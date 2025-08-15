@@ -1,5 +1,7 @@
 package com.bluecodeltd.ecap.chw.activity;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -10,9 +12,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -25,12 +29,15 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.actionhelper.CSVGeneratorHelper;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.contract.GenerateCSVContract;
 import com.bluecodeltd.ecap.chw.dao.CaregiverVisitationDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.model.CaregiverVisitationModel;
 import com.bluecodeltd.ecap.chw.model.Child;
+import com.bluecodeltd.ecap.chw.presenter.GenerateCSVPresenter;
 import com.github.javiersantos.appupdater.AppUpdater;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -61,14 +68,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 
-public class DashboardActivity extends AppCompatActivity {
+public class DashboardActivity extends AppCompatActivity  implements GenerateCSVContract.View {
+    private GenerateCSVContract.Presenter presenter;
+
     private AppBarLayout myAppbar;
+    private CSVGeneratorHelper csvGenerator;
     private Toolbar toolbar;
-    private android.widget.TextView allHouseHoldsCount;
-    private android.widget.TextView allVcasCount;
-    private android.widget.TextView allDueVisits;
-    private  android.widget.TextView lastUpdated;
-    private  android.widget.TextView facilityName;
+    private TextView allHouseHoldsCount;
+    private TextView allVcasCount;
+    private TextView allDueVisits;
+    private  TextView lastUpdated;
+    private  TextView facilityName;
     CardView dueCardview;
     private static final int MAX_X_VALUE = 7;
     private static final int MAX_Y_VALUE = 50;
@@ -83,7 +93,7 @@ public class DashboardActivity extends AppCompatActivity {
     ProgressBar loadingDataProgressBar;
     Switch  facilityInformationSwitch;
     String phone = "";
-    private final int FIVE_SECONDS = 2000;
+    private final int FORTY_FIVE_MINUTES = 3000;
     Runnable runnable;
     ArrayList<Integer> colors;
     AppUpdater appUpdater;
@@ -100,7 +110,22 @@ public class DashboardActivity extends AppCompatActivity {
         NavigationMenu.getInstance(this, null, toolbar);
         chart = findViewById(R.id.fragment_verticalbarchart_chart);
         allHouseHoldsCount = findViewById(R.id.allHouseholdsNumber);
-        allHouseHoldsCount.setText(HouseholdDao.countNumberoFHouseholds());
+        presenter = new GenerateCSVPresenter(this);
+
+        csvGenerator = new CSVGeneratorHelper();
+
+        try {
+            String householdCount = HouseholdDao.countNumberoFHouseholds();
+            if (householdCount != null) {
+                allHouseHoldsCount.setText(householdCount);
+            } else {
+                allHouseHoldsCount.setText("0");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            allHouseHoldsCount.setText("0");
+        }
+
         allVcasCount = findViewById(R.id.allVcasNumber);
         allDueVisits = findViewById(R.id.due_visits);
         dueCardview = findViewById(R.id.due_card_view);
@@ -473,10 +498,10 @@ public class DashboardActivity extends AppCompatActivity {
     public void refreshData() {
         handler.postDelayed(runnable = new Runnable() {
             public void run() {
-                handler.postDelayed(runnable, FIVE_SECONDS);
+                handler.postDelayed(runnable, FORTY_FIVE_MINUTES);
                 loadData();
             }
-        }, FIVE_SECONDS);
+        }, FORTY_FIVE_MINUTES);
     }
     @Override
     protected void onPause() {
@@ -572,12 +597,25 @@ public class DashboardActivity extends AppCompatActivity {
             case R.id.refresh:
                 loadData();
                 break;
+            case R.id.generate_pdf:
 
+                csvGenerator.generateCSVWithProgress(this, presenter, () ->
+                        showCustomDialog(DashboardActivity.this,
+                                "CSV files have been generated. You can find them in the device's file folder."));
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void showCSVGeneratedMessage(String filePath) {
 
+    }
+
+    @Override
+    public void showError(String errorMessage) {
+
+    }
 
 
     //format values on top of the bars rto return whole numbers
@@ -589,4 +627,25 @@ public class DashboardActivity extends AppCompatActivity {
 
 
     }
+
+
+    public void showCustomDialog(Context context, String message) {
+
+        Dialog dialog = new Dialog(context);
+
+        dialog.setContentView(R.layout.custom_dialog);
+
+        dialog.setCancelable(false);
+        TextView messageTextView = dialog.findViewById(R.id.dialog_message);
+        messageTextView.setText(message);
+
+        Button okButton = dialog.findViewById(R.id.dialog_ok_button);
+        okButton.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
+    }
+
+
+
+
 }

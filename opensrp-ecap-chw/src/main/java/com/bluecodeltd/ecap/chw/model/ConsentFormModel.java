@@ -1,4 +1,4 @@
-package org.smartregister.chw.model;
+package com.bluecodeltd.ecap.chw.model;
 
 
 

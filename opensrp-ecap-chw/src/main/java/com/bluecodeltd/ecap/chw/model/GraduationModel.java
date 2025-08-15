@@ -30,6 +30,7 @@ public class GraduationModel {
     private String repeat_school;
     private String additional_information;
     private String graduation_status;
+    private String touching_in_sexual;
     private String delete_status;
 
     public String getBase_entity_id() {
@@ -262,6 +263,14 @@ public class GraduationModel {
 
     public void setGraduation_status(String graduation_status) {
         this.graduation_status = graduation_status;
+    }
+
+    public String getTouching_in_sexual() {
+        return touching_in_sexual;
+    }
+
+    public void setTouching_in_sexual(String touching_in_sexual) {
+        this.touching_in_sexual = touching_in_sexual;
     }
 
     public String getDelete_status() {

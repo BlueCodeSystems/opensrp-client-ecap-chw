@@ -160,7 +160,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         JSONObject indexCheckObject = getFieldJSONObject(fields(jsonObject, STEP3), "index_check_box");
 
         if (indexCheckObject != null) {
-            indexCheckObject.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
+            indexCheckObject.remove(JsonFormUtils.VALUE);
             try {
                 indexCheckObject.put(JsonFormUtils.VALUE, "1");
             } catch (JSONException e) {
@@ -173,7 +173,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         JSONObject stepOneUniqueId = getFieldJSONObject(fields(jsonObject, STEP1), "unique_id");
 
         if (stepOneUniqueId != null) {
-            stepOneUniqueId.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
+            stepOneUniqueId.remove(JsonFormUtils.VALUE);
             try {
                 stepOneUniqueId.put(JsonFormUtils.VALUE, newEntityId);
             } catch (JSONException e) {
@@ -190,7 +190,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
             JSONObject stepHouseholdId = getFieldJSONObject(fields(jsonObject, STEP1), "household_id");
 
             if (stepHouseholdId != null) {
-                stepHouseholdId.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
+                stepHouseholdId.remove(JsonFormUtils.VALUE);
                 try {
                     stepHouseholdId.put(JsonFormUtils.VALUE, household_id);
                 } catch (JSONException e) {
@@ -233,7 +233,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         JSONObject indexCheckObject = getFieldJSONObject(fields(jsonObject, STEP3), "index_check_box");
 
         if (indexCheckObject != null) {
-            indexCheckObject.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
+            indexCheckObject.remove(JsonFormUtils.VALUE);
             try {
                 indexCheckObject.put(JsonFormUtils.VALUE, "1");
             } catch (JSONException e) {
@@ -263,7 +263,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
             JSONObject stepHouseholdId = getFieldJSONObject(fields(jsonObject, STEP1), "household_id");
 
             if (stepHouseholdId != null) {
-                stepHouseholdId.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
+                stepHouseholdId.remove(JsonFormUtils.VALUE);
                 try {
                     stepHouseholdId.put(JsonFormUtils.VALUE, household_id);
                 } catch (JSONException e) {
@@ -298,14 +298,19 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
 
                 if (Constants.EcapEncounterType.CHILD_INDEX.equalsIgnoreCase(
                         jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
-                    RegisterParams registerParam = new RegisterParams();
-                    registerParam.setEditMode(false);
-                    registerParam.setFormTag(OpdJsonFormUtils.formTag(OpdUtils.context().allSharedPreferences()));
-                    showProgressDialog(R.string.saving_dialog_title);
-                    indexRegisterPresenter().saveForm(jsonString, registerParam);
-                    uniqueId = getFieldJSONObject(fields(jsonFormObject, STEP1), "unique_id").optString("value");
+//                    RegisterParams registerParam = new RegisterParams();
+//                    registerParam.setEditMode(false);
+//                    registerParam.setFormTag(OpdJsonFormUtils.formTag(OpdUtils.context().allSharedPreferences()));
+//                    showProgressDialog(org.smartregister.family.R.string.saving_dialog_title);
+//                    indexRegisterPresenter().saveForm(jsonString, registerParam);
+//                    uniqueId = getFieldJSONObject(fields(jsonFormObject, STEP1), "unique_id").optString("value");
+//
+//                   gotToChildProfile(uniqueId);
+                    Intent passClosureForm   =  new Intent(this,SignatureActivity.class);
+                    passClosureForm.putExtra("jsonForm", jsonString);
+                    startActivity(passClosureForm);
 
-                   gotToChildProfile(uniqueId);
+
 
                 } else if(Constants.EcapEncounterType.HOUSEHOLD_INDEX.equalsIgnoreCase(
                         jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))){
@@ -313,7 +318,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
                     RegisterParams registerParam = new RegisterParams();
                     registerParam.setEditMode(false);
                     registerParam.setFormTag(OpdJsonFormUtils.formTag(OpdUtils.context().allSharedPreferences()));
-                    showProgressDialog(R.string.saving_dialog_title);
+                    showProgressDialog(org.smartregister.family.R.string.saving_dialog_title);
                     indexRegisterPresenter().saveForm(jsonString, registerParam);
 
                     hid = getFieldJSONObject(fields(jsonFormObject, STEP2), "household_id").optString("value");
@@ -464,7 +469,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
 
     public void openForm(String formName, JSONObject jsonFormObject){
 
-        org.smartregister.util.FormUtils formUtils = null;
+        FormUtils formUtils = null;
         try {
             formUtils = new FormUtils(IndexRegisterActivity.this);
         } catch (Exception e) {

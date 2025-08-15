@@ -33,17 +33,17 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
     }
 
     @Override
-    public ItemAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_flag, parent, false);
 
-        ItemAdapter.ViewHolder viewHolder = new ItemAdapter.ViewHolder(v, viewType);
+        ViewHolder viewHolder = new ViewHolder(v, viewType);
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(final ItemAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         final Items myitems =  items.get(position);
 
@@ -54,11 +54,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
 
         if (myitems.getStatus().equals("1")){
 
-            holder.imgFlag.setColorFilter(ContextCompat.getColor(context, R.color.orange), android.graphics.PorterDuff.Mode.MULTIPLY);
+            holder.imgFlag.setColorFilter(ContextCompat.getColor(context, org.smartregister.chw.core.R.color.orange), PorterDuff.Mode.MULTIPLY);
 
         } else if(myitems.getStatus().equals("2")) {
 
-            holder.imgFlag.setColorFilter(ContextCompat.getColor(context, R.color.colorGreen), android.graphics.PorterDuff.Mode.MULTIPLY);
+            holder.imgFlag.setColorFilter(ContextCompat.getColor(context, org.smartregister.chw.core.R.color.colorGreen), PorterDuff.Mode.MULTIPLY);
 
         }
 

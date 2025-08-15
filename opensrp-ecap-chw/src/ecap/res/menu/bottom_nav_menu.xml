@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+  <!--  <item
+        android:id="@+id/action_family"
+        android:enabled="true"
+        android:icon="@mipmap/ic_home"
+        android:title="@string/home"
+        app:showAsAction="ifRoom" />-->
+
+    <item
+        android:id="@+id/action_register"
+        android:enabled="true"
+        android:icon="@mipmap/ic_add_family"
+        android:title="@string/add_family"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_register_index"
+        android:enabled="true"
+        android:icon="@mipmap/ic_add_family"
+        android:title="@string/add_index"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_identifcation"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_person_add_24"
+        app:showAsAction="ifRoom"
+        android:title="VCA Screening" />
+
+    <item
+        android:id="@+id/action_fsw"
+        android:enabled="true"
+        android:icon="@drawable/baseline_woman_24"
+        android:iconTint="#696969"
+        app:showAsAction="ifRoom"
+        android:title="FSW Screening" />
+
+  <item
+      android:id="@+id/action_hts"
+      android:enabled="true"
+      android:icon="@mipmap/ic_add_family"
+      android:title="@string/add_hts"
+      app:showAsAction="ifRoom" />
+
+
+</menu>

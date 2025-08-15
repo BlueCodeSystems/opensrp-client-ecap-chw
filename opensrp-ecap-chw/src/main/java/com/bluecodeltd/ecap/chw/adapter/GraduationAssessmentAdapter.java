@@ -64,14 +64,14 @@ public class GraduationAssessmentAdapter extends RecyclerView.Adapter<Graduation
 
     @NonNull
     @Override
-    public GraduationAssessmentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.gradaution_list, parent, false);
-        GraduationAssessmentAdapter.ViewHolder viewHolder = new GraduationAssessmentAdapter.ViewHolder(v);
+        ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull GraduationAssessmentAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         final GraduationModel visit = graduationAssessment.get(position);
 
@@ -275,7 +275,7 @@ public class GraduationAssessmentAdapter extends RecyclerView.Adapter<Graduation
         form.setNextLabel("Next");
         form.setPreviousLabel("Previous");
         form.setSaveLabel("Submit");
-        form.setActionBarBackground(R.color.dark_grey);
+        form.setActionBarBackground(org.smartregister.R.color.dark_grey);
         Intent intent = new Intent(context, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());

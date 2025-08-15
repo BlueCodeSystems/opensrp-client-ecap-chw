@@ -10,6 +10,10 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,14 +21,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
+import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -67,18 +74,18 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
     }
 
     @Override
-    public ShowReferralsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_referral, parent, false);
 
-        ShowReferralsAdapter.ViewHolder viewHolder = new ShowReferralsAdapter.ViewHolder(v);
+        ViewHolder viewHolder = new ViewHolder(v);
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(ShowReferralsAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 
         final ReferralModel showReferrals = referrals.get(position);
 
@@ -92,7 +99,7 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
 
                 try {
 
-                    openFormUsingFormUtils(context, "referral", showReferrals);
+                    openFormUsingFormUtils(context, "referral_for_vca_edit", showReferrals);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -102,33 +109,42 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
         });
         CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(showReferrals.getUnique_id());
 
-        holder.editme.setOnClickListener(v -> {
-            if( caseStatusModel.getCase_status().equals("0") ||  caseStatusModel.getCase_status().equals("2")) {
-                Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.dialog_layout);
-                dialog.show();
+        if (caseStatusModel != null) {
+            holder.editme.setOnClickListener(v -> {
+                try {
+                    String caseStatus = caseStatusModel.getCase_status();
+                    if (caseStatus != null && (caseStatus.equals("0") || caseStatus.equals("2"))) {
+                        Dialog dialog = new Dialog(context);
+                        dialog.setContentView(R.layout.dialog_layout);
+                        dialog.show();
 
-                TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                dialogMessage.setText(caseStatusModel.getFirst_name() + " " + caseStatusModel.getLast_name() + " was either de-registered or inactive in the program");
+                        TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                        String firstName = caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "Unknown";
+                        String lastName = caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "User";
 
-                Button dialogButton = dialog.findViewById(R.id.dialog_button);
-                dialogButton.setOnClickListener(va -> dialog.dismiss());
+                        dialogMessage.setText(firstName + " " + lastName + " was either de-registered or inactive in the program");
 
-            } else {
-                if (v.getId() == R.id.edit_me) {
-
-                    try {
-
-                        openFormUsingFormUtils(context, "referral", showReferrals);
-
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                        dialogButton.setOnClickListener(va -> dialog.dismiss());
+                    } else {
+                        if (v.getId() == R.id.edit_me) {
+                            try {
+                                openFormUsingFormUtils(context, "referral_for_vca_edit", showReferrals);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
-
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(context, "An error occurred while handling the action.", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
+            });
+        } else {
+
+            Toast.makeText(context, "Unable to retrieve case status. Please try again.", Toast.LENGTH_SHORT).show();
+        }
+
         holder.delete.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setMessage("You are about to delete this VCA referral");
@@ -144,7 +160,7 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
                     e.printStackTrace();
                 }
                 showReferrals.setDelete_status("1");
-                JSONObject vcaScreeningForm = formUtils.getFormJson("referral");
+                JSONObject vcaScreeningForm = formUtils.getFormJson("referral_for_vca_edit");
                 try {
                     CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(showReferrals, Map.class));
                     vcaScreeningForm.put("entity_id", showReferrals.getBase_entity_id());
@@ -177,6 +193,44 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
             alert.show();
         });
 
+        Household household = HouseholdDao.getHouseholdVcaId(showReferrals.getUnique_id());
+
+        String encodedSignature = showReferrals.getSignature();
+        String encodeSignatureHousehold = household.getSignature();
+
+
+        if(encodedSignature != null && encodedSignature != "") {
+            setImageViewFromBase64(encodedSignature, holder.signatureView);
+        } else {
+            if(encodeSignatureHousehold != null && encodeSignatureHousehold != "") {
+                setImageViewFromBase64(encodeSignatureHousehold, holder.signatureView);
+            } else {
+                holder.signatureView.setVisibility(View.GONE);
+            }
+        }
+
+    }
+    private void setImageViewFromBase64(String base64Str, ImageView imageView) {
+        try {
+            // Decode the Base64 string into bytes
+            byte[] decodedBytes = Base64.decode(base64Str, Base64.DEFAULT);
+
+            // Convert bytes to a Bitmap
+            Bitmap originalBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+
+            if (originalBitmap != null) {
+                // Resize the Bitmap to 36x36
+                Bitmap resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, 80, 80, true);
+
+                // Set the resized Bitmap to the ImageView
+                imageView.setImageBitmap(resizedBitmap);
+            } else {
+                Log.e("ImageDecode", "Bitmap is null. Check Base64 input.");
+            }
+        } catch (IllegalArgumentException e) {
+            // Handle invalid Base64 string
+            Log.e("ImageDecode", "Invalid Base64 string: " + e.getMessage());
+        }
     }
 
     public void openFormUsingFormUtils(Context context, String formName, ReferralModel referral) throws JSONException {
@@ -210,7 +264,7 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
         form.setNextLabel("Next");
         form.setPreviousLabel("Previous");
         form.setSaveLabel("Submit");
-        form.setActionBarBackground(R.color.dark_grey);
+        form.setActionBarBackground(org.smartregister.R.color.dark_grey);
         Intent intent = new Intent(context, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
@@ -238,7 +292,7 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
 
             switch (encounterType) {
 
-                case "Referral":
+                case "Referral Edit VCA":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
@@ -323,6 +377,7 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
 
         LinearLayout linearLayout;
         ImageView editme, delete;
+        ImageView signatureView;
 
         public ViewHolder(View itemView) {
 
@@ -332,6 +387,7 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
             txtDate  = itemView.findViewById(R.id.date);
             editme = itemView.findViewById(R.id.edit_me);
             delete = itemView.findViewById(R.id.delete_record);
+            signatureView = itemView.findViewById(R.id.signature_view);
 
         }
 

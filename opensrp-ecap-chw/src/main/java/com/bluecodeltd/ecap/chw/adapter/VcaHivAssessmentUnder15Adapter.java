@@ -2,6 +2,8 @@ package com.bluecodeltd.ecap.chw.adapter;
 
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getAllSharedPreferences;
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getFormTag;
+import static com.vijay.jsonwizard.utils.FormUtils.fields;
+import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.chw.fp.util.FpUtil.getClientProcessorForJava;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
@@ -65,19 +67,23 @@ public class VcaHivAssessmentUnder15Adapter extends RecyclerView.Adapter<VcaHivA
 
     @NonNull
     @Override
-    public VcaHivAssessmentUnder15Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.vca_hiv_sigle_hiv_assessment, parent, false);
-        VcaHivAssessmentUnder15Adapter.ViewHolder viewHolder = new VcaHivAssessmentUnder15Adapter.ViewHolder(v);
+        ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VcaHivAssessmentUnder15Adapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final HivRiskAssessmentUnder15Model assessmentUnder15Model = hivAssessment.get(position);
 
         holder.setIsRecyclable(false);
 
-        holder.txtDate.setText(assessmentUnder15Model.getAssessment_date());
+            String assessmentDate = assessmentUnder15Model.getDate_edited();
+            if(assessmentDate!=null){
+                holder.txtDate.setText(assessmentUnder15Model.getDate_edited());
+            }
+
 
         holder.linearLayout.setOnClickListener(v -> {
 
@@ -256,7 +262,23 @@ public class VcaHivAssessmentUnder15Adapter extends RecyclerView.Adapter<VcaHivA
 
         formToBeOpened.put("entity_id", visit.getBase_entity_id());
 
+
+
         CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(visit, Map.class));
+        JSONObject question = getFieldJSONObject(fields(formToBeOpened, "step1"), "Question");
+
+        String answer = (visit != null && visit.getQuestion() != null) ? visit.getQuestion() : "";
+
+        if ("yes".equalsIgnoreCase(answer)) {
+            question.put(JsonFormUtils.VALUE, "yes");
+        } else if ("no".equalsIgnoreCase(answer)) {
+            question.put(JsonFormUtils.VALUE, "no");
+        } else {
+            question.put(JsonFormUtils.VALUE, "");
+        }
+
+
+//        CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(visit, Map.class));
 
         startFormActivity(formToBeOpened);
 
@@ -271,7 +293,7 @@ public class VcaHivAssessmentUnder15Adapter extends RecyclerView.Adapter<VcaHivA
         form.setNextLabel("Next");
         form.setPreviousLabel("Previous");
         form.setSaveLabel("Submit");
-        form.setActionBarBackground(R.color.dark_grey);
+        form.setActionBarBackground(org.smartregister.R.color.dark_grey);
         Intent intent = new Intent(context, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());

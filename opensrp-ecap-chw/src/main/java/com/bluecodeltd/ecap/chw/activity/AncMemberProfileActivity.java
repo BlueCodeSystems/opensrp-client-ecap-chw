@@ -1,5 +1,9 @@
 package com.bluecodeltd.ecap.chw.activity;
 
+import static com.bluecodeltd.ecap.chw.util.NotificationsUtil.handleNotificationRowClick;
+import static com.bluecodeltd.ecap.chw.util.NotificationsUtil.handleReceivedNotifications;
+import static org.smartregister.chw.core.utils.Utils.passToolbarTitle;
+
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -11,19 +15,27 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.contract.AncMemberProfileContract;
+import com.bluecodeltd.ecap.chw.custom_view.AncFloatingMenu;
+import com.bluecodeltd.ecap.chw.dataloader.AncMemberDataLoader;
+import com.bluecodeltd.ecap.chw.dataloader.FamilyMemberDataLoader;
+import com.bluecodeltd.ecap.chw.interactor.AncMemberProfileInteractor;
+import com.bluecodeltd.ecap.chw.model.FamilyProfileModel;
+import com.bluecodeltd.ecap.chw.model.ReferralTypeModel;
+import com.bluecodeltd.ecap.chw.presenter.AncMemberProfilePresenter;
+import com.bluecodeltd.ecap.chw.schedulers.ChwScheduleTaskExecutor;
+
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import com.bluecodeltd.ecap.chw.BuildConfig;
-import com.bluecodeltd.ecap.chw.R;
 import org.smartregister.chw.anc.AncLibrary;
 import org.smartregister.chw.anc.domain.MemberObject;
 import org.smartregister.chw.anc.domain.Visit;
 import org.smartregister.chw.anc.util.Constants;
 import org.smartregister.chw.anc.util.DBConstants;
 import org.smartregister.chw.anc.util.NCUtils;
-import com.bluecodeltd.ecap.chw.application.ChwApplication;
-import com.bluecodeltd.ecap.chw.contract.AncMemberProfileContract;
 import org.smartregister.chw.core.activity.CoreAncMemberProfileActivity;
 import org.smartregister.chw.core.adapter.NotificationListAdapter;
 import org.smartregister.chw.core.application.CoreChwApplication;
@@ -32,15 +44,6 @@ import org.smartregister.chw.core.listener.OnClickFloatingMenu;
 import org.smartregister.chw.core.utils.ChwNotificationUtil;
 import org.smartregister.chw.core.utils.CoreConstants;
 import org.smartregister.chw.core.utils.CoreJsonFormUtils;
-import com.bluecodeltd.ecap.chw.custom_view.AncFloatingMenu;
-import com.bluecodeltd.ecap.chw.dataloader.AncMemberDataLoader;
-import com.bluecodeltd.ecap.chw.dataloader.FamilyMemberDataLoader;
-import com.bluecodeltd.ecap.chw.interactor.AncMemberProfileInteractor;
-import org.smartregister.chw.malaria.dao.MalariaDao;
-import com.bluecodeltd.ecap.chw.model.FamilyProfileModel;
-import com.bluecodeltd.ecap.chw.model.ReferralTypeModel;
-import com.bluecodeltd.ecap.chw.presenter.AncMemberProfilePresenter;
-import com.bluecodeltd.ecap.chw.schedulers.ChwScheduleTaskExecutor;
 import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.commonregistry.AllCommonsRepository;
 import org.smartregister.commonregistry.CommonPersonObject;
@@ -64,10 +67,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
-
-import static org.smartregister.chw.core.utils.Utils.passToolbarTitle;
-import static com.bluecodeltd.ecap.chw.util.NotificationsUtil.handleNotificationRowClick;
-import static com.bluecodeltd.ecap.chw.util.NotificationsUtil.handleReceivedNotifications;
 
 public class AncMemberProfileActivity extends CoreAncMemberProfileActivity implements AncMemberProfileContract.View {
 
@@ -148,29 +147,29 @@ public class AncMemberProfileActivity extends CoreAncMemberProfileActivity imple
     }
 
     private void addAncReferralTypes() {
-        referralTypeModels.add(new ReferralTypeModel(getString(R.string.anc_danger_signs),
-                BuildConfig.USE_UNIFIED_REFERRAL_APPROACH ? com.bluecodeltd.ecap.chw.util.Constants.JSON_FORM.getAncUnifiedReferralForm() : com.bluecodeltd.ecap.chw.util.Constants.JSON_FORM.getAncReferralForm(), CoreConstants.TASKS_FOCUS.ANC_DANGER_SIGNS));
-
-        if (BuildConfig.USE_UNIFIED_REFERRAL_APPROACH) {
-            referralTypeModels.add(new ReferralTypeModel(getString(R.string.hiv_referral),
-                    com.bluecodeltd.ecap.chw.util.Constants.JSON_FORM.getHivReferralForm(), CoreConstants.TASKS_FOCUS.SUSPECTED_HIV));
-
-            referralTypeModels.add(new ReferralTypeModel(getString(R.string.tb_referral),
-                    com.bluecodeltd.ecap.chw.util.Constants.JSON_FORM.getTbReferralForm(), CoreConstants.TASKS_FOCUS.SUSPECTED_TB));
-
-            referralTypeModels.add(new ReferralTypeModel(getString(R.string.gbv_referral),
-                    com.bluecodeltd.ecap.chw.util.Constants.JSON_FORM.getGbvReferralForm(), CoreConstants.TASKS_FOCUS.SUSPECTED_GBV));
-        }
-
-        if (MalariaDao.isRegisteredForMalaria(baseEntityID)) {
-            referralTypeModels.add(new ReferralTypeModel(getString(R.string.client_malaria_follow_up), null, null));
-        }
+//        referralTypeModels.add(new ReferralTypeModel(getString(R.string.anc_danger_signs),
+//                BuildConfig.USE_UNIFIED_REFERRAL_APPROACH ? Constant.JSON_FORM.getAncUnifiedReferralForm() : Constants.JSON_FORM.getAncReferralForm(), CoreConstants.TASKS_FOCUS.ANC_DANGER_SIGNS));
+//
+//        if (BuildConfig.USE_UNIFIED_REFERRAL_APPROACH) {
+//            referralTypeModels.add(new ReferralTypeModel(getString(R.string.hiv_referral),
+//                    Constants.JSON_FORM.getHivReferralForm(), CoreConstants.TASKS_FOCUS.SUSPECTED_HIV));
+//
+//            referralTypeModels.add(new ReferralTypeModel(getString(R.string.tb_referral),
+//                    Constants.JSON_FORM.getTbReferralForm(), CoreConstants.TASKS_FOCUS.SUSPECTED_TB));
+//
+//            referralTypeModels.add(new ReferralTypeModel(getString(R.string.gbv_referral),
+//                    Constants.JSON_FORM.getGbvReferralForm(), CoreConstants.TASKS_FOCUS.SUSPECTED_GBV));
+//        }
+//
+//        if (MalariaDao.isRegisteredForMalaria(baseEntityID)) {
+//            referralTypeModels.add(new ReferralTypeModel(getString(R.string.client_malaria_follow_up), null, null));
+//        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.action_remove_member) {
+        if (itemId == org.smartregister.chw.core.R.id.action_remove_member) {
             CommonRepository commonRepository = Utils.context().commonrepository(Utils.metadata().familyMemberRegister.tableName);
 
             final CommonPersonObject commonPersonObject = commonRepository.findByBaseEntityId(memberObject.getBaseEntityId());
@@ -180,7 +179,7 @@ public class AncMemberProfileActivity extends CoreAncMemberProfileActivity imple
 
             IndividualProfileRemoveActivity.startIndividualProfileActivity(AncMemberProfileActivity.this, client, memberObject.getFamilyBaseEntityId(), memberObject.getFamilyHead(), memberObject.getPrimaryCareGiver(), AncRegisterActivity.class.getCanonicalName());
             return true;
-        } else if (itemId == R.id.action_pregnancy_out_come) {
+        } else if (itemId == org.smartregister.chw.core.R.id.action_pregnancy_out_come) {
             CoreConstants.JSON_FORM.setLocaleAndAssetManager(ChwApplication.getCurrentLocale(), ChwApplication.getInstance().getApplicationContext().getAssets());
             PncRegisterActivity.startPncRegistrationActivity(AncMemberProfileActivity.this, memberObject.getBaseEntityId(), null, CoreConstants.JSON_FORM.getPregnancyOutcome(), AncLibrary.getInstance().getUniqueIdRepository().getNextUniqueId().getOpenmrsId(), memberObject.getFamilyBaseEntityId(), memberObject.getFamilyName(), memberObject.getLastMenstrualPeriod());
             return true;
@@ -191,8 +190,8 @@ public class AncMemberProfileActivity extends CoreAncMemberProfileActivity imple
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        menu.findItem(R.id.anc_danger_signs_outcome).setVisible(false);
-        menu.findItem(R.id.action_malaria_diagnosis).setVisible(false);
+        menu.findItem(org.smartregister.chw.core.R.id.anc_danger_signs_outcome).setVisible(false);
+        menu.findItem(org.smartregister.chw.core.R.id.action_malaria_diagnosis).setVisible(false);
         return true;
     }
 
@@ -227,7 +226,7 @@ public class AncMemberProfileActivity extends CoreAncMemberProfileActivity imple
 
                 } else if (form.getString(JsonFormUtils.ENCOUNTER_TYPE).equals(CoreConstants.EventType.ANC_REFERRAL)) {
                     ancMemberProfilePresenter().createReferralEvent(Utils.getAllSharedPreferences(), jsonString);
-                    showToast(this.getString(R.string.referral_submitted));
+                    showToast(this.getString(org.smartregister.chw.core.R.string.referral_submitted));
                 }
 
             } catch (Exception e) {
@@ -321,9 +320,9 @@ public class AncMemberProfileActivity extends CoreAncMemberProfileActivity imple
     public void onClick(View view) {
         super.onClick(view);
         int id = view.getId();
-        if (id == R.id.textview_record_visit || id == R.id.textview_record_reccuring_visit) {
+        if (id == org.smartregister.chw.core.R.id.textview_record_visit || id == org.smartregister.chw.opensrp_chw_anc.R.id.textview_record_reccuring_visit) {
             AncHomeVisitActivity.startMe(this, memberObject.getBaseEntityId(), false);
-        } else if (id == R.id.textview_edit) {
+        } else if (id == org.smartregister.chw.core.R.id.textview_edit) {
             AncHomeVisitActivity.startMe(this, memberObject.getBaseEntityId(), true);
         }
         handleNotificationRowClick(this, view, notificationListAdapter, memberObject.getBaseEntityId());

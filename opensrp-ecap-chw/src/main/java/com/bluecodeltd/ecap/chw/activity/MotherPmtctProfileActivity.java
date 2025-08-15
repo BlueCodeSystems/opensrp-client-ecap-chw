@@ -7,10 +7,14 @@ import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -29,14 +33,17 @@ import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
 import com.bluecodeltd.ecap.chw.dao.PmctMotherAncDao;
-import com.bluecodeltd.ecap.chw.dao.PtmctMotherMonitoringDao;
+import com.bluecodeltd.ecap.chw.dao.PmtctChildDao;
+import com.bluecodeltd.ecap.chw.dao.PmtctDeliveryDao;
+import com.bluecodeltd.ecap.chw.dao.PmtctMotherOutComeDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
-import com.bluecodeltd.ecap.chw.fragment.AncPmctFragment;
 import com.bluecodeltd.ecap.chw.fragment.PMTCTMotherOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.PmctMotherHeiFragment;
 import com.bluecodeltd.ecap.chw.fragment.PostnatalCareFragment;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.PmctMotherAncModel;
+import com.bluecodeltd.ecap.chw.model.PmctMotherOutcomeModel;
+import com.bluecodeltd.ecap.chw.model.PmtctDeliveryDetailsModel;
 import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
 import com.bluecodeltd.ecap.chw.model.PtmctMotherMonitoringModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
@@ -98,10 +105,15 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
     public PtctMotherModel ptctMotherModel;
     public PtmctMotherMonitoringModel ptmctMotherMonitoringModel;
     public PmctMotherAncModel pmctMotherAncModel;
+    public PmtctDeliveryDetailsModel pmtctDeliveryDetailsModel;
+    public PmctMotherOutcomeModel pmctMotherOutcomeModel;
+
     Random Number;
     int Rnumber;
     ObjectMapper householdMapper;
     String clientId;
+
+    AlertDialog.Builder builder;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -123,6 +135,8 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         labourLayout = findViewById(R.id.labour_details);
         postnatalLayout = findViewById(R.id.postnatal_details);
 
+        builder = new AlertDialog.Builder(MotherPmtctProfileActivity.this);
+
 
         //commonMother = (CommonPersonObjectClient) getIntent().getSerializableExtra("mother");
         Bundle extras = getIntent().getExtras();
@@ -131,14 +145,17 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
         }
 
+
+
         ptctMotherModel = PMTCTMotherDao.getPMCTMother(clientId);
 
-//        ptmctMotherMonitoringModel = PtmctMotherMonitoringDao.getPMCTMother(clientId);
+        pmtctDeliveryDetailsModel = PmtctDeliveryDao.getPmtctDeliveryDetails(clientId);
         pmctMotherAncModel = PmctMotherAncDao.getPMCTMotherAnc(clientId);
+        pmctMotherOutcomeModel = PmtctMotherOutComeDao.getPMCTmothersOutcome(clientId);
 
 
         if (ptctMotherModel != null) {
-            String mothersFullName = ptctMotherModel.getMothers_full_name();
+            String mothersFullName = ptctMotherModel.getFirst_name()+" "+ptctMotherModel.getLast_name();
             if (mothersFullName != null) {
                 motherName.setText(mothersFullName);
             } else {
@@ -156,22 +173,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
             motherName.setText("Name not available");
             txtAge.setText("Age not available");
         }
-//           CommonPersonObject personObject = getCommonRepository("ec_pmtct_mother").findByBaseEntityId(clientId);
-//           CommonPersonObjectClient client = new CommonPersonObjectClient(personObject.getCaseId(), personObject.getDetails(), "");
-//           client.setColumnmaps(personObject.getColumnmaps());
-//        commonPersonObjectClient = client;
-//
-//        //Refresh activity using Intent
-//        refresh = getIntent().getExtras().getStri HashMap<String, Child> mymap = ( (IndexDetailsActivity) requireActivity()).getData();
-//        Child childIndex =mymap.get("Child")ng("1");
-//
-//        family = HouseholdDao.getHousehold(commonPersonObjectClient.getColumnmaps().get("household_id"));
-//
-//        motherName.setText(client.getColumnmaps().get("caregiver_name"));
-//        String birthdate = commonPersonObjectClient.getColumnmaps().get("caregiver_birth_date");
-//        String age = getAge(birthdate);
-//        txtAge.setText(age);
-//
+
        oMapper = new ObjectMapper();
 //
         fab = findViewById(R.id.fabx);
@@ -181,7 +183,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
 
         setupViewPager();
-        updateAncTabTitle();
+//        updateAncTabTitle();
         updatePostnatalTitle();
         updateHeiTitle();
         updateOverviewTitle();
@@ -207,7 +209,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
     private void setupViewPager(){
         mPagerAdapter = new ProfileViewPagerAdapter(getSupportFragmentManager());
         mPagerAdapter.addFragment(new PMTCTMotherOverviewFragment());
-        mPagerAdapter.addFragment(new AncPmctFragment());
+//        mPagerAdapter.addFragment(new AncPmctFragment());
         mPagerAdapter.addFragment(new PostnatalCareFragment());
         mPagerAdapter.addFragment(new PmctMotherHeiFragment());
 
@@ -216,24 +218,24 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.getTabAt(0).setText("OVERVIEW");
-        mTabLayout.getTabAt(1).setText("ANC");
-        mTabLayout.getTabAt(2).setText("POSTNATAL");
-        mTabLayout.getTabAt(3).setText("HEI");
+//        mTabLayout.getTabAt(1).setText("ANC");
+        mTabLayout.getTabAt(1).setText("POSTNATAL");
+        mTabLayout.getTabAt(2).setText("HEI");
 
     }
 
-    private void updateAncTabTitle() {
-        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.pmct_titles, null);
-        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
-        visitTabTitle.setText("ANC");
-        childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
-
-
-        String countANC = PmctMotherAncDao.countMotherAnc(clientId);
-        childTabCount.setText(countANC);
-
-        mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
-    }
+//    private void updateAncTabTitle() {
+//        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.pmct_titles, null);
+//        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
+//        visitTabTitle.setText("ANC");
+//        childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
+//
+//
+//        String countANC = PmctMotherAncDao.countMotherAnc(clientId);
+//        childTabCount.setText(countANC);
+//
+//        mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
+//    }
     private void updatePostnatalTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.pmct_titles, null);
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
@@ -245,7 +247,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
         childTabCount.setText(countMotherPostnatal);
 
-        mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
+        mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
     }
     private void updateHeiTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.pmct_titles, null);
@@ -254,11 +256,11 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
 
 
-        String countHie = PtmctMotherMonitoringDao.countMotherHei(clientId);
+        String countHie = PmtctChildDao.countMotherHei(clientId);
 
         childTabCount.setText(countHie);
 
-        mTabLayout.getTabAt(3).setCustomView(taskTabTitleLayout);
+        mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
     }
     private void updateOverviewTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.pmct_titles, null);
@@ -372,24 +374,24 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
                 break;
             case R.id.postnatal_details:
-                PtctMotherModel model = PMTCTMotherDao.getPostnatalDate(ptctMotherModel.getPmtct_id());
+//                PtctMotherModel model = PMTCTMotherDao.getPostnatalDate(ptctMotherModel.getPmtct_id());
 
 
-                String todaysDate = getTodaysDateFormatted();
-                String postNatalCareDate = model != null ? model.getDate_of_st_post_natal_care() : null;
-
-                if (todaysDate != null && todaysDate.equals(postNatalCareDate)) {
-                    Toast.makeText(
-                            MotherPmtctProfileActivity.this, "You cannot conduct a postnatal visit twice a day",
-                            Toast.LENGTH_SHORT
-                    ).show();
-                } else {
+//                String todaysDate = getTodaysDateFormatted();
+//                String postNatalCareDate = model != null ? model.getDate_of_st_post_natal_care() : null;
+//
+//                if (todaysDate != null && todaysDate.equals(postNatalCareDate)) {
+//                    Toast.makeText(
+//                            MotherPmtctProfileActivity.this, "You cannot conduct a postnatal visit twice a day",
+//                            Toast.LENGTH_SHORT
+//                    ).show();
+//                } else {
                     try {
                         openFormUsingFormUtils(MotherPmtctProfileActivity.this,"postnatal_care");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }
+//                }
 
 
 
@@ -422,6 +424,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
     }
 
     public void openFormUsingFormUtils(Context context, String formName) throws JSONException {
+
 
 
         FormUtils formUtils = null;
@@ -486,17 +489,17 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
             case "labour_delivery":
                 householdMapper = new ObjectMapper();
-//                if(ptmctMotherMonitoringModel == null){
-                    formToBeOpened.put("entity_id",  this.ptctMotherModel.getBase_entity_id());
+                if(pmtctDeliveryDetailsModel == null){
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptctMotherModel, Map.class));
-
-//                }
-//                else {
-//                    formToBeOpened.put("entity_id",  this.ptmctMotherMonitoringModel.getBase_entity_id());
-//                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptmctMotherMonitoringModel, Map.class));
-//                }
+                }
+                else {
+                    formToBeOpened.put("entity_id",  this.pmtctDeliveryDetailsModel.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(pmtctDeliveryDetailsModel, Map.class));
+                }
 
                 break;
+
+
             case "postnatal_care":
                 householdMapper = new ObjectMapper();
                 PtctMotherModel model = new PtctMotherModel();
@@ -513,6 +516,17 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
                 break;
 
+            case "pmtct_outcome":
+                householdMapper = new ObjectMapper();
+                if(pmctMotherOutcomeModel == null){
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptctMotherModel, Map.class));
+                }
+                else {
+                    formToBeOpened.put("entity_id",  this.pmctMotherOutcomeModel.getBase_entity_id());
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(pmctMotherOutcomeModel, Map.class));
+                }
+
+break;
 
         }
         startFormActivity(formToBeOpened);
@@ -520,10 +534,9 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
     }
 
     public void startFormActivity(JSONObject jsonObject) {
-
         Form form = new Form();
         form.setWizard(false);
-        form.setName(getString(R.string.child_details));
+        form.setName(getString(org.smartregister.chw.core.R.string.child_details));
         form.setHideSaveLabel(true);
         form.setNextLabel(getString(R.string.next));
         form.setPreviousLabel(getString(R.string.previous));
@@ -570,6 +583,21 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
                 saveRegistration(childIndexEventClient, is_edit_mode);
 
                 getUniqueIdRepository().close(vca_id);
+                String encounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
+
+                switch (encounterType) {
+
+                    case "Mother Pmtct Child":
+                    case "Mother Pmtct":
+                    case "Mother Pmtct Postnatal":
+                    case "Mother Pmtct Delivery":
+
+                        finish();
+                        startActivity(getIntent());
+
+                        break;
+
+                }
 
                 Toasty.success(MotherPmtctProfileActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
 
@@ -631,7 +659,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
                     if (fields != null) {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, "ec_pmtct_mother_child");
+                                encounterType, "ec_pmtct_child");
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);
@@ -659,6 +687,29 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
                         return new ChildIndexEventClient(event, client);
                     }
                     break;
+                case "Mother Pmtct Delivery":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_pmtct_delivery_details");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+                case "PMTCT Mother Outcome":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_pmtct_mother_outcome");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
             }
         } catch (JSONException e) {
         Timber.e(e);
@@ -769,6 +820,104 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
         return map;
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.pmtct_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.refresh:
+                finish();
+                startActivity(getIntent());
+
+                break;
+            case R.id.case_status:
+
+                try {
+                    openFormUsingFormUtils(MotherPmtctProfileActivity.this, "pmtct_outcome");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+                break;
+
+            case R.id.delete_record:
+
+
+            Boolean checkForLinks = PmtctChildDao.hasDeletedHei(clientId);
+            if (checkForLinks == false) {
+
+
+                builder.setMessage("You are about to delete this record");
+                builder.setNegativeButton("NO", (dialog, id) -> {
+                    //  Action for 'NO' Button
+                    dialog.cancel();
+
+                }).setPositiveButton("YES", ((dialogInterface, i) -> {
+                    FormUtils formUtils = null;
+                    try {
+                        formUtils = new FormUtils(this);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    ptctMotherModel.setDelete_status("1");
+                    JSONObject openForm = formUtils.getFormJson("mother_pmtct");
+                    try {
+                        CoreJsonFormUtils.populateJsonForm(openForm, new ObjectMapper().convertValue(ptctMotherModel, Map.class));
+                        openForm.put("entity_id", ptctMotherModel.getBase_entity_id());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    try {
+
+                        ChildIndexEventClient childIndexEventClient = processRegistration(openForm.toString());
+                        if (childIndexEventClient == null) {
+                            return;
+                        }
+                        saveRegistration(childIndexEventClient, true);
+
+
+                    } catch (Exception e) {
+                        Timber.e(e);
+                    }
+
+
+                    Toasty.success(MotherPmtctProfileActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
+
+
+//                            super.onBackPressed();
+
+                    Intent returnToRegister = new Intent(this, PMTCTRegisterActivity.class);
+                    startActivity(returnToRegister);
+                    finish();
+                }));
+
+                //Creating dialog box
+                AlertDialog alert = builder.create();
+                //Setting the title manually
+                alert.setTitle("Alert");
+                alert.show();
+            } else{
+                Toasty.success(MotherPmtctProfileActivity.this, "Delete the HEI before deleting the record", Toast.LENGTH_LONG, true).show();
+            }
+            break;
+
+
+
+
+        }
+        return super.onOptionsItemSelected(item);
     }
     public static String getTodaysDateFormatted() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");

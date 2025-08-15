@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/register_columns"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/white">
+
+
+        <LinearLayout
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:orientation="horizontal"
+            android:id="@+id/itemm"
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+            <View
+                android:id="@+id/mystatusx"
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                />
+
+            <LinearLayout
+                android:layout_marginLeft="20dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <org.smartregister.view.customcontrols.CustomFontTextView
+                    android:id="@+id/familyNameTextView"
+                    style="@style/CustomFontTextViewStyle.ClientList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:layout_marginTop="10dp"
+                    android:singleLine="true"
+                    android:text="Patient Name"
+                    android:textColor="@color/text_black"
+                    android:textSize="18sp" />
+
+                <org.smartregister.view.customcontrols.CustomFontTextView
+                    android:id="@+id/gender_age"
+                    style="@style/CustomFontTextViewStyle.ClientList.Light"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Female : 3 Years Old"
+                    android:textColor="@color/light_grey_text"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <org.smartregister.view.customcontrols.CustomFontTextView
+                    android:id="@+id/villageTextView"
+                    style="@style/CustomFontTextViewStyle.ClientList.Light"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Lavington #445"
+                    android:textColor="@color/light_grey_text"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/case_plan_wrapper"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/grey_left_border"
+            android:paddingBottom="@dimen/register_list_top_bottom_padding"
+            android:paddingEnd="@dimen/register_list_item_padding"
+            android:paddingLeft="@dimen/register_list_item_padding"
+            android:paddingRight="@dimen/register_list_item_padding"
+            android:paddingStart="@dimen/register_list_item_padding"
+            android:paddingTop="@dimen/register_list_top_bottom_padding">
+
+
+
+            <TextView
+                android:id="@+id/index_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="2dp"
+                android:background="@drawable/rounded_corner_index"
+                android:padding="8dp"
+                android:text="Index"
+                android:textColor="@color/dark_grey_text"
+                android:textSize="12dp"
+              />
+
+            <ImageView
+                android:onClick="onClick"
+                android:visibility="visible"
+                android:id="@+id/index_warning"
+                android:src="@drawable/ic_icon_warning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="2dp"
+                />
+
+
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/index_visit"
+                android:src="@drawable/activityrow_visited"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="5dp"
+                />
+
+            <ImageView
+                android:visibility="visible"
+                android:tint="@color/light_grey_text"
+                android:id="@+id/index_case_plan"
+                android:src="@drawable/ic_baseline_content_paste_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="5dp"
+                />
+
+            <LinearLayout
+                android:id="@+id/notification_wrapper"
+                android:background="@drawable/grey_left_border"
+                android:visibility="gone"
+                android:paddingLeft="@dimen/register_list_item_padding"
+                android:paddingTop="@dimen/register_list_top_bottom_padding"
+                android:paddingRight="@dimen/register_list_item_padding"
+                android:paddingBottom="@dimen/register_list_top_bottom_padding"
+                android:layout_width="90dp"
+                android:layout_height="@dimen/register_list_item_height"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingStart="@dimen/register_list_item_padding"
+                android:paddingEnd="@dimen/register_list_item_padding"
+                android:layout_alignParentEnd="true">
+                <ImageView
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textSize="@dimen/register_list_due_size"
+                    android:typeface="normal"
+                    android:textColor="@color/grey"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:tint="#00fff6"
+                    android:id="@+id/notifications"
+                    android:src="@drawable/ic_notification"
+                    android:background="@drawable/notification_icon"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:hapticFeedbackEnabled="true"
+                    android:textAllCaps="false"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/due_button_wrapper"
+                android:background="@drawable/grey_left_border"
+                android:paddingLeft="@dimen/register_list_item_padding"
+                android:paddingTop="@dimen/register_list_top_bottom_padding"
+                android:paddingRight="@dimen/register_list_item_padding"
+                android:paddingBottom="@dimen/register_list_top_bottom_padding"
+                android:layout_width="@dimen/register_list_item_width"
+                android:layout_height="@dimen/register_list_item_height"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingStart="@dimen/register_list_item_padding"
+                android:paddingEnd="@dimen/register_list_item_padding"
+                android:layout_alignParentEnd="true">
+                <Button
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textSize="@dimen/register_list_due_size"
+                    android:typeface="normal"
+                    android:textColor="@color/grey"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:id="@+id/due_button"
+                    android:background="@drawable/due_contact"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:text="Home Visit"
+                    android:hapticFeedbackEnabled="true"
+                    android:textAllCaps="false"
+                    />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </RelativeLayout>

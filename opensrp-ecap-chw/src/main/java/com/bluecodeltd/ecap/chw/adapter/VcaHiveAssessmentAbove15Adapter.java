@@ -64,22 +64,25 @@ public class VcaHiveAssessmentAbove15Adapter extends RecyclerView.Adapter<VcaHiv
 
     @NonNull
     @Override
-    public VcaHiveAssessmentAbove15Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.vca_hiv_sigle_hiv_assessment, parent, false);
-        VcaHiveAssessmentAbove15Adapter.ViewHolder viewHolder = new VcaHiveAssessmentAbove15Adapter.ViewHolder(v);
+        ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VcaHiveAssessmentAbove15Adapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
 
         final HivRiskAssessmentAbove15Model assessment = hivAssessment.get(position);
 
         holder.setIsRecyclable(false);
 
-        holder.txtDate.setText(assessment.getDate_edited());
+        if(assessment.getDate_edited()!=null){
+            holder.txtDate.setText(assessment.getDate_edited());
+        }
+
 
         holder.linearLayout.setOnClickListener(v -> {
 
@@ -273,7 +276,7 @@ public class VcaHiveAssessmentAbove15Adapter extends RecyclerView.Adapter<VcaHiv
         form.setNextLabel("Next");
         form.setPreviousLabel("Previous");
         form.setSaveLabel("Submit");
-        form.setActionBarBackground(R.color.dark_grey);
+        form.setActionBarBackground(org.smartregister.R.color.dark_grey);
         Intent intent = new Intent(context, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());

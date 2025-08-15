@@ -12,11 +12,11 @@ import java.util.concurrent.Callable;
 
 public interface ListContract {
 
-    interface Model<T extends ListContract.Identifiable> {
+    interface Model<T extends Identifiable> {
 
     }
 
-    interface View<T extends ListContract.Identifiable> {
+    interface View<T extends Identifiable> {
 
         void bindLayout();
 
@@ -35,7 +35,7 @@ public interface ListContract {
         Presenter<T> loadPresenter();
     }
 
-    interface Presenter<T extends ListContract.Identifiable> {
+    interface Presenter<T extends Identifiable> {
 
         void fetchList(Callable<List<T>> callable);
 
@@ -70,7 +70,7 @@ public interface ListContract {
         Model<T> getModel();
     }
 
-    interface Interactor<T extends ListContract.Identifiable> {
+    interface Interactor<T extends Identifiable> {
 
         /**
          * @param callable
@@ -84,14 +84,14 @@ public interface ListContract {
     }
 
 
-    interface AdapterViewHolder<T extends ListContract.Identifiable> {
+    interface AdapterViewHolder<T extends Identifiable> {
 
         /**
          * bind view to object
          *
          * @param t
          */
-        void bindView(T t, ListContract.View<T> view);
+        void bindView(T t, View<T> view);
 
         /**
          * reset the view details

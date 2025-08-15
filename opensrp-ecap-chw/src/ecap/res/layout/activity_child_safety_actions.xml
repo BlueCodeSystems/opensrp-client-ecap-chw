@@ -1,0 +1,45 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="10dp">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/actionrecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/actionBtn2" />
+
+    <com.rey.material.widget.Button
+        android:id="@+id/actionBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="#218CC5"
+        android:onClick="onClick"
+        android:padding="8dp"
+        android:text="Add Actions"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        app:rd_enable="true"
+        app:rd_rippleType="wave" />
+
+    <com.rey.material.widget.Button
+        android:id="@+id/actionBtn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#218CC5"
+        android:onClick="onClick"
+        android:padding="8dp"
+        android:text="Add Actions"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:visibility="gone"
+        app:rd_enable="true"
+        app:rd_rippleType="wave" />
+
+</RelativeLayout>

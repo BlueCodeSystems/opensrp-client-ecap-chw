@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HeiDetailsActivity;
-import com.bluecodeltd.ecap.chw.model.PtmctMotherMonitoringModel;
+import com.bluecodeltd.ecap.chw.model.PmtctChildModel;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -24,33 +24,33 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 public class PmctMotherHeiAdapter extends  RecyclerView.Adapter<PmctMotherHeiAdapter.ViewHolder>{
-ArrayList<PtmctMotherMonitoringModel> model;
+ArrayList<PmtctChildModel> model;
 Context context;
 
-    public PmctMotherHeiAdapter(ArrayList<PtmctMotherMonitoringModel> model, Context context) {
+    public PmctMotherHeiAdapter(ArrayList<PmtctChildModel> model, Context context) {
         this.model = model;
         this.context = context;
     }
 
     @NonNull
     @Override
-    public PmctMotherHeiAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_child_hei, parent, false);
-        PmctMotherHeiAdapter.ViewHolder  viewHolder = new PmctMotherHeiAdapter.ViewHolder (v);
+        ViewHolder  viewHolder = new ViewHolder (v);
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PmctMotherHeiAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-           final PtmctMotherMonitoringModel monitoringModel = model.get(position);
+           final PmtctChildModel monitoringModel = model.get(position);
                 holder.fullName.setText(monitoringModel.getInfant_first_name() + " " + monitoringModel.getInfant_lastname());
                 holder.age.setText("Age : " + getAge(monitoringModel.getInfants_date_of_birth()));
 
 
 
-                holder.genderIcon.setImageResource((monitoringModel.getInfants_sex() != null && monitoringModel.getInfants_sex().equals("male")) ? R.drawable.child_boy_infant : R.drawable.child_girl_infant);
+                holder.genderIcon.setImageResource((monitoringModel.getInfants_sex() != null && monitoringModel.getInfants_sex().equals("male")) ? org.smartregister.R.drawable.child_boy_infant : org.smartregister.R.drawable.child_girl_infant);
 
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
                     @Override

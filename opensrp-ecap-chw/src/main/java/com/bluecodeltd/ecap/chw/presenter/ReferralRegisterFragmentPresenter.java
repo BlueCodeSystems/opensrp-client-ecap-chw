@@ -1,12 +1,13 @@
 package com.bluecodeltd.ecap.chw.presenter;
 
 import org.jetbrains.annotations.NotNull;
-import com.bluecodeltd.ecap.chw.R;
 import org.smartregister.chw.core.utils.ChwDBConstants;
 import org.smartregister.chw.core.utils.CoreConstants;
-import org.smartregister.chw.referral.contract.BaseReferralRegisterFragmentContract;
 import org.smartregister.chw.referral.presenter.BaseReferralRegisterFragmentPresenter;
 import org.smartregister.chw.referral.util.DBConstants;
+
+import com.bluecodeltd.ecap.chw.fragment.ReferralRegisterFragment;
+import com.bluecodeltd.ecap.chw.model.ReferralRegisterFragmentModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 
 import static org.smartregister.chw.referral.util.Constants.ReferralType;
@@ -14,7 +15,7 @@ import static org.smartregister.chw.referral.util.Constants.Tables;
 
 public class ReferralRegisterFragmentPresenter extends BaseReferralRegisterFragmentPresenter {
 
-    public ReferralRegisterFragmentPresenter(BaseReferralRegisterFragmentContract.View view, BaseReferralRegisterFragmentContract.Model model, String viewConfigurationIdentifier) {
+    public ReferralRegisterFragmentPresenter(ReferralRegisterFragment view, ReferralRegisterFragmentModel model, String viewConfigurationIdentifier) {
         super(view, model, viewConfigurationIdentifier);
     }
 
@@ -39,7 +40,8 @@ public class ReferralRegisterFragmentPresenter extends BaseReferralRegisterFragm
     public void processViewConfigurations() {
         super.processViewConfigurations();
         if (getConfig().getSearchBarText() != null && getView() != null) {
-            getView().updateSearchBarHint(getView().getContext().getString(R.string.search_name_or_id));
+            //TODO fix updateSearchBarHint not found
+//            getView().updateSearchBarHint(getView().getContext().getString(org.smartregister.chw.core.R.string.search_name_or_id));
         }
     }
 

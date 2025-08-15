@@ -19,7 +19,7 @@ public interface MotherIndexContract {
 
         void onRegistrationSaved();
 
-        MotherIndexContract.View getView();
+        View getView();
     }
 
     interface Interactor {

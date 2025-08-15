@@ -6,11 +6,12 @@ import android.view.View;
 import androidx.annotation.NonNull;
 
 import com.bluecodeltd.ecap.chw.R;
-import org.smartregister.chw.core.fragment.CoreAllClientsRegisterFragment;
-import org.smartregister.chw.core.utils.CoreConstants;
 import com.bluecodeltd.ecap.chw.dao.FamilyDao;
 import com.bluecodeltd.ecap.chw.model.FamilyDetailsModel;
 import com.bluecodeltd.ecap.chw.util.AllClientsUtils;
+
+import org.smartregister.chw.core.fragment.CoreAllClientsRegisterFragment;
+import org.smartregister.chw.core.utils.CoreConstants;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.family.util.Constants;
 import org.smartregister.opd.utils.OpdDbConstants;
@@ -34,10 +35,10 @@ public class AllClientsRegisterFragment extends CoreAllClientsRegisterFragment {
         FamilyDetailsModel familyDetailsModel = FamilyDao.getFamilyDetail(commonPersonObjectClient.entityId());
 
         if (familyDetailsModel != null) {
-            bundle.putString(org.smartregister.family.util.Constants.INTENT_KEY.FAMILY_BASE_ENTITY_ID, familyDetailsModel.getBaseEntityId());
-            bundle.putString(org.smartregister.family.util.Constants.INTENT_KEY.FAMILY_HEAD, familyDetailsModel.getFamilyHead());
-            bundle.putString(org.smartregister.family.util.Constants.INTENT_KEY.PRIMARY_CAREGIVER, familyDetailsModel.getPrimaryCareGiver());
-            bundle.putString(org.smartregister.family.util.Constants.INTENT_KEY.FAMILY_NAME, familyDetailsModel.getFamilyName());
+            bundle.putString(Constants.INTENT_KEY.FAMILY_BASE_ENTITY_ID, familyDetailsModel.getBaseEntityId());
+            bundle.putString(Constants.INTENT_KEY.FAMILY_HEAD, familyDetailsModel.getFamilyHead());
+            bundle.putString(Constants.INTENT_KEY.PRIMARY_CAREGIVER, familyDetailsModel.getPrimaryCareGiver());
+            bundle.putString(Constants.INTENT_KEY.FAMILY_NAME, familyDetailsModel.getFamilyName());
             bundle.putString(Constants.INTENT_KEY.VILLAGE_TOWN, commonPersonObjectClient.getDetails().get(OpdDbConstants.KEY.HOME_ADDRESS));
         }
 

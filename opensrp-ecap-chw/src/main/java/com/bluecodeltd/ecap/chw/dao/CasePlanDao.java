@@ -10,7 +10,7 @@ public class CasePlanDao extends AbstractDao {
 
         String sql = "SELECT COUNT(*) plans FROM ec_vca_case_plan WHERE unique_id = '" + childID + "' AND case_plan_date IS NOT NULL AND (delete_status IS NULL OR delete_status <> '1') ORDER BY case_plan_date DESC";
 
-        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "plans");
+        DataMap<String> dataMap = c -> getCursorValue(c, "plans");
 
         List<String> values = AbstractDao.readData(sql, dataMap);
 
@@ -23,7 +23,7 @@ public class CasePlanDao extends AbstractDao {
 
         String sql = "SELECT COUNT(*) v FROM ec_vca_case_plan_domain WHERE unique_id = '" + uniqueId + "' AND case_plan_date = '" + cpDate + "' AND case_plan_date IS NOT NULL AND (delete_status IS NULL OR delete_status <> '1')";
 
-        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
+        DataMap<String> dataMap = c -> getCursorValue(c, "v");
 
         List<String> values = AbstractDao.readData(sql, dataMap);
 
@@ -38,7 +38,7 @@ public class CasePlanDao extends AbstractDao {
 
         String sql = "SELECT COUNT(*) plans FROM ec_caregiver_case_plan WHERE household_id = '" + Id + "' AND case_plan_date IS NOT NULL AND (delete_status IS NULL OR delete_status <> '1') ORDER BY case_plan_date DESC";
 
-        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "plans");
+        DataMap<String> dataMap = c -> getCursorValue(c, "plans");
 
         List<String> values = AbstractDao.readData(sql, dataMap);
         if (values == null)
@@ -56,7 +56,7 @@ public class CasePlanDao extends AbstractDao {
 
         String sql = "SELECT COUNT(*) v FROM ec_caregiver_case_plan_domain WHERE household_id = '" + householdID + "' AND case_plan_date = '" + cpDate + "' AND case_plan_date IS NOT NULL AND (delete_status IS NULL OR delete_status <> '1')";
 
-        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
+        DataMap<String> dataMap = c -> getCursorValue(c, "v");
 
         List<String> values = AbstractDao.readData(sql, dataMap);
 

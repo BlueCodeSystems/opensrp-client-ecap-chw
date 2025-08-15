@@ -68,17 +68,17 @@ public class ChildSafetyActionAdapter extends RecyclerView.Adapter<ChildSafetyAc
     }
 
     @Override
-    public ChildSafetyActionAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_action_plan, parent, false);
 
-        ChildSafetyActionAdapter.ViewHolder viewHolder = new ChildSafetyActionAdapter.ViewHolder(v);
+        ViewHolder viewHolder = new ViewHolder(v);
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(ChildSafetyActionAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 
         final ChildSafetyActionModel plan = action_plan.get(position);
 
@@ -339,7 +339,7 @@ public class ChildSafetyActionAdapter extends RecyclerView.Adapter<ChildSafetyAc
         form.setNextLabel("Next");
         form.setPreviousLabel("Previous");
         form.setSaveLabel("Submit");
-        form.setActionBarBackground(R.color.dark_grey);
+        form.setActionBarBackground(org.smartregister.R.color.dark_grey);
         Intent intent = new Intent(context, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());

@@ -61,15 +61,16 @@ import timber.log.Timber;
 public class VcaServiceActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    RecyclerView.Adapter recyclerViewadapter;
+    VCAServiceAdapter recyclerViewadapter;
     private ArrayList<VCAServiceModel> familyServiceList = new ArrayList<>();
     private LinearLayout linearLayout;
     private TextView vcaname,hh_id;
 
     private Button hh_services_link;
+    VCAServiceModel vcaServiceModel;
 
     private Toolbar toolbar;
-    public String hivstatus, household_id,c_name,intent_vcaid;
+    public String hivstatus, household_id,c_name,intent_vcaid,signature;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,11 +89,12 @@ public class VcaServiceActivity extends AppCompatActivity {
         hh_services_link = findViewById(R.id.hh_service_link);
         HouseholdLinkFromVca();
 
-         intent_vcaid = getIntent().getExtras().getString("vcaid");
+        intent_vcaid = getIntent().getExtras().getString("vcaid");
         String intent_cname = getIntent().getExtras().getString("vcaname");
         hivstatus = getIntent().getExtras().getString("hivstatus");
         household_id = getIntent().getExtras().getString("hh_id");
         c_name = getIntent().getExtras().getString("vcaname");
+        signature = getIntent().getExtras().getString("signature");
 
 
 
@@ -101,14 +103,24 @@ public class VcaServiceActivity extends AppCompatActivity {
 
 
         familyServiceList.addAll(VCAServiceReportDao.getServicesByVCAID(intent_vcaid));
+        vcaServiceModel = VCAServiceReportDao.getVcaService(intent_vcaid);
 
-        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(VcaServiceActivity.this);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(eLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new VCAServiceAdapter(familyServiceList, VcaServiceActivity.this);
-        recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
+
+        if (recyclerViewadapter == null) {
+            RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(VcaServiceActivity.this);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(eLayoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerViewadapter = new VCAServiceAdapter(familyServiceList, VcaServiceActivity.this);
+            recyclerView.setAdapter(recyclerViewadapter);
+            recyclerViewadapter.notifyDataSetChanged();
+
+            recyclerViewadapter.setOnDataUpdateListener(() -> runOnUiThread(() -> {
+                recreate();
+            }));
+        } else {
+            recyclerViewadapter.notifyDataSetChanged();
+        }
 
         if (recyclerViewadapter.getItemCount() > 0){
 
@@ -191,7 +203,7 @@ public class VcaServiceActivity extends AppCompatActivity {
         form.setNextLabel(getString(R.string.next));
         form.setPreviousLabel(getString(R.string.previous));
         form.setSaveLabel(getString(R.string.submit));
-        form.setActionBarBackground(R.color.dark_grey);
+        form.setActionBarBackground(org.smartregister.R.color.dark_grey);
         Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
@@ -202,7 +214,6 @@ public class VcaServiceActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK) {
 
             boolean is_edit_mode = false;
@@ -220,6 +231,17 @@ public class VcaServiceActivity extends AppCompatActivity {
                 is_edit_mode = true;
             }
             String EncounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
+            if(EncounterType.equals("VCA Service Report")){
+                Intent passClosureForm   =  new Intent(this,SignatureActivity.class);
+                passClosureForm.putExtra("jsonForm", jsonFormObject.toString());
+                passClosureForm.putExtra("vcaid",intent_vcaid);
+                passClosureForm.putExtra("vcaname",c_name);
+                passClosureForm.putExtra("hivtstatus",hivstatus);
+                passClosureForm.putExtra("hh_id",household_id);
+                finish();
+                startActivity(passClosureForm);
+            }
+
 
 
             try {
@@ -233,23 +255,24 @@ public class VcaServiceActivity extends AppCompatActivity {
                 saveRegistration(childIndexEventClient, is_edit_mode,EncounterType);
 
 
-                switch (EncounterType) {
+            switch (EncounterType) {
 
-                    case "VCA Service Report":
-                      Toasty.success(VcaServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
-                      familyServiceList.clear();
-                      familyServiceList.addAll(VCAServiceReportDao.getServicesByVCAID(intent_vcaid));
+                case "VCA Service Report Edit":
+                    Toasty.success(VcaServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
+                    familyServiceList.clear();
+                    familyServiceList.addAll(VCAServiceReportDao.getServicesByVCAID(intent_vcaid));
+                    recyclerViewadapter.notifyDataSetChanged();
+                    break;
 
-                        break;
-
-                }
+            }
 
             } catch (Exception e) {
                 Timber.e(e);
             }
         }
-        finish();
-        startActivity(getIntent());
+//        finish();
+//        startActivity(getIntent());
+        recyclerViewadapter.notifyDataSetChanged();
     }
 
     public ChildIndexEventClient processRegistration(String jsonString){
@@ -265,16 +288,26 @@ public class VcaServiceActivity extends AppCompatActivity {
                 entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
             }
 
+
             JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
+
 
             JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
-            FormTag formTag = getFormTag();
-            Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,encounterType, "ec_vca_service_report");
-            tagSyncMetadata(event);
-            Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
-            return new ChildIndexEventClient(event, client);
+            switch (encounterType) {
+                case "VCA Service Report Edit":
 
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_VCA_SERVICE_REPORT);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
+            }
         } catch (JSONException e) {
             Timber.e(e);
         }
@@ -377,7 +410,7 @@ public class VcaServiceActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, IndexDetailsActivity.class);
+        Intent intent = new Intent(VcaServiceActivity.this, IndexDetailsActivity.class);
         intent.putExtra("Child", intent_vcaid);
         startActivity(intent);
         finish();

@@ -35,7 +35,7 @@ public class PtmctMotherMonitoringDao extends AbstractDao {
     public static String countMotherHei (String pmtctID){
 
         String sql = "SELECT COUNT(*) v FROM ec_pmtct_mother_child WHERE pmtct_id = '" + pmtctID + "' ";
-        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
+        DataMap<String> dataMap = c -> getCursorValue(c, "v");
 
         List<String> values = AbstractDao.readData(sql, dataMap);
 
@@ -88,7 +88,7 @@ public class PtmctMotherMonitoringDao extends AbstractDao {
     public static String countChildMonitoring (String uniqueId){
 
         String sql = "SELECT COUNT(*) v FROM ec_pmtct_child_monitoring WHERE unique_id = '" + uniqueId + "' ";
-        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
+        DataMap<String> dataMap = c -> getCursorValue(c, "v");
 
         List<String> values = AbstractDao.readData(sql, dataMap);
 

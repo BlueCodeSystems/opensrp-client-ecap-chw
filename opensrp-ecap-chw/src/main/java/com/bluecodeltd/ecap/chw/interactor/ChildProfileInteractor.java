@@ -63,7 +63,7 @@ public class ChildProfileInteractor extends CoreChildProfileInteractor {
     public static final String TAG = ChildProfileInteractor.class.getName();
     private AppExecutors appExecutors;
     private Map<String, Date> vaccineList = new LinkedHashMap<>();
-    private static ChildProfileInteractor.Flavour childProfileInteractorFlv = new ChildProfileInteractorFlv();
+    private static Flavour childProfileInteractorFlv = new ChildProfileInteractorFlv();
 
     public ChildProfileInteractor() {
         this(new AppExecutors());

@@ -50,7 +50,7 @@ public class MemberActivity extends AppCompatActivity {
                     jsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE)
                             .equalsIgnoreCase(Constants.EcapEncounterType.CHILD_INDEX)) {
                 form.setWizard(true);
-                form.setName(getString(R.string.child_details));
+                form.setName(getString(org.smartregister.chw.core.R.string.child_details));
                 form.setHideSaveLabel(true);
                 form.setNextLabel(getString(R.string.next));
                 form.setPreviousLabel(getString(R.string.previous));

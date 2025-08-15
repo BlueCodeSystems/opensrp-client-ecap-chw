@@ -1,5 +1,7 @@
 package com.bluecodeltd.ecap.chw.activity;
 
+import static org.smartregister.chw.anc.util.Constants.ANC_MEMBER_OBJECTS.MEMBER_PROFILE_OBJECT;
+
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -19,24 +21,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.SickFormMedicalHistoryAdapter;
-import org.smartregister.chw.anc.activity.BaseAncUpcomingServicesActivity;
-import org.smartregister.chw.anc.domain.MemberObject;
-import org.smartregister.chw.anc.domain.Visit;
 import com.bluecodeltd.ecap.chw.contract.SickFormMedicalHistoryContract;
-import org.smartregister.chw.core.utils.CustomDividerItemDecoration;
 import com.bluecodeltd.ecap.chw.domain.FormDetails;
 import com.bluecodeltd.ecap.chw.fragment.FormHistoryDialogFragment;
 import com.bluecodeltd.ecap.chw.interactor.SickFormMedicalHistoryInteractor;
 import com.bluecodeltd.ecap.chw.presenter.SickFormMedicalHistoryPresenter;
+import com.bluecodeltd.ecap.chw.util.Constants;
+
+import org.smartregister.chw.anc.activity.BaseAncUpcomingServicesActivity;
+import org.smartregister.chw.anc.domain.MemberObject;
+import org.smartregister.chw.anc.domain.Visit;
+import org.smartregister.chw.core.utils.CustomDividerItemDecoration;
 import org.smartregister.view.activity.SecuredActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bluecodeltd.ecap.chw.util.Constants;
 import timber.log.Timber;
-
-import static org.smartregister.chw.anc.util.Constants.ANC_MEMBER_OBJECTS.MEMBER_PROFILE_OBJECT;
 
 public class SickFormMedicalHistory extends SecuredActivity implements SickFormMedicalHistoryContract.View {
 
@@ -87,7 +88,7 @@ public class SickFormMedicalHistory extends SecuredActivity implements SickFormM
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             final Drawable upArrow = getResources().getDrawable(R.drawable.ic_arrow_back_white_24dp);
-            upArrow.setColorFilter(getResources().getColor(R.color.text_blue), PorterDuff.Mode.SRC_ATOP);
+            upArrow.setColorFilter(getResources().getColor(org.smartregister.R.color.text_blue), PorterDuff.Mode.SRC_ATOP);
             actionBar.setHomeAsUpIndicator(upArrow);
         }
         toolbar.setNavigationOnClickListener(v -> finish());
@@ -99,7 +100,7 @@ public class SickFormMedicalHistory extends SecuredActivity implements SickFormM
         progressBar = findViewById(R.id.progressBarUpcomingServices);
 
         tvTitle = findViewById(R.id.tvTitle);
-        tvTitle.setText(getString(R.string.back_to, memberObject.getFullName()));
+        tvTitle.setText(getString(org.smartregister.chw.opensrp_chw_anc.R.string.back_to, memberObject.getFullName()));
 
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);

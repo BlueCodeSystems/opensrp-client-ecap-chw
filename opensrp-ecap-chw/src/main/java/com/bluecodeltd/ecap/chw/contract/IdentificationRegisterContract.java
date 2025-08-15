@@ -16,7 +16,7 @@ public interface IdentificationRegisterContract {
 
         void onRegistrationSaved();
 
-        IdentificationRegisterContract.View getView();
+        View getView();
     }
 
     interface Interactor {

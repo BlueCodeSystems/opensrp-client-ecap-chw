@@ -96,7 +96,7 @@ public class HouseholdIndexInteractor implements HouseholdIndexContract.Interact
     }
 
     @Override
-    public void saveRegistration(final List<com.bluecodeltd.ecap.chw.model.EventClient> eventClientList, final String jsonString,
+    public void saveRegistration(final List<EventClient> eventClientList, final String jsonString,
                                  final RegisterParams registerParams, final HouseholdIndexContract.InteractorCallBack callBack) {
         Runnable runnable = () -> {
             saveMe(eventClientList, jsonString, registerParams);
@@ -106,7 +106,7 @@ public class HouseholdIndexInteractor implements HouseholdIndexContract.Interact
         appExecutors.diskIO().execute(runnable);
     }
 
-    public void saveMe(@NonNull List<com.bluecodeltd.ecap.chw.model.EventClient> allClientEventList, @NonNull String jsonString,
+    public void saveMe(@NonNull List<EventClient> allClientEventList, @NonNull String jsonString,
                        @NonNull RegisterParams params) {
         try {
             List<String> currentFormSubmissionIds = new ArrayList<>();
@@ -142,7 +142,7 @@ public class HouseholdIndexInteractor implements HouseholdIndexContract.Interact
             // UnAssign current OpenSRP ID
             if (baseClient != null) {
                 String newOpenSrpId = baseClient.getIdentifier(Utils.metadata().uniqueIdentifierKey).replace("-", "");
-                String currentOpenSrpId = org.smartregister.family.util.JsonFormUtils.getString(jsonString, org.smartregister.family.util.JsonFormUtils.CURRENT_OPENSRP_ID).replace("-", "");
+                String currentOpenSrpId = JsonFormUtils.getString(jsonString, JsonFormUtils.CURRENT_OPENSRP_ID).replace("-", "");
                 if (!newOpenSrpId.equals(currentOpenSrpId)) {
                     //OpenSRP ID was changed
                     getUniqueIdRepository().open(currentOpenSrpId);
@@ -161,7 +161,7 @@ public class HouseholdIndexInteractor implements HouseholdIndexContract.Interact
     }
 
     private void addClient(@NonNull RegisterParams params, Client baseClient) throws JSONException {
-        JSONObject clientJson = new JSONObject(org.smartregister.family.util.JsonFormUtils.gson.toJson(baseClient));
+        JSONObject clientJson = new JSONObject(JsonFormUtils.gson.toJson(baseClient));
         if (params.isEditMode()) {
             try {
                 JsonFormUtils.mergeAndSaveClient(getSyncHelper(), baseClient);

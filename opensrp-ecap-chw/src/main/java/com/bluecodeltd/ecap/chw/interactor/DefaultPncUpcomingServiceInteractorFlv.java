@@ -63,7 +63,7 @@ public class DefaultPncUpcomingServiceInteractorFlv implements PncUpcomingServic
     }
 
     private String serviceName(String val) {
-        return MessageFormat.format(context.getString(R.string.pnc_health_facility_visit_num), val);
+        return MessageFormat.format(context.getString(org.smartregister.chw.core.R.string.pnc_health_facility_visit_num), val);
     }
 
     private void evaluateHealthFacility(List<BaseUpcomingService> serviceList) {
@@ -117,13 +117,13 @@ public class DefaultPncUpcomingServiceInteractorFlv implements PncUpcomingServic
         String serviceName = null;
         List<Alert> alertList = VisitVaccineUtil.getNextVaccines(baby.getBaseEntityID(), new DateTime(baby.getDob()), CoreConstants.SERVICE_GROUPS.CHILD, true);
         if (alertList.size() == 2) {
-            serviceName = context.getString(R.string.upcoming_immunizations, context.getString(R.string.at_birth), baby.getFirstName(), context.getString(R.string.bcg), context.getString(R.string.opv_0));
+            serviceName = context.getString(org.smartregister.chw.core.R.string.upcoming_immunizations, context.getString(org.smartregister.chw.core.R.string.at_birth), baby.getFirstName(), context.getString(R.string.bcg), context.getString(R.string.opv_0));
         } else {
             for (Alert alert : alertList) {
                 if (alert.scheduleName().toLowerCase().replace(" ", "").replace("_", "").equalsIgnoreCase(context.getString(R.string.opv_0).replace(" ", ""))) {
-                    serviceName = context.getString(R.string.up_immunizations, context.getString(R.string.at_birth), baby.getFirstName(), context.getString(R.string.opv_0));
+                    serviceName = context.getString(org.smartregister.chw.core.R.string.up_immunizations, context.getString(org.smartregister.chw.core.R.string.at_birth), baby.getFirstName(), context.getString(R.string.opv_0));
                 } else if (alert.scheduleName().toLowerCase().replace(" ", "").replace("_", "").equalsIgnoreCase(context.getString(R.string.bcg))) {
-                    serviceName = context.getString(R.string.up_immunizations, context.getString(R.string.at_birth), baby.getFirstName(), context.getString(R.string.bcg));
+                    serviceName = context.getString(org.smartregister.chw.core.R.string.up_immunizations, context.getString(org.smartregister.chw.core.R.string.at_birth), baby.getFirstName(), context.getString(R.string.bcg));
                 }
             }
         }

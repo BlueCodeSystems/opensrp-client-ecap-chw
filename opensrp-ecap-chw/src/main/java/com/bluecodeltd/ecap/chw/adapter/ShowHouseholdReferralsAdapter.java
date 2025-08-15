@@ -10,6 +10,10 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,18 +70,18 @@ public class ShowHouseholdReferralsAdapter extends RecyclerView.Adapter<ShowHous
     }
 
     @Override
-    public ShowHouseholdReferralsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_referral, parent, false);
 
-        ShowHouseholdReferralsAdapter.ViewHolder viewHolder = new ShowHouseholdReferralsAdapter.ViewHolder(v);
+        ViewHolder viewHolder = new ViewHolder(v);
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(ShowHouseholdReferralsAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 
         final ReferralModel showReferrals = referrals.get(position);
 
@@ -91,7 +95,7 @@ public class ShowHouseholdReferralsAdapter extends RecyclerView.Adapter<ShowHous
 
                 try {
 
-                    openFormUsingFormUtils(context, "household_referral", showReferrals);
+                    openFormUsingFormUtils(context, "household_referral_edit", showReferrals);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -109,7 +113,7 @@ public class ShowHouseholdReferralsAdapter extends RecyclerView.Adapter<ShowHous
 
                     try {
 
-                        openFormUsingFormUtils(context, "household_referral", showReferrals);
+                        openFormUsingFormUtils(context, "household_referral_edit", showReferrals);
 
 
                     } catch (JSONException e) {
@@ -173,8 +177,46 @@ public class ShowHouseholdReferralsAdapter extends RecyclerView.Adapter<ShowHous
             }
         });
 
+        Household household = HouseholdDao.getHousehold(showReferrals.getHousehold_id());
+
+        String encodedSignature = showReferrals.getSignature();
+        String encodeSignatureHousehold = household.getSignature();
+
+
+        if(encodedSignature != null && encodedSignature != "") {
+            setImageViewFromBase64(encodedSignature, holder.signatureView);
+        } else {
+            if(encodeSignatureHousehold != null && encodeSignatureHousehold != "") {
+                setImageViewFromBase64(encodeSignatureHousehold, holder.signatureView);
+            } else {
+                holder.signatureView.setVisibility(View.GONE);
+            }
+        }
 
     }
+    private void setImageViewFromBase64(String base64Str, ImageView imageView) {
+        try {
+            // Decode the Base64 string into bytes
+            byte[] decodedBytes = Base64.decode(base64Str, Base64.DEFAULT);
+
+            // Convert bytes to a Bitmap
+            Bitmap originalBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+
+            if (originalBitmap != null) {
+                // Resize the Bitmap to 36x36
+                Bitmap resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, 80, 80, true);
+
+                // Set the resized Bitmap to the ImageView
+                imageView.setImageBitmap(resizedBitmap);
+            } else {
+                Log.e("ImageDecode", "Bitmap is null. Check Base64 input.");
+            }
+        } catch (IllegalArgumentException e) {
+            // Handle invalid Base64 string
+            Log.e("ImageDecode", "Invalid Base64 string: " + e.getMessage());
+        }
+    }
+
     public void showDialogBox(String householdId,String message){
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_layout);
@@ -220,7 +262,7 @@ public class ShowHouseholdReferralsAdapter extends RecyclerView.Adapter<ShowHous
         form.setNextLabel("Next");
         form.setPreviousLabel("Previous");
         form.setSaveLabel("Submit");
-        form.setActionBarBackground(R.color.dark_grey);
+        form.setActionBarBackground(org.smartregister.R.color.dark_grey);
         Intent intent = new Intent(context, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
@@ -333,6 +375,7 @@ public class ShowHouseholdReferralsAdapter extends RecyclerView.Adapter<ShowHous
 
         LinearLayout linearLayout;
         ImageView editme,delete;
+        ImageView signatureView;
 
         public ViewHolder(View itemView) {
 
@@ -342,6 +385,7 @@ public class ShowHouseholdReferralsAdapter extends RecyclerView.Adapter<ShowHous
             txtDate  = itemView.findViewById(R.id.date);
             editme = itemView.findViewById(R.id.edit_me);
             delete = itemView.findViewById(R.id.delete_record);
+            signatureView = itemView.findViewById(R.id.signature_view);
 
         }
 

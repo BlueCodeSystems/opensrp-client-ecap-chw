@@ -53,7 +53,7 @@ public class ChildProfilePresenter extends CoreChildProfilePresenter {
 
     private List<ReferralTypeModel> referralTypeModels;
 
-    public ChildProfilePresenter(CoreChildProfileContract.View childView, CoreChildProfileContract.Flavor flavor, CoreChildProfileContract.Model model, String childBaseEntityId) {
+    public ChildProfilePresenter(View childView, Flavor flavor, Model model, String childBaseEntityId) {
         super(childView, model, childBaseEntityId);
         setView(new WeakReference<>(childView));
         setFlavor(new WeakReference<>(flavor));

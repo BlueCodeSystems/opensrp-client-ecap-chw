@@ -1,4 +1,4 @@
-package org.smartregister.chw.contract;
+package com.bluecodeltd.ecap.chw.contract;
 
 public interface ConsentFormContract {
     interface Model {

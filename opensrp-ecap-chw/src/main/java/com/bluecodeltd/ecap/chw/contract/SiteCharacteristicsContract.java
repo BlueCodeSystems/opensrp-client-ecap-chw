@@ -8,7 +8,7 @@ public interface SiteCharacteristicsContract {
 
     interface Presenter {
 
-        SiteCharacteristicsContract.View getSiteCharacteristicsView();
+        View getSiteCharacteristicsView();
 
         void launchSiteCharacteristicsForm();
 
