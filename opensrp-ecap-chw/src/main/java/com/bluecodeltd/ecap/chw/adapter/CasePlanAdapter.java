@@ -72,17 +72,17 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
     }
 
     @Override
-    public CasePlanAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_plan, parent, false);
 
-        CasePlanAdapter.ViewHolder viewHolder = new CasePlanAdapter.ViewHolder(v);
+        ViewHolder viewHolder = new ViewHolder(v);
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(CasePlanAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 
         final CasePlanModel casePlan = caseplans.get(position);
 

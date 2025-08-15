@@ -4,6 +4,7 @@ import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
 
 import org.smartregister.dao.AbstractDao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HivAssessmentAbove15Dao extends AbstractDao {
@@ -19,6 +20,16 @@ public class HivAssessmentAbove15Dao extends AbstractDao {
 
 
         return values.get(0);
+    }
+    public static List<HivRiskAssessmentAbove15Model> getHivAssessment(String childID) {
+        String sql = "SELECT * FROM ec_hiv_assessment_above_15 WHERE unique_id = '" + childID + "'";
+
+        List<HivRiskAssessmentAbove15Model> values = AbstractDao.readData(sql, getHivRiskAssessmentAbove15ModelMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
     }
 
     public static DataMap<HivRiskAssessmentAbove15Model> getHivRiskAssessmentAbove15ModelMap() {
@@ -45,7 +56,8 @@ public class HivAssessmentAbove15Dao extends AbstractDao {
             record.setPhone(getCursorValue(c, "phone"));
             record.setUnique_id(getCursorValue(c, "unique_id"));
             record.setHousehold_id(getCursorValue(c, "household_id"));
-
+            record.setAssessment_date(getCursorValue(c,"assessment_date"));
+            record.setDate_edited(getCursorValue(c,"date_edited"));
             return record;
         };
     }

@@ -81,7 +81,7 @@ public class ChwRegisterProvider extends CoreRegisterProvider {
                 visitNot = Long.valueOf(visitNotDone);
             }
             if (!TextUtils.isEmpty(strDateCreated)) {
-                dateCreated = org.smartregister.family.util.Utils.dobStringToDateTime(strDateCreated).getMillis();
+                dateCreated = Utils.dobStringToDateTime(strDateCreated).getMillis();
             }
             ChildVisit childVisit = ChildUtils.getChildVisitStatus(context, rules, dobString, lastVisit, visitNot, dateCreated);
             childVisitList.add(childVisit);

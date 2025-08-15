@@ -1,5 +1,6 @@
 package com.bluecodeltd.ecap.chw.adapter;
 
+import static android.view.View.GONE;
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getAllSharedPreferences;
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getFormTag;
 import static org.smartregister.chw.fp.util.FpUtil.getClientProcessorForJava;
@@ -22,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.HTSDetailsActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.HTSlinksModel;
@@ -67,16 +69,16 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
 
     @NonNull
     @Override
-    public HTSlinksAdapter.View onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public View onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         android.view.View binder = LayoutInflater.from(parent.getContext()).inflate(R.layout.links_row, parent, false);
 
-        HTSlinksAdapter.View viewHolder = new HTSlinksAdapter.View(binder);
+        View viewHolder = new View(binder);
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HTSlinksAdapter.View holder, int position) {
+    public void onBindViewHolder(@NonNull View holder, int position) {
         final  HTSlinksModel client = links.get(position);
         holder.clientNameTextView.setText(client.getFirst_name()+" "+ client.getLast_name());
         holder.clientAgeTextView.setText("Age: "+getAgeWithoutText(client.getBirthdate()));
@@ -95,6 +97,56 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
                     e.printStackTrace();
                 }
             }
+        });
+
+        holder.deleteRecord.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setMessage("You are about to delete this record");
+            builder.setNegativeButton("NO", (dialog, id) -> {
+                //  Action for 'NO' Button
+                dialog.cancel();
+
+            }).setPositiveButton("YES",((dialogInterface, i) -> {
+                FormUtils formUtils = null;
+                try {
+                    formUtils = new FormUtils(context);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                client.setDelete_status("1");
+                JSONObject vcaScreeningForm = formUtils.getFormJson("hiv_testing_links");
+                try {
+                    CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue( client, Map.class));
+                    vcaScreeningForm.put("entity_id", client.getBase_entity_id());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+
+                    ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
+                    if (childIndexEventClient == null) {
+                        return;
+                    }
+                    saveRegistration(childIndexEventClient,true);
+
+
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+
+                Intent returnToProfile = new Intent(context, HTSDetailsActivity.class);
+                returnToProfile.putExtra("client_id",  client.getClient_number());
+                context.startActivity(returnToProfile);
+                ((Activity) context).finish();
+
+            }));
+
+            //Creating dialog box
+            AlertDialog alert = builder.create();
+            //Setting the title manually
+            alert.setTitle("Alert");
+            alert.show();
         });
     }
     private String getAgeWithoutText(String birthdate){
@@ -132,21 +184,47 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
         TextView landmark = dialogView.findViewById(R.id.landmark);
         TextView phone = dialogView.findViewById(R.id.phone);
         TextView hiv_status = dialogView.findViewById(R.id.hiv_status);
-        TextView date_tested = dialogView.findViewById(R.id.date_tested);
+        TextView art_number = dialogView.findViewById(R.id.art_number);
+        TextView date_tested = dialogView.findViewById(R.id.hiv_status_r_nr);
         TextView test_results = dialogView.findViewById(R.id.test_results);
         TextView date_enrolled_on_ART = dialogView.findViewById(R.id.date_enrolled_on_ART);
         TextView initial_art_date = dialogView.findViewById(R.id.initial_art_date);
         TextView comment = dialogView.findViewById(R.id.comment);
         TextView caseworker_name = dialogView.findViewById(R.id.caseworker_name);
         TextView checked_by = dialogView.findViewById(R.id.checked_by);
+        TextView artNumTxt = dialogView.findViewById(R.id.artNumTxt);
 
         enrolled_on_ARTLayout = dialogView.findViewById(R.id.enrolled_on_ARTLayout);
         initial_artLayout = dialogView.findViewById(R.id.initial_artLayout);
 
+        LinearLayout date = dialogView.findViewById(R.id.date);
+        LinearLayout artLayout = dialogView.findViewById(R.id.artLayout);
+        LinearLayout label = dialogView.findViewById(R.id.label);
+
+
+
+        if (client.getHiv_status() != null &&
+                (client.getHiv_status().equals("Known Positive") ||
+                        client.getHiv_status().equals("Test Not Required (evidenced by an HIV risk assessment)"))){
+            date.setVisibility(GONE);
+            label.setVisibility(GONE);
+
+        }
+        if (client.getHiv_status() != null && client.getHiv_status().equals("Known Negative")
+        ||  client.getHiv_status().equals("Test Not Required (evidenced by an HIV risk assessment)")) {
+            artLayout.setVisibility(GONE);
+            art_number.setVisibility(GONE);
+            artNumTxt.setVisibility(GONE);
+        }
+
+
         if (client != null) {
-            if (client.getHiv_status() != null && client.getHiv_status().equals("positive") ||
-                    client.getHiv_result() != null && client.getHiv_result().equals("positive")) {
+            if ((client.getHiv_status() != null && client.getHiv_status().equals("positive")) ||
+                    (client.getHiv_result() != null && client.getHiv_result().equals("Newly Tested HIV+"))) {
                 initial_artLayout.setVisibility(android.view.View.VISIBLE);
+                artLayout.setVisibility(android.view.View.VISIBLE);
+                artNumTxt.setVisibility(android.view.View.VISIBLE);
+                art_number.setVisibility(android.view.View.VISIBLE);
                 enrolled_on_ARTLayout.setVisibility(android.view.View.VISIBLE);
             }
 
@@ -192,6 +270,9 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
             String hivStatusValue = client.getHiv_status();
             hiv_status.setText(hivStatusValue != null ? hivStatusValue : "Not Set");
 
+            String artNumberValue = client.getArt_number();
+            art_number.setText(artNumberValue != null ? artNumberValue : "Not Set");
+
             String dateTestedValue = client.getDate_tested();
             date_tested.setText(dateTestedValue != null ? dateTestedValue : "Not Set");
 
@@ -231,14 +312,16 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
     }
 
     public class View extends RecyclerView.ViewHolder {
-        TextView clientNameTextView, clientAgeTextView,clientDetails;
-        ImageView editClient;
+        TextView clientNameTextView, clientAgeTextView,clientDetails,artNumTxt;
+        ImageView editClient,deleteRecord;
         public View(@NonNull android.view.View itemView) {
             super(itemView);
             clientNameTextView = itemView.findViewById(R.id.clientNameTextView);
             clientAgeTextView = itemView.findViewById(R.id.clientAgeTextView);
             clientDetails = itemView.findViewById(R.id.details);
             editClient = itemView.findViewById(R.id.edit_client);
+            deleteRecord = itemView.findViewById(R.id.delete);
+
         }
     }
 
@@ -273,7 +356,7 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
         form.setNextLabel("Next");
         form.setPreviousLabel("Previous");
         form.setSaveLabel("Submit");
-        form.setActionBarBackground(R.color.dark_grey);
+        form.setActionBarBackground(org.smartregister.R.color.dark_grey);
         Intent intent = new Intent(context, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
@@ -319,7 +402,7 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
 
         return null;
     }
-    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode, String encounterType) {
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
 
         Runnable runnable = () -> {
 

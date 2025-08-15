@@ -10,6 +10,10 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,27 +71,42 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
     }
 
     @Override
-    public CaregiverVisitAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_visit, parent, false);
 
-        CaregiverVisitAdapter.ViewHolder viewHolder = new CaregiverVisitAdapter.ViewHolder(v);
+        ViewHolder viewHolder = new ViewHolder(v);
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(CaregiverVisitAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 
         final CaregiverVisitationModel visit = visits.get(position);
 
         holder.setIsRecyclable(false);
 
         holder.txtDate.setText(visit.getVisit_date());
-        Household householdModel = HouseholdDao.getHousehold(visit.getHousehold_id());
+        Household household = HouseholdDao.getHousehold(visit.getHousehold_id());
 
-        if (householdModel.getCaregiver_hiv_status().equals("positive")){
+
+        String encodedSignature = visit.getSignature();
+        String encodeSignatureHousehold = household.getSignature();
+
+
+        if(encodedSignature != null && encodedSignature != "") {
+            setImageViewFromBase64(encodedSignature, holder.signatureView);
+        } else {
+            if(encodeSignatureHousehold != null && encodeSignatureHousehold != "") {
+                setImageViewFromBase64(encodeSignatureHousehold, holder.signatureView);
+            } else {
+                holder.signatureView.setVisibility(View.GONE);
+            }
+        }
+
+        if (household.getCaregiver_hiv_status().equals("positive")){
             holder.exPandableView.setVisibility(View.GONE);
             holder.expMore.setVisibility(View.GONE);
             holder.expLess.setVisibility(View.GONE);
@@ -127,14 +146,14 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
         });
 
 
-        if(householdModel.getCaregiver_hiv_status() != null && householdModel.getCaregiver_hiv_status().equals("positive")){
+        if(household.getCaregiver_hiv_status() != null && household.getCaregiver_hiv_status().equals("positive")){
             holder.intialHivStatus.setText("Positive");
-        } else if(householdModel.getCaregiver_hiv_status().equals("unknown")) {
+        } else if(household.getCaregiver_hiv_status().equals("unknown")) {
             holder.intialHivStatus.setText("Unknown");
         } else {
             holder.intialHivStatus.setText("Negative");
         }
-        holder.initialHivStatusDate.setText(householdModel.getScreening_date());
+        holder.initialHivStatusDate.setText(household.getScreening_date());
 
         if(visit.getCaregiver_hiv_status() != null && visit.getCaregiver_hiv_status().equals("positive")){
             holder.updateHivStatus.setText("Positive");
@@ -153,7 +172,7 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
 
                 try {
 
-                    openFormUsingFormUtils(context, "household_visitation_for_caregiver", visit);
+                    openFormUsingFormUtils(context, "household_visitation_for_caregiver_edit", visit);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -164,7 +183,7 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
 
 
         holder.editme.setOnClickListener(v -> {
-            Household household = HouseholdDao.getHousehold(visit.getHousehold_id());
+
            if (household.getHousehold_case_status() != null && (household.getHousehold_case_status().equals("0") || household.getHousehold_case_status().equals("2"))) {
                 showDialogBox(visit.getHousehold_id(), "`s has been inactive or de-registered");
             } else{
@@ -172,7 +191,7 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
 
                     try {
 
-                        openFormUsingFormUtils(context, "household_visitation_for_caregiver", visit);
+                        openFormUsingFormUtils(context, "household_visitation_for_caregiver_edit", visit);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -198,7 +217,7 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
                         e.printStackTrace();
                     }
                     visit.setDelete_status("1");
-                    JSONObject vcaScreeningForm = formUtils.getFormJson("household_visitation_for_caregiver");
+                    JSONObject vcaScreeningForm = formUtils.getFormJson("household_visitation_for_caregiver_edit");
                     try {
                         CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(visit, Map.class));
                         vcaScreeningForm.put("entity_id", visit .getBase_entity_id());
@@ -282,7 +301,7 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
         form.setNextLabel("Next");
         form.setPreviousLabel("Previous");
         form.setSaveLabel("Submit");
-        form.setActionBarBackground(R.color.dark_grey);
+        form.setActionBarBackground(org.smartregister.R.color.dark_grey);
         Intent intent = new Intent(context, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
@@ -310,7 +329,7 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
 
             switch (encounterType) {
 
-                case "Household Visitation For Caregiver":
+                case "Household Visitation For Caregiver Edit":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
@@ -389,12 +408,32 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
         return visits.size();
     }
 
+    private void setImageViewFromBase64(String base64Str, ImageView imageView) {
+        try {
+
+            byte[] decodedBytes = Base64.decode(base64Str, Base64.DEFAULT);
+            Bitmap originalBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+
+            if (originalBitmap != null) {
+                // Resize the Bitmap to 36x36
+                Bitmap resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, 80, 80, true);
+                imageView.setImageBitmap(resizedBitmap);
+            } else {
+                Log.e("ImageDecode", "Bitmap is null. Check Base64 input.");
+            }
+        } catch (IllegalArgumentException e) {
+            // Handle invalid Base64 string
+            Log.e("ImageDecode", "Invalid Base64 string: " + e.getMessage());
+        }
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView txtDate,intialHivStatus,initialHivStatusDate,updateHivStatus,updatedHivStatusDate;
 
         LinearLayout linearLayout, exPandableView;
         ImageView expMore, expLess,editme,delete;
+        ImageView signatureView;
 
         public ViewHolder(View itemView) {
 
@@ -411,6 +450,7 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
             initialHivStatusDate  = itemView.findViewById(R.id.initial_hiv_status_date);
             updateHivStatus = itemView.findViewById(R.id.updated_hiv_status);
             updatedHivStatusDate = itemView.findViewById(R.id.updated_hiv_status_date);
+            signatureView = itemView.findViewById(R.id.signature_view);
 
 
         }

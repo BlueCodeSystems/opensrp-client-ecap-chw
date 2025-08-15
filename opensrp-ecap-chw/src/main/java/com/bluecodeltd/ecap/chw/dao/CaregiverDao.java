@@ -21,7 +21,7 @@ public class CaregiverDao extends AbstractDao {
     }
 
 
-    public static AbstractDao.DataMap<Caregiver> getCaregiverMap() {
+    public static DataMap<Caregiver> getCaregiverMap() {
         return c -> {
 
             Caregiver record = new Caregiver();

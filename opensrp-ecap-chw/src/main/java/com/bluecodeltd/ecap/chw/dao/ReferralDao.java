@@ -21,6 +21,18 @@ public class ReferralDao extends AbstractDao {
 
         return values.get(0);
     }
+
+    public static List<ReferralModel> getAllReferrals() {
+
+        String sql = "SELECT * FROM ec_referral";
+
+        List<ReferralModel> values = AbstractDao.readData(sql, getReferralModelMap());
+
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+    }
     public static List<ReferralModel> getReferralsByID(String childID) {
 
         String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_referred,7,4) || '-' || substr(date_referred,4,2) || '-' || substr(date_referred,1,2)) as sortable_date" +
@@ -143,6 +155,9 @@ public class ReferralDao extends AbstractDao {
             record.setSpecify_school(getCursorValue(c, "specify_school"));
             record.setSpecify_stability(getCursorValue(c, "specify_stability"));
             record.setDelete_status(getCursorValue(c, "delete_status"));
+            record.setReferral_location(getCursorValue(c, "referral_location"));
+            record.setSignature(getCursorValue(c, "signature"));
+
 
 
 

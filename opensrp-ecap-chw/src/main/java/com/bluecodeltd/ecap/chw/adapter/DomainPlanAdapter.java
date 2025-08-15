@@ -88,17 +88,17 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
     }
 
     @Override
-    public DomainPlanAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_domain, parent, false);
 
-        DomainPlanAdapter.ViewHolder viewHolder = new DomainPlanAdapter.ViewHolder(v);
+        ViewHolder viewHolder = new ViewHolder(v);
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(DomainPlanAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 
         final CasePlanModel casePlan = caseplans.get(position);
 
@@ -301,7 +301,7 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
         form.setNextLabel("Next");
         form.setPreviousLabel("Previous");
         form.setSaveLabel("Submit");
-        form.setActionBarBackground(R.color.dark_grey);
+        form.setActionBarBackground(org.smartregister.R.color.dark_grey);
         Intent intent = new Intent(context, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());

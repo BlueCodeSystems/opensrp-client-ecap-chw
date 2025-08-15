@@ -28,14 +28,14 @@ public class MedicalHistoryAdapter extends RecyclerView.Adapter<MedicalHistoryAd
 
     @NonNull
     @Override
-    public MedicalHistoryAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         inflater = LayoutInflater.from(viewGroup.getContext());
         View v = inflater.inflate(R.layout.medical_history_nested_item, viewGroup, false);
-        return new MedicalHistoryAdapter.MyViewHolder(v);
+        return new MyViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MedicalHistoryAdapter.MyViewHolder myViewHolder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int position) {
         MedicalHistory item = items.get(position);
 
         myViewHolder.tvSubTitle.setVisibility(StringUtils.isNotBlank(item.getTitle()) ? View.VISIBLE : View.GONE);
@@ -46,7 +46,7 @@ public class MedicalHistoryAdapter extends RecyclerView.Adapter<MedicalHistoryAd
 
         for (String content : item.getText()) {
             View view = inflater.inflate(layoutID, null);
-            TextView tvContent = view.findViewById(R.id.tvContent);
+            TextView tvContent = view.findViewById(org.smartregister.chw.core.R.id.tvContent);
             tvContent.setText(content);
 
             myViewHolder.llItems.addView(view);

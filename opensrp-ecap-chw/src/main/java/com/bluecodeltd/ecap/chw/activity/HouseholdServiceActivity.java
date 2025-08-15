@@ -63,13 +63,14 @@ import timber.log.Timber;
 public class HouseholdServiceActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    RecyclerView.Adapter recyclerViewadapter;
+    HouseholdServiceAdapter recyclerViewadapter;
     private ArrayList<HouseholdServiceReportModel> familyServiceList = new ArrayList<>();
     private LinearLayout linearLayout;
     private TextView cname, hh_id,updatedCaregiverName;
 
     private Toolbar toolbar;
     String intent_householdId;
+    String intent_cname;
     newCaregiverModel updatedCaregiver;
 
     @SuppressLint("MissingInflatedId")
@@ -90,7 +91,7 @@ public class HouseholdServiceActivity extends AppCompatActivity {
         updatedCaregiverName = findViewById(R.id.updated_caregiver_name);
 
         intent_householdId = getIntent().getExtras().getString("householdId");
-        String intent_cname = getIntent().getExtras().getString("cname");
+        intent_cname = getIntent().getExtras().getString("cname");
 
         updatedCaregiver = newCaregiverDao.getNewCaregiverById(intent_householdId);
 
@@ -107,13 +108,21 @@ public class HouseholdServiceActivity extends AppCompatActivity {
 
         familyServiceList.addAll(HouseholdServiceReportDao.getServicesByHousehold(intent_householdId));
 
-        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(HouseholdServiceActivity.this);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(eLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new HouseholdServiceAdapter(familyServiceList, HouseholdServiceActivity.this);
-        recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
+        if (recyclerViewadapter == null) {
+            RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(HouseholdServiceActivity.this);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(eLayoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerViewadapter = new HouseholdServiceAdapter(familyServiceList, HouseholdServiceActivity.this);
+            recyclerView.setAdapter(recyclerViewadapter);
+            recyclerViewadapter.notifyDataSetChanged();
+
+            recyclerViewadapter.setOnDataUpdateListener(() -> runOnUiThread(() -> {
+                recreate();
+            }));
+        } else {
+            recyclerViewadapter.notifyDataSetChanged();
+        }
 
         if (recyclerViewadapter.getItemCount() > 0){
 
@@ -137,34 +146,34 @@ public class HouseholdServiceActivity extends AppCompatActivity {
             case R.id.services1:
                 GraduationBenchmarkModel model = HouseholdDao.getGraduationStatus(intent_householdId);
                 Household house = HouseholdDao.getHousehold(intent_householdId);
-if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
-    showDialogBox("Unable to add service(s) for "+house.getCaregiver_name() + "`s household  because no Case Plan(s) have been added");
+                if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
+                    showDialogBox("Unable to add service(s) for "+house.getCaregiver_name() + "`s household  because no Case Plan(s) have been added");
 
-} else if (house.getHousehold_case_status() !=null && (house.getHousehold_case_status().equals("0") || house.getHousehold_case_status().equals("2"))) {
-        showDialogBox(house.getCaregiver_name() + "`s household has been inactive or de-registered");
+                } else if (house.getHousehold_case_status() !=null && (house.getHousehold_case_status().equals("0") || house.getHousehold_case_status().equals("2"))) {
+                    showDialogBox(house.getCaregiver_name() + "`s household has been inactive or de-registered");
 
-} else {
-        try {
-            FormUtils formUtils = new FormUtils(this);
-            JSONObject indexRegisterForm;
+                } else {
+                    try {
+                        FormUtils formUtils = new FormUtils(this);
+                        JSONObject indexRegisterForm;
 
-            indexRegisterForm = formUtils.getFormJson("service_report_household");
+                        indexRegisterForm = formUtils.getFormJson("service_report_household");
 
-            JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "household_id");
-            cId.put("value",hh_id.getText().toString());
+                        JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "household_id");
+                        cId.put("value",hh_id.getText().toString());
 
-            JSONObject hivStatus = getFieldJSONObject(fields(indexRegisterForm, STEP1), "is_hiv_positive");
-            hivStatus.put("value",house.getCaregiver_hiv_status());
-
-
-            startFormActivity(indexRegisterForm);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+                        JSONObject hivStatus = getFieldJSONObject(fields(indexRegisterForm, STEP1), "is_hiv_positive");
+                        hivStatus.put("value",house.getCaregiver_hiv_status());
 
 
-}
+                        startFormActivity(indexRegisterForm);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
 
 
                 break;
@@ -191,7 +200,7 @@ if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
         form.setNextLabel(getString(R.string.next));
         form.setPreviousLabel(getString(R.string.previous));
         form.setSaveLabel(getString(R.string.submit));
-        form.setActionBarBackground(R.color.dark_grey);
+        form.setActionBarBackground(org.smartregister.R.color.dark_grey);
         Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
@@ -222,31 +231,39 @@ if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
             }
             String EncounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
 
+            if (EncounterType.equals("Household Service Report")) {
+                Intent openSignatureIntent   =  new Intent(this,SignatureActivity.class);
+                openSignatureIntent.putExtra("jsonForm", jsonFormObject.toString());
+                openSignatureIntent.putExtra("householdId",intent_householdId);
+                openSignatureIntent.putExtra("cname",intent_cname);
+                startActivity(openSignatureIntent);
+            } else{
+                try {
 
-            try {
+                    ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
 
-                ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
+                    if (childIndexEventClient == null) {
+                        return;
+                    }
 
-                if (childIndexEventClient == null) {
-                    return;
+
+                    saveRegistration(childIndexEventClient, is_edit_mode, EncounterType);
+
+
+                    switch (EncounterType) {
+
+                        case "Household Service Report Edit":
+
+                            Toasty.success(HouseholdServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
+                            refreshData();
+
+
+                            break;
+
+                    }
+                } catch(Exception e){
+                    Timber.e(e);
                 }
-
-                saveRegistration(childIndexEventClient, is_edit_mode,EncounterType);
-
-
-                switch (EncounterType) {
-
-                    case "Household Service Report":
-
-                        Toasty.success(HouseholdServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
-                        refreshData();
-
-
-                        break;
-
-                }
-            } catch (Exception e) {
-                Timber.e(e);
             }
         }
     }
@@ -269,19 +286,26 @@ if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
                 entityId  = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
             }
 
+
             JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
 
 
             JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
-            FormTag formTag = getFormTag();
-            Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,encounterType, "ec_household_service_report");
-            tagSyncMetadata(event);
-            Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
-            return new ChildIndexEventClient(event, client);
+            switch (encounterType) {
+                case "Household Service Report Edit":
 
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable. EC_HOUSEHOLD_SERVICE);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
 
-
+            }
         } catch (JSONException e) {
             Timber.e(e);
         }

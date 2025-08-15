@@ -9,17 +9,17 @@ import android.view.View;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
+import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.FamilyProfileActivity;
+import com.bluecodeltd.ecap.chw.model.FamilyProfileDueModel;
+import com.bluecodeltd.ecap.chw.presenter.FamilyProfileDuePresenter;
+import com.bluecodeltd.ecap.chw.provider.ChwDueRegisterProvider;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.domain.Form;
 
 import org.json.JSONObject;
-import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.activity.FamilyProfileActivity;
 import org.smartregister.chw.core.utils.ChildDBConstants;
 import org.smartregister.chw.core.utils.CoreConstants;
-import com.bluecodeltd.ecap.chw.model.FamilyProfileDueModel;
-import com.bluecodeltd.ecap.chw.presenter.FamilyProfileDuePresenter;
-import com.bluecodeltd.ecap.chw.provider.ChwDueRegisterProvider;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.cursoradapter.SmartRegisterQueryBuilder;
 import org.smartregister.family.adapter.FamilyRecyclerViewCustomAdapter;

@@ -33,7 +33,7 @@ public class RecyclerViewPaginatedAdapter <V extends RecyclerView.ViewHolder> ex
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == RecyclerViewCursorAdapter.Type.FOOTER.ordinal()) {
+        if (viewType == Type.FOOTER.ordinal()) {
             return listItemProvider.createFooterHolder(parent);
         } else {
             return listItemProvider.createViewHolder(parent);

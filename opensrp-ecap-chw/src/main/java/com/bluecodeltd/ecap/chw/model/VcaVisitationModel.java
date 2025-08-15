@@ -59,6 +59,7 @@ public class VcaVisitationModel {
     private String neglected_child_exploitation;
     private String neglected_child_relationships;
     private String child_above_12_a;
+    private String child_ever_experienced_sexual_violence;
     private String type_of_neglect;
     private String signs_of_violence;
     private String relationships_neglected;
@@ -102,40 +103,62 @@ public class VcaVisitationModel {
     private String phone;
     private String indicate_vl_result;
     private String length_on_art;
-
     private String delete_status;
     private String status_color;
+    private String vca_visit_location;
+    private String signature;
+    private String visits;
+    private String date_edited;
+    private String date_edited_check;
 
-    public String getIndicate_vl_result() {
-        return indicate_vl_result;
+    private String referred_health_facility;
+
+    private String vl_other;
+
+    private String child_oedema;
+    private String medical_complications;
+
+    private String oedema_stage;
+
+
+    public String getUnique_id() {
+        return unique_id;
     }
 
-    public void setIndicate_vl_result(String indicate_vl_result) {
-        this.indicate_vl_result = indicate_vl_result;
+    public void setUnique_id(String unique_id) {
+        this.unique_id = unique_id;
     }
 
-    public String getLength_on_art() {
-        return length_on_art;
+    public String getFirst_name() {
+        return first_name;
     }
 
-    public void setLength_on_art(String length_on_art) {
-        this.length_on_art = length_on_art;
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
     }
 
-    public String getDelete_status() {
-        return delete_status;
+    public String getLast_name() {
+        return last_name;
     }
 
-    public void setDelete_status(String delete_status) {
-        this.delete_status = delete_status;
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getBirthdate() {
+        return birthdate;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setBirthdate(String birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public String getHei() {
+        return hei;
+    }
+
+    public void setHei(String hei) {
+        this.hei = hei;
     }
 
     public String getBase_entity_id() {
@@ -874,44 +897,36 @@ public class VcaVisitationModel {
         this.school_administration_signature = school_administration_signature;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getIndicate_vl_result() {
+        return indicate_vl_result;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setIndicate_vl_result(String indicate_vl_result) {
+        this.indicate_vl_result = indicate_vl_result;
     }
 
-    public String getBirthdate() {
-        return birthdate;
+    public String getLength_on_art() {
+        return length_on_art;
     }
 
-    public void setBirthdate(String birthdate) {
-        this.birthdate = birthdate;
+    public void setLength_on_art(String length_on_art) {
+        this.length_on_art = length_on_art;
     }
 
-    public String getHei() {
-        return hei;
+    public String getDelete_status() {
+        return delete_status;
     }
 
-    public void setHei(String hei) {
-        this.hei = hei;
-    }
-
-    public String getUnique_id() {
-        return unique_id;
-    }
-
-    public void setUnique_id(String unique_id) {
-        this.unique_id = unique_id;
+    public void setDelete_status(String delete_status) {
+        this.delete_status = delete_status;
     }
 
     public String getStatus_color() {
@@ -920,5 +935,93 @@ public class VcaVisitationModel {
 
     public void setStatus_color(String status_color) {
         this.status_color = status_color;
+    }
+
+    public String getVca_visit_location() {
+        return vca_visit_location;
+    }
+
+    public void setVca_visit_location(String vca_visit_location) {
+        this.vca_visit_location = vca_visit_location;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    public String getVisits() {
+        return visits;
+    }
+
+    public void setVisits(String visits) {
+        this.visits = visits;
+    }
+
+    public String getDate_edited() {
+        return date_edited;
+    }
+
+    public void setDate_edited(String date_edited) {
+        this.date_edited = date_edited;
+    }
+
+    public String getDate_edited_check() {
+        return date_edited_check;
+    }
+
+    public void setDate_edited_check(String date_edited_check) {
+        this.date_edited_check = date_edited_check;
+    }
+
+    public String getChild_ever_experienced_sexual_violence() {
+        return child_ever_experienced_sexual_violence;
+    }
+
+    public void setChild_ever_experienced_sexual_violence(String child_ever_experienced_sexual_violence) {
+        this.child_ever_experienced_sexual_violence = child_ever_experienced_sexual_violence;
+    }
+
+    public String getReferred_health_facility() {
+        return referred_health_facility;
+    }
+
+    public void setReferred_health_facility(String referred_health_facility) {
+        this.referred_health_facility = referred_health_facility;
+    }
+
+    public String getVl_other() {
+        return vl_other;
+    }
+
+    public void setVl_other(String vl_other) {
+        this.vl_other = vl_other;
+    }
+
+    public String getChild_oedema() {
+        return child_oedema;
+    }
+
+    public void setChild_oedema(String child_oedema) {
+        this.child_oedema = child_oedema;
+    }
+
+    public String getMedical_complications() {
+        return medical_complications;
+    }
+
+    public void setMedical_complications(String medical_complications) {
+        this.medical_complications = medical_complications;
+    }
+
+    public String getOedema_stage() {
+        return oedema_stage;
+    }
+
+    public void setOedema_stage(String oedema_stage) {
+        this.oedema_stage = oedema_stage;
     }
 }

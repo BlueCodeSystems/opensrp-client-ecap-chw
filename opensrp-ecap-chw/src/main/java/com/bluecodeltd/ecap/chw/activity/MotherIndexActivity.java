@@ -104,7 +104,7 @@ public class MotherIndexActivity extends BaseRegisterActivity implements MotherI
             JSONObject stepOneHouseholdId = getFieldJSONObject(fields(jsonObject, STEP1), "household_id");
 
             if (stepOneHouseholdId != null) {
-                stepOneHouseholdId.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
+                stepOneHouseholdId.remove(JsonFormUtils.VALUE);
                 try {
                     stepOneHouseholdId.put(JsonFormUtils.VALUE, household_id);
                 } catch (JSONException e) {

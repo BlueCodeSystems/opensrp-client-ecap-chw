@@ -278,7 +278,7 @@
         "hint": "Indicate date started ",
         "look_up": "true",
         "expanded": false,
-        "min_date": "01-01-1900",
+        "min_date": "01-11-2023",
         "max_date": "today",
         "relevance": {
           "step1:on_art": {
@@ -573,7 +573,7 @@
         "hint": "Date of  HIV test",
         "look_up": "true",
         "expanded": false,
-        "min_date": "01-01-1900",
+        "min_date": "01-11-2023",
         "max_date": "today",
         "relevance": {
           "step1:hiv_tb": {

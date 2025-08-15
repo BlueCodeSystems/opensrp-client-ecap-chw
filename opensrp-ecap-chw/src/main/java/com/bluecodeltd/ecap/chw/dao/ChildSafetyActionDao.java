@@ -25,7 +25,7 @@ public class ChildSafetyActionDao extends AbstractDao {
 
         String sql = "SELECT COUNT(*) v FROM ec_child_safety_actions WHERE unique_id = '" + uniqueId + "' AND initial_date = '" + cpDate + "' AND (delete_status IS NULL OR delete_status <> '1')";
 
-        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
+        DataMap<String> dataMap = c -> getCursorValue(c, "v");
 
         List<String> values = AbstractDao.readData(sql, dataMap);
 

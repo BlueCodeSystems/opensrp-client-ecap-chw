@@ -1,5 +1,7 @@
 package com.bluecodeltd.ecap.chw.dao;
 
+import android.util.Log;
+
 import com.bluecodeltd.ecap.chw.model.CaregiverAssessmentModel;
 
 import org.smartregister.dao.AbstractDao;
@@ -7,20 +9,36 @@ import org.smartregister.dao.AbstractDao;
 import java.util.List;
 
 public class CaregiverAssessmentDao extends AbstractDao {
-    public static CaregiverAssessmentModel getCaregiverAssessment (String householdID) {
-
-        String sql = "SELECT * FROM ec_caregiver_household_assessment WHERE household_id = '" + householdID + "' ";
-
-        List<CaregiverAssessmentModel> values = AbstractDao.readData(sql, getCaregiverAssessmentMap());
-
-        if (values.size() == 0) {
+    public static CaregiverAssessmentModel getCaregiverAssessment(String householdID) {
+        if (householdID == null || householdID.isEmpty()) {
+            Log.w("getCaregiverAssessment", "Household ID is null or empty.");
             return null;
         }
 
+        try {
+            String sql = "SELECT * FROM ec_caregiver_household_assessment WHERE household_id = '" + householdID + "'";
 
-        return values.get(0);
+            List<CaregiverAssessmentModel> values = AbstractDao.readData(sql, getCaregiverAssessmentMap());
+
+            if (values == null || values.isEmpty()) {
+                Log.i("getCaregiverAssessment", "No caregiver assessment found for household ID: " + householdID);
+                return null;
+            }
+            return values.get(0);
+        } catch (Exception e) {
+            Log.e("getCaregiverAssessment", "Error fetching caregiver assessment: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
     }
 
+
+    public static boolean hasCaregiverAssessment(String householdID) {
+        String sql = "SELECT * FROM ec_caregiver_household_assessment WHERE household_id = '" + householdID + "' AND household_type IS NOT NULL";
+
+        List<CaregiverAssessmentModel> values = AbstractDao.readData(sql, getCaregiverAssessmentMap());
+        return values != null && values.size() > 0;
+    }
     public static DataMap<CaregiverAssessmentModel> getCaregiverAssessmentMap() {
         return c -> {
 
@@ -36,22 +54,21 @@ public class CaregiverAssessmentDao extends AbstractDao {
             record.setExposed(getCursorValue(c, "exposed"));
             record.setUnprotected(getCursorValue(c, "unprotected"));
             record.setBreastfeeding(getCursorValue(c, "breastfeeding"));
-            record.setLast_year(getCursorValue(c, "last_year"));
-            record.setRelation(getCursorValue(c, "relation"));
-            record.setPartner_caregiver(getCursorValue(c, "partner_caregiver"));
             record.setActive_on_treatment(getCursorValue(c, "active_on_treatment"));
+            record.setDate_of_last_viral_load(getCursorValue(c, "date_of_last_viral_load"));
             record.setCaregiver_art_number(getCursorValue(c, "caregiver_art_number"));
             record.setAppointments(getCursorValue(c, "appointments"));
             record.setArt_regularly(getCursorValue(c, "art_regularly"));
-            record.setHiv_adherence(getCursorValue(c, "hiv_adherence"));
             record.setMonths_medication(getCursorValue(c, "months_medication"));
             record.setViral_load_12months(getCursorValue(c, "viral_load_12months"));
             record.setViral_load_results(getCursorValue(c, "viral_load_results"));
-            record.setDate_of_last_viral_load(getCursorValue(c, "date_of_last_viral_load"));
             record.setDocumented_12months(getCursorValue(c, "documented_12months"));
             record.setPmtct_enrolled(getCursorValue(c, "pmtct_enrolled"));
             record.setCancer_screened(getCursorValue(c, "cancer_screened"));
             record.setMalnutrition_screened(getCursorValue(c, "malnutrition_screened"));
+            record.setLast_year(getCursorValue(c, "last_year"));
+            record.setRelation(getCursorValue(c, "relation"));
+            record.setPartner_caregiver(getCursorValue(c, "partner_caregiver"));
             record.setHousehold_number(getCursorValue(c, "household_number"));
             record.setCaregiver_education(getCursorValue(c, "caregiver_education"));
             record.setHousehold_member(getCursorValue(c, "household_member"));
@@ -59,6 +76,7 @@ public class CaregiverAssessmentDao extends AbstractDao {
             record.setOther_source_main(getCursorValue(c, "other_source_main"));
             record.setSource_earner(getCursorValue(c, "source_earner"));
             record.setOther_earner_other(getCursorValue(c, "other_earner_other"));
+            record.setLast_time(getCursorValue(c, "last_time"));
             record.setHh_head_spouse(getCursorValue(c, "hh_head_spouse"));
             record.setAny_adult(getCursorValue(c, "any_adult"));
             record.setHousehold_stable(getCursorValue(c, "household_stable"));
@@ -68,16 +86,16 @@ public class CaregiverAssessmentDao extends AbstractDao {
             record.setEarly_childhood(getCursorValue(c, "early_childhood"));
             record.setChildren_adolescent_a(getCursorValue(c, "children_adolescent_a"));
             record.setChildren_adolescent_b(getCursorValue(c, "children_adolescent_b"));
+            record.setDrinking_water(getCursorValue(c, "drinking_water"));
             record.setOther_water_other(getCursorValue(c, "other_water_other"));
             record.setToilet_facility(getCursorValue(c, "toilet_facility"));
+            record.setOther_toilet_facility(getCursorValue(c, "other_toilet_facility"));
             record.setSanitary_products(getCursorValue(c, "sanitary_products"));
-            record.setOther_sanitary_product_other(getCursorValue(c, "other_sanitary_product_other"));
+            record.setOther_sanitary_products(getCursorValue(c, "other_sanitary_products"));
             record.setMaterial_construction_food(getCursorValue(c, "material_construction_food"));
             record.setOther_food_source_other(getCursorValue(c, "other_food_source_other"));
             record.setHousehold_eaten(getCursorValue(c, "household_eaten"));
             record.setHousehold_eaten_month(getCursorValue(c, "household_eaten_month"));
-            record.setChild(getCursorValue(c, "child"));
-            record.setPregnant_caregiver(getCursorValue(c, "pregnant_caregiver"));
             record.setLack_resources(getCursorValue(c, "lack_resources"));
             record.setLimited_variety(getCursorValue(c, "limited_variety"));
             record.setNight_hungry(getCursorValue(c, "night_hungry"));
@@ -86,6 +104,8 @@ public class CaregiverAssessmentDao extends AbstractDao {
             record.setNot_registered(getCursorValue(c, "not_registered"));
             record.setQuestions(getCursorValue(c, "questions"));
             record.setCaregiver_question(getCursorValue(c, "caregiver_question"));
+
+
 
             return record;
         };

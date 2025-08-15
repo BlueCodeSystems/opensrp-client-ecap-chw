@@ -70,16 +70,16 @@ public class HouseholdServicesOnlyAdapter extends RecyclerView.Adapter<Household
     }
     @NonNull
     @Override
-    public HouseholdServicesOnlyAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_service, parent, false);
 
-        HouseholdServicesOnlyAdapter.ViewHolder viewHolder = new HouseholdServicesOnlyAdapter.ViewHolder(v);
+        ViewHolder viewHolder = new ViewHolder(v);
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HouseholdServicesOnlyAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final HouseholdServiceReportModel service = services.get(position);
 
         holder.setIsRecyclable(false);
@@ -295,7 +295,7 @@ public class HouseholdServicesOnlyAdapter extends RecyclerView.Adapter<Household
         form.setNextLabel("Next");
         form.setPreviousLabel("Previous");
         form.setSaveLabel("Submit");
-        form.setActionBarBackground(R.color.dark_grey);
+        form.setActionBarBackground(org.smartregister.R.color.dark_grey);
         Intent intent = new Intent(context, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());

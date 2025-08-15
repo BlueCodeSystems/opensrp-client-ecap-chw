@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 public class ChildUtils extends CoreChildUtils {
-    private static CoreChildUtils.Flavor childUtilsFlv = new ChildUtilsFlv();
+    private static Flavor childUtilsFlv = new ChildUtilsFlv();
 
     /**
      * Based on received vaccine list it'll return the fully immunized year.

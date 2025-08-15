@@ -21,6 +21,17 @@ public class VCAServiceModel {
     private String other_stable_services;
     private String delete_status;
 
+    private  String vca_service_location;
+    private String signature;
+
+    public String getVca_service_location() {
+        return vca_service_location;
+    }
+
+    public void setVca_service_location(String vca_service_location) {
+        this.vca_service_location = vca_service_location;
+    }
+
     public String getBase_entity_id() {
         return base_entity_id;
     }
@@ -171,5 +182,13 @@ public class VCAServiceModel {
 
     public void setDelete_status(String delete_status) {
         this.delete_status = delete_status;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
     }
 }

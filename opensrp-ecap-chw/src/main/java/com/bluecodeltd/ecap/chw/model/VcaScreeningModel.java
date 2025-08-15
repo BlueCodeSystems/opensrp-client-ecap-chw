@@ -1,15 +1,19 @@
 package com.bluecodeltd.ecap.chw.model;
 
 public class VcaScreeningModel {
-
+    private String last_interacted_with;
     private String base_entity_id;
+    private String deleted;
     private String household_id;
     private String unique_id;
+    private String signature;
+    private String date_edited;
+    private String phone;
+    private String caseworker_name;
     private String province;
     private String district;
     private String ward;
     private String facility;
-    private String screening_location;
     private String partner;
     private String adolescent_first_name;
     private String adolescent_last_name;
@@ -18,6 +22,7 @@ public class VcaScreeningModel {
     private String landmark;
     private String adolescent_gender;
     private String school;
+    private String schoolName;
     private String other_school;
     private String is_hiv_positive;
     private String is_on_hiv_treatment;
@@ -34,6 +39,7 @@ public class VcaScreeningModel {
     private String positive_mother;
     private String active_on_treatment;
     private String caregiver_art_number;
+    private String date_next_vl_vca;
     private String adhering_to_treatment;
     private String is_mother_virally_suppressed;
     private String child_been_tested_for_hiv;
@@ -56,7 +62,7 @@ public class VcaScreeningModel {
     private String agyw_having_sex_with_older_men;
     private String agyw_transactional_sex;
     private String agyw_engaged_in_transactional_sex;
-    private String agyw_engaged_in_sex_work;
+    private String agwy_engaged_in_sex_work;
     private String agyw_food_or_economically_insecure;
     private String agyw_marry_early;
     private String agyw_give_birth_before_the_age_of_18;
@@ -72,26 +78,20 @@ public class VcaScreeningModel {
     private String child_clinical_care_services_received_other;
     private String other_child_clinical_care_services_received;
     private String is_the_child_caregiver_an_fsw;
-    private String fsw_prevention_intervention;
     private String fsw_child_tested;
     private String fsw_child_positive;
+    private String fsw_prevention_intervention;
     private String fsw_economic_strengthening_intervention;
-    private String caseworker_name;
     private String date_screened;
     private String approved_by;
     private String consent_check_box;
-    private String subpop1_toast;
-    private String subpop6_toast;
-    private String subpop2_toast;
-    private String subpop3_toast;
-    private String subpop4_toast;
-    private String subpop5_toast;
     private String subpop1;
-    private String subpop;
     private String subpop2;
     private String subpop3;
     private String subpop4;
     private String subpop5;
+    private String screening_location;
+    private String subpop;
     private String first_name;
     private String last_name;
     private String gender;
@@ -123,14 +123,33 @@ public class VcaScreeningModel {
     private String transfer_reason;
     private String other_reason;
     private String exited_graduation_reason;
-    private String phone;
+    private String abym_years;
+    private String abym_sexually_active;
+    private String abym_preventions;
+    private String abym_preventions_other;
+    private String abym_sex_older_women;
+    private String abym_transactional_sex;
+    private String abym_sex_work;
+    private String abym_economically_insecure;
+    private String abym_violent_partner;
+    private String abym_diagnosed;
+    private String abym_hiv_tested;
+    private String abym_test_positive;
+    private String abym_undergone_vmmc;
+    private String abym_in_school;
+    private String abym_economic_strengthening;
+    private String vca_receiving_caseworker;
+    private String district_moved_to;
+    private String name_ovc;
+    private  String location_moved_to;
+    private String ovc_district;
 
-    public String getPhone() {
-        return phone;
+    public String getLast_interacted_with() {
+        return last_interacted_with;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setLast_interacted_with(String last_interacted_with) {
+        this.last_interacted_with = last_interacted_with;
     }
 
     public String getBase_entity_id() {
@@ -139,6 +158,14 @@ public class VcaScreeningModel {
 
     public void setBase_entity_id(String base_entity_id) {
         this.base_entity_id = base_entity_id;
+    }
+
+    public String getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(String deleted) {
+        this.deleted = deleted;
     }
 
     public String getHousehold_id() {
@@ -155,6 +182,38 @@ public class VcaScreeningModel {
 
     public void setUnique_id(String unique_id) {
         this.unique_id = unique_id;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    public String getDate_edited() {
+        return date_edited;
+    }
+
+    public void setDate_edited(String date_edited) {
+        this.date_edited = date_edited;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getCaseworker_name() {
+        return caseworker_name;
+    }
+
+    public void setCaseworker_name(String caseworker_name) {
+        this.caseworker_name = caseworker_name;
     }
 
     public String getProvince() {
@@ -181,6 +240,13 @@ public class VcaScreeningModel {
         this.ward = ward;
     }
 
+    public String getFacility() {
+        return facility;
+    }
+
+    public void setFacility(String facility) {
+        this.facility = facility;
+    }
 
     public String getPartner() {
         return partner;
@@ -244,6 +310,14 @@ public class VcaScreeningModel {
 
     public void setSchool(String school) {
         this.school = school;
+    }
+
+    public String getSchoolName() {
+        return schoolName;
+    }
+
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
     }
 
     public String getOther_school() {
@@ -372,6 +446,14 @@ public class VcaScreeningModel {
 
     public void setCaregiver_art_number(String caregiver_art_number) {
         this.caregiver_art_number = caregiver_art_number;
+    }
+
+    public String getDate_next_vl_vca() {
+        return date_next_vl_vca;
+    }
+
+    public void setDate_next_vl_vca(String date_next_vl_vca) {
+        this.date_next_vl_vca = date_next_vl_vca;
     }
 
     public String getAdhering_to_treatment() {
@@ -550,7 +632,21 @@ public class VcaScreeningModel {
         this.agyw_engaged_in_transactional_sex = agyw_engaged_in_transactional_sex;
     }
 
+    public String getAgwy_engaged_in_sex_work() {
+        return agwy_engaged_in_sex_work;
+    }
 
+    public void setAgwy_engaged_in_sex_work(String agwy_engaged_in_sex_work) {
+        this.agwy_engaged_in_sex_work = agwy_engaged_in_sex_work;
+    }
+
+    public String getAgyw_food_or_economically_insecure() {
+        return agyw_food_or_economically_insecure;
+    }
+
+    public void setAgyw_food_or_economically_insecure(String agyw_food_or_economically_insecure) {
+        this.agyw_food_or_economically_insecure = agyw_food_or_economically_insecure;
+    }
 
     public String getAgyw_marry_early() {
         return agyw_marry_early;
@@ -664,6 +760,22 @@ public class VcaScreeningModel {
         this.is_the_child_caregiver_an_fsw = is_the_child_caregiver_an_fsw;
     }
 
+    public String getFsw_child_tested() {
+        return fsw_child_tested;
+    }
+
+    public void setFsw_child_tested(String fsw_child_tested) {
+        this.fsw_child_tested = fsw_child_tested;
+    }
+
+    public String getFsw_child_positive() {
+        return fsw_child_positive;
+    }
+
+    public void setFsw_child_positive(String fsw_child_positive) {
+        this.fsw_child_positive = fsw_child_positive;
+    }
+
     public String getFsw_prevention_intervention() {
         return fsw_prevention_intervention;
     }
@@ -679,15 +791,6 @@ public class VcaScreeningModel {
     public void setFsw_economic_strengthening_intervention(String fsw_economic_strengthening_intervention) {
         this.fsw_economic_strengthening_intervention = fsw_economic_strengthening_intervention;
     }
-
-    public String getCaseworker_name() {
-        return caseworker_name;
-    }
-
-    public void setCaseworker_name(String caseworker_name) {
-        this.caseworker_name = caseworker_name;
-    }
-
 
     public String getDate_screened() {
         return date_screened;
@@ -713,52 +816,60 @@ public class VcaScreeningModel {
         this.consent_check_box = consent_check_box;
     }
 
-    public String getSubpop1_toast() {
-        return subpop1_toast;
+    public String getSubpop1() {
+        return subpop1;
     }
 
-    public void setSubpop1_toast(String subpop1_toast) {
-        this.subpop1_toast = subpop1_toast;
+    public void setSubpop1(String subpop1) {
+        this.subpop1 = subpop1;
     }
 
-    public String getSubpop6_toast() {
-        return subpop6_toast;
+    public String getSubpop2() {
+        return subpop2;
     }
 
-    public void setSubpop6_toast(String subpop6_toast) {
-        this.subpop6_toast = subpop6_toast;
+    public void setSubpop2(String subpop2) {
+        this.subpop2 = subpop2;
     }
 
-    public String getSubpop2_toast() {
-        return subpop2_toast;
+    public String getSubpop3() {
+        return subpop3;
     }
 
-    public void setSubpop2_toast(String subpop2_toast) {
-        this.subpop2_toast = subpop2_toast;
+    public void setSubpop3(String subpop3) {
+        this.subpop3 = subpop3;
     }
 
-    public String getSubpop3_toast() {
-        return subpop3_toast;
+    public String getSubpop4() {
+        return subpop4;
     }
 
-    public void setSubpop3_toast(String subpop3_toast) {
-        this.subpop3_toast = subpop3_toast;
+    public void setSubpop4(String subpop4) {
+        this.subpop4 = subpop4;
     }
 
-    public String getSubpop4_toast() {
-        return subpop4_toast;
+    public String getSubpop5() {
+        return subpop5;
     }
 
-    public void setSubpop4_toast(String subpop4_toast) {
-        this.subpop4_toast = subpop4_toast;
+    public void setSubpop5(String subpop5) {
+        this.subpop5 = subpop5;
     }
 
-    public String getSubpop5_toast() {
-        return subpop5_toast;
+    public String getScreening_location() {
+        return screening_location;
     }
 
-    public void setSubpop5_toast(String subpop5_toast) {
-        this.subpop5_toast = subpop5_toast;
+    public void setScreening_location(String screening_location) {
+        this.screening_location = screening_location;
+    }
+
+    public String getSubpop() {
+        return subpop;
+    }
+
+    public void setSubpop(String subpop) {
+        this.subpop = subpop;
     }
 
     public String getFirst_name() {
@@ -990,107 +1101,15 @@ public class VcaScreeningModel {
     }
 
     public void setTransfer_reason(String transfer_reason) {
-        this.transfer_reason = transfer_reason;}
+        this.transfer_reason = transfer_reason;
+    }
 
     public String getOther_reason() {
         return other_reason;
     }
+
     public void setOther_reason(String other_reason) {
         this.other_reason = other_reason;
-    }
-
-    public String getScreening_location() {
-        return screening_location;
-    }
-    public void setScreening_location(String screening_location) {
-        this.screening_location = screening_location;}
-
-    public String getFacility() {
-        return facility;
-    }
-
-    public void setFacility(String facility) {
-        this.facility = facility;
-    }
-
-    public String getFsw_child_tested() {
-        return fsw_child_tested;
-    }
-
-    public void setFsw_child_tested(String fsw_child_tested) {
-        this.fsw_child_tested = fsw_child_tested;
-    }
-
-    public String getFsw_child_positive() {
-        return fsw_child_positive;
-    }
-
-    public void setFsw_child_positive(String fsw_child_positive) {
-        this.fsw_child_positive = fsw_child_positive;
-    }
-
-    public String getAgyw_engaged_in_sex_work() {
-        return agyw_engaged_in_sex_work;
-    }
-
-    public void setAgyw_engaged_in_sex_work(String agyw_engaged_in_sex_work) {
-        this.agyw_engaged_in_sex_work = agyw_engaged_in_sex_work;
-    }
-
-    public String getAgyw_food_or_economically_insecure() {
-        return agyw_food_or_economically_insecure;
-    }
-
-    public void setAgyw_food_or_economically_insecure(String agyw_food_or_economically_insecure) {
-        this.agyw_food_or_economically_insecure = agyw_food_or_economically_insecure;
-    }
-
-    public String getSubpop1() {
-        return subpop1;
-    }
-
-    public void setSubpop1(String subpop1) {
-        this.subpop1 = subpop1;
-    }
-
-    public String getSubpop() {
-        return subpop;
-    }
-
-    public void setSubpop(String subpop) {
-        this.subpop = subpop;
-    }
-
-    public String getSubpop2() {
-        return subpop2;
-    }
-
-    public void setSubpop2(String subpop2) {
-        this.subpop2 = subpop2;
-    }
-
-    public String getSubpop3() {
-        return subpop3;
-    }
-
-    public void setSubpop3(String subpop3) {
-        this.subpop3 = subpop3;
-    }
-
-    public String getSubpop4() {
-        return subpop4;
-    }
-
-    public void setSubpop4(String subpop4) {
-        this.subpop4 = subpop4;
-    }
-
-    public String getSubpop5() {
-        return subpop5;
-    }
-
-    public void setSubpop5(String subpop5) {
-        this.subpop5 = subpop5;
     }
 
     public String getExited_graduation_reason() {
@@ -1100,4 +1119,166 @@ public class VcaScreeningModel {
     public void setExited_graduation_reason(String exited_graduation_reason) {
         this.exited_graduation_reason = exited_graduation_reason;
     }
+
+    public String getAbym_years() {
+        return abym_years;
+    }
+
+    public void setAbym_years(String abym_years) {
+        this.abym_years = abym_years;
+    }
+
+    public String getAbym_sexually_active() {
+        return abym_sexually_active;
+    }
+
+    public void setAbym_sexually_active(String abym_sexually_active) {
+        this.abym_sexually_active = abym_sexually_active;
+    }
+
+    public String getAbym_preventions() {
+        return abym_preventions;
+    }
+
+    public void setAbym_preventions(String abym_preventions) {
+        this.abym_preventions = abym_preventions;
+    }
+
+    public String getAbym_preventions_other() {
+        return abym_preventions_other;
+    }
+
+    public void setAbym_preventions_other(String abym_preventions_other) {
+        this.abym_preventions_other = abym_preventions_other;
+    }
+
+    public String getAbym_sex_older_women() {
+        return abym_sex_older_women;
+    }
+
+    public void setAbym_sex_older_women(String abym_sex_older_women) {
+        this.abym_sex_older_women = abym_sex_older_women;
+    }
+
+    public String getAbym_transactional_sex() {
+        return abym_transactional_sex;
+    }
+
+    public void setAbym_transactional_sex(String abym_transactional_sex) {
+        this.abym_transactional_sex = abym_transactional_sex;
+    }
+
+    public String getAbym_sex_work() {
+        return abym_sex_work;
+    }
+
+    public void setAbym_sex_work(String abym_sex_work) {
+        this.abym_sex_work = abym_sex_work;
+    }
+
+    public String getAbym_economically_insecure() {
+        return abym_economically_insecure;
+    }
+
+    public void setAbym_economically_insecure(String abym_economically_insecure) {
+        this.abym_economically_insecure = abym_economically_insecure;
+    }
+
+    public String getAbym_violent_partner() {
+        return abym_violent_partner;
+    }
+
+    public void setAbym_violent_partner(String abym_violent_partner) {
+        this.abym_violent_partner = abym_violent_partner;
+    }
+
+    public String getAbym_diagnosed() {
+        return abym_diagnosed;
+    }
+
+    public void setAbym_diagnosed(String abym_diagnosed) {
+        this.abym_diagnosed = abym_diagnosed;
+    }
+
+    public String getAbym_hiv_tested() {
+        return abym_hiv_tested;
+    }
+
+    public void setAbym_hiv_tested(String abym_hiv_tested) {
+        this.abym_hiv_tested = abym_hiv_tested;
+    }
+
+    public String getAbym_test_positive() {
+        return abym_test_positive;
+    }
+
+    public void setAbym_test_positive(String abym_test_positive) {
+        this.abym_test_positive = abym_test_positive;
+    }
+
+    public String getAbym_undergone_vmmc() {
+        return abym_undergone_vmmc;
+    }
+
+    public void setAbym_undergone_vmmc(String abym_undergone_vmmc) {
+        this.abym_undergone_vmmc = abym_undergone_vmmc;
+    }
+
+    public String getAbym_in_school() {
+        return abym_in_school;
+    }
+
+    public void setAbym_in_school(String abym_in_school) {
+        this.abym_in_school = abym_in_school;
+    }
+
+    public String getAbym_economic_strengthening() {
+        return abym_economic_strengthening;
+    }
+
+    public void setAbym_economic_strengthening(String abym_economic_strengthening) {
+        this.abym_economic_strengthening = abym_economic_strengthening;
+    }
+
+    public String getVca_receiving_caseworker() {
+        return vca_receiving_caseworker;
+    }
+
+    public void setVca_receiving_caseworker(String vca_receiving_caseworker) {
+        this.vca_receiving_caseworker = vca_receiving_caseworker;
+    }
+
+    public String getDistrict_moved_to() {
+        return district_moved_to;
+    }
+
+    public void setDistrict_moved_to(String district_moved_to) {
+        this.district_moved_to = district_moved_to;
+    }
+
+    public String getName_ovc() {
+        return name_ovc;
+    }
+
+    public void setName_ovc(String name_ovc) {
+        this.name_ovc = name_ovc;
+    }
+
+    public String getLocation_moved_to() {
+        return location_moved_to;
+    }
+
+    public void setLocation_moved_to(String location_moved_to) {
+        this.location_moved_to = location_moved_to;
+    }
+
+    public String getOvc_district() {
+        return ovc_district;
+    }
+
+    public void setOvc_district(String ovc_district) {
+        this.ovc_district = ovc_district;
+    }
 }
+
+

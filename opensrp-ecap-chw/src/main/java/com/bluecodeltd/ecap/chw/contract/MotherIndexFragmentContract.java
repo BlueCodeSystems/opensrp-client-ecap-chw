@@ -5,9 +5,9 @@ import org.smartregister.view.contract.BaseRegisterFragmentContract;
 public interface MotherIndexFragmentContract {
 
     interface Presenter extends BaseRegisterFragmentContract.Presenter {
-        void initView(MotherIndexFragmentContract.View view);
+        void initView(View view);
 
-        MotherIndexFragmentContract.View getView();
+        View getView();
     }
 
     interface View extends BaseRegisterFragmentContract.View {

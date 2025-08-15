@@ -2,6 +2,8 @@ package com.bluecodeltd.ecap.chw.adapter;
 
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getAllSharedPreferences;
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getFormTag;
+import static com.vijay.jsonwizard.utils.FormUtils.fields;
+import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.chw.fp.util.FpUtil.getClientProcessorForJava;
 import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
 
@@ -10,6 +12,10 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,16 +23,21 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.dao.VCAScreeningDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.Child;
+import com.bluecodeltd.ecap.chw.model.Household;
+import com.bluecodeltd.ecap.chw.model.VcaScreeningModel;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -46,6 +57,9 @@ import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -69,18 +83,18 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
     }
 
     @Override
-    public VisitAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_vca_visit, parent, false);
 
-        VisitAdapter.ViewHolder viewHolder = new VisitAdapter.ViewHolder(v);
+        ViewHolder viewHolder = new ViewHolder(v);
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(VisitAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 
         final VcaVisitationModel visit = visits.get(position);
 
@@ -94,7 +108,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
 
                 try {
 
-                    openFormUsingFormUtils(context, "household_visitation_for_vca_0_20_years", visit);
+                    openFormUsingFormUtils(context, "household_visitation_for_vca_0_20_years_edit", visit);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -106,29 +120,39 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
         CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(visit.getUnique_id());
 
         holder.editme.setOnClickListener(v -> {
-            if( caseStatusModel.getCase_status().equals("0") ||  caseStatusModel.getCase_status().equals("2")) {
-                Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.dialog_layout);
-                dialog.show();
+            try {
+                if (caseStatusModel != null && caseStatusModel.getCase_status() != null) {
+                    // Check case status
+                    if (caseStatusModel.getCase_status().equals("0") || caseStatusModel.getCase_status().equals("2")) {
+                        Dialog dialog = new Dialog(context);
+                        dialog.setContentView(R.layout.dialog_layout);
+                        dialog.show();
 
-                TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                dialogMessage.setText(caseStatusModel.getFirst_name() + " " + caseStatusModel.getLast_name() + " was either de-registered or inactive in the program");
+                        TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                        String firstName = caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "Unknown";
+                        String lastName = caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "User";
 
-                Button dialogButton = dialog.findViewById(R.id.dialog_button);
-                dialogButton.setOnClickListener(va -> dialog.dismiss());
+                        dialogMessage.setText(firstName + " " + lastName +
+                                " was either de-registered or inactive in the program");
 
-            } else {
-                if (v.getId() == R.id.edit_me) {
-
-                    try {
-
-                        openFormUsingFormUtils(context, "household_visitation_for_vca_0_20_years", visit);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                        dialogButton.setOnClickListener(va -> dialog.dismiss());
+                    } else {
+                        if (v.getId() == R.id.edit_me) {
+                            try {
+                                openFormUsingFormUtils(context, "household_visitation_for_vca_0_20_years_edit", visit);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Toast.makeText(context, "Error opening the form. Please try again.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
-
+                } else {
+                    Toast.makeText(context, "Unable to retrieve case status. Please try again.", Toast.LENGTH_SHORT).show();
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(context, "An unexpected error occurred. Please try again.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -147,8 +171,9 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
                     e.printStackTrace();
                 }
                 visit.setDelete_status("1");
-                JSONObject vcaScreeningForm = formUtils.getFormJson("household_visitation_for_vca_0_20_years");
+                JSONObject vcaScreeningForm = formUtils.getFormJson("household_visitation_for_vca_0_20_years_edit");
                 try {
+
                     CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue( visit, Map.class));
                     vcaScreeningForm.put("entity_id", visit.getBase_entity_id());
                 } catch (JSONException e) {
@@ -248,8 +273,45 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
 
             holder.updatedHivStatusDate.setText(visit.getVisit_date() != null ? visit.getVisit_date() : "Date not set");
         }
-    }
 
+        Household household = HouseholdDao.getHousehold(childModel.getHousehold_id());
+
+        String encodedSignature = visit.getSignature();
+        String encodeSignatureHousehold = household.getSignature();
+
+
+        if(encodedSignature != null && encodedSignature != "") {
+            setImageViewFromBase64(encodedSignature, holder.signatureView);
+        } else {
+            if(encodeSignatureHousehold != null && encodeSignatureHousehold != "") {
+                setImageViewFromBase64(encodeSignatureHousehold, holder.signatureView);
+            } else {
+                holder.signatureView.setVisibility(View.GONE);
+            }
+        }
+    }
+    private void setImageViewFromBase64(String base64Str, ImageView imageView) {
+        try {
+            // Decode the Base64 string into bytes
+            byte[] decodedBytes = Base64.decode(base64Str, Base64.DEFAULT);
+
+            // Convert bytes to a Bitmap
+            Bitmap originalBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+
+            if (originalBitmap != null) {
+                // Resize the Bitmap to 36x36
+                Bitmap resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, 80, 80, true);
+
+                // Set the resized Bitmap to the ImageView
+                imageView.setImageBitmap(resizedBitmap);
+            } else {
+                Log.e("ImageDecode", "Bitmap is null. Check Base64 input.");
+            }
+        } catch (IllegalArgumentException e) {
+            // Handle invalid Base64 string
+            Log.e("ImageDecode", "Invalid Base64 string: " + e.getMessage());
+        }
+    }
     public void openFormUsingFormUtils(Context context, String formName, VcaVisitationModel visit) throws JSONException {
 
         oMapper = new ObjectMapper();
@@ -265,6 +327,77 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
         formToBeOpened = formUtils.getFormJson(formName);
 
         formToBeOpened.put("entity_id", visit.getBase_entity_id());
+        VcaScreeningModel vcaScreeningModel = VCAScreeningDao.getVcaScreening(visit.getUnique_id());
+
+
+        Double vAge = getAndCalculateAge(vcaScreeningModel.getAdolescent_birthdate());
+
+        JSONObject hiv_infection = getFieldJSONObject(fields(formToBeOpened, "step1"), "hiv_infection");
+
+
+        if (vAge >= 10.0 && vAge <= 17.0) {
+            hiv_infection.put("type", "native_radio");
+
+        } else {
+            hiv_infection.put("type", "hidden");
+
+        }
+
+
+        JSONObject under_five = getFieldJSONObject(fields(formToBeOpened, "step1"), "under_five");
+        JSONObject nutrition_status = getFieldJSONObject(fields(formToBeOpened, "step1"), "nutrition_status");
+
+        if (vAge > 5) {
+            under_five.put("type", "hidden");
+            nutrition_status.put("type", "hidden");
+        }
+
+        JSONObject eid_test = getFieldJSONObject(fields(formToBeOpened, "step1"), "eid_test");
+        JSONObject age_appropriate = getFieldJSONObject(fields(formToBeOpened, "step1"), "age_appropriate");
+
+
+        if (vAge <= 5) {
+            eid_test.put("type", "edit_text");
+            age_appropriate.put("type", "native_radio");
+
+        }  else {
+            eid_test.put("type", "hidden");
+            age_appropriate.put("type", "hidden");
+
+        }
+
+
+        JSONObject currently_in_school = getFieldJSONObject(fields(formToBeOpened, "step1"), "currently_in_school");
+        JSONObject verified_by_school = getFieldJSONObject(fields(formToBeOpened, "step1"), "verified_by_school");
+        JSONObject current_calendar = getFieldJSONObject(fields(formToBeOpened, "step1"), "current_calendar");
+        JSONObject school_administration_name = getFieldJSONObject(fields(formToBeOpened, "step1"), "school_administration_name");
+        JSONObject telephone_number = getFieldJSONObject(fields(formToBeOpened, "step1"), "telephone_number");
+        JSONObject school_administration_date_signed = getFieldJSONObject(fields(formToBeOpened, "step1"), "school_administration_date_signed");
+        JSONObject school_administration_signature = getFieldJSONObject(fields(formToBeOpened, "step1"), "school_administration_signature");
+
+
+
+        if(vAge < 5.0){
+            currently_in_school.put("type", "hidden");
+            verified_by_school.put("type", "hidden");
+            current_calendar.put("type", "hidden");
+            school_administration_name.put("type", "hidden");
+            telephone_number.put("type", "hidden");
+            school_administration_date_signed.put("type", "hidden");
+            school_administration_signature.put("type", "hidden");
+        }
+
+        JSONObject question = getFieldJSONObject(fields(formToBeOpened, "step1"), "child_ever_experienced_sexual_violence");
+
+//        if(visit.getChild_ever_experienced_sexual_violence().equals("yes")){
+
+        question.put(JsonFormUtils.VALUE, "yes");
+//        } else if (hivRiskAssessmentUnder15Model.getQuestion().equals("no")) {
+//            question.put(JsonFormUtils.VALUE, "no");
+//        } else{
+//            question.put(JsonFormUtils.VALUE, "");
+//        }
+
 
         CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(visit, Map.class));
 
@@ -281,7 +414,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
         form.setNextLabel("Next");
         form.setPreviousLabel("Previous");
         form.setSaveLabel("Submit");
-        form.setActionBarBackground(R.color.dark_grey);
+        form.setActionBarBackground(org.smartregister.R.color.dark_grey);
         Intent intent = new Intent(context, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
@@ -309,7 +442,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
 
             switch (encounterType) {
 
-                case "Household Visitation Form 0-20 years":
+                case "Household Visitation Form 0-20 years Edit":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
@@ -394,6 +527,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
 
         LinearLayout linearLayout, exPandableView;
         ImageView expMore, expLess,editme, delete;
+        ImageView signatureView;
 
         public ViewHolder(View itemView) {
 
@@ -410,6 +544,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
             initialHivStatusDate  = itemView.findViewById(R.id.initial_hiv_status_date);
             updateHivStatus = itemView.findViewById(R.id.updated_hiv_status);
             updatedHivStatusDate = itemView.findViewById(R.id.updated_hiv_status_date);
+            signatureView = itemView.findViewById(R.id.signature_view);
 
         }
 
@@ -417,6 +552,25 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
         @Override
         public void onClick(View v) {
 
+        }
+    }
+    private double getAndCalculateAge(String birthdate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
+        LocalDate today = LocalDate.now();
+        Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
+
+        int years = periodBetweenDateOfBirthAndNow.getYears();
+        int months = periodBetweenDateOfBirthAndNow.getMonths();
+
+        if (years == 0) {
+            if (months >= 10) return 0.5; // 10–11 months
+            else if (months >= 7) return 0.4; // 7–9 months
+            else if (months >= 4) return 0.3; // 4–6 months
+            else if (months >= 1) return 0.1; // 1–3 months
+            else return 0.0; // < 1 month
+        } else {
+            return (double) years;
         }
     }
 

@@ -22,7 +22,7 @@ public class VcaCasePlanDao extends AbstractDao {
         return values.get(0);
     }
 
-    public static AbstractDao.DataMap<VcaCasePlanModel> getVcaCasePlanModelMap() {
+    public static DataMap<VcaCasePlanModel> getVcaCasePlanModelMap() {
         return c -> {
 
             VcaCasePlanModel record = new VcaCasePlanModel();

@@ -1,19 +1,19 @@
 package com.bluecodeltd.ecap.chw.util;
 
+import static org.smartregister.chw.core.utils.CoreReferralUtils.getCommonRepository;
+
 import android.app.Activity;
 import android.util.Pair;
 import android.view.View;
 
-import org.jetbrains.annotations.NotNull;
-import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.UpdateRegisterDetailsActivity;
+
+import org.jetbrains.annotations.NotNull;
 import org.smartregister.chw.core.adapter.NotificationListAdapter;
 import org.smartregister.commonregistry.CommonPersonObject;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 
 import java.util.List;
-
-import static org.smartregister.chw.core.utils.CoreReferralUtils.getCommonRepository;
 
 public class NotificationsUtil {
 
@@ -49,7 +49,7 @@ public class NotificationsUtil {
         notificationListAdapter.getNotificationRecords().clear();
         notificationListAdapter.getNotificationRecords().addAll(notifications);
         notificationListAdapter.notifyDataSetChanged();
-        activity.findViewById(R.id.notification_and_referral_row).setVisibility(View.VISIBLE);
-        activity.findViewById(R.id.view_notification_and_referral_row).setVisibility(View.VISIBLE);
+        activity.findViewById(org.smartregister.chw.core.R.id.notification_and_referral_row).setVisibility(View.VISIBLE);
+        activity.findViewById(org.smartregister.chw.core.R.id.notification_and_referral_row).setVisibility(View.VISIBLE);
     }
 }

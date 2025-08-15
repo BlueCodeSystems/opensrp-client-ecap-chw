@@ -3,6 +3,11 @@ package com.bluecodeltd.ecap.chw.model;
 public class GraduationModel {
     private String base_entity_id;
     private String household_id;
+    private String enrollment_date;
+    private String asmt;
+    private String caregiver_name;
+    private String caregiver_sex;
+    private String caregiver_birth_date;
     private String date_assessment;
     private String previous_asmt_date;
     private String hiv_status_enrolled;
@@ -25,6 +30,7 @@ public class GraduationModel {
     private String repeat_school;
     private String additional_information;
     private String graduation_status;
+    private String touching_in_sexual;
     private String delete_status;
 
     public String getBase_entity_id() {
@@ -41,6 +47,46 @@ public class GraduationModel {
 
     public void setHousehold_id(String household_id) {
         this.household_id = household_id;
+    }
+
+    public String getEnrollment_date() {
+        return enrollment_date;
+    }
+
+    public void setEnrollment_date(String enrollment_date) {
+        this.enrollment_date = enrollment_date;
+    }
+
+    public String getAsmt() {
+        return asmt;
+    }
+
+    public void setAsmt(String asmt) {
+        this.asmt = asmt;
+    }
+
+    public String getCaregiver_name() {
+        return caregiver_name;
+    }
+
+    public void setCaregiver_name(String caregiver_name) {
+        this.caregiver_name = caregiver_name;
+    }
+
+    public String getCaregiver_sex() {
+        return caregiver_sex;
+    }
+
+    public void setCaregiver_sex(String caregiver_sex) {
+        this.caregiver_sex = caregiver_sex;
+    }
+
+    public String getCaregiver_birth_date() {
+        return caregiver_birth_date;
+    }
+
+    public void setCaregiver_birth_date(String caregiver_birth_date) {
+        this.caregiver_birth_date = caregiver_birth_date;
     }
 
     public String getDate_assessment() {
@@ -217,6 +263,14 @@ public class GraduationModel {
 
     public void setGraduation_status(String graduation_status) {
         this.graduation_status = graduation_status;
+    }
+
+    public String getTouching_in_sexual() {
+        return touching_in_sexual;
+    }
+
+    public void setTouching_in_sexual(String touching_in_sexual) {
+        this.touching_in_sexual = touching_in_sexual;
     }
 
     public String getDelete_status() {

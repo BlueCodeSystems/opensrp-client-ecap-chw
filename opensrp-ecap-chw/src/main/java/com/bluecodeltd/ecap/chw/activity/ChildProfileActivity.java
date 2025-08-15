@@ -1,5 +1,15 @@
 package com.bluecodeltd.ecap.chw.activity;
 
+import static com.bluecodeltd.ecap.chw.util.Constants.MALARIA_REFERRAL_FORM;
+import static com.bluecodeltd.ecap.chw.util.NotificationsUtil.handleNotificationRowClick;
+import static com.bluecodeltd.ecap.chw.util.NotificationsUtil.handleReceivedNotifications;
+import static org.smartregister.chw.anc.util.Constants.ANC_MEMBER_OBJECTS.MEMBER_PROFILE_OBJECT;
+import static org.smartregister.chw.core.dao.ChildDao.queryColumnWithIdentifier;
+import static org.smartregister.chw.core.utils.CoreConstants.ThinkMdConstants.CARE_PLAN_DATE;
+import static org.smartregister.chw.core.utils.CoreConstants.ThinkMdConstants.FHIR_BUNDLE_INTENT;
+import static org.smartregister.chw.core.utils.Utils.updateToolbarTitle;
+import static org.smartregister.opd.utils.OpdConstants.DateFormat.YYYY_MM_DD;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -12,12 +22,17 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import org.apache.commons.lang3.StringUtils;
-import org.json.JSONObject;
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
-import org.smartregister.chw.anc.domain.MemberObject;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.custom_view.FamilyMemberFloatingMenu;
+import com.bluecodeltd.ecap.chw.model.ReferralTypeModel;
+import com.bluecodeltd.ecap.chw.presenter.ChildProfilePresenter;
+import com.bluecodeltd.ecap.chw.schedulers.ChwScheduleTaskExecutor;
+
+import org.apache.commons.lang3.StringUtils;
+import org.json.JSONObject;
+import org.smartregister.chw.anc.domain.MemberObject;
 import org.smartregister.chw.core.activity.CoreChildProfileActivity;
 import org.smartregister.chw.core.adapter.NotificationListAdapter;
 import org.smartregister.chw.core.contract.CoreChildProfileContract;
@@ -28,26 +43,12 @@ import org.smartregister.chw.core.presenter.CoreChildProfilePresenter;
 import org.smartregister.chw.core.utils.ChwNotificationUtil;
 import org.smartregister.chw.core.utils.CoreConstants;
 import org.smartregister.chw.core.utils.CoreConstants.JSON_FORM;
-import com.bluecodeltd.ecap.chw.custom_view.FamilyMemberFloatingMenu;
-import com.bluecodeltd.ecap.chw.model.ReferralTypeModel;
-import com.bluecodeltd.ecap.chw.presenter.ChildProfilePresenter;
-import com.bluecodeltd.ecap.chw.schedulers.ChwScheduleTaskExecutor;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.family.util.Constants;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static org.smartregister.chw.anc.util.Constants.ANC_MEMBER_OBJECTS.MEMBER_PROFILE_OBJECT;
-import static org.smartregister.chw.core.dao.ChildDao.queryColumnWithIdentifier;
-import static org.smartregister.chw.core.utils.CoreConstants.ThinkMdConstants.CARE_PLAN_DATE;
-import static org.smartregister.chw.core.utils.CoreConstants.ThinkMdConstants.FHIR_BUNDLE_INTENT;
-import static org.smartregister.chw.core.utils.Utils.updateToolbarTitle;
-import static com.bluecodeltd.ecap.chw.util.Constants.MALARIA_REFERRAL_FORM;
-import static com.bluecodeltd.ecap.chw.util.NotificationsUtil.handleNotificationRowClick;
-import static com.bluecodeltd.ecap.chw.util.NotificationsUtil.handleReceivedNotifications;
-import static org.smartregister.opd.utils.OpdConstants.DateFormat.YYYY_MM_DD;
 
 public class ChildProfileActivity extends CoreChildProfileActivity implements OnRetrieveNotifications, CoreChildProfileContract.Flavor {
     public FamilyMemberFloatingMenu familyFloatingMenu;
@@ -101,26 +102,26 @@ public class ChildProfileActivity extends CoreChildProfileActivity implements On
     public void onClick(View view) {
         super.onClick(view);
         int i = view.getId();
-        if (i == R.id.last_visit_row) {
+        if (i == org.smartregister.chw.core.R.id.last_visit_row) {
             openMedicalHistoryScreen();
-        } else if (i == R.id.vaccine_history) {
+        } else if (i == org.smartregister.chw.core.R.id.vaccine_history) {
             openMedicalHistoryScreen();
-        } else if (i == R.id.most_due_overdue_row) {
+        } else if (i == org.smartregister.chw.core.R.id.most_due_overdue_row) {
             openUpcomingServicePage();
-        } else if (i == R.id.view_due_today) {
+        } else if (i == org.smartregister.chw.core.R.id.view_due_today) {
             openUpcomingServicePage();
-        } else if (i == R.id.textview_record_visit || i == R.id.record_visit_done_bar) {
+        } else if (i == org.smartregister.chw.core.R.id.textview_record_visit || i == org.smartregister.chw.core.R.id.record_visit_done_bar) {
             openVisitHomeScreen(false);
         } else if (i == R.id.family_has_row) {
             openFamilyDueTab();
-        } else if (i == R.id.textview_edit) {
+        } else if (i == org.smartregister.chw.core.R.id.textview_edit) {
             openVisitHomeScreen(true);
         }
-        if (i == R.id.textview_visit_not) {
+        if (i == org.smartregister.chw.core.R.id.textview_visit_not) {
             presenter().updateVisitNotDone(System.currentTimeMillis());
             imageViewCrossChild.setVisibility(View.VISIBLE);
             imageViewCrossChild.setImageResource(R.drawable.activityrow_notvisited);
-        } else if (i == R.id.textview_undo) {
+        } else if (i == org.smartregister.chw.core.R.id.textview_undo) {
             presenter().updateVisitNotDone(0);
         }
         handleNotificationRowClick(this, view, notificationListAdapter, childBaseEntityId);
@@ -184,19 +185,19 @@ public class ChildProfileActivity extends CoreChildProfileActivity implements On
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        menu.findItem(R.id.action_sick_child_form).setVisible(ChwApplication.getApplicationFlavor().hasChildSickForm()
+        menu.findItem(org.smartregister.chw.core.R.id.action_sick_child_form).setVisible(ChwApplication.getApplicationFlavor().hasChildSickForm()
                 && flavor.isChildOverTwoMonths(((CoreChildProfilePresenter) presenter).getChildClient())
                 && !ChwApplication.getApplicationFlavor().useThinkMd());
-        menu.findItem(R.id.action_sick_child_follow_up).setVisible(false);
-        menu.findItem(R.id.action_malaria_diagnosis).setVisible(false);
-        menu.findItem(R.id.action_malaria_followup_visit).setVisible(false);
-        menu.findItem(R.id.action_thinkmd_health_assessment).setVisible(ChwApplication.getApplicationFlavor().useThinkMd()
+        menu.findItem(org.smartregister.chw.core.R.id.action_sick_child_follow_up).setVisible(false);
+        menu.findItem(org.smartregister.chw.core.R.id.action_malaria_diagnosis).setVisible(false);
+        menu.findItem(org.smartregister.chw.core.R.id.action_malaria_followup_visit).setVisible(false);
+        menu.findItem(org.smartregister.chw.core.R.id.action_thinkmd_health_assessment).setVisible(ChwApplication.getApplicationFlavor().useThinkMd()
                 && flavor.isChildOverTwoMonths(((CoreChildProfilePresenter) presenter).getChildClient()));
         if (ChwApplication.getApplicationFlavor().useThinkMd()
                 && StringUtils.isNotBlank(queryColumnWithIdentifier(CoreConstants.DB_CONSTANTS.BASE_ENTITY_ID, childBaseEntityId, CARE_PLAN_DATE))) {
-            menu.findItem(R.id.action_thinkmd_careplan).setVisible(true);
-            menu.findItem(R.id.action_thinkmd_careplan).setTitle(
-                    String.format(getResources().getString(R.string.thinkmd_careplan), queryColumnWithIdentifier(CoreConstants.DB_CONSTANTS.BASE_ENTITY_ID, childBaseEntityId, CARE_PLAN_DATE))
+            menu.findItem(org.smartregister.chw.core.R.id.action_thinkmd_careplan).setVisible(true);
+            menu.findItem(org.smartregister.chw.core.R.id.action_thinkmd_careplan).setTitle(
+                    String.format(getResources().getString(org.smartregister.chw.core.R.string.thinkmd_careplan), queryColumnWithIdentifier(CoreConstants.DB_CONSTANTS.BASE_ENTITY_ID, childBaseEntityId, CARE_PLAN_DATE))
             );
         }
         return true;
@@ -237,7 +238,7 @@ public class ChildProfileActivity extends CoreChildProfileActivity implements On
         intent.putExtra(Constants.INTENT_KEY.FAMILY_NAME, ((ChildProfilePresenter) presenter()).getFamilyName());
         intent.putExtra(Constants.INTENT_KEY.BASE_ENTITY_ID, ((ChildProfilePresenter) presenter()).getChildBaseEntityId());
 
-        intent.putExtra(com.bluecodeltd.ecap.chw.util.Constants.INTENT_KEY.SERVICE_DUE, true);
+        intent.putExtra("Constants.INTENT_KEY.SERVICE_DUE", true);
         startActivity(intent);
     }
 
@@ -248,7 +249,7 @@ public class ChildProfileActivity extends CoreChildProfileActivity implements On
 
         if (memberObject.getAge() >= 5) {
             referralTypeModels.add(new ReferralTypeModel(getString(R.string.suspected_malaria),
-                    BuildConfig.USE_UNIFIED_REFERRAL_APPROACH ? CoreConstants.JSON_FORM.getMalariaReferralForm()
+                    BuildConfig.USE_UNIFIED_REFERRAL_APPROACH ? JSON_FORM.getMalariaReferralForm()
                             : MALARIA_REFERRAL_FORM, CoreConstants.TASKS_FOCUS.SUSPECTED_MALARIA));
         }
         if (BuildConfig.USE_UNIFIED_REFERRAL_APPROACH) {

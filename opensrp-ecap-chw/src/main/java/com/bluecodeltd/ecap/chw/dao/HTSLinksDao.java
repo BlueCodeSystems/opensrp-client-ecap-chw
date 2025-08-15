@@ -12,7 +12,7 @@ public class HTSLinksDao extends AbstractDao {
 
         String sql = "SELECT COUNT(*) AS htsCount FROM ec_hiv_testing_links WHERE client_number = '" + clientID + "' AND (delete_status IS NULL OR delete_status <> '1') ";
 
-        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "htsCount");
+        DataMap<String> dataMap = c -> getCursorValue(c, "htsCount");
 
         List<String> values = AbstractDao.readData(sql, dataMap);
 
@@ -31,6 +31,35 @@ public class HTSLinksDao extends AbstractDao {
 
         return values;
     }
+    public static HTSlinksModel getLinks (String clientID) {
+
+
+        String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_linked,7,4) || '-' || substr(date_linked,4,2) || '-' || substr(date_linked,1,2)) as sortable_date FROM ec_hiv_testing_links WHERE client_number = '" + clientID + "'" +
+                " AND (delete_status IS NULL OR delete_status <> '1') ORDER BY sortable_date DESC ";
+
+        List<HTSlinksModel> values = AbstractDao.readData(sql, getHTSlinksModelMap());
+
+        if (values.size() == 0) {
+            return null;
+        }
+
+
+        return values.get(0);
+    }
+
+    public static boolean hasLinksCheck(String clientID) {
+
+        String sql = "SELECT *, strftime('%Y-%m-%d', substr(date_linked,7,4) || '-' || " +
+                "substr(date_linked,4,2) || '-' || substr(date_linked,1,2)) as sortable_date " +
+                "FROM ec_hiv_testing_links WHERE client_number = '" + clientID + "' " +
+                "AND (delete_status IS NULL OR delete_status <> '1') ORDER BY sortable_date DESC";
+
+        List<HTSlinksModel> values = AbstractDao.readData(sql, getHTSlinksModelMap());
+
+        // Return true if the query returns results, otherwise false
+        return !values.isEmpty();
+    }
+
 
     public static DataMap<HTSlinksModel> getHTSlinksModelMap() {
         return c -> {
@@ -43,6 +72,7 @@ public class HTSLinksDao extends AbstractDao {
             record.setFirst_name(getCursorValue(c, "first_name"));
             record.setMiddle_name(getCursorValue(c, "middle_name"));
             record.setLast_name(getCursorValue(c, "last_name"));
+            record.setGender(getCursorValue(c,"gender"));
             record.setEcap_id(getCursorValue(c, "ecap_id"));
             record.setSub_population(getCursorValue(c, "sub_population"));
             record.setBirthdate(getCursorValue(c, "birthdate"));
@@ -61,6 +91,8 @@ public class HTSLinksDao extends AbstractDao {
             record.setComment(getCursorValue(c, "comment"));
             record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
             record.setChecked_by(getCursorValue(c, "checked_by"));
+            record.setArt_number(getCursorValue(c,"art_number"));
+            record.setContact_accepts_HTS_offer(getCursorValue(c,"contact_accepts_HTS_offer"));
             record.setDelete_status(getCursorValue(c, "delete_status"));
 
 

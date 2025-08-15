@@ -11,11 +11,11 @@ public class ChildDBConstants extends org.smartregister.chw.core.utils.ChildDBCo
     public static String ADD_COLUMN_CARE_PLAN_DATE = "ALTER TABLE ec_child ADD COLUMN care_plan_date VARCHAR;";
 
     public static String childDueVaccinesFilterForChildrenBelowTwoAndGirlsAgeNineToEleven() {
-        return childDueVaccinesFilterForChildrenBelowTwoAndGirlsAgeNineToEleven(DBConstants.KEY.DOB, org.smartregister.chw.core.utils.ChildDBConstants.KEY.ENTRY_POINT, org.smartregister.chw.core.utils.ChildDBConstants.KEY.MOTHER_ENTITY_ID);
+        return childDueVaccinesFilterForChildrenBelowTwoAndGirlsAgeNineToEleven(DBConstants.KEY.DOB, KEY.ENTRY_POINT, KEY.MOTHER_ENTITY_ID);
     }
 
     public static String childDueVaccinesFilterForChildrenBelowTwoAndGirlsAgeNineToEleven(String tableName) {
-        return childDueVaccinesFilterForChildrenBelowTwoAndGirlsAgeNineToEleven(tableColConcat(tableName, DBConstants.KEY.DOB), tableColConcat(tableName, org.smartregister.chw.core.utils.ChildDBConstants.KEY.ENTRY_POINT), tableColConcat(tableName, org.smartregister.chw.core.utils.ChildDBConstants.KEY.MOTHER_ENTITY_ID));
+        return childDueVaccinesFilterForChildrenBelowTwoAndGirlsAgeNineToEleven(tableColConcat(tableName, DBConstants.KEY.DOB), tableColConcat(tableName, KEY.ENTRY_POINT), tableColConcat(tableName, KEY.MOTHER_ENTITY_ID));
     }
 
     private static String childDueVaccinesFilterForChildrenBelowTwoAndGirlsAgeNineToEleven(String dateColumn, String entryPoint, String motherEntityId) {

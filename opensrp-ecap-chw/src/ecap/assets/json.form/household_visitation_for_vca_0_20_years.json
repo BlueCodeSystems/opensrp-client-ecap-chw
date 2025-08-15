@@ -53,7 +53,7 @@
     }
   },
   "step1": {
-    "title": "Household Visitation For VCA 0-20 years",
+    "title": "Quarterly Assessment Form For VCA ",
     "fields": [
       {
         "key": "unique_id",
@@ -145,6 +145,25 @@
         }
       },
       {
+        "key": "signature",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "signature",
+        "type": "hidden"
+      },
+      {
+        "key": "vca_visit_location",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vca_visit_location",
+        "openmrs_data_type": "text",
+        "type": "gps",
+        "v_required": {
+          "value": false,
+          "err": "Visit location is required"
+        }
+      },
+      {
         "key": "visit_date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -152,7 +171,7 @@
         "type": "date_picker",
         "hint": "Date of Household Visit",
         "look_up": "true",
-        "min_date": "01-01-1900",
+        "min_date": "01-11-2023",
         "max_date": "today",
         "v_required": {
           "value": true,
@@ -532,22 +551,7 @@
           }
         }
       },
-      {
-        "key": "vl_other",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "vl_other",
-        "type": "edit_text",
-        "hint": "Other",
-        "edit_type": "",
-        "read_only": false,
-        "relevance": {
-          "step1:vl_last_result": {
-            "type": "string",
-            "ex": "equalTo(., \"Other\")"
-          }
-        }
-      },
+
       {
         "key": "date_hiv",
         "openmrs_entity_parent": "",
@@ -790,7 +794,7 @@
       {
         "key": "eid_test",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "eid_test",
         "type": "edit_text",
         "hint": "Check child’s under-five clinic card When was the last EID test done?",
@@ -950,7 +954,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_infection",
-        "type": "native_radio",
+        "type": "hidden",
         "label": "Is the child able to describe at least two HIV infection risks in their local community?",
         "options": [
           {
@@ -1128,14 +1132,7 @@
             "text": "No",
             "value": false
           }
-        ],
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "household_visitation_form_0_20.yml"
-            }
-          }
-        }
+        ]
       },
       {
         "key": "attending_under_five_clinic",
@@ -1216,22 +1213,6 @@
         }
       },
       {
-        "key": "muac_measure",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "muac_measure",
-        "type": "edit_text",
-        "hint": "What is the child’s MUAC measurement?",
-        "edit_type": "number",
-        "read_only": false,
-        "relevance": {
-          "step1:appropriate_vaccinations": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-      {
         "key": "nutrition_counselling_a",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -1285,23 +1266,7 @@
           }
         }
       },
-      {
-        "key": "muac_other_a",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "muac_other_a",
-        "type": "edit_text",
-        "hint": "Other",
-        "edit_type": "name",
-        "read_only": false,
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "household_visitation_form_0_20.yml"
-            }
-          }
-        }
-      },
+
       {
         "key": "toaster",
         "openmrs_entity_parent": "",
@@ -1373,42 +1338,153 @@
           }
         }
       },
-      {
-        "key": "muac_other_b",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "muac_other_b",
-        "type": "edit_text",
-        "hint": "Other",
-        "edit_type": "name",
-        "read_only": false,
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "household_visitation_form_0_20.yml"
-            }
-          }
-        }
-      },
+
+
       {
         "key": "nutrition_status",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "nutrition_status",
         "type": "edit_text",
-        "hint": "With reference to the age of the child, what is the nutrition status of the child?",
-        "edit_type": "name",
-        "read_only": "false",
-        "look_up": "true",
+        "hint": "What is the child’s MUAC measurement?",
+        "edit_type": "number",
+        "read_only": false,
         "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid name"
-        },
+          "value": "^(0|[1-9]|1[0-9]|2[0-6])(\\.\\d+)?$",
+          "err": "Please enter a valid MUAC measurement (0–26 cm)"
+        }
+      },
+      {
+        "key": "medical_complications",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "medical_complications",
+        "type": "native_radio",
+        "label": "Medical Complications?",
+        "options": [
+          {
+            "key": "Medical Complications present",
+            "text": "Medical Complications present"
+          },
+          {
+            "key": "No Medical Complications",
+            "text": "No Medical Complications"
+          }
+        ],
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "household_visitation_form_0_20.yml"
+              "rules-file": "home_visitation_muac.yml"
             }
+          }
+        }
+      },
+      {
+        "key": "patient toaster",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions_a",
+        "type": "toaster_notes",
+        "text": "-Refer for in-patient care and rehabilitation according to IMCI protocal\n-Rehydrate if necessary\n-Give phased feeding following IMAM guidelines",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:medical_complications": {
+            "type": "string",
+            "ex": "equalTo(., \"Medical Complications present\")"
+          }
+        }
+      },
+      {
+        "key": "patient toaster 2",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions_a",
+        "type": "toaster_notes",
+        "text": "-Treat as outpatient with RUTF & medications following IMAM guidelines",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:medical_complications": {
+            "type": "string",
+            "ex": "equalTo(., \"No Medical Complications\")"
+          }
+        }
+      },
+      {
+        "key": "patient toaster 3",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions_a",
+        "type": "toaster_notes",
+        "text": " -Treat any infections\n-Prevent further weight loss and infections with fortified blended flours\n -Ensure adequate micronutrient intake",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_type": "info",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "home_visitation_muac.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "child_oedema",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "child_oedema",
+        "type": "native_radio",
+        "label": "Does the child have Oedema?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "home_visitation_muac.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "oedema_stage",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "oedema_stage",
+        "type": "native_radio",
+        "label": "Oedema Stage",
+        "options": [
+          {
+            "key": "Grade 1",
+            "text": "Grade 1"
+          },
+          {
+            "key": "Grade 2",
+            "text": "Grade 2"
+          },
+          {
+            "key": "Grade 3",
+            "text": "Grade 3"
+          },
+          {
+            "key": "nill",
+            "text": "Nil"
+          }
+        ],
+        "relevance": {
+          "step1:child_oedema": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2353,7 +2429,7 @@
         "duration": {
           "label": ""
         },
-        "min_date": "today-100y",
+        "min_date": "01-11-2023",
         "max_date": "today",
         "v_required": {
           "value": false,

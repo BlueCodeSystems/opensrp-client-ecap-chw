@@ -16,7 +16,7 @@ public class RoutineHouseHoldDao extends AbstractDao {
         String sql = "select eventDate from event where eventType = '" + CoreConstants.EventType.ROUTINE_HOUSEHOLD_VISIT + "' and " +
                 "baseEntityId = '" + familyBaseEntityID + "' order by eventDate desc limit 1";
 
-        AbstractDao.DataMap<Date> dataMap = c -> getCursorValueAsDate(c, "eventDate", getDobDateFormat());
+        DataMap<Date> dataMap = c -> getCursorValueAsDate(c, "eventDate", getDobDateFormat());
         List<Date> res = AbstractDao.readData(sql, dataMap);
         if (res == null || res.size() == 0)
             return 0;

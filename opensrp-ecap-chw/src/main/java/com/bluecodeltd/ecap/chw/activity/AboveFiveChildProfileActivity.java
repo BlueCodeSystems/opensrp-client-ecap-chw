@@ -1,5 +1,8 @@
 package com.bluecodeltd.ecap.chw.activity;
 
+import static com.bluecodeltd.ecap.chw.util.Constants.MALARIA_REFERRAL_FORM;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Gravity;
@@ -7,24 +10,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
-import org.smartregister.chw.core.activity.CoreAboveFiveChildProfileActivity;
-import org.smartregister.chw.core.contract.CoreChildProfileContract;
-import org.smartregister.chw.core.model.CoreChildProfileModel;
-import org.smartregister.chw.core.utils.CoreConstants;
 import com.bluecodeltd.ecap.chw.custom_view.FamilyMemberFloatingMenu;
 import com.bluecodeltd.ecap.chw.model.ReferralTypeModel;
 import com.bluecodeltd.ecap.chw.presenter.AboveFiveChildProfilePresenter;
 import com.bluecodeltd.ecap.chw.schedulers.ChwScheduleTaskExecutor;
+
+import org.smartregister.chw.core.activity.CoreAboveFiveChildProfileActivity;
+import org.smartregister.chw.core.contract.CoreChildProfileContract;
+import org.smartregister.chw.core.model.CoreChildProfileModel;
+import org.smartregister.chw.core.utils.CoreConstants;
 import org.smartregister.family.util.Constants;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static com.bluecodeltd.ecap.chw.util.Constants.MALARIA_REFERRAL_FORM;
 
 public class AboveFiveChildProfileActivity extends CoreAboveFiveChildProfileActivity implements CoreChildProfileContract.Flavor {
     public FamilyMemberFloatingMenu familyFloatingMenu;
@@ -38,7 +41,7 @@ public class AboveFiveChildProfileActivity extends CoreAboveFiveChildProfileActi
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        menu.findItem(R.id.action_malaria_followup_visit).setVisible(false);
+        menu.findItem(org.smartregister.chw.core.R.id.action_malaria_followup_visit).setVisible(false);
         return true;
     }
 
@@ -95,6 +98,7 @@ public class AboveFiveChildProfileActivity extends CoreAboveFiveChildProfileActi
     }
 
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -127,7 +131,7 @@ public class AboveFiveChildProfileActivity extends CoreAboveFiveChildProfileActi
         intent.putExtra(Constants.INTENT_KEY.PRIMARY_CAREGIVER, ((AboveFiveChildProfilePresenter) presenter()).getPrimaryCareGiverID());
         intent.putExtra(Constants.INTENT_KEY.FAMILY_NAME, ((AboveFiveChildProfilePresenter) presenter()).getFamilyName());
 
-        intent.putExtra(com.bluecodeltd.ecap.chw.util.Constants.INTENT_KEY.SERVICE_DUE, true);
+        intent.putExtra("Service Due", true);
         startActivity(intent);
     }
 

@@ -144,6 +144,9 @@
             android:name=".activity.MalariaRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
+            android:name="com.bluecodeltd.ecap.chw.activity.SignatureActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
             android:name=".activity.FpRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
@@ -156,6 +159,10 @@
             android:name=".activity.FamilyProfileMenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
+            android:name=".activity.HeiDetailsActivity"
+            android:exported="false"
+            android:theme="@style/ChwTheme.NoActionBar"/>
         <activity
             android:name=".activity.FamilyRegisterActivity"
             android:label="@string/app_name"

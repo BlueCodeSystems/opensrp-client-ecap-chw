@@ -227,12 +227,18 @@
         "spacer_height": "15dp"
       },
       {
-        "key": "hd2",
+        "key": "risk_assessment_heading",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd1",
         "type": "label",
-        "text": "HIV RISK ASSESSMENT OF PRIMARY CAREGIVER"
+        "text": "HIV RISK ASSESSMENT OF PRIMARY CAREGIVER",
+        "relevance": {
+          "step1:test_6months": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
+        }
       },
       {
         "key": "symptoms",
@@ -526,7 +532,13 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd1",
         "type": "label",
-        "text": "ART ASSESSMENT FOR HIV+ CAREGIVER"
+        "text": "ART ASSESSMENT FOR HIV+ CAREGIVER",
+        "relevance": {
+          "step1:caregiver_hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"positive\")"
+          }
+        }
       },
       {
         "key": "active_on_treatment",
@@ -554,13 +566,7 @@
           }
         }
       },
-      {
-        "key": "date_of_last_viral_load",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_of_last_viral_load",
-        "type": "hidden"
-      },
+
       {
         "key": "caregiver_art_number",
         "openmrs_entity_parent": "",
@@ -742,10 +748,9 @@
           }
         ],
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "caregiver_household_vulnerability_assessment_relevance.yml"
-            }
+          "step1:caregiver_hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"positive\")"
           }
         }
       },
@@ -795,7 +800,7 @@
         "duration": {
           "label": ""
         },
-        "min_date": "today-100y",
+        "min_date": "01-06-1900",
         "max_date": "today",
         "v_required": {
           "value": false,
@@ -1126,7 +1131,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "household_number",
         "type": "edit_text",
-        "hint": "How many members does the household have?"
+        "hint": "How many members does \nthe household have?",
+        "edit_type": "number",
+        "look_up": "true",
+        "v_regex": {
+          "value": "[0-9]*",
+          "err": "Please enter a valid number"
+        }
       },
       {
         "key": "caregiver_education",
@@ -1902,7 +1913,7 @@
       {
         "key": "household_eaten",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "household_eaten",
         "hint": "Has the household eaten at least 2\nmeals a day, every day, for the last\nmonth?",
         "type": "spinner",
@@ -2202,7 +2213,7 @@
         "type": "native_radio",
         "label_text_style": "",
         "text_color": "#000000",
-        "label": "Is there any child in this household who… …has not been registered at birth? …does not have a birth certificate or National Identification card?",
+        "label": "Is there any child in this household who has not been registered at birth? …does not have a birth certificate or National Identification card?",
         "options": [
           {
             "key": "Yes",

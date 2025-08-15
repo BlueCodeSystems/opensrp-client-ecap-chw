@@ -28,7 +28,7 @@ import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.Household;
-import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
+import com.bluecodeltd.ecap.chw.model.PmtctMotherPostnatalModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -56,37 +56,31 @@ import timber.log.Timber;
 
 public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMotherAdapter.ViewHolder> {
     Context context;
-    List<PtctMotherModel> postnatal;
+    List<PmtctMotherPostnatalModel> postnatal;
     ObjectMapper oMapper;
 
-    public PostnatalMotherAdapter(Context context, List<PtctMotherModel> postnatal) {
+    public PostnatalMotherAdapter(Context context, List<PmtctMotherPostnatalModel> postnatal) {
         this.context = context;
         this.postnatal = postnatal;
     }
 
     @NonNull
     @Override
-    public PostnatalMotherAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.mother_postnatal_list, parent, false);
-        PostnatalMotherAdapter.ViewHolder viewHolder = new PostnatalMotherAdapter.ViewHolder(v);
+        ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PostnatalMotherAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        final PtctMotherModel visit = postnatal.get(position);
+        final PmtctMotherPostnatalModel visit = postnatal.get(position);
 
         holder.setIsRecyclable(false);
 
         holder.txtDate.setText(visit.getDate_of_st_post_natal_care());
-//        Household householdModel = HouseholdDao.getHousehold(visit.getHousehold_id());
 
-//        if (householdModel.getCaregiver_hiv_status().equals("positive")){
-//            holder.exPandableView.setVisibility(View.GONE);
-//            holder.expMore.setVisibility(View.GONE);
-//            holder.expLess.setVisibility(View.GONE);
-//        }
         holder.linearLayout.setOnClickListener(v -> {
 
             if (v.getId() == R.id.itemm) {
@@ -254,7 +248,7 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
 
     }
 
-    public void openFormUsingFormUtils(Context context, String formName, PtctMotherModel visit) throws JSONException {
+    public void openFormUsingFormUtils(Context context, String formName, PmtctMotherPostnatalModel visit) throws JSONException {
 
         oMapper = new ObjectMapper();
 
@@ -285,7 +279,7 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
         form.setNextLabel("Next");
         form.setPreviousLabel("Previous");
         form.setSaveLabel("Submit");
-        form.setActionBarBackground(R.color.dark_grey);
+        form.setActionBarBackground(org.smartregister.R.color.dark_grey);
         Intent intent = new Intent(context, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());

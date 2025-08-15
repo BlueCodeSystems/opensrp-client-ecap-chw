@@ -293,12 +293,15 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
                 "first_name",
                 "middle_name",
                 "last_name",
-                "client_number"
+                "client_number",
+                "delete_status"
         });
         map.put(Constants.EcapClientTable.EC_MOTHER_PMTCT, new String[]{
-                "mothers_full_name",
+                DBConstants.KEY.LAST_INTERACTED_WITH,
+                "first_name",
+                "last_name",
                 "pmtct_id",
-                "household_id"
+                "delete_status"
         });
         return map;
     }
@@ -336,12 +339,15 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
                 "middle_name",
                 "last_name",
                 "client_number",
-                "testing_modality"
+                "testing_modality",
+                "delete_status"
         });
         map.put(Constants.EcapClientTable.EC_MOTHER_PMTCT, new String[]{
-                "mothers_full_name",
+                DBConstants.KEY.LAST_INTERACTED_WITH,
+                "first_name",
+                "last_name",
                 "pmtct_id",
-                "household_id"
+                "delete_status"
         });
 
         return map;

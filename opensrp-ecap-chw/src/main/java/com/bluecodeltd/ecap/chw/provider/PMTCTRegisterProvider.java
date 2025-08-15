@@ -80,7 +80,7 @@ public class PMTCTRegisterProvider implements RecyclerViewProvider<PMTCTRegister
         CommonPersonObjectClient personObjectClient = (CommonPersonObjectClient) smartRegisterClient;
 
         String BaseEntityId = Utils.getValue(personObjectClient.getColumnmaps(), "base_entity_id", false);
-        String firstName = Utils.getValue(personObjectClient.getColumnmaps(), "mothers_full_name", true);
+        String firstName = Utils.getValue(personObjectClient.getColumnmaps(), "first_name", true);
         String lastName = Utils.getValue(personObjectClient.getColumnmaps(), "last_name", true);
         String clientId = Utils.getValue(personObjectClient.getColumnmaps(), "pmtct_id", false);
 //        String gender = Utils.getValue(personObjectClient.getColumnmaps(), "caregiver_sex", true);
@@ -95,7 +95,7 @@ public class PMTCTRegisterProvider implements RecyclerViewProvider<PMTCTRegister
             age = getAge(birthdate);
         }
 
-        pmtctRegisterViewHolder.setupViews(firstName,"ID : " + clientId, gender, age,client_type);
+        pmtctRegisterViewHolder.setupViews(firstName+" "+lastName,"ID : " + clientId, gender, age,client_type);
         pmtctRegisterViewHolder.itemView.setOnClickListener(onClickListener);
         pmtctRegisterViewHolder.itemView.findViewById(R.id.index_warning).setOnClickListener(onClickListener);
         pmtctRegisterViewHolder.itemView.setTag(smartRegisterClient);
@@ -105,7 +105,7 @@ public class PMTCTRegisterProvider implements RecyclerViewProvider<PMTCTRegister
     public void getFooterView(RecyclerView.ViewHolder viewHolder,int currentPageCount, int totalPageCount, boolean hasNextPage, boolean hasPreviousPage) {
         FooterViewHolder footerViewHolder = (FooterViewHolder) viewHolder;
         footerViewHolder.pageInfoView.setText(
-                MessageFormat.format(context.getString(org.smartregister.chw.core.R.string.str_page_info), currentPageCount, totalPageCount));
+                MessageFormat.format(context.getString(org.smartregister.R.string.str_page_info), currentPageCount, totalPageCount));
 
         footerViewHolder.nextPageView.setVisibility(hasNextPage ? View.VISIBLE : View.INVISIBLE);
         footerViewHolder.previousPageView.setVisibility(hasPreviousPage ? View.VISIBLE : View.INVISIBLE);
@@ -143,7 +143,7 @@ public class PMTCTRegisterProvider implements RecyclerViewProvider<PMTCTRegister
 
     @Override
     public RecyclerView.ViewHolder createFooterHolder(ViewGroup parent) {
-        View view = inflater().inflate(org.smartregister.chw.core.R.layout.smart_register_pagination, parent, false);
+        View view = inflater().inflate(org.smartregister.R.layout.smart_register_pagination, parent, false);
         return new FooterViewHolder(view);
     }
 

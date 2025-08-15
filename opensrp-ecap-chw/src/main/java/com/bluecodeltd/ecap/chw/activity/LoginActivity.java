@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -59,19 +60,35 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
     }
 
     @Override
+
     protected void onResume() {
         super.onResume();
-        mLoginPresenter.processViewCustomizations();
 
-        if (hasPinLogin()) {
-            pinLoginAttempt();
-            return;
-        }
+        try {
 
-        if (!mLoginPresenter.isUserLoggedOut()) {
-            goToHome(false);
+            if (mLoginPresenter != null) {
+                mLoginPresenter.processViewCustomizations();
+            } else {
+                Log.e("onResume", "LoginPresenter is null, unable to process view customizations.");
+            }
+
+            if (hasPinLogin()) {
+                pinLoginAttempt();
+                return;
+            }
+
+            if (mLoginPresenter != null && !mLoginPresenter.isUserLoggedOut()) {
+                goToHome(false);
+            } else if (mLoginPresenter == null) {
+                Log.e("onResume", "LoginPresenter is null, unable to check user login status.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("onResume", "An unexpected error occurred: " + e.getMessage());
+
         }
     }
+
 
     private void pinLoginAttempt() {
         // if the user has pin
@@ -163,7 +180,7 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
     @Override
     public void goToHome(boolean remote) {
         if (remote) {
-            Utils.startAsyncTask(new SaveTeamLocationsTask(), null);
+            Utils.startAsyncTask(new SaveTeamLocationsTask(), (Object) null);
         }
 
         if (hasPinLogin()) {
@@ -201,7 +218,7 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
             startActivity(intent);
             finish();
         } else {
-          // Changed something here
+            // Changed something here
             Intent intent = new Intent(this, ChwApplication.getApplicationFlavor().launchChildClientsAtLogin() ?
                     ChildRegisterActivity.class : IndexRegisterActivity.class);
             intent.putExtra(Constants.INTENT_KEY.IS_REMOTE_LOGIN, remote);

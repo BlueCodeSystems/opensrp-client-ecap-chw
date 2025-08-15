@@ -1,69 +1,72 @@
 package com.bluecodeltd.ecap.chw.model;
 
-public class CaregiverAssessmentModel {
 
+public class CaregiverAssessmentModel {
     private String base_entity_id;
-    private String household_id;
-    private String household_type;
-    private String monthly_expenses;
-    private String caregiver_hiv_status;
-    private String test_6months;
-    private String symptoms;
-    private String private_parts;
-    private String exposed;
-    private String unprotected;
-    private String breastfeeding;
-    private String last_year;
-    private String relation;
-    private String partner_caregiver;
-    private String active_on_treatment;
-    private String caregiver_art_number;
-    private String appointments;
-    private String art_regularly;
-    private String hiv_adherence;
-    private String months_medication;
-    private String viral_load_12months;
-    private String viral_load_results;
-    private String date_of_last_viral_load;
-    private String documented_12months;
-    private String pmtct_enrolled;
-    private String cancer_screened;
-    private String malnutrition_screened;
-    private String household_number;
-    private String caregiver_education;
-    private String household_member;
-    private String source_income;
-    private String other_source_main;
-    private String source_earner;
-    private String other_earner_other;
-    private String hh_head_spouse;
-    private String any_adult;
-    private String household_stable;
-    private String every_member;
-    private String material_construction;
-    private String material_construction_roof;
-    private String early_childhood;
-    private String children_adolescent_a;
-    private String children_adolescent_b;
-    private String drinking_water;
-    private String other_water_other;
-    private String toilet_facility;
-    private String sanitary_products;
-    private String other_sanitary_product_other;
-    private String material_construction_food;
-    private String other_food_source_other;
-    private String household_eaten;
-    private String household_eaten_month;
-    private String child;
-    private String pregnant_caregiver;
-    private String lack_resources;
-    private String limited_variety;
-    private String night_hungry;
-    private String child_household;
-    private String other_obvious_issues;
-    private String not_registered;
-    private String questions;
-    private String caregiver_question;
+    public String household_id;
+    public String household_type;
+    public String monthly_expenses;
+    public String caregiver_hiv_status;
+    public String income_source;
+    public String test_6months;
+    public String symptoms;
+    public String private_parts;
+    public String exposed;
+    public String unprotected;
+    public String breastfeeding;
+    public String active_on_treatment;
+    public String date_of_last_viral_load;
+    public String caregiver_art_number;
+    public String appointments;
+    public String art_regularly;
+    public String months_medication;
+    public String viral_load_12months;
+    public String viral_load_results;
+    public String documented_12months;
+    public String pmtct_enrolled;
+    public String cancer_screened;
+    public String malnutrition_screened;
+    public String last_year;
+    public String relation;
+    public String partner_caregiver;
+    public String household_number;
+    public String caregiver_education;
+    public String household_member;
+    public String source_income;
+    public String other_source_main;
+    public String source_earner;
+    public String other_earner_other;
+    public String last_time;
+    public String hh_head_spouse;
+    public String any_adult;
+    public String household_stable;
+    public String every_member;
+    public String material_construction;
+    public String material_construction_roof;
+    public String early_childhood;
+    public String children_adolescent_a;
+    public String children_adolescent_b;
+    public String drinking_water;
+    public String other_water_other;
+    public String toilet_facility;
+    public String other_toilet_facility;
+    public String sanitary_products;
+    public String other_sanitary_products;
+    public String material_construction_food;
+    public String other_food_source_other;
+    public String household_eaten;
+    public String household_eaten_month;
+    public String lack_resources;
+    public String limited_variety;
+    public String night_hungry;
+    public String risk_assessment_counselling;
+    public String other_medical;
+    public String other_hiv_unknown;
+    public String child_household;
+    public String other_obvious_issues;
+    public String not_registered;
+    public String questions;
+    public String caregiver_question;
 
     public String getBase_entity_id() {
         return base_entity_id;
@@ -153,36 +156,20 @@ public class CaregiverAssessmentModel {
         this.breastfeeding = breastfeeding;
     }
 
-    public String getLast_year() {
-        return last_year;
-    }
-
-    public void setLast_year(String last_year) {
-        this.last_year = last_year;
-    }
-
-    public String getRelation() {
-        return relation;
-    }
-
-    public void setRelation(String relation) {
-        this.relation = relation;
-    }
-
-    public String getPartner_caregiver() {
-        return partner_caregiver;
-    }
-
-    public void setPartner_caregiver(String partner_caregiver) {
-        this.partner_caregiver = partner_caregiver;
-    }
-
     public String getActive_on_treatment() {
         return active_on_treatment;
     }
 
     public void setActive_on_treatment(String active_on_treatment) {
         this.active_on_treatment = active_on_treatment;
+    }
+
+    public String getDate_of_last_viral_load() {
+        return date_of_last_viral_load;
+    }
+
+    public void setDate_of_last_viral_load(String date_of_last_viral_load) {
+        this.date_of_last_viral_load = date_of_last_viral_load;
     }
 
     public String getCaregiver_art_number() {
@@ -209,14 +196,6 @@ public class CaregiverAssessmentModel {
         this.art_regularly = art_regularly;
     }
 
-    public String getHiv_adherence() {
-        return hiv_adherence;
-    }
-
-    public void setHiv_adherence(String hiv_adherence) {
-        this.hiv_adherence = hiv_adherence;
-    }
-
     public String getMonths_medication() {
         return months_medication;
     }
@@ -239,14 +218,6 @@ public class CaregiverAssessmentModel {
 
     public void setViral_load_results(String viral_load_results) {
         this.viral_load_results = viral_load_results;
-    }
-
-    public String getDate_of_last_viral_load() {
-        return date_of_last_viral_load;
-    }
-
-    public void setDate_of_last_viral_load(String date_of_last_viral_load) {
-        this.date_of_last_viral_load = date_of_last_viral_load;
     }
 
     public String getDocumented_12months() {
@@ -279,6 +250,30 @@ public class CaregiverAssessmentModel {
 
     public void setMalnutrition_screened(String malnutrition_screened) {
         this.malnutrition_screened = malnutrition_screened;
+    }
+
+    public String getLast_year() {
+        return last_year;
+    }
+
+    public void setLast_year(String last_year) {
+        this.last_year = last_year;
+    }
+
+    public String getRelation() {
+        return relation;
+    }
+
+    public void setRelation(String relation) {
+        this.relation = relation;
+    }
+
+    public String getPartner_caregiver() {
+        return partner_caregiver;
+    }
+
+    public void setPartner_caregiver(String partner_caregiver) {
+        this.partner_caregiver = partner_caregiver;
     }
 
     public String getHousehold_number() {
@@ -335,6 +330,14 @@ public class CaregiverAssessmentModel {
 
     public void setOther_earner_other(String other_earner_other) {
         this.other_earner_other = other_earner_other;
+    }
+
+    public String getLast_time() {
+        return last_time;
+    }
+
+    public void setLast_time(String last_time) {
+        this.last_time = last_time;
     }
 
     public String getHh_head_spouse() {
@@ -433,6 +436,14 @@ public class CaregiverAssessmentModel {
         this.toilet_facility = toilet_facility;
     }
 
+    public String getOther_toilet_facility() {
+        return other_toilet_facility;
+    }
+
+    public void setOther_toilet_facility(String other_toilet_facility) {
+        this.other_toilet_facility = other_toilet_facility;
+    }
+
     public String getSanitary_products() {
         return sanitary_products;
     }
@@ -441,12 +452,12 @@ public class CaregiverAssessmentModel {
         this.sanitary_products = sanitary_products;
     }
 
-    public String getOther_sanitary_product_other() {
-        return other_sanitary_product_other;
+    public String getOther_sanitary_products() {
+        return other_sanitary_products;
     }
 
-    public void setOther_sanitary_product_other(String other_sanitary_product_other) {
-        this.other_sanitary_product_other = other_sanitary_product_other;
+    public void setOther_sanitary_products(String other_sanitary_products) {
+        this.other_sanitary_products = other_sanitary_products;
     }
 
     public String getMaterial_construction_food() {
@@ -479,22 +490,6 @@ public class CaregiverAssessmentModel {
 
     public void setHousehold_eaten_month(String household_eaten_month) {
         this.household_eaten_month = household_eaten_month;
-    }
-
-    public String getChild() {
-        return child;
-    }
-
-    public void setChild(String child) {
-        this.child = child;
-    }
-
-    public String getPregnant_caregiver() {
-        return pregnant_caregiver;
-    }
-
-    public void setPregnant_caregiver(String pregnant_caregiver) {
-        this.pregnant_caregiver = pregnant_caregiver;
     }
 
     public String getLack_resources() {
@@ -559,5 +554,37 @@ public class CaregiverAssessmentModel {
 
     public void setCaregiver_question(String caregiver_question) {
         this.caregiver_question = caregiver_question;
+    }
+
+    public String getRisk_assessment_counselling() {
+        return risk_assessment_counselling;
+    }
+
+    public void setRisk_assessment_counselling(String risk_assessment_counselling) {
+        this.risk_assessment_counselling = risk_assessment_counselling;
+    }
+
+    public String getOther_medical() {
+        return other_medical;
+    }
+
+    public void setOther_medical(String other_medical) {
+        this.other_medical = other_medical;
+    }
+
+    public String getOther_hiv_unknown() {
+        return other_hiv_unknown;
+    }
+
+    public void setOther_hiv_unknown(String other_hiv_unknown) {
+        this.other_hiv_unknown = other_hiv_unknown;
+    }
+
+    public String getIncome_source() {
+        return income_source;
+    }
+
+    public void setIncome_source(String income_source) {
+        this.income_source = income_source;
     }
 }

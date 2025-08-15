@@ -10,7 +10,11 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +65,15 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
     private static final long REFRESH_DELAY = 100;
     private Handler handler = new Handler();
 
+    public interface OnDataUpdateListener {
+        void onDataUpdate();
+    }
+    private OnDataUpdateListener onDataUpdateListener;
+
+    public void setOnDataUpdateListener(OnDataUpdateListener onDataUpdateListener) {
+        this.onDataUpdateListener = onDataUpdateListener;
+    }
+
 
     public HouseholdServiceAdapter(List<HouseholdServiceReportModel> services, Context context){
 
@@ -72,17 +85,17 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
     }
 
     @Override
-    public HouseholdServiceAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_service, parent, false);
 
-        HouseholdServiceAdapter.ViewHolder viewHolder = new HouseholdServiceAdapter.ViewHolder(v);
+        ViewHolder viewHolder = new ViewHolder(v);
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(HouseholdServiceAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 
         final HouseholdServiceReportModel service = services.get(position);
 
@@ -129,9 +142,37 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
 //            }
 //
 //        }
+        Household household = HouseholdDao.getHousehold(service.getHousehold_id());
 
+
+        String encodedSignature = service.getSignature();
+        String encodeSignatureHousehold = household.getSignature();
+
+
+        if(encodedSignature != null && encodedSignature != "") {
+            setImageViewFromBase64(encodedSignature, holder.signatureView);
+        } else {
+            if(encodeSignatureHousehold != null && encodeSignatureHousehold != "") {
+                setImageViewFromBase64(encodeSignatureHousehold, holder.signatureView);
+            } else {
+                holder.signatureView.setVisibility(View.GONE);
+            }
+        }
+        holder.edit.setOnClickListener(v -> {
+            if (household.getHousehold_case_status() != null &&
+                    (household.getHousehold_case_status().equals("0") || household.getHousehold_case_status().equals("2"))) {
+                showDialogBox(service.getHousehold_id(), "`s has been inactive or de-registered");
+            } else {
+                try {
+                    FormUtils formUtils = new FormUtils(context);
+                    openFormUsingFormUtils(context, "service_report_household_edit", service);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         holder.linearLayout.setOnClickListener(v -> {
-            Household household = HouseholdDao.getHousehold(service.getHousehold_id());
+
            if (household.getHousehold_case_status() != null && (household.getHousehold_case_status().equals("0") || household.getHousehold_case_status().equals("2"))) {
                 showDialogBox(service.getHousehold_id(), "`s has been inactive or de-registered");
             } else {
@@ -146,7 +187,7 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
 
 
                     try {
-                        openFormUsingFormUtils(context, "service_report_household", service);
+                        openFormUsingFormUtils(context, "service_report_household_edit", service);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -192,7 +233,9 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
                     } catch (Exception e) {
                         Timber.e(e);
                     }
-                   refreshActivity();
+                    if (context instanceof Activity) {
+                        ((Activity) context).finish();
+                    }
 
                 }));
 
@@ -262,6 +305,7 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
         }
 
         householdReport.setOther_health_services(service.getOther_health_services());
+        householdReport.setHh_service_location(service.getHh_service_location());
         householdReport.setSchooled_services(service.getSchooled_services());
         householdReport.setOther_schooled_services(service.getOther_schooled_services());
         householdReport.setSafe_services(service.getSafe_services());
@@ -298,7 +342,7 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
         form.setNextLabel("Next");
         form.setPreviousLabel("Previous");
         form.setSaveLabel("Submit");
-        form.setActionBarBackground(R.color.dark_grey);
+        form.setActionBarBackground(org.smartregister.R.color.dark_grey);
         Intent intent = new Intent(context, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
@@ -327,6 +371,7 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
 
             switch (encounterType) {
 
+                case "Household Service Report Edit":
                 case "Household Service Report":
 
                     if (fields != null) {
@@ -406,10 +451,35 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
         return services.size();
     }
 
+    private void setImageViewFromBase64(String base64Str, ImageView imageView) {
+        try {
+            // Decode the Base64 string into bytes
+            byte[] decodedBytes = Base64.decode(base64Str, Base64.DEFAULT);
+
+            // Convert bytes to a Bitmap
+            Bitmap originalBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+
+            if (originalBitmap != null) {
+                // Resize the Bitmap to 36x36
+                Bitmap resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, 80, 80, true);
+
+                // Set the resized Bitmap to the ImageView
+                imageView.setImageBitmap(resizedBitmap);
+            } else {
+                Log.e("ImageDecode", "Bitmap is null. Check Base64 input.");
+            }
+        } catch (IllegalArgumentException e) {
+            // Handle invalid Base64 string
+            Log.e("ImageDecode", "Invalid Base64 string: " + e.getMessage());
+        }
+    }
+
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView txtDate,txtserviceType, txtServices ;
-        ImageView delete;
+        ImageView delete, edit;
+        ImageView signatureView;
         LinearLayout linearLayout;
 
 
@@ -422,6 +492,8 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
             txtserviceType = itemView.findViewById(R.id.service);
             txtServices = itemView.findViewById(R.id.services);
             delete = itemView.findViewById(R.id.delete_record);
+            signatureView = itemView.findViewById(R.id.signature_view);
+            edit = itemView.findViewById(R.id.edit_me);
 
         }
 

@@ -8,6 +8,7 @@ import org.smartregister.dao.AbstractDao;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 public class GradDao extends AbstractDao {
@@ -47,7 +48,7 @@ public class GradDao extends AbstractDao {
                 "WHERE ec_client_index.household_id = '" + householdID + "' AND ec_visit.is_hiv_positive = 'yes' AND (ec_client_index.deleted IS NULL OR ec_client_index.deleted <> 1) \n" +
                 "GROUP BY ec_visit.unique_id\n" +
                 "ORDER BY ec_visit.visit_date DESC";
-        AbstractDao.DataMap<Boolean> dataMap = c -> {
+        DataMap<Boolean> dataMap = c -> {
             String indicateVlResult = getCursorValue(c, "indicate_vl_result");
             String isHivPositive = getCursorValue(c, "is_hiv_positive");
             if (indicateVlResult != null && isHivPositive != null &&
@@ -73,43 +74,74 @@ public class GradDao extends AbstractDao {
         return true;
     }
     public static boolean doTheVCAsMeetBenchMarkThree(String householdID) {
-        String sql = "SELECT grad.unique_id, grad.household_id, grad.infection_correct, grad.protect_correct, grad.prevention_correct, ec_client_index.adolescent_birthdate\n" +
-                " FROM ec_grad grad\n" +
-                " JOIN (SELECT unique_id, adolescent_birthdate,deleted FROM ec_client_index WHERE (deleted IS NULL OR deleted <> 1)) ec_client_index\n" +
-                " ON grad.unique_id = ec_client_index.unique_id WHERE grad.household_id = '" + householdID + "' AND  strftime('%Y', 'now') - strftime('%Y', substr(ec_client_index.adolescent_birthdate, 7, 4) || '-' || substr(ec_client_index.adolescent_birthdate, 4, 2) || '-' || substr(ec_client_index.adolescent_birthdate, 1, 2)) BETWEEN 12 AND 17";
+        if (householdID == null || householdID.trim().isEmpty()) {
+            return false; // Handle invalid householdID
+        }
 
-        AbstractDao.DataMap<VcaGradCorrectAnswers> dataMap = c -> {
+        // Basic sanitization to prevent SQL injection
+        if (householdID.contains("'") || householdID.contains(";") || householdID.contains("--")) {
+            return false; // Reject potentially malicious input
+        }
+
+        // Query all VCAs aged 10–17, including those without grad records
+        String sql = "SELECT ec_client_index.unique_id, ec_client_index.household_id, ec_client_index.adolescent_birthdate, " +
+                "grad.infection_correct, grad.protect_correct, grad.prevention_correct " +
+                "FROM ec_client_index " +
+                "LEFT JOIN ec_grad grad ON ec_client_index.unique_id = grad.unique_id " +
+                "WHERE (ec_client_index.deleted IS NULL OR ec_client_index.deleted <> 1) " +
+                "AND ec_client_index.household_id = '" + householdID + "' " +
+                "AND strftime('%Y', 'now') - strftime('%Y', substr(ec_client_index.adolescent_birthdate, 7, 4) || '-' || substr(ec_client_index.adolescent_birthdate, 4, 2) || '-' || substr(ec_client_index.adolescent_birthdate, 1, 2)) BETWEEN 10 AND 17";
+
+        DataMap<VcaGradCorrectAnswers> dataMap = c -> {
             String birthdateString = getCursorValue(c, "adolescent_birthdate");
             String infection_correct = getCursorValue(c, "infection_correct");
             String protect_correct = getCursorValue(c, "protect_correct");
             String prevention_correct = getCursorValue(c, "prevention_correct");
-            String birthdate = String.valueOf(LocalDate.parse(birthdateString, DateTimeFormatter.ofPattern("dd-MM-yyyy")));
-            return new VcaGradCorrectAnswers(birthdate, infection_correct, protect_correct, prevention_correct);
+
+            try {
+                LocalDate birthdate = LocalDate.parse(birthdateString, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+                return new VcaGradCorrectAnswers(birthdate.toString(), infection_correct, protect_correct, prevention_correct);
+            } catch (DateTimeParseException e) {
+                return null; // Skip invalid birthdate records
+            }
         };
 
         List<VcaGradCorrectAnswers> values = AbstractDao.readData(sql, dataMap);
 
         if (values == null || values.isEmpty()) {
-            return false;
+            return false; // No VCAs aged 10–17 in household
         }
 
         LocalDate today = LocalDate.now();
 
         for (VcaGradCorrectAnswers value : values) {
-            LocalDate birthdate = LocalDate.parse(value.getBirthdate());
-
-            int infectionCorrect = Integer.parseInt(value.getInfection_correct() != null ? value.getInfection_correct() : "0");
-            int protectCorrect = Integer.parseInt(value.getProtect_correct() != null ? value.getProtect_correct() : "0");
-            int preventionCorrect = Integer.parseInt(value.getPrevention_correct() != null ? value.getPrevention_correct() : "0");
-
-            if (infectionCorrect < 2 || protectCorrect < 1 || preventionCorrect < 1) {
+            if (value == null) {
                 return false;
             }
 
-            Period age = Period.between(birthdate, today);
-            int years = age.getYears();
+            try {
+                LocalDate birthdate = LocalDate.parse(value.getBirthdate());
+                int age = Period.between(birthdate, today).getYears();
 
-            if (years < 12 || years > 17) {
+                if (age < 10 || age > 17) {
+                    return false;
+                }
+
+
+                if (value.getInfection_correct() == null || value.getProtect_correct() == null || value.getPrevention_correct() == null) {
+                    return false;
+                }
+
+
+                int infectionCorrect = parseAnswer(value.getInfection_correct());
+                int protectCorrect = parseAnswer(value.getProtect_correct());
+                int preventionCorrect = parseAnswer(value.getPrevention_correct());
+
+
+                if (infectionCorrect < 2 || protectCorrect < 1 || preventionCorrect < 1) {
+                    return false;
+                }
+            } catch (DateTimeParseException e) {
                 return false;
             }
         }
@@ -118,11 +150,20 @@ public class GradDao extends AbstractDao {
     }
 
 
+    private static int parseAnswer(String answer) {
+        try {
+            return answer != null ? Integer.parseInt(answer) : 0;
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+
+
     public static boolean hasVCAInAgeRange(String householdID) {
 
         String sql = "SELECT unique_id, adolescent_birthdate, household_id " +
                 "FROM ec_client_index " +
-                "WHERE (strftime('%Y', 'now') - substr(adolescent_birthdate, 7, 4)) >= 12 " +
+                "WHERE (strftime('%Y', 'now') - substr(adolescent_birthdate, 7, 4)) >= 10 " +
                 "AND (strftime('%Y', 'now') - substr(adolescent_birthdate, 7, 4)) <= 17 " +
                 "AND household_id = '" + householdID + "'";
 
@@ -136,7 +177,7 @@ public class GradDao extends AbstractDao {
 
         String sql = "SELECT COUNT(*) AS childrenCount FROM ec_grad WHERE household_id = '" + householdID + "' AND CAST(correct as integer) = 1";
 
-        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "childrenCount");
+        DataMap<String> dataMap = c -> getCursorValue(c, "childrenCount");
 
         List<String> values = AbstractDao.readData(sql, dataMap);
 

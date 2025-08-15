@@ -26,7 +26,7 @@ public interface HouseholdIndexContract {
     interface Presenter extends BaseRegisterContract.Presenter {
         void saveForm(String jsonString, @NonNull RegisterParams registerParams);
 
-        HouseholdIndexContract.View getView();
+        View getView();
 
     }
 
@@ -35,7 +35,7 @@ public interface HouseholdIndexContract {
 
         void onDestroy(boolean isChangingConfiguration);
 
-        void saveRegistration(List<EventClient> opdEventClientList, String jsonString, RegisterParams registerParams, HouseholdIndexContract.InteractorCallBack callBack);
+        void saveRegistration(List<EventClient> opdEventClientList, String jsonString, RegisterParams registerParams, InteractorCallBack callBack);
 
     }
 

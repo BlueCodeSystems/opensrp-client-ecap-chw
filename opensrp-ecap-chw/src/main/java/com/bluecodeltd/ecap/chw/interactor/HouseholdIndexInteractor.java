@@ -10,11 +10,8 @@ import android.content.SharedPreferences;
 import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 
-import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.contract.HouseholdIndexContract;
-import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
 import com.bluecodeltd.ecap.chw.model.EventClient;
-import com.bluecodeltd.ecap.chw.model.HouseholdIndexEventClient;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Triple;
@@ -29,14 +26,10 @@ import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.family.util.Utils;
 import org.smartregister.opd.pojo.RegisterParams;
 import org.smartregister.opd.utils.OpdJsonFormUtils;
-import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.repository.EventClientRepository;
 import org.smartregister.repository.UniqueIdRepository;
-import org.smartregister.sync.ClientProcessorForJava;
-import org.smartregister.sync.helper.ECSyncHelper;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -96,7 +89,7 @@ public class HouseholdIndexInteractor implements HouseholdIndexContract.Interact
     }
 
     @Override
-    public void saveRegistration(final List<com.bluecodeltd.ecap.chw.model.EventClient> eventClientList, final String jsonString,
+    public void saveRegistration(final List<EventClient> eventClientList, final String jsonString,
                                  final RegisterParams registerParams, final HouseholdIndexContract.InteractorCallBack callBack) {
         Runnable runnable = () -> {
             saveMe(eventClientList, jsonString, registerParams);
@@ -106,7 +99,7 @@ public class HouseholdIndexInteractor implements HouseholdIndexContract.Interact
         appExecutors.diskIO().execute(runnable);
     }
 
-    public void saveMe(@NonNull List<com.bluecodeltd.ecap.chw.model.EventClient> allClientEventList, @NonNull String jsonString,
+    public void saveMe(@NonNull List<EventClient> allClientEventList, @NonNull String jsonString,
                        @NonNull RegisterParams params) {
         try {
             List<String> currentFormSubmissionIds = new ArrayList<>();
@@ -142,7 +135,7 @@ public class HouseholdIndexInteractor implements HouseholdIndexContract.Interact
             // UnAssign current OpenSRP ID
             if (baseClient != null) {
                 String newOpenSrpId = baseClient.getIdentifier(Utils.metadata().uniqueIdentifierKey).replace("-", "");
-                String currentOpenSrpId = org.smartregister.family.util.JsonFormUtils.getString(jsonString, org.smartregister.family.util.JsonFormUtils.CURRENT_OPENSRP_ID).replace("-", "");
+                String currentOpenSrpId = JsonFormUtils.getString(jsonString, JsonFormUtils.CURRENT_OPENSRP_ID).replace("-", "");
                 if (!newOpenSrpId.equals(currentOpenSrpId)) {
                     //OpenSRP ID was changed
                     getUniqueIdRepository().open(currentOpenSrpId);
@@ -161,7 +154,7 @@ public class HouseholdIndexInteractor implements HouseholdIndexContract.Interact
     }
 
     private void addClient(@NonNull RegisterParams params, Client baseClient) throws JSONException {
-        JSONObject clientJson = new JSONObject(org.smartregister.family.util.JsonFormUtils.gson.toJson(baseClient));
+        JSONObject clientJson = new JSONObject(JsonFormUtils.gson.toJson(baseClient));
         if (params.isEditMode()) {
             try {
                 JsonFormUtils.mergeAndSaveClient(getSyncHelper(), baseClient);

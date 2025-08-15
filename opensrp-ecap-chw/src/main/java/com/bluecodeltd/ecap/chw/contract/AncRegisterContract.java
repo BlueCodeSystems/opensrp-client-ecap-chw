@@ -10,7 +10,7 @@ public interface AncRegisterContract {
 
     interface Interactor {
 
-        void getNextUniqueId(Triple<String, String, String> triple, AncRegisterContract.InteractorCallBack callBack, String familyID);
+        void getNextUniqueId(Triple<String, String, String> triple, InteractorCallBack callBack, String familyID);
 
     }
 

@@ -40,14 +40,14 @@ public class GuideBooksAdapter extends RecyclerView.Adapter<GuideBooksAdapter.My
 
     @NonNull
     @Override
-    public GuideBooksAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.fragment_job_aids_guide_books_item, viewGroup, false);
-        return new GuideBooksAdapter.MyViewHolder(v);
+        return new MyViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull GuideBooksAdapter.MyViewHolder myViewHolder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int position) {
         GuideBooksFragmentContract.RemoteFile remoteFile = remoteFiles.get(position);
 
         myViewHolder.icon.setVisibility(View.VISIBLE);
@@ -112,7 +112,7 @@ public class GuideBooksAdapter extends RecyclerView.Adapter<GuideBooksAdapter.My
     }
 
     @Nullable
-    private DownloadGuideBooksUtils getDownloadTask(GuideBooksFragmentContract.RemoteFile remoteFile, @NonNull GuideBooksAdapter.MyViewHolder myViewHolder, int position) {
+    private DownloadGuideBooksUtils getDownloadTask(GuideBooksFragmentContract.RemoteFile remoteFile, @NonNull MyViewHolder myViewHolder, int position) {
         DownloadGuideBooksUtils downloadTask = null;
         if (!remoteFile.isDowloaded()) {
             GuideBooksFragmentContract.DownloadListener listener = new GuideBooksFragmentContract.DownloadListener() {

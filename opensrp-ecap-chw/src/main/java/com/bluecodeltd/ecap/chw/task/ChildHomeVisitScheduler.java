@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 public class ChildHomeVisitScheduler extends BaseTaskExecutor {
-    private ChildHomeVisitScheduler.Flavor flavor = new ChildHomeVisitSchedulerFlv();
+    private Flavor flavor = new ChildHomeVisitSchedulerFlv();
 
     @Override
     public void resetSchedule(String baseEntityID, String scheduleName) {

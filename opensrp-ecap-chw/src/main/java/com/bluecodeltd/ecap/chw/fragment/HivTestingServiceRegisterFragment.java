@@ -104,11 +104,11 @@ public class HivTestingServiceRegisterFragment extends BaseRegisterFragment impl
     @Override
     protected String getMainCondition() {
         //return "case_status > 0 AND is_closed = 0 ";
-        return "";
+        return "first_name IS NULL";
     }
     @Override
     protected String getDefaultSortQuery() {
-        return "";
+        return "first_name IS NULL";
     }
 
     @Override

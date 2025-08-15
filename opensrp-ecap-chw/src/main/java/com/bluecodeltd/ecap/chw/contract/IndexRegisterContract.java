@@ -35,11 +35,11 @@ public interface IndexRegisterContract {
 
     interface Interactor {
 
-        void getNextUniqueId(Context context, Triple<String, String, String> triple, IndexRegisterContract.InteractorCallBack callBack);
+        void getNextUniqueId(Context context, Triple<String, String, String> triple, InteractorCallBack callBack);
 
         void onDestroy(boolean isChangingConfiguration);
 
-        void saveRegistration(List<EventClient> opdEventClientList, String jsonString, RegisterParams registerParams, IndexRegisterContract.InteractorCallBack callBack);
+        void saveRegistration(List<EventClient> opdEventClientList, String jsonString, RegisterParams registerParams, InteractorCallBack callBack);
 
     }
 

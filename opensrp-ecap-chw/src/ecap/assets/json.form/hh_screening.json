@@ -243,10 +243,9 @@
       {
         "key": "sub_population",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "sub_population",
         "type": "check_box",
-        "read_only": true,
         "label": "Sub Population :",
         "options": [
           {
@@ -266,7 +265,7 @@
           },
           {
             "key": "subpop4",
-            "text": "Adolescent Girls and Young Women (AGYW)",
+            "text": "At Risk Adolescent Girls and Young Women (AGYW)",
             "value": "false"
           },
           {
@@ -280,7 +279,7 @@
             "value": "false"
           },
           {
-            "key": "Siblings of the Index/Other family members",
+            "key": "Siblings of the Index and other family members",
             "text": "Siblings of the Index/Other family members"
 
           },
@@ -288,6 +287,10 @@
             "key": "PBFW",
             "text": "PBFW"
 
+          },
+          {
+            "key": "ABYM",
+            "text": "At risk adolescent boys and young men (ABYM)"
           }
         ],
         "v_required": {
@@ -413,6 +416,14 @@
           "value": true,
           "err": "Village is Required"
         }
+      },
+      {
+        "key": "household_location",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_location",
+        "openmrs_data_type": "text",
+        "type": "gps"
       },
       {
         "key": "screening_date",
@@ -788,9 +799,9 @@
           "err": "This field is Required"
         },
         "relevance": {
-          "step2:active_on_treatment": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "step2:date_of_last_viral_load": {
+            "type": "date",
+            "ex": "greaterThanEqualTo(., step2:date_of_last_viral_load)"
           }
         }
       },

@@ -1,7 +1,9 @@
 package com.bluecodeltd.ecap.chw.fragment;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,53 +43,135 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
 
     @Override
     public void setupViews(View view) {
-        super.setupViews(view);
-       Toolbar toolbar = view.findViewById(R.id.register_toolbar);
-        toolbar.setContentInsetsAbsolute(0, 0);
-        toolbar.setContentInsetsRelative(0, 0);
-        toolbar.setContentInsetStartWithNavigation(0);
-        NavigationMenu.getInstance(getActivity(), null, toolbar);
-        View navbarContainer = view.findViewById(R.id.register_nav_bar_container);
-        navbarContainer.setFocusable(false);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        View searchBarLayout = view.findViewById(R.id.search_bar_layout);
-        searchBarLayout.setLayoutParams(params);
-        searchBarLayout.setBackgroundResource(R.color.primary);
-        searchBarLayout.setPadding(searchBarLayout.getPaddingLeft(), searchBarLayout.getPaddingTop(), searchBarLayout.getPaddingRight(), (int) org.smartregister.chw.core.utils.Utils.convertDpToPixel(10, getActivity()));
 
-         ImageView logo = view.findViewById(R.id.opensrp_logo_image_view);
-        if (logo != null) {
-            logo.setVisibility(View.GONE);
+        if (view == null) {
+            Log.e("setupViews", "View is null. Aborting setup.");
+            return; // Exit if the view itself is null
         }
-        CustomFontTextView titleView = view.findViewById(R.id.txt_title_label);
-        if (titleView != null) {
-            titleView.setVisibility(View.VISIBLE);
-            titleView.setText(getString(R.string.all_index_title));
-            titleView.setFontVariant(FontVariant.REGULAR);
-            titleView.setClickable(false);
 
-        }
-        if (getSearchView() != null) {
-            getSearchView().setBackgroundResource(org.smartregister.family.R.color.white);
-            getSearchView().setCompoundDrawablesWithIntrinsicBounds(org.smartregister.family.R.drawable.ic_action_search, 0, 0, 0);
-            getSearchView().setTextColor(getResources().getColor(R.color.text_black));
-        }
-        View topRightLayout = view.findViewById(R.id.top_right_layout);
-        topRightLayout.setVisibility(View.GONE);
-        View topLeftLayout = view.findViewById(org.smartregister.chw.core.R.id.top_left_layout);
-        topLeftLayout.setVisibility(View.GONE);
-        View sortFilterBarLayout = view.findViewById(org.smartregister.chw.core.R.id.register_sort_filter_bar_layout);
-        sortFilterBarLayout.setVisibility(View.GONE);
-        View filterSortLayout = view.findViewById(org.smartregister.chw.core.R.id.filter_sort_layout);
-        filterSortLayout.setVisibility(View.GONE);
+        try {
+            super.setupViews(view);
 
-        builder = new AlertDialog.Builder(getActivity());
+            // Toolbar Setup
+            Toolbar toolbar = view.findViewById(org.smartregister.R.id.register_toolbar);
+            if (toolbar != null) {
+                toolbar.setContentInsetsAbsolute(0, 0);
+                toolbar.setContentInsetsRelative(0, 0);
+                toolbar.setContentInsetStartWithNavigation(0);
+                NavigationMenu navigationMenu = NavigationMenu.getInstance(getActivity(), null, toolbar);
+                if (navigationMenu == null) {
+                    Log.w("setupViews", "NavigationMenu is null. Skipping toolbar setup.");
+                }
+            } else {
+                Log.w("setupViews", "Toolbar is null.");
+            }
 
-      /*  if (!isSyncing()){
+            // Navbar Setup
+            View navbarContainer = view.findViewById(org.smartregister.R.id.register_nav_bar_container);
+            if (navbarContainer != null) {
+                navbarContainer.setFocusable(false);
+            } else {
+                Log.w("setupViews", "Navbar container is null.");
+            }
+
+            // Search Bar Layout Customization
+            View searchBarLayout = view.findViewById(R.id.search_bar_layout);
+            if (searchBarLayout != null) {
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
+                );
+                searchBarLayout.setLayoutParams(params);
+                searchBarLayout.setBackgroundResource(R.color.primary);
+                searchBarLayout.setPadding(
+                        searchBarLayout.getPaddingLeft(),
+                        searchBarLayout.getPaddingTop(),
+                        searchBarLayout.getPaddingRight(),
+                        (int) org.smartregister.chw.core.utils.Utils.convertDpToPixel(10, getActivity())
+                );
+            } else {
+                Log.w("setupViews", "Search bar layout is null.");
+            }
+
+            // Logo Visibility
+            ImageView logo = view.findViewById(R.id.opensrp_logo_image_view);
+            if (logo != null) {
+                logo.setVisibility(View.GONE);
+            } else {
+                Log.w("setupViews", "Logo view is null.");
+            }
+
+            // Title Setup
+            CustomFontTextView titleView = view.findViewById(org.smartregister.R.id.txt_title_label);
+            if (titleView != null) {
+                titleView.setVisibility(View.VISIBLE);
+                titleView.setText(getString(R.string.all_index_title));
+                titleView.setFontVariant(FontVariant.REGULAR);
+                titleView.setClickable(false);
+            } else {
+                Log.w("setupViews", "Title view is null.");
+            }
+
+            // Search View Customization
+            if (getSearchView() != null) {
+                getSearchView().setBackgroundResource(org.smartregister.R.color.white);
+                getSearchView().setCompoundDrawablesWithIntrinsicBounds(
+                        org.smartregister.family.R.drawable.ic_action_search, 0, 0, 0
+                );
+                getSearchView().setTextColor(getResources().getColor(org.smartregister.R.color.text_black));
+            } else {
+                Log.w("setupViews", "Search view is null.");
+            }
+
+            // Hide Top Layouts
+            View topRightLayout = view.findViewById(org.smartregister.R.id.top_right_layout);
+            if (topRightLayout != null) {
+                topRightLayout.setVisibility(View.GONE);
+            } else {
+                Log.w("setupViews", "Top-right layout is null.");
+            }
+
+            View topLeftLayout = view.findViewById(org.smartregister.R.id.top_left_layout);
+            if (topLeftLayout != null) {
+                topLeftLayout.setVisibility(View.GONE);
+            } else {
+                Log.w("setupViews", "Top-left layout is null.");
+            }
+
+            View sortFilterBarLayout = view.findViewById(org.smartregister.R.id.register_sort_filter_bar_layout);
+            if (sortFilterBarLayout != null) {
+                sortFilterBarLayout.setVisibility(View.GONE);
+            } else {
+                Log.w("setupViews", "Sort filter bar layout is null.");
+            }
+
+            View filterSortLayout = view.findViewById(org.smartregister.R.id.filter_sort_layout);
+            if (filterSortLayout != null) {
+                filterSortLayout.setVisibility(View.GONE);
+            } else {
+                Log.w("setupViews", "Filter sort layout is null.");
+            }
+
+            // AlertDialog Setup
+            Activity activity = getActivity();
+            if (activity != null) {
+                builder = new AlertDialog.Builder(activity);
+            } else {
+                Log.w("setupViews", "Activity is null. AlertDialog builder not initialized.");
+            }
+
+        /* Uncomment and modify if needed
+        if (!isSyncing()) {
+
             AppUpdater appUpdater = new AppUpdater(getActivity());
             appUpdater.start();
-        }*/
+        }
+        */
+        } catch (Exception e) {
+            Log.e("setupViews", "Error occurred during setup: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
+
 
 
 
@@ -104,11 +188,11 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
     @Override
     protected String getMainCondition() {
         //return "case_status > 0 AND is_closed = 0 ";
-        return "case_status != '3' AND (deleted IS NULL OR deleted != '1') AND (subpop1 = 'true' OR subpop2 = 'true' OR subpop3 = 'true' OR subpop4 = 'true' OR subpop5 = 'true' OR subpop = 'true') AND first_name IS NOT NULL";
+        return "(deleted IS NULL OR deleted != '1') AND (subpop1 = 'true' OR subpop2 = 'true' OR subpop3 = 'true' OR subpop4 = 'true' OR subpop5 = 'true' OR subpop = 'true') AND first_name IS NOT NULL";
     }
     @Override
     protected String getDefaultSortQuery() {
-        return "last_interacted_with DESC ";
+        return "last_interacted_with DESC";
     }
 
     @Override
@@ -174,15 +258,24 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
 
     @Override
     protected void onResumption() {
-
-            super.onResumption();
-
+        super.onResumption();
+        
+        // Refresh the fragment data when returning from forms
+        if (clientAdapter != null) {
+            clientAdapter.notifyDataSetChanged();
+        }
+        
+        // Re-execute queries to get updated data
+        if (presenter != null) {
+            countExecute();
+            filterandSortInInitializeQueries();
+        }
     }
 
     @Override
     public void onSyncComplete(FetchStatus fetchStatus) {
         if (!SyncStatusBroadcastReceiver.getInstance().isSyncing() && (FetchStatus.fetched.equals(fetchStatus) || FetchStatus.nothingFetched.equals(fetchStatus))) {
-            Utils.showShortToast(getActivity(), getString(org.smartregister.chw.core.R.string.sync_complete));
+            Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_complete));
             getActivity().recreate();
             AppUpdater appUpdater = new AppUpdater(getActivity());
             appUpdater.start();

@@ -71,17 +71,17 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
     }
 
     @Override
-    public ChildrenAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_child, parent, false);
 
-        ChildrenAdapter.ViewHolder viewHolder = new ChildrenAdapter.ViewHolder(v);
+        ViewHolder viewHolder = new ViewHolder(v);
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(ChildrenAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 
         final String childUniqueID = children.get(position).getUnique_id();
         Child child  = IndexPersonDao.getChildByBaseId(childUniqueID);
@@ -119,7 +119,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         }
 
         try{
-            if(child.getIndex_check_box() != null && child.getIndex_check_box().equals("1")){
+            if(child.getIndex_check_box() != null && (child.getIndex_check_box().equals("1") || child.getIndex_check_box().equals("yes"))){
                 holder.is_index.setVisibility(View.VISIBLE);
             } else {
                 holder.is_index.setVisibility(View.GONE);
@@ -142,17 +142,19 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
         if(gradModel == null){
             holder.gradBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.grad_bg));
-            holder.gradBtn.setColorFilter(ContextCompat.getColor(context, R.color.dark_grey));
+            holder.gradBtn.setColorFilter(ContextCompat.getColor(context, org.smartregister.R.color.dark_grey));
 
         } else {
 
-            holder.gradBtn.setColorFilter(ContextCompat.getColor(context, R.color.colorGreen));
+            holder.gradBtn.setColorFilter(ContextCompat.getColor(context, org.smartregister.chw.core.R.color.colorGreen));
 
         }
         if (!memberAge.equals("Invalid birthdate format")) {
-            int age = Integer.parseInt(memberAge);
-            if (age >= 18 || age <= 10) {
+            int age = getAgeForGraduation(dob);
+            if (age < 10 || age > 17) {
                 holder.gradBtn.setVisibility(View.INVISIBLE);
+            } else {
+                holder.gradBtn.setVisibility(View.VISIBLE);
             }
         } else {
             Log.e("TAG", "Invalid birthdate format");
@@ -220,7 +222,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
 
         // Enable MUAC Button
-        if(caseStatus != null && txtMuac.equals("1") && (caseStatus.equals("0") || caseStatus.equals("1") || caseStatus.equals("2"))){
+        if(caseStatus != null && (caseStatus.equals("0") || caseStatus.equals("1")) && isAgeBetween6MonthsAnd5Years(dob)){
 
             holder.muacButton.setVisibility(View.VISIBLE);
 
@@ -228,13 +230,12 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
             if(cModel != null){
 
-                if(Integer.parseInt(getAgeWithoutText(dob)) < 6){
-                    holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_icon_info, 0, 0, 0);
-                }
+
+                holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(org.smartregister.family.R.drawable.ic_icon_info, 0, 0, 0);
 
             } else {
 
-                holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_icon_warning, 0, 0, 0);
+                holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(org.smartregister.family.R.drawable.ic_icon_warning, 0, 0, 0);
 
             }
 
@@ -286,8 +287,11 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
                 case (R.id.register_columns):
 
-//                    String subpop3 = child.getSubpop3();
-//                    assert subpop3 != null;
+                    String subpop3 = child.getSubpop3();
+                    if (subpop3 == null) {
+                        Toasty.warning(context, "Go to the VCA Register to complete this VCA’s profile", Toast.LENGTH_LONG, true).show();
+                        return;
+                    }
 
                     if((Integer.parseInt(memberAge) < 24) || isEligibleForEnrollment(child)){
 
@@ -346,6 +350,41 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         } catch (DateTimeParseException e) {
             Log.e("TAG", "Invalid birthdate format: " + e.getMessage());
             return "Invalid birthdate format";
+        }
+    }
+
+    private int getAgeForGraduation(String birthdate) throws DateTimeParseException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
+        LocalDate today = LocalDate.now();
+        Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
+
+        if (periodBetweenDateOfBirthAndNow.getYears() > 0) {
+            return periodBetweenDateOfBirthAndNow.getYears();
+        } else if (periodBetweenDateOfBirthAndNow.getMonths() > 0) {
+            return periodBetweenDateOfBirthAndNow.getMonths();
+        } else if (periodBetweenDateOfBirthAndNow.getDays() >= 0) {
+            return periodBetweenDateOfBirthAndNow.getDays();
+        } else {
+            return 0;
+        }
+    }
+
+    private static boolean isAgeBetween6MonthsAnd5Years(String birthdate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        try {
+            LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
+            LocalDate today = LocalDate.now();
+            Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
+
+            int years = periodBetweenDateOfBirthAndNow.getYears();
+            int months = periodBetweenDateOfBirthAndNow.getMonths();
+            int totalMonths = years * 12 + months;
+
+            return (totalMonths >= 6) && (years < 5 || (years == 5 && months == 6));
+        } catch (DateTimeParseException e) {
+            System.err.println("Invalid birthdate format: " + e.getMessage());
+            return false;
         }
     }
 
@@ -511,26 +550,26 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         }
 */
 
-        }
+    }
 
 
     public void isGraduationButtonToBeDisplayed(ViewHolder holder,Boolean check){
         if(check !=null && check) {
-        holder.gradBtn.setVisibility(View.VISIBLE);
-    } else {
+            holder.gradBtn.setVisibility(View.VISIBLE);
+        } else {
             holder.gradBtn.setVisibility(View.GONE);
         }
-}
-
-public Boolean checkAgeEligibility(String age)
-{
-    if(Integer.parseInt(age) <= 2)
-    {
-        return false;
     }
 
-    return true;
-}
+    public Boolean checkAgeEligibility(String age)
+    {
+        if(Integer.parseInt(age) <= 2)
+        {
+            return false;
+        }
+
+        return true;
+    }
     private String checkAndConvertDateFormat(String date){
         if (date.matches("\\d{2}-\\d{2}-\\d{4}")) {
             return date;

@@ -13,7 +13,7 @@ public class ChwANCDao extends AbstractDao {
         try {
             String sql = "SELECT MIN(date) as earliestVisitDate FROM vaccines WHERE base_entity_id='" + baseEntityId + "';";
 
-            AbstractDao.DataMap<String> dataMap = cursor -> getCursorValue(cursor, "earliestVisitDate");
+            DataMap<String> dataMap = cursor -> getCursorValue(cursor, "earliestVisitDate");
 
             String earliestVisitDate = readSingleValue(sql, dataMap);
             if (earliestVisitDate != null)
@@ -28,7 +28,7 @@ public class ChwANCDao extends AbstractDao {
     public static String getLastContactDate(String baseEntityId) {
         try {
             String sql = "SELECT last_contact_visit lastContactVisit FROM ec_anc_register WHERE base_entity_id='" + baseEntityId + "';";
-            AbstractDao.DataMap<String> dataMap = cursor -> getCursorValue(cursor, "lastContactVisit");
+            DataMap<String> dataMap = cursor -> getCursorValue(cursor, "lastContactVisit");
 
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
             Date lastContactDate = simpleDateFormat.parse(readSingleValue(sql, dataMap));
