@@ -1,7 +1,0 @@
----
-name: step2_test
-description: test relevance
-priority: 1
-condition: "step1_case_plan_status.contains('Initial')"
-actions:
-  - "isRelevant = true"

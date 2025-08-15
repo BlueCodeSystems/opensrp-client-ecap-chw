@@ -1,7 +1,0 @@
----
-name: step1_age
-description: step1_age
-priority: 1
-condition: "step1_adolescent_birthdate == true"
-actions:
-  - "calculation = helper.formatDate(step1_adolescent_birthdate,'y')"

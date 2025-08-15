@@ -1,7 +1,0 @@
----
-name: step1_subpop4_toast
-description: subpop4_toast relevance
-priority: 1
-condition: "helper.formatDate(step1_dob,'y') < 18"
-actions:
-  - "isRelevant = true"

@@ -1,7 +1,0 @@
----
-name: step1_hiv_tb_sti
-description: hiv_tb_sti
-priority: 1
-condition: "step1_symptoms.contains('Yes') || step1_private_parts.contains('Yes') || step1_exposed_to_HIV.contains('Yes') || step1_unprotected_sex.contains('Yes')"
-actions:
-  - "isRelevant = true"

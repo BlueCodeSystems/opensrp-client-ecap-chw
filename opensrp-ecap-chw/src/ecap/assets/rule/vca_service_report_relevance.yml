@@ -1,7 +1,0 @@
----
-name: step1_other_service_children
-description: other_service_children relevance
-priority: 1
-condition: "step1_vca_services_children.contains('other')"
-actions:
-  - "isRelevant = true"
