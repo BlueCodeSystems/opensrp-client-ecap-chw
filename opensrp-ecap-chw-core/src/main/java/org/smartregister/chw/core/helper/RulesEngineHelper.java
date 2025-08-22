@@ -71,7 +71,21 @@ public class RulesEngineHelper {
 
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(context.getAssets().open(fileName)));
                 try {
-                    ruleMap.put(fileName, MVELRuleFactory.createRulesFrom(bufferedReader));
+                    Class<?> readerInterface = Class.forName("org.jeasy.rules.support.reader.RuleDefinitionReader");
+                    Class<?> yamlReaderClass = Class.forName("org.jeasy.rules.support.reader.YamlRuleDefinitionReader");
+                    Object yamlReader = yamlReaderClass.getDeclaredConstructor().newInstance();
+                    java.lang.reflect.Constructor<MVELRuleFactory> ctor = MVELRuleFactory.class.getConstructor(readerInterface);
+                    MVELRuleFactory ruleFactory = ctor.newInstance(yamlReader);
+                    // Try createRules (v4+). If unavailable, fallback to createRulesFrom (v3)
+                    Rules parsedRules;
+                    try {
+                        java.lang.reflect.Method m = MVELRuleFactory.class.getMethod("createRules", java.io.Reader.class);
+                        parsedRules = (Rules) m.invoke(ruleFactory, bufferedReader);
+                    } catch (NoSuchMethodException e1) {
+                        java.lang.reflect.Method m = MVELRuleFactory.class.getMethod("createRulesFrom", java.io.Reader.class);
+                        parsedRules = (Rules) m.invoke(ruleFactory, bufferedReader);
+                    }
+                    ruleMap.put(fileName, parsedRules);
                 } catch (Exception e) {
                     Timber.e(e);
                 }

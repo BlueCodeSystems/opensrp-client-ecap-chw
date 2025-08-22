@@ -31,7 +31,15 @@ buildscript {
 }
 
 def localProperties = new Properties()
-localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+if (rootProject.file("local.properties").exists()) {
+    localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+}
+
+// Load GitHub Packages credentials (for consuming private packages)
+def githubProperties = new Properties()
+if (rootProject.file("github.properties").exists()) {
+    githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
+}
 
 allprojects {
 
@@ -40,8 +48,7 @@ allprojects {
             task.enabled = false
         }
     }
-	
-	repositories {
+    repositories {
         google()
         mavenCentral()
         mavenLocal()
@@ -54,12 +61,28 @@ allprojects {
         maven { url 'https://maven.fabric.io/public' }
         maven { url "https://s3.amazonaws.com/repo.commonsware.com" }
         maven { url 'https://repo1.maven.org/maven2/com/ibm/fhir' }
+        // GitHub Packages: limit to org.smartregister only, to avoid intercepting other artifacts
+        maven {
+            name = "GitHubPackagesNativeForm"
+            url = uri("https://maven.pkg.github.com/josephtj/opensrp-client-native-form")
+            credentials {
+                // Support both gpr.user and gpr.usr keys for compatibility
+                username = (githubProperties['gpr.user'] ?: githubProperties['gpr.usr']) ?: System.getenv("GPR_USER") ?: System.getenv("GITHUB_ACTOR")
+                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY") ?: System.getenv("GITHUB_TOKEN")
+            }
+            content {
+                includeGroup("org.smartregister")
+            }
+        }
         maven {
             url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
             authentication { basic(BasicAuthentication) }
             credentials {
                 username = 'mapbox' // Do not change
-                password = localProperties["mapbox.sdk.token"] ?: ""
+                // Strip any surrounding quotes from the token in local.properties
+                def _raw = (localProperties["mapbox.sdk.token"] ?: "").toString()
+                def _clean = _raw.replaceAll('^\"|\"$', '')
+                password = _clean
             }
         }
 
