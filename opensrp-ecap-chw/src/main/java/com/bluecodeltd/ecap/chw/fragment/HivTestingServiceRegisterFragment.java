@@ -42,12 +42,12 @@ public class HivTestingServiceRegisterFragment extends BaseRegisterFragment impl
     @Override
     public void setupViews(View view) {
         super.setupViews(view);
-       Toolbar toolbar = view.findViewById(R.id.register_toolbar);
+        Toolbar toolbar = view.findViewById(org.smartregister.R.id.register_toolbar);
         toolbar.setContentInsetsAbsolute(0, 0);
         toolbar.setContentInsetsRelative(0, 0);
         toolbar.setContentInsetStartWithNavigation(0);
         NavigationMenu.getInstance(getActivity(), null, toolbar);
-        View navbarContainer = view.findViewById(R.id.register_nav_bar_container);
+        View navbarContainer = view.findViewById(org.smartregister.R.id.register_nav_bar_container);
         navbarContainer.setFocusable(false);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         View searchBarLayout = view.findViewById(R.id.search_bar_layout);
@@ -55,11 +55,11 @@ public class HivTestingServiceRegisterFragment extends BaseRegisterFragment impl
         searchBarLayout.setBackgroundResource(R.color.primary);
         searchBarLayout.setPadding(searchBarLayout.getPaddingLeft(), searchBarLayout.getPaddingTop(), searchBarLayout.getPaddingRight(), (int) org.smartregister.chw.core.utils.Utils.convertDpToPixel(10, getActivity()));
 
-         ImageView logo = view.findViewById(R.id.opensrp_logo_image_view);
+        ImageView logo = view.findViewById(R.id.opensrp_logo_image_view);
         if (logo != null) {
             logo.setVisibility(View.GONE);
         }
-        CustomFontTextView titleView = view.findViewById(R.id.txt_title_label);
+        CustomFontTextView titleView = view.findViewById(org.smartregister.R.id.txt_title_label);
         if (titleView != null) {
             titleView.setVisibility(View.VISIBLE);
             titleView.setText(getString(R.string.hts_services));
@@ -70,15 +70,15 @@ public class HivTestingServiceRegisterFragment extends BaseRegisterFragment impl
         if (getSearchView() != null) {
             getSearchView().setBackgroundResource(org.smartregister.family.R.color.white);
             getSearchView().setCompoundDrawablesWithIntrinsicBounds(org.smartregister.family.R.drawable.ic_action_search, 0, 0, 0);
-            getSearchView().setTextColor(getResources().getColor(R.color.text_black));
+            getSearchView().setTextColor(getResources().getColor(org.smartregister.R.color.text_black));
         }
-        View topRightLayout = view.findViewById(R.id.top_right_layout);
+        View topRightLayout = view.findViewById(org.smartregister.R.id.top_right_layout);
         topRightLayout.setVisibility(View.GONE);
-        View topLeftLayout = view.findViewById(org.smartregister.chw.core.R.id.top_left_layout);
+        View topLeftLayout = view.findViewById(org.smartregister.R.id.top_left_layout);
         topLeftLayout.setVisibility(View.GONE);
-        View sortFilterBarLayout = view.findViewById(org.smartregister.chw.core.R.id.register_sort_filter_bar_layout);
+        View sortFilterBarLayout = view.findViewById(org.smartregister.R.id.register_sort_filter_bar_layout);
         sortFilterBarLayout.setVisibility(View.GONE);
-        View filterSortLayout = view.findViewById(org.smartregister.chw.core.R.id.filter_sort_layout);
+        View filterSortLayout = view.findViewById(org.smartregister.R.id.filter_sort_layout);
         filterSortLayout.setVisibility(View.GONE);
 
         builder = new AlertDialog.Builder(getActivity());
@@ -103,12 +103,12 @@ public class HivTestingServiceRegisterFragment extends BaseRegisterFragment impl
 
     @Override
     protected String getMainCondition() {
-        return "delete_status IS NULL OR delete_status != '1'";
-
+        //return "case_status > 0 AND is_closed = 0 ";
+        return "delete_status IS NULL";
     }
     @Override
     protected String getDefaultSortQuery() {
-        return "last_interacted_with DESC";
+        return "delete_status IS NULL";
     }
 
     @Override
@@ -148,7 +148,7 @@ public class HivTestingServiceRegisterFragment extends BaseRegisterFragment impl
 
         Intent intent = new Intent(getActivity(), HTSDetailsActivity.class);
         intent.putExtra("client_id",  clientId);
-       // intent.putExtra("baseId",  client);
+        // intent.putExtra("baseId",  client);
         startActivity(intent);
     }
 
@@ -175,14 +175,14 @@ public class HivTestingServiceRegisterFragment extends BaseRegisterFragment impl
     @Override
     protected void onResumption() {
 
-            super.onResumption();
+        super.onResumption();
 
     }
 
     @Override
     public void onSyncComplete(FetchStatus fetchStatus) {
         if (!SyncStatusBroadcastReceiver.getInstance().isSyncing() && (FetchStatus.fetched.equals(fetchStatus) || FetchStatus.nothingFetched.equals(fetchStatus))) {
-            Utils.showShortToast(getActivity(), getString(org.smartregister.chw.core.R.string.sync_complete));
+            Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_complete));
             getActivity().recreate();
             AppUpdater appUpdater = new AppUpdater(getActivity());
             appUpdater.start();

@@ -294,15 +294,13 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
                 "middle_name",
                 "last_name",
                 "client_number",
-                "testing_modality",
                 "delete_status"
         });
         map.put(Constants.EcapClientTable.EC_MOTHER_PMTCT, new String[]{
-                "mothers_full_name",
-                "pmtct_id",
-                "household_id",
+                DBConstants.KEY.LAST_INTERACTED_WITH,
                 "first_name",
                 "last_name",
+                "pmtct_id",
                 "delete_status"
         });
         return map;
@@ -345,11 +343,10 @@ public abstract class DefaultChwApplicationFlv implements ChwApplication.Flavor 
                 "delete_status"
         });
         map.put(Constants.EcapClientTable.EC_MOTHER_PMTCT, new String[]{
-                "mothers_full_name",
-                "pmtct_id",
-                "household_id",
+                DBConstants.KEY.LAST_INTERACTED_WITH,
                 "first_name",
                 "last_name",
+                "pmtct_id",
                 "delete_status"
         });
 

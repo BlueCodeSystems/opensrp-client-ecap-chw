@@ -152,15 +152,13 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
                 "middle_name",
                 "last_name",
                 "client_number",
-                "testing_modality",
-                "delete_status"
+                "testing_modality"
         });
         map.put(Constants.EcapClientTable.EC_MOTHER_PMTCT, new String[]{
-                "mothers_full_name",
-                "pmtct_id",
-                "household_id",
+                DBConstants.KEY.LAST_INTERACTED_WITH,
                 "first_name",
                 "last_name",
+                "pmtct_id",
                 "delete_status"
         });
 
@@ -209,16 +207,13 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
                 "middle_name",
                 "last_name",
                 "client_number",
-                "testing_modality",
                 "delete_status"
         });
         map.put(Constants.EcapClientTable.EC_MOTHER_PMTCT, new String[]{
                 DBConstants.KEY.LAST_INTERACTED_WITH,
-                "mothers_full_name",
-                "pmtct_id",
-                "household_id",
                 "first_name",
                 "last_name",
+                "pmtct_id",
                 "delete_status"
         });
         return map;
