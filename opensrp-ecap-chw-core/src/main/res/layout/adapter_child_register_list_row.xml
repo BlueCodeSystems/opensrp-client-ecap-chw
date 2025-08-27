@@ -144,7 +144,7 @@
         android:paddingBottom="@dimen/register_list_top_bottom_padding"
         android:visibility="gone">
 
-        <com.rey.material.widget.ImageView
+        <ImageView
             android:id="@+id/go_to_profile_image_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

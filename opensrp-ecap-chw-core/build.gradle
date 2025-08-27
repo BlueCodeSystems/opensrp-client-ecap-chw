@@ -127,6 +127,12 @@ tasks.withType(Test) {
     jacoco.includeNoLocationClasses = true
 }
 
+// Exclude org.smartregister utils/simprints to avoid duplicates with BlueCode forks
+configurations.all {
+    exclude group: 'org.smartregister', module: 'opensrp-client-utils'
+    exclude group: 'org.smartregister', module: 'opensrp-client-simprints'
+}
+
 dependencies {
     //implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
@@ -157,7 +163,9 @@ dependencies {
         exclude group: 'org.slf4j', module: 'jcl-over-slf4j'
         exclude group: 'xpp3', module: 'xpp3'
     }
-    api("org.smartregister:opensrp-client-native-form:3.1.2-SNAPSHOT") {
+//    io.github.bluecodesystems:opensrp-client-native-form-new:3.1.2
+    api("io.github.bluecodesystems:opensrp-client-native-form-new:3.1.2")
+            {
         transitive = true
         exclude group: 'com.android.support', module: 'appcompat-v7'
         exclude group: 'com.android.support', module: 'cardview-v7'
@@ -169,16 +177,20 @@ dependencies {
         exclude group: 'io.ona.CircleProgressbar', module: 'lib'
         exclude group: 'org.smartregister', module: 'opensrp-client-simprints'
     }
-    api('org.smartregister:opensrp-client-simprints:1.1.0-SNAPSHOT@aar') {
-      transitive = true
-      exclude group: 'com.android.support', module: 'appcompat-v7'
-      exclude group: 'com.android.support', module: 'design'
-      exclude group: 'com.android.support', module: 'design'
-      exclude group: 'com.simprints:', module: 'libsimprints'
-    }
+    // Prefer BlueCode utils to avoid duplicate classes with org.smartregister utils
+    api "io.github.bluecodesystems:opensrp-client-utils:0.0.6"
+    // Prefer BlueCode fork of simprints to avoid duplicate classes
+//    api('org.smartregister:opensrp-client-simprints:1.1.0-SNAPSHOT@aar') {
+//      transitive = true
+//      exclude group: 'com.android.support', module: 'appcompat-v7'
+//      exclude group: 'com.android.support', module: 'design'
+//      exclude group: 'com.android.support', module: 'design'
+//      exclude group: 'com.simprints:', module: 'libsimprints'
+//    }
+    api "io.github.bluecodesystems:opensrp-client-simprints:1.1.0"
     api 'com.simprints:libsimprints:2024.2.2'
-    api "org.smartregister:circleprogressbar:1.0.16-SNAPSHOT@aar"
-    api 'com.simprints:libsimprints:2024.10.1-SNAPSHOT'
+//    api "org.smartregister:circleprogressbar:1.0.16-SNAPSHOT@aar"
+//    api 'com.simprints:libsimprints:2024.10.1-SNAPSHOT'
     api('org.smartregister:opensrp-client-core:6.1.5-ALPHA1-SNAPSHOT@aar') {
         transitive = true
         exclude group: 'com.github.bmelnychuk', module: 'atv'
