@@ -164,7 +164,7 @@ dependencies {
         exclude group: 'xpp3', module: 'xpp3'
     }
 //    io.github.bluecodesystems:opensrp-client-native-form-new:3.1.2
-    api("io.github.bluecodesystems:opensrp-client-native-form-new:3.1.2")
+    api("io.github.bluecodesystems:opensrp-client-native-form-new:3.1.3")
             {
         transitive = true
         exclude group: 'com.android.support', module: 'appcompat-v7'
