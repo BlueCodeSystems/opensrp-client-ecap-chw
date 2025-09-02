@@ -65,6 +65,7 @@ allprojects {
         maven {
             name = "GitHubPackagesNativeForm"
             url = uri("https://maven.pkg.github.com/josephtj/opensrp-client-native-form")
+//            url = uri("https://maven.pkg.github.com/bluecodesystems/opensrp-client-native-form-new")
             credentials {
                 // Support both gpr.user and gpr.usr keys for compatibility
                 username = (githubProperties['gpr.user'] ?: githubProperties['gpr.usr']) ?: System.getenv("GPR_USER") ?: System.getenv("GITHUB_ACTOR")
@@ -99,10 +100,10 @@ subprojects {
     group = 'org.smartregister'
 
     ext.androidToolsBuildGradle = '4.0.1'
-    ext.androidBuildToolsVersion = '34.0.0'
+    ext.androidBuildToolsVersion = '35.0.0'
     ext.androidMinSdkVersion = 27
-    ext.androidCompileSdkVersion = 34
-    ext.androidTargetSdkVersion = 34
+    ext.androidCompileSdkVersion = 35
+    ext.androidTargetSdkVersion = 35
 
     project.ext {
         if (project.hasProperty('preDexEnable')) {
