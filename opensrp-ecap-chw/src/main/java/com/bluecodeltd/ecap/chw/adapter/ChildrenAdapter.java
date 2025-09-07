@@ -45,6 +45,7 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 import es.dmoral.toasty.Toasty;
 
@@ -59,6 +60,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
     ObjectMapper oMapper, gradMapper;
     String dob;
     String caseStatus;
+    // Use centralized Threading
 
 
     public ChildrenAdapter(List<Child> children, Context context, String txtMuac){
@@ -133,22 +135,20 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
         isGraduationButtonToBeDisplayed(holder,isEligibleForEnrollment(child));
 
-        try{
-            gradModel = GradDao.getGrad(child.getUnique_id());
-        } catch (NullPointerException e) {
-
-        }
-
-
-        if(gradModel == null){
-            holder.gradBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.grad_bg));
-            holder.gradBtn.setColorFilter(ContextCompat.getColor(context, org.smartregister.R.color.dark_grey));
-
-        } else {
-
-            holder.gradBtn.setColorFilter(ContextCompat.getColor(context, org.smartregister.chw.core.R.color.colorGreen));
-
-        }
+        holder.gradBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.grad_bg));
+        holder.gradBtn.setColorFilter(ContextCompat.getColor(context, org.smartregister.R.color.dark_grey));
+        holder.gradBtn.setTag(child.getUnique_id());
+        Threading.io(() -> {
+            GradModel gm = null;
+            try { gm = GradDao.getGrad(child.getUnique_id()); } catch (Exception ignored) {}
+            GradModel finalGm = gm;
+            Threading.main(() -> {
+                if (!child.getUnique_id().equals(holder.gradBtn.getTag())) return;
+                if (finalGm != null) {
+                    holder.gradBtn.setColorFilter(ContextCompat.getColor(context, org.smartregister.chw.core.R.color.colorGreen));
+                }
+            });
+        });
         if (!memberAge.equals("Invalid birthdate format")) {
             int age = getAgeForGraduation(dob);
             if (age < 10 || age > 17) {
@@ -226,18 +226,20 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
             holder.muacButton.setVisibility(View.VISIBLE);
 
-            cModel = MuacDao.getMuac(child.getUnique_id());
-
-            if(cModel != null){
-
-
-                holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(org.smartregister.family.R.drawable.ic_icon_info, 0, 0, 0);
-
-            } else {
-
-                holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(org.smartregister.family.R.drawable.ic_icon_warning, 0, 0, 0);
-
-            }
+            holder.muacButton.setTag(child.getUnique_id());
+            Threading.io(() -> {
+                MuacModel localMuac = null;
+                try { localMuac = MuacDao.getMuac(child.getUnique_id()); } catch (Exception ignored) {}
+                MuacModel finalMuac = localMuac;
+                Threading.main(() -> {
+                    if (!child.getUnique_id().equals(holder.muacButton.getTag())) return;
+                    if(finalMuac != null){
+                        holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(org.smartregister.family.R.drawable.ic_icon_info, 0, 0, 0);
+                    } else {
+                        holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(org.smartregister.family.R.drawable.ic_icon_warning, 0, 0, 0);
+                    }
+                });
+            });
 
         } else {
             holder.muacButton.setVisibility(View.GONE);
