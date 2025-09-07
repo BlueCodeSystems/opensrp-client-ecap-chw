@@ -15,6 +15,7 @@ import com.bluecodeltd.ecap.chw.contract.IndexRegisterFragmentContract;
 import com.bluecodeltd.ecap.chw.provider.HivTestingServicesRegisterProvider;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.github.javiersantos.appupdater.AppUpdater;
+import com.bluecodeltd.ecap.chw.util.UpdateManager;
 
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
@@ -184,8 +185,7 @@ public class HivTestingServiceRegisterFragment extends BaseRegisterFragment impl
         if (!SyncStatusBroadcastReceiver.getInstance().isSyncing() && (FetchStatus.fetched.equals(fetchStatus) || FetchStatus.nothingFetched.equals(fetchStatus))) {
             Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_complete));
             getActivity().recreate();
-            AppUpdater appUpdater = new AppUpdater(getActivity());
-            appUpdater.start();
+            UpdateManager.startOnce(getActivity());
         } else {
             super.onSyncComplete(fetchStatus);
         }
