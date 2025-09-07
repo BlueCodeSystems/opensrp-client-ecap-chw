@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HeiDetailsActivity;
@@ -39,6 +40,7 @@ public class UnderFiveCardFragment extends Fragment {
     ImageView imageviewProfile;
 
     ChildMonitoringModel childMonitoring;
+    // Use centralized Threading
 
     public UnderFiveCardFragment() {
         // Required empty public constructor
@@ -130,20 +132,24 @@ public class UnderFiveCardFragment extends Fragment {
 
 
 //        childMonitoring = new PtmctMotherMonitoringModel();
-        childMonitoring = ChildMonitoringDao.getRecentChildVisit(uniqueId);
-
-        if (childMonitoring != null) {
-            followUpVisitDate.setText(childMonitoring.getPediatic_care_follow_up() != null ? childMonitoring.getPediatic_care_follow_up() : "Not set");
-            pediaticDate.setText(childMonitoring.getDate() != null ? childMonitoring.getDate() : "Not set");
-            hiv_status.setText(childMonitoring.getHiv_test() != null ? childMonitoring.getHiv_test() : "Not set");
-//            childMonitoringVisit.setText(childMonitoring.getDate_tested() != null ? childMonitoring.getDate_tested() : "Not set");
-        } else {
-            followUpVisitDate.setText("Not Conducted");
-            pediaticDate.setText("Not Conducted");
-//            dateTested.setText("Not Conducted");
-            hiv_status.setText("Not Conducted");
-//            childMonitoringVisit.setText("Not Conducted");
-        }
+        // Load monitoring record off main thread
+        final String uid = uniqueId;
+        Threading.io(() -> {
+            ChildMonitoringModel cm = ChildMonitoringDao.getRecentChildVisit(uid);
+            Threading.main(() -> {
+                if (!isAdded()) return;
+                childMonitoring = cm;
+                if (childMonitoring != null) {
+                    followUpVisitDate.setText(childMonitoring.getPediatic_care_follow_up() != null ? childMonitoring.getPediatic_care_follow_up() : "Not set");
+                    pediaticDate.setText(childMonitoring.getDate() != null ? childMonitoring.getDate() : "Not set");
+                    hiv_status.setText(childMonitoring.getHiv_test() != null ? childMonitoring.getHiv_test() : "Not set");
+                } else {
+                    followUpVisitDate.setText("Not Conducted");
+                    pediaticDate.setText("Not Conducted");
+                    hiv_status.setText("Not Conducted");
+                }
+            });
+        });
 
 
 

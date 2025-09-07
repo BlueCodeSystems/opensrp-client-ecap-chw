@@ -20,8 +20,11 @@ import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
+import androidx.lifecycle.ViewModelProvider;
+import com.bluecodeltd.ecap.chw.viewmodel.ChildVisitsViewModel;
 
 import java.util.ArrayList;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 public class ChildVisitsFragment extends Fragment {
 
@@ -30,6 +33,8 @@ public class ChildVisitsFragment extends Fragment {
     private ArrayList<VcaVisitationModel> visitList = new ArrayList<>();
     private LinearLayout linearLayout;
     View vieww;
+    // Use ViewModel + centralized Threading
+    private ChildVisitsViewModel viewModel;
 
     @Nullable
     @Override
@@ -43,21 +48,29 @@ public class ChildVisitsFragment extends Fragment {
         linearLayout = vieww.findViewById(R.id.visit_container);
 
         visitList.clear();
-
-        visitList.addAll(VcaVisitationDao.getVisitsByID(childId));
-
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerViewadapter = new VisitAdapter(visitList, getContext());
         recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
 
-        if (recyclerViewadapter.getItemCount() > 0){
-
-            linearLayout.setVisibility(View.GONE);
-        }
+        View progress = vieww.findViewById(R.id.progress_loading);
+        if (progress != null) progress.setVisibility(View.VISIBLE);
+        viewModel = new ViewModelProvider(this).get(ChildVisitsViewModel.class);
+        viewModel.getVisits().observe(getViewLifecycleOwner(), list -> {
+            if (!isAdded() || list == null) return;
+            visitList.clear();
+            visitList.addAll(list);
+            recyclerViewadapter.notifyDataSetChanged();
+            if (recyclerViewadapter.getItemCount() > 0){
+                linearLayout.setVisibility(View.GONE);
+            } else {
+                linearLayout.setVisibility(View.VISIBLE);
+            }
+            if (progress != null) progress.setVisibility(View.GONE);
+        });
+        viewModel.refresh(childId);
 
 
         return vieww;

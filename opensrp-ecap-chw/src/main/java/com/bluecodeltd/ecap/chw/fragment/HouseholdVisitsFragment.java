@@ -2,6 +2,8 @@ package com.bluecodeltd.ecap.chw.fragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +19,14 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HouseholdDetails;
 import com.bluecodeltd.ecap.chw.adapter.CaregiverVisitAdapter;
 import com.bluecodeltd.ecap.chw.dao.CaregiverVisitationDao;
+import androidx.lifecycle.ViewModelProvider;
+import com.bluecodeltd.ecap.chw.viewmodel.HouseholdVisitsViewModel;
 import com.bluecodeltd.ecap.chw.model.CaregiverVisitationModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 public class HouseholdVisitsFragment extends Fragment {
 
@@ -30,6 +35,7 @@ public class HouseholdVisitsFragment extends Fragment {
     private ArrayList<CaregiverVisitationModel> visitList = new ArrayList<>();
     private LinearLayout linearLayout;
     View vieww;
+    // Use centralized Threading
 
 
     @SuppressLint("MissingInflatedId")
@@ -49,20 +55,32 @@ public class HouseholdVisitsFragment extends Fragment {
 
         visitList.clear();
 
-        visitList.addAll(CaregiverVisitationDao.getVisitsByID(houseId));
+        // subtle loading indicator
+        View progress = vieww.findViewById(R.id.progress_loading);
+        if (progress != null) progress.setVisibility(View.VISIBLE);
+        linearLayout.setVisibility(View.GONE);
 
-        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(eLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new CaregiverVisitAdapter(visitList, getContext());
-        recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
+        HouseholdVisitsViewModel vm = new ViewModelProvider(this).get(HouseholdVisitsViewModel.class);
+        vm.getVisits().observe(getViewLifecycleOwner(), list -> {
+            if (!isAdded() || list == null) return;
+            RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(eLayoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            visitList.clear();
+            visitList.addAll(list);
+            recyclerViewadapter = new CaregiverVisitAdapter(visitList, getContext());
+            recyclerView.setAdapter(recyclerViewadapter);
+            recyclerViewadapter.notifyDataSetChanged();
 
-        if (recyclerViewadapter.getItemCount() > 0){
-
-            linearLayout.setVisibility(View.GONE);
-        }
+            if (recyclerViewadapter.getItemCount() > 0){
+                linearLayout.setVisibility(View.GONE);
+            } else {
+                linearLayout.setVisibility(View.VISIBLE);
+            }
+            if (progress != null) progress.setVisibility(View.GONE);
+        });
+        vm.refresh(houseId);
 
 
         return vieww;

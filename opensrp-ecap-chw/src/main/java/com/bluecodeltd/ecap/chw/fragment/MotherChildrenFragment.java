@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,18 +18,22 @@ import com.bluecodeltd.ecap.chw.activity.MotherDetail;
 import com.bluecodeltd.ecap.chw.adapter.ChildrenAdapter;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.model.Child;
+import com.bluecodeltd.ecap.chw.viewmodel.HouseholdChildrenState;
+import com.bluecodeltd.ecap.chw.viewmodel.HouseholdChildrenViewModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 public class MotherChildrenFragment extends Fragment {
 
     private RecyclerView recyclerView;
     RecyclerView.Adapter recyclerViewadapter;
     private ArrayList<Child> childList = new ArrayList<>();
+    private HouseholdChildrenViewModel viewModel;
 
     @Nullable
     @Override
@@ -42,18 +47,30 @@ public class MotherChildrenFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerView);
 
-        childList.addAll(IndexPersonDao.getFamilyChildren(houseId));
-
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerViewadapter = new ChildrenAdapter(childList, getContext(), "0");
         recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
+
+        View progress = view.findViewById(R.id.progress_loading);
+        if (progress != null) progress.setVisibility(View.VISIBLE);
+        viewModel = new ViewModelProvider(this).get(HouseholdChildrenViewModel.class);
+        viewModel.getState().observe(getViewLifecycleOwner(), this::applyChildrenState);
+        viewModel.refresh(houseId);
 
 
         return view;
 
+    }
+
+    private void applyChildrenState(HouseholdChildrenState state) {
+        if (!isAdded() || state == null) return;
+        childList.clear();
+        if (state.getChildren() != null) childList.addAll(state.getChildren());
+        recyclerViewadapter.notifyDataSetChanged();
+        View progress = getView() != null ? getView().findViewById(R.id.progress_loading) : null;
+        if (progress != null) progress.setVisibility(View.GONE);
     }
 }

@@ -15,12 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HouseholdDetails;
 import com.bluecodeltd.ecap.chw.adapter.GraduationAssessmentAdapter;
-import com.bluecodeltd.ecap.chw.dao.GraduationDao;
+import com.bluecodeltd.ecap.chw.dao.GraduationDao;nimport androidx.lifecycle.ViewModelProvider;nimport com.bluecodeltd.ecap.chw.viewmodel.GraduationAssessmentViewModel; 
 import com.bluecodeltd.ecap.chw.model.GraduationModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +35,7 @@ public class GraduationAssessmentFragment extends Fragment {
     private ArrayList<GraduationModel> assessmentList = new ArrayList<>();
     private LinearLayout linearLayout;
     View vieww;
+    // Use centralized Threading
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -87,21 +89,31 @@ public class GraduationAssessmentFragment extends Fragment {
         linearLayout = vieww.findViewById(R.id.visit_container);
 
         assessmentList.clear();
-
-        assessmentList.addAll(GraduationDao.getAssessment(houseId));
-
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerViewadapter = new GraduationAssessmentAdapter( getContext(), assessmentList);
         recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
 
-        if (recyclerViewadapter.getItemCount() > 0){
+        View progress = vieww.findViewById(R.id.progress_loading);
+        if (progress != null) progress.setVisibility(View.VISIBLE);
 
-            linearLayout.setVisibility(View.GONE);
-        }
+        Threading.io(() -> {
+            ArrayList<GraduationModel> results = new ArrayList<>(GraduationDao.getAssessment(houseId));
+            Threading.main(() -> {
+                if (!isAdded()) return;
+                assessmentList.clear();
+                assessmentList.addAll(results);
+                recyclerViewadapter.notifyDataSetChanged();
+                if (recyclerViewadapter.getItemCount() > 0){
+                    linearLayout.setVisibility(View.GONE);
+                } else {
+                    linearLayout.setVisibility(View.VISIBLE);
+                }
+                if (progress != null) progress.setVisibility(View.GONE);
+            });
+        });
 
 
         return vieww;

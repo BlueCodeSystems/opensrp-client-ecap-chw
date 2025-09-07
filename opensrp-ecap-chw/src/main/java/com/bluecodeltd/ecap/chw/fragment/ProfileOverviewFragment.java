@@ -3,6 +3,10 @@ package com.bluecodeltd.ecap.chw.fragment;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import com.bluecodeltd.ecap.chw.util.Threading;
+import androidx.lifecycle.ViewModelProvider;
+import com.bluecodeltd.ecap.chw.viewmodel.ProfileOverviewViewModel;
+import com.bluecodeltd.ecap.chw.viewmodel.ProfileOverviewState;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,6 +60,7 @@ public class ProfileOverviewFragment extends Fragment {
 
     MuacModel muacModel;
     VcaScreeningModel childScreeningModel;
+    // Use centralized Threading
     @SuppressLint("MissingInflatedId")
     @Nullable
     @Override
@@ -186,18 +191,7 @@ public class ProfileOverviewFragment extends Fragment {
         String subpop5 = childIndex.getSubpop5();
         String subpop6 = childIndex.getSubpop6();
 
-        Household household = HouseholdDao.getVcaSubPop(childIndex.getHousehold_id(),childIndex.getUnique_id());
-        if(household.getSub_population() != null){
-            subPopLayout1.setVisibility(View.GONE);
-            subPopLayout2.setVisibility(View.VISIBLE);
-        }
-        else{
-            subPopLayout1.setVisibility(View.VISIBLE);
-            subPopLayout2.setVisibility(View.GONE);
-        }
-        String subPopulations = household.getSub_population();
-        String subPopulationsValues = (subPopulations != null) ? keysToValues(subPopulations) : null;
-        txtSubPopulation.setText((subPopulationsValues != null) ? subPopulationsValues : "");
+        // Subpopulation details loaded asynchronously below
 
 
         long timestamp = Long.parseLong(childIndex.getLast_interacted_with());
@@ -240,7 +234,7 @@ public class ProfileOverviewFragment extends Fragment {
         }
 
         String facility = null;
-        VcaScreeningModel vcaScreeningModel = VCAScreeningDao.getVcaScreening(childIndex.getUnique_id());
+        // Screening fetch moved off main thread
         if (childIndex.getFacility() != null) {
             facility = childIndex.getFacility();
         }
@@ -309,29 +303,7 @@ public class ProfileOverviewFragment extends Fragment {
             txtVlResult.setText("N/A");
         }
 
-        List<VCAServiceModel> sModel = VCAServiceReportDao.getRecentServicesByVCAID(childIndex.getUnique_id());
-
-        String viralLoadResult = null;
-
-        if (!sModel.isEmpty()) {
-            VCAServiceModel serviceM = sModel.get(0);
-            viralLoadResult = serviceM.getVl_last_result();
-        }
-
-        if (viralLoadResult == null) {
-            viralLoadResult = childIndex.getVl_last_result();
-        }
-
-        if (viralLoadResult != null) {
-            try {
-                int intValue = Integer.parseInt(viralLoadResult);
-                txtIsSuppressed.setText(intValue <= 1000 ? "Yes" : "No");
-            } catch (NumberFormatException e) {
-                txtIsSuppressed.setText("Update VL Results");
-            }
-        } else {
-            txtIsSuppressed.setText("Not set");
-        }
+        // Suppression computed after async fetch
 
 
 
@@ -351,60 +323,7 @@ public class ProfileOverviewFragment extends Fragment {
             txtMMDResult.setText("N/A");
         }
 
-        List<VCAServiceModel> serviceModels = VCAServiceReportDao.getRecentServicesByVCAID(childIndex.getUnique_id());
-
-        if (!serviceModels.isEmpty()) {
-            VCAServiceModel serviceModel = serviceModels.get(0);
-            if(serviceModel.getVl_last_result() != null){
-                recent_vl_result.setText(serviceModel.getVl_last_result());
-            } else {
-                if (childIndex.getVl_last_result() != null){
-                    recent_vl_result.setText(childIndex.getVl_last_result());
-                } else {
-                    recent_vl_result.setText("N/A");
-                }
-            }
-
-            if(serviceModel.getLevel_mmd() != null){
-                recent_mmd_level.setText(serviceModel.getLevel_mmd());
-            } else {
-                if (childIndex.getLevel_mmd() != null){
-                    recent_mmd_level.setText(childIndex.getLevel_mmd());
-                } else {
-                    recent_mmd_level.setText("N/A");
-                }
-            }
-
-            if (serviceModel.getDate_next_vl() != null){
-                txtNextVl.setText(serviceModel.getDate_next_vl());
-            } else {
-                if (childIndex.getDate_next_vl() != null){
-                    txtNextVl.setText(childIndex.getDate_next_vl());
-                } else {
-                    txtNextVl.setText("N/A");
-                }
-            }
-
-
-        } else {
-            if (childIndex.getVl_last_result() != null){
-                recent_vl_result.setText(childIndex.getVl_last_result());
-            } else {
-                recent_vl_result.setText("N/A");
-            }
-
-            if (childIndex.getLevel_mmd() != null){
-                recent_mmd_level.setText(childIndex.getLevel_mmd());
-            } else {
-                recent_mmd_level.setText("N/A");
-            }
-
-            if (childIndex.getDate_next_vl() != null){
-                txtNextVl.setText(childIndex.getDate_next_vl());
-            } else {
-                txtNextVl.setText("N/A");
-            }
-        }
+        // Recent service values set after async fetch
         imgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -423,17 +342,7 @@ public class ProfileOverviewFragment extends Fragment {
         txtcPhone.setText(childIndex.getPhone() != null ? childIndex.getPhone() : "Not Set");
 
 
-        abym = AbymSubpopulationDao.getAbymSubpopulation(childIndex.getUnique_id());
-        muacModel = MuacDao.getMuac(childIndex.getUnique_id());
-        childScreeningModel = VCAScreeningDao.getVcaScreening(childIndex.getUnique_id());
-
-        boolean isSubpopulationVisible = false;
-
-        if ( !"female".equals(childIndex.getGender()) && abym != null && "yes".equals(abym.getAbym_years()) ) {
-            abymSub.setVisibility(View.VISIBLE);
-        } else{
-            abymSub.setVisibility(View.GONE);
-        }
+        // ABYM/MUAC values set after async fetch
 
 //        HouseholdMemberModel memberModel = HouseholdMemberDao.getMember(childIndex.getUnique_id());
 //        if(memberModel != null && "sibling".equals(memberModel.getMember_type())){
@@ -442,39 +351,12 @@ public class ProfileOverviewFragment extends Fragment {
 //            siblingSubPop.setVisibility(View.GONE);
 //        }
 
-        Household sub = HouseholdDao.getHousehold(childIndex.getHousehold_id());
-        VcaScreeningModel screen = VCAScreeningDao.getVcaScreening(childIndex.getUnique_id());
-
-        if (sub != null && sub.getSub_population() != null) {
-            String mappedValues = keysToValues(sub.getSub_population());
-
-            String indexCheck = screen != null && screen.getIndex_check_box() != null
-                    ? screen.getIndex_check_box().toLowerCase()
-                    : "";
-
-            boolean isIndex = indexCheck.equals("yes") || indexCheck.equals("1");
-
-            if (mappedValues != null && mappedValues.contains("SIBS/INDEX FAMILY") && !isIndex) {
-                siblingSubPop.setVisibility(View.VISIBLE);
-            } else {
-                siblingSubPop.setVisibility(View.GONE);
-            }
-        } else {
-            siblingSubPop.setVisibility(View.GONE);
-        }
+        // Sibling subpop set after async fetch
 
 
 
 
-        if(muacModel != null &&  ("red".equals(muacModel.getMuac()) || "yellow".equals(muacModel.getMuac()))){
-            isSubpopulationVisible = true;
-        }
-
-
-
-
-
-        moreSubpopBtn.setVisibility(isSubpopulationVisible ? View.VISIBLE : View.GONE);
+        // Button visibility set after async fetch
 
         moreSubpopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -483,6 +365,80 @@ public class ProfileOverviewFragment extends Fragment {
             }
         });
 
+
+        // Use ViewModel: fetch background data; apply UI from state
+        ProfileOverviewViewModel vm = new ViewModelProvider(this).get(ProfileOverviewViewModel.class);
+        vm.getState().observe(getViewLifecycleOwner(), st -> {
+            if (!isAdded() || st == null) return;
+            Household household = st.getHousehold();
+            List<VCAServiceModel> recentServices = st.getRecentServices();
+            AbymSubpopulationModel abymLocal = st.getAbym();
+            MuacModel muacLocal = st.getMuac();
+            VcaScreeningModel screenLocal = st.getScreen();
+
+            if (household != null && household.getSub_population() != null) {
+                subPopLayout1.setVisibility(View.GONE);
+                subPopLayout2.setVisibility(View.VISIBLE);
+                String mapped = keysToValues(household.getSub_population());
+                txtSubPopulation.setText(mapped != null ? mapped : "");
+            } else {
+                subPopLayout1.setVisibility(View.VISIBLE);
+                subPopLayout2.setVisibility(View.GONE);
+                txtSubPopulation.setText("");
+            }
+
+            String viralLoadResult = null;
+            if (recentServices != null && !recentServices.isEmpty()) {
+                VCAServiceModel serviceM = recentServices.get(0);
+                viralLoadResult = serviceM.getVl_last_result();
+            }
+            if (viralLoadResult == null) viralLoadResult = childIndex.getVl_last_result();
+            if (viralLoadResult != null) {
+                try {
+                    int intValue = Integer.parseInt(viralLoadResult);
+                    txtIsSuppressed.setText(intValue <= 1000 ? "Yes" : "No");
+                } catch (NumberFormatException e) {
+                    txtIsSuppressed.setText("Update VL Results");
+                }
+            } else {
+                txtIsSuppressed.setText("Not set");
+            }
+
+            if (recentServices != null && !recentServices.isEmpty()) {
+                VCAServiceModel serviceModel = recentServices.get(0);
+                recent_vl_result.setText(serviceModel.getVl_last_result() != null ? serviceModel.getVl_last_result() : (childIndex.getVl_last_result() != null ? childIndex.getVl_last_result() : "N/A"));
+                recent_mmd_level.setText(serviceModel.getLevel_mmd() != null ? serviceModel.getLevel_mmd() : (childIndex.getLevel_mmd() != null ? childIndex.getLevel_mmd() : "N/A"));
+                txtNextVl.setText(serviceModel.getDate_next_vl() != null ? serviceModel.getDate_next_vl() : (childIndex.getDate_next_vl() != null ? childIndex.getDate_next_vl() : "N/A"));
+            } else {
+                recent_vl_result.setText(childIndex.getVl_last_result() != null ? childIndex.getVl_last_result() : "N/A");
+                recent_mmd_level.setText(childIndex.getLevel_mmd() != null ? childIndex.getLevel_mmd() : "N/A");
+                txtNextVl.setText(childIndex.getDate_next_vl() != null ? childIndex.getDate_next_vl() : "N/A");
+            }
+
+            if (!"female".equals(childIndex.getGender()) && abymLocal != null && "yes".equals(abymLocal.getAbym_years())) {
+                abymSub.setVisibility(View.VISIBLE);
+            } else {
+                abymSub.setVisibility(View.GONE);
+            }
+
+            if (household != null) {
+                String mappedValues = keysToValues(household.getSub_population());
+                String indexCheck = screenLocal != null && screenLocal.getIndex_check_box() != null ? screenLocal.getIndex_check_box().toLowerCase() : "";
+                boolean isIndex = indexCheck.equals("yes") || indexCheck.equals("1");
+                if (mappedValues != null && mappedValues.contains("SIBS/INDEX FAMILY") && !isIndex) {
+                    siblingSubPop.setVisibility(View.VISIBLE);
+                } else {
+                    siblingSubPop.setVisibility(View.GONE);
+                }
+            } else {
+                siblingSubPop.setVisibility(View.GONE);
+            }
+
+            boolean showMore = muacLocal != null && ("red".equals(muacLocal.getMuac()) || "yellow".equals(muacLocal.getMuac()));
+            moreSubpopBtn.setVisibility(showMore ? View.VISIBLE : View.GONE);
+        });
+        new ViewModelProvider(this).get(ProfileOverviewViewModel.class)
+                .refresh(childIndex.getHousehold_id(), childIndex.getUnique_id());
 
         return view;
 

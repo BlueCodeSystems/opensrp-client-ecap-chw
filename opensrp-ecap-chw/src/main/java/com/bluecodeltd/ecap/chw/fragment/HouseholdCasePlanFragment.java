@@ -18,11 +18,14 @@ import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.adapter.CasePlanAdapter;
 import com.bluecodeltd.ecap.chw.adapter.HouseholdCasePlanAdapter;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
+import androidx.lifecycle.ViewModelProvider;
+import com.bluecodeltd.ecap.chw.viewmodel.HouseholdCasePlanViewModel;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 
 import java.util.ArrayList;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 public class HouseholdCasePlanFragment extends Fragment {
 
@@ -30,6 +33,7 @@ public class HouseholdCasePlanFragment extends Fragment {
     RecyclerView.Adapter recyclerViewadapter;
     private ArrayList<CasePlanModel> householdCasePlanList = new ArrayList<>();
     private LinearLayout linearLayout;
+    // Use centralized Threading
 
     @Nullable
     @Override
@@ -40,20 +44,29 @@ public class HouseholdCasePlanFragment extends Fragment {
         Household house = ( (HouseholdDetails) requireActivity()).house;
         recyclerView = view.findViewById(R.id.householdRecycler);
         linearLayout = view.findViewById(R.id.household_visit_container);
-        householdCasePlanList.addAll(HouseholdDao.getCasePlansById(householdId));
-
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerViewadapter = new HouseholdCasePlanAdapter(householdCasePlanList, getContext(),house);
         recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
 
-        if (recyclerViewadapter.getItemCount() > 0){
-
-            linearLayout.setVisibility(View.GONE);
-        }
+        View progress = view.findViewById(R.id.progress_loading);
+        if (progress != null) progress.setVisibility(View.VISIBLE);
+        HouseholdCasePlanViewModel vm = new ViewModelProvider(this).get(HouseholdCasePlanViewModel.class);
+        vm.getCasePlans().observe(getViewLifecycleOwner(), list -> {
+            if (!isAdded() || list == null) return;
+            householdCasePlanList.clear();
+            householdCasePlanList.addAll(list);
+            recyclerViewadapter.notifyDataSetChanged();
+            if (recyclerViewadapter.getItemCount() > 0){
+                linearLayout.setVisibility(View.GONE);
+            } else {
+                linearLayout.setVisibility(View.VISIBLE);
+            }
+            if (progress != null) progress.setVisibility(View.GONE);
+        });
+        vm.refresh(householdId);
 
 
         return view;

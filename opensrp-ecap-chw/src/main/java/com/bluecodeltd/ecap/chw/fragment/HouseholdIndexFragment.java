@@ -2,6 +2,7 @@ package com.bluecodeltd.ecap.chw.fragment;
 
 import android.content.Intent;
 import android.util.Log;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,8 +28,10 @@ import org.smartregister.view.fragment.BaseRegisterFragment;
 import java.util.HashMap;
 
 import es.dmoral.toasty.Toasty;
+ 
 
 public class HouseholdIndexFragment extends BaseRegisterFragment implements HouseholdIndexFragmentContract.View{
+    // Use centralized Threading
 
     @Override
     protected void initializePresenter() {
@@ -157,14 +160,21 @@ public class HouseholdIndexFragment extends BaseRegisterFragment implements Hous
 
         CommonPersonObjectClient client =(CommonPersonObjectClient) view.getTag();
 
-        //String isClosed = client.getColumnmaps().get("is_closed");
-        String isClosed = HouseholdDao.getHouseholdByBaseId(client.getColumnmaps().get("base_entity_id")).getStatus();
+        Threading.io(() -> {
+            String isClosed = null;
+            try {
+                isClosed = HouseholdDao.getHouseholdByBaseId(client.getColumnmaps().get("base_entity_id")).getStatus();
+            } catch (Exception ignored) {}
 
-         if(isClosed != null && isClosed.equals("1")){
-             Toasty.warning(getActivity(), "This household has been deleted", Toast.LENGTH_LONG, true).show();
-         } else {
-             goToIndexDetailActivity(client);
-         }
+            final String finalIsClosed = isClosed;
+            Threading.main(() -> {
+                if (finalIsClosed != null && finalIsClosed.equals("1")){
+                    Toasty.warning(getActivity(), "This household has been deleted", Toast.LENGTH_LONG, true).show();
+                } else {
+                    goToIndexDetailActivity(client);
+                }
+            });
+        });
 
     }
 
