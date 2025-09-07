@@ -78,6 +78,9 @@ import com.bluecodeltd.ecap.chw.model.WeServiceCaregiverModel;
 import com.bluecodeltd.ecap.chw.model.newCaregiverModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import androidx.lifecycle.ViewModelProvider;
+import com.bluecodeltd.ecap.chw.viewmodel.HouseholdDetailsViewModel;
+import com.bluecodeltd.ecap.chw.viewmodel.HouseholdDetailsState;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -113,6 +116,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
@@ -155,6 +159,8 @@ public class HouseholdDetails extends AppCompatActivity {
     WeServiceCaregiverModel weServiceCaregiverModel;
     newCaregiverModel updatedCaregiver;
     private ArrayList<Child> childList = new ArrayList<>();
+    private HouseholdDetailsViewModel viewModel;
+    // Background execution centralized via Threading
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -169,38 +175,10 @@ public class HouseholdDetails extends AppCompatActivity {
 
         householdId = getIntent().getExtras().getString("householdId");
 
-        childList.addAll(IndexPersonDao.getFamilyChildren(householdId));
-
-        weServiceCaregiverModel = WeServiceCaregiverDoa.getWeServiceCaregiver(householdId);
-        caregiverAssessmentModel = CaregiverAssessmentDao.getCaregiverAssessment(householdId);
-        caregiverVisitationModel = CaregiverVisitationDao.getCaregiverVisitation(householdId);
-        caregiverHivAssessmentModel = CaregiverHivAssessmentDao.getCaregiverHivAssessment(householdId);
-        graduationModel = GraduationDao.getGraduation(householdId);
-        updatedCaregiver = newCaregiverDao.getNewCaregiverById(householdId);
-
         builder = new AlertDialog.Builder(HouseholdDetails.this);
 
-        house = getHousehold(householdId);
-        refreshActivity(house);
-
-       caregiver = CaregiverDao.getCaregiver(householdId);
-
-        oMapper = new ObjectMapper();
-        caregiverMapper = new ObjectMapper();
-        weServiceMapper = new ObjectMapper();
-        assessmentMapper = new ObjectMapper();
-
+        // init views
         callFab = findViewById(R.id.callFab);
-
-        try{
-            if(caregiverAssessmentModel.getHousehold_type() == null){
-                callFab.setImageResource(android.R.drawable.ic_input_add);
-            }
-        } catch (Exception e){
-
-        }
-
-
         fab = findViewById(R.id.fabx);
         changeFabIconColor();
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
@@ -208,13 +186,10 @@ public class HouseholdDetails extends AppCompatActivity {
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
         rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
 
-
-
         rscreen = findViewById(R.id.hh_screening);
         grad_form = findViewById(R.id.graduation);
         we_service_caregiver = findViewById(R.id.we_service_caregiver);
         chivAssessment = findViewById(R.id.hiv_assessment_caregiver);
-        //caregiver_name
         cname = findViewById(R.id.caregiver_name);
         updatedCaregiverName = findViewById(R.id.updated_caregiver_name);
         txtDistrict = findViewById(R.id.myaddress);
@@ -226,52 +201,72 @@ public class HouseholdDetails extends AppCompatActivity {
         household_visitation_caregiver = findViewById(R.id.household_visitation_caregiver);
         mTabLayout =  findViewById(R.id.tabs);
         mViewPager  = findViewById(R.id.viewpager);
-        setupViewPager();
-//        setupFabVisibility();
-        updateTasksTabTitle();
-        updateChildTabTitle();
-        updateCaseplanTitle();
 
-        updateOverviewTabTitle();
-        updateGradTabTitle();
-        txtDistrict.setText(householdId);
+        // ViewModel: heavy data
+        viewModel = new ViewModelProvider(this).get(HouseholdDetailsViewModel.class);
+        viewModel.getState().observe(this, state -> applyState(state, householdId));
+        viewModel.refresh(householdId);
+    }
 
-
-        if(house.getCaregiver_name() == null || house.getCaregiver_name().equals("null")){
-
-            cname.setText("No Household");
-
-        } else {
-            cname.setText(house.getCaregiver_name() + " Household");
-        }
-
+    private void applyState(HouseholdDetailsState state, String householdId) {
+        if (state == null || isFinishing()) return;
         try {
-            if(updatedCaregiver.getNew_caregiver_name() != null && !updatedCaregiver.getNew_caregiver_name().isEmpty()){
-                updatedCaregiverName.setVisibility(View.VISIBLE);
-                updatedCaregiverName.setText("Current Caregiver: "+ updatedCaregiver.getNew_caregiver_name());
+            childList.clear();
+            if (state.getChildren() != null) childList.addAll(state.getChildren());
+            weServiceCaregiverModel = state.getWeServiceCaregiverModel();
+            caregiverAssessmentModel = state.getCaregiverAssessmentModel();
+            caregiverVisitationModel = state.getCaregiverVisitationModel();
+            caregiverHivAssessmentModel = state.getCaregiverHivAssessmentModel();
+            graduationModel = state.getGraduationModel();
+            updatedCaregiver = state.getUpdatedCaregiver();
+            house = state.getHouse();
+            refreshActivity(house);
+
+            caregiver = CaregiverDao.getCaregiver(householdId);
+            oMapper = new ObjectMapper();
+            caregiverMapper = new ObjectMapper();
+            weServiceMapper = new ObjectMapper();
+            assessmentMapper = new ObjectMapper();
+
+            setupViewPager();
+            updateTasksTabTitle();
+            updateChildTabTitle();
+            updateCaseplanTitle();
+            updateOverviewTabTitle();
+            updateGradTabTitle();
+            txtDistrict.setText(householdId);
+
+            if(house != null && house.getCaregiver_name() != null && !house.getCaregiver_name().equals("null")){
+                cname.setText(house.getCaregiver_name() + " Household");
+            } else {
+                cname.setText("No Household");
             }
-        } catch (NullPointerException e) {
-            Log.e("TAG", "Error: " + e.getMessage());
-        }
 
-        countFemales = IndexPersonDao.countFemales(householdId);
-        countMales = IndexPersonDao.countMales(householdId);
-        allMalesBirthDates =IndexPersonDao.getMalesBirthdates(householdId);
-        allFemalesBirthDates = IndexPersonDao.getAllFemalesBirthdate(householdId);
-        allChildrenBirthDates = IndexPersonDao.getAllChildrenBirthdate(householdId);
-        if (allMalesBirthDates == null) {
-            allMalesBirthDates = new ArrayList<>();
-        }
-        if (allFemalesBirthDates == null) {
-            allFemalesBirthDates = new ArrayList<>();
-        }
-        if (allChildrenBirthDates == null) {
-            allChildrenBirthDates = new ArrayList<>();
-        }
+            try{
+                if(caregiverAssessmentModel == null || caregiverAssessmentModel.getHousehold_type() == null){
+                    callFab.setImageResource(android.R.drawable.ic_input_add);
+                }
+            } catch (Exception ignored){ }
 
-         countNumberOfMales(allMalesBirthDates);
-         countNumberOfFemales(allFemalesBirthDates);
-         countNumberofChildren(allChildrenBirthDates);
+            try {
+                if(updatedCaregiver != null && updatedCaregiver.getNew_caregiver_name() != null && !updatedCaregiver.getNew_caregiver_name().isEmpty()){
+                    updatedCaregiverName.setVisibility(View.VISIBLE);
+                    updatedCaregiverName.setText("Current Caregiver: "+ updatedCaregiver.getNew_caregiver_name());
+                }
+            } catch (Exception e) {
+                Log.e("TAG", "Error: " + e.getMessage());
+            }
+
+            countFemales = state.getCountFemales();
+            countMales = state.getCountMales();
+            allMalesBirthDates = state.getAllMalesBirthDates() != null ? state.getAllMalesBirthDates() : new ArrayList<>();
+            allFemalesBirthDates = state.getAllFemalesBirthDates() != null ? state.getAllFemalesBirthDates() : new ArrayList<>();
+            allChildrenBirthDates = state.getAllChildrenBirthDates() != null ? state.getAllChildrenBirthDates() : new ArrayList<>();
+
+            countNumberOfMales(allMalesBirthDates);
+            countNumberOfFemales(allFemalesBirthDates);
+            countNumberofChildren(allChildrenBirthDates);
+        } catch (Exception ignored) {}
     }
 
 
