@@ -26,7 +26,7 @@ import com.mapbox.mapboxsdk.geometry.LatLngBounds;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.Style;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
-import com.mapbox.turf.TurfMeasurement;
+import org.smartregister.chw.core.util.GeoJsonUtils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
@@ -218,7 +218,7 @@ public class CoreAncMemberMapActivity extends AppCompatActivity {
             BoundingBox boundingBox = featureCollection.bbox();
 
             if (boundingBox == null) {
-                double[] bBox = TurfMeasurement.bbox(featureCollection);
+                double[] bBox = GeoJsonUtils.bbox(featureCollection);
                 boundingBox = BoundingBox.fromLngLats(bBox[0], bBox[1], bBox[2], bBox[3]);
             }
 
