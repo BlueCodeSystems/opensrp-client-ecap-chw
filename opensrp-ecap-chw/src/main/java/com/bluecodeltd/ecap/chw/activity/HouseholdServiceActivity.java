@@ -59,6 +59,7 @@ import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 public class HouseholdServiceActivity extends AppCompatActivity {
 
@@ -72,6 +73,7 @@ public class HouseholdServiceActivity extends AppCompatActivity {
     String intent_householdId;
     String intent_cname;
     newCaregiverModel updatedCaregiver;
+    // Use centralized Threading
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -93,22 +95,32 @@ public class HouseholdServiceActivity extends AppCompatActivity {
         intent_householdId = getIntent().getExtras().getString("householdId");
         intent_cname = getIntent().getExtras().getString("cname");
 
-        updatedCaregiver = newCaregiverDao.getNewCaregiverById(intent_householdId);
+        // Load updated caregiver name off-UI
+        Threading.io(() -> {
+            newCaregiverModel updated = null;
+            try { updated = newCaregiverDao.getNewCaregiverById(intent_householdId); } catch (Exception ignored) {}
+            newCaregiverModel finalUpdated = updated;
+            Threading.main(() -> {
+                updatedCaregiver = finalUpdated;
+                if(updatedCaregiver != null && updatedCaregiver.getNew_caregiver_name() != null && !updatedCaregiver.getNew_caregiver_name().isEmpty()) {
+                    updatedCaregiverName.setVisibility(View.VISIBLE);
+                    updatedCaregiverName.setText("Current: "+ updatedCaregiver.getNew_caregiver_name()+" Household");
+                }
+            });
+        });
 
 
         hh_id.setText(intent_householdId);
         cname.setText(intent_cname);
 
-        if(updatedCaregiver != null && updatedCaregiver.getNew_caregiver_name() != null && !updatedCaregiver.getNew_caregiver_name().isEmpty()) {
-            updatedCaregiverName.setVisibility(View.VISIBLE);
-            updatedCaregiverName.setText("Current: "+ updatedCaregiver.getNew_caregiver_name()+" Household");
-        }
-
-
-
-        familyServiceList.addAll(HouseholdServiceReportDao.getServicesByHousehold(intent_householdId));
-
-        if (recyclerViewadapter == null) {
+        View progress = findViewById(R.id.progress_loading);
+        if (progress != null) progress.setVisibility(View.VISIBLE);
+        Threading.io(() -> {
+            ArrayList<HouseholdServiceReportModel> results = new ArrayList<>(HouseholdServiceReportDao.getServicesByHousehold(intent_householdId));
+            Threading.main(() -> {
+                familyServiceList.clear();
+                familyServiceList.addAll(results);
+                if (recyclerViewadapter == null) {
             RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(HouseholdServiceActivity.this);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(eLayoutManager);
@@ -120,14 +132,17 @@ public class HouseholdServiceActivity extends AppCompatActivity {
             recyclerViewadapter.setOnDataUpdateListener(() -> runOnUiThread(() -> {
                 recreate();
             }));
-        } else {
+                } else {
             recyclerViewadapter.notifyDataSetChanged();
-        }
-
-        if (recyclerViewadapter.getItemCount() > 0){
-
-            linearLayout.setVisibility(View.GONE);
-        }
+                }
+                if (recyclerViewadapter.getItemCount() > 0){
+                    linearLayout.setVisibility(View.GONE);
+                } else {
+                    linearLayout.setVisibility(View.VISIBLE);
+                }
+                if (progress != null) progress.setVisibility(View.GONE);
+            });
+        });
     }
 
     @Override
@@ -144,38 +159,37 @@ public class HouseholdServiceActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.services1:
-                GraduationBenchmarkModel model = HouseholdDao.getGraduationStatus(intent_householdId);
-                Household house = HouseholdDao.getHousehold(intent_householdId);
-                if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
-                    showDialogBox("Unable to add service(s) for "+house.getCaregiver_name() + "`s household  because no Case Plan(s) have been added");
-
-                } else if (house.getHousehold_case_status() !=null && (house.getHousehold_case_status().equals("0") || house.getHousehold_case_status().equals("2"))) {
-                    showDialogBox(house.getCaregiver_name() + "`s household has been inactive or de-registered");
-
-                } else {
-                    try {
-                        FormUtils formUtils = new FormUtils(this);
-                        JSONObject indexRegisterForm;
-
-                        indexRegisterForm = formUtils.getFormJson("service_report_household");
-
-                        JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "household_id");
-                        cId.put("value",hh_id.getText().toString());
-
-                        JSONObject hivStatus = getFieldJSONObject(fields(indexRegisterForm, STEP1), "is_hiv_positive");
-                        hivStatus.put("value",house.getCaregiver_hiv_status());
-
-
-                        startFormActivity(indexRegisterForm);
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-
-                }
-
-
+                Threading.io(() -> {
+                    Household houseBg = null;
+                    int casePlanCount = 0;
+                    try { houseBg = HouseholdDao.getHousehold(intent_householdId); } catch (Exception ignored) {}
+                    try { casePlanCount = CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId); } catch (Exception ignored) {}
+                    Household finalHouseBg = houseBg;
+                    int finalCasePlanCount = casePlanCount;
+                    Threading.main(() -> {
+                        if (finalHouseBg == null) {
+                            showDialogBox("Household details unavailable");
+                            return;
+                        }
+                        if (finalCasePlanCount == 0){
+                            showDialogBox("Unable to add service(s) for "+finalHouseBg.getCaregiver_name() + "`s household  because no Case Plan(s) have been added");
+                        } else if (finalHouseBg.getHousehold_case_status() !=null && (finalHouseBg.getHousehold_case_status().equals("0") || finalHouseBg.getHousehold_case_status().equals("2"))) {
+                            showDialogBox(finalHouseBg.getCaregiver_name() + "`s household has been inactive or de-registered");
+                        } else {
+                            try {
+                                FormUtils formUtils = new FormUtils(this);
+                                JSONObject indexRegisterForm = formUtils.getFormJson("service_report_household");
+                                JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "household_id");
+                                cId.put("value",hh_id.getText().toString());
+                                JSONObject hivStatus = getFieldJSONObject(fields(indexRegisterForm, STEP1), "is_hiv_positive");
+                                hivStatus.put("value",finalHouseBg.getCaregiver_hiv_status());
+                                startFormActivity(indexRegisterForm);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                });
                 break;
         }
     }
