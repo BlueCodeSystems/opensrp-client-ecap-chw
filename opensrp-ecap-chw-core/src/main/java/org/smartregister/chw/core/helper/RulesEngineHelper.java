@@ -71,7 +71,8 @@ public class RulesEngineHelper {
 
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(context.getAssets().open(fileName)));
                 try {
-                    ruleMap.put(fileName, MVELRuleFactory.createRulesFrom(bufferedReader));
+                    MVELRuleFactory ruleFactory = new MVELRuleFactory();
+                    ruleMap.put(fileName, ruleFactory.createRules(bufferedReader));
                 } catch (Exception e) {
                     Timber.e(e);
                 }
