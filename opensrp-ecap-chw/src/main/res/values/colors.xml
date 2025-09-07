@@ -33,9 +33,20 @@
     <color name="pie_chart_purple">#A64D79</color>
     <color name="pie_chart_orange">#E69138</color>
     <color name="pie_chart_brown">#803F04</color>
-    // forms colors
+    <!-- forms colors -->
     <color name="family_actionbar">@color/primary</color>
     <color name="family_navigation">#61a5c9</color>
-    //Notification colors
+    <!-- Notification colors -->
     <color name="inactive">#BED6E2</color>
+
+    <!-- Missing colors required by layouts/drawables -->
+    <color name="progress_orange">#FFA500</color>
+    <color name="due_vaccine_red">#D13F3F</color>
+    <color name="other_member_profile_bg">@color/primaryBackground</color>
+
+    <!-- Commonly used colors that may be referenced -->
+    <color name="white">#FFFFFF</color>
+    <color name="text_black">#000000</color>
+    <color name="customAppThemeBlue">@color/primary</color>
+
 </resources>

@@ -52,4 +52,10 @@
     inner_frame_layout_padding (below variable) on round screens.
     -->
     <dimen name="inner_frame_layout_padding">5dp</dimen>
+
+    <!-- Added to satisfy references from layouts -->
+    <dimen name="register_list_desc_size">14sp</dimen>
+    <dimen name="register_list_top_bottom_min_padding">4dp</dimen>
+    <dimen name="register_member_village_size">14sp</dimen>
+    <dimen name="register_member_name_size">18sp</dimen>
 </resources>

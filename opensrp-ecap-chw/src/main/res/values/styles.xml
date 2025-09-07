@@ -31,6 +31,13 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <!-- Base Family theme used by some library references -->
+    <style name="FamilyTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/chw_family_primary</item>
+        <item name="colorPrimaryDark">@color/chw_family_primary_dark</item>
+        <item name="colorAccent">@color/chw_family_accent</item>
+    </style>
+
 
     <style name="ChwTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
@@ -66,6 +73,9 @@
         <item name="android:windowMinWidthMinor">90%</item>
     </style>
 
+    <!-- Define the referenced Material dialog checkbox style and a project-specific variant -->
+    <style name="Material.Drawable.CheckBox.Dialog" parent="Widget.AppCompat.CompoundButton.CheckBox" />
+
     <style name="custom_chw_vaccine_checkbox" parent="Material.Drawable.CheckBox.Dialog">
         <item name="colorAccent">@android:color/white</item> <!-- for uncheck state -->
         <item name="android:textColorSecondary">@android:color/white</item>
@@ -78,6 +88,8 @@
         <item name="android:windowBackground">@color/white</item>
         <item name="android:colorBackground">@color/white</item>
     </style>
+
+    <style name="FamilyTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="FamilyTheme.AppBarOverlay.Light" parent="FamilyTheme.AppBarOverlay">
         <item name="android:textColorPrimary">@color/customAppThemeBlue</item>
