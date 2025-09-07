@@ -65,6 +65,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
@@ -89,6 +90,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
 
     VcaScreeningModel indexVCA;
     VCAServiceModel serviceModel;
+    // Use centralized Threading
 
     public IndexRegisterViewHolder(@NonNull View itemView, Context context) {
         super(itemView);
@@ -152,68 +154,71 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
         } else {
             warningIcon.setVisibility(View.VISIBLE);
         }
-        VcaVisitationModel visitStatus = VcaVisitationDao.getVcaVisitationNotification(village);
-        VcaAssessmentModel assessmentModel = VcaAssessmentDao.getVcaVisitationNotificationFromAssessment(village);
-        String statusColor = null;
-        String visitDate = null;
-
-        if (visitStatus != null) {
-            statusColor = visitStatus.getStatus_color();
-            visitDate = visitStatus.getVisit_date();
-        } else {
-            if (assessmentModel != null) {
+        // Default while loading
+        dueButton.setBackgroundResource(org.smartregister.family.R.drawable.due_contact);
+        dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), org.smartregister.R.color.btn_blue));
+        dueButton.setText("Conduct Visit");
+        final String rowTag = village;
+        dueButton.setTag(rowTag);
+        Threading.io(() -> {
+            VcaVisitationModel visitStatus = null;
+            VcaAssessmentModel assessmentModel = null;
+            VcaScreeningModel screening = null;
+            try { visitStatus = VcaVisitationDao.getVcaVisitationNotification(village); } catch (Exception ignored) {}
+            try { assessmentModel = VcaAssessmentDao.getVcaVisitationNotificationFromAssessment(village); } catch (Exception ignored) {}
+            try { screening = VCAScreeningDao.getVcaScreening(village); } catch (Exception ignored) {}
+            final VcaScreeningModel screeningFinal = screening;
+            String statusColor = null;
+            String visitDate = null;
+            if (visitStatus != null) {
+                statusColor = visitStatus.getStatus_color();
+                visitDate = visitStatus.getVisit_date();
+            } else if (assessmentModel != null) {
                 statusColor = assessmentModel.getStatus_color();
                 visitDate = assessmentModel.getDate_edited();
-
             }
-        }
-
-// Check if both the status color and the visit date are not null and trim the status color string
-
-        indexVCA = VCAScreeningDao.getVcaScreening(village);
-
-        if (statusColor != null && (indexVCA.getCase_status() == null || indexVCA.getCase_status().equals("1") )) {
-            statusColor = statusColor.trim();
-
-            // Assign resource ids based on status color
-            int backgroundResource;
-            int textColorResource;
-            String buttonText;
-
-            if ("green".equalsIgnoreCase(statusColor) && visitDate != null) {
-                backgroundResource = R.drawable.home_visit_due;
-                textColorResource = org.smartregister.chw.core.R.color.colorGreen;
-                buttonText = "Visit Due: " + visitDate;
-            } else if ("yellow".equalsIgnoreCase(statusColor) && visitDate != null) {
-                backgroundResource = R.drawable.home_visit_10days_less;
-                textColorResource = R.color.pie_chart_yellow;
-                buttonText = "Visit Due: " + visitDate;
-            } else if ("red".equalsIgnoreCase(statusColor) && visitDate != null) {
-                backgroundResource = R.drawable.home_visit_overdue;
-                textColorResource = com.nerdstone.neatformcore.R.color.colorRed;
-                buttonText = "Visit Overdue: " + visitDate;
-            } else {
-                backgroundResource = org.smartregister.family.R.drawable.due_contact;
-                textColorResource = org.smartregister.R.color.btn_blue;
-                buttonText = "Conduct Visit";
-            }
-
-            // Apply the resources to the button
-            dueButton.setBackgroundResource(backgroundResource);
-            dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), textColorResource));
-            dueButton.setText(buttonText);
-        }
-        else {
-            if(indexVCA != null && (indexVCA.getCase_status().equals("0") || indexVCA.getCase_status().equals("2")) ){
-                dueButton.setBackgroundResource(R.drawable.inactive_button);
-                dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), org.smartregister.R.color.btn_blue));
-                dueButton.setText("Case Closed");
-            } else {
-                dueButton.setBackgroundResource(org.smartregister.family.R.drawable.due_contact);
-                dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), org.smartregister.R.color.btn_blue));
-                dueButton.setText("Conduct Visit");
-            }
-        }
+            final String fColor = statusColor != null ? statusColor.trim() : null;
+            final String fDate = visitDate;
+            Threading.main(() -> {
+                Object t = dueButton.getTag();
+                if (!(t instanceof String) || !rowTag.equals(t)) return;
+                if (fColor != null && (screeningFinal == null || screeningFinal.getCase_status() == null || "1".equals(screeningFinal.getCase_status()))) {
+                    int backgroundResource;
+                    int textColorResource;
+                    String buttonText;
+                    if ("green".equalsIgnoreCase(fColor) && fDate != null) {
+                        backgroundResource = R.drawable.home_visit_due;
+                        textColorResource = org.smartregister.chw.core.R.color.colorGreen;
+                        buttonText = "Visit Due: " + fDate;
+                    } else if ("yellow".equalsIgnoreCase(fColor) && fDate != null) {
+                        backgroundResource = R.drawable.home_visit_10days_less;
+                        textColorResource = R.color.pie_chart_yellow;
+                        buttonText = "Visit Due: " + fDate;
+                    } else if ("red".equalsIgnoreCase(fColor) && fDate != null) {
+                        backgroundResource = R.drawable.home_visit_overdue;
+                        textColorResource = com.nerdstone.neatformcore.R.color.colorRed;
+                        buttonText = "Visit Overdue: " + fDate;
+                    } else {
+                        backgroundResource = org.smartregister.family.R.drawable.due_contact;
+                        textColorResource = org.smartregister.R.color.btn_blue;
+                        buttonText = "Conduct Visit";
+                    }
+                    dueButton.setBackgroundResource(backgroundResource);
+                    dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), textColorResource));
+                    dueButton.setText(buttonText);
+                } else {
+                    if (screeningFinal != null && ("0".equals(screeningFinal.getCase_status()) || "2".equals(screeningFinal.getCase_status()))) {
+                        dueButton.setBackgroundResource(R.drawable.inactive_button);
+                        dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), org.smartregister.R.color.btn_blue));
+                        dueButton.setText("Case Closed");
+                    } else {
+                        dueButton.setBackgroundResource(org.smartregister.family.R.drawable.due_contact);
+                        dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), org.smartregister.R.color.btn_blue));
+                        dueButton.setText("Conduct Visit");
+                    }
+                }
+            });
+        });
 
        //Setting up the notification bell
 //        serviceModel = VCAServiceReportDao.getVcaService(indexVCA.getUnique_id());

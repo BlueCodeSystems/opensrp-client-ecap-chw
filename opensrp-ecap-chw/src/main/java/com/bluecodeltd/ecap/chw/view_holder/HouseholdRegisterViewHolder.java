@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
 
@@ -34,6 +35,7 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
     private Boolean isGraduated;
 
     LinearLayout hLayout;
+    // Use centralized Threading
 
     public HouseholdRegisterViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -47,53 +49,62 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
         familyNameTextView.setText(family);
         villageTextView.setText(village);
 
-        try {
-            // Get Graduation Status
-            GraduationModel graduationModel = GraduationDao.getGraduationStatus(householdId);
-            if (graduationModel != null && "1".equals(graduationModel.getGraduation_status())) {
-                homeIcon.setImageResource(R.mipmap.graduation);
-                return;
-            }
-
-            // Get Household details by base ID
-            Household household = HouseholdDao.getHouseholdByBaseId(isClosed);
-            String householdStatus = (household != null) ? household.getStatus() : null;
-
-
-            if (householdStatus == null || !"1".equals(householdStatus)) {
-                if ("true".equals(screened)) {
-                    homeIcon.setImageResource(org.smartregister.family.R.mipmap.ic_home_active);
-                } else {
-                    homeIcon.setImageResource(org.smartregister.family.R.mipmap.ic_home);
-
-                }
-            } else {
-
-                homeIcon.setImageResource(org.smartregister.family.R.mipmap.ic_home);
-                homeIcon.setColorFilter(ContextCompat.getColor(context, com.nerdstone.neatformcore.R.color.colorRed));
-
-            }
-
-            // Get Household Case Status
-            Household house = HouseholdDao.getHousehold(householdId);
-            if (house != null) {
-                String householdCaseStatus = house.getHousehold_case_status();
-                String deRegistrationReason = house.getDe_registration_reason();
-
-                if (householdCaseStatus != null &&
-                        ("0".equals(householdCaseStatus) ||
-                                ("2".equals(householdCaseStatus) &&
-                                        deRegistrationReason != null &&
-                                        ("Exited without graduation".equals(deRegistrationReason) ||
-                                                "Moved (Relocated)".equals(deRegistrationReason) ||
-                                                "other".equals(deRegistrationReason))))) {
-                    homeIcon.setImageResource(R.drawable.inactive_house);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e("HomeIconSetup", "An error occurred: " + e.getMessage());
+        // Set a baseline icon quickly; async refine below
+        if ("true".equals(screened)) {
+            homeIcon.setImageResource(org.smartregister.family.R.mipmap.ic_home_active);
+        } else {
+            homeIcon.setImageResource(org.smartregister.family.R.mipmap.ic_home);
         }
+        homeIcon.clearColorFilter();
+        homeIcon.setTag(householdId);
+
+        Threading.io(() -> {
+            try {
+                GraduationModel graduationModel = GraduationDao.getGraduationStatus(householdId);
+                Household householdByBase = HouseholdDao.getHouseholdByBaseId(isClosed);
+                String householdStatus = (householdByBase != null) ? householdByBase.getStatus() : null;
+                Household house = HouseholdDao.getHousehold(householdId);
+
+                Threading.main(() -> {
+                    if (!householdId.equals(homeIcon.getTag())) return; // view recycled
+                    try {
+                        if (graduationModel != null && "1".equals(graduationModel.getGraduation_status())) {
+                            homeIcon.setImageResource(R.mipmap.graduation);
+                            return;
+                        }
+
+                        if (householdStatus != null && "1".equals(householdStatus)) {
+                            homeIcon.setImageResource(org.smartregister.family.R.mipmap.ic_home);
+                            homeIcon.setColorFilter(ContextCompat.getColor(context, com.nerdstone.neatformcore.R.color.colorRed));
+                        } else {
+                            if ("true".equals(screened)) {
+                                homeIcon.setImageResource(org.smartregister.family.R.mipmap.ic_home_active);
+                            } else {
+                                homeIcon.setImageResource(org.smartregister.family.R.mipmap.ic_home);
+                            }
+                            homeIcon.clearColorFilter();
+                        }
+
+                        if (house != null) {
+                            String householdCaseStatus = house.getHousehold_case_status();
+                            String deRegistrationReason = house.getDe_registration_reason();
+                            if (householdCaseStatus != null &&
+                                    ("0".equals(householdCaseStatus) ||
+                                            ("2".equals(householdCaseStatus) &&
+                                                    deRegistrationReason != null &&
+                                                    ("Exited without graduation".equals(deRegistrationReason) ||
+                                                            "Moved (Relocated)".equals(deRegistrationReason) ||
+                                                            "other".equals(deRegistrationReason))))) {
+                                homeIcon.setImageResource(R.drawable.inactive_house);
+                                homeIcon.clearColorFilter();
+                            }
+                        }
+                    } catch (Exception ignored) {}
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
 
 
         //This prevents Duplication of Icons
