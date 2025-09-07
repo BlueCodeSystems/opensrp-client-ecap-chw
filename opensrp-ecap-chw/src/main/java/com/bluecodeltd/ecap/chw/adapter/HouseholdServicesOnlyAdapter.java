@@ -50,6 +50,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 import timber.log.Timber;
 
@@ -59,6 +60,7 @@ public class HouseholdServicesOnlyAdapter extends RecyclerView.Adapter<Household
     ObjectMapper oMapper;
     private static final long REFRESH_DELAY = 100;
     private Handler handler = new Handler();
+    // Use centralized Threading
 
     public HouseholdServicesOnlyAdapter(List<HouseholdServiceReportModel> services, Context context){
 
@@ -127,30 +129,22 @@ public class HouseholdServicesOnlyAdapter extends RecyclerView.Adapter<Household
 //        }
 
         holder.linearLayout.setOnClickListener(v -> {
-            Household household = HouseholdDao.getHousehold(service.getHousehold_id());
-            if (household.getHousehold_case_status() != null && (household.getHousehold_case_status().equals("0") || household.getHousehold_case_status().equals("2"))) {
-                showDialogBox(service.getHousehold_id(), "`s has been inactive or de-registered");
-            } else {
-                if (v.getId() == R.id.itemm) {
-
-                    FormUtils formUtils = null;
-                    try {
-                        formUtils = new FormUtils(context);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+            Threading.io(() -> {
+                Household household = null;
+                try { household = HouseholdDao.getHousehold(service.getHousehold_id()); } catch (Exception ignored) {}
+                Household finalHouse = household;
+                Threading.main(() -> {
+                    if (finalHouse != null && finalHouse.getHousehold_case_status() != null && (finalHouse.getHousehold_case_status().equals("0") || finalHouse.getHousehold_case_status().equals("2"))) {
+                        showDialogBox(service.getHousehold_id(), "`s has been inactive or de-registered");
+                    } else {
+                        if (v.getId() == R.id.itemm) {
+                            FormUtils formUtils = null;
+                            try { formUtils = new FormUtils(context); } catch (Exception e) { e.printStackTrace(); }
+                            try { openFormUsingFormUtils(context, "service_report_household", service); } catch (JSONException e) { e.printStackTrace(); }
+                        }
                     }
-
-
-                    try {
-                        openFormUsingFormUtils(context, "service_report_household", service);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-
+                });
+            });
         });
         holder.delete.setOnClickListener(v -> {
             try {
@@ -223,8 +217,16 @@ public class HouseholdServicesOnlyAdapter extends RecyclerView.Adapter<Household
         dialog.show();
 
         TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-        Household house = HouseholdDao.getHousehold(householdId);
-        dialogMessage.setText(house.getCaregiver_name() + message);
+        dialogMessage.setText("Loading...");
+        Threading.io(() -> {
+            Household house = null;
+            try { house = HouseholdDao.getHousehold(householdId); } catch (Exception ignored) {}
+            Household finalHouse = house;
+            Threading.main(() -> {
+                String name = (finalHouse != null && finalHouse.getCaregiver_name() != null) ? finalHouse.getCaregiver_name() : "Household";
+                dialogMessage.setText(name + message);
+            });
+        });
 
         android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
         dialogButton.setOnClickListener(v -> dialog.dismiss());

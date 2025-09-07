@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HouseholdServiceActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.Household;
@@ -53,6 +54,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import android.os.Looper;
 
 import timber.log.Timber;
 
@@ -64,6 +68,7 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
     ObjectMapper oMapper;
     private static final long REFRESH_DELAY = 100;
     private Handler handler = new Handler();
+    // Use centralized Threading for background name lookups
 
     public interface OnDataUpdateListener {
         void onDataUpdate();
@@ -269,12 +274,20 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
         dialog.show();
 
         TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-        Household house = HouseholdDao.getHousehold(householdId);
-        dialogMessage.setText(house.getCaregiver_name() + message);
+        dialogMessage.setText("Loading...");
+
+        Threading.io(() -> {
+            Household house = null;
+            try { house = HouseholdDao.getHousehold(householdId); } catch (Exception ignored) {}
+            Household finalHouse = house;
+            Threading.main(() -> {
+                String name = (finalHouse != null && finalHouse.getCaregiver_name() != null) ? finalHouse.getCaregiver_name() : "Household";
+                dialogMessage.setText(name + message);
+            });
+        });
 
         android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
         dialogButton.setOnClickListener(v -> dialog.dismiss());
-
     }
 
     public void openFormUsingFormUtils(Context context, String formName, HouseholdServiceReportModel service) throws JSONException {

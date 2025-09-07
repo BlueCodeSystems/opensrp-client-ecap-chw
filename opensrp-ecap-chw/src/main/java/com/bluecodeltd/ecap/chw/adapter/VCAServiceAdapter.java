@@ -56,6 +56,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 import timber.log.Timber;
 
@@ -64,6 +65,7 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
     Context context;
     List<VCAServiceModel> services;
     ObjectMapper oMapper;
+    // Use centralized Threading
 
     public interface OnDataUpdateListener {
         void onDataUpdate();
@@ -125,22 +127,28 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
 //                e.printStackTrace();
 //            }
 
-        VcaScreeningModel vcaScreeningModel = VCAScreeningDao.getVcaScreening(service.getUnique_id());
-        Household household = HouseholdDao.getHousehold(vcaScreeningModel.getHousehold_id());
-
-        String encodedSignature = service.getSignature();
-        String encodeSignatureHousehold = household.getSignature();
-
-
-        if(encodedSignature != null && encodedSignature != "") {
-            setImageViewFromBase64(encodedSignature, holder.signatureView);
-        } else {
-            if(encodeSignatureHousehold != null && encodeSignatureHousehold != "") {
-                setImageViewFromBase64(encodeSignatureHousehold, holder.signatureView);
-            } else {
-                holder.signatureView.setVisibility(View.GONE);
+        holder.signatureView.setVisibility(View.GONE);
+        holder.signatureView.setTag(service.getBase_entity_id());
+        Threading.io(() -> {
+            try {
+                VcaScreeningModel vcaScreeningModel = VCAScreeningDao.getVcaScreening(service.getUnique_id());
+                Household household = (vcaScreeningModel != null) ? HouseholdDao.getHousehold(vcaScreeningModel.getHousehold_id()) : null;
+                String encodedSignature = service.getSignature();
+                String encodeSignatureHousehold = household != null ? household.getSignature() : null;
+                Threading.main(() -> {
+                    if (!service.getBase_entity_id().equals(holder.signatureView.getTag())) return;
+                    String toUse = (encodedSignature != null && !encodedSignature.isEmpty()) ? encodedSignature : encodeSignatureHousehold;
+                    if (toUse != null && !toUse.isEmpty()) {
+                        holder.signatureView.setVisibility(View.VISIBLE);
+                        setImageViewFromBase64(toUse, holder.signatureView);
+                    } else {
+                        holder.signatureView.setVisibility(View.GONE);
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }
+        });
 
         CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(service.getUnique_id());
 
