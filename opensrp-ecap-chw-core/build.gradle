@@ -52,11 +52,11 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 18
+        minSdkVersion 28
         targetSdkVersion 34
         versionCode 2
         versionName "v2.0.0"
-        multiDexEnabled true
+        // multidex not required (minSdk 28+)
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -88,7 +88,7 @@ android {
     }
 
     buildFeatures {
-        dataBinding false
+        dataBinding true
         viewBinding true
         buildConfig true
     }
@@ -104,38 +104,70 @@ android {
         }
     }
 
-    repositories {
-        google()
-        mavenLocal()
-        mavenCentral()
-        maven { url "https://jitpack.io" }
-        maven { url 'https://maven.google.com' }
-        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
-        maven { url "https://dl.bintray.com/ona/kujaku" }
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/BlueCodeSystems/opensrp-client-household")
-            credentials {
-                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
-                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
-            }
-        }
-    }
 }
 
 tasks.withType(Test) {
     jacoco.includeNoLocationClasses = true
 }
 
+// Align/override transitive deps to avoid duplicate-manifest namespaces
+    configurations.all {
+    // Prefer newer CWAC Saferoom.X and drop legacy Saferoom
+    exclude group: 'com.commonsware.cwac', module: 'saferoom'
+    // Use one Hellocharts artifact; keep library, drop android flavor
+    exclude group: 'com.github.lecho', module: 'hellocharts-android'
+    // Block legacy Ona artifacts brought transitively by older native-form
+    exclude group: 'io.ona.CircleProgressbar', module: 'lib'
+    exclude group: 'io.ona.rdt-capture', module: 'lib'
+    // Exclude databinding related artifacts to avoid conflicts
+    exclude group: 'com.android.databinding', module: 'databinding-compiler'
+    exclude group: 'com.android.databinding', module: 'databinding-runtime'
+    exclude group: 'com.android.databinding', module: 'databinding-adapters'
+    exclude group: 'androidx.databinding', module: 'databinding-runtime'
+    exclude group: 'androidx.databinding', module: 'databinding-adapters'
+
+        resolutionStrategy {
+            // Ensure we resolve to the requested JitPack variants
+            dependencySubstitution {
+                substitute module('io.github.bluecodesystems:android-p2p-sync') using module('com.github.BlueCodeSystems:android-p2p-sync:v0.4.3')
+                substitute module('io.github.bluecodesystems:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v6.2.2')
+                substitute module('org.smartregister:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v6.2.2')
+                // Route legacy OPD coordinates to BlueCodeSystems JitPack OPD
+                substitute module('org.smartregister:opensrp-opd') using module('com.github.BlueCodeSystems:opensrp-client-opd:v1.0.3')
+                // Route legacy native-form to BlueCodeSystems native-form-new
+                substitute module('org.smartregister:opensrp-client-native-form') using module('io.github.bluecodesystems:opensrp-client-native-form-new:3.1.3')
+                // Route SmartRegister configurable-views to BlueCodeSystems JitPack
+                substitute module('org.smartregister:opensrp-client-configurable-views') using module('com.github.BlueCodeSystems:opensrp-client-configurable-views:v2.0.1')
+                // Also route io.github group to JitPack coord to avoid Central/GH Packages lookups
+                substitute module('io.github.bluecodesystems:opensrp-configurable-views') using module('com.github.BlueCodeSystems:opensrp-client-configurable-views:v2.0.1')
+                // Route CHW FP to BlueCodeSystems JitPack CHW Family Planning lib
+                substitute module('org.smartregister:opensrp-chw-fp') using module('com.github.BlueCodeSystems:opensrp-client-chw-family-planning:v1.0.27')
+                // Also route Maven Central coord to JitPack artifact
+                substitute module('io.github.bluecodesystems:opensrp-chw-family-planning') using module('com.github.BlueCodeSystems:opensrp-client-chw-family-planning:v1.0.27')
+                // Route FP client to BlueCodeSystems JitPack FP v2.1.0
+                substitute module('org.smartregister:opensrp-client-fp') using module('com.github.BlueCodeSystems:opensrp-client-fp:v2.1.0')
+                substitute module('io.github.bluecodesystems:opensrp-client-fp') using module('com.github.BlueCodeSystems:opensrp-client-fp:v2.1.0')
+            }
+        // Lock the Saferoom.X version
+        force 'com.commonsware.cwac:saferoom.x:1.3.0'
+        
+            // Custom artifact naming resolution
+        eachDependency { DependencyResolveDetails details ->
+            // No forced versions here; dependencySubstitution above pins the coord + version
+        }
+    }
+}
 dependencies {
-    //implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'io.realm:realm-android-library:10.19.0'
     implementation 'androidx.multidex:multidex:2.0.1'
-    implementation 'com.mapbox.mapboxsdk:mapbox-sdk-turf:7.2.0'
-    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:9.7.1'
+    // MapLibre GL (v9 API-compatible)
+    implementation 'org.maplibre.gl:android-sdk:9.6.0'
     implementation('io.ona.kujaku:library:0.10.8-SNAPSHOT') {
         exclude group: 'com.android.volley', module: 'volley'
         exclude group: 'stax', module: 'stax-api'
+        // Avoid bundling Mapbox SDK; rely on MapLibre GL declared above
+        exclude group: 'com.mapbox.mapboxsdk', module: 'mapbox-android-sdk'
     }
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
@@ -144,6 +176,10 @@ dependencies {
    // implementation 'com.jakewharton:butterknife:9.0.0-SNAPSHOT'
 
     implementation 'com.ibm.fhir:fhir-model:4.7.1'
+
+    // Easy Rules (align with RulesEngineParameters usage)
+    api 'org.jeasy:easy-rules-core:3.3.0'
+    api 'org.jeasy:easy-rules-mvel:3.3.0'
 
     api('org.smartregister:opensrp-client-thinkmd:1.0.4-SNAPSHOT@aar') {
         transitive = true
@@ -157,7 +193,9 @@ dependencies {
         exclude group: 'org.slf4j', module: 'jcl-over-slf4j'
         exclude group: 'xpp3', module: 'xpp3'
     }
-    api('org.smartregister:opensrp-client-native-form:2.1.18-SNAPSHOT@aar') {
+//    io.github.bluecodesystems:opensrp-client-native-form-new:3.1.2
+    api("io.github.bluecodesystems:opensrp-client-native-form-new:3.1.3")
+            {
         transitive = true
         exclude group: 'com.android.support', module: 'appcompat-v7'
         exclude group: 'com.android.support', module: 'cardview-v7'
@@ -167,19 +205,30 @@ dependencies {
         exclude group: 'io.ona.rdt-capture', module: 'lib'
         exclude group: 'com.google.guava', module: 'guava'
         exclude group: 'io.ona.CircleProgressbar', module: 'lib'
-        exclude group: 'org.smartregister:opensrp-client-simprints'
+        exclude group: 'org.smartregister', module: 'opensrp-client-simprints'
+        exclude group: 'org.smartregister', module: 'opensrp-client-core'
+        exclude group: 'io.github.bluecodesystems', module: 'opensrp-client-core'
+        exclude group: 'io.github.bluecodesystems', module: 'android-p2p-sync'
     }
-    api('org.smartregister:opensrp-client-simprints:1.1.0-SNAPSHOT@aar') {
-      transitive = true
-      exclude group: 'com.android.support', module: 'appcompat-v7'
-      exclude group: 'com.android.support', module: 'design'
-      exclude group: 'com.android.support', module: 'design'
-      exclude group: 'com.simprints:', module: 'libsimprints'
-    }
+    // Prefer BlueCode utils to avoid duplicate classes with org.smartregister utils
+    api "io.github.bluecodesystems:opensrp-client-utils:0.0.6"
+    // Prefer BlueCode fork of simprints to avoid duplicate classes
+//    api('org.smartregister:opensrp-client-simprints:1.1.0-SNAPSHOT@aar') {
+//      transitive = true
+//      exclude group: 'com.android.support', module: 'appcompat-v7'
+//      exclude group: 'com.android.support', module: 'design'
+//      exclude group: 'com.android.support', module: 'design'
+//      exclude group: 'com.simprints:', module: 'libsimprints'
+//    }
+    api "io.github.bluecodesystems:opensrp-client-simprints:1.1.0"
     api 'com.simprints:libsimprints:2024.2.2'
-    api "org.smartregister:circleprogressbar:1.0.16-SNAPSHOT@aar"
-    api 'com.simprints:libsimprints:2024.10.1-SNAPSHOT'
-    api('org.smartregister:opensrp-client-core:6.1.5-ALPHA1-SNAPSHOT@aar') {
+    // Circle progress bar from Maven Central
+    api 'io.github.bluecodesystems:circleprogressbar:1.0.0'
+    // MaterialEditText fork on Maven Central
+    api 'io.github.bluecodesystems:materialedittext:3.1.5'
+//    api 'com.simprints:libsimprints:2024.10.1-SNAPSHOT'
+    // Core from JitPack (v6.2.2)
+    api('com.github.BlueCodeSystems:opensrp-client-core:v6.2.2') {
         transitive = true
         exclude group: 'com.github.bmelnychuk', module: 'atv'
         exclude group: 'com.google.guava', module: 'guava'
@@ -189,11 +238,21 @@ dependencies {
         exclude group: 'com.rengwuxian.materialedittext', module: 'library'
         exclude group: 'com.ibm.fhir', module: 'fhir-model'
     }
-    api('org.smartregister:opensrp-client-configurable-views:1.1.5-SNAPSHOT@aar') {
-        transitive = true
+    // P2P Sync from JitPack (v0.4.3)
+    api('com.github.BlueCodeSystems:android-p2p-sync:v0.4.3') {
+        // Guard against old SmartRegister core sneaking in transitively
         exclude group: 'org.smartregister', module: 'opensrp-client-core'
-        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'io.github.bluecodesystems', module: 'opensrp-client-core'
     }
+    // Plan Evaluator on Maven Central
+    api('io.github.bluecodesystems:opensrp-plan-evaluator:1.7.0') {
+        // Guard against old SmartRegister core sneaking in transitively
+        exclude group: 'org.smartregister', module: 'opensrp-client-core'
+        exclude group: 'io.github.bluecodesystems', module: 'opensrp-client-core'
+        exclude group: 'io.github.bluecodesystems', module: 'android-p2p-sync'
+    }
+    // BlueCodeSystems configurable views - using preferred version (JitPack)
+    implementation 'com.github.BlueCodeSystems:opensrp-client-configurable-views:v2.0.1'
     api('org.smartregister:opensrp-household:1.0.0-RELEASE@aar') {
         transitive = true
         exclude group: 'org.smartregister', module: 'opensrp-client-core'
@@ -201,21 +260,45 @@ dependencies {
         exclude group: 'org.smartregister', module: 'opensrp-client-configurable-views'
         exclude group: 'com.android.support', module: 'appcompat-v7'
         exclude group: 'id.zelory', module: 'compressor'
+        exclude group: 'io.github.bluecodesystems', module: 'opensrp-client-core'
+        exclude group: 'io.github.bluecodesystems', module: 'android-p2p-sync'
     }
     api('org.smartregister:opensrp-client-immunization:3.0.3-SNAPSHOT@aar') {
         transitive = true
         exclude group: 'org.smartregister', module: 'opensrp-client-core'
         exclude group: 'org.smartregister', module: 'opensrp-client-native-form'
+        exclude group: 'org.smartregister', module: 'opensrp-client-configurable-views'
         exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'io.github.bluecodesystems', module: 'opensrp-client-core'
+        exclude group: 'io.github.bluecodesystems', module: 'android-p2p-sync'
+    }
+    // OPD module from BlueCodeSystems JitPack (v1.0.3)
+    api('com.github.BlueCodeSystems:opensrp-client-opd:v1.0.3') {
+        transitive = true
+        // Guard against older core being brought in transitively
+        exclude group: 'org.smartregister', module: 'opensrp-client-core'
+        exclude group: 'io.github.bluecodesystems', module: 'opensrp-client-core'
+    }
+    // CHW FP library (org.smartregister.chw.fp.*)
+    api('com.github.BlueCodeSystems:opensrp-client-chw-family-planning:v1.0.27') {
+        transitive = true
+        // Guard against older core brought in transitively
+        exclude group: 'org.smartregister', module: 'opensrp-client-core'
+        exclude group: 'io.github.bluecodesystems', module: 'opensrp-client-core'
+        exclude group: 'io.github.bluecodesystems', module: 'android-p2p-sync'
     }
     api('org.smartregister:opensrp-client-reporting:0.0.22-SNAPSHOT@aar') {
         transitive = true
         exclude group: 'org.smartregister', module: 'opensrp-client-core'
+        exclude group: 'org.smartregister', module: 'opensrp-client-native-form'
+        exclude group: 'org.smartregister', module: 'opensrp-client-configurable-views'
         exclude group: 'com.android.support', module: 'appcompat-v7'
         exclude group: 'com.android.support', module: 'support-v4'
         exclude group: 'com.android.support', module: 'design'
         exclude group: 'com.github.lecho', module: 'hellocharts-library'
         exclude group: 'id.zelory', module: 'compressor'
+        exclude group: 'io.github.bluecodesystems', module: 'opensrp-client-core'
+        exclude group: 'io.github.bluecodesystems', module: 'android-p2p-sync'
     }
     api('org.smartregister:opensrp-client-growth-monitoring:1.1.23-SNAPSHOT@aar') {
         transitive = true
@@ -224,6 +307,16 @@ dependencies {
         exclude group: 'org.smartregister', module: 'opensrp-client-configurable-views'
         exclude group: 'com.android.support', module: 'appcompat-v7'
         exclude group: 'com.github.lecho', module: 'hellocharts-android'
+        exclude group: 'io.github.bluecodesystems', module: 'opensrp-client-core'
+        exclude group: 'io.github.bluecodesystems', module: 'android-p2p-sync'
+    }
+    // CHW Malaria module for malaria UI/domain/presenters
+    api('org.smartregister:opensrp-client-chw-malaria:+@aar') {
+        transitive = true
+        exclude group: 'org.smartregister', module: 'opensrp-client-core'
+        exclude group: 'org.smartregister', module: 'opensrp-client-native-form'
+        exclude group: 'org.smartregister', module: 'opensrp-client-configurable-views'
+        exclude group: 'com.android.support', module: 'appcompat-v7'
     }
     api('org.smartregister:opensrp-client-chw-anc:2.0.6-SNAPSHOT@aar') {
         transitive = true
@@ -234,6 +327,8 @@ dependencies {
         exclude group: 'org.smartregister', module: 'opensrp-client-immunization'
         exclude group: 'org.smartregister', module: 'opensrp-client-family'
         exclude group: 'id.zelory', module: 'compressor'
+        exclude group: 'io.github.bluecodesystems', module: 'opensrp-client-core'
+        exclude group: 'io.github.bluecodesystems', module: 'android-p2p-sync'
     }
     api('org.smartregister:opensrp-client-chw-pnc:2.0.0-SNAPSHOT@aar') {
         transitive = true
@@ -245,97 +340,30 @@ dependencies {
         exclude group: 'org.smartregister', module: 'opensrp-client-immunization'
         exclude group: 'org.smartregister', module: 'opensrp-client-family'
         exclude group: 'id.zelory', module: 'compressor'
+        exclude group: 'io.github.bluecodesystems', module: 'opensrp-client-core'
+        exclude group: 'io.github.bluecodesystems', module: 'android-p2p-sync'
     }
-    api('org.smartregister:opensrp-client-chw-malaria:1.2.19-SNAPSHOT@aar') {
-        transitive = true
-        exclude group: 'org.smartregister', module: 'opensrp-client-core'
-        exclude group: 'org.smartregister', module: 'opensrp-client-native-form'
-        exclude group: 'org.smartregister', module: 'opensrp-client-configurable-views'
-        exclude group: 'com.android.support', module: 'appcompat-v7'
-        exclude group: 'id.zelory', module: 'compressor'
-    }
-    api('org.smartregister:opensrp-chw-family-planning:1.0.27-SNAPSHOT@aar') {
-        transitive = true
-        exclude group: 'org.smartregister', module: 'opensrp-client-core'
-        exclude group: 'org.smartregister', module: 'opensrp-client-native-form'
-        exclude group: 'org.smartregister', module: 'opensrp-client-configurable-views'
-        exclude group: 'com.android.support', module: 'appcompat-v7'
-        exclude group: 'id.zelory', module: 'compressor'
-    }
-    api('org.smartregister:opensrp-client-chw-referral:1.3.6-SNAPSHOT@aar') {
-        transitive = true
-        exclude group: 'org.smartregister', module: 'opensrp-client-core'
-        exclude group: 'org.smartregister', module: 'opensrp-client-native-form'
-        exclude group: 'org.smartregister', module: 'opensrp-client-configurable-views'
-        exclude group: 'com.android.support', module: 'appcompat-v7'
-        exclude group: 'id.zelory', module: 'compressor'
-        exclude group: 'com.nerdstone', module: 'neat-form-core'
-        exclude group: 'org.koin', module: 'koin-android'
-        exclude group: 'org.koin', module: 'koin-androidx-scope'
-        exclude group: 'org.koin', module: 'koin-androidx-viewmodel'
-    }
-    api "io.insert-koin:koin-androidx-viewmodel:2.0.1"
-    api "io.insert-koin:koin-android:2.0.1"
-    api('org.smartregister:opensrp-client-opd:0.0.13-SNAPSHOT@aar') {
-        transitive = true
-        exclude group: 'com.github.lecho', module: 'hellocharts-android'
-        exclude group: 'org.smartregister', module: 'opensrp-client-native-form'
-        exclude group: 'org.smartregister', module: 'opensrp-client-core'
-        exclude group: 'org.smartregister', module: 'opensrp-client-anc'
-        exclude group: 'com.google.guava', module: 'guava'
-        exclude group: 'id.zelory', module: 'compressor'
-    }
-    api 'com.google.guava:guava:30.1.1-android'
+
+    // RxJava support used across core and app
+    api 'io.reactivex.rxjava2:rxjava:2.2.21'
     api 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    // Because RxAndroid releases are few and far between, it is recommended you also
-    // explicitly depend on RxJava's latest version for bug fixes and new features.
-    api 'io.reactivex.rxjava2:rxjava:2.2.15'
-    api 'com.evernote:android-job:1.2.6'
-    api 'org.greenrobot:eventbus:3.1.1'
-    api("org.smartregister:android-p2p-sync:0.3.8-aplha4-SNAPSHOT") {
-        transitive = true
-        exclude group: 'org.smartregister', module: 'opensrp-client-core'
-        exclude group: 'com.android.support', module: 'appcompat-v7'
-        exclude group: 'org.smartregister', module: 'opensrp-client-native-form'
-        exclude group: 'org.smartregister', module: 'opensrp-client-configurable-views'
-        exclude group: 'com.rengwuxian.materialedittext', module: 'library'
-    }
-//    api 'com.google.firebase:firebase-crashlytics:19.3.0'
 
-    kapt "androidx.databinding:databinding-compiler:8.6.1"
+    // core library desugaring not required for minSdk 28+
 
-    androidTestImplementation 'org.mockito:mockito-android:3.0.0'
-    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
-
-    testImplementation 'org.mockito:mockito-core:4.8.1'
-    testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.robolectric:robolectric:4.13'
-    testImplementation 'org.robolectric:shadows-multidex:4.3.1'
-    testImplementation 'org.robolectric:shadows-support-v4:3.4-rc2'
-
-    // unit test
-    def powerMockVersion = '2.0.7'
-    testImplementation "org.powermock:powermock-module-junit4:$powerMockVersion"
-    testImplementation "org.powermock:powermock-module-junit4-rule:$powerMockVersion"
-    testImplementation "org.powermock:powermock-api-mockito2:$powerMockVersion"
-    testImplementation "org.powermock:powermock-classloading-xstream:$powerMockVersion"
 }
 
-task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest']) {
-//
-//    reports {
+tasks.register('jacocoTestReport', JacocoReport) {
+    dependsOn 'testDebugUnitTest'
+    reports {
 //        xml.enabled = true
 //        html.enabled = true
-//    }
-
+    }
     getReports().getXml().setDestination(file("${buildDir}/reports/jacoco/jacocoRootReport/merged.xml"))
     getReports().getHtml().setDestination(file("${buildDir}/reports/jacoco/jacocoRootReport/html"))
 
-    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*', '**/*$ViewBinder*.*']
-    def debugTree = fileTree(dir: "$project.buildDir/intermediates/javac/debug/classes", excludes: fileFilter)
+    def fileFilter = ['**/R.class','**/R$*.class','**/BuildConfig.*','**/Manifest*.*','**/*Test*.*','android/**/*.*','**/*$ViewBinder*.*']
+    def debugTree = fileTree(dir: "$project.buildDir/intermediates/javac/debug/classes/", excludes: fileFilter)
     def mainSrc = "$project.projectDir/src/main/java"
-
     sourceDirectories.setFrom(files([mainSrc]))
     classDirectories.setFrom(files([debugTree]))
     executionData.setFrom(fileTree(dir: project.buildDir, includes: [

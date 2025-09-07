@@ -1,1 +1,77 @@
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        // Prioritize standard repositories first
+        mavenCentral()
+        google()
+        mavenLocal()
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://maven.google.com' }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+        maven { url "https://acra.googlecode.com/svn/repository/releases" }
+        maven { url "https://repo.maven.apache.org/maven2" }
+        maven { url "https://cloudant.github.io/cloudant-sync-eap/repository" }
+        maven { url 'https://maven.fabric.io/public' }
+        maven { url "https://s3.amazonaws.com/repo.commonsware.com" }
+        maven { url 'https://repo1.maven.org/maven2/com/ibm/fhir' }
+        maven { url  "https://s01.oss.sonatype.org/content/repositories/snapshots" }
+        maven { url  "https://s01.oss.sonatype.org/content/repositories/releases" }
+        maven { url  "https://repository.liferay.com/nexus/content/repositories/public" }
+        maven { url "https://dl.bintray.com/ona/kujaku" }
+        
+        // Mapbox repository with credentials
+        maven {
+            url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
+            authentication { basic(BasicAuthentication) }
+            credentials {
+                username = 'mapbox'
+                // Note: password needs to be configured in local.properties
+                password = System.getProperty("mapbox.sdk.token") ?: "sample_key"
+            }
+        }
+        
+        // GitHub Packages repositories (require authentication)
+        maven {
+            name = "GitHubPackages-NeatForm"
+            url = uri("https://maven.pkg.github.com/ellykits/neat-form")
+            credentials {
+                username = System.getenv("GPR_USER") ?: System.getProperty("gpr.usr")
+                password = System.getenv("GPR_API_KEY") ?: System.getProperty("gpr.key")
+            }
+        }
+        maven {
+            name = "GitHubPackages-FHIR-Model"
+            url = uri("https://maven.pkg.github.com/com.ibm.fhir/fhir-model")
+            credentials {
+                username = System.getenv("GPR_USER") ?: System.getProperty("gpr.usr")
+                password = System.getenv("GPR_API_KEY") ?: System.getProperty("gpr.key")
+            }
+        }
+        maven {
+            name = "GitHubPackages-FHIR-Path"
+            url = uri("https://maven.pkg.github.com/com.ibm.fhir/fhir-path")
+            credentials {
+                username = System.getenv("GPR_USER") ?: System.getProperty("gpr.usr")
+                password = System.getenv("GPR_API_KEY") ?: System.getProperty("gpr.key")
+            }
+        }
+        maven {
+            name = "GitHubPackages-ECAP-CHW-Core"
+            url = uri("https://maven.pkg.github.com/BlueCodeSystems/opensrp-client-ecap-chw-core")
+            credentials {
+                username = System.getenv("GPR_USER") ?: System.getProperty("gpr.usr")
+                password = System.getenv("GPR_API_KEY") ?: System.getProperty("gpr.key")
+            }
+        }
+        maven {
+            name = "GitHubPackages-Household"
+            url = uri("https://maven.pkg.github.com/BlueCodeSystems/opensrp-client-household")
+            credentials {
+                username = System.getenv("GPR_USER") ?: System.getProperty("gpr.usr")
+                password = System.getenv("GPR_API_KEY") ?: System.getProperty("gpr.key")
+            }
+        }
+    }
+}
+
 include ':opensrp-ecap-chw', ':opensrp-ecap-chw-core'

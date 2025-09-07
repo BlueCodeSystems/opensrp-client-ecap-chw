@@ -38,77 +38,6 @@ if (project.rootProject.file("local.properties").exists()) {
     githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
 }
 
-allprojects {
-    repositories {
-        google()
-        mavenLocal()
-        mavenCentral()
-        maven { url "https://jitpack.io" }
-        maven { url 'https://maven.google.com' }
-        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
-        maven { url "https://dl.bintray.com/ona/kujaku" }
-        maven { url 'https://maven.fabric.io/public' }
-        /** GitHub packages **/
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/ellykits/neat-form")
-            credentials {
-                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
-                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
-            }
-        }
-      /*  maven {
-            name = "GitHubPackages"
-            *//**
-             * Configure path of the package repository on Github using the GITHUB_USER_ID and * Git Repository *//*
-            url = uri("https://maven.pkg.github.com/io.ona.rdt-capture/lib")
-            credentials {
-                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
-                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
-            }
-        }*/
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/com.ibm.fhir/fhir-model")
-            credentials {
-                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
-                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
-            }
-        }
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/com.ibm.fhir/fhir-path")
-            credentials {
-                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
-                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
-            }
-        }
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/BlueCodeSystems/opensrp-client-ecap-chw-core")
-            credentials {
-                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
-                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
-            }
-        }
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://mvnrepository.com/artifact/com.ibm.fhir/fhir-path")
-            credentials {
-                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
-                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
-            }
-        }
-        /*maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/BlueCodeSystems/opensrp-client-household")
-            credentials {
-                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
-                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
-            }
-        }*/
-    }
-}
 
 android {
     namespace  = "com.bluecodeltd.ecap.chw"
@@ -137,11 +66,11 @@ android {
 
     defaultConfig {
         applicationId "com.bluecodeltd.chw"
-        minSdkVersion androidMinSdkVersion
-        targetSdkVersion androidTargetSdkVersion
+        minSdk 28
+        targetSdk 35
         versionCode 14
         versionName "v6.1.2"
-        multiDexEnabled true
+        // multidex not required (minSdk 28+)
         buildConfigField "long", "MAX_SERVER_TIME_DIFFERENCE", "1800000l"
         buildConfigField "boolean", "TIME_CHECK", "false"
         buildConfigField "String", "SYNC_TYPE", '"teamId"'
@@ -310,6 +239,26 @@ android {
     buildToolsVersion '35.0.0'
 }
 
+// Align/override transitive deps to avoid duplicate-manifest namespaces
+configurations.all {
+    // Prefer newer CWAC Saferoom.X and drop legacy Saferoom
+    exclude group: 'com.commonsware.cwac', module: 'saferoom'
+    // Use one Hellocharts artifact; keep library, drop android flavor
+    exclude group: 'com.github.lecho', module: 'hellocharts-android'
+
+    resolutionStrategy {
+        dependencySubstitution {
+            substitute module('io.github.bluecodesystems:android-p2p-sync') using module('com.github.BlueCodeSystems:android-p2p-sync:v0.4.3')
+            substitute module('io.github.bluecodesystems:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v6.2.0')
+            substitute module('org.smartregister:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v6.2.0')
+            // Route CHW FP to BlueCodeSystems JitPack CHW Family Planning lib
+            substitute module('org.smartregister:opensrp-chw-fp') using module('com.github.BlueCodeSystems:opensrp-client-chw-family-planning:v1.0.27')
+            // Also route Maven Central coord to JitPack artifact
+            substitute module('io.github.bluecodesystems:opensrp-chw-family-planning') using module('com.github.BlueCodeSystems:opensrp-client-chw-family-planning:v1.0.27')
+        }
+        force 'com.commonsware.cwac:saferoom.x:1.3.0'
+    }
+}
 dependencies {
 
     implementation "com.nerdstone:neat-form-core:1.1.4"
@@ -317,6 +266,8 @@ dependencies {
     implementation "com.ibm.fhir:fhir-model:4.7.1"
     implementation "com.ibm.fhir:fhir-path:4.7.1"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    // CHW FP library (org.smartregister.chw.fp.*)
+    implementation 'com.github.BlueCodeSystems:opensrp-client-chw-family-planning:v1.0.27'
 
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.14'
 
@@ -337,17 +288,19 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.core:core-ktx:1.13.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-//    implementation 'com.mapbox.mapboxsdk:mapbox-sdk-turf:5.1.0'
+    // MapLibre GL is used for the map renderer; Turf usage replaced with local util
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'com.google.android.material:material:1.12.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.3.2'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    // Rey Material widgets (for com.rey.material.widget.* used in XML)
+    implementation 'com.github.rey5137:material:1.2.5'
     implementation 'com.github.gcacace:signature-pad:1.3.1'
     implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
-    //For viewing PDFs in the app
-    implementation 'com.github.mhiew:android-pdf-viewer:3.2.0-beta.3'
+    // For viewing PDFs in the app (BlueCodeSystems fork)
+    implementation 'com.github.BlueCodeSystems:AndroidPdfViewer:v2.0.0'
     implementation 'androidx.wear:wear:1.0.0'
     //For Sentry
 //    implementation 'io.sentry:sentry-android:5.1.2'
@@ -360,8 +313,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-scalars:2.5.0'
     //GSON
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    //Material Icons
-    implementation 'com.android.support:appcompat-v7:28.0.0'
+    //Material Icons (do not include legacy support-v7 alongside AndroidX)
     implementation 'androidx.navigation:navigation-fragment-ktx:2.8.4'
     implementation 'androidx.navigation:navigation-ui-ktx:2.8.4'
     implementation("io.insert-koin:koin-androidx-viewmodel:2.0.1")
@@ -379,11 +331,13 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.mockito:mockito-core:4.8.1'
     testImplementation 'org.robolectric:robolectric:4.13'
-    testImplementation 'org.robolectric:shadows-multidex:4.3.1'
+    // Removed legacy Robolectric shadows; not needed at minSdk 28+
     testImplementation 'androidx.test:core:1.6.1'
     implementation 'com.jakewharton:butterknife:10.0.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
+    kapt 'com.jakewharton:butterknife-compiler:10.0.0'
     compileOnly 'com.google.android.wearable:wearable:2.9.0'
+
+    // core library desugaring not required for minSdk 28+
 }
 
 def flavors = android.productFlavors.collect { flavor -> flavor.name }
