@@ -207,7 +207,7 @@
     <string name="confirm_remove_text">Are you sure you want to remove %s\'s record? This will remove their entire health record from your device. This action cannot be undone.</string>
     <string name="remove">REMOVE</string>
     <string name="remove_entire_family">Removing entire family</string>
-    <string name="remove_warning_family">Are you sure you want to remove the %s Family\'s record? This will remove the family\'s entire record AND all of the %s family members\' health records from your device. This action cannot be undone.</string>
+    <string name="remove_warning_family">Are you sure you want to remove the %1$s Family\'s record? This will remove the family\'s entire record AND all of the %2$s family members\' health records from your device. This action cannot be undone.</string>
     <string name="family">%s Family</string>
 
     <!--Change care giver-->
@@ -217,7 +217,7 @@
     <string name="remove_familyhead_warning_message">Before you remove this member you must select a new family head.</string>
     <string name="profile_change_dialog_message">Before you remove this member, you must select a new family head.</string>
     <string name="select_a_new_family_head">Select a new family head</string>
-    <string name="remove_family_count">%s adults and %s U5 children</string>
+    <string name="remove_family_count">%1$s adults and %2$s U5 children</string>
 
     <string name="yellow_fever">Yellow Fever</string>
 
@@ -401,7 +401,7 @@
 
     <string name="phone_not_provided">Phone not provided</string>
     <string name="anc_danger_sign_prefix">ANC Danger Signs; Symptoms: %s</string>
-    <string name="client_name_age_suffix">%s, %s</string>
+    <string name="client_name_age_suffix">%1$s, %2$s</string>
 
     <!--PNC -->
     <string name="pnc_visit_day_due">DAY %s VISIT DUE</string>
@@ -464,8 +464,8 @@
     <string name="pnc_medical_history_child_immunization_bcg">BCG: {0}</string>
 
     <!--Wcaro Upcoming Services -->
-    <string name="upcoming_immunizations">Immunizations (%s) (%s) \n%s \n%s</string>
-    <string name="up_immunizations">Immunizations (%s) (%s) \n%s </string>
+    <string name="upcoming_immunizations">Immunizations (%1$s) (%2$s) \n%3$s \n%4$s</string>
+    <string name="up_immunizations">Immunizations (%1$s) (%2$s) \n%3$s </string>
 
     <!-- dates -->
     <string name="date_days">Days</string>
