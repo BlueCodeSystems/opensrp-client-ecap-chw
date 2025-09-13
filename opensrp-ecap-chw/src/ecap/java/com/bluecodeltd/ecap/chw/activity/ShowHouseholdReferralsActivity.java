@@ -1,6 +1,6 @@
 package com.bluecodeltd.ecap.chw.activity;
 
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 
 import android.content.Intent;
 import android.os.Bundle;
