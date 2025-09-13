@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- IME action id for login editor action -->
+    <integer name="login">1001</integer>
+    <!-- Weights used in multiple vaccination dialog layouts -->
+    <integer name="anc_list_anc_visit_service_mode_anc_visit_1_view_weight">1</integer>
+</resources>

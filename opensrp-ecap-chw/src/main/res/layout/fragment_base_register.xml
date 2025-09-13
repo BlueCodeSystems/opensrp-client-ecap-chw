@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- Top toolbar/navigation bar used by BaseRegisterFragment (provides register_toolbar, txt_title_label, register_nav_bar_container) -->
+    <include
+        layout="@layout/toolbar_base_register" />
+
+    <!-- Search/filter row (provides search_bar_layout, filter_sort_layout) -->
+    <include
+        layout="@layout/base_register_search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize" />
+
+    <!-- Sort/filter bar (provides register_sort_filter_bar_layout) -->
+    <include
+        layout="@layout/base_register_sort_filter_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <!-- Main client list RecyclerView expected by BaseRegisterFragment -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
+
+        <!-- Progress bar expected by BaseRegisterFragment -->
+        <ProgressBar
+            android:id="@+id/client_list_progress"
+            style="@android:style/Widget.Holo.Light.ProgressBar.Large.Inverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+</LinearLayout>
+

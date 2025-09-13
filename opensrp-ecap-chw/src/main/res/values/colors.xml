@@ -1,52 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <color name="chw_primary">#218CC5</color>
-    <color name="primary">#218CC5</color>
-    <color name="chw_primary_dark">#0d384e</color>
-    <color name="chw_accent">#3797ca</color>
-
-    <color name="chw_family_primary">#009900</color>
-    <color name="chw_family_primary_dark">#037003</color>
-    <color name="chw_family_accent">#024a02</color>
-
-    <color name="refer_close_red">#BF271B</color>
-    <color name="primaryAccent">#3797ca</color>
-    <color name="primaryBackground">#a6d1e7</color>
-    <color name="medical_bar">#3B404D</color>
-    <color name="medical_text_inner">#212121</color>
-    <color name="medical_sub_text_inner">#575757</color>
-    <color name="black_tranparent_50">#3B404D</color>
+    <!-- Legacy Holo blue for dialogs referencing color/holo_blue_light -->
+    <color name="holo_blue_light">#33B5E5</color>
+    <!-- CHW theme colors (placeholders to satisfy theme references) -->
+    <color name="chw_family_primary">#3F51B5</color>
+    <color name="chw_family_primary_dark">#303F9F</color>
+    <color name="chw_family_accent">#FF4081</color>
+    <color name="chw_accent">#FF4081</color>
+    <!-- Reporting pie chart colors and common color refs -->
+    <color name="pie_chart_yes_green">#4CAF50</color>
+    <color name="pie_chart_no_red">#F44336</color>
     <color name="black">#000000</color>
-    <color name="grey">#9e9e9e</color>
-    <color name="light_blue">#C7E7FE</color>
-    <color name="light_gray">#FAFAFA</color>
-    <color name="visit_status_ok">@android:color/holo_blue_light</color>
-    <color name="visit_status_over_due">#D13F3F</color>
-    <color name="visit_status_not_yet">@android:color/darker_gray</color>
-    <color name="pie_chart_yes_green">#99CC00</color>
-    <color name="pie_chart_no_red">#FF4444</color>
-    <color name="pie_chart_red">#FF5508</color>
-    <color name="pie_chart_blue">#1155D7</color>
-    <color name="pie_chart_yellow">#F6C732</color>
-    <color name="pie_chart_green">#38761D</color>
-    <color name="pie_chart_purple">#A64D79</color>
-    <color name="pie_chart_orange">#E69138</color>
-    <color name="pie_chart_brown">#803F04</color>
-    <!-- forms colors -->
-    <color name="family_actionbar">@color/primary</color>
-    <color name="family_navigation">#61a5c9</color>
-    <!-- Notification colors -->
-    <color name="inactive">#BED6E2</color>
-
-    <!-- Missing colors required by layouts/drawables -->
-    <color name="progress_orange">#FFA500</color>
-    <color name="due_vaccine_red">#D13F3F</color>
-    <color name="other_member_profile_bg">@color/primaryBackground</color>
-
-    <!-- Commonly used colors that may be referenced -->
+    <!-- Primary color fallback referenced in some forms -->
+    <color name="primary">#3F51B5</color>
+    <color name="family_actionbar">#3F51B5</color>
+    <color name="family_navigation">#3F51B5</color>
+    <color name="pie_chart_yellow">#FFC107</color>
+    <!-- Additional pie chart palette used in ChwReport -->
+    <color name="pie_chart_blue">#2196F3</color>
+    <color name="pie_chart_green">#4CAF50</color>
+    <color name="pie_chart_purple">#9C27B0</color>
+    <color name="pie_chart_orange">#FF9800</color>
+    <color name="pie_chart_brown">#795548</color>
+    <color name="pie_chart_red">#F44336</color>
+    <!-- CHW primary color alias used in fragments -->
+    <color name="chw_primary">#3F51B5</color>
+    <!-- Fallback color used by some library references -->
+    <color name="translucent_yellow">#80FFFF00</color>
+    <!-- Bottom navigation background color -->
+    <color name="bottom_nav_bar_background">#212121</color>
+    
+    <!-- Commonly referenced colors in layouts/styles -->
     <color name="white">#FFFFFF</color>
-    <color name="text_black">#000000</color>
-    <color name="customAppThemeBlue">@color/primary</color>
-
+    <color name="grey">#9E9E9E</color>
+    <color name="light_grey">#E0E0E0</color>
+    <color name="client_list_header_dark_grey">#333333</color>
+    <color name="search_bar_background_black">#121212</color>
+    <color name="search_hint_white">#B3FFFFFF</color>
+    <color name="customAppThemeBlue">#389CC8</color>
+    <color name="colorDarkGrey">#585858</color>
+    <color name="me_page_line_separator">#E0E0E0</color>
 </resources>

@@ -214,12 +214,12 @@
             </com.google.android.material.appbar.AppBarLayout>
 
 
-        <androidx.viewpager.widget.ViewPager
+        <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/collapsing_toolbar_appbarlayout"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"></androidx.viewpager.widget.ViewPager>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
 

@@ -1,61 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="login_logo_height">100dp</dimen>
+    <dimen name="member_due_list_title_size">16sp</dimen>
+    <dimen name="member_profile_pic_width">48dp</dimen>
+    <dimen name="member_profile_list_title_size">16sp</dimen>
+    <!-- Defaults required by layouts -->
+    <dimen name="appbar_padding_top">16dp</dimen>
+    <dimen name="vaccine_text_top_margin">8dp</dimen>
+    <!-- Padding used by FP/base profile buttons in multiple layouts -->
+    <dimen name="profile_btn_registration_info_padding">12dp</dimen>
+    <!-- Common list header/margins used by various list layouts -->
+    <dimen name="list_header_height">48dp</dimen>
+    <dimen name="list_view_margin_left_and_right">16dp</dimen>
+    
+    <!-- Search bar dims for base_register_search_bar -->
+    <dimen name="ec_main_header_search_layout_height">40dp</dimen>
+    <dimen name="register_search_bar_margin">12dp</dimen>
+    <dimen name="register_search_bar_min_margin">8dp</dimen>
+    <dimen name="register_search_bar_padding">8dp</dimen>
+    <dimen name="default_font_size_search_bar">16sp</dimen>
+    <dimen name="search_view_cancel_image_margin_right">8dp</dimen>
+    <dimen name="search_bar_min_margin">8dp</dimen>
+    <dimen name="ec_main_header_search_cancel_button_width">40dp</dimen>
+
+    <!-- Pagination bar height used across registers/dialogs -->
+    <dimen name="pagination_bar_height">56dp</dimen>
+
+    <!-- Misc dimensions referenced across app layouts -->
+    <dimen name="app_bar_height">56dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="app_bar_height">200dp</dimen>
-    <dimen name="item_width">200dp</dimen>
-    <dimen name="text_margin">16dp</dimen>
-    <dimen name="child_home_visit_bar_height">95dp</dimen>
-    <dimen name="app_bar_size">75dp</dimen>
-    <dimen name="vaccine_text_size">12sp</dimen>
-    <dimen name="number_view_text_size">15sp</dimen>
-
-    <dimen name="copy_to_clipboard_header_text_size">20sp</dimen>
+    <dimen name="btn_margin_bottom">8dp</dimen>
+    <!-- contact_* padding defined in contact_dims.xml -->
+    <dimen name="copy_to_clipboard_header_text_size">16sp</dimen>
     <dimen name="copy_to_clipboard_message_text_size">14sp</dimen>
+    <dimen name="item_width">64dp</dimen>
+    <dimen name="register_list_due_size">12sp</dimen>
+    <dimen name="name_margin_top">8dp</dimen>
+    <dimen name="name_view_text_size">18sp</dimen>
+    <dimen name="number_view_text_size">14sp</dimen>
 
-    <dimen name="login_font_size">14sp</dimen>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="appbar_padding_top">8dp</dimen>
-
-    <dimen name="tool_bar_size">55dp</dimen>
-    <dimen name="tool_bar_title">20sp</dimen>
-    <dimen name="tool_bar_image">25dp</dimen>
-
-    <dimen name="call_widget_padding_top">10dp</dimen>
-    <dimen name="call_widget_padding_side">15dp</dimen>
-    <dimen name="call_widget_padding_bottom">30dp</dimen>
-
-    <dimen name="call_widget_font1">25sp</dimen>
-    <dimen name="call_widget_font2">20sp</dimen>
-    <dimen name="call_widget_font3">18sp</dimen>
-
-    <dimen name="dialog_toolbar_close_margin">10dp</dimen>
-
-    <dimen name="member_profile_pic_width">70dp</dimen>
-    <dimen name="member_profile_list_title_size">18sp</dimen>
-    <dimen name="member_due_list_title_size">17.5sp</dimen>
-
-    <dimen name="family_register_text_size">4sp</dimen>
-    <dimen name="family_register_image_size">22dp</dimen>
-    <dimen name="family_register_count_size">34dp</dimen>
-    <!--
-    Because the window insets on round devices are larger than 15dp, this padding only applies
-    to square screens.
-    -->
-    <dimen name="box_inset_layout_padding">0dp</dimen>
-
-    <!--
-    This padding applies to both square and round screens. The total padding between the buttons
-    and the window insets is box_inset_layout_padding (above variable) on square screens and
-    inner_frame_layout_padding (below variable) on round screens.
-    -->
-    <dimen name="inner_frame_layout_padding">5dp</dimen>
-
-    <!-- Added to satisfy references from layouts -->
-    <dimen name="register_list_desc_size">14sp</dimen>
-    <dimen name="register_list_top_bottom_min_padding">4dp</dimen>
-    <dimen name="register_member_village_size">14sp</dimen>
-    <dimen name="register_member_name_size">18sp</dimen>
+    <!-- Login and PIN screen metrics -->
+    <dimen name="login_bottom_margin">24dp</dimen>
+    <dimen name="login_logo_top_padding">16dp</dimen>
+    <dimen name="login_build_text_view_textSize">12sp</dimen>
+    <dimen name="login_middle_section_padding_top">12dp</dimen>
+    <dimen name="login_horizontal_margin">16dp</dimen>
+    <dimen name="login_view_component_height">48dp</dimen>
+    <dimen name="login_edit_text_textSize">16sp</dimen>
+    <dimen name="checkbox_margin_top">4dp</dimen>
+    <dimen name="login_logo_height">180dp</dimen>
+    <dimen name="login_title_text_size">25sp</dimen>
+    <dimen name="login_opensrp_logo_height">60dp</dimen>
 </resources>
