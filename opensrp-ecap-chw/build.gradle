@@ -6,7 +6,7 @@ buildscript {
     }
     dependencies {
         classpath 'org.apache.commons:commons-lang3:3.14.0'
-        classpath 'com.android.tools.build:gradle:8.6.1'
+        classpath 'com.android.tools.build:gradle:8.7.0'
         classpath 'com.google.gms:google-services:4.4.2'
 //        classpath 'com.google.firebase:firebase-crashlytics-gradle:3.0.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
@@ -42,14 +42,17 @@ if (project.rootProject.file("local.properties").exists()) {
 android {
     namespace  = "com.bluecodeltd.ecap.chw"
     useLibrary 'org.apache.http.legacy'
-    compileSdk 35
+    compileSdkVersion 35
+    buildToolsVersion '35.0.0'
 
-    lintOptions {
-        checkReleaseBuilds false
-        abortOnError false
+    lint {
+        // Keep lint strict but simple
+        checkReleaseBuilds true
+        abortOnError true
     }
 
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
@@ -121,9 +124,7 @@ android {
         }
     }
 
-    dexOptions {
-        javaMaxHeapSize "4g"
-    }
+    // dexOptions is obsolete in AGP 8+; removed
 
 
 
@@ -212,9 +213,39 @@ android {
     }
 
     configurations.all {
+        // Drop Mapbox GeoJSON/Turf to avoid conflicts with MapLibre
+        exclude group: 'com.mapbox.mapboxsdk', module: 'mapbox-sdk-geojson'
+        exclude group: 'com.mapbox.mapboxsdk', module: 'mapbox-sdk-turf'
+        // Ensure only one Core library is on classpath (allow BlueCodeSystems core; block legacy group)
+        // exclude group: 'com.github.BlueCodeSystems', module: 'opensrp-client-core'
+        exclude group: 'org.smartregister', module: 'opensrp-client-core'
+        // Prefer the class bundled in household; drop standalone compressor
+        exclude group: 'id.zelory', module: 'compressor'
+        // Ensure only one MaterialEditText artifact (prefer BlueCodeSystems fork)
+        exclude group: 'com.rengwuxian.materialedittext', module: 'library'
+        exclude group: 'io.github.bluecodesystems', module: 'materialedittext'
+        // Ensure only one configurable-views artifact
+        exclude group: 'io.github.bluecodesystems', module: 'opensrp-configurable-views'
+        // Ensure only one Volley (use AndroidX volley)
+        exclude group: 'com.mcxiaoke.volley', module: 'library'
         resolutionStrategy {
-            force 'androidx.appcompat:appcompat:1.0.2'
-            force 'com.google.android.material:material:1.0.0'
+            // Unify configurable-views to BlueCodeSystems JitPack coord
+            dependencySubstitution {
+                substitute module('io.github.bluecodesystems:opensrp-configurable-views') using module('com.github.BlueCodeSystems:opensrp-client-configurable-views:v2.0.1')
+                substitute module('org.smartregister:opensrp-client-configurable-views') using module('com.github.BlueCodeSystems:opensrp-client-configurable-views:v2.0.1')
+                // Route original MaterialEditText to BlueCodeSystems fork to avoid duplicates
+                substitute module('com.rengwuxian.materialedittext:library') using module('io.github.bluecodesystems:MaterialEditTextLibrary:3.1.5')
+                // Ensure any reference to io.github.bluecodesystems:materialedittext resolves to the fork artifact
+                substitute module('io.github.bluecodesystems:materialedittext') using module('io.github.bluecodesystems:MaterialEditTextLibrary:3.1.5')
+                // Use legacy household coord as-is (avoid JitPack variant to reduce duplicates)
+            }
+            // Align vector drawables to avoid mixed-namespace warning
+            force 'androidx.vectordrawable:vectordrawable:1.1.0'
+            force 'androidx.vectordrawable:vectordrawable-animated:1.1.0'
+            // Align AppCompat and Material to modern versions used by this app
+            force 'androidx.appcompat:appcompat:1.7.0'
+            // Ensure Material Components is recent enough for ThemeOverlay.MaterialComponents.MaterialAlertDialog
+            force 'com.google.android.material:material:1.12.0'
         }
     }
 
@@ -236,7 +267,6 @@ android {
             buildConfigField "int", "DATABASE_VERSION", '8'
         }
     }
-    buildToolsVersion '35.0.0'
 }
 
 // Align/override transitive deps to avoid duplicate-manifest namespaces
@@ -249,8 +279,8 @@ configurations.all {
     resolutionStrategy {
         dependencySubstitution {
             substitute module('io.github.bluecodesystems:android-p2p-sync') using module('com.github.BlueCodeSystems:android-p2p-sync:v0.4.3')
-            substitute module('io.github.bluecodesystems:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v6.2.0')
-            substitute module('org.smartregister:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v6.2.0')
+            substitute module('io.github.bluecodesystems:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v6.2.2')
+            substitute module('org.smartregister:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v6.2.2')
             // Route CHW FP to BlueCodeSystems JitPack CHW Family Planning lib
             substitute module('org.smartregister:opensrp-chw-fp') using module('com.github.BlueCodeSystems:opensrp-client-chw-family-planning:v1.0.27')
             // Also route Maven Central coord to JitPack artifact
@@ -260,14 +290,37 @@ configurations.all {
     }
 }
 dependencies {
+    // Core library desugaring for Java 8+ APIs used by dependencies
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 
-    implementation "com.nerdstone:neat-form-core:1.1.4"
+    // Household features and utilities will come from core module's transitive
+    // dependency on org.smartregister:opensrp-household
+
+    implementation 'com.github.BlueCodeSystems:neat-form:v1.1.6'
 //    implementation "io.ona.rdt-capture:lib:2.1.0"
     implementation "com.ibm.fhir:fhir-model:4.7.1"
     implementation "com.ibm.fhir:fhir-path:4.7.1"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     // CHW FP library (org.smartregister.chw.fp.*)
     implementation 'com.github.BlueCodeSystems:opensrp-client-chw-family-planning:v1.0.27'
+
+    // CHW Referral library (org.smartregister.chw.referral.*)
+    implementation 'com.github.BlueCodeSystems:opensrp-client-chw-referral:v2.0.0'
+
+    // Configurable Views used directly in app presenters/fragments
+    implementation 'com.github.BlueCodeSystems:opensrp-client-configurable-views:v2.0.1'
+
+    // FP client referenced directly in app code (org.smartregister.fp.BuildConfig)
+    implementation 'com.github.BlueCodeSystems:opensrp-client-fp:v2.1.0'
+
+    // AndroidX Preference (for PreferenceManager usage)
+    implementation 'androidx.preference:preference:1.2.1'
+
+    // CircleImageView used in databinding layouts
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    // Android-SpinKit (FadingCircle) used in JobAidsActivity
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.14'
 
@@ -293,15 +346,22 @@ dependencies {
     implementation 'com.google.android.material:material:1.12.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.3.2'
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
     implementation 'androidx.multidex:multidex:2.0.1'
     // Rey Material widgets (for com.rey.material.widget.* used in XML)
     implementation 'com.github.rey5137:material:1.2.5'
+    // AndroidX Volley for networking used in app code
+    implementation 'com.android.volley:volley:1.2.1'
+    // Evernote Job used by app jobs (JobCreator, Job)
+    implementation 'com.evernote:android-job:1.4.3'
     implementation 'com.github.gcacace:signature-pad:1.3.1'
     implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
     // For viewing PDFs in the app (BlueCodeSystems fork)
-    implementation 'com.github.BlueCodeSystems:AndroidPdfViewer:v2.0.0'
-    implementation 'androidx.wear:wear:1.0.0'
+        implementation 'com.github.BlueCodeSystems:AndroidPdfViewer:v2.0.0'
+        implementation 'androidx.wear:wear:1.0.0'
+        // Ensure AndroidX SQLite APIs available for any upgrade utilities referencing SupportSQLiteDatabase
+        implementation 'androidx.sqlite:sqlite:2.4.0'
     //For Sentry
 //    implementation 'io.sentry:sentry-android:5.1.2'
     //Custom Toast
@@ -316,12 +376,16 @@ dependencies {
     //Material Icons (do not include legacy support-v7 alongside AndroidX)
     implementation 'androidx.navigation:navigation-fragment-ktx:2.8.4'
     implementation 'androidx.navigation:navigation-ui-ktx:2.8.4'
-    implementation("io.insert-koin:koin-androidx-viewmodel:2.0.1")
+    // Koin 3.x (required by referral v2 and app code)
+    implementation 'io.insert-koin:koin-android:3.5.6'
+    implementation 'io.insert-koin:koin-core:3.5.6'
 
     //For Charts
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
-    kapt "androidx.databinding:databinding-compiler:8.6.1"
+    kapt "androidx.databinding:databinding-compiler:8.7.0"
+    // Core library desugaring for Java 8+ APIs used by dependencies
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
@@ -338,6 +402,7 @@ dependencies {
     compileOnly 'com.google.android.wearable:wearable:2.9.0'
 
     // core library desugaring not required for minSdk 28+
+
 }
 
 def flavors = android.productFlavors.collect { flavor -> flavor.name }
