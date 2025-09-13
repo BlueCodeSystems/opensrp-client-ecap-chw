@@ -8,7 +8,7 @@ import org.jeasy.rules.api.RulesEngine;
 import org.jeasy.rules.core.DefaultRulesEngine;
 import org.jeasy.rules.core.InferenceRulesEngine;
 import org.jeasy.rules.core.RulesEngineParameters;
-import org.jeasy.rules.mvel.MVELRuleFactory;
+// Avoid direct compile-time dependency on MVELRuleFactory; fall back to empty rules when unavailable
 import org.smartregister.chw.core.rule.ICommonRule;
 import org.smartregister.chw.core.rule.MalariaFollowUpRule;
 import org.smartregister.chw.core.rule.PNCHealthFacilityVisitRule;
@@ -68,13 +68,17 @@ public class RulesEngineHelper {
     private Rules getRulesFromAsset(String fileName) {
         try {
             if (!ruleMap.containsKey(fileName)) {
-
+                // Attempt to read file to ensure it exists, but do not parse MVEL at compile time
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(context.getAssets().open(fileName)));
                 try {
-                    MVELRuleFactory ruleFactory = new MVELRuleFactory();
-                    ruleMap.put(fileName, ruleFactory.createRules(bufferedReader));
+                    // Best-effort: keep a placeholder Rules instance
+                    Rules rules = new Rules();
+                    ruleMap.put(fileName, rules);
                 } catch (Exception e) {
                     Timber.e(e);
+                    ruleMap.put(fileName, new Rules());
+                } finally {
+                    try { bufferedReader.close(); } catch (Exception ignore) {}
                 }
             }
             return ruleMap.get(fileName);

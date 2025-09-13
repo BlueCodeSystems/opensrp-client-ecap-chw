@@ -74,7 +74,7 @@ public class BaseChwNotificationProvider implements RecyclerViewProvider<ChwNoti
     private void attachPatientOnclickListener(View view, SmartRegisterClient client) {
         view.setOnClickListener(onClickListener);
         view.setTag(client);
-        view.setTag(org.smartregister.chw.referral.R.id.VIEW_ID, BaseFamilyRegisterFragment.CLICK_VIEW_NORMAL);
+        view.setTag(R.id.VIEW_ID, BaseFamilyRegisterFragment.CLICK_VIEW_NORMAL);
     }
 
     @Override

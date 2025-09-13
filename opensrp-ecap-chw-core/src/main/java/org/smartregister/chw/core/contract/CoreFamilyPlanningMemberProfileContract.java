@@ -1,17 +1,15 @@
 package org.smartregister.chw.core.contract;
 
 import org.json.JSONObject;
-import org.smartregister.fp.features.profile.contract.ProfileContract;
-import org.smartregister.fp.common.domain.ClientDetail;
 import org.smartregister.repository.AllSharedPreferences;
 
 public interface CoreFamilyPlanningMemberProfileContract {
 
-    interface View extends ProfileContract.View {
-        void startFormActivity(JSONObject formJson, ClientDetail clientDetail);
+    interface View {
+        void startFormActivity(JSONObject formJson, Object clientDetail);
     }
 
-    interface Presenter extends ProfileContract.Presenter {
+    interface Presenter {
         void createReferralEvent(AllSharedPreferences allSharedPreferences, String jsonString) throws Exception;
 
         void startFamilyPlanningReferral();

@@ -143,9 +143,9 @@ public abstract class Utils extends org.smartregister.family.util.Utils {
     public static String getYesNoAsLanguageSpecific(Context context, String value) {
         if (TextUtils.isEmpty(value)) return "";
         if (value.equalsIgnoreCase("yes")) {
-            return context.getString(org.smartregister.R.string.yes);
+            return context.getString(R.string.yes);
         } else if (value.equalsIgnoreCase("no")) {
-            return context.getString(org.smartregister.R.string.no);
+            return context.getString(R.string.no);
         }
         return value;
     }
@@ -714,7 +714,7 @@ public abstract class Utils extends org.smartregister.family.util.Utils {
         return null;
     }
 
-    public static MemberObject referralToAncMember(org.smartregister.chw.referral.domain.MemberObject memberObject) {
+    public static MemberObject referralToAncMember(Object memberObject) {
         try {
             JSONObject referralJson = new JSONObject(org.smartregister.family.util.JsonFormUtils.gson.toJson(memberObject));
             return convert(referralJson.toString(), MemberObject.class);

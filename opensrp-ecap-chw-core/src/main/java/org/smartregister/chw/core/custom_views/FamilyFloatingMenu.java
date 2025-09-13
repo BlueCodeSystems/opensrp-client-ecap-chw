@@ -77,7 +77,7 @@ public class FamilyFloatingMenu extends LinearLayout implements View.OnClickList
         }
 
         if (isFabMenuOpen) {
-            activityMain.setBackgroundResource(org.smartregister.R.color.transparent);
+            activityMain.setBackgroundResource(R.color.transparent);
 
             fab.startAnimation(rotateBack);
             fab.setImageResource(org.smartregister.family.R.drawable.ic_edit_white);
