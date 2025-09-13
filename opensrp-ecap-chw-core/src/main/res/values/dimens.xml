@@ -1,18 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="register_list_title_size">16sp</dimen>
-    <dimen name="register_list_item_margin">12dp</dimen>
-    <dimen name="register_list_top_bottom_margin">8dp</dimen>
-    <dimen name="register_list_item_padding">12dp</dimen>
-    <dimen name="register_list_top_bottom_padding">8dp</dimen>
+    <!-- Margins for child home visit layouts -->
+    <dimen name="child_home_visit_left_margin">16dp</dimen>
+    <dimen name="child_home_visit_right_margin">16dp</dimen>
+
+    <!-- Referral item spacing -->
+    <dimen name="referral_item_margin">8dp</dimen>
+
+    <!-- Change member list paddings and text sizes -->
+    <dimen name="change_member_padding">16dp</dimen>
+    <dimen name="change_member_list_main">16sp</dimen>
+    <dimen name="change_member_list_details">14sp</dimen>
+
+    <!-- Text size used in medical history content -->
+    <dimen name="px_20_to_sp">20sp</dimen>
+
+    <!-- Sync time paddings -->
+    <dimen name="sync_time_padding">8dp</dimen>
     <dimen name="sync_time_padding_right">8dp</dimen>
-    <dimen name="sync_time_padding">4dp</dimen>
-    <dimen name="remove_member_prompt_left_padding">12dp</dimen>
-    <dimen name="remove_member_prompt_margin">12dp</dimen>
-    <dimen name="remove_member_prompt_top_padding">8dp</dimen>
-    <dimen name="child_register_title_size">16sp</dimen>
-    <dimen name="child_register_list_desc_size">14sp</dimen>
-    <dimen name="child_register_list_item_width">60dp</dimen>
+
+    <!-- Remove member prompt spacing -->
+    <dimen name="remove_member_prompt_left_padding">16dp</dimen>
+    <dimen name="remove_member_prompt_top_padding">12dp</dimen>
+    <dimen name="remove_member_prompt_margin">16dp</dimen>
+
+    <!-- Referral text size and immunization circle size -->
     <dimen name="referral_text_size">12sp</dimen>
-    <dimen name="immunization_status_circle_size">36dp</dimen>
+    <dimen name="immunization_status_circle_size">40dp</dimen>
+    <dimen name="remove_member_text_size">14sp</dimen>
+    <dimen name="child_home_visit_title_text_size">18sp</dimen>
+    <dimen name="change_dialog_text_size">14sp</dimen>
+    
+    <!-- Additional defaults for standalone AAR build -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_title_size">20sp</dimen>
+    
+    <dimen name="btn_margin_left">8dp</dimen>
+    <dimen name="btn_margin_right">8dp</dimen>
+    <dimen name="btn_padding_top">8dp</dimen>
+    <dimen name="btn_padding_bottom">8dp</dimen>
+    <dimen name="btn_text_size">16sp</dimen>
+
+    <dimen name="call_widget_font1">24sp</dimen>
+    <dimen name="call_widget_font2">20sp</dimen>
+    <dimen name="call_widget_font3">16sp</dimen>
+    <dimen name="call_widget_padding_top">8dp</dimen>
+    <dimen name="call_widget_padding_bottom">8dp</dimen>
+    <dimen name="call_widget_padding_side">16dp</dimen>
+
+    <dimen name="child_register_list_desc_size">12sp</dimen>
+    <dimen name="child_register_list_item_width">80dp</dimen>
+    <dimen name="child_register_title_size">16sp</dimen>
+    <dimen name="client_profile_pic_width">48dp</dimen>
+    <dimen name="client_profile_pic_height">48dp</dimen>
+
+    <dimen name="daily_tallies_pic_dim">48dp</dimen>
+    <dimen name="illustration_report_empty_state_size">120dp</dimen>
+
+    <dimen name="default_padding">16dp</dimen>
+    <dimen name="dialog_list_padding_vertical">8dp</dimen>
+    <dimen name="dialog_toolbar_close_margin">8dp</dimen>
+
+    <dimen name="indicator_table_contents_text_size">12sp</dimen>
+    <dimen name="indicator_table_divider_height">1dp</dimen>
+
+    <dimen name="login_edit_text_textSize">16sp</dimen>
+    <dimen name="login_view_component_height">48dp</dimen>
+
+    <dimen name="noti_button_text_size">14sp</dimen>
+    <dimen name="noti_message_text_size">14sp</dimen>
+
+    <dimen name="pagination_bar_button_width">48dp</dimen>
+    <dimen name="pagination_bar_text_size">14sp</dimen>
+
+    <dimen name="profile_dot_separator_margin">4dp</dimen>
+
+    <dimen name="px_14_to_sp">14sp</dimen>
+    <dimen name="px_15_to_sp">15sp</dimen>
+    <dimen name="px_16_to_sp">16sp</dimen>
+
+    <dimen name="register_list_desc_size">12sp</dimen>
+    <dimen name="register_list_item_height">72dp</dimen>
+    <dimen name="register_list_item_margin">8dp</dimen>
+    <dimen name="register_list_item_padding">12dp</dimen>
+    <dimen name="register_list_max_padding">24dp</dimen>
+    <dimen name="register_list_member_item_padding">12dp</dimen>
+    <dimen name="register_list_title_size">16sp</dimen>
+    <dimen name="register_list_top_bottom_margin">8dp</dimen>
+    <dimen name="register_list_top_bottom_min_padding">8dp</dimen>
+    <dimen name="register_list_top_bottom_padding">12dp</dimen>
+    <dimen name="register_member_name_size">16sp</dimen>
+    <dimen name="register_member_title_size">14sp</dimen>
+    <dimen name="register_member_village_size">12sp</dimen>
+
+    <dimen name="remove_member_padding">16dp</dimen>
+
+    <dimen name="sent_monthly_pic_dim">48dp</dimen>
+
+    <dimen name="smart_register_client_divider_height">1dp</dimen>
+    <dimen name="smart_register_nav_bar_separator">1dp</dimen>
+
+    <dimen name="table_row_middle_margin">8dp</dimen>
+    <dimen name="table_row_side_margin">16dp</dimen>
+
+    <dimen name="tool_bar_image">24dp</dimen>
+    <dimen name="tool_bar_size">56dp</dimen>
+    <dimen name="tool_bar_title">20sp</dimen>
+    
+    <!-- SnackBar text size -->
+    <dimen name="snack_bar_text_size">14sp</dimen>
+    
+    <!-- Family register and member list dimensions -->
+    <dimen name="family_register_text_size">14sp</dimen>
+    <dimen name="family_register_image_size">22dp</dimen>
+    <dimen name="family_register_count_size">34sp</dimen>
+    <dimen name="member_profile_pic_width">48dp</dimen>
+    <dimen name="member_profile_list_title_size">16sp</dimen>
 </resources>
