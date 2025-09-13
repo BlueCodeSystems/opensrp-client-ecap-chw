@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="appbar_scrolling_view_behavior">AppBar scrolling</string>
+    <string name="edit">Edit</string>
+    <string name="family_has_nothing_due">Family has nothing due</string>
+    <string name="family_head">Family head</string>
+    <string name="go_to_family_s_profile">Go to family profile</string>
+    <string name="head_of_family">Head of family</string>
+    <string name="last_visit_40_days_ago">Last visit 40 days ago</string>
+    <string name="medical_history">Medical history</string>
+    <string name="no">No</string>
+    <string name="not_visiting_this_month">Not visiting this month</string>
+    <string name="primary_care_giver">Primary caregiver</string>
+    <string name="return_to_family_profile">Return to family profile</string>
+    <string name="save">Save</string>
+    <string name="str_next">Next</string>
+    <string name="str_previous">Previous</string>
+    <string name="submit">Submit</string>
+    <string name="undo">Undo</string>
+    <string name="upcoming_services">Upcoming services</string>
+    <string name="view_medical_history">View medical history</string>
+    <string name="view_upcoming_services">View upcoming services</string>
+    <string name="visit_not_done_btn_child_profile">Visit not done</string>
+    <string name="vitamin_a">Vitamin A</string>
+    <string name="yes">Yes</string>
+    <string name="peer_to_peer_activity_title">Peer-to-peer</string>
+    <string name="back_to_referrals">Back to referrals</string>
+    <string name="abbrv_years">yrs</string>
+</resources>
