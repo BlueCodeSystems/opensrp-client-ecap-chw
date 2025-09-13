@@ -8,20 +8,22 @@ buildscript {
     ext.dokkaVersion = '0.10.1'
 
     repositories {
+        mavenLocal()
         google()
         mavenCentral()
         gradlePluginPortal()
-        mavenLocal()
         maven { url "https://dl.bintray.com/ona/kujaku" }
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url 'https://maven.google.com' }
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.6.1'
+        classpath 'com.android.tools.build:gradle:8.7.0'
         classpath "gradle.plugin.org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.12.2"
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:${dokkaVersion}"
-//        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.10, 0.99.99]'
+        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.30.0"
+        classpath 'net.ltgt.gradle:gradle-errorprone-plugin:4.1.0'
+        //        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.10, 0.99.99]'
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.23")
 //        classpath 'com.google.gms:google-services:4.3.3'
 //        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.3.0'
@@ -29,6 +31,9 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
+
+// Apply nexus-staging on the root project only
+apply plugin: 'io.codearte.nexus-staging'
 
 def localProperties = new Properties()
 if (rootProject.file("local.properties").exists()) {
@@ -57,10 +62,10 @@ subprojects {
     group = 'org.smartregister'
 
     ext.androidToolsBuildGradle = '4.0.1'
-    ext.androidBuildToolsVersion = '34.0.0'
+    ext.androidBuildToolsVersion = '35.0.0'
     ext.androidMinSdkVersion = 28
-    ext.androidCompileSdkVersion = 34
-    ext.androidTargetSdkVersion = 34
+    ext.androidCompileSdkVersion = 35
+    ext.androidTargetSdkVersion = 35
 
     project.ext {
         if (project.hasProperty('preDexEnable')) {
@@ -88,4 +93,18 @@ task clean(type: Delete) {
 
 def isReleaseBuild() {
     return version.contains("SNAPSHOT") == false
+}
+
+// Sonatype Nexus Staging configuration (root only)
+ext.getSonatypeUsername = {
+    hasProperty('sonatypeUsername') ? sonatypeUsername : System.getenv('SONATYPE_USERNAME') ?: ""
+}
+ext.getSonatypePassword = {
+    hasProperty('sonatypePassword') ? sonatypePassword : System.getenv('SONATYPE_PASSWORD') ?: ""
+}
+
+nexusStaging {
+    serverUrl = "https://s01.oss.sonatype.org/service/local/"
+    username = getSonatypeUsername()
+    password = getSonatypePassword()
 }

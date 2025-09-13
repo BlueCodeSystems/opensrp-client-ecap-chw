@@ -1,11 +1,22 @@
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        // Prioritize standard repositories first
+        // Prioritize local development first
+        mavenLocal()
         mavenCentral()
         google()
-        mavenLocal()
-        maven { url 'https://jitpack.io' }
+        // JitPack (supports private repos with optional credentials)
+        maven {
+            url 'https://jitpack.io'
+            def jitpackUser = System.getenv("JITPACK_USER") ?: System.getProperty("jitpack.user")
+            def jitpackToken = System.getenv("JITPACK_TOKEN") ?: System.getProperty("jitpack.token")
+            if (jitpackUser && jitpackToken) {
+                credentials {
+                    username = jitpackUser
+                    password = jitpackToken
+                }
+            }
+        }
         maven { url 'https://maven.google.com' }
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
         maven { url "https://acra.googlecode.com/svn/repository/releases" }
