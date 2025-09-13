@@ -174,7 +174,13 @@ public class CoreChildProfileActivity extends BaseProfileActivity implements Cor
             appBarLayout.setOutlineProvider(null);
         }
         imageRenderHelper = new ImageRenderHelper(this);
-        registerReceiver(mDateTimeChangedReceiver, getsIntentFilter());
+        try {
+            if (android.os.Build.VERSION.SDK_INT >= 33) {
+                registerReceiver(mDateTimeChangedReceiver, getsIntentFilter(), RECEIVER_NOT_EXPORTED);
+            } else {
+                registerReceiver(mDateTimeChangedReceiver, getsIntentFilter());
+            }
+        } catch (SecurityException ignored) { }
         initializeNotificationReferralRecyclerView();
     }
 
@@ -401,14 +407,14 @@ public class CoreChildProfileActivity extends BaseProfileActivity implements Cor
     public void setVisitButtonDueStatus() {
         openVisitButtonView();
         textViewRecord.setBackgroundResource(R.drawable.record_btn_selector_due);
-        textViewRecord.setTextColor(getResources().getColor(org.smartregister.R.color.white));
+        textViewRecord.setTextColor(getResources().getColor(R.color.white));
     }
 
     @Override
     public void setVisitButtonOverdueStatus() {
         openVisitButtonView();
         textViewRecord.setBackgroundResource(R.drawable.record_btn_selector_overdue);
-        textViewRecord.setTextColor(getResources().getColor(org.smartregister.R.color.white));
+        textViewRecord.setTextColor(getResources().getColor(R.color.white));
     }
 
     @Override
@@ -417,7 +423,7 @@ public class CoreChildProfileActivity extends BaseProfileActivity implements Cor
         textViewNotVisitMonth.setText(org.smartregister.chw.opensrp_chw_anc.R.string.not_visiting_this_month);
         textViewUndo.setText(org.smartregister.family.R.string.undo);
         textViewUndo.setVisibility(withinEditPeriod ? View.VISIBLE : View.GONE);
-        imageViewCrossChild.setImageResource(org.smartregister.fp.R.drawable.activityrow_notvisited);
+        imageViewCrossChild.setImageResource(R.drawable.activityrow_notvisited);
     }
 
     @Override

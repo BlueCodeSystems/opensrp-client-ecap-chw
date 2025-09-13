@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
@@ -47,6 +49,45 @@ public abstract class CoreFamilyRegisterFragment extends BaseFamilyRegisterFragm
 
         String viewConfigurationIdentifier = ((BaseRegisterActivity) getActivity()).getViewIdentifiers().get(0);
         presenter = new FamilyRegisterFragmentPresenter(this, new FamilyRegisterFramentModel(), viewConfigurationIdentifier);
+    }
+
+    // Ensure ActionBar exists before base code sets its title
+    protected void setUpActionBar() {
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        if (activity == null) return;
+        ActionBar actionBar = activity.getSupportActionBar();
+        if (actionBar == null) {
+            View root = getView();
+            if (root != null) {
+                Toolbar toolbar = root.findViewById(org.smartregister.R.id.register_toolbar);
+                if (toolbar != null) {
+                    activity.setSupportActionBar(toolbar);
+                    actionBar = activity.getSupportActionBar();
+                }
+            }
+        }
+        if (actionBar != null) {
+            actionBar.setTitle("");
+            actionBar.setDisplayHomeAsUpEnabled(false);
+        }
+    }
+
+    // Handle variant where base passes the view
+    protected void setUpActionBar(View view) {
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        if (activity == null) return;
+        ActionBar actionBar = activity.getSupportActionBar();
+        if (actionBar == null && view != null) {
+            Toolbar toolbar = view.findViewById(org.smartregister.R.id.register_toolbar);
+            if (toolbar != null) {
+                activity.setSupportActionBar(toolbar);
+                actionBar = activity.getSupportActionBar();
+            }
+        }
+        if (actionBar != null) {
+            actionBar.setTitle("");
+            actionBar.setDisplayHomeAsUpEnabled(false);
+        }
     }
 
     @Override

@@ -4,6 +4,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import org.smartregister.chw.core.R;
@@ -74,6 +76,45 @@ public abstract class BaseChwRegisterFragment extends BaseRegisterFragment {
         filterSortLayout.setVisibility(View.GONE);
 
 
+    }
+
+    // Defensive setup to avoid NPE when base tries to set title on a null ActionBar
+    protected void setUpActionBar() {
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        if (activity == null) return;
+        ActionBar actionBar = activity.getSupportActionBar();
+        if (actionBar == null) {
+            View root = getView();
+            if (root != null) {
+                Toolbar toolbar = root.findViewById(org.smartregister.R.id.register_toolbar);
+                if (toolbar != null) {
+                    activity.setSupportActionBar(toolbar);
+                    actionBar = activity.getSupportActionBar();
+                }
+            }
+        }
+        if (actionBar != null) {
+            actionBar.setTitle("");
+            actionBar.setDisplayHomeAsUpEnabled(false);
+        }
+    }
+
+    // Some base fragments pass the root view into setUpActionBar; handle that too
+    protected void setUpActionBar(View view) {
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        if (activity == null) return;
+        ActionBar actionBar = activity.getSupportActionBar();
+        if (actionBar == null && view != null) {
+            Toolbar toolbar = view.findViewById(org.smartregister.R.id.register_toolbar);
+            if (toolbar != null) {
+                activity.setSupportActionBar(toolbar);
+                actionBar = activity.getSupportActionBar();
+            }
+        }
+        if (actionBar != null) {
+            actionBar.setTitle("");
+            actionBar.setDisplayHomeAsUpEnabled(false);
+        }
     }
 
     protected abstract int getToolBarTitle();

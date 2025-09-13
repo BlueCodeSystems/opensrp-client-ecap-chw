@@ -332,11 +332,30 @@ public abstract class CoreFamilyOtherMemberProfileActivity extends BaseFamilyOth
 
     @Override
     protected ViewPager setupViewPager(ViewPager viewPager) {
+        if (viewPager == null) return null;
+        try { viewPager.setSaveEnabled(false); } catch (Throwable ignored) {}
+        if (viewPager.getAdapter() != null) return viewPager;
+
+        // Defensive cleanup of any fragments attached to this container to avoid double-add on restore
+        try {
+            final androidx.fragment.app.FragmentManager fm = getSupportFragmentManager();
+            final androidx.fragment.app.FragmentTransaction tx = fm.beginTransaction();
+            final int vpId = viewPager.getId();
+            final String tagPrefix = "android:switcher:" + vpId + ":";
+            for (androidx.fragment.app.Fragment f : fm.getFragments()) {
+                if (f == null) continue;
+                boolean matchesByTag = f.getTag() != null && f.getTag().startsWith(tagPrefix);
+                boolean matchesByContainer = f.getId() == vpId;
+                if (matchesByTag || matchesByContainer) tx.remove(f);
+            }
+            tx.commitNowAllowingStateLoss();
+        } catch (Exception ignored) {}
+
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         BaseFamilyOtherMemberProfileFragment profileOtherMemberFragment = getFamilyOtherMemberProfileFragment();
         adapter.addFragment(profileOtherMemberFragment, "");
 
-        viewPager.setAdapter(adapter);
+        try { viewPager.setAdapter(adapter); } catch (Exception ignored) {}
 
         return viewPager;
     }
