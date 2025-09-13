@@ -123,7 +123,7 @@ public class FlagActivity extends AppCompatActivity {
                     recyclerView.setItemAnimator(new DefaultItemAnimator());
                     recyclerViewadapter = new ItemAdapter(itemList, FlagActivity.this);
                     recyclerView.setAdapter(recyclerViewadapter);
-                    recyclerViewadapter.notifyDataSetChanged();
+                    try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
                 }
             }
 

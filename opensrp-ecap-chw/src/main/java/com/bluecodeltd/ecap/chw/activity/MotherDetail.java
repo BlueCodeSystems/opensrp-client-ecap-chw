@@ -4,7 +4,7 @@ import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getFormTag;
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.chw.core.utils.CoreReferralUtils.getCommonRepository;
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.content.Context;
@@ -24,7 +24,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.preference.PreferenceManager;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
@@ -77,13 +78,16 @@ import timber.log.Timber;
 
 public class MotherDetail extends AppCompatActivity {
 
+    private com.bluecodeltd.ecap.chw.databinding.ActivityMotherDetailBinding binding;
+
 
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     private Toolbar toolbar;
     public ProfileViewPagerAdapter mPagerAdapter;
     private TabLayout mTabLayout;
-    public ViewPager mViewPager;
+    public ViewPager2 mViewPager;
+    private TabLayoutMediator tabMediator;
     private String refresh;
     private TextView childTabCount, motherName, txtAge;
     private FloatingActionButton fab;
@@ -100,18 +104,19 @@ public class MotherDetail extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mother_detail);
+        binding = com.bluecodeltd.ecap.chw.databinding.ActivityMotherDetailBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        toolbar = findViewById(R.id.toolbarx);
+        toolbar = binding.toolbarx;
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         NavigationMenu.getInstance(this, null, toolbar);
-        mTabLayout =  findViewById(R.id.tabs);
-        mViewPager  = findViewById(R.id.viewpager);
-        motherName = findViewById(R.id.mother_name);
-        txtAge = findViewById(R.id.mother_age);
-        mLayout = findViewById(R.id.mother_form);
-        cLayout = findViewById(R.id.child_form);
+        mTabLayout =  binding.tabs;
+        mViewPager  = binding.viewpager;
+        motherName = binding.motherName;
+        txtAge = binding.motherAge;
+        mLayout = binding.motherForm;
+        cLayout = binding.childForm;
 
         commonMother = (CommonPersonObjectClient) getIntent().getSerializableExtra("mother");
 
@@ -133,7 +138,7 @@ public class MotherDetail extends AppCompatActivity {
 
         oMapper = new ObjectMapper();
 
-        fab = findViewById(R.id.fabx);
+        fab = binding.fabx;
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
@@ -173,16 +178,21 @@ public class MotherDetail extends AppCompatActivity {
 
 
     private void setupViewPager(){
-        mPagerAdapter = new ProfileViewPagerAdapter(getSupportFragmentManager());
-        mPagerAdapter.addFragment(new MotherOverviewFragment());
-        mPagerAdapter.addFragment(new MotherChildrenFragment());
+        // If adapter already exists, skip rebuilding
+        if (mViewPager.getAdapter() != null) return;
+        
+        java.util.List<androidx.fragment.app.Fragment> fragments = new java.util.ArrayList<>();
+        fragments.add(new MotherOverviewFragment());
+        fragments.add(new MotherChildrenFragment());
 
-
-        mViewPager.setAdapter(mPagerAdapter);
-
-        mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.getTabAt(0).setText("Overview");
-        mTabLayout.getTabAt(1).setText("Children");
+        com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter adapter = new com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter(this, fragments);
+        mViewPager.setAdapter(adapter);
+        if (tabMediator != null) { try { tabMediator.detach(); } catch (Exception ignored) {} }
+        tabMediator = new TabLayoutMediator(mTabLayout, mViewPager, (tab, position) -> {
+            if (position == 0) tab.setText("Overview");
+            else if (position == 1) tab.setText("Children");
+        });
+        tabMediator.attach();
 
     }
 

@@ -67,7 +67,8 @@ public class ChwMemberRegisterProvider extends FamilyMemberRegisterProvider {
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) viewHolder.profile.getLayoutParams();
         layoutParams.width = context.getResources().getDimensionPixelSize(R.dimen.member_profile_pic_width);
         layoutParams.height = context.getResources().getDimensionPixelSize(R.dimen.member_profile_pic_width);
-        layoutParams.setMarginStart(context.getResources().getDimensionPixelSize(org.smartregister.chw.core.R.dimen.change_layout_to_start));
+        // Use local fallback margin; avoids dependency on missing core dimen 'change_layout_to_start'
+        layoutParams.setMarginStart(context.getResources().getDimensionPixelSize(com.bluecodeltd.ecap.chw.R.dimen.register_member_nav_margin));
         viewHolder.profile.setLayoutParams(layoutParams);
         viewHolder.patientNameAge.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimensionPixelSize(R.dimen.member_profile_list_title_size));
 

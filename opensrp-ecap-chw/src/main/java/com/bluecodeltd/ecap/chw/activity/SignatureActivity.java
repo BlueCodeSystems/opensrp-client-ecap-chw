@@ -2,7 +2,7 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getAllSharedPreferences;
 import static org.smartregister.family.util.JsonFormUtils.fields;
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.getFieldJSONObject;
 
 import android.app.AlertDialog;

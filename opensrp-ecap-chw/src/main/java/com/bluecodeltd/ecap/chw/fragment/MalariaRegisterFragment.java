@@ -10,6 +10,7 @@ import com.bluecodeltd.ecap.chw.presenter.MalariaRegisterFragmentPresenter;
 import org.smartregister.view.activity.BaseRegisterActivity;
 
 public class MalariaRegisterFragment extends CoreMalariaRegisterFragment {
+    private com.bluecodeltd.ecap.chw.databinding.FragmentBaseRegisterBinding binding;
 
     @Override
     protected void initializePresenter() {
@@ -49,6 +50,26 @@ public class MalariaRegisterFragment extends CoreMalariaRegisterFragment {
     protected void normalFilter(View dueOnlyLayout) {
         super.normalFilter(dueOnlyLayout);
     }
-}
 
+    @Override
+    public void setupViews(View view) {
+        try { binding = com.bluecodeltd.ecap.chw.databinding.FragmentBaseRegisterBinding.bind(view); } catch (Throwable ignored) {}
+        super.setupViews(view);
+        try {
+            if (clientsView == null && binding != null && binding.recyclerView != null) {
+                clientsView = binding.recyclerView;
+                if (clientsView.getLayoutManager() == null && getContext() != null) {
+                    clientsView.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(getContext()));
+                }
+                clientsView.setHasFixedSize(true);
+            }
+        } catch (Exception ignored) { }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+}
 

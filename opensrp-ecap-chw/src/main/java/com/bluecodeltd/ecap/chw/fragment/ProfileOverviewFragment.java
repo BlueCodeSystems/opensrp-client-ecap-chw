@@ -44,6 +44,8 @@ import java.util.Objects;
 
 public class ProfileOverviewFragment extends Fragment {
 
+    private com.bluecodeltd.ecap.chw.databinding.FragmentOverviewBinding binding;
+
     RelativeLayout myview;
     Button moreSubpopBtn;
     LinearLayout myview2,linearlayout_name,linearlayout_gender,linearlayout_dob,linearlayout_status,linearlayout_relation,linearlayout_phone,subPopLayout1,subPopLayout2,abymSubpopulation;
@@ -65,69 +67,70 @@ public class ProfileOverviewFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_overview, container, false);
+        binding = com.bluecodeltd.ecap.chw.databinding.FragmentOverviewBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 
-        txtEditedBy = view.findViewById(R.id.edited_by);
-        txtDateEdited = view.findViewById(R.id.date_last_edited);
-        txtcPhone = view.findViewById(R.id.cPhone);
-        txtArtNumber = view.findViewById(R.id.art_number);
-        myview2 = view.findViewById(R.id.mylayout);
-        imgBtn = view.findViewById(R.id.arrow_button);
-        sub1 = view.findViewById(R.id.subpop1);
-        sub2 = view.findViewById(R.id.subpop2);
-        sub3 = view.findViewById(R.id.subpop3);
-        sub4 = view.findViewById(R.id.subpop4);
-        sub5 = view.findViewById(R.id.subpop5);
-        sub6 = view.findViewById(R.id.subpop6);
-        abymSub = view.findViewById(R.id.abymSub);
-        siblingSubPop = view.findViewById(R.id.siblingSubPop);
-        txtSubPopulation = view.findViewById(R.id.sub_population);
-        subPopLayout1 = view.findViewById(R.id.subPopLayout1);
-        subPopLayout2 = view.findViewById(R.id.subPopLayout2);
-        myview = view.findViewById(R.id.myview);
-        txtReferred = view.findViewById(R.id.referred);
-        txtEnrolled = view.findViewById(R.id.enrolled);
-        txtArtCheckbox = view.findViewById(R.id.is_art);
-        txtDateStartedArt = view.findViewById(R.id.art_date);
-        txtVlLastDate = view.findViewById(R.id.date_last_vl);
-        txtSchool = view.findViewById(R.id.school);
+        txtEditedBy = binding.editedBy;
+        txtDateEdited = binding.dateLastEdited;
+        txtcPhone = binding.cPhone;
+        txtArtNumber = binding.artNumber;
+        myview2 = binding.mylayout;
+        imgBtn = binding.arrowButton;
+        sub1 = binding.subpop1;
+        sub2 = binding.subpop2;
+        sub3 = binding.subpop3;
+        sub4 = binding.subpop4;
+        sub5 = binding.subpop5;
+        sub6 = binding.subpop6;
+        abymSub = binding.abymSub;
+        siblingSubPop = binding.siblingSubPop;
+        txtSubPopulation = binding.subPopulation;
+        subPopLayout1 = binding.subPopLayout1;
+        subPopLayout2 = binding.subPopLayout2;
+        myview = binding.myview;
+        txtReferred = binding.referred;
+        txtEnrolled = binding.enrolled;
+        txtArtCheckbox = binding.isArt;
+        txtDateStartedArt = binding.artDate;
+        txtVlLastDate = binding.dateLastVl;
+        txtSchool = binding.school;
 
-        txtVlResult = view.findViewById(R.id.last_vl_result);
-        txtIsSuppressed = view.findViewById(R.id.vl_suppressed);
-        txtNextVl = view.findViewById(R.id.next_vl_test);
-        txtIsMMD = view.findViewById(R.id.on_mmd);
-        txtFacility = view.findViewById(R.id.facility);
-        txtMMDResult = view.findViewById(R.id.mmd_level);
+        txtVlResult = binding.lastVlResult;
+        txtIsSuppressed = binding.vlSuppressed;
+        txtNextVl = binding.nextVlTest;
+        txtIsMMD = binding.onMmd;
+        txtFacility = binding.facility;
+        txtMMDResult = binding.mmdLevel;
 
         //Caregiver Views
-        txtCaregiverName= view.findViewById(R.id.caregiver_name);
-        txtGender = view.findViewById(R.id.caregiver_gender);
-        txtDob= view.findViewById(R.id.caregiver_dob);
-        txtHiv = view.findViewById(R.id.hiv_status);
-        txtRelation = view.findViewById(R.id.child_relation);
-        txtPhone = view.findViewById(R.id.caregiver_phone);
-        recent_vl_result = view.findViewById(R.id.recent_vl_result);
-        recent_mmd_level = view.findViewById(R.id.recent_mmd_level);
+        txtCaregiverName= binding.caregiverName;
+        txtGender = binding.caregiverGender;
+        txtDob= binding.caregiverDob;
+        txtHiv = binding.hivStatus;
+        txtRelation = binding.childRelation;
+        txtPhone = binding.caregiverPhone;
+        recent_vl_result = binding.recentVlResult;
+        recent_mmd_level = binding.recentMmdLevel;
 
-        new_caregiver_name = view.findViewById(R.id.new_caregiver_name);
-        new_caregiver_gender = view.findViewById(R.id.new_caregiver_gender);
-        new_caregiver_dob = view.findViewById(R.id.new_caregiver_dob);
-        new_hiv_status = view.findViewById(R.id.new_hiv_status);
-        new_child_relation = view.findViewById(R.id.new_child_relation);
-        new_caregiver_phone = view.findViewById(R.id.new_caregiver_phone);
-        overview_section_header3 = view.findViewById(R.id.overview_section_header3);
-        overview_section_header5 = view.findViewById(R.id.overview_section_header5);
-
-
-        linearlayout_name =  view.findViewById(R.id. linearlayout_name);
-        linearlayout_gender = view.findViewById(R.id.linearlayout_gender);
-        linearlayout_dob = view.findViewById(R.id.linearlayout_dob);
-        linearlayout_status = view.findViewById(R.id.linearlayout_status);
-        linearlayout_relation = view.findViewById(R.id.linearlayout_relation);
-        linearlayout_phone = view.findViewById(R.id.linearlayout_phone);
+        new_caregiver_name = binding.newCaregiverName;
+        new_caregiver_gender = binding.newCaregiverGender;
+        new_caregiver_dob = binding.newCaregiverDob;
+        new_hiv_status = binding.newHivStatus;
+        new_child_relation = binding.newChildRelation;
+        new_caregiver_phone = binding.newCaregiverPhone;
+        overview_section_header3 = binding.overviewSectionHeader3;
+        overview_section_header5 = binding.overviewSectionHeader5;
 
 
-        moreSubpopBtn = view.findViewById(R.id.morePopulation);
+        linearlayout_name =  binding.linearlayoutName;
+        linearlayout_gender = binding.linearlayoutGender;
+        linearlayout_dob = binding.linearlayoutDob;
+        linearlayout_status = binding.linearlayoutStatus;
+        linearlayout_relation = binding.linearlayoutRelation;
+        linearlayout_phone = binding.linearlayoutPhone;
+
+
+        moreSubpopBtn = binding.morePopulation;
 
 
 
@@ -444,11 +447,20 @@ public class ProfileOverviewFragment extends Fragment {
 
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
 
     private boolean isYes(String value) {
         return value != null && value.equals("yes");
     }
     public String keysToValues(String keys) {
+        if (keys == null || keys.trim().isEmpty()) {
+            return "";
+        }
         Map<String, String> keyValues = new HashMap<>();
         keyValues.put("subpop1", "C/ALHIV");
         keyValues.put("subpop2", "HEI");

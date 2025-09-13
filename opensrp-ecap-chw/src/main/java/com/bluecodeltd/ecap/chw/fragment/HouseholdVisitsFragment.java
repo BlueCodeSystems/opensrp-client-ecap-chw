@@ -30,33 +30,33 @@ import com.bluecodeltd.ecap.chw.util.Threading;
 
 public class HouseholdVisitsFragment extends Fragment {
 
+    private com.bluecodeltd.ecap.chw.databinding.FragmentChildvisitsBinding binding;
+
     private RecyclerView recyclerView;
     RecyclerView.Adapter recyclerViewadapter;
-    private ArrayList<CaregiverVisitationModel> visitList = new ArrayList<>();
+    private final ArrayList<CaregiverVisitationModel> visitList = new ArrayList<>();
     private LinearLayout linearLayout;
-    View vieww;
     // Use centralized Threading
-
 
     @SuppressLint("MissingInflatedId")
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View vieww = inflater.inflate(R.layout.fragment_housevisits, container, false);
+        // Actual layout used is fragment_childvisits (second inflation took effect previously)
+        binding = com.bluecodeltd.ecap.chw.databinding.FragmentChildvisitsBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 
-        vieww = inflater.inflate(R.layout.fragment_childvisits, container, false);
-
-        HashMap<String, Household> mymap = ( (HouseholdDetails) requireActivity()).getData();
+        HashMap<String, Household> mymap = ((HouseholdDetails) requireActivity()).getData();
         Household house = mymap.get("house");
-        String houseId = house.getHousehold_id();
+        String houseId = house != null ? house.getHousehold_id() : null;
 
-        recyclerView = vieww.findViewById(R.id.visitrecyclerView);
-        linearLayout = vieww.findViewById(R.id.visit_container);
+        recyclerView = binding.visitrecyclerView;
+        linearLayout = binding.visitContainer;
 
         visitList.clear();
 
         // subtle loading indicator
-        View progress = vieww.findViewById(R.id.progress_loading);
+        View progress = binding.progressLoading;
         if (progress != null) progress.setVisibility(View.VISIBLE);
         linearLayout.setVisibility(View.GONE);
 
@@ -73,19 +73,23 @@ public class HouseholdVisitsFragment extends Fragment {
             recyclerView.setAdapter(recyclerViewadapter);
             recyclerViewadapter.notifyDataSetChanged();
 
-            if (recyclerViewadapter.getItemCount() > 0){
+            if (recyclerViewadapter.getItemCount() > 0) {
                 linearLayout.setVisibility(View.GONE);
             } else {
                 linearLayout.setVisibility(View.VISIBLE);
             }
             if (progress != null) progress.setVisibility(View.GONE);
         });
-        vm.refresh(houseId);
+        if (houseId != null) {
+            vm.refresh(houseId);
+        }
 
-
-        return vieww;
-
-
+        return view;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 }

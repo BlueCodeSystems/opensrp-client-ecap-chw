@@ -9,8 +9,12 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -297,13 +301,38 @@ public class AllClientsMemberProfileActivity extends CoreFamilyOtherMemberProfil
 
     @Override
     protected ViewPager setupViewPager(ViewPager viewPager) {
+        if (viewPager == null) return null;
+        try { viewPager.setSaveEnabled(false); } catch (Throwable ignored) {}
+        if (viewPager.getAdapter() != null) return viewPager;
+
+        // Defensive cleanup of any fragments attached to this container
+        try {
+            final FragmentManager fm = getSupportFragmentManager();
+            final FragmentTransaction tx = fm.beginTransaction();
+            final int vpId = viewPager.getId();
+            final String tagPrefix = "android:switcher:" + vpId + ":";
+            for (Fragment f : fm.getFragments()) {
+                if (f == null) continue;
+                boolean matchesByTag = f.getTag() != null && f.getTag().startsWith(tagPrefix);
+                boolean matchesByContainer = f.getId() == vpId;
+                if (matchesByTag || matchesByContainer) tx.remove(f);
+            }
+            tx.commitNowAllowingStateLoss();
+        } catch (Exception ignored) {}
+
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         BaseFamilyOtherMemberProfileFragment profileOtherMemberFragment = FamilyOtherMemberProfileFragment.newInstance(this.getIntent().getExtras());
         adapter.addFragment(profileOtherMemberFragment, "");
 
-        viewPager.setAdapter(adapter);
+        try { viewPager.setAdapter(adapter); } catch (Exception ignored) {}
 
         return viewPager;
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull android.os.Bundle outState) {
+        try { outState.remove("android:support:fragments"); } catch (Throwable ignored) {}
+        super.onSaveInstanceState(outState);
     }
 
     @Override

@@ -83,6 +83,11 @@ public class JsonFormUtils extends CoreJsonFormUtils {
         return event;
     }
 
+    // Convenience overload for existing call sites
+    public static Event tagSyncMetadata(Event event) {
+        return tagSyncMetadata(ChwApplication.getInstance().getContext().allSharedPreferences(), event);
+    }
+
 
     public static Pair<Client, Event> processChildRegistrationForm(AllSharedPreferences allSharedPreferences, String jsonString) {
 

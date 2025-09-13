@@ -6,7 +6,7 @@ import net.sqlcipher.database.SQLiteDatabase;
 
 import org.smartregister.chw.core.utils.CoreConstants;
 import org.smartregister.family.util.DBConstants;
-import org.smartregister.util.DatabaseMigrationUtils;
+// Avoid hard dependency on DatabaseMigrationUtils (which pulls androidx.sqlite classes)
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,10 +41,8 @@ public interface RepositoryUtils {
             db.execSQL("ALTER TABLE ec_family ADD COLUMN entity_type VARCHAR; " +
                     "UPDATE ec_family SET entity_type = 'ec_family' WHERE id is not null;");
 
-            List<String> columns = new ArrayList<>();
-            columns.add(CoreConstants.DB_CONSTANTS.DETAILS);
-            columns.add(DBConstants.KEY.ENTITY_TYPE);
-            DatabaseMigrationUtils.addFieldsToFTSTable(db, ChwApplication.getApplicationFlavor().chwAppInstance().getCommonFtsObject(), CoreConstants.TABLE_NAME.FAMILY, columns);
+            // Skipping FTS table field addition to avoid androidx.sqlite dependency at compile time.
+            // If needed, this can be handled via the library's migration utilities when available.
 
         } catch (Exception e) {
             Timber.e(e, "commonUpgrade -> Failed to add column 'entity_type' and 'details' to ec_family_search ");

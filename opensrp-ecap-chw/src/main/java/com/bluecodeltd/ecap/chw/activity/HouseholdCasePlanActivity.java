@@ -2,7 +2,7 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.app.Dialog;
@@ -54,6 +54,8 @@ import timber.log.Timber;
 
 public class HouseholdCasePlanActivity extends AppCompatActivity {
 
+    private com.bluecodeltd.ecap.chw.databinding.ActivityHouseholdCasePlanBinding binding;
+
 
     private RecyclerView recyclerView;
     HouseholdDomainPlanAdapter recyclerViewadapter;
@@ -65,11 +67,12 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_household_case_plan);
+        binding = com.bluecodeltd.ecap.chw.databinding.ActivityHouseholdCasePlanBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        recyclerView = findViewById(R.id.household_domainrecyclerView);
-        domainBtn = findViewById(R.id.household_domainBtn);
-        domainBtn2 = findViewById(R.id.household_domainBtn2);
+        recyclerView = binding.householdDomainrecyclerView;
+        domainBtn = binding.householdDomainBtn;
+        domainBtn2 = binding.householdDomainBtn2;
         Bundle bundle = getIntent().getExtras();
         householdId = getIntent().getExtras().getString("householdId");
         caseDate = getIntent().getExtras().getString("dateId");
@@ -112,7 +115,7 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
                 recreate();
             }));
         } else {
-            recyclerViewadapter.notifyDataSetChanged();
+            try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
         }
 
         if (recyclerViewadapter.getItemCount() > 0) {

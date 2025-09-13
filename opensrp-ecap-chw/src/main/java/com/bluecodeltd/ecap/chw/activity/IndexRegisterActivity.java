@@ -7,7 +7,7 @@ import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.chw.fp.util.FpUtil.getClientProcessorForJava;
 import static org.smartregister.family.util.JsonFormUtils.STEP2;
 import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_EXTRA.STEP3;
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.content.Intent;
@@ -20,6 +20,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
@@ -88,7 +90,21 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        NavigationMenu.getInstance(this, null, null);
+        // Bind toolbar as ActionBar so BaseRegisterFragment can access a non-null ActionBar
+        Toolbar toolbar = findViewById(org.smartregister.R.id.register_toolbar);
+        if (toolbar != null) {
+            toolbar.setContentInsetsAbsolute(0, 0);
+            toolbar.setContentInsetsRelative(0, 0);
+            toolbar.setContentInsetStartWithNavigation(0);
+            setSupportActionBar(toolbar);
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setHomeButtonEnabled(true);
+            }
+            NavigationMenu.getInstance(this, null, toolbar);
+        } else {
+            NavigationMenu.getInstance(this, null, null);
+        }
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(IndexRegisterActivity.this);
         String phone = sp.getString("phone", "anonymous");

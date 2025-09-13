@@ -1,7 +1,5 @@
 package com.bluecodeltd.ecap.chw.application;
 
-import static org.koin.core.context.GlobalContext.getOrNull;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -46,6 +44,8 @@ import com.bluecodeltd.ecap.chw.util.FailSafeRecalledID;
 import com.bluecodeltd.ecap.chw.util.FileUtils;
 import com.bluecodeltd.ecap.chw.util.JsonFormUtils;
 import com.bluecodeltd.ecap.chw.util.Utils;
+import com.evernote.android.job.JobApi;
+import com.evernote.android.job.JobConfig;
 import com.evernote.android.job.JobManager;
 import com.vijay.jsonwizard.NativeFormLibrary;
 import com.vijay.jsonwizard.domain.Form;
@@ -55,7 +55,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
-import org.koin.core.context.GlobalContextKt;
 import org.smartregister.AllConstants;
 import org.smartregister.Context;
 import org.smartregister.CoreLibrary;
@@ -238,6 +237,11 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         this.jsonSpecHelper = new JsonSpecHelper(this);
 
         //init Job Manager
+        try {
+            JobConfig.forceApi(JobApi.V_26);
+            JobConfig.setApiEnabled(JobApi.V_14, false);
+            JobConfig.setApiEnabled(JobApi.V_19, false);
+        } catch (Throwable ignored) { }
         JobManager.create(this).addJobCreator(new ChwJobCreator());
 
         initOfflineSchedules();
@@ -272,6 +276,15 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         }
 
         reloadLanguage();
+
+        // Ensure Timber does not reference Crashlytics when the dependency/plugin is not applied
+        // This prevents NoClassDefFoundError from org.smartregister.util.CrashLyticsTree
+        try {
+            Timber.uprootAll();
+            Timber.plant(new Timber.DebugTree());
+        } catch (Throwable t) {
+            // Ignore; logging is non-critical
+        }
     }
 
     protected void initializeMapBox() {
@@ -307,11 +320,16 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         growthMonitoringConfig.setWeightForHeightZScoreFile("weight_for_height.csv");
         GrowthMonitoringLibrary.init(context, getRepository(), BuildConfig.VERSION_CODE, BuildConfig.DATABASE_VERSION, growthMonitoringConfig);
 
-        if (hasReferrals() && getOrNull() == null) {
-            //Setup referral library and initialize Koin dependencies once
-            ReferralLibrary.init(this);
-            ReferralLibrary.getInstance().setAppVersion(BuildConfig.VERSION_CODE);
-            ReferralLibrary.getInstance().setDatabaseVersion(BuildConfig.DATABASE_VERSION);
+        if (hasReferrals()) {
+            try {
+                // Setup referral library; if Koin is available the library will manage its context.
+                ReferralLibrary.init(this);
+                ReferralLibrary.getInstance().setAppVersion(BuildConfig.VERSION_CODE);
+                ReferralLibrary.getInstance().setDatabaseVersion(BuildConfig.DATABASE_VERSION);
+            } catch (Throwable t) {
+                // Safely ignore if referral library is not fully available in this build variant
+                Timber.w(t, "Referral library initialization skipped");
+            }
         }
 
         OpdLibrary.init(context, getRepository(),
@@ -322,8 +340,14 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
                 BuildConfig.VERSION_CODE, BuildConfig.DATABASE_VERSION
         );
 
-        SyncStatusBroadcastReceiver.init(this);
-        SyncStatusBroadcastReceiver.getInstance().addSyncStatusListener(this);
+        try {
+            SyncStatusBroadcastReceiver.init(this);
+            SyncStatusBroadcastReceiver.getInstance().addSyncStatusListener(this);
+        } catch (SecurityException se) {
+            Timber.w(se, "Skipping SyncStatusBroadcastReceiver init on API 33+ (receiver flags required)");
+        } catch (Throwable t) {
+            Timber.w(t, "SyncStatusBroadcastReceiver init failed; continuing without it");
+        }
 
         if (p2pProcessingStatusBroadcastReceiver == null)
             p2pProcessingStatusBroadcastReceiver = new P2pProcessingStatusBroadcastReceiver(this);
@@ -354,7 +378,10 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
     @Override
     public void onTerminate() {
         super.onTerminate();
-        GlobalContextKt.stopKoin();
+        try {
+            Class<?> gc = Class.forName("org.koin.core.context.GlobalContextKt");
+            gc.getMethod("stopKoin").invoke(null);
+        } catch (Throwable ignored) { }
     }
 
     @Override

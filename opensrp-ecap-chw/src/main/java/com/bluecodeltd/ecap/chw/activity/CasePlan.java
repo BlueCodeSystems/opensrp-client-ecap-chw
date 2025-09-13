@@ -2,7 +2,7 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.annotation.SuppressLint;
@@ -56,6 +56,8 @@ import timber.log.Timber;
 
 public class CasePlan extends AppCompatActivity {
 
+    private com.bluecodeltd.ecap.chw.databinding.ActivityCasePlanBinding binding;
+
 
     private RecyclerView recyclerView;
     DomainPlanAdapter recyclerViewadapter;
@@ -66,11 +68,12 @@ public class CasePlan extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_case_plan);
+        binding = com.bluecodeltd.ecap.chw.databinding.ActivityCasePlanBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        recyclerView = findViewById(R.id.domainrecyclerView);
-        domainBtn = findViewById(R.id.domainBtn);
-        domainBtn2 = findViewById(R.id.domainBtn2);
+        recyclerView = binding.domainrecyclerView;
+        domainBtn = binding.domainBtn;
+        domainBtn2 = binding.domainBtn2;
 
         childId = getIntent().getExtras().getString("childId");
         caseDate = getIntent().getExtras().getString("dateId");
@@ -97,7 +100,7 @@ public class CasePlan extends AppCompatActivity {
                 recreate();
             }));
         } else {
-            recyclerViewadapter.notifyDataSetChanged();
+            try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
         }
 
         if (recyclerViewadapter.getItemCount() > 0) {

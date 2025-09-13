@@ -13,8 +13,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import com.github.ybq.android.spinkit.style.FadingCircle;
 import com.google.android.material.tabs.TabLayout;
@@ -40,7 +41,8 @@ import timber.log.Timber;
 public class JobAidsActivity extends FamilyRegisterActivity {
 
     private static final String REPORT_LAST_PROCESSED_DATE = "REPORT_LAST_PROCESSED_DATE";
-    private ViewPager mViewPager;
+    private ViewPager2 mViewPager;
+    private TabLayoutMediator tabMediator;
     private ImageView refreshIndicatorsIcon;
     private ProgressBar refreshIndicatorsProgressBar;
 
@@ -74,14 +76,18 @@ public class JobAidsActivity extends FamilyRegisterActivity {
         }
     }
 
-    public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
+    public class SectionsPagerAdapter extends FragmentStateAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
+        public SectionsPagerAdapter(@NonNull androidx.fragment.app.FragmentActivity activity) {
+            super(activity);
         }
 
         @Override
-        public Fragment getItem(int position) {
+        public int getItemCount() { return 2; }
+
+        @NonNull
+        @Override
+        public Fragment createFragment(int position) {
             switch (position) {
                 case 0:
                     return JobAidsDashboardFragment.newInstance();
@@ -90,20 +96,6 @@ public class JobAidsActivity extends FamilyRegisterActivity {
                 default:
                     return JobAidsDashboardFragment.newInstance();
             }
-        }
-
-        @Override
-        public int getCount() {
-            // Show 3 total pages.
-            return 2;
-        }
-
-        @Override
-        public int getItemPosition(Object object) {
-            if (object instanceof JobAidsDashboardFragment) {
-                ((JobAidsDashboardFragment) object).loadIndicatorTallies();
-            }
-            return super.getItemPosition(object);
         }
     }
 
@@ -131,17 +123,16 @@ public class JobAidsActivity extends FamilyRegisterActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(" ");
         }
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
+        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(this);
         mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
         TabLayout tabLayout = findViewById(R.id.tabs);
-
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+        if (tabMediator != null) { try { tabMediator.detach(); } catch (Exception ignored) {} }
+        tabMediator = new TabLayoutMediator(tabLayout, mViewPager, (tab, pos) -> {
+            if (pos == 0) tab.setText(getString(R.string.tab_text_1));
+            else if (pos == 1) tab.setText(getString(R.string.tab_text_2));
+        });
+        tabMediator.attach();
 
         refreshIndicatorsIcon = findViewById(R.id.refreshIndicatorsIcon);
         refreshIndicatorsProgressBar = findViewById(R.id.refreshIndicatorsPB);

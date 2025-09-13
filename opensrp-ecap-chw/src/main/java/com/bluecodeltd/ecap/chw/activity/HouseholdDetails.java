@@ -4,7 +4,7 @@ import static com.vijay.jsonwizard.constants.JsonFormConstants.OPTIONS_FIELD_NAM
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.family.util.JsonFormUtils.STEP2;
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.annotation.SuppressLint;
@@ -35,7 +35,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.preference.PreferenceManager;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
@@ -123,9 +124,13 @@ import timber.log.Timber;
 
 public class HouseholdDetails extends AppCompatActivity {
 
+    private com.bluecodeltd.ecap.chw.databinding.ActivityHouseholdDetailsBinding binding;
+
     public ProfileViewPagerAdapter mPagerAdapter;
     private TabLayout mTabLayout;
-    public ViewPager mViewPager;
+    public ViewPager2 mViewPager;
+    private TabLayoutMediator tabMediator;
+    private boolean viewPagerInitialized = false;
     private Toolbar toolbar;
     private TextView visitTabCount, cname,updatedCaregiverName, txtDistrict, txtVillage,casePlanTabCount;
     public TextView childTabCount;
@@ -166,9 +171,10 @@ public class HouseholdDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_household_details);
+        binding = com.bluecodeltd.ecap.chw.databinding.ActivityHouseholdDetailsBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        toolbar = findViewById(R.id.toolbarx);
+        toolbar = binding.toolbarx;
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         NavigationMenu.getInstance(this, null, toolbar);
@@ -178,34 +184,53 @@ public class HouseholdDetails extends AppCompatActivity {
         builder = new AlertDialog.Builder(HouseholdDetails.this);
 
         // init views
-        callFab = findViewById(R.id.callFab);
-        fab = findViewById(R.id.fabx);
-        changeFabIconColor();
+        callFab = binding.callFab;
+        fab = binding.fabx;
+        // Defer FAB color update until house is loaded
+        if (house != null) {
+            changeFabIconColor();
+        }
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
         rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
 
-        rscreen = findViewById(R.id.hh_screening);
-        grad_form = findViewById(R.id.graduation);
-        we_service_caregiver = findViewById(R.id.we_service_caregiver);
-        chivAssessment = findViewById(R.id.hiv_assessment_caregiver);
-        cname = findViewById(R.id.caregiver_name);
-        updatedCaregiverName = findViewById(R.id.updated_caregiver_name);
-        txtDistrict = findViewById(R.id.myaddress);
-        txtVillage = findViewById(R.id.address1);
-        rassessment = findViewById(R.id.cassessment);
-        rcase_plan = findViewById(R.id.hcase_plan);
-        refferal = findViewById(R.id.h_referral);
-        child_form = findViewById(R.id.child_form);
-        household_visitation_caregiver = findViewById(R.id.household_visitation_caregiver);
-        mTabLayout =  findViewById(R.id.tabs);
-        mViewPager  = findViewById(R.id.viewpager);
+        rscreen = binding.hhScreening;
+        grad_form = binding.graduation;
+        we_service_caregiver = binding.weServiceCaregiver;
+        chivAssessment = binding.hivAssessmentCaregiver;
+        cname = binding.caregiverName;
+        updatedCaregiverName = binding.updatedCaregiverName;
+        txtDistrict = binding.myaddress;
+        txtVillage = binding.address1;
+        rassessment = binding.cassessment;
+        rcase_plan = binding.hcasePlan;
+        refferal = binding.hReferral;
+        child_form = binding.childForm;
+        household_visitation_caregiver = binding.householdVisitationCaregiver;
+        mTabLayout =  binding.tabs;
+        mViewPager  = binding.viewpager;
+        try {
+            // Assign a fresh unique ID to avoid any stale fragments attached to the
+            // previous container ID from other flows causing duplicate-add collisions.
+            int newId = androidx.core.view.ViewCompat.generateViewId();
+            mViewPager.setId(newId);
+        } catch (Throwable ignored) {}
+        // ViewPager2 does not have setSaveFromParentEnabled; only disable saving state if needed
+        try { mViewPager.setSaveEnabled(false); } catch (Throwable ignored) {}
 
         // ViewModel: heavy data
         viewModel = new ViewModelProvider(this).get(HouseholdDetailsViewModel.class);
         viewModel.getState().observe(this, state -> applyState(state, householdId));
         viewModel.refresh(householdId);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        // Avoid persisting fragments for this activity to prevent duplicate restoration
+        // when we explicitly rebuild the ViewPager contents.
+        try { outState.remove("android:support:fragments"); } catch (Throwable ignored) {}
+        super.onSaveInstanceState(outState);
     }
 
     private void applyState(HouseholdDetailsState state, String householdId) {
@@ -220,7 +245,9 @@ public class HouseholdDetails extends AppCompatActivity {
             graduationModel = state.getGraduationModel();
             updatedCaregiver = state.getUpdatedCaregiver();
             house = state.getHouse();
-            refreshActivity(house);
+
+            // Wait until house is loaded to bind UI that requires it
+            if (house == null) return;
 
             caregiver = CaregiverDao.getCaregiver(householdId);
             oMapper = new ObjectMapper();
@@ -236,7 +263,7 @@ public class HouseholdDetails extends AppCompatActivity {
             updateGradTabTitle();
             txtDistrict.setText(householdId);
 
-            if(house != null && house.getCaregiver_name() != null && !house.getCaregiver_name().equals("null")){
+            if(house.getCaregiver_name() != null && !house.getCaregiver_name().equals("null")){
                 cname.setText(house.getCaregiver_name() + " Household");
             } else {
                 cname.setText("No Household");
@@ -266,6 +293,9 @@ public class HouseholdDetails extends AppCompatActivity {
             countNumberOfMales(allMalesBirthDates);
             countNumberOfFemales(allFemalesBirthDates);
             countNumberofChildren(allChildrenBirthDates);
+
+            // Apply FAB color after house availability
+            changeFabIconColor();
         } catch (Exception ignored) {}
     }
 
@@ -325,43 +355,138 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
     private void setupViewPager(){
-        mPagerAdapter = new ProfileViewPagerAdapter(getSupportFragmentManager());
-        mPagerAdapter.addFragment(new HouseholdOverviewFragment());
-        mPagerAdapter.addFragment(new HouseholdChildrenFragment());
-        mPagerAdapter.addFragment(new HouseholdCasePlanFragment());
-        mPagerAdapter.addFragment(new HouseholdVisitsFragment());
-        mPagerAdapter.addFragment(new GraduationAssessmentFragment());
+        if (house == null) return;
+        // Prevent duplicate initialization if observer fires multiple times
+        if (viewPagerInitialized) return;
+        // If the ViewPager already has an adapter, detach it first
+        if (mViewPager.getAdapter() != null) {
+            try { mViewPager.setAdapter(null); } catch (Exception ignored) {}
+        }
+        // Add comprehensive fragment cleanup before creating new adapter
+        try {
+            androidx.fragment.app.FragmentManager fm = getSupportFragmentManager();
+            androidx.fragment.app.FragmentTransaction transaction = fm.beginTransaction();
+            
+            // Remove any existing fragments attached to the ViewPager container.
+            // Some FragmentStatePagerAdapter versions identify items by tag pattern:
+            //   "android:switcher:" + viewPagerId + ":" + itemId
+            final int vpId = mViewPager.getId();
+            final String tagPrefix = "android:switcher:" + vpId + ":";
+            for (androidx.fragment.app.Fragment f : fm.getFragments()) {
+                try {
+                    if (f == null) continue;
+                    boolean matchesByTag = f.getTag() != null && f.getTag().startsWith(tagPrefix);
+                    boolean matchesByContainer = false;
+                    try { matchesByContainer = f.getId() == vpId; } catch (Exception ignored2) {}
+                    boolean matchesByType = f instanceof com.bluecodeltd.ecap.chw.fragment.HouseholdOverviewFragment
+                            || f instanceof com.bluecodeltd.ecap.chw.fragment.HouseholdChildrenFragment
+                            || f instanceof com.bluecodeltd.ecap.chw.fragment.HouseholdCasePlanFragment
+                            || f instanceof com.bluecodeltd.ecap.chw.fragment.HouseholdVisitsFragment
+                            || f instanceof com.bluecodeltd.ecap.chw.fragment.GraduationAssessmentFragment
+                            || f instanceof com.bluecodeltd.ecap.chw.fragment.CaregiverHivAssessmentFragment;
+                    if (matchesByTag || matchesByContainer || matchesByType) {
+                        transaction.remove(f);
+                    }
+                } catch (Exception ignored) { }
+            }
+            // Extra safety: if a fragment is directly attached to the ViewPager container by id
+            try {
+                androidx.fragment.app.Fragment direct = fm.findFragmentById(vpId);
+                if (direct != null) transaction.remove(direct);
+            } catch (Exception ignored) {}
+            transaction.commitNowAllowingStateLoss();
+            try { fm.executePendingTransactions(); } catch (Exception ignored) {}
+        } catch (Exception ignored) {}
 
+        // Mark initialized after cleanup but before adapter set to avoid re-entry
+        viewPagerInitialized = true;
+
+        // Debug: log existing fragments before adapter
+        logFragments("before_setAdapter");
+
+        // Align with other working screens: use a simple fragments list adapter
+        java.util.List<androidx.fragment.app.Fragment> fragments = new java.util.ArrayList<>();
+        fragments.add(new HouseholdOverviewFragment());
+        fragments.add(new HouseholdChildrenFragment());
+        fragments.add(new HouseholdCasePlanFragment());
+        fragments.add(new HouseholdVisitsFragment());
+        fragments.add(new GraduationAssessmentFragment());
 
         String hivStatus = house.getCaregiver_hiv_status();
-
         if (hivStatus != null && "negative".equalsIgnoreCase(hivStatus)) {
-            mPagerAdapter.addFragment(new CaregiverHivAssessmentFragment());
+            fragments.add(new CaregiverHivAssessmentFragment());
         }
 
-
-        mViewPager.setAdapter(mPagerAdapter);
+        // Set adapter
+        mViewPager.setAdapter(new com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter(this, fragments));
         mViewPager.setOffscreenPageLimit(2);
 
-        mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.getTabAt(0).setText(getString(R.string.fragment_overview));
-        mTabLayout.getTabAt(1).setText(getString(R.string.fragment_members));
-        mTabLayout.getTabAt(2).setText("CP");
-        mTabLayout.getTabAt(3).setText(getString(R.string.fragment_housevisits));
-        mTabLayout.getTabAt(4).setText("Grad");
-        if (mPagerAdapter.getCount() > 5) {
-            mTabLayout.getTabAt(5).setText("HIV ASSESSMENT");
+        // Attach TabLayoutMediator
+        if (tabMediator != null) { try { tabMediator.detach(); } catch (Exception ignored) {} }
+        tabMediator = new TabLayoutMediator(mTabLayout, mViewPager, (tab, position) -> {
+            switch (position) {
+                case 0: tab.setText(getString(R.string.fragment_overview)); break;
+                case 1: tab.setText(getString(R.string.fragment_members)); break;
+                case 2: tab.setText("CP"); break;
+                case 3: tab.setText(getString(R.string.fragment_housevisits)); break;
+                case 4: tab.setText("Grad"); break;
+                case 5: tab.setText("HIV ASSESSMENT"); break;
+                default: break;
+            }
+        });
+        tabMediator.attach();
+
+        // Apply custom tab titles/counts
+        if (fragments.size() > 5) {
             updateHivRiskTabTitle();
         }
 
+        // Debug: log fragments after adapter
+        logFragments("after_setAdapter");
+    }
+
+    @Override
+    protected void onDestroy() {
+        try {
+            if (mViewPager != null) {
+                // Detach adapter to break references and avoid fragment leaks
+                try { mViewPager.setAdapter(null); } catch (Exception ignored) {}
+            }
+            // Proactively remove any fragments tagged for this ViewPager to avoid carry-over
+            androidx.fragment.app.FragmentManager fm = getSupportFragmentManager();
+            androidx.fragment.app.FragmentTransaction tx = fm.beginTransaction();
+            final int vpId = mViewPager != null ? mViewPager.getId() : 0;
+            final String tagPrefix = "android:switcher:" + vpId + ":";
+            for (androidx.fragment.app.Fragment f : fm.getFragments()) {
+                try {
+                    if (f == null) continue;
+                    boolean matchesByTag = f.getTag() != null && f.getTag().startsWith(tagPrefix);
+                    boolean matchesByContainer = vpId != 0 && f.getId() == vpId;
+                    if (matchesByTag || matchesByContainer) {
+                        tx.remove(f);
+                    }
+                } catch (Exception ignored) {}
+            }
+            try { tx.commitNowAllowingStateLoss(); } catch (Exception ignored) {}
+        } catch (Exception ignored) {}
+        super.onDestroy();
+    }
+
+    private void logFragments(String where) {
+        try {
+            if (!com.bluecodeltd.ecap.chw.BuildConfig.DEBUG) return;
+            final androidx.fragment.app.FragmentManager fm = getSupportFragmentManager();
+            final int vpId = mViewPager != null ? mViewPager.getId() : -1;
+            final String tagPrefix = vpId != -1 ? ("android:switcher:" + vpId + ":") : "";
+            for (androidx.fragment.app.Fragment f : fm.getFragments()) {
+                if (f == null) continue;
+                android.util.Log.d("HH_DETAILS", where + " id=" + f.getId() + " tag=" + f.getTag() + " added=" + f.isAdded() + " visible=" + f.getUserVisibleHint() + " type=" + f.getClass().getSimpleName());
+            }
+            android.util.Log.d("HH_DETAILS", where + " tagPrefix=" + tagPrefix);
+        } catch (Throwable ignored) { }
     }
     private void setupFabVisibility() {
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @SuppressLint("RestrictedApi")
+        mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 if (position == 1 || position == 2 || position == 3) {
@@ -370,12 +495,20 @@ public class HouseholdDetails extends AppCompatActivity {
                     fab.setVisibility(View.VISIBLE);
                 }
             }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
         });
+    }
+
+    // Safe getter for an existing page fragment managed by ViewPager2
+    @SuppressWarnings("unchecked")
+    public <T extends androidx.fragment.app.Fragment> T getPagerFragmentAt(int position, Class<T> type) {
+        try {
+            // FragmentStateAdapter uses tag format "f" + itemId
+            long itemId = position; // default mapping
+            String tag = "f" + itemId;
+            androidx.fragment.app.Fragment f = getSupportFragmentManager().findFragmentByTag(tag);
+            if (type.isInstance(f)) return (T) f;
+        } catch (Exception ignored) {}
+        return null;
     }
 
     private void updateTasksTabTitle() {
@@ -388,7 +521,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
         visitTabCount.setText(String.valueOf(visits));
 
-        mTabLayout.getTabAt(3).setCustomView(taskTabTitleLayout);
+        try { if (mTabLayout.getTabAt(3) != null) mTabLayout.getTabAt(3).setCustomView(taskTabTitleLayout); } catch (Exception ignored) {}
     }
 
     private void updateCaseplanTitle() {
@@ -398,15 +531,12 @@ public class HouseholdDetails extends AppCompatActivity {
         casePlanTabCount = taskTabTitleLayout.findViewById(R.id.household_plans_count);
         int plans = CasePlanDao.getByIDNumberOfCaregiverCasepalns(house.getHousehold_id());
 
-        if (plans > 0)
-        {
+        if (plans > 0) {
             casePlanTabCount.setText(String.valueOf(plans));
-        }
-        else{
+        } else {
             casePlanTabCount.setText("0");
         }
-
-        mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
+        try { if (mTabLayout.getTabAt(2) != null) mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout); } catch (Exception ignored) {}
     }
 
     private void updateChildTabTitle() {
@@ -419,7 +549,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
         childTabCount.setText(childrenCount);
 
-        mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
+        try { if (mTabLayout.getTabAt(1) != null) mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout); } catch (Exception ignored) {}
     }
     private void updateHivRiskTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
@@ -1651,9 +1781,9 @@ public class HouseholdDetails extends AppCompatActivity {
             fab.startAnimation(rotate_forward);
             rscreen.setVisibility(View.VISIBLE);
             grad_form.setVisibility(View.VISIBLE);
-            if(house.getCaregiver_hiv_status().equals("positive") ||
-                    house.getCaregiver_hiv_status().equals("HIV+")
-                    ) {
+            if(house != null && house.getCaregiver_hiv_status() != null &&
+                    (house.getCaregiver_hiv_status().equals("positive") || house.getCaregiver_hiv_status().equals("HIV+")
+                    )) {
                 chivAssessment.setVisibility(View.GONE);
             } else {
                 chivAssessment.setVisibility(View.VISIBLE);
@@ -1854,7 +1984,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
             case R.id.call:
                 try {
-                    String caregiverPhoneNumber = house.getCaregiver_phone();
+                    String caregiverPhoneNumber = (house != null) ? house.getCaregiver_phone() : null;
                     if (caregiverPhoneNumber != null && !caregiverPhoneNumber.equals("")) {
                         Intent callIntent = new Intent(Intent.ACTION_DIAL);
                         callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
@@ -2046,21 +2176,25 @@ public class HouseholdDetails extends AppCompatActivity {
 
     }
     public void getDeregistrationStatus(){
-            if (house.getHousehold_case_status() != null && (house.getHousehold_case_status().equals("0") || house.getHousehold_case_status().equals("2"))){
-                fab.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
-                showDialogBox(house.getCaregiver_name() + "`s household has been inactive or de-registered");
-            } else {
-                animateFAB();
-            }
-
-
+        if (house == null) {
+            Toast.makeText(getApplicationContext(), "Household still loading…", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String status = house.getHousehold_case_status();
+        if (status != null && ("0".equals(status) || "2".equals(status))){
+            fab.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+            showDialogBox(house.getCaregiver_name() + "`s household has been inactive or de-registered");
+        } else {
+            animateFAB();
+        }
     }
     public void changeFabIconColor(){
-        if (house.getHousehold_case_status() != null && (house.getHousehold_case_status().equals("0") || house.getHousehold_case_status().equals("2"))){
+        if (house == null) return;
+        String status = house.getHousehold_case_status();
+        if (status != null && ("0".equals(status) || "2".equals(status))){
             fab.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
             showDialogBox(house.getCaregiver_name() + "`s household has been inactive or de-registered");
         }
-
     }
     public void showDialogBox(String message){
         Dialog dialog = new Dialog(this);

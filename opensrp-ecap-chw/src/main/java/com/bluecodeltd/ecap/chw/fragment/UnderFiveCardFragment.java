@@ -25,6 +25,8 @@ import java.util.HashMap;
  */
 public class UnderFiveCardFragment extends Fragment {
 
+    private com.bluecodeltd.ecap.chw.databinding.FragmentUnderFiveCardBinding binding;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -76,8 +78,8 @@ public class UnderFiveCardFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        inflateView = inflater.inflate(R.layout.fragment_under_five_card, container, false);
+        binding = com.bluecodeltd.ecap.chw.databinding.FragmentUnderFiveCardBinding.inflate(inflater, container, false);
+        inflateView = binding.getRoot();
 
         HashMap<String, PmtctChildModel> mymap = ((HeiDetailsActivity) requireActivity()).getClientDetails();
 
@@ -102,17 +104,17 @@ public class UnderFiveCardFragment extends Fragment {
 
         }
 
-        cardNumber = inflateView.findViewById(R.id.card_number);
-        childBirthDate = inflateView.findViewById(R.id.child_dob);
-        weight = inflateView.findViewById(R.id.child_weight);
-        childFeedingOption = inflateView.findViewById(R.id.infant_feeding_option);
+        cardNumber = binding.cardNumber;
+        childBirthDate = binding.childDob;
+        weight = binding.childWeight;
+        childFeedingOption = binding.infantFeedingOption;
 
-        followUpVisitDate = inflateView.findViewById(R.id.pediatic_visit);
-        pediaticDate = inflateView.findViewById(R.id.pediatic_date);
-        hiv_status= inflateView.findViewById(R.id.hiv_status_r_nr);
+        followUpVisitDate = binding.pediaticVisit;
+        pediaticDate = binding.pediaticDate;
+        hiv_status= binding.hivStatusRNr;
 //        hiv_status = inflateView.findViewById(R.id.nvp_date_start);
 //        childMonitoringVisit = inflateView.findViewById(R.id.child_monitoring_visit);
-        imageviewProfile = inflateView.findViewById(R.id.imageview_profile);
+        imageviewProfile = binding.imageviewProfile;
 
         try {
             imageviewProfile.setImageResource((motherDetails != null && motherDetails.getInfants_sex() != null && motherDetails.getInfants_sex().equals("male"))
@@ -155,5 +157,11 @@ public class UnderFiveCardFragment extends Fragment {
 
 
         return inflateView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

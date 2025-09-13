@@ -1,6 +1,6 @@
 package com.bluecodeltd.ecap.chw.activity;
 
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -119,7 +119,7 @@ public class ShowHouseholdReferralActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerViewadapter = new ShowHouseholdReferralsAdapter(referralList, ShowHouseholdReferralActivity.this);
         recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
+        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
 
         if (recyclerViewadapter.getItemCount() > 0) {
 

@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.ActionBar;
+import android.widget.ProgressBar;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
@@ -30,7 +33,9 @@ import org.smartregister.view.fragment.BaseRegisterFragment;
 
 import java.util.HashMap;
 
-public class IndexFragmentRegister extends BaseRegisterFragment implements IndexRegisterFragmentContract.View {
+public class IndexFragmentRegister extends BaseSafeRegisterFragment implements IndexRegisterFragmentContract.View {
+
+    private com.bluecodeltd.ecap.chw.databinding.FragmentBaseRegisterBinding binding;
 
     AlertDialog.Builder builder;
 
@@ -43,6 +48,7 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
 
     @Override
     public void setupViews(View view) {
+        try { binding = com.bluecodeltd.ecap.chw.databinding.FragmentBaseRegisterBinding.bind(view); } catch (Throwable ignored) {}
 
         if (view == null) {
             Log.e("setupViews", "View is null. Aborting setup.");
@@ -50,7 +56,72 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
         }
 
         try {
+            // Ensure a RecyclerView exists before base setup tries to configure it
+            try {
+                androidx.recyclerview.widget.RecyclerView rv = null;
+                try { rv = view.findViewById(R.id.recycler_view); } catch (Exception ignored) {}
+                if (rv == null) { try { rv = view.findViewById(org.smartregister.R.id.recycler_view); } catch (Exception ignored) {} }
+                if (rv == null && view instanceof android.view.ViewGroup) {
+                    rv = new androidx.recyclerview.widget.RecyclerView(requireContext());
+                    rv.setId(org.smartregister.R.id.recycler_view);
+                    rv.setLayoutParams(new android.view.ViewGroup.LayoutParams(
+                            android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+                            android.view.ViewGroup.LayoutParams.MATCH_PARENT
+                    ));
+                    ((android.view.ViewGroup) view).addView(rv);
+                }
+            } catch (Exception ignored) { }
+
+            // Ensure a ProgressBar exists (BaseRegisterFragment toggles its visibility during setup)
+            try {
+                android.widget.ProgressBar pb = null;
+                try { pb = view.findViewById(R.id.client_list_progress); } catch (Exception ignored) {}
+                if (pb == null && view instanceof android.view.ViewGroup) {
+                    pb = new android.widget.ProgressBar(requireContext());
+                    pb.setId(R.id.client_list_progress);
+                    android.view.ViewGroup parent = (android.view.ViewGroup) view;
+                    if (parent instanceof android.widget.RelativeLayout) {
+                        android.widget.RelativeLayout.LayoutParams lp = new android.widget.RelativeLayout.LayoutParams(
+                                android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+                                android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+                        );
+                        lp.addRule(android.widget.RelativeLayout.CENTER_IN_PARENT, android.widget.RelativeLayout.TRUE);
+                        parent.addView(pb, lp);
+                    } else {
+                        android.view.ViewGroup.LayoutParams lp = new android.view.ViewGroup.LayoutParams(
+                                android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+                                android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+                        );
+                        parent.addView(pb, lp);
+                    }
+                    pb.setVisibility(View.GONE);
+                }
+            } catch (Exception ignored) { }
+
             super.setupViews(view);
+
+            // Fallback: if base did not bind the RecyclerView, try to resolve it manually
+            try {
+                if (clientsView == null && view != null) {
+                    androidx.recyclerview.widget.RecyclerView rv = null;
+                    try { rv = view.findViewById(R.id.recycler_view); } catch (Exception ignored) {}
+                    if (rv == null) { try { rv = view.findViewById(org.smartregister.R.id.recycler_view); } catch (Exception ignored) {} }
+                    if (rv == null) {
+                        // Scan the view hierarchy for the first RecyclerView instance
+                        rv = findFirstRecyclerView(view);
+                    }
+                    if (rv != null) {
+                        clientsView = rv;
+                        if (clientsView.getLayoutManager() == null && getContext() != null) {
+                            clientsView.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(getContext()));
+                        }
+                        clientsView.setHasFixedSize(true);
+                        if (clientAdapter == null) {
+                            try { initializeAdapter(); } catch (Exception ignoredInitAdapter) {}
+                        }
+                    }
+                }
+            } catch (Exception ignored) { }
 
             // Toolbar Setup
             Toolbar toolbar = view.findViewById(org.smartregister.R.id.register_toolbar);
@@ -58,6 +129,14 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
                 toolbar.setContentInsetsAbsolute(0, 0);
                 toolbar.setContentInsetsRelative(0, 0);
                 toolbar.setContentInsetStartWithNavigation(0);
+                if (getActivity() instanceof AppCompatActivity) {
+                    AppCompatActivity act = (AppCompatActivity) getActivity();
+                    act.setSupportActionBar(toolbar);
+                    if (act.getSupportActionBar() != null) {
+                        act.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                        act.getSupportActionBar().setHomeButtonEnabled(true);
+                    }
+                }
                 NavigationMenu navigationMenu = NavigationMenu.getInstance(getActivity(), null, toolbar);
                 if (navigationMenu == null) {
                     Log.w("setupViews", "NavigationMenu is null. Skipping toolbar setup.");
@@ -101,12 +180,16 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
             }
 
             // Title Setup
-            CustomFontTextView titleView = view.findViewById(org.smartregister.R.id.txt_title_label);
+            android.widget.TextView titleView = null;
+            try { titleView = view.findViewById(org.smartregister.R.id.txt_title_label); } catch (Exception ignored) {}
+            if (titleView == null) { try { titleView = view.findViewById(R.id.txt_title_label); } catch (Exception ignored) {} }
             if (titleView != null) {
                 titleView.setVisibility(View.VISIBLE);
                 titleView.setText(getString(R.string.all_index_title));
-                titleView.setFontVariant(FontVariant.REGULAR);
                 titleView.setClickable(false);
+                if (titleView instanceof CustomFontTextView) {
+                    ((CustomFontTextView) titleView).setFontVariant(FontVariant.REGULAR);
+                }
             } else {
                 Log.w("setupViews", "Title view is null.");
             }
@@ -169,11 +252,65 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
         } catch (Exception e) {
             Log.e("setupViews", "Error occurred during setup: " + e.getMessage());
             e.printStackTrace();
+
+            // Attempt last-resort RecyclerView binding so the screen remains usable
+            try {
+                if (clientsView == null && view != null) {
+                    androidx.recyclerview.widget.RecyclerView rv = null;
+                    try { rv = view.findViewById(R.id.recycler_view); } catch (Exception ignored) {}
+                    if (rv == null) {
+                        rv = findFirstRecyclerView(view);
+                    }
+                    if (rv != null) {
+                        clientsView = rv;
+                        if (clientsView.getLayoutManager() == null && getContext() != null) {
+                            clientsView.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(getContext()));
+                        }
+                        clientsView.setHasFixedSize(true);
+                        if (clientAdapter == null) {
+                            try { initializeAdapter(); } catch (Exception ignoredInitAdapter2) {}
+                        }
+                    }
+                }
+            } catch (Exception ignored2) { }
+
         }
     }
 
+    private androidx.recyclerview.widget.RecyclerView findFirstRecyclerView(View root) {
+        if (root instanceof androidx.recyclerview.widget.RecyclerView) {
+            return (androidx.recyclerview.widget.RecyclerView) root;
+        }
+        if (root instanceof android.view.ViewGroup) {
+            android.view.ViewGroup vg = (android.view.ViewGroup) root;
+            for (int i = 0; i < vg.getChildCount(); i++) {
+                androidx.recyclerview.widget.RecyclerView found = findFirstRecyclerView(vg.getChildAt(i));
+                if (found != null) return found;
+            }
+        }
+        return null;
+    }
 
-
+    @Override
+    protected void setUpActionBar() {
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        if (activity == null) return;
+        ActionBar actionBar = activity.getSupportActionBar();
+        if (actionBar == null) {
+            View root = getView();
+            if (root != null) {
+                Toolbar toolbar = root.findViewById(org.smartregister.R.id.register_toolbar);
+                if (toolbar != null) {
+                    activity.setSupportActionBar(toolbar);
+                    actionBar = activity.getSupportActionBar();
+                }
+            }
+        }
+        if (actionBar != null) {
+            actionBar.setTitle("");
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
 
     @Override
     public void setUniqueID(String s) {
@@ -243,10 +380,37 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
 
     @Override
     public void initializeAdapter() {
+        // Ensure RecyclerView is bound before setting adapter
+        try {
+            if (clientsView == null) {
+                View root = getView();
+                if (root != null) {
+                    androidx.recyclerview.widget.RecyclerView rv = null;
+                    try { rv = root.findViewById(R.id.recycler_view); } catch (Exception ignored) {}
+                    if (rv == null) { try { rv = root.findViewById(org.smartregister.R.id.recycler_view); } catch (Exception ignored) {} }
+                    if (rv == null) { rv = findFirstRecyclerView(root); }
+                    if (rv != null) {
+                        clientsView = rv;
+                        if (clientsView.getLayoutManager() == null && getContext() != null) {
+                            clientsView.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(getContext()));
+                        }
+                        clientsView.setHasFixedSize(true);
+                    }
+                }
+            }
+        } catch (Exception ignored) { }
+
+        if (clientsView == null) {
+            Log.e("IndexFragmentRegister", "RecyclerView not found; skipping adapter initialization");
+            return;
+        }
+
         IndexRegisterProvider registerProvider = new IndexRegisterProvider(requireContext(), registerActionHandler, paginationViewHandler);
         clientAdapter = new RecyclerViewPaginatedAdapter(null, registerProvider, context().commonrepository(Constants.EcapClientTable.EC_CLIENT_INDEX));
         clientAdapter.setCurrentlimit(20);
         clientsView.setAdapter(clientAdapter);
+
+        Log.d("IndexFragmentRegister", "Adapter initialized and attached to RecyclerView");
 
 
     }
@@ -259,17 +423,86 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
     @Override
     protected void onResumption() {
         super.onResumption();
-        
-        // Refresh the fragment data when returning from forms
+        // Only refresh adapter; let base/presenter manage queries to avoid null repositories
         if (clientAdapter != null) {
-            clientAdapter.notifyDataSetChanged();
+            try { clientAdapter.notifyDataSetChanged(); } catch (Exception ignored) {}
         }
-        
-        // Re-execute queries to get updated data
-        if (presenter != null) {
-            countExecute();
-            filterandSortInInitializeQueries();
+    }
+
+    @Override
+    public void showProgressView() {
+        try {
+            ProgressBar progressBar = null;
+            if (binding != null) {
+                progressBar = binding.clientListProgress;
+            }
+            if (progressBar == null && getView() != null) {
+                // Try the most common progress bar IDs that actually exist
+                try {
+                    progressBar = getView().findViewById(R.id.progress_bar);
+                } catch (Exception ignored) {}
+                
+                if (progressBar == null) {
+                    try {
+                        progressBar = getView().findViewById(R.id.progress_loading);
+                    } catch (Exception ignored) {}
+                }
+                
+                if (progressBar == null) {
+                    try {
+                        progressBar = getView().findViewById(R.id.client_list_progress);
+                    } catch (Exception ignored) {}
+                }
+            }
+            
+            if (progressBar != null && progressBar.getVisibility() != View.VISIBLE) {
+                progressBar.setVisibility(View.VISIBLE);
+            }
+        } catch (Exception e) {
+            // Defensive catch to prevent crashes - progress indicators are not critical
+            Log.w("IndexFragmentRegister", "Could not show progress view: " + e.getMessage());
         }
+    }
+
+    @Override
+    public void hideProgressView() {
+        try {
+            ProgressBar progressBar = null;
+            if (binding != null) {
+                progressBar = binding.clientListProgress;
+            }
+            if (progressBar == null && getView() != null) {
+                // Try the most common progress bar IDs that actually exist
+                try {
+                    progressBar = getView().findViewById(R.id.progress_bar);
+                } catch (Exception ignored) {}
+                
+                if (progressBar == null) {
+                    try {
+                        progressBar = getView().findViewById(R.id.progress_loading);
+                    } catch (Exception ignored) {}
+                }
+                
+                if (progressBar == null) {
+                    try {
+                        progressBar = getView().findViewById(R.id.client_list_progress);
+                    } catch (Exception ignored) {}
+                }
+            }
+            
+            if (progressBar != null && progressBar.getVisibility() == View.VISIBLE) {
+                progressBar.setVisibility(View.GONE);
+            }
+        } catch (Exception e) {
+            // Defensive catch to prevent crashes - progress indicators are not critical
+            Log.w("IndexFragmentRegister", "Could not hide progress view: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     @Override

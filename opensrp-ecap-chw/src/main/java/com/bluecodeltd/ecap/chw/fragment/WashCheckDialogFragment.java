@@ -39,6 +39,8 @@ import timber.log.Timber;
 
 public class WashCheckDialogFragment extends DialogFragment implements View.OnClickListener {
 
+    private com.bluecodeltd.ecap.chw.databinding.FragmentWashCheckBinding binding;
+
     public static final String DIALOG_TAG = "WashCheckDialogFragment";
     private static final String BASE_ENTITY_ID = "base_entity_id";
     private static final String VISIT_DATE = "visit_date";
@@ -94,7 +96,8 @@ public class WashCheckDialogFragment extends DialogFragment implements View.OnCl
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_wash_check, container, false);
+        binding = com.bluecodeltd.ecap.chw.databinding.FragmentWashCheckBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
@@ -103,14 +106,15 @@ public class WashCheckDialogFragment extends DialogFragment implements View.OnCl
         baseEntityID = getArguments().getString(BASE_ENTITY_ID);
         washCheckDate = getArguments().getLong(VISIT_DATE);
 
-        handwashingYes = view.findViewById(R.id.choice_1_handwashing);
-        handwashingNo = view.findViewById(R.id.choice_2_handwashing);
-        drinkingYes = view.findViewById(R.id.choice_1_drinking);
-        drinkingNo = view.findViewById(R.id.choice_2_drinking);
-        latrineYes = view.findViewById(R.id.choice_1_latrine);
-        latrineNo = view.findViewById(R.id.choice_2_latrine);
-        view.findViewById(R.id.close).setOnClickListener(this);
-        view.findViewById(R.id.textview_update).setOnClickListener(this);
+        // Access controls inside the included layout via the generated nested binding
+        handwashingYes = binding.dietaryBar.choice1Handwashing;
+        handwashingNo = binding.dietaryBar.choice2Handwashing;
+        drinkingYes = binding.dietaryBar.choice1Drinking;
+        drinkingNo = binding.dietaryBar.choice2Drinking;
+        latrineYes = binding.dietaryBar.choice1Latrine;
+        latrineNo = binding.dietaryBar.choice2Latrine;
+        binding.close.setOnClickListener(this);
+        binding.textviewUpdate.setOnClickListener(this);
 
 
         Observable<String> observable = Observable.create(e -> {
@@ -158,10 +162,17 @@ public class WashCheckDialogFragment extends DialogFragment implements View.OnCl
     }
 
     private void notifyUpdateButtonUi() {
+        if (binding == null) return;
         if (olderThen24Hours)
-            getView().findViewById(R.id.textview_update).setVisibility(View.GONE);
+            binding.textviewUpdate.setVisibility(View.GONE);
         else
-            getView().findViewById(R.id.textview_update).setVisibility(View.VISIBLE);
+            binding.textviewUpdate.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     private void parseOldData(String jsonData) {

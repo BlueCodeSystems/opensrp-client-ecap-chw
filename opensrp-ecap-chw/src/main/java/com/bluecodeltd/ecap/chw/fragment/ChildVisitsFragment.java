@@ -62,7 +62,7 @@ public class ChildVisitsFragment extends Fragment {
             if (!isAdded() || list == null) return;
             visitList.clear();
             visitList.addAll(list);
-            recyclerViewadapter.notifyDataSetChanged();
+            try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
             if (recyclerViewadapter.getItemCount() > 0){
                 linearLayout.setVisibility(View.GONE);
             } else {

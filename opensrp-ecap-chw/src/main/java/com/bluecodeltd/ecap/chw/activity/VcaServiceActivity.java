@@ -3,7 +3,7 @@ package com.bluecodeltd.ecap.chw.activity;
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_EXTRA.STEP1;
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -60,6 +60,8 @@ import timber.log.Timber;
 
 public class VcaServiceActivity extends AppCompatActivity {
 
+    private com.bluecodeltd.ecap.chw.databinding.ActivityVcaServiceBinding binding;
+
     private RecyclerView recyclerView;
     VCAServiceAdapter recyclerViewadapter;
     private ArrayList<VCAServiceModel> familyServiceList = new ArrayList<>();
@@ -75,18 +77,19 @@ public class VcaServiceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vca_service);
+        binding = com.bluecodeltd.ecap.chw.databinding.ActivityVcaServiceBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        toolbar = findViewById(R.id.toolbarx);
+        toolbar = binding.toolbarx;
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         NavigationMenu.getInstance(this, null, toolbar);
 
-        recyclerView = findViewById(R.id.hhrecyclerView);
-        linearLayout = findViewById(R.id.service_container);
-        vcaname = findViewById(R.id.caregiver_name);
-        hh_id = findViewById(R.id.hhid);
-        hh_services_link = findViewById(R.id.hh_service_link);
+        recyclerView = binding.hhrecyclerView;
+        linearLayout = binding.serviceContainer;
+        vcaname = binding.caregiverName;
+        hh_id = binding.hhid;
+        hh_services_link = binding.hhServiceLink;
         HouseholdLinkFromVca();
 
         intent_vcaid = getIntent().getExtras().getString("vcaid");
@@ -113,13 +116,13 @@ public class VcaServiceActivity extends AppCompatActivity {
             recyclerView.setItemAnimator(new DefaultItemAnimator());
             recyclerViewadapter = new VCAServiceAdapter(familyServiceList, VcaServiceActivity.this);
             recyclerView.setAdapter(recyclerViewadapter);
-            recyclerViewadapter.notifyDataSetChanged();
+            try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
 
             recyclerViewadapter.setOnDataUpdateListener(() -> runOnUiThread(() -> {
                 recreate();
             }));
         } else {
-            recyclerViewadapter.notifyDataSetChanged();
+            try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
         }
 
         if (recyclerViewadapter.getItemCount() > 0){
@@ -131,7 +134,7 @@ public class VcaServiceActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
+        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -261,7 +264,7 @@ public class VcaServiceActivity extends AppCompatActivity {
                     Toasty.success(VcaServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
                     familyServiceList.clear();
                     familyServiceList.addAll(VCAServiceReportDao.getServicesByVCAID(intent_vcaid));
-                    recyclerViewadapter.notifyDataSetChanged();
+                    try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
                     break;
 
             }
@@ -272,7 +275,7 @@ public class VcaServiceActivity extends AppCompatActivity {
         }
 //        finish();
 //        startActivity(getIntent());
-        recyclerViewadapter.notifyDataSetChanged();
+        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
     }
 
     public ChildIndexEventClient processRegistration(String jsonString){
@@ -390,7 +393,7 @@ public class VcaServiceActivity extends AppCompatActivity {
         familyServiceList.clear();
         List<VCAServiceModel> updatedList = VCAServiceReportDao.getServicesByVCAID(intent_vcaid);
         familyServiceList.addAll(updatedList);
-        recyclerViewadapter.notifyDataSetChanged();
+        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
     }
 
     public void HouseholdLinkFromVca(){

@@ -16,13 +16,31 @@ import org.smartregister.family.util.Constants;
 import org.smartregister.opd.utils.OpdDbConstants;
 
 public class AllClientsRegisterFragment extends CoreAllClientsRegisterFragment {
+    private com.bluecodeltd.ecap.chw.databinding.FragmentBaseRegisterBinding binding;
     public static final String REGISTER_TYPE = "register_type";
 
     @Override
     public void setupViews(View view) {
+        try { binding = com.bluecodeltd.ecap.chw.databinding.FragmentBaseRegisterBinding.bind(view); } catch (Throwable ignored) {}
         super.setupViews(view);
+        // Ensure clientsView references the bound RecyclerView
+        try {
+            if (clientsView == null && binding != null && binding.recyclerView != null) {
+                clientsView = binding.recyclerView;
+                if (clientsView.getLayoutManager() == null && getContext() != null) {
+                    clientsView.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(getContext()));
+                }
+                clientsView.setHasFixedSize(true);
+            }
+        } catch (Exception ignored) { }
         View dueOnlyLayout = view.findViewById(R.id.due_only_layout);
         dueOnlyLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     @Override

@@ -10,7 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.fragment.FamilyProfileActivityFragment;
@@ -179,6 +182,31 @@ public class FamilyProfileActivity extends CoreFamilyProfileActivity  {
 
     @Override
     protected ViewPager setupViewPager(ViewPager viewPager) {
+        if (viewPager == null) return null;
+        try {
+            viewPager.setSaveEnabled(false);
+        } catch (Throwable ignored) {}
+
+        // If already set, avoid re-adding and causing double-add issues
+        if (viewPager.getAdapter() != null) return viewPager;
+
+        // Defensive cleanup of any fragments that might be attached to this container
+        try {
+            final FragmentManager fm = getSupportFragmentManager();
+            final FragmentTransaction tx = fm.beginTransaction();
+            final int vpId = viewPager.getId();
+            final String tagPrefix = "android:switcher:" + vpId + ":";
+            for (Fragment f : fm.getFragments()) {
+                if (f == null) continue;
+                boolean matchesByTag = f.getTag() != null && f.getTag().startsWith(tagPrefix);
+                boolean matchesByContainer = f.getId() == vpId;
+                if (matchesByTag || matchesByContainer) {
+                    tx.remove(f);
+                }
+            }
+            tx.commitNowAllowingStateLoss();
+        } catch (Exception ignored) {}
+
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         FamilyProfileMemberFragment profileMemberFragment = (FamilyProfileMemberFragment) FamilyProfileMemberFragment.newInstance(this.getIntent().getExtras());
         profileDueFragment = FamilyProfileDueFragment.newInstance(this.getIntent().getExtras());
@@ -188,13 +216,19 @@ public class FamilyProfileActivity extends CoreFamilyProfileActivity  {
         adapter.addFragment(profileDueFragment, this.getString(org.smartregister.family.R.string.due).toUpperCase());
         adapter.addFragment(profileActivityFragment, this.getString(org.smartregister.family.R.string.activity).toUpperCase());
 
-        viewPager.setAdapter(adapter);
+        try { viewPager.setAdapter(adapter); } catch (Exception ignored) {}
 
         if (getIntent().getBooleanExtra(CoreConstants.INTENT_KEY.SERVICE_DUE, false) || getIntent().getBooleanExtra(Constants.INTENT_KEY.GO_TO_DUE_PAGE, false)) {
-            viewPager.setCurrentItem(1);
+            try { viewPager.setCurrentItem(1, false); } catch (Exception ignored) {}
         }
 
         return viewPager;
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull android.os.Bundle outState) {
+        try { outState.remove("android:support:fragments"); } catch (Throwable ignored) {}
+        super.onSaveInstanceState(outState);
     }
 
     @Override

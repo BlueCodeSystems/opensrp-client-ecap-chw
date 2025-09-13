@@ -37,6 +37,8 @@ import java.util.Date;
  */
 public class VcaHivAssesmentFragment extends Fragment {
 
+    private com.bluecodeltd.ecap.chw.databinding.FragmentVcaHivAssesmentBinding binding;
+
     private RecyclerView recyclerView;
     RecyclerView.Adapter recyclerViewadapter;
 
@@ -78,12 +80,13 @@ public class VcaHivAssesmentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        vieww = inflater.inflate(R.layout.fragment_vca_hiv_assesment, container, false);
+        binding = com.bluecodeltd.ecap.chw.databinding.FragmentVcaHivAssesmentBinding.inflate(inflater, container, false);
+        vieww = binding.getRoot();
 
         String childId  = ( (IndexDetailsActivity) requireActivity()).uniqueId;
-        recyclerView = vieww.findViewById(R.id.visitrecyclerView);
-        linearLayout = vieww.findViewById(R.id.visit_container);
-        View progress = vieww.findViewById(R.id.progress_loading);
+        recyclerView = binding.visitrecyclerView;
+        linearLayout = binding.visitContainer;
+        View progress = binding.progressLoading;
 
         // Load screening and assessments off main thread
         if (progress != null) progress.setVisibility(View.VISIBLE);
@@ -95,9 +98,9 @@ public class VcaHivAssesmentFragment extends Fragment {
                 if (indexVCA != null && indexVCA.getAdolescent_birthdate() != null) {
                     int compareAge = calculateAge(indexVCA.getAdolescent_birthdate());
                     if (compareAge <= 14){
-                        getAssessmentUnder15(recyclerView,recyclerViewadapter,childId);
+                        getAssessmentUnder15(recyclerView, childId);
                     } else {
-                        getAssessmentAbove15(recyclerView,recyclerViewadapter,childId);
+                        getAssessmentAbove15(recyclerView, childId);
                     }
                 }
                 if (progress != null) progress.setVisibility(View.GONE);
@@ -128,14 +131,14 @@ public class VcaHivAssesmentFragment extends Fragment {
             return -1;
         }
     }
-    public void getAssessmentUnder15(RecyclerView recyclerView, RecyclerView.Adapter recyclerViewadapter, String childId){
+    public void getAssessmentUnder15(RecyclerView recyclerView, String childId){
         ArrayList<HivRiskAssessmentUnder15Model> assessmentList = new ArrayList<>();
 
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        View progressLocal = getView() != null ? getView().findViewById(R.id.progress_loading) : null;
+        final View progressLocal = (binding != null) ? binding.progressLoading : null;
         if (progressLocal != null) progressLocal.setVisibility(View.VISIBLE);
         Threading.io(() -> {
             ArrayList<HivRiskAssessmentUnder15Model> results = new ArrayList<>(HivAssessmentUnder15Dao.getHivAssessment(childId));
@@ -153,14 +156,14 @@ public class VcaHivAssesmentFragment extends Fragment {
         });
 
     }
-    public void getAssessmentAbove15(RecyclerView recyclerView, RecyclerView.Adapter recyclerViewadapter, String childId){
+    public void getAssessmentAbove15(RecyclerView recyclerView, String childId){
         ArrayList<HivRiskAssessmentAbove15Model> assessmentList2 = new ArrayList<>();
 
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        View progressLocal = getView() != null ? getView().findViewById(R.id.progress_loading) : null;
+        final View progressLocal = (binding != null) ? binding.progressLoading : null;
         if (progressLocal != null) progressLocal.setVisibility(View.VISIBLE);
         Threading.io(() -> {
             ArrayList<HivRiskAssessmentAbove15Model> results = new ArrayList<>(HivAssessmentAbove15Dao.getHivAssessment(childId));
@@ -177,6 +180,12 @@ public class VcaHivAssesmentFragment extends Fragment {
             });
         });
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
 }

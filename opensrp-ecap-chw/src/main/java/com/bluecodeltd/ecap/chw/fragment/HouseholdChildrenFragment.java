@@ -31,6 +31,8 @@ import com.bluecodeltd.ecap.chw.util.Threading;
 
 public class HouseholdChildrenFragment extends Fragment {
 
+    private com.bluecodeltd.ecap.chw.databinding.FragmentChildrenBinding binding;
+
     private RecyclerView recyclerView;
     RecyclerView.Adapter recyclerViewadapter;
     private ArrayList<Child> childList = new ArrayList<>();
@@ -43,7 +45,8 @@ public class HouseholdChildrenFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_children, container, false);
+        binding = com.bluecodeltd.ecap.chw.databinding.FragmentChildrenBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 
         HashMap<String, Household> mymap = ( (HouseholdDetails) requireActivity()).getData();
         HashMap<String, CaregiverAssessmentModel> vmap = ( (HouseholdDetails) requireActivity()).getVulnerabilities();
@@ -67,8 +70,8 @@ public class HouseholdChildrenFragment extends Fragment {
 
         }
 
-        recyclerView = view.findViewById(R.id.recyclerView);
-        View progress = view.findViewById(R.id.progress_loading);
+        recyclerView = binding.recyclerView;
+        View progress = binding.progressLoading;
 
         childList.clear();
 
@@ -98,7 +101,7 @@ public class HouseholdChildrenFragment extends Fragment {
 
 
     public void reloadChildrenList(String houseId) {
-        View progress2 = getView() != null ? getView().findViewById(R.id.progress_loading) : null;
+        View progress2 = (binding != null) ? binding.progressLoading : null;
         if (progress2 != null) progress2.setVisibility(View.VISIBLE);
         viewModel.refresh(houseId);
     }
@@ -107,10 +110,16 @@ public class HouseholdChildrenFragment extends Fragment {
         if (!isAdded() || state == null) return;
         childList.clear();
         if (state.getChildren() != null) childList.addAll(state.getChildren());
-        recyclerViewadapter.notifyDataSetChanged();
+        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
         ((HouseholdDetails) requireActivity()).childrenCount = state.getCount();
         ((HouseholdDetails) requireActivity()).childTabCount.setText(state.getCount());
-        View progress = getView() != null ? getView().findViewById(R.id.progress_loading) : null;
+        View progress = (binding != null) ? binding.progressLoading : null;
         if (progress != null) progress.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

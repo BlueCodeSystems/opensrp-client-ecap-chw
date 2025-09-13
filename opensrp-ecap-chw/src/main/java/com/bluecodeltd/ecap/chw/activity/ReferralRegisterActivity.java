@@ -29,8 +29,8 @@ import timber.log.Timber;
 
 import static org.smartregister.chw.core.utils.CoreConstants.ENTITY_ID;
 import static org.smartregister.chw.core.utils.CoreConstants.JSON_FORM.getMalariaConfirmation;
-import static org.smartregister.chw.referral.util.Constants.ActivityPayload;
-import static org.smartregister.chw.referral.util.Constants.ActivityPayloadType;
+import org.smartregister.chw.referral.util.Constants.ActivityPayload;
+import org.smartregister.chw.referral.util.Constants.ActivityPayloadType;
 import static org.smartregister.util.JsonFormUtils.VALUE;
 import static org.smartregister.util.JsonFormUtils.getFieldJSONObject;
 
@@ -75,7 +75,11 @@ public class ReferralRegisterActivity extends BaseReferralRegisterActivity {
         if (bottomNavigationView != null) {
             bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
             bottomNavigationView.getMenu().removeItem(org.smartregister.R.id.action_clients);
-            bottomNavigationView.getMenu().removeItem(org.smartregister.chw.referral.R.id.action_register);
+            // Remove referral module register action if present (avoid hard dependency on referral R)
+            int referralRegisterId = getResources().getIdentifier("action_register", "id", "org.smartregister.chw.referral");
+            if (referralRegisterId != 0) {
+                bottomNavigationView.getMenu().removeItem(referralRegisterId);
+            }
             bottomNavigationView.getMenu().removeItem(org.smartregister.R.id.action_search);
             bottomNavigationView.getMenu().removeItem(org.smartregister.R.id.action_library);
 

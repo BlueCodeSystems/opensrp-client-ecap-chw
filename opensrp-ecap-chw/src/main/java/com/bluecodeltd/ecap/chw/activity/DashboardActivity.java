@@ -73,6 +73,7 @@ import java.util.Random;
 import com.bluecodeltd.ecap.chw.util.Threading;
 
 public class DashboardActivity extends AppCompatActivity  implements GenerateCSVContract.View {
+    private com.bluecodeltd.ecap.chw.databinding.ActivityDashboardBinding binding;
     private GenerateCSVContract.Presenter presenter;
 
     private AppBarLayout myAppbar;
@@ -107,15 +108,16 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard);
-        toolbar = findViewById(R.id.toolbarx);
+        binding = com.bluecodeltd.ecap.chw.databinding.ActivityDashboardBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        toolbar = binding.toolbarx;
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbar.getOverflowIcon().setColorFilter(Color.WHITE , PorterDuff.Mode.SRC_ATOP);
-        myAppbar = findViewById(R.id.collapsing_toolbar_appbarlayout);
+        myAppbar = binding.collapsingToolbarAppbarlayout;
         NavigationMenu.getInstance(this, null, toolbar);
-        chart = findViewById(R.id.fragment_verticalbarchart_chart);
-        allHouseHoldsCount = findViewById(R.id.allHouseholdsNumber);
+        chart = binding.fragmentVerticalbarchartChart;
+        allHouseHoldsCount = binding.allHouseholdsNumber;
         presenter = new GenerateCSVPresenter(this);
 
         csvGenerator = new CSVGeneratorHelper();
@@ -123,14 +125,14 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
         // Defer DB work to background; set placeholder until loaded
         allHouseHoldsCount.setText("-");
 
-        allVcasCount = findViewById(R.id.allVcasNumber);
-        allDueVisits = findViewById(R.id.due_visits);
-        dueCardview = findViewById(R.id.due_card_view);
-        lastUpdated = findViewById(R.id.last_updated);
-        facilityName = findViewById(R.id.dash_facility_name);
-        loadingDataProgressBar = findViewById(R.id.dash_progressbar);
-        facilityInformationSwitch = findViewById(R.id.information_switch);
-        allHouseHoldsCount = findViewById(R.id.allHouseholdsNumber);
+        allVcasCount = binding.allVcasNumber;
+        allDueVisits = binding.dueVisits;
+        dueCardview = binding.dueCardView;
+        lastUpdated = binding.lastUpdated;
+        facilityName = binding.dashFacilityName;
+        loadingDataProgressBar = binding.dashProgressbar;
+        facilityInformationSwitch = binding.informationSwitch;
+        allHouseHoldsCount = binding.allHouseholdsNumber;
         Bundle extras = getIntent().getExtras();
         String username = extras.getString("username");
         String password = extras.getString("password");
@@ -150,7 +152,7 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
                 BarData data = dataForBarchart(state.getSubpops());
                 configureChartAppearance();
                 prepareChartData(data);
-                allHouseHoldsCount = findViewById(R.id.allHouseholdsNumber);
+                allHouseHoldsCount = binding.allHouseholdsNumber;
                 allHouseHoldsCount.setText(state.getHouseholdsCount() != null ? state.getHouseholdsCount() : "0");
                 allVcasCount.setText(state.getVcasCount());
                 if (state.getLastUpdated() != null) lastUpdated.setText(String.valueOf(dtf.format(state.getLastUpdated())));

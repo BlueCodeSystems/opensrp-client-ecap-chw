@@ -29,6 +29,8 @@ import com.bluecodeltd.ecap.chw.util.Threading;
 
 public class HouseholdCasePlanFragment extends Fragment {
 
+    private com.bluecodeltd.ecap.chw.databinding.FragmentHouseholdcaseplansBinding binding;
+
     private RecyclerView recyclerView;
     RecyclerView.Adapter recyclerViewadapter;
     private ArrayList<CasePlanModel> householdCasePlanList = new ArrayList<>();
@@ -38,12 +40,13 @@ public class HouseholdCasePlanFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_householdcaseplans, container, false);
+        binding = com.bluecodeltd.ecap.chw.databinding.FragmentHouseholdcaseplansBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 
         String householdId = ( (HouseholdDetails) requireActivity()).house.getHousehold_id();
         Household house = ( (HouseholdDetails) requireActivity()).house;
-        recyclerView = view.findViewById(R.id.householdRecycler);
-        linearLayout = view.findViewById(R.id.household_visit_container);
+        recyclerView = binding.householdRecycler;
+        linearLayout = binding.householdVisitContainer;
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
@@ -51,14 +54,14 @@ public class HouseholdCasePlanFragment extends Fragment {
         recyclerViewadapter = new HouseholdCasePlanAdapter(householdCasePlanList, getContext(),house);
         recyclerView.setAdapter(recyclerViewadapter);
 
-        View progress = view.findViewById(R.id.progress_loading);
+        View progress = binding.progressLoading;
         if (progress != null) progress.setVisibility(View.VISIBLE);
         HouseholdCasePlanViewModel vm = new ViewModelProvider(this).get(HouseholdCasePlanViewModel.class);
         vm.getCasePlans().observe(getViewLifecycleOwner(), list -> {
             if (!isAdded() || list == null) return;
             householdCasePlanList.clear();
             householdCasePlanList.addAll(list);
-            recyclerViewadapter.notifyDataSetChanged();
+            try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
             if (recyclerViewadapter.getItemCount() > 0){
                 linearLayout.setVisibility(View.GONE);
             } else {
@@ -77,6 +80,12 @@ public class HouseholdCasePlanFragment extends Fragment {
     public void onResume() {
         super.onResume();
         recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
+        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

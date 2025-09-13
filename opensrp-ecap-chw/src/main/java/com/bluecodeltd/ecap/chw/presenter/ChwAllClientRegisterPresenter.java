@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Triple;
 import org.json.JSONObject;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
-import org.smartregister.chw.core.presenter.CoreAllClientsRegisterPresenter;
+import org.smartregister.opd.presenter.BaseOpdRegisterActivityPresenter;
 import com.bluecodeltd.ecap.chw.interactor.ChwAllClientsRegisterInteractor;
 import org.smartregister.domain.FetchStatus;
 import org.smartregister.opd.contract.OpdRegisterActivityContract;
@@ -20,7 +20,7 @@ import java.util.List;
 
 import timber.log.Timber;
 
-public class ChwAllClientRegisterPresenter extends CoreAllClientsRegisterPresenter {
+public class ChwAllClientRegisterPresenter extends BaseOpdRegisterActivityPresenter {
 
     public ChwAllClientRegisterPresenter(OpdRegisterActivityContract.View view, OpdRegisterActivityContract.Model model) {
         super(view, model);

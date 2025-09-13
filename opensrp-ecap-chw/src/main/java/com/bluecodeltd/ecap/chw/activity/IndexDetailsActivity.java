@@ -3,7 +3,7 @@ package com.bluecodeltd.ecap.chw.activity;
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.chw.core.utils.CoreJsonFormUtils.getSyncHelper;
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -37,7 +37,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.preference.PreferenceManager;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
@@ -124,6 +125,7 @@ import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
 public class IndexDetailsActivity extends AppCompatActivity {
+    private com.bluecodeltd.ecap.chw.databinding.VcaContentBinding binding;
 //    @Override
 //    protected void onResume() {
 //        super.onResume();
@@ -139,7 +141,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private  VcaAssessmentModel assessmentModel;
     private TextView txtName, txtGender, txtAge, txtChildid;
     private TabLayout mTabLayout;
-    public ViewPager mViewPager;
+    public ViewPager2 mViewPager;
+    private TabLayoutMediator tabMediator;
     private AppExecutors appExecutors;
     public ProfileViewPagerAdapter mPagerAdapter;
     private TextView visitTabCount, plansTabCount;
@@ -171,14 +174,15 @@ public class IndexDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.vca_content);
+        binding = com.bluecodeltd.ecap.chw.databinding.VcaContentBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        toolbar = findViewById(R.id.toolbarx);
+        toolbar = binding.toolbarx;
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         toolbar.getOverflowIcon().setColorFilter(Color.WHITE , PorterDuff.Mode.SRC_ATOP);
-        myAppbar = findViewById(R.id.collapsing_toolbar_appbarlayout);
+        myAppbar = binding.collapsingToolbarAppbarlayout;
         NavigationMenu.getInstance(this, null, toolbar);
 
         builder = new AlertDialog.Builder(IndexDetailsActivity.this);
@@ -226,12 +230,12 @@ public class IndexDetailsActivity extends AppCompatActivity {
             }
         }
 
-        fabHiv = findViewById(R.id.hiv_risk);
-        fabHiv2 = findViewById(R.id.hiv_risk2);
-        fabVisitation = findViewById(R.id.household_visitation_for_vca_fab);
-        fabReferal = findViewById(R.id.refer_to_facility_fab);
-        fabCasePlan =  findViewById(R.id.case_plan_fab);
-        fabAssessment = findViewById(R.id.fabAssessment);
+        fabHiv = binding.hivRisk;
+        fabHiv2 = binding.hivRisk2;
+        fabVisitation = binding.householdVisitationForVcaFab;
+        fabReferal = binding.referToFacilityFab;
+        fabCasePlan =  binding.casePlanFab;
+        fabAssessment = binding.fabAssessment;
 
         vcaAssessmentModel = VcaAssessmentDao.getVcaAssessment(childId);
         referralModel = ReferralDao.getReferral(childId);
@@ -280,7 +284,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         }
 
 
-        fab = findViewById(R.id.fab);
+        fab = binding.fab;
         if(indexVCA.getCase_status() != null && (indexVCA.getCase_status().equals("0") || indexVCA.getCase_status().equals("2"))){
             fab.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
         }
@@ -304,26 +308,26 @@ public class IndexDetailsActivity extends AppCompatActivity {
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
         rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
 
-        txtScreening = findViewById(R.id.vca_screening);
-        rassessment = findViewById(R.id.assessment);
-        rcase_plan = findViewById(R.id.case_plan);
-        referral = findViewById(R.id.referral);
-        household_visitation_for_vca = findViewById(R.id.household_visitation_for_vca);
+        txtScreening = binding.vcaScreening;
+        rassessment = binding.assessment;
+        rcase_plan = binding.casePlan;
+        referral = binding.referral;
+        household_visitation_for_vca = binding.householdVisitationForVca;
 
 
 
-        hiv_assessment = findViewById(R.id.hiv_assessment);
-        hiv_assessment2 = findViewById(R.id.hiv_assessment2);
-        childPlan = findViewById(R.id.childPlan);
-        weServicesVca = findViewById(R.id.we_services_vca);
+        hiv_assessment = binding.hivAssessment;
+        hiv_assessment2 = binding.hivAssessment2;
+        childPlan = binding.childPlan;
+        weServicesVca = binding.weServicesVca;
 
-        txtName = findViewById(R.id.vca_name);
-        txtGender = findViewById(R.id.vca_gender);
-        txtAge = findViewById(R.id.vca_age);
-        txtChildid = findViewById(R.id.childid);
+        txtName = binding.vcaName;
+        txtGender = binding.vcaGender;
+        txtAge = binding.vcaAge;
+        txtChildid = binding.childid;
 
-        mTabLayout =  findViewById(R.id.tabs);
-        mViewPager  = findViewById(R.id.viewpager);
+        mTabLayout =  binding.tabs;
+        mViewPager  = binding.viewpager;
 
         setupViewPager();
         setupFabVisibility();
@@ -332,7 +336,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         updatePlanTabTitle();
 
         int page = getIntent().getIntExtra("tab",0);
-        mViewPager.setCurrentItem(page);
+        mViewPager.setCurrentItem(page, false);
 
 createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE);
 
@@ -445,35 +449,34 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
     }
 
     private void setupViewPager(){
-        mPagerAdapter = new ProfileViewPagerAdapter(getSupportFragmentManager());
-        mPagerAdapter.addFragment(new ProfileOverviewFragment());
-        mPagerAdapter.addFragment(new ChildCasePlanFragment());
-        mPagerAdapter.addFragment(new ChildVisitsFragment());
+        java.util.List<androidx.fragment.app.Fragment> fragments = new java.util.ArrayList<>();
+        fragments.add(new ProfileOverviewFragment());
+        fragments.add(new ChildCasePlanFragment());
+        fragments.add(new ChildVisitsFragment());
 
         String hivStatus = indexVCA.getIs_hiv_positive();
-
         if (hivStatus != null && "no".equalsIgnoreCase(hivStatus)) {
-            mPagerAdapter.addFragment(new VcaHivAssesmentFragment());
+            fragments.add(new VcaHivAssesmentFragment());
         }
 
-        mViewPager.setAdapter(mPagerAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
-
-        mTabLayout.getTabAt(0).setText("OVERVIEW");
-        mTabLayout.getTabAt(1).setText("CASE PLANS");
-        mTabLayout.getTabAt(2).setText("VISITS");
-        if (mPagerAdapter.getCount() > 3) {
-            mTabLayout.getTabAt(3).setText("HIV ASSESSMENT");
+        com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter adapter = new com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter(this, fragments);
+        mViewPager.setAdapter(adapter);
+        if (tabMediator != null) { try { tabMediator.detach(); } catch (Exception ignored) {} }
+        tabMediator = new TabLayoutMediator(mTabLayout, mViewPager, (tab, position) -> {
+            switch (position) {
+                case 0: tab.setText("OVERVIEW"); break;
+                case 1: tab.setText("CASE PLANS"); break;
+                case 2: tab.setText("VISITS"); break;
+                case 3: tab.setText("HIV ASSESSMENT"); break;
+            }
+        });
+        tabMediator.attach();
+        if (fragments.size() > 3) {
             updateHivAssessmentTabTitle();
         }
     }
     private void setupFabVisibility() {
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @SuppressLint("RestrictedApi")
+        mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 if (position == 1 || position == 2 || position == 3) {
@@ -483,10 +486,6 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 }
             }
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
         });
     }
     private void updateOverviewTabTitle() {

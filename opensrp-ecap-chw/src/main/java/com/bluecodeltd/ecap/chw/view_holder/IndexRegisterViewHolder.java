@@ -6,7 +6,7 @@ import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.chw.fp.util.FpUtil.getClientProcessorForJava;
 import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_EXTRA.STEP1;
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 
 import android.content.Context;
 import android.content.Intent;
@@ -156,7 +156,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
         }
         // Default while loading
         dueButton.setBackgroundResource(org.smartregister.family.R.drawable.due_contact);
-        dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), org.smartregister.R.color.btn_blue));
+        dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), org.smartregister.chw.core.R.color.btn_blue));
         dueButton.setText("Conduct Visit");
         final String rowTag = village;
         dueButton.setTag(rowTag);
@@ -167,6 +167,8 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
             try { visitStatus = VcaVisitationDao.getVcaVisitationNotification(village); } catch (Exception ignored) {}
             try { assessmentModel = VcaAssessmentDao.getVcaVisitationNotificationFromAssessment(village); } catch (Exception ignored) {}
             try { screening = VCAScreeningDao.getVcaScreening(village); } catch (Exception ignored) {}
+            // Cache for later click handlers; may still be null if not found
+            indexVCA = screening;
             final VcaScreeningModel screeningFinal = screening;
             String statusColor = null;
             String visitDate = null;
@@ -200,7 +202,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
                         buttonText = "Visit Overdue: " + fDate;
                     } else {
                         backgroundResource = org.smartregister.family.R.drawable.due_contact;
-                        textColorResource = org.smartregister.R.color.btn_blue;
+                        textColorResource = org.smartregister.chw.core.R.color.btn_blue;
                         buttonText = "Conduct Visit";
                     }
                     dueButton.setBackgroundResource(backgroundResource);
@@ -209,11 +211,11 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
                 } else {
                     if (screeningFinal != null && ("0".equals(screeningFinal.getCase_status()) || "2".equals(screeningFinal.getCase_status()))) {
                         dueButton.setBackgroundResource(R.drawable.inactive_button);
-                        dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), org.smartregister.R.color.btn_blue));
+                        dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), org.smartregister.chw.core.R.color.btn_blue));
                         dueButton.setText("Case Closed");
                     } else {
                         dueButton.setBackgroundResource(org.smartregister.family.R.drawable.due_contact);
-                        dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), org.smartregister.R.color.btn_blue));
+                        dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), org.smartregister.chw.core.R.color.btn_blue));
                         dueButton.setText("Conduct Visit");
                     }
                 }
@@ -271,16 +273,33 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
         dueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if(indexVCA.getCase_status() != null && (indexVCA.getCase_status().equals("0") || indexVCA.getCase_status().equals("2")) ){
-                    Toasty.warning(context, "Unable to conduct a visitation for "+indexVCA.getFirst_name()+" "+indexVCA.getLast_name()+ " because the record is closed", Toast.LENGTH_LONG, true).show();
-                } else {
-                    if (indexVCA.getDate_screened() != null) {
-
-                        openVisitationForm(village, vcaAge);
-                    } else {
-                        Toasty.warning(context, "Unable to conduct a visitation for " + indexVCA.getFirst_name() + " " + indexVCA.getLast_name() + " VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                VcaScreeningModel screen = indexVCA;
+                if (screen == null) {
+                    try { screen = VCAScreeningDao.getVcaScreening(village); } catch (Exception ignored) {}
+                }
+                String displayName = null;
+                try {
+                    if (screen != null) {
+                        displayName = (screen.getFirst_name() != null ? screen.getFirst_name() : "")
+                                + (screen.getLast_name() != null ? (" "+screen.getLast_name()) : "");
                     }
+                } catch (Exception ignored) {}
+                if (displayName == null || displayName.trim().isEmpty()) {
+                    try { displayName = String.valueOf(familyNameTextView.getText()); } catch (Exception ignored) {}
+                }
+
+                String caseStatus = null;
+                try { caseStatus = screen != null ? screen.getCase_status() : null; } catch (Exception ignored) {}
+                if (caseStatus != null && ("0".equals(caseStatus) || "2".equals(caseStatus))) {
+                    Toasty.warning(context, "Unable to conduct a visitation for " + (displayName != null ? displayName : "this beneficiary") + " because the record is closed", Toast.LENGTH_LONG, true).show();
+                    return;
+                }
+                String dateScreened = null;
+                try { dateScreened = screen != null ? screen.getDate_screened() : null; } catch (Exception ignored) {}
+                if (dateScreened != null) {
+                    openVisitationForm(village, vcaAge);
+                } else {
+                    Toasty.warning(context, "Unable to conduct a visitation for " + (displayName != null ? displayName : "this beneficiary") + ". VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
             }
         });

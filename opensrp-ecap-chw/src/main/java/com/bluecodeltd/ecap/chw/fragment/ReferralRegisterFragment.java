@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
@@ -43,6 +44,8 @@ import timber.log.Timber;
 
 public class ReferralRegisterFragment extends BaseReferralRegisterFragment {
 
+    private com.bluecodeltd.ecap.chw.databinding.FragmentBaseRegisterBinding binding;
+
     private static final String DUE_FILTER_TAG = "PRESSED";
     private View view;
     private View dueOnlyLayout;
@@ -58,45 +61,72 @@ public class ReferralRegisterFragment extends BaseReferralRegisterFragment {
 
     @Override
     public void setupViews(View view) {
+        try { binding = com.bluecodeltd.ecap.chw.databinding.FragmentBaseRegisterBinding.bind(view); } catch (Throwable ignored) {}
         super.setupViews(view);
         this.view = view;
 
-        Toolbar toolbar = view.findViewById(org.smartregister.R.id.register_toolbar);
-        toolbar.setContentInsetsAbsolute(0, 0);
-        toolbar.setContentInsetsRelative(0, 0);
-        toolbar.setContentInsetStartWithNavigation(0);
+        Toolbar toolbar = null;
+        try { toolbar = view.findViewById(org.smartregister.R.id.register_toolbar); } catch (Exception ignored) {}
+        if (toolbar != null) {
+            try {
+                toolbar.setContentInsetsAbsolute(0, 0);
+                toolbar.setContentInsetsRelative(0, 0);
+                toolbar.setContentInsetStartWithNavigation(0);
+            } catch (Throwable ignored) {}
+            if (getActivity() instanceof AppCompatActivity) {
+                AppCompatActivity act = (AppCompatActivity) getActivity();
+                try { act.setSupportActionBar(toolbar); } catch (Throwable ignored) {}
+                if (act.getSupportActionBar() != null) {
+                    act.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                    act.getSupportActionBar().setHomeButtonEnabled(true);
+                }
+            }
+            NavigationMenu.getInstance(getActivity(), null, toolbar);
+        } else {
+            NavigationMenu.getInstance(getActivity(), null, null);
+        }
 
-        NavigationMenu.getInstance(getActivity(), null, toolbar);
-
-        View navbarContainer = view.findViewById(org.smartregister.R.id.register_nav_bar_container);
-        navbarContainer.setFocusable(false);
+        View navbarContainer = null;
+        try { navbarContainer = view.findViewById(org.smartregister.R.id.register_nav_bar_container); } catch (Exception ignored) {}
+        if (navbarContainer != null) navbarContainer.setFocusable(false);
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        View searchBarLayout = view.findViewById(R.id.search_bar_layout);
-        searchBarLayout.setLayoutParams(params);
-        searchBarLayout.setBackgroundResource(R.color.chw_primary);
-        searchBarLayout.setPadding(searchBarLayout.getPaddingLeft(), searchBarLayout.getPaddingTop(), searchBarLayout.getPaddingRight(), (int) Utils.convertDpToPixel(10, getActivity()));
+        View searchBarLayout = null;
+        try { searchBarLayout = view.findViewById(R.id.search_bar_layout); } catch (Exception ignored) {}
+        if (searchBarLayout != null) {
+            searchBarLayout.setLayoutParams(params);
+            searchBarLayout.setBackgroundResource(R.color.chw_primary);
+            searchBarLayout.setPadding(searchBarLayout.getPaddingLeft(), searchBarLayout.getPaddingTop(), searchBarLayout.getPaddingRight(), (int) Utils.convertDpToPixel(10, getActivity()));
+        }
 
-        CustomFontTextView titleView = view.findViewById(org.smartregister.R.id.txt_title_label);
+        android.widget.TextView titleView = null;
+        try { titleView = view.findViewById(org.smartregister.R.id.txt_title_label); } catch (Exception ignored) {}
+        if (titleView == null) { try { titleView = view.findViewById(R.id.txt_title_label); } catch (Exception ignored) {} }
         if (titleView != null) {
             titleView.setPadding(0, titleView.getTop(), titleView.getPaddingRight(), titleView.getPaddingBottom());
         }
 
-        View topLeftLayout = view.findViewById(org.smartregister.R.id.top_left_layout);
-        topLeftLayout.setVisibility(View.GONE);
+        View topLeftLayout = null;
+        try { topLeftLayout = view.findViewById(org.smartregister.R.id.top_left_layout); } catch (Exception ignored) {}
+        if (topLeftLayout != null) topLeftLayout.setVisibility(View.GONE);
 
-        View topRightLayout = view.findViewById(org.smartregister.R.id.top_right_layout);
-        topRightLayout.setVisibility(View.VISIBLE);
+        View topRightLayout = null;
+        try { topRightLayout = view.findViewById(org.smartregister.R.id.top_right_layout); } catch (Exception ignored) {}
+        if (topRightLayout != null) topRightLayout.setVisibility(View.VISIBLE);
 
-        View sortFilterBarLayout = view.findViewById(org.smartregister.R.id.register_sort_filter_bar_layout);
-        sortFilterBarLayout.setVisibility(View.GONE);
+        View sortFilterBarLayout = null;
+        try { sortFilterBarLayout = view.findViewById(org.smartregister.R.id.register_sort_filter_bar_layout); } catch (Exception ignored) {}
+        if (sortFilterBarLayout != null) sortFilterBarLayout.setVisibility(View.GONE);
 
-        View filterSortLayout = view.findViewById(R.id.filter_sort_layout);
-        filterSortLayout.setVisibility(View.GONE);
+        View filterSortLayout = null;
+        try { filterSortLayout = view.findViewById(R.id.filter_sort_layout); } catch (Exception ignored) {}
+        if (filterSortLayout != null) filterSortLayout.setVisibility(View.GONE);
 
         dueOnlyLayout = view.findViewById(R.id.due_only_layout);
-        dueOnlyLayout.setVisibility(View.VISIBLE);
-        dueOnlyLayout.setOnClickListener(registerActionHandler);
+        if (dueOnlyLayout != null) {
+            dueOnlyLayout.setVisibility(View.VISIBLE);
+            dueOnlyLayout.setOnClickListener(registerActionHandler);
+        }
 
         if (getSearchView() != null) {
             getSearchView().setBackgroundResource(org.smartregister.family.R.color.white);
@@ -178,11 +208,25 @@ public class ReferralRegisterFragment extends BaseReferralRegisterFragment {
     public void onResume() {
         super.onResume();
 
-        Toolbar toolbar = view.findViewById(org.smartregister.R.id.register_toolbar);
-        toolbar.setContentInsetsAbsolute(0, 0);
-        toolbar.setContentInsetsRelative(0, 0);
-        toolbar.setContentInsetStartWithNavigation(0);
-        NavigationMenu.getInstance(getActivity(), null, toolbar);
+        Toolbar toolbar = null;
+        try { toolbar = view.findViewById(org.smartregister.R.id.register_toolbar); } catch (Exception ignored) {}
+        if (toolbar != null) {
+            try {
+                toolbar.setContentInsetsAbsolute(0, 0);
+                toolbar.setContentInsetsRelative(0, 0);
+                toolbar.setContentInsetStartWithNavigation(0);
+            } catch (Throwable ignored) {}
+            NavigationMenu.getInstance(getActivity(), null, toolbar);
+        } else {
+            NavigationMenu.getInstance(getActivity(), null, null);
+        }
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     @Override
@@ -306,5 +350,3 @@ public class ReferralRegisterFragment extends BaseReferralRegisterFragment {
     }
 
 }
-
-

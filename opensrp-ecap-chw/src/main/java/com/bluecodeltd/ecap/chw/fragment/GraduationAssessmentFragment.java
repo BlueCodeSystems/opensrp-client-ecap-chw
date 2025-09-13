@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HouseholdDetails;
 import com.bluecodeltd.ecap.chw.adapter.GraduationAssessmentAdapter;
-import com.bluecodeltd.ecap.chw.dao.GraduationDao;nimport androidx.lifecycle.ViewModelProvider;nimport com.bluecodeltd.ecap.chw.viewmodel.GraduationAssessmentViewModel; 
+import com.bluecodeltd.ecap.chw.dao.GraduationDao;
 import com.bluecodeltd.ecap.chw.model.GraduationModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 
@@ -29,6 +29,8 @@ import com.bluecodeltd.ecap.chw.util.Threading;
  * create an instance of this fragment.
  */
 public class GraduationAssessmentFragment extends Fragment {
+
+    private com.bluecodeltd.ecap.chw.databinding.FragmentGraduationAssessmentBinding binding;
 
     private RecyclerView recyclerView;
     RecyclerView.Adapter recyclerViewadapter;
@@ -79,14 +81,15 @@ public class GraduationAssessmentFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        vieww = inflater.inflate(R.layout.fragment_graduation_assessment, container, false);
+        binding = com.bluecodeltd.ecap.chw.databinding.FragmentGraduationAssessmentBinding.inflate(inflater, container, false);
+        vieww = binding.getRoot();
 
         HashMap<String, Household> mymap = ( (HouseholdDetails) requireActivity()).getData();
         Household house = mymap.get("house");
         String houseId = house.getHousehold_id();
 
-        recyclerView = vieww.findViewById(R.id.visitrecyclerView);
-        linearLayout = vieww.findViewById(R.id.visit_container);
+        recyclerView = binding.visitrecyclerView;
+        linearLayout = binding.visitContainer;
 
         assessmentList.clear();
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
@@ -96,7 +99,7 @@ public class GraduationAssessmentFragment extends Fragment {
         recyclerViewadapter = new GraduationAssessmentAdapter( getContext(), assessmentList);
         recyclerView.setAdapter(recyclerViewadapter);
 
-        View progress = vieww.findViewById(R.id.progress_loading);
+        View progress = binding.progressLoading;
         if (progress != null) progress.setVisibility(View.VISIBLE);
 
         Threading.io(() -> {
@@ -105,7 +108,7 @@ public class GraduationAssessmentFragment extends Fragment {
                 if (!isAdded()) return;
                 assessmentList.clear();
                 assessmentList.addAll(results);
-                recyclerViewadapter.notifyDataSetChanged();
+                try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
                 if (recyclerViewadapter.getItemCount() > 0){
                     linearLayout.setVisibility(View.GONE);
                 } else {
@@ -120,4 +123,9 @@ public class GraduationAssessmentFragment extends Fragment {
 
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 }
