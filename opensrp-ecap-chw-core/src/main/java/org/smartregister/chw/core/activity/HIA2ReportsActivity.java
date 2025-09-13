@@ -16,7 +16,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -28,7 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.chw.anc.util.NCUtils;
 import org.smartregister.chw.core.R;
-import org.smartregister.chw.core.adapter.SectionsPagerAdapter;
+import org.smartregister.chw.core.adapter.Hia2ViewPager2Adapter;
 import org.smartregister.chw.core.application.CoreChwApplication;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.chw.core.domain.MonthlyTally;
@@ -79,14 +80,15 @@ public class HIA2ReportsActivity extends MultiLanguageActivity
     public static final String FORM_KEY_CONFIRM = "confirm";
     public static final int TOOLBAR_ID = R.id.location_switching_toolbar;
     protected static final String TAG = HIA2ReportsActivity.class.getCanonicalName();
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private Hia2ViewPager2Adapter hia2Adapter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    protected ViewPager mViewPager;
+    protected ViewPager2 mViewPager;
     protected TabLayout tabLayout;
     protected ProgressDialog progressDialog;
+    private TabLayoutMediator tabMediator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,26 +98,49 @@ public class HIA2ReportsActivity extends MultiLanguageActivity
         setSupportActionBar(toolbar);
 
         tabLayout = findViewById(R.id.hia_tabs);
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), this);
+        hia2Adapter = new Hia2ViewPager2Adapter(this);
 
-        // Set up the ViewPager with the sections adapter.
+        // Set up the ViewPager2 with the sections adapter.
         mViewPager = findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setAdapter(hia2Adapter);
 
-        tabLayout.setupWithViewPager(mViewPager);
+        if (tabMediator != null) { try { tabMediator.detach(); } catch (Exception ignored) {} }
+        tabMediator = new TabLayoutMediator(tabLayout, mViewPager, (tab, position) -> {
+            switch (position) {
+                case 0:
+                    tab.setText(getString(R.string.hia2_daily_tallies));
+                    break;
+                case 1:
+                    tab.setText(getString(R.string.hia2_draft_monthly));
+                    break;
+                case 2:
+                    tab.setText(getString(R.string.hia2_sent_monthly));
+                    break;
+            }
+        });
+        tabMediator.attach();
         refreshDraftMonthlyTitle();
         //  mSectionsPagerAdapter.getItem(1);
-        mViewPager.setCurrentItem(1);
+        mViewPager.setCurrentItem(1, false);
         findViewById(R.id.toggle_action_menu).setOnClickListener(v -> onClickReport(v));
     }
 
 
     protected Fragment currentFragment() {
-        if (mViewPager == null || mSectionsPagerAdapter == null) {
+        if (mViewPager == null || hia2Adapter == null) {
             return null;
         }
+        return getPagerFragmentAt(mViewPager.getCurrentItem(), Fragment.class);
+    }
 
-        return mSectionsPagerAdapter.getItem(mViewPager.getCurrentItem());
+    @SuppressWarnings("unchecked")
+    private <T extends Fragment> T getPagerFragmentAt(int position, Class<T> type) {
+        try {
+            String tag = "f" + position; // default FragmentStateAdapter tag format
+            Fragment f = getSupportFragmentManager().findFragmentByTag(tag);
+            if (type.isInstance(f)) return (T) f;
+        } catch (Exception ignored) {}
+        return null;
     }
 
     public void startMonthlyReportForm(String formName, Date date) {
@@ -239,7 +264,7 @@ public class HIA2ReportsActivity extends MultiLanguageActivity
                 tabLayout.post(new Runnable() {
                     @Override
                     public void run() {
-                        for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
+                        for (int i = 0; i < hia2Adapter.getItemCount(); i++) {
                             TabLayout.Tab tab = tabLayout.getTabAt(i);
                             if (tab != null && tab.getText() != null && tab.getText().toString()
                                     .contains(getString(R.string.hia2_draft_monthly))) {
@@ -344,8 +369,10 @@ public class HIA2ReportsActivity extends MultiLanguageActivity
             Utils.startAsyncTask(new FetchEditedMonthlyTalliesTask(new FetchEditedMonthlyTalliesTask.TaskListener() {
                 @Override
                 public void onPostExecute(List<MonthlyTally> monthlyTallies) {
-                    Fragment fragment = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.container + ":" + mViewPager.getCurrentItem());
-                    ((DraftMonthlyFragment) fragment).updateDraftsReportListView(monthlyTallies);
+                    DraftMonthlyFragment fragment = getPagerFragmentAt(mViewPager.getCurrentItem(), DraftMonthlyFragment.class);
+                    if (fragment != null) {
+                        fragment.updateDraftsReportListView(monthlyTallies);
+                    }
                 }
             }), null);
         }
@@ -426,8 +453,10 @@ public class HIA2ReportsActivity extends MultiLanguageActivity
                     Utils.startAsyncTask(new FetchEditedMonthlyTalliesTask(new FetchEditedMonthlyTalliesTask.TaskListener() {
                         @Override
                         public void onPostExecute(List<MonthlyTally> monthlyTallies) {
-                            Fragment fragment = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.container + ":" + mViewPager.getCurrentItem());
-                            ((DraftMonthlyFragment) fragment).updateDraftsReportListView(monthlyTallies);
+                            DraftMonthlyFragment fragment = getPagerFragmentAt(mViewPager.getCurrentItem(), DraftMonthlyFragment.class);
+                            if (fragment != null) {
+                                fragment.updateDraftsReportListView(monthlyTallies);
+                            }
                         }
                     }), null);
                 }
@@ -437,4 +466,3 @@ public class HIA2ReportsActivity extends MultiLanguageActivity
         }
     }
 }
-
