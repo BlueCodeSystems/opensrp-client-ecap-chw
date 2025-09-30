@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -30,7 +31,7 @@ public final class Threading {
             /* max  */ CPU_COUNT,
             /* keepAlive */ 0L,
             TimeUnit.MILLISECONDS,
-            new SynchronousQueue<>(),
+            new LinkedBlockingQueue<>(),
             named("CPU-")
     );
     private static final Handler MAIN = new Handler(Looper.getMainLooper());
