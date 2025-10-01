@@ -62,7 +62,7 @@ import timber.log.Timber;
 import static org.smartregister.chw.core.utils.Utils.passToolbarTitle;
 import static org.smartregister.chw.core.utils.Utils.updateToolbarTitle;
 
-public class CoreChildProfileActivity extends BaseProfileActivity implements CoreChildProfileContract.View, CoreChildRegisterContract.InteractorCallBack {
+public class CoreChildProfileActivity extends BaseProfileActivity implements CoreChildProfileContract.View, CoreChildRegisterContract.InteractorCallBack, View.OnClickListener {
     public static IntentFilter sIntentFilter;
 
     static {
@@ -109,6 +109,7 @@ public class CoreChildProfileActivity extends BaseProfileActivity implements Cor
     private RelativeLayout layoutMostDueOverdue;
     private RelativeLayout layoutSickVisit;
     private RelativeLayout layoutRecordButtonDone;
+    private String patientName;
     private LinearLayout layoutRecordView;
     private View viewMostDueRow;
     public final BroadcastReceiver mDateTimeChangedReceiver = new BroadcastReceiver() {
@@ -182,6 +183,27 @@ public class CoreChildProfileActivity extends BaseProfileActivity implements Cor
             }
         } catch (SecurityException ignored) { }
         initializeNotificationReferralRecyclerView();
+    }
+
+    @Override
+    public String getIntentString(String key) {
+        Intent intent = getIntent();
+        return intent != null ? intent.getStringExtra(key) : null;
+    }
+
+    @Override
+    public void showProgressDialog(int messageStringIdentifier) {
+        super.showProgressDialog(messageStringIdentifier);
+    }
+
+    @Override
+    public void hideProgressDialog() {
+        super.hideProgressDialog();
+    }
+
+    @Override
+    public void displayToast(int resourceId) {
+        super.displayToast(resourceId);
     }
 
     @Override

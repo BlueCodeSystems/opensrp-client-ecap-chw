@@ -148,7 +148,8 @@ tasks.withType(Test) {
             // Ensure we resolve to the requested JitPack variants
             dependencySubstitution {
                 substitute module('io.github.bluecodesystems:android-p2p-sync') using module('com.github.BlueCodeSystems:android-p2p-sync:v0.4.3')
-                substitute module('io.github.bluecodesystems:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v6.2.2')
+                substitute module('io.github.bluecodesystems:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v7.0.0')
+                substitute module('com.github.BlueCodeSystems:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v7.0.0')
                 substitute module('org.smartregister:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v6.2.2')
                 // Route legacy OPD coordinates to BlueCodeSystems JitPack OPD
                 substitute module('org.smartregister:opensrp-opd') using module('com.github.BlueCodeSystems:opensrp-client-opd:v1.0.3')
@@ -175,10 +176,17 @@ tasks.withType(Test) {
                 substitute module('org.smartregister:opensrp-client-chw-anc') using module('com.github.BlueCodeSystems.opensrp-client-chw-anc:opensrp-client-chw-anc:v2.0.0')
                 substitute module('org.smartregister:opensrp-client-growth-monitoring') using module('com.github.BlueCodeSystems:opensrp-client-growth-monitoring:v3.0.0')
                 substitute module('org.smartregister:opensrp-client-thinkmd') using module('com.github.BlueCodeSystems:pulsebridge:0.1.1-local')
+                substitute module('org.smartregister:opensrp-household') using module('com.github.BlueCodeSystems:opensrp-household:v2.1.3')
+                substitute module('org.smartregister:opensrp-client-household') using module('com.github.BlueCodeSystems:opensrp-household:v2.1.3')
+                substitute module('io.github.bluecodesystems:opensrp-client-household') using module('com.github.BlueCodeSystems:opensrp-household:v2.1.3')
             }
         // Lock the Saferoom.X version
         force 'com.commonsware.cwac:saferoom.x:1.3.0'
         force 'com.google.guava:guava:33.2.1-android'
+        // Keep Easy Rules on 3.4.0; JsonWizard is compiled against org.jeasy.rules.core.*
+        force 'org.jeasy:easy-rules-core:3.4.0'
+        force 'org.jeasy:easy-rules-support:3.4.0'
+        force 'org.jeasy:easy-rules-mvel:3.4.0'
         
             // Custom artifact naming resolution
         eachDependency { DependencyResolveDetails details ->
@@ -221,10 +229,10 @@ dependencies {
 
     implementation 'com.ibm.fhir:fhir-model:4.7.1'
 
-    // Easy Rules (align with RulesEngineParameters usage)
-    api 'org.jeasy:easy-rules-core:4.1.0'
-    api 'org.jeasy:easy-rules-support:4.1.0'
-    api 'org.jeasy:easy-rules-mvel:4.1.0'
+    // Easy Rules (align with JsonWizard dependency compiled against v3.x)
+    api 'org.jeasy:easy-rules-core:3.4.0'
+    api 'org.jeasy:easy-rules-support:3.4.0'
+    api 'org.jeasy:easy-rules-mvel:3.4.0'
 
     implementation 'com.github.BlueCodeSystems:pulsebridge:0.1.1-local'
     api('com.github.BlueCodeSystems.Opensrp-client-native-form-new:opensrp-client-native-form:v3.1.5') {
@@ -254,8 +262,8 @@ dependencies {
     // MaterialEditText fork on Maven Central (BlueCodeSystems)
     implementation 'io.github.bluecodesystems:MaterialEditTextLibrary:3.1.5'
 //    api 'com.simprints:libsimprints:2024.10.1-SNAPSHOT'
-    // Core from JitPack (v6.2.2)
-    api('com.github.BlueCodeSystems:opensrp-client-core:v6.2.2') {
+    // Core from JitPack (v7.0.0)
+    api('com.github.BlueCodeSystems:opensrp-client-core:v7.0.0') {
         transitive = true
         exclude group: 'com.github.bmelnychuk', module: 'atv'
         exclude group: 'com.google.guava', module: 'guava'
@@ -350,7 +358,16 @@ dependencies {
     }
     // CHW Malaria module (expose to consumers)
     api 'com.github.BlueCodeSystems:opensrp-client-chw-malaria:v2.0.0'
-    api project(':opensrp-client-pnc')
+    api('com.github.BlueCodeSystems:opensrp-client-pnc:v0.2.0') {
+        transitive = true
+    }
+    implementation('com.github.BlueCodeSystems:opensrp-household:v2.1.3') {
+        transitive = true
+        exclude group: 'com.github.BlueCodeSystems', module: 'opensrp-client-core'
+        exclude group: 'org.smartregister', module: 'opensrp-client-core'
+        exclude group: 'io.github.bluecodesystems', module: 'opensrp-client-core'
+        exclude group: 'io.github.bluecodesystems', module: 'android-p2p-sync'
+    }
 
     // RxJava support used across core and app
     api 'io.reactivex.rxjava2:rxjava:2.2.21'

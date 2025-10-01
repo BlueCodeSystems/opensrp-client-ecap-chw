@@ -282,6 +282,12 @@ configurations.all {
             substitute module('io.github.bluecodesystems:android-p2p-sync') using module('com.github.BlueCodeSystems:android-p2p-sync:v0.4.3')
             substitute module('io.github.bluecodesystems:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v6.2.2')
             substitute module('org.smartregister:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v6.2.2')
+            substitute module('org.jeasy:easy-rules-core') using module('org.jeasy:easy-rules-core:3.4.0')
+            substitute module('org.jeasy:easy-rules-support') using module('org.jeasy:easy-rules-support:3.4.0')
+            substitute module('org.jeasy:easy-rules-mvel') using module('org.jeasy:easy-rules-mvel:3.4.0')
+            substitute module('org.smartregister:opensrp-household') using module('com.github.BlueCodeSystems:opensrp-household:v2.1.3')
+            substitute module('org.smartregister:opensrp-client-household') using module('com.github.BlueCodeSystems:opensrp-household:v2.1.3')
+            substitute module('io.github.bluecodesystems:opensrp-client-household') using module('com.github.BlueCodeSystems:opensrp-household:v2.1.3')
             // Route CHW FP to BlueCodeSystems JitPack CHW Family Planning lib
             substitute module('org.smartregister:opensrp-chw-fp') using module('com.github.BlueCodeSystems:opensrp-client-chw-family-planning:v1.0.27')
             // Also route Maven Central coord to JitPack artifact
@@ -297,6 +303,9 @@ configurations.all {
         }
         force 'com.commonsware.cwac:saferoom.x:1.3.0'
         force 'com.google.guava:guava:33.2.1-android'
+        force 'org.jeasy:easy-rules-core:3.4.0'
+        force 'org.jeasy:easy-rules-support:3.4.0'
+        force 'org.jeasy:easy-rules-mvel:3.4.0'
     }
 }
 dependencies {

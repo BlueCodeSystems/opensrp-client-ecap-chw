@@ -85,6 +85,4 @@ dependencyResolutionManagement {
     }
 }
 
-include ':opensrp-ecap-chw', ':opensrp-ecap-chw-core', ':opensrp-client-pnc'
-
-project(':opensrp-client-pnc').projectDir = new File(rootDir.parentFile, 'opensrp-client-pnc/opensrp-pnc')
+include ':opensrp-ecap-chw', ':opensrp-ecap-chw-core'
