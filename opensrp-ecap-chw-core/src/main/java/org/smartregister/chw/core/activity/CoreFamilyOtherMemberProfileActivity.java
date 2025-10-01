@@ -286,11 +286,11 @@ public abstract class CoreFamilyOtherMemberProfileActivity extends BaseFamilyOth
     public void setFamilyServiceStatus(String status) {
         layoutFamilyHasRow.setVisibility(View.VISIBLE);
         if (status.equalsIgnoreCase(CoreChildProfileInteractor.FamilyServiceType.DUE.name())) {
-            textViewFamilyHas.setText(getString(org.smartregister.chw.pnc.R.string.family_has_services_due));
+            textViewFamilyHas.setText(getString(org.smartregister.pnc.R.string.family_has_services_due));
         } else if (status.equalsIgnoreCase(CoreChildProfileInteractor.FamilyServiceType.OVERDUE.name())) {
-            textViewFamilyHas.setText(CoreChildUtils.fromHtml(getString(org.smartregister.chw.pnc.R.string.family_has_service_overdue)));
+            textViewFamilyHas.setText(CoreChildUtils.fromHtml(getString(org.smartregister.pnc.R.string.family_has_service_overdue)));
         } else {
-            textViewFamilyHas.setText(getString(org.smartregister.chw.pnc.R.string.family_has_nothing_due));
+            textViewFamilyHas.setText(getString(org.smartregister.pnc.R.string.family_has_nothing_due));
         }
     }
 

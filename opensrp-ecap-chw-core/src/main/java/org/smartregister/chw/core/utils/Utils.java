@@ -107,7 +107,7 @@ public abstract class Utils extends org.smartregister.family.util.Utils {
      */
     @Deprecated
     public static int getAnCWomanImageResourceIdentifier() {
-        return org.smartregister.chw.pnc.R.drawable.anc_woman;
+        return org.smartregister.pnc.R.drawable.anc_woman;
     }
 
     /**
@@ -116,7 +116,7 @@ public abstract class Utils extends org.smartregister.family.util.Utils {
      */
     @Deprecated
     public static int getPnCWomanImageResourceIdentifier() {
-        return org.smartregister.chw.pnc.R.drawable.pnc_woman;
+        return org.smartregister.pnc.R.drawable.pnc_woman;
     }
 
     /**
@@ -202,7 +202,7 @@ public abstract class Utils extends org.smartregister.family.util.Utils {
                 ClipData clip = ClipData.newPlainText(activity.getText(R.string.copied_phone_number), phoneNumber);
                 clipboard.setPrimaryClip(clip);
 
-                CopyToClipboardDialog copyToClipboardDialog = new CopyToClipboardDialog(activity, org.smartregister.chw.pnc.R.style.copy_clipboard_dialog);
+                CopyToClipboardDialog copyToClipboardDialog = new CopyToClipboardDialog(activity, org.smartregister.pnc.R.style.copy_clipboard_dialog);
                 copyToClipboardDialog.setContent(phoneNumber);
                 copyToClipboardDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 copyToClipboardDialog.show();
@@ -250,7 +250,7 @@ public abstract class Utils extends org.smartregister.family.util.Utils {
      */
     @Deprecated
     public static int getOverDueProfileImageResourceIDentifier() {
-        return org.smartregister.chw.pnc.R.color.visit_status_over_due;
+        return org.smartregister.pnc.R.color.visit_status_over_due;
     }
 
     /**
@@ -259,7 +259,7 @@ public abstract class Utils extends org.smartregister.family.util.Utils {
      */
     @Deprecated
     public static int getDueProfileImageResourceIDentifier() {
-        return org.smartregister.chw.pnc.R.color.due_profile_blue;
+        return org.smartregister.pnc.R.color.due_profile_blue;
     }
 
     public static String actualDaysBetweenDateAndNow(Context context, String date) {
@@ -520,7 +520,7 @@ public abstract class Utils extends org.smartregister.family.util.Utils {
         } else {
             callTextViewHint.setVisibility(VISIBLE);
             callTextView.setTypeface(null, Typeface.ITALIC);
-            callTextView.setTextColor(menu.getResources().getColor(org.smartregister.chw.pnc.R.color.grey));
+            callTextView.setTextColor(menu.getResources().getColor(org.smartregister.pnc.R.color.grey));
             ((FloatingActionButton) menu.findViewById(R.id.callFab)).getDrawable().setAlpha(122);
         }
 

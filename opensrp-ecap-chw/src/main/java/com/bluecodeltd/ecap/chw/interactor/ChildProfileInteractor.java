@@ -39,8 +39,8 @@ import org.smartregister.family.util.DBConstants;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.location.helper.LocationHelper;
 import org.smartregister.repository.AllSharedPreferences;
-import org.smartregister.thinkmd.ThinkMDLibrary;
-import org.smartregister.thinkmd.model.FHIRBundleModel;
+import org.bluecodesystems.pulsebridge.PulseBridgeLibrary;
+import org.bluecodesystems.pulsebridge.model.FHIRBundleModel;
 import org.smartregister.util.FormUtils;
 import org.smartregister.util.ImageUtils;
 import org.smartregister.view.LocationPickerView;
@@ -281,7 +281,7 @@ public class ChildProfileInteractor extends CoreChildProfileInteractor {
                 ChildFHIRBundleDao fhirBundleDao = new ChildFHIRBundleDao();
                 FHIRBundleModel bundle = fhirBundleDao.fetchFHIRDateModel(context, getChildBaseEntityId());
                 addThinkmdIdentifier(bundle.getUniqueIdGeneratedForThinkMD(), getChildBaseEntityId());
-                ThinkMDLibrary.getInstance().processHealthAssessment(context, bundle);
+                PulseBridgeLibrary.getInstance().processHealthAssessment(context, bundle);
             } catch (Exception e) {
                 Timber.e(e);
             }

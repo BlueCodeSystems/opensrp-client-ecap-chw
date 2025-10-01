@@ -27,7 +27,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Set;
 
-import provider.PncRegisterProvider;
+import org.smartregister.pnc.provider.PncRegisterProvider;
 import timber.log.Timber;
 
 public class ChwPncRegisterProvider extends PncRegisterProvider {
@@ -36,7 +36,7 @@ public class ChwPncRegisterProvider extends PncRegisterProvider {
     private View.OnClickListener onClickListener;
 
     public ChwPncRegisterProvider(Context context, CommonRepository commonRepository, Set visibleColumns, View.OnClickListener onClickListener, View.OnClickListener paginationClickListener) {
-        super(context, commonRepository, visibleColumns, onClickListener, paginationClickListener);
+        super(context, onClickListener, paginationClickListener);
         this.context = context;
         this.onClickListener = onClickListener;
     }

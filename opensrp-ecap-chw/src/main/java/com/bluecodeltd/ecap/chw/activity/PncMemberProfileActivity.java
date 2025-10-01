@@ -311,11 +311,11 @@ public class PncMemberProfileActivity extends CorePncMemberProfileActivity imple
         super.onClick(view);
         handleNotificationRowClick(this, view, notificationListAdapter, baseEntityID);
         switch (view.getId()) {
-            case org.smartregister.chw.pnc.R.id.textview_record_visit:
-            case org.smartregister.chw.pnc.R.id.textview_record_reccuring_visit:
+            case org.smartregister.pnc.R.id.textview_record_visit:
+            case org.smartregister.pnc.R.id.textview_record_reccuring_visit:
                 PncHomeVisitActivity.startMe(this, memberObject, false);
                 break;
-            case org.smartregister.chw.pnc.R.id.textview_edit:
+            case org.smartregister.pnc.R.id.textview_edit:
                 PncHomeVisitActivity.startMe(this, memberObject, true);
                 break;
             default:
@@ -351,7 +351,7 @@ public class PncMemberProfileActivity extends CorePncMemberProfileActivity imple
                 tvEdit.setVisibility(View.VISIBLE);
                 textViewUndo.setVisibility(View.GONE);
                 textViewNotVisitMonth.setVisibility(View.VISIBLE);
-                textViewNotVisitMonth.setText(MessageFormat.format(getContext().getString(org.smartregister.chw.pnc.R.string.pnc_visit_done), pncDay));
+                textViewNotVisitMonth.setText(MessageFormat.format(getContext().getString(org.smartregister.pnc.R.string.pnc_visit_done), pncDay));
                 imageViewCross.setImageResource(R.drawable.activityrow_visited);
                 textview_record_visit.setVisibility(View.GONE);
             } else {

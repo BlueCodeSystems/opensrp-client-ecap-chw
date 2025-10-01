@@ -286,9 +286,9 @@ configurations.all {
             // Also route Maven Central coord to JitPack artifact
             substitute module('io.github.bluecodesystems:opensrp-chw-family-planning') using module('com.github.BlueCodeSystems:opensrp-client-chw-family-planning:v1.0.27')
             substitute module('org.smartregister:opensrp-client-immunization') using module('com.github.BlueCodeSystems:opensrp-client-immunization:v5.1.1')
-            substitute module('org.smartregister:opensrp-client-chw-anc') using module('com.github.BlueCodeSystems:opensrp-client-chw-anc:v2.0.6')
+            substitute module('org.smartregister:opensrp-client-chw-anc') using module('com.github.BlueCodeSystems.opensrp-client-chw-anc:opensrp-client-chw-anc:v2.0.0')
             substitute module('org.smartregister:opensrp-client-growth-monitoring') using module('com.github.BlueCodeSystems:opensrp-client-growth-monitoring:v3.0.0')
-            substitute module('org.smartregister:opensrp-client-thinkmd') using module('com.github.BlueCodeSystems:pulsebridge:v0.1.0')
+            substitute module('org.smartregister:opensrp-client-thinkmd') using module('com.github.BlueCodeSystems:pulsebridge:0.1.1-local')
         }
         force 'com.commonsware.cwac:saferoom.x:1.3.0'
         force 'com.google.guava:guava:33.2.1-android'

@@ -92,8 +92,8 @@ import org.smartregister.reporting.ReportingLibrary;
 import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.repository.Repository;
 import org.smartregister.sync.P2PClassifier;
-import org.smartregister.thinkmd.ThinkMDConfig;
-import org.smartregister.thinkmd.ThinkMDLibrary;
+import org.bluecodesystems.pulsebridge.PulseBridgeConfig;
+import org.bluecodesystems.pulsebridge.PulseBridgeLibrary;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -368,11 +368,11 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
 
         NativeFormLibrary.getInstance().setPerformFormTranslation(true);
         NativeFormLibrary.getInstance().setClientFormDao(CoreLibrary.getInstance().context().getClientFormRepository());
-        // ThinkMD library
-        ThinkMDConfig thinkMDConfig = new ThinkMDConfig();
-        thinkMDConfig.setThinkmdEndPoint(BuildConfig.THINKMD_BASE_URL);
-        thinkMDConfig.setThinkmdBaseUrl(BuildConfig.THINKMD_END_POINT);
-        ThinkMDLibrary.init(getApplicationContext(), thinkMDConfig);
+        // PulseBridge health assessment library (ThinkMD successor)
+        PulseBridgeConfig pulseBridgeConfig = new PulseBridgeConfig();
+        pulseBridgeConfig.setServiceEndpoint(BuildConfig.THINKMD_BASE_URL);
+        pulseBridgeConfig.setWebAppPath(BuildConfig.THINKMD_END_POINT);
+        PulseBridgeLibrary.init(getApplicationContext(), pulseBridgeConfig);
     }
 
     @Override
