@@ -856,8 +856,6 @@ public class HouseholdDetails extends AppCompatActivity {
                         // Fallback message if no specific conditions are identified (unlikely)
                         Toasty.error(HouseholdDetails.this, "Cannot proceed with graduation. Please check household requirements.", Toast.LENGTH_LONG, true).show();
                     }
-                } else {
-                    Toast.makeText(this, getString(R.string.graduation_requirements_pending), Toast.LENGTH_LONG).show();
                 }
                 break;
 

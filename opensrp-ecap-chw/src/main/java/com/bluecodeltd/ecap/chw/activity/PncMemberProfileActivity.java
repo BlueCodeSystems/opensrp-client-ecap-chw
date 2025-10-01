@@ -311,11 +311,11 @@ public class PncMemberProfileActivity extends CorePncMemberProfileActivity imple
         super.onClick(view);
         handleNotificationRowClick(this, view, notificationListAdapter, baseEntityID);
         switch (view.getId()) {
-            case org.smartregister.pnc.R.id.textview_record_visit:
-            case org.smartregister.pnc.R.id.textview_record_reccuring_visit:
+            case org.smartregister.chw.core.R.id.textview_record_visit:
+            case org.smartregister.chw.core.R.id.textview_record_visit_done:
                 PncHomeVisitActivity.startMe(this, memberObject, false);
                 break;
-            case org.smartregister.pnc.R.id.textview_edit:
+            case org.smartregister.chw.core.R.id.textview_edit:
                 PncHomeVisitActivity.startMe(this, memberObject, true);
                 break;
             default:

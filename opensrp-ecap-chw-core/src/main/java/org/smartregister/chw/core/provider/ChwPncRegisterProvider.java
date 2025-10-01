@@ -27,6 +27,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Set;
 
+import org.smartregister.pnc.holder.PncRegisterViewHolder;
 import org.smartregister.pnc.provider.PncRegisterProvider;
 import timber.log.Timber;
 
@@ -42,7 +43,7 @@ public class ChwPncRegisterProvider extends PncRegisterProvider {
     }
 
     @Override
-    public void getView(Cursor cursor, SmartRegisterClient client, RegisterViewHolder viewHolder) {
+    public void getView(Cursor cursor, SmartRegisterClient client, PncRegisterViewHolder viewHolder) {
         super.getView(cursor, client, viewHolder);
 
         viewHolder.dueButton.setVisibility(View.GONE);
@@ -51,7 +52,7 @@ public class ChwPncRegisterProvider extends PncRegisterProvider {
         Utils.startAsyncTask(new UpdateAsyncTask(context, viewHolder, pc), null);
     }
 
-    private void updateDueColumn(Context context, RegisterViewHolder viewHolder, PncVisitAlertRule pncVisitAlertRule) {
+    private void updateDueColumn(Context context, PncRegisterViewHolder viewHolder, PncVisitAlertRule pncVisitAlertRule) {
         viewHolder.dueButton.setVisibility(View.VISIBLE);
         if (pncVisitAlertRule.getButtonStatus().equalsIgnoreCase(CoreConstants.VISIT_STATE.DUE)) {
             setVisitButtonDueStatus(context, pncVisitAlertRule.getVisitID(), viewHolder.dueButton);
@@ -84,14 +85,14 @@ public class ChwPncRegisterProvider extends PncRegisterProvider {
     }
 
     private class UpdateAsyncTask extends AsyncTask<Void, Void, Void> {
-        private final RegisterViewHolder viewHolder;
+        private final PncRegisterViewHolder viewHolder;
         private final CommonPersonObjectClient pc;
         private final Context context;
 
         private final Rules rules;
         private PncVisitAlertRule pncVisitAlertRule;
 
-        private UpdateAsyncTask(Context context, RegisterViewHolder viewHolder, CommonPersonObjectClient pc) {
+        private UpdateAsyncTask(Context context, PncRegisterViewHolder viewHolder, CommonPersonObjectClient pc) {
             this.context = context;
             this.viewHolder = viewHolder;
             this.pc = pc;
