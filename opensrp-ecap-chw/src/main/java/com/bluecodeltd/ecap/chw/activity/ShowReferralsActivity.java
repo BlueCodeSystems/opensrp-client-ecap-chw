@@ -179,6 +179,7 @@ public class ShowReferralsActivity extends AppCompatActivity {
 
             switch (encounterType) {
                 case "Referral":
+                case "Referral Edit VCA":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();

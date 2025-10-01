@@ -165,7 +165,7 @@ public class CasePlan extends AppCompatActivity {
     public void startFormActivity(JSONObject jsonObject) {
 
         Form form = new Form();
-        form.setWizard(false);
+        form.setWizard(true);
         form.setName("Vulnerability Identified");
         form.setHideSaveLabel(true);
         form.setNextLabel(getString(R.string.next));

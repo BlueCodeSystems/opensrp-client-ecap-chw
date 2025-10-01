@@ -84,7 +84,7 @@
     <!-- Common form navigation labels -->
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-    <string name="submit">Submit</string>
+    <string name="submit">Save</string>
 
     <!-- Referral and clinical defaults used in UI -->
     <string name="suspected_malaria">Suspected malaria</string>
@@ -164,6 +164,7 @@
     <string name="pnc_counselling">Counselling</string>
     <string name="net_condition">Net condition</string>
     <string name="action_taken">Action taken</string>
+    <string name="graduation_requirements_pending">Complete all household visits, assessments and services before starting the graduation benchmark assessment.</string>
     <string name="pnc_health_facility_visit_within_fourty_eight_hours">PNC health facility visit - within 48 hours</string>
     <string name="pnc_health_facility_visit_days_three_to_seven">PNC health facility visit - days 3–7</string>
     <string name="pnc_health_facility_visit_days_eight_to_twenty_eight">PNC health facility visit - days 8–28</string>

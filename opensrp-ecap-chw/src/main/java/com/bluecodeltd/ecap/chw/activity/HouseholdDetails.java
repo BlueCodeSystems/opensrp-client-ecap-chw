@@ -856,6 +856,8 @@ public class HouseholdDetails extends AppCompatActivity {
                         // Fallback message if no specific conditions are identified (unlikely)
                         Toasty.error(HouseholdDetails.this, "Cannot proceed with graduation. Please check household requirements.", Toast.LENGTH_LONG, true).show();
                     }
+                } else {
+                    Toast.makeText(this, getString(R.string.graduation_requirements_pending), Toast.LENGTH_LONG).show();
                 }
                 break;
 
@@ -1234,26 +1236,22 @@ public class HouseholdDetails extends AppCompatActivity {
 
         Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         Form form = new Form();
+        form.setWizard(true);
+        form.setHideSaveLabel(true);
+        form.setNextLabel(getString(R.string.next));
+        form.setPreviousLabel(getString(R.string.previous));
+        form.setSaveLabel(getString(R.string.submit));
+        form.setNavigationBackground(R.color.primary);
         try {
             if (jsonObject.has(JsonFormConstants.ENCOUNTER_TYPE) &&
                     jsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE)
                             .equalsIgnoreCase(Constants.EcapEncounterType.CHILD_INDEX)) {
-                form.setWizard(true);
                 form.setName(getString(org.smartregister.chw.core.R.string.child_details));
-                form.setHideSaveLabel(true);
-                form.setNextLabel(getString(R.string.next));
-                form.setPreviousLabel(getString(R.string.previous));
-                form.setSaveLabel(getString(R.string.submit));
-                form.setNavigationBackground(R.color.primary);
-            } else {
-                form.setWizard(false);
-                form.setHideSaveLabel(true);
-                form.setNextLabel("");
             }
-            intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         } catch (JSONException e) {
             Timber.e(e);
         }
+        intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
         startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
