@@ -158,6 +158,10 @@ tasks.withType(Test) {
                 substitute module('org.smartregister:opensrp-client-configurable-views') using module('com.github.BlueCodeSystems:opensrp-client-configurable-views:v2.0.1')
                 // Also route io.github group to JitPack coord to avoid Central/GH Packages lookups
                 substitute module('io.github.bluecodesystems:opensrp-configurable-views') using module('com.github.BlueCodeSystems:opensrp-client-configurable-views:v2.0.1')
+                substitute module('io.github.bluecodesystems:opensrp-client-immunization') using module('com.github.BlueCodeSystems:opensrp-client-immunization:v5.1.1')
+                substitute module('io.github.bluecodesystems:opensrp-client-utils') using module('com.github.BlueCodeSystems:opensrp-client-utils:v1.0.0')
+                substitute module('io.github.bluecodesystems:opensrp-client-native-form-new') using module('com.github.BlueCodeSystems.Opensrp-client-native-form-new:opensrp-client-native-form:v3.1.5')
+                substitute module('io.github.bluecodesystems:circleprogressbar') using module('com.github.BlueCodeSystems.Opensrp-client-native-form-new:circleprogressbar:v3.1.5')
                 // Route CHW FP to BlueCodeSystems JitPack CHW Family Planning lib
                 substitute module('org.smartregister:opensrp-chw-fp') using module('com.github.BlueCodeSystems:opensrp-client-chw-family-planning:v1.0.27')
                 // Also route Maven Central coord to JitPack artifact
@@ -226,6 +230,7 @@ dependencies {
     api('com.github.BlueCodeSystems.Opensrp-client-native-form-new:opensrp-client-native-form:v3.1.5') {
         transitive = true
         exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'commons-logging', module: 'commons-logging'
         exclude group: 'com.android.support', module: 'cardview-v7'
         exclude group: 'com.android.support', module: 'support-media-compat'
         exclude group: 'com.android.support', module: 'support-v4'
@@ -290,6 +295,11 @@ dependencies {
     implementation('com.github.BlueCodeSystems.opensrp-client-chw-anc:opensrp-client-chw-anc:v2.0.0') {
         exclude group: 'com.android.support'
         exclude group: 'androidx.appcompat'
+        exclude group: 'io.github.bluecodesystems', module: 'opensrp-client-immunization'
+        exclude group: 'io.github.bluecodesystems', module: 'opensrp-client-core'
+        exclude group: 'io.github.bluecodesystems', module: 'opensrp-client-utils'
+        exclude group: 'io.github.bluecodesystems', module: 'opensrp-client-native-form-new'
+        exclude group: 'io.github.bluecodesystems', module: 'circleprogressbar'
     }
     api('com.github.BlueCodeSystems:opensrp-client-immunization:v5.1.1') {
         transitive = true

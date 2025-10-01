@@ -7,7 +7,7 @@ import org.jeasy.rules.api.Rules;
 import org.jeasy.rules.api.RulesEngine;
 import org.jeasy.rules.core.DefaultRulesEngine;
 import org.jeasy.rules.core.InferenceRulesEngine;
-import org.jeasy.rules.core.RulesEngineParameters;
+import org.jeasy.rules.api.RulesEngineParameters;
 // Avoid direct compile-time dependency on MVELRuleFactory; fall back to empty rules when unavailable
 import org.smartregister.chw.core.rule.ICommonRule;
 import org.smartregister.chw.core.rule.MalariaFollowUpRule;
