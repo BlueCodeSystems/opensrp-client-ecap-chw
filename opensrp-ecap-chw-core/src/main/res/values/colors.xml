@@ -22,6 +22,7 @@
     <color name="dark_grey">#616161</color>
     <color name="due_vaccine_red">#D32F2F</color>
     <color name="family_actionbar">#3F51B5</color>
+    <color name="family_navigation">#303F9F</color>
     <color name="grey">#9E9E9E</color>
     <color name="light_gray">#D3D3D3</color>
     <color name="light_grey">#ECECEC</color>

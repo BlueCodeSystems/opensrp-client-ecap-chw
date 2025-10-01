@@ -40,4 +40,5 @@
     <color name="customAppThemeBlue">#3797CA</color>
     <color name="colorDarkGrey">#585858</color>
     <color name="me_page_line_separator">#E0E0E0</color>
+    <color name="progress_orange">#FFA726</color>
 </resources>

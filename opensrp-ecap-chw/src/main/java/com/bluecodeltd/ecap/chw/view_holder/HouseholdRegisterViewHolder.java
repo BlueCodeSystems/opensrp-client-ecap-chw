@@ -51,9 +51,9 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
 
         // Set a baseline icon quickly; async refine below
         if ("true".equals(screened)) {
-            homeIcon.setImageResource(org.smartregister.family.R.mipmap.ic_home_active);
+            homeIcon.setImageResource(R.drawable.tabmenu_home_active);
         } else {
-            homeIcon.setImageResource(org.smartregister.family.R.mipmap.ic_home);
+            homeIcon.setImageResource(R.drawable.tabmenu_home);
         }
         homeIcon.clearColorFilter();
         homeIcon.setTag(householdId);
@@ -74,13 +74,13 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
                         }
 
                         if (householdStatus != null && "1".equals(householdStatus)) {
-                            homeIcon.setImageResource(org.smartregister.family.R.mipmap.ic_home);
+                            homeIcon.setImageResource(R.drawable.tabmenu_home);
                             homeIcon.setColorFilter(ContextCompat.getColor(context, com.nerdstone.neatformcore.R.color.colorRed));
                         } else {
                             if ("true".equals(screened)) {
-                                homeIcon.setImageResource(org.smartregister.family.R.mipmap.ic_home_active);
+                                homeIcon.setImageResource(R.drawable.tabmenu_home_active);
                             } else {
-                                homeIcon.setImageResource(org.smartregister.family.R.mipmap.ic_home);
+                                homeIcon.setImageResource(R.drawable.tabmenu_home);
                             }
                             homeIcon.clearColorFilter();
                         }
@@ -127,15 +127,15 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
 
                 if (genderList.get(i).equals("male") && age < 20){
 
-                    image.setImageResource(org.smartregister.family.R.mipmap.ic_boy_child);
+                    image.setImageResource(R.drawable.row_boy);
 
                 } else if(genderList.get(i).equals("female") && age < 20) {
 
-                    image.setImageResource(org.smartregister.family.R.mipmap.ic_girl_child);
+                    image.setImageResource(R.drawable.row_girl);
 
                 } else {
-                    image.setImageResource(org.smartregister.family.R.drawable.ic_person_black_24dp);
-                    image.setColorFilter(ContextCompat.getColor(context, org.smartregister.R.color.dark_grey));
+                    image.setImageResource(R.drawable.ic_person_black_24dp);
+                    image.setColorFilter(ContextCompat.getColor(context, R.color.client_list_header_dark_grey));
                 }
 
                 hLayout.addView(image);

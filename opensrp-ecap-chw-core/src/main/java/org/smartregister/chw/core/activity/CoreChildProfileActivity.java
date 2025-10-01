@@ -443,7 +443,7 @@ public class CoreChildProfileActivity extends BaseProfileActivity implements Cor
     public void setVisitNotDoneThisMonth(boolean withinEditPeriod) {
         openVisitMonthView();
         textViewNotVisitMonth.setText(org.smartregister.chw.opensrp_chw_anc.R.string.not_visiting_this_month);
-        textViewUndo.setText(org.smartregister.family.R.string.undo);
+        textViewUndo.setText(R.string.undo);
         textViewUndo.setVisibility(withinEditPeriod ? View.VISIBLE : View.GONE);
         imageViewCrossChild.setImageResource(R.drawable.activityrow_notvisited);
     }

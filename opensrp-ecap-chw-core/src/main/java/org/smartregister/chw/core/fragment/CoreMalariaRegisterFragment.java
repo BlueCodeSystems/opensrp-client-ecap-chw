@@ -131,7 +131,7 @@ public abstract class CoreMalariaRegisterFragment extends BaseMalariaRegisterFra
         dueOnlyLayout.setOnClickListener(registerActionHandler);
 
         if (getSearchView() != null) {
-            getSearchView().setBackgroundResource(org.smartregister.family.R.color.white);
+            getSearchView().setBackgroundResource(org.smartregister.chw.core.R.color.white);
             getSearchView().setCompoundDrawablesWithIntrinsicBounds(org.smartregister.family.R.drawable.ic_action_search, 0, 0, 0);
             getSearchView().setTextColor(getResources().getColor(R.color.text_black));
         }
@@ -319,4 +319,3 @@ public abstract class CoreMalariaRegisterFragment extends BaseMalariaRegisterFra
     }
 
 }
-

@@ -86,10 +86,10 @@ public class Utils extends org.smartregister.chw.core.utils.Utils {
         }
 
         if (bottomNavigationView != null && !ChwApplication.getApplicationFlavor().hasQR())
-            bottomNavigationView.getMenu().removeItem(org.smartregister.family.R.id.action_scan_qr);
+            bottomNavigationView.getMenu().removeItem(R.id.action_scan_qr);
 
         if (bottomNavigationView != null && !ChwApplication.getApplicationFlavor().hasJobAids())
-            bottomNavigationView.getMenu().removeItem(org.smartregister.family.R.id.action_job_aids);
+            bottomNavigationView.getMenu().removeItem(R.id.action_job_aids);
 
     }
 

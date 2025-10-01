@@ -114,7 +114,7 @@ public class HivTestingServiceActivity extends BaseRegisterActivity implements I
 
         } catch (Exception e) {
             Timber.e(e);
-            displayToast(org.smartregister.family.R.string.error_unable_to_start_form);
+            displayToast(R.string.error_unable_to_start_form);
         }
     }
 
@@ -259,7 +259,7 @@ public class HivTestingServiceActivity extends BaseRegisterActivity implements I
                     RegisterParams registerParam = new RegisterParams();
                     registerParam.setEditMode(false);
                     registerParam.setFormTag(OpdJsonFormUtils.formTag(OpdUtils.context().allSharedPreferences()));
-                    showProgressDialog(org.smartregister.family.R.string.saving_dialog_title);
+                    showProgressDialog(R.string.saving_dialog_title);
                     indexRegisterPresenter().saveForm(jsonString, registerParam);
                     uniqueId = getFieldJSONObject(fields(jsonFormObject, STEP1), "unique_id").optString("value");
 
@@ -271,7 +271,7 @@ public class HivTestingServiceActivity extends BaseRegisterActivity implements I
                     RegisterParams registerParam = new RegisterParams();
                     registerParam.setEditMode(false);
                     registerParam.setFormTag(OpdJsonFormUtils.formTag(OpdUtils.context().allSharedPreferences()));
-                    showProgressDialog(org.smartregister.family.R.string.saving_dialog_title);
+                    showProgressDialog(R.string.saving_dialog_title);
                     indexRegisterPresenter().saveForm(jsonString, registerParam);
 
                     hid = getFieldJSONObject(fields(jsonFormObject, STEP2), "household_id").optString("value");
@@ -286,7 +286,7 @@ public class HivTestingServiceActivity extends BaseRegisterActivity implements I
                     RegisterParams registerParam = new RegisterParams();
                     registerParam.setEditMode(false);
                     registerParam.setFormTag(OpdJsonFormUtils.formTag(OpdUtils.context().allSharedPreferences()));
-                    showProgressDialog(org.smartregister.family.R.string.saving_dialog_title);
+                    showProgressDialog(R.string.saving_dialog_title);
                     indexRegisterPresenter().saveForm(jsonString, registerParam);
 
 //                    hid = getFieldJSONObject(fields(jsonFormObject, STEP2), "household_id").optString("value");

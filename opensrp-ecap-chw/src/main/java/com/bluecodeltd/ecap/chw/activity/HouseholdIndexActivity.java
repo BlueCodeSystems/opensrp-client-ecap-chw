@@ -160,7 +160,7 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
 
         } catch (Exception e) {
             Timber.e(e);
-            displayToast(org.smartregister.family.R.string.error_unable_to_start_form);
+            displayToast(R.string.error_unable_to_start_form);
         }
     }
 

@@ -234,9 +234,9 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
                 Threading.main(() -> {
                     if (!child.getUnique_id().equals(holder.muacButton.getTag())) return;
                     if(finalMuac != null){
-                        holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(org.smartregister.family.R.drawable.ic_icon_info, 0, 0, 0);
+                        holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_outline_blue, 0, 0, 0);
                     } else {
-                        holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(org.smartregister.family.R.drawable.ic_icon_warning, 0, 0, 0);
+                        holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_warning_orange, 0, 0, 0);
                     }
                 });
             });

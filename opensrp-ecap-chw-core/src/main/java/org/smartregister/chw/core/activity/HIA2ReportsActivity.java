@@ -282,8 +282,8 @@ public class HIA2ReportsActivity extends MultiLanguageActivity
     private void initializeProgressDialog() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
-        progressDialog.setTitle(getString(org.smartregister.family.R.string.loading));
-        progressDialog.setMessage(getString(org.smartregister.family.R.string.please_wait_message));
+        progressDialog.setTitle(getString(R.string.loading));
+        progressDialog.setMessage(getString(R.string.please_wait_message));
     }
 
     public void showProgressDialog() {

@@ -26,4 +26,8 @@
     <string name="peer_to_peer_activity_title">Peer-to-peer</string>
     <string name="back_to_referrals">Back to referrals</string>
     <string name="abbrv_years">yrs</string>
+    <string name="loading">Loading...</string>
+    <string name="please_wait_message">Please wait...</string>
+    <string name="next">Next</string>
+    <string name="back">Back</string>
 </resources>

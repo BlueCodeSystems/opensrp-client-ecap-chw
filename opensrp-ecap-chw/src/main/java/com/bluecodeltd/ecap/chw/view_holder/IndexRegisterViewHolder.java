@@ -155,7 +155,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
             warningIcon.setVisibility(View.VISIBLE);
         }
         // Default while loading
-        dueButton.setBackgroundResource(org.smartregister.family.R.drawable.due_contact);
+        dueButton.setBackgroundResource(R.drawable.due_contact);
         dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), org.smartregister.chw.core.R.color.btn_blue));
         dueButton.setText("Conduct Visit");
         final String rowTag = village;
@@ -201,7 +201,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
                         textColorResource = com.nerdstone.neatformcore.R.color.colorRed;
                         buttonText = "Visit Overdue: " + fDate;
                     } else {
-                        backgroundResource = org.smartregister.family.R.drawable.due_contact;
+                        backgroundResource = R.drawable.due_contact;
                         textColorResource = org.smartregister.chw.core.R.color.btn_blue;
                         buttonText = "Conduct Visit";
                     }
@@ -214,7 +214,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
                         dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), org.smartregister.chw.core.R.color.btn_blue));
                         dueButton.setText("Case Closed");
                     } else {
-                        dueButton.setBackgroundResource(org.smartregister.family.R.drawable.due_contact);
+                        dueButton.setBackgroundResource(R.drawable.due_contact);
                         dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), org.smartregister.chw.core.R.color.btn_blue));
                         dueButton.setText("Conduct Visit");
                     }

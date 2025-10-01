@@ -212,9 +212,9 @@ public class FamilyProfileActivity extends CoreFamilyProfileActivity  {
         profileDueFragment = FamilyProfileDueFragment.newInstance(this.getIntent().getExtras());
         FamilyProfileActivityFragment profileActivityFragment = (FamilyProfileActivityFragment) FamilyProfileActivityFragment.newInstance(this.getIntent().getExtras());
 
-        adapter.addFragment(profileMemberFragment, this.getString(org.smartregister.family.R.string.member).toUpperCase());
-        adapter.addFragment(profileDueFragment, this.getString(org.smartregister.family.R.string.due).toUpperCase());
-        adapter.addFragment(profileActivityFragment, this.getString(org.smartregister.family.R.string.activity).toUpperCase());
+        adapter.addFragment(profileMemberFragment, this.getString(R.string.member).toUpperCase());
+        adapter.addFragment(profileDueFragment, this.getString(R.string.due).toUpperCase());
+        adapter.addFragment(profileActivityFragment, this.getString(R.string.activity).toUpperCase());
 
         try { viewPager.setAdapter(adapter); } catch (Exception ignored) {}
 

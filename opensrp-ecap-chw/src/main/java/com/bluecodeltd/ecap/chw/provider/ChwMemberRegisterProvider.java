@@ -102,7 +102,7 @@ public class ChwMemberRegisterProvider extends FamilyMemberRegisterProvider {
             dobString = getDuration(dod, dob);
             dobString = dobString.contains("y") ? dobString.substring(0, dobString.indexOf("y")) : dobString;
 
-            patientName = patientName + ", " + org.smartregister.family.util.Utils.getTranslatedDate(dobString, context) + " " + context.getString(org.smartregister.family.R.string.deceased_brackets);
+            patientName = patientName + ", " + org.smartregister.family.util.Utils.getTranslatedDate(dobString, context) + " " + context.getString(R.string.deceased_brackets);
             viewHolder.patientNameAge.setFontVariant(FontVariant.REGULAR);
             viewHolder.patientNameAge.setTextColor(Color.GRAY);
             viewHolder.patientNameAge.setTypeface(viewHolder.patientNameAge.getTypeface(), Typeface.ITALIC);
@@ -124,9 +124,9 @@ public class ChwMemberRegisterProvider extends FamilyMemberRegisterProvider {
         String gender_key = org.smartregister.family.util.Utils.getValue(pc.getColumnmaps(), DBConstants.KEY.GENDER, true);
         String gender = "";
         if (gender_key.equalsIgnoreCase("Male")) {
-            gender = context.getString(org.smartregister.family.R.string.male);
+            gender = context.getString(R.string.male);
         } else if (gender_key.equalsIgnoreCase("Female")) {
-            gender = context.getString(org.smartregister.family.R.string.female);
+            gender = context.getString(R.string.female);
         }
         fillValue(viewHolder.gender, gender);
 
@@ -164,13 +164,13 @@ public class ChwMemberRegisterProvider extends FamilyMemberRegisterProvider {
     private void attachPatientOnclickListener(View view, SmartRegisterClient client) {
         view.setOnClickListener(onClickListener);
         view.setTag(client);
-        view.setTag(org.smartregister.family.R.id.VIEW_ID, BaseFamilyProfileMemberFragment.CLICK_VIEW_NORMAL);
+        view.setTag(org.smartregister.chw.core.R.id.VIEW_ID, BaseFamilyProfileMemberFragment.CLICK_VIEW_NORMAL);
     }
 
     private void attachNextArrowOnclickListener(View view, SmartRegisterClient client) {
         view.setOnClickListener(onClickListener);
         view.setTag(client);
-        view.setTag(org.smartregister.family.R.id.VIEW_ID, BaseFamilyProfileMemberFragment.CLICK_VIEW_NEXT_ARROW);
+        view.setTag(org.smartregister.chw.core.R.id.VIEW_ID, BaseFamilyProfileMemberFragment.CLICK_VIEW_NEXT_ARROW);
     }
 
     private String getDueState(String memberBaseEntityId) {

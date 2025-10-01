@@ -68,6 +68,10 @@
     <!-- Generic yes/no used across reports -->
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="deceased_brackets">(deceased)</string>
+    <string name="id_with_value">ID: %1$s</string>
     <!-- Reporting labels (defaults) -->
     <string name="children_0_24_months_upto_date_vaccinations">Children (0–23 months) up to date with vaccination schedule</string>
     <string name="opv_0_not_included">OPV 0 not included</string>
@@ -85,6 +89,12 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="submit">Save</string>
+    <string name="undo">Undo</string>
+    <string name="back">Back</string>
+    <string name="loading">Loading...</string>
+    <string name="please_wait_message">Please wait...</string>
+    <string name="no_unique_id">No unique ID available. Sync to fetch more.</string>
+    <string name="error_unable_to_start_form">Unable to start form. Please try again.</string>
 
     <!-- Referral and clinical defaults used in UI -->
     <string name="suspected_malaria">Suspected malaria</string>
@@ -152,6 +162,9 @@
     <string name="pnc_child_vaccine_card_recevied">Child vaccine card received ({0})</string>
     <string name="pnc_immunization_at_birth">Immunizations (at birth) ({0})</string>
     <string name="pnc_exclusive_breastfeeding">Exclusive breastfeeding ({0})</string>
+    <string name="member">Member</string>
+    <string name="due">Due</string>
+    <string name="activity">Activity</string>
     
     <!-- Base strings for PNC and FP flows used in flavor classes -->
     <string name="pnc_danger_signs_mama">Danger signs - mother</string>

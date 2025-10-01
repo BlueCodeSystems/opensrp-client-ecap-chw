@@ -73,7 +73,7 @@ public class AllClientsMemberProfileActivity extends CoreFamilyOtherMemberProfil
         setIndependentClient(true);
         setContentView(R.layout.activity_all_clients_member_profile);
 
-        Toolbar toolbar = findViewById(org.smartregister.family.R.id.family_toolbar);
+        Toolbar toolbar = findViewById(R.id.family_toolbar);
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
@@ -82,7 +82,7 @@ public class AllClientsMemberProfileActivity extends CoreFamilyOtherMemberProfil
             actionBar.setTitle("");
         }
 
-        appBarLayout = findViewById(org.smartregister.family.R.id.toolbar_appbarlayout);
+        appBarLayout = findViewById(R.id.toolbar_appbarlayout);
 
         imageRenderHelper = new ImageRenderHelper(this);
 
@@ -245,8 +245,8 @@ public class AllClientsMemberProfileActivity extends CoreFamilyOtherMemberProfil
         form.setName(getString(R.string.update_client_registration));
         form.setActionBarBackground(R.color.family_actionbar);
         form.setNavigationBackground(R.color.family_navigation);
-        form.setHomeAsUpIndicator(org.smartregister.family.R.mipmap.ic_cross_white);
-        form.setPreviousLabel(getResources().getString(org.smartregister.family.R.string.back));
+        form.setHomeAsUpIndicator(R.drawable.ic_cross_white);
+        form.setPreviousLabel(getResources().getString(R.string.back));
         form.setWizard(false);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
