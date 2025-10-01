@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Ecap II</string>
     <string name="login_title">Case Management System</string>
-    <string name="nav_logo">USAID Ecap II</string>
+    <string name="nav_logo">ECAP II</string>
     <string name="add_family">Add Household</string>
     <string name="menu_anc">ANC</string>
     <string name="menu_pnc">PNC</string>

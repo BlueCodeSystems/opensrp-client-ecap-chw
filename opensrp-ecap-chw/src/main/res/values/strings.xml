@@ -47,7 +47,7 @@
     <string name="refer_to_facilty">Refer to facility</string>
     <string name="refresh_indicators">Refresh indicators</string>
     <string name="remarks_and__comments">Remarks and comments</string>
-    <string name="reports">Reports</string>
+    <string name="reports">Home</string>
     <string name="section_format">Section</string>
     <string name="select_communities">Select communities</string>
     <string name="severe">Severe</string>
@@ -171,11 +171,11 @@
     <string name="pnc_health_facility_visit_days_twenty_nine_to_forty_two">PNC health facility visit - days 29–42</string>
 
     <!-- Additional base strings to satisfy references -->
-    <string name="app_name">OpenSRP ECAP CHW</string>
-    <string name="all_households">All households</string>
-    <string name="all_households_title">All households</string>
-    <string name="all_index_title">Index clients</string>
-    <string name="all_mother_title">Mothers</string>
+    <string name="app_name">ECAP II</string>
+    <string name="all_households">Household Register</string>
+    <string name="all_households_title">Household Register</string>
+    <string name="all_index_title">VCA Register</string>
+    <string name="all_mother_title">Mother Index Register</string>
     <string name="anc_danger_signs">Danger signs</string>
     <string name="anc_home_visit_counselling_task">Counselling</string>
     <string name="anc_home_visit_family_planning">Family planning</string>
@@ -206,7 +206,7 @@
     <string name="deworming_number_dose">Deworming dose number</string>
     <string name="error_opening_profile">Error opening profile</string>
     <string name="exclusive_breastfeeding_months">Exclusive breastfeeding (months)</string>
-    <string name="facility_ovc_register">OVC register</string>
+    <string name="facility_ovc_register"> VCA Register</string>
     <string name="family_has_nothing_else_due">Family has nothing else due</string>
     <string name="family_planning_not_done">Family planning not done</string>
     <string name="family_planning_done">Family planning counseling at the health facility was done</string>

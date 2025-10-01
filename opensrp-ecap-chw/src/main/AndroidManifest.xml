@@ -213,7 +213,6 @@
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.HouseholdIndexActivity"
-            android:label="All Households"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.BeneficiariesRegisterActivity"

@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.fragment.ChooseLoginMethodFragment;
@@ -111,11 +112,15 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        if (hasPinLogin() && !pinLogger.isFirstAuthentication()) {
-            menu.add(getString(R.string.reset_pin_login));
+        if (BuildConfig.DEBUG) {
+            if (hasPinLogin() && !pinLogger.isFirstAuthentication()) {
+                menu.add(getString(R.string.reset_pin_login));
+            }
+            menu.add(getString(R.string.export_database));
+            return true;
         }
-        menu.add(getString(R.string.export_database));
-        return true;
+        menu.clear();
+        return false;
     }
 
     @Override
