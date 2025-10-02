@@ -31,6 +31,8 @@
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/register_list_bottom_inset"
             android:scrollbars="vertical" />
 
         <!-- Progress bar expected by BaseRegisterFragment -->
@@ -45,4 +47,3 @@
     </RelativeLayout>
 
 </LinearLayout>
-
