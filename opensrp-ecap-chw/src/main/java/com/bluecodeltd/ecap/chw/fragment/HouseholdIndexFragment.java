@@ -19,16 +19,16 @@ import com.bluecodeltd.ecap.chw.util.Constants;
 
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
+import org.smartregister.commonregistry.CommonRepository;
 import org.smartregister.cursoradapter.RecyclerViewPaginatedAdapter;
 import org.smartregister.view.customcontrols.CustomFontTextView;
 import org.smartregister.view.customcontrols.FontVariant;
-import org.smartregister.view.fragment.BaseRegisterFragment;
 
 import java.util.HashMap;
 
 import es.dmoral.toasty.Toasty;
 
-public class HouseholdIndexFragment extends BaseRegisterFragment implements HouseholdIndexFragmentContract.View{
+public class HouseholdIndexFragment extends BaseEcapRegisterFragment implements HouseholdIndexFragmentContract.View{
 
     @Override
     protected void initializePresenter() {
@@ -184,7 +184,11 @@ public class HouseholdIndexFragment extends BaseRegisterFragment implements Hous
     @Override
     public void initializeAdapter() {
         HouseholdRegisterProvider registerProvider = new HouseholdRegisterProvider(requireContext(), registerActionHandler, paginationViewHandler);
-        clientAdapter = new RecyclerViewPaginatedAdapter(null, registerProvider, context().commonrepository(Constants.EcapClientTable.EC_HOUSEHOLD));
+        CommonRepository repository = getRepository(Constants.EcapClientTable.EC_HOUSEHOLD);
+        if (repository == null) {
+            return;
+        }
+        clientAdapter = new RecyclerViewPaginatedAdapter(null, registerProvider, repository);
         clientAdapter.setCurrentlimit(20);
         clientsView.setAdapter(clientAdapter);
     }

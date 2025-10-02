@@ -19,16 +19,16 @@ import com.bluecodeltd.ecap.chw.util.Constants;
 
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
+import org.smartregister.commonregistry.CommonRepository;
 import org.smartregister.cursoradapter.RecyclerViewPaginatedAdapter;
 import org.smartregister.view.customcontrols.CustomFontTextView;
 import org.smartregister.view.customcontrols.FontVariant;
-import org.smartregister.view.fragment.BaseRegisterFragment;
 
 import java.util.HashMap;
 
 import androidx.appcompat.widget.Toolbar;
 
-public class MotherIndexFragment extends BaseRegisterFragment implements MotherIndexFragmentContract.View {
+public class MotherIndexFragment extends BaseEcapRegisterFragment implements MotherIndexFragmentContract.View {
 
     @Override
     protected void initializePresenter() {
@@ -127,7 +127,11 @@ public class MotherIndexFragment extends BaseRegisterFragment implements MotherI
     @Override
     public void initializeAdapter() {
         MotherRegisterProvider registerProvider = new MotherRegisterProvider(requireContext(), registerActionHandler, paginationViewHandler);
-        clientAdapter = new RecyclerViewPaginatedAdapter(null, registerProvider, context().commonrepository(Constants.EcapClientTable.EC_MOTHER_INDEX));
+        CommonRepository repository = getRepository(Constants.EcapClientTable.EC_MOTHER_INDEX);
+        if (repository == null) {
+            return;
+        }
+        clientAdapter = new RecyclerViewPaginatedAdapter(null, registerProvider, repository);
         clientAdapter.setCurrentlimit(20);
         clientsView.setAdapter(clientAdapter);
     }

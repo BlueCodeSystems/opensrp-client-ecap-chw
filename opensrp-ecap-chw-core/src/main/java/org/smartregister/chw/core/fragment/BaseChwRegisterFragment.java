@@ -4,6 +4,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import org.smartregister.chw.core.R;
@@ -14,6 +16,32 @@ import org.smartregister.view.customcontrols.FontVariant;
 import org.smartregister.view.fragment.BaseRegisterFragment;
 
 public abstract class BaseChwRegisterFragment extends BaseRegisterFragment {
+
+    @Override
+    protected void setUpActionBar() {
+        if (!(getActivity() instanceof AppCompatActivity) || rootView == null) {
+            return;
+        }
+
+        Toolbar toolbar = rootView.findViewById(org.smartregister.R.id.register_toolbar);
+        if (toolbar == null) {
+            return;
+        }
+
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
+
+        ActionBar actionBar = activity.getSupportActionBar();
+        if (actionBar == null) {
+            return;
+        }
+
+        actionBar.setTitle(activity.getIntent().getStringExtra(TOOLBAR_TITLE));
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setLogo(org.smartregister.R.drawable.round_white_background);
+        actionBar.setDisplayUseLogoEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(false);
+    }
 
     @Override
     public void setupViews(View view) {

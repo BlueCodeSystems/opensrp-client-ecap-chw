@@ -191,7 +191,7 @@ dependencies {
 //        exclude group: 'xpp3', module: 'xpp3'
 //    }
 //    io.github.bluecodesystems:opensrp-client-native-form-new:3.1.2
-    api('com.github.BlueCodeSystems.Opensrp-client-native-form-new:opensrp-client-native-form:3.1.5') {
+    api('com.github.BlueCodeSystems.Opensrp-client-native-form-new:opensrp-client-native-form:3.2.0') {
         exclude group: 'com.android.support', module: 'appcompat-v7'
         exclude group: 'com.android.support', module: 'cardview-v7'
         exclude group: 'com.android.support', module: 'support-media-compat'
@@ -202,7 +202,7 @@ dependencies {
         exclude group: 'io.ona.CircleProgressbar', module: 'lib'
         exclude group: 'org.smartregister', module: 'opensrp-client-simprints'
     }
-    api 'com.github.BlueCodeSystems.Opensrp-client-native-form-new:circleprogressbar:3.1.5'
+    api 'com.github.BlueCodeSystems.Opensrp-client-native-form-new:circleprogressbar:3.2.0'
     // Prefer BlueCode utils to avoid duplicate classes with org.smartregister utils
     api "com.github.BlueCodeSystems:opensrp-client-utils:v1.0.0"
     // Prefer BlueCode fork of simprints to avoid duplicate classes

@@ -20,17 +20,17 @@ import com.github.javiersantos.appupdater.AppUpdater;
 
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
+import org.smartregister.commonregistry.CommonRepository;
 import org.smartregister.cursoradapter.RecyclerViewPaginatedAdapter;
 import org.smartregister.domain.FetchStatus;
 import org.smartregister.receiver.SyncStatusBroadcastReceiver;
 import org.smartregister.util.Utils;
 import org.smartregister.view.customcontrols.CustomFontTextView;
 import org.smartregister.view.customcontrols.FontVariant;
-import org.smartregister.view.fragment.BaseRegisterFragment;
 
 import java.util.HashMap;
 
-public class IndexFragmentRegister extends BaseRegisterFragment implements IndexRegisterFragmentContract.View {
+public class IndexFragmentRegister extends BaseEcapRegisterFragment implements IndexRegisterFragmentContract.View {
 
     AlertDialog.Builder builder;
 
@@ -244,7 +244,11 @@ public class IndexFragmentRegister extends BaseRegisterFragment implements Index
     @Override
     public void initializeAdapter() {
         IndexRegisterProvider registerProvider = new IndexRegisterProvider(requireContext(), registerActionHandler, paginationViewHandler);
-        clientAdapter = new RecyclerViewPaginatedAdapter(null, registerProvider, context().commonrepository(Constants.EcapClientTable.EC_CLIENT_INDEX));
+        CommonRepository repository = getRepository(Constants.EcapClientTable.EC_CLIENT_INDEX);
+        if (repository == null) {
+            return;
+        }
+        clientAdapter = new RecyclerViewPaginatedAdapter(null, registerProvider, repository);
         clientAdapter.setCurrentlimit(20);
         clientsView.setAdapter(clientAdapter);
 

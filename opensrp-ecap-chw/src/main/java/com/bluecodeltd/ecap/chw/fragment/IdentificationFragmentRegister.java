@@ -13,15 +13,15 @@ import com.bluecodeltd.ecap.chw.provider.IndexRegisterProvider;
 
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.cursoradapter.RecyclerViewPaginatedAdapter;
+import org.smartregister.commonregistry.CommonRepository;
 import org.smartregister.view.customcontrols.CustomFontTextView;
 import org.smartregister.view.customcontrols.FontVariant;
-import org.smartregister.view.fragment.BaseRegisterFragment;
 
 import java.util.HashMap;
 
 import androidx.appcompat.widget.Toolbar;
 
-public class IdentificationFragmentRegister extends BaseRegisterFragment implements IdentificationRegisterFragmentContract.View {
+public class IdentificationFragmentRegister extends BaseEcapRegisterFragment implements IdentificationRegisterFragmentContract.View {
 
     @Override
     protected void initializePresenter() {
@@ -111,7 +111,11 @@ public class IdentificationFragmentRegister extends BaseRegisterFragment impleme
     @Override
     public void initializeAdapter() {
         IndexRegisterProvider registerProvider = new IndexRegisterProvider(requireContext(), registerActionHandler, paginationViewHandler);
-        clientAdapter = new RecyclerViewPaginatedAdapter(null, registerProvider, context().commonrepository("ec_family"));
+        CommonRepository repository = getRepository("ec_family");
+        if (repository == null) {
+            return;
+        }
+        clientAdapter = new RecyclerViewPaginatedAdapter(null, registerProvider, repository);
         clientAdapter.setCurrentlimit(20);
         clientsView.setAdapter(clientAdapter);
     }
