@@ -276,6 +276,8 @@ configurations.all {
     // Use one Hellocharts artifact; keep library, drop android flavor
     exclude group: 'com.github.lecho', module: 'hellocharts-android'
     exclude group: 'commons-logging', module: 'commons-logging'
+    exclude group: 'com.github.BlueCodeSystems.Opensrp-client-native-form-new', module: 'opensrp-client-native-form'
+    exclude group: 'com.github.BlueCodeSystems.Opensrp-client-native-form-new', module: 'circleprogressbar'
 
     resolutionStrategy {
         dependencySubstitution {
@@ -295,11 +297,13 @@ configurations.all {
             substitute module('org.smartregister:opensrp-client-immunization') using module('com.github.BlueCodeSystems:opensrp-client-immunization:v5.1.1')
             substitute module('io.github.bluecodesystems:opensrp-client-immunization') using module('com.github.BlueCodeSystems:opensrp-client-immunization:v5.1.1')
             substitute module('io.github.bluecodesystems:opensrp-client-native-form-new') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:opensrp-client-native-form:v3.2.0')
+            substitute module('com.github.BlueCodeSystems.Opensrp-client-native-form-new:opensrp-client-native-form') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:opensrp-client-native-form:v3.2.0')
             substitute module('io.github.bluecodesystems:circleprogressbar') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:circleprogressbar:v3.2.0')
+            substitute module('com.github.BlueCodeSystems.Opensrp-client-native-form-new:circleprogressbar') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:circleprogressbar:v3.2.0')
             substitute module('io.github.bluecodesystems:opensrp-client-utils') using module('com.github.BlueCodeSystems:opensrp-client-utils:v1.0.0')
             substitute module('org.smartregister:opensrp-client-chw-anc') using module('com.github.BlueCodeSystems.opensrp-client-chw-anc:opensrp-client-chw-anc:v2.0.0')
             substitute module('org.smartregister:opensrp-client-growth-monitoring') using module('com.github.BlueCodeSystems:opensrp-client-growth-monitoring:v3.0.0')
-            substitute module('org.smartregister:opensrp-client-thinkmd') using module('com.github.BlueCodeSystems:pulsebridge:0.1.1-local')
+            substitute module('org.smartregister:opensrp-client-thinkmd') using module('com.github.BlueCodeSystems:pulsebridge:v0.1.1')
         }
         force 'com.commonsware.cwac:saferoom.x:1.3.0'
         force 'com.google.guava:guava:33.2.1-android'
@@ -331,7 +335,7 @@ dependencies {
 
     // FP client referenced directly in app code (org.smartregister.fp.BuildConfig)
     implementation 'com.github.BlueCodeSystems:opensrp-client-fp:v2.1.0'
-    implementation 'com.github.BlueCodeSystems:pulsebridge:0.1.1-local'
+    implementation 'com.github.BlueCodeSystems:pulsebridge:v0.1.1'
 
     // AndroidX Preference (for PreferenceManager usage)
     implementation 'androidx.preference:preference:1.2.1'
@@ -472,3 +476,6 @@ coveralls {
     jacocoReportPath = "${buildDir}/reports/jacoco/jacocoRootReport/merged.xml"
     sourceDirs = ["$project.projectDir/src/main/java"]
 }
+
+
+

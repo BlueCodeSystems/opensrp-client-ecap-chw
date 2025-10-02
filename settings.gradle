@@ -29,7 +29,7 @@ dependencyResolutionManagement {
         maven { url  "https://s01.oss.sonatype.org/content/repositories/releases" }
         maven { url  "https://repository.liferay.com/nexus/content/repositories/public" }
         maven { url "https://dl.bintray.com/ona/kujaku" }
-        
+
         // Mapbox repository with credentials
         maven {
             url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
@@ -40,7 +40,7 @@ dependencyResolutionManagement {
                 password = System.getProperty("mapbox.sdk.token") ?: "sample_key"
             }
         }
-        
+
         // GitHub Packages repositories (require authentication)
         maven {
             name = "GitHubPackages-NeatForm"
