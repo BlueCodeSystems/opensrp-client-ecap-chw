@@ -9,7 +9,6 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/report_details"
         tools:itemCount="3"
         tools:listitem="@layout/my_community_activity_details_fragment_item" />
 
