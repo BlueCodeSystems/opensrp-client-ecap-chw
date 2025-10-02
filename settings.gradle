@@ -93,13 +93,13 @@ def localNativeFormPath = "../Opensrp-client-native-form-new"
 if (useLocalNativeForm && file(localNativeFormPath).exists()) {
     includeBuild(localNativeFormPath) {
         dependencySubstitution {
-            substitute(module("com.github.BlueCodeSystems.Opensrp-client-native-form-new:opensrp-client-native-form"))
+            substitute(module("com.github.BlueCodeSystems.opensrp-client-native-form-new:opensrp-client-native-form"))
                     .using(project(":android-json-form-wizard"))
             substitute(module("io.github.bluecodesystems:opensrp-client-native-form-new"))
                     .using(project(":android-json-form-wizard"))
             substitute(module("org.smartregister:opensrp-client-native-form"))
                     .using(project(":android-json-form-wizard"))
-            substitute(module("com.github.BlueCodeSystems.Opensrp-client-native-form-new:circleprogressbar"))
+            substitute(module("com.github.BlueCodeSystems.opensrp-client-native-form-new:circleprogressbar"))
                     .using(project(":circleprogressbar"))
         }
     }
