@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Preserve percentage literals by disabling formatting on upstream translation -->
+    <string name="balanced_diet_content_eight" formatted="false">Menos de 10% da ingestão total de energia proveniente de açúcares livres, equivalente a 50 g (ou cerca de 12 colheres de chá) para uma pessoa com peso corporal saudável, consumindo aproximadamente 2000 calorias por dia, mas, idealmente, menos de 5% da ingestão total de energia para benefícios adicionais para a saúde. A maioria dos açúcares livres é adicionada a alimentos ou bebidas pelo fabricante, cozinheiro ou consumidor, e também pode ser encontrada em açúcares naturalmente presentes no mel, xaropes, sucos de frutas e concentrados de suco de frutas.</string>
+</resources>
