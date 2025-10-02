@@ -46,6 +46,10 @@ if (rootProject.file("github.properties").exists()) {
     githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
 }
 
+ext.useLocalNativeForm = project.hasProperty('useLocalNativeForm')
+        ? project.property('useLocalNativeForm').toString().toBoolean()
+        : false
+
 allprojects {
 
     tasks.whenTaskAdded { task ->

@@ -86,3 +86,21 @@ dependencyResolutionManagement {
 }
 
 include ':opensrp-ecap-chw', ':opensrp-ecap-chw-core'
+
+def useLocalNativeForm = (gradle.startParameter.projectProperties['useLocalNativeForm']
+        ?: System.getenv('USE_LOCAL_NATIVE_FORM'))?.toString()?.toBoolean() ?: false
+def localNativeFormPath = "../Opensrp-client-native-form-new"
+if (useLocalNativeForm && file(localNativeFormPath).exists()) {
+    includeBuild(localNativeFormPath) {
+        dependencySubstitution {
+            substitute(module("com.github.BlueCodeSystems.Opensrp-client-native-form-new:opensrp-client-native-form"))
+                    .using(project(":android-json-form-wizard"))
+            substitute(module("io.github.bluecodesystems:opensrp-client-native-form-new"))
+                    .using(project(":android-json-form-wizard"))
+            substitute(module("org.smartregister:opensrp-client-native-form"))
+                    .using(project(":android-json-form-wizard"))
+            substitute(module("com.github.BlueCodeSystems.Opensrp-client-native-form-new:circleprogressbar"))
+                    .using(project(":circleprogressbar"))
+        }
+    }
+}
