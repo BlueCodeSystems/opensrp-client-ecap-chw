@@ -3,7 +3,7 @@ package com.bluecodeltd.ecap.chw.activity;
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_EXTRA.STEP1;
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static com.bluecodeltd.ecap.chw.util.EventMetadataUtils.tagSyncMetadata;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;

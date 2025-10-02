@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="activity">กิจกรรม</string>
+    <string name="add_fam">เพิ่มครอบครัว</string>
+    <string name="add_family">เพิ่มครอบครัว</string>
+    <string name="add_member">เพิ่มสมาชิก</string>
+    <string name="age_text">อายุ: %1$s</string>
+    <string name="all_families">ครอบครัวทั้งหมด</string>
+    <string name="any_changes_you_make">ข้อมูลใดๆที่คุณได้เปลี่ยนแปลงไว้จะสูญหาย</string>
+    <string name="app_name">opensrp-client-family</string>
+    <string name="back">ย้อนกลับ</string>
+    <string name="deceased_brackets">(เสียชีวิตแล้ว)</string>
+    <string name="due">ครบกำหนด</string>
+    <string name="error_unable_to_start_form">พบข้อผิดพลาดขณะเริ่มต้นแบบฟอร์ม</string>
+    <string name="families">ครอบครัว</string>
+    <string name="family_head">หัวหน้าครอบครัว</string>
+    <string name="family_profile_title">%1$s ครอบครัว</string>
+    <string name="family_profile_title_with_firstname">%1$s %2$s ครอบครัว</string>
+    <string name="family_title">{0} ครอบครัว</string>
+    <string name="home">หน้าหลัก</string>
+    <string name="id_with_value">เลขประจำตัวประชาชน: %1$s</string>
+    <string name="job_aids">อุปกรณ์หรือเครื่องมือช่วยปฏิบัติงาน</string>
+    <string name="member">สมาชิก</string>
+    <string name="new_registration_saved">บันทึกการลงทะเบียนใหม่เรียบร้อยแล้ว !</string>
+    <string name="no_matching_record_found_on_this_device">ไม่มีข้อมูลบันทึกที่ตรงกันบนอุปกรณ์นี้</string>
+    <string name="no_unique_id">ไม่พบรหัสที่ค้นหา โปรดกดปุ่มซิงค์เพื่อค้นหาเพิ่มเติม แต่หากยังพบข้อผิดพลาดอยู่โปรดติดต่อผู้ดูแลระบบ</string>
+    <string name="primary_care_giver">ผู้ดูแลหลัก</string>
+    <string name="registration_info_updated">อัพเดทข้อมูลการลงทะเบียนเรียบร้อยแล้ว !</string>
+    <string name="return_to_all_families">กลับไปยัง ครอบครัวทั้งหมด</string>
+    <string name="return_to_family_profile">กลับไปยัง โปรไฟล์ของครอบครัว</string>
+    <string name="saving_dialog_title">กำลังบันทึก...</string>
+    <string name="scan_qr">สแกนรหัสคิวอาร์</string>
+    <string name="sort">เรียงลำดับ</string>
+    <string name="title_family_detail">รายละเอียดเกี่ยวกับครอบครัว</string>
+    <string name="unique_id_text">เลขประจำตัวประชาชน:%1$s</string>
+</resources>

@@ -145,8 +145,29 @@ public class AllClientsUtils {
         locationDetailsEvent.getEvent().setEntityType(CoreConstants.TABLE_NAME.INDEPENDENT_CLIENT);
         clientDetailsEvent.getEvent().setEntityType(CoreConstants.TABLE_NAME.INDEPENDENT_CLIENT);
 
-        allClientMemberEvents.add(new OpdEventClient(locationDetailsEvent.getClient(), locationDetailsEvent.getEvent()));
-        allClientMemberEvents.add(new OpdEventClient(clientDetailsEvent.getClient(), clientDetailsEvent.getEvent()));
+        allClientMemberEvents.add(new OpdEventClient(locationDetailsEvent.getClient(), toDomainEvent(locationDetailsEvent.getEvent())));
+        allClientMemberEvents.add(new OpdEventClient(clientDetailsEvent.getClient(), toDomainEvent(clientDetailsEvent.getEvent())));
         return allClientMemberEvents;
+    }
+
+    private static org.smartregister.domain.Event toDomainEvent(org.smartregister.clientandeventmodel.Event clientEvent) {
+        if (clientEvent == null) {
+            return null;
+        }
+
+        org.smartregister.domain.Event event = new org.smartregister.domain.Event();
+        event.setBaseEntityId(clientEvent.getBaseEntityId());
+        event.setEventType(clientEvent.getEventType());
+        event.setEntityType(clientEvent.getEntityType());
+        event.setProviderId(clientEvent.getProviderId());
+        event.setLocationId(clientEvent.getLocationId());
+        event.setChildLocationId(clientEvent.getChildLocationId());
+        event.setTeam(clientEvent.getTeam());
+        event.setTeamId(clientEvent.getTeamId());
+        event.setFormSubmissionId(clientEvent.getFormSubmissionId());
+        event.setClientApplicationVersion(clientEvent.getClientApplicationVersion());
+        event.setClientDatabaseVersion(clientEvent.getClientDatabaseVersion());
+        event.setDetails(clientEvent.getDetails());
+        return event;
     }
 }

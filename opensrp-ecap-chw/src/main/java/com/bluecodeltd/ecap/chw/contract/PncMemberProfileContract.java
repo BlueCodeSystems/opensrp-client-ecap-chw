@@ -1,7 +1,6 @@
 package com.bluecodeltd.ecap.chw.contract;
 
 import org.json.JSONObject;
-import org.smartregister.chw.anc.contract.BaseAncMemberProfileContract;
 import org.smartregister.chw.core.listener.OnRetrieveNotifications;
 import com.bluecodeltd.ecap.chw.model.ReferralTypeModel;
 import org.smartregister.chw.pnc.contract.BasePncMemberProfileContract;
@@ -25,7 +24,7 @@ public interface PncMemberProfileContract {
         void createReferralEvent(AllSharedPreferences allSharedPreferences, String jsonString) throws Exception;
     }
 
-    interface Interactor extends BasePncMemberProfileContract.Interactor, BaseAncMemberProfileContract.Interactor {
+    interface Interactor extends BasePncMemberProfileContract.Interactor {
         void createReferralEvent(AllSharedPreferences allSharedPreferences, String jsonString, String entityID) throws Exception;
     }
 

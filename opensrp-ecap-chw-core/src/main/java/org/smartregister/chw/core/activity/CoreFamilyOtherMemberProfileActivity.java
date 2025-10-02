@@ -220,7 +220,7 @@ public abstract class CoreFamilyOtherMemberProfileActivity extends BaseFamilyOth
 
 
         Form form = new Form();
-        form.setActionBarBackground(org.smartregister.family.R.color.family_actionbar);
+        form.setActionBarBackground(R.color.family_actionbar);
         form.setWizard(false);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
 
@@ -286,11 +286,11 @@ public abstract class CoreFamilyOtherMemberProfileActivity extends BaseFamilyOth
     public void setFamilyServiceStatus(String status) {
         layoutFamilyHasRow.setVisibility(View.VISIBLE);
         if (status.equalsIgnoreCase(CoreChildProfileInteractor.FamilyServiceType.DUE.name())) {
-            textViewFamilyHas.setText(getString(org.smartregister.chw.pnc.R.string.family_has_services_due));
+            textViewFamilyHas.setText(getString(R.string.family_has_services_due));
         } else if (status.equalsIgnoreCase(CoreChildProfileInteractor.FamilyServiceType.OVERDUE.name())) {
-            textViewFamilyHas.setText(CoreChildUtils.fromHtml(getString(org.smartregister.chw.pnc.R.string.family_has_service_overdue)));
+            textViewFamilyHas.setText(CoreChildUtils.fromHtml(getString(R.string.family_has_service_overdue)));
         } else {
-            textViewFamilyHas.setText(getString(org.smartregister.chw.pnc.R.string.family_has_nothing_due));
+            textViewFamilyHas.setText(getString(R.string.family_has_nothing_due));
         }
     }
 

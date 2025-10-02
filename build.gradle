@@ -64,7 +64,7 @@ allprojects {
         // GitHub Packages: limit to org.smartregister only, to avoid intercepting other artifacts
         maven {
             name = "GitHubPackagesNativeForm"
-            url = uri("https://maven.pkg.github.com/josephtj/opensrp-client-native-form")
+            url =  url = uri("https://maven.pkg.github.com/bluecodesystems/opensrp-client-native-form-new")
             credentials {
                 // Support both gpr.user and gpr.usr keys for compatibility
                 username = (githubProperties['gpr.user'] ?: githubProperties['gpr.usr']) ?: System.getenv("GPR_USER") ?: System.getenv("GITHUB_ACTOR")
@@ -100,7 +100,7 @@ subprojects {
 
     ext.androidToolsBuildGradle = '4.0.1'
     ext.androidBuildToolsVersion = '34.0.0'
-    ext.androidMinSdkVersion = 27
+    ext.androidMinSdkVersion = 28
     ext.androidCompileSdkVersion = 34
     ext.androidTargetSdkVersion = 34
 
@@ -122,6 +122,11 @@ subprojects {
             project.android.dexOptions.preDexLibraries = rootProject.ext.preDexLibs
         }
     }*/
+
+    configurations.all {
+        exclude group: 'org.smartregister', module: 'opensrp-client-chw-anc'
+        exclude group: 'org.smartregister', module: 'opensrp-client-immunization'
+    }
 }
 
 task clean(type: Delete) {
@@ -131,3 +136,4 @@ task clean(type: Delete) {
 def isReleaseBuild() {
     return version.contains("SNAPSHOT") == false
 }
+

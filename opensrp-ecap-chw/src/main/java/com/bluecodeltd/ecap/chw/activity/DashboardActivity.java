@@ -21,7 +21,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
-import androidx.preference.PreferenceManager;
+import android.preference.PreferenceManager;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;

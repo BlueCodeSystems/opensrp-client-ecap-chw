@@ -161,9 +161,9 @@ public class CoreChildRegisterProvider implements RecyclerViewProvider<RegisterV
         String gender_key = Utils.getValue(pc.getColumnmaps(), DBConstants.KEY.GENDER, true);
         String gender = "";
         if (gender_key.equalsIgnoreCase("Male")) {
-            gender = context.getString(org.smartregister.family.R.string.male);
+            gender = context.getString(R.string.male);
         } else if (gender_key.equalsIgnoreCase("Female")) {
-            gender = context.getString(org.smartregister.family.R.string.female);
+            gender = context.getString(R.string.female);
         }
         fillValue(viewHolder.textViewAddressGender, address + " \u00B7 " + gender);
     }

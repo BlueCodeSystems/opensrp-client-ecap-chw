@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 
-import org.smartregister.family.R;
+import org.smartregister.R;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.chw.core.presenter.CoreAllClientsRegisterFragmentPresenter;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
@@ -100,7 +100,7 @@ public class CoreAllClientsRegisterFragment extends BaseOpdRegisterFragment {
     }
 
     private void switchViews(View dueOnlyLayout, boolean isPress) {
-        TextView dueOnlyTextView = dueOnlyLayout.findViewById(R.id.due_only_text_view);
+        TextView dueOnlyTextView = dueOnlyLayout.findViewById(org.smartregister.R.id.due_only_text_view);
         if (isPress) {
             dueOnlyTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_due_filter_on, 0);
         } else {
@@ -118,3 +118,4 @@ public class CoreAllClientsRegisterFragment extends BaseOpdRegisterFragment {
         return org.smartregister.chw.core.R.string.menu_all_clients;
     }
 }
+

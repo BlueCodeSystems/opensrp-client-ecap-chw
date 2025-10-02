@@ -1,0 +1,21 @@
+apply plugin: 'com.android.library'
+
+android {
+    namespace 'org.smartregister.family'
+    compileSdk 35
+
+    defaultConfig {
+        minSdk 28
+        targetSdk 35
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    api files('libs/opensrp-household-classes-stripped.jar')
+}

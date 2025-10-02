@@ -1,6 +1,6 @@
 package org.smartregister.chw.core.custom_views;
 
-import android.app.Activity;
+import androidx.fragment.app.FragmentActivity;
 import android.content.Context;
 import android.view.View;
 import android.view.animation.Animation;
@@ -82,7 +82,7 @@ public abstract class CoreMalariaFloatingMenu extends BaseMalariaFloatingMenu {
         if (isFabMenuOpen) {
             activityMain.setBackgroundResource(org.smartregister.R.color.transparent);
 
-            fab.setImageResource(com.vijay.jsonwizard.R.drawable.ic_edit_white);
+            fab.setImageResource(R.drawable.ic_edit_white);
 
             callLayout.startAnimation(fabClose);
             callLayout.setClickable(false);
@@ -93,7 +93,7 @@ public abstract class CoreMalariaFloatingMenu extends BaseMalariaFloatingMenu {
         } else {
             activityMain.setBackgroundResource(R.color.grey_tranparent_50);
 
-            fab.setImageResource(com.vijay.jsonwizard.R.drawable.ic_edit_white);
+            fab.setImageResource(R.drawable.ic_edit_white);
 
             callLayout.startAnimation(fabOpen);
             callLayout.setClickable(true);
@@ -106,7 +106,18 @@ public abstract class CoreMalariaFloatingMenu extends BaseMalariaFloatingMenu {
 
 
     public void launchCallWidget() {
-        BaseMalariaCallDialogFragment.launchDialog((Activity) this.getContext(), MEMBER_OBJECT);
+        Context context = getContext();
+        FragmentActivity activity = null;
+        while (context instanceof android.content.ContextWrapper) {
+            if (context instanceof FragmentActivity) {
+                activity = (FragmentActivity) context;
+                break;
+            }
+            context = ((android.content.ContextWrapper) context).getBaseContext();
+        }
+        if (activity != null) {
+            BaseMalariaCallDialogFragment.launchDialog(activity, MEMBER_OBJECT);
+        }
     }
 
     public void redraw(boolean hasPhoneNumber) {

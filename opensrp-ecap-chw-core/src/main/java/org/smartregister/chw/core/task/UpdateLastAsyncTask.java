@@ -114,7 +114,7 @@ public class UpdateLastAsyncTask extends AsyncTask<Void, Void, Void> {
     }
 
     public void setVisitButtonOverdueStatus(Context context, Button dueButton, String lastVisitDays) {
-        dueButton.setTextColor(context.getResources().getColor(org.smartregister.R.color.white));
+        dueButton.setTextColor(context.getResources().getColor(R.color.white));
         if (TextUtils.isEmpty(lastVisitDays)) {
             dueButton.setText(context.getString(R.string.record_visit));
         } else {
@@ -137,7 +137,7 @@ public class UpdateLastAsyncTask extends AsyncTask<Void, Void, Void> {
     }
 
     public void setVisitNotDone(Context context, Button dueButton) {
-        dueButton.setTextColor(context.getResources().getColor(org.smartregister.family.R.color.progress_orange));
+        dueButton.setTextColor(context.getResources().getColor(R.color.progress_orange));
         dueButton.setText(context.getString(R.string.visit_not_done));
         dueButton.setBackgroundColor(context.getResources().getColor(org.smartregister.R.color.transparent));
         dueButton.setOnClickListener(null);

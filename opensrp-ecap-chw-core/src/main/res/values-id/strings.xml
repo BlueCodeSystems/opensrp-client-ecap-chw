@@ -1,0 +1,90 @@
+<resources>
+    <string name="app_name">OpenSRP Chw Anc</string>
+
+    <string name="error_unable_to_start_form">Terjadi kesalahan saat memulai pengisian formulir</string>
+    <string name="error_unable_save_home_visit">Terjadi kesalahan saat menyimpan kunjungan rumah</string>
+    <string name="anc">ANC Pasien</string>
+
+    <!-- menu -->
+    <string name="add_member">Tambahkan anggota</string>
+    <string name="sort">Sortir</string>
+    <string name="home">Halaman depan</string>
+    <string name="add_family">Tambahkan keluarga</string>
+    <string name="scan_qr">Pindai Kode QR</string>
+    <string name="job_aids">Bantuan Pekerjaan</string>
+
+    <!-- register details -->
+    <string name="age">Usia</string>
+    <string name="weeks">Minggu</string>
+    <string name="gestation_age_initial">Usia Kehamilan</string>
+
+    <!-- other -->
+    <string name="saving_dialog_title">Sedang menyimpan</string>
+
+    <!-- anc home visit -->
+    <string name="optional">pilihan</string>
+    <string name="anc_visit">Kunjungan ANC</string>
+    <string name="anc_home_visit">Kunjungan Rumah</string>
+    <string name="dose_not_given">DOSIS TIDAK DIBERIKAN</string>
+
+
+    <string name="return_to_family_members">Kembali ke anggota keluarga</string>
+    <string name="return_to_all_anc_women">Kembali ke semua ANC Ibu</string>
+    <string name="record_pnc_visit">Catat kunjungan PNC</string>
+    <string name="record_anc_visit">Catat kunjungan ANC</string>
+    <string name="visit_not_done_btn_child_profile">Kunjungan belum selesai</string>
+    <string name="not_visiting_this_month">Tidak berkunjung bulan ini</string>
+    <string name="undo">BATALKAN</string>
+    <string name="edit">SUNTING</string>
+
+    <string name="unique_id_text">ID: %1$s</string>
+
+    <string name="confirm_form_close">Konfirmasikan penutupan formulir</string>
+    <string name="confirm_form_close_explanation">Apakah Anda yakin untuk kembali? Seluruh data yang telah dimasukkan pada form ini akan hilang.</string>
+
+    <!-- anc profile -->
+    <string name="gest_age">Usia Kehamilan: %1$s</string>
+    <string name="gest_age_weeks">minggu</string>
+
+    <string name="call_anc_woman">Memanggil Ibu ANC</string>
+    <string name="call_pnc_woman">Memanggil Ibu PNC</string>
+    <string name="anc_call">Panggilan</string>
+    <string name="copy_to_clipboard">Salin ke papan klip</string>
+    <string name="copied_phone_number">Nomor Telepon disalin ke papan klip</string>
+    <string name="head_of_family">Kepala keluarga</string>
+    <string name="anc_woman">ANC ibu</string>
+
+    <string name="last_visit_40_days_ago">Kunjungan terakhir %1$s lalu</string>
+    <string name="view_medical_history">Tampilkan riwayat kesehatan</string>
+    <string name="view_upcoming_services">Tampilkan layanan mendatang</string>
+    <string name="family_has_nothing_due">Keluarga tidak ada kewajiban</string>
+    <string name="go_to_family_s_profile">Pergi ke profile keluarga</string>
+    <string name="family_has_services_due">Keluarga memiliki layanan</string>
+    <string name="family_has_service_overdue"><![CDATA[Family has <font color=#FF0000>services overdue</font></b>]]></string>
+    <string name="vaccine_service_upcoming"><![CDATA[%1$s <font color=#7f7f7f>pcoming (%2$s)</font></b>]]></string>
+    <string name="vaccine_service_overdue"><![CDATA[%1$s <font color=#f04646>overdue (%2$s)</font></b>]]></string>
+    <string name="vaccine_service_due"><![CDATA[%1$s <font color=#000000>due (%2$s)</font></b>]]></string>
+
+    <string name="back_to">Kembali ke %1$s\'s profil</string>
+    <string name="days_overdue">%1$s hari terlambat</string>
+    <string name="anc_visit_done">%1$s kunjungan selesai</string>
+    <string name="less_than_twenty_four">kurang dari 24 jam</string>
+    <string name="primary_care_giver">Pengasuh Utama</string>
+    <string name="family_head">Kepala Keluarga</string>
+
+    <string name="anc_home_visit_danger_signs">Tanda bahaya</string>
+    <string name="danger_signs_counselling">Konseling tanda bahaya</string>
+    <string name="not_done">Belum selesai</string>
+    <string name="medical_history">Riwayat kesehatan</string>
+    <string name="upcoming_services">Layanan Mendatang</string>
+
+    <string name="vaccines_not_done">VAKSIN TIDAK DILAKUKAN</string>
+    <string name="add_date_separately">+ TAMBAHKAN TANGGAL UNTUK SETIAP VAKSIN</string>
+    <string name="when_vaccines_given_text">Kapan vaksinasi dilakukan?</string>
+    <string name="which_vaccines_given_text">Vaksinasi mana yang dilakukan?</string>
+    <string name="record_vaccinations">Catat vaksinasi</string>
+
+
+    <string name="when_vaccine">Kapan imunisasi %s telah dilakukan? </string>
+    <string name="no_vaccines_were_done">Tidak ada vaksin yang dilakukan</string>
+</resources>

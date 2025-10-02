@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.text.TextUtils;
 import android.util.Log;
 
-import net.sqlcipher.SQLException;
+import android.database.SQLException;
 import net.sqlcipher.database.SQLiteDatabase;
 
 import org.joda.time.LocalDate;
@@ -462,3 +462,4 @@ public class MonthlyTalliesRepository extends BaseRepository {
         return tallies;
     }
 }
+

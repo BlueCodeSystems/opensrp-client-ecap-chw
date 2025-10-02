@@ -1,7 +1,5 @@
 package com.bluecodeltd.ecap.chw.application;
 
-import static org.koin.core.context.GlobalContext.getOrNull;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -55,7 +53,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
-import org.koin.core.context.GlobalContextKt;
+import org.koin.core.Koin;
+import org.koin.core.context.GlobalContext;
 import org.smartregister.AllConstants;
 import org.smartregister.Context;
 import org.smartregister.CoreLibrary;
@@ -307,7 +306,7 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         growthMonitoringConfig.setWeightForHeightZScoreFile("weight_for_height.csv");
         GrowthMonitoringLibrary.init(context, getRepository(), BuildConfig.VERSION_CODE, BuildConfig.DATABASE_VERSION, growthMonitoringConfig);
 
-        if (hasReferrals() && getOrNull() == null) {
+        if (hasReferrals() && GlobalContext.INSTANCE.getOrNull() == null) {
             //Setup referral library and initialize Koin dependencies once
             ReferralLibrary.init(this);
             ReferralLibrary.getInstance().setAppVersion(BuildConfig.VERSION_CODE);
@@ -354,7 +353,10 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
     @Override
     public void onTerminate() {
         super.onTerminate();
-        GlobalContextKt.stopKoin();
+        org.koin.core.Koin koinInstance = GlobalContext.INSTANCE.getOrNull();
+        if (koinInstance != null) {
+            koinInstance.close();
+        }
     }
 
     @Override

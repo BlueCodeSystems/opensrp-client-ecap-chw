@@ -75,7 +75,7 @@ public class ReferralRegisterActivity extends BaseReferralRegisterActivity {
         if (bottomNavigationView != null) {
             bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
             bottomNavigationView.getMenu().removeItem(org.smartregister.R.id.action_clients);
-            bottomNavigationView.getMenu().removeItem(org.smartregister.chw.referral.R.id.action_register);
+            bottomNavigationView.getMenu().removeItem(R.id.action_register);
             bottomNavigationView.getMenu().removeItem(org.smartregister.R.id.action_search);
             bottomNavigationView.getMenu().removeItem(org.smartregister.R.id.action_library);
 

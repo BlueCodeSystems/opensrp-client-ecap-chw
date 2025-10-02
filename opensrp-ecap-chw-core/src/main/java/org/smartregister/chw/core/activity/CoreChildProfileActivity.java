@@ -363,9 +363,9 @@ public class CoreChildProfileActivity extends BaseProfileActivity implements Cor
 
     private String getGenderTranslated(String gender) {
         if (gender.equalsIgnoreCase(Gender.MALE.toString())) {
-            return getResources().getString(org.smartregister.family.R.string.male);
+            return getResources().getString(R.string.male);
         } else if (gender.equalsIgnoreCase(Gender.FEMALE.toString())) {
-            return getResources().getString(org.smartregister.family.R.string.female);
+            return getResources().getString(R.string.female);
         }
         return "";
     }
@@ -401,23 +401,23 @@ public class CoreChildProfileActivity extends BaseProfileActivity implements Cor
     public void setVisitButtonDueStatus() {
         openVisitButtonView();
         textViewRecord.setBackgroundResource(R.drawable.record_btn_selector_due);
-        textViewRecord.setTextColor(getResources().getColor(org.smartregister.R.color.white));
+        textViewRecord.setTextColor(getResources().getColor(R.color.white));
     }
 
     @Override
     public void setVisitButtonOverdueStatus() {
         openVisitButtonView();
         textViewRecord.setBackgroundResource(R.drawable.record_btn_selector_overdue);
-        textViewRecord.setTextColor(getResources().getColor(org.smartregister.R.color.white));
+        textViewRecord.setTextColor(getResources().getColor(R.color.white));
     }
 
     @Override
     public void setVisitNotDoneThisMonth(boolean withinEditPeriod) {
         openVisitMonthView();
         textViewNotVisitMonth.setText(org.smartregister.chw.opensrp_chw_anc.R.string.not_visiting_this_month);
-        textViewUndo.setText(org.smartregister.family.R.string.undo);
+        textViewUndo.setText(R.string.undo);
         textViewUndo.setVisibility(withinEditPeriod ? View.VISIBLE : View.GONE);
-        imageViewCrossChild.setImageResource(org.smartregister.fp.R.drawable.activityrow_notvisited);
+        imageViewCrossChild.setImageResource(R.drawable.activityrow_notvisited);
     }
 
     @Override
@@ -438,7 +438,7 @@ public class CoreChildProfileActivity extends BaseProfileActivity implements Cor
         if (!TextUtils.isEmpty(serviceName)) {
             layoutMostDueOverdue.setVisibility(View.VISIBLE);
             viewMostDueRow.setVisibility(View.VISIBLE);
-            textViewNameDue.setText(CoreChildUtils.fromHtml(getString(org.smartregister.chw.pnc.R.string.vaccine_service_due, serviceName, dueDate)));
+            textViewNameDue.setText(CoreChildUtils.fromHtml(getString(R.string.vaccine_service_due, serviceName, dueDate)));
         } else {
             layoutMostDueOverdue.setVisibility(View.GONE);
             viewMostDueRow.setVisibility(View.GONE);
@@ -449,14 +449,14 @@ public class CoreChildProfileActivity extends BaseProfileActivity implements Cor
     public void setServiceNameOverDue(String serviceName, String dueDate) {
         layoutMostDueOverdue.setVisibility(View.VISIBLE);
         viewMostDueRow.setVisibility(View.VISIBLE);
-        textViewNameDue.setText(CoreChildUtils.fromHtml(getString(org.smartregister.chw.pnc.R.string.vaccine_service_overdue, serviceName, dueDate)));
+        textViewNameDue.setText(CoreChildUtils.fromHtml(getString(R.string.vaccine_service_overdue, serviceName, dueDate)));
     }
 
     @Override
     public void setServiceNameUpcoming(String serviceName, String dueDate) {
         layoutMostDueOverdue.setVisibility(View.VISIBLE);
         viewMostDueRow.setVisibility(View.VISIBLE);
-        textViewNameDue.setText(CoreChildUtils.fromHtml(getString(org.smartregister.chw.pnc.R.string.vaccine_service_upcoming, serviceName, dueDate)));
+        textViewNameDue.setText(CoreChildUtils.fromHtml(getString(R.string.vaccine_service_upcoming, serviceName, dueDate)));
     }
 
     public void setDueTodayServices() {
@@ -467,9 +467,9 @@ public class CoreChildProfileActivity extends BaseProfileActivity implements Cor
     @Override
     public void setVisitLessTwentyFourView(String monthName) {
         textViewNotVisitMonth.setText(getString(R.string.visit_month, monthName));
-        textViewUndo.setText(getString(org.smartregister.chw.pnc.R.string.edit));
+        textViewUndo.setText(getString(R.string.edit));
         textViewUndo.setVisibility(View.GONE);
-        imageViewCrossChild.setImageResource(org.smartregister.chw.pnc.R.drawable.activityrow_visited);
+        imageViewCrossChild.setImageResource(R.drawable.activityrow_visited);
         openVisitMonthView();
     }
 
@@ -477,7 +477,7 @@ public class CoreChildProfileActivity extends BaseProfileActivity implements Cor
     public void setVisitAboveTwentyFourView() {
         textViewVisitNot.setVisibility(View.GONE);
         openVisitRecordDoneView();
-        textViewRecord.setBackgroundResource(org.smartregister.chw.pnc.R.drawable.record_btn_selector_above_twentyfr);
+        textViewRecord.setBackgroundResource(R.drawable.record_btn_selector_above_twentyfr);
         textViewRecord.setTextColor(getResources().getColor(org.smartregister.R.color.light_grey_text));
     }
 
@@ -498,14 +498,14 @@ public class CoreChildProfileActivity extends BaseProfileActivity implements Cor
     public void setFamilyHasServiceDue() {
         layoutFamilyHasRow.setVisibility(View.VISIBLE);
         viewFamilyRow.setVisibility(View.VISIBLE);
-        textViewFamilyHas.setText(getString(org.smartregister.chw.pnc.R.string.family_has_service_overdue));
+        textViewFamilyHas.setText(getString(R.string.family_has_service_overdue));
     }
 
     @Override
     public void setFamilyHasServiceOverdue() {
         layoutFamilyHasRow.setVisibility(View.VISIBLE);
         viewFamilyRow.setVisibility(View.VISIBLE);
-        textViewFamilyHas.setText(CoreChildUtils.fromHtml(getString(org.smartregister.chw.pnc.R.string.family_has_service_overdue)));
+        textViewFamilyHas.setText(CoreChildUtils.fromHtml(getString(R.string.family_has_service_overdue)));
     }
 
     @Override

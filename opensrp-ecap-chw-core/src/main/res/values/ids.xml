@@ -1,0 +1,18 @@
+<resources>
+    <item name="not_give_condition_id" type="id" />
+    <item name="due_only_layout" type="id" />
+    <item name="due_only_text_view" type="id" />
+    <item name="filter_sort_layout" type="id" />
+    <item name="filter_text_view" type="id" />
+    <item name="btn_register_search" type="id" />
+    <item name="btn_scan_qr_code" type="id" />
+    <item name="edt_search" type="id" />
+    <item name="search_cancel_button" type="id" />
+    <item name="due_only_layout_label" type="id" />
+    <item name="filter_label" type="id" />
+    <item name="search_bar_layout" type="id" />
+    <item name="btn_search_cancel" type="id" />
+    <item name="btn_filter" type="id" />
+    <item name="btn_sort" type="id" />
+    <item name="filter_status_layout" type="id" />
+</resources>

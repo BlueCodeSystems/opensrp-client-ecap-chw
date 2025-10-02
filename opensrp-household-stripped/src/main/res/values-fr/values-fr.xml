@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="abbrv_days">j</string>
+    <string name="abbrv_months">m</string>
+    <string name="abbrv_weeks">s</string>
+    <string name="abbrv_years">a</string>
+    <string name="activity">Activité</string>
+    <string name="add_fam">Ajouter Ménage</string>
+    <string name="add_family">Ajouter ménage</string>
+    <string name="add_member">Ajouter membre</string>
+    <string name="age_text">Âge: %1$s</string>
+    <string name="all_families">Tous les ménages</string>
+    <string name="any_changes_you_make">Toutes les modifications que vous avez apportées seront perdues</string>
+    <string name="app_name">opensrp-client-family</string>
+    <string name="back">RETOUR</string>
+    <string name="deceased_brackets">(décédé)</string>
+    <string name="due">Dû</string>
+    <string name="error_unable_to_start_form">Une erreur s\'est produite en lancant le formulaire</string>
+    <string name="families">Ménages</string>
+    <string name="family_head">Chef de Ménage</string>
+    <string name="family_profile_title">Famille %1$s</string>
+    <string name="family_profile_title_with_firstname">Famille %1$s %2$s</string>
+    <string name="family_title">{0} Ménage</string>
+    <string name="female">Feminin</string>
+    <string name="home">Acceuil</string>
+    <string name="id_with_value">ID: %1$s</string>
+    <string name="job_aids">Boite à Outils</string>
+    <string name="male">Masculin</string>
+    <string name="member">Membres</string>
+    <string name="new_registration_saved">Nouveau dossier enregistré !</string>
+    <string name="no_matching_record_found_on_this_device">Aucun dossier correspondant n\'a éte retrouvé sur cet appareil.</string>
+    <string name="no_unique_id">Aucun identifiant unique retrouvé. Cliquez sur le bouton sync pour en obtenir plus et contactez l\'administrateur système si l\'erreur persiste.</string>
+    <string name="primary_care_giver">Gardienne</string>
+    <string name="registration_info_updated">Information d\'enregistrement mise à jour !</string>
+    <string name="return_to_all_families">Retourner à tous les ménages</string>
+    <string name="return_to_family_profile">Retourner au profil du ménage</string>
+    <string name="saving_dialog_title">Enregistrement en cours...</string>
+    <string name="scan_qr">Scanner code QR</string>
+    <string name="sort">Trier</string>
+    <string name="title_family_detail">Détails sur le ménage</string>
+    <string name="unique_id_text">ID: %1$s</string>
+</resources>

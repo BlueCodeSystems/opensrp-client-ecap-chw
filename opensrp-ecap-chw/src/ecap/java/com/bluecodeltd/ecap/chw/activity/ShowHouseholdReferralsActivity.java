@@ -25,6 +25,7 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
 import com.bluecodeltd.ecap.chw.model.newCaregiverModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.EventConversionUtils;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONArray;
@@ -191,11 +192,12 @@ public class ShowHouseholdReferralsActivity extends AppCompatActivity {
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
-                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                        Event clientEvent = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
                                 encounterType, Constants.EcapClientTable.EC_REFERRAL);
+                        org.smartregister.domain.Event event = EventConversionUtils.toDomainEvent(clientEvent);
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
-                        return new ChildIndexEventClient(event, client);
+                        return new ChildIndexEventClient(clientEvent, client);
                     }
                     break;
 

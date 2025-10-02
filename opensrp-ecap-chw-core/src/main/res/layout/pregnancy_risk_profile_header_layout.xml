@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <org.smartregister.view.customcontrols.CustomFontTextView
+            android:id="@+id/text_view_pg_risk_ga"
+            style="@style/CustomFontTextViewStyle.ClientList.Light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="GA: 10 weeks"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/register_member_village_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/profile_dot_separator_margin"
+            android:layout_marginRight="@dimen/profile_dot_separator_margin"
+            android:text="\u00b7"
+            android:textColor="@android:color/black" />
+
+        <org.smartregister.view.customcontrols.CustomFontTextView
+            android:id="@+id/text_view_pg_risk_gravida"
+            style="@style/CustomFontTextViewStyle.ClientList.Light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Gravida 2"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/register_member_village_size" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <org.smartregister.view.customcontrols.CustomFontTextView
+            android:id="@+id/text_view_pg_risk_address"
+            style="@style/CustomFontTextViewStyle.ClientList.Light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingLeft="0dp"
+            android:text="Lavingtone #445"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/register_member_village_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/profile_dot_separator_margin"
+            android:layout_marginRight="@dimen/profile_dot_separator_margin"
+            android:text="\u00b7"
+            android:textColor="@android:color/black" />
+
+        <org.smartregister.view.customcontrols.CustomFontTextView
+            android:id="@+id/text_view_pg_risk_id"
+            style="@style/CustomFontTextViewStyle.ClientList.Light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingLeft="0dp"
+            android:text="ID:123456"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/register_member_village_size" />
+    </LinearLayout>
+
+</LinearLayout>
+

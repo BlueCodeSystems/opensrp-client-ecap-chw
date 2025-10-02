@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="accent">#3797ca</color>
+    <color name="customAppThemeBlue">#3797ca</color>
+    <color name="due_profile_blue">#218CC5</color>
+    <color name="family_actionbar">#30383C</color>
+    <color name="family_navigation">#596468</color>
+    <color name="other_member_profile_bg">#FAFAFA</color>
+    <color name="primary">#218CC5</color>
+    <color name="primaryAccent">#3797ca</color>
+    <color name="primaryBackground">#a6d1e7</color>
+    <color name="primaryDark">#0d384e</color>
+    <color name="progress_orange">#fca917</color>
+    <color name="vaccine_blue_bg_end">#3495bf</color>
+    <color name="vaccine_blue_bg_st">#389cc8</color>
+    <color name="vaccine_blue_bg_stk">#267ea5</color>
+    <dimen name="app_bar_height">200dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="item_width">200dp</dimen>
+    <dimen name="register_due_status_size">10dp</dimen>
+    <dimen name="register_due_status_top_margin">5dp</dimen>
+    <dimen name="register_last_visit_top_margin">5dp</dimen>
+    <dimen name="register_list_arrow_right_margin">20dp</dimen>
+    <dimen name="register_list_desc_size">17sp</dimen>
+    <dimen name="register_list_due_size">15sp</dimen>
+    <dimen name="register_list_elevation">8dp</dimen>
+    <dimen name="register_list_item_end_margin">5dp</dimen>
+    <dimen name="register_list_item_height">75dp</dimen>
+    <dimen name="register_list_item_margin">15dp</dimen>
+    <dimen name="register_list_item_padding">7dp</dimen>
+    <dimen name="register_list_item_width">130dp</dimen>
+    <dimen name="register_list_max_padding">15dp</dimen>
+    <dimen name="register_list_member_icon_margin">10dp</dimen>
+    <dimen name="register_list_member_item_padding">10dp</dimen>
+    <dimen name="register_list_next_arrow_padding">5dp</dimen>
+    <dimen name="register_list_title_size">19sp</dimen>
+    <dimen name="register_list_top_bottom_margin">7dp</dimen>
+    <dimen name="register_list_top_bottom_min_padding">2dp</dimen>
+    <dimen name="register_list_top_bottom_padding">7dp</dimen>
+    <dimen name="register_member_name_size">22sp</dimen>
+    <dimen name="register_member_nav_margin">10dp</dimen>
+    <dimen name="register_member_title_size">17sp</dimen>
+    <dimen name="register_member_toolbar_margin">16dp</dimen>
+    <dimen name="register_member_village_size">15sp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <item name="VIEW_ID" type="id"/>
+    <item name="filter_text_view" type="id"/>
+    <item name="opensrp_logo_image_view" type="id"/>
+    <item name="scanQrCode" type="id"/>
+    <item name="search_bar_layout" type="id"/>
+    <item name="txt_title_label" type="id"/>
+    <string name="abbrv_days">d</string>
+    <string name="abbrv_months">m</string>
+    <string name="abbrv_weeks">w</string>
+    <string name="abbrv_years">y</string>
+    <string name="activity">Activity</string>
+    <string name="add_fam">Add Household</string>
+    <string name="add_family">Add Household</string>
+    <string name="add_member">Add Member</string>
+    <string name="age_text">Age: %1$s</string>
+    <string name="all_families">All Households</string>
+    <string name="any_changes_you_make">Any changes you have made will be lost</string>
+    <string name="app_name">opensrp-client-household</string>
+    <string name="back">BACK</string>
+    <string name="confirm_form_close">Close form?</string>
+    <string name="confirm_form_close_explanation">Any changes you have made will be lost</string>
+    <string name="deceased_brackets">(deceased)</string>
+    <string name="due">Due</string>
+    <string name="error_unable_to_start_form">An error occurred when starting the form</string>
+    <string name="families">Household</string>
+    <string name="family_head">Household Head</string>
+    <string name="family_profile_title">%1$s Household</string>
+    <string name="family_profile_title_with_firstname">%1$s %2$s Household</string>
+    <string name="family_title">{0} Household</string>
+    <string name="female">Female</string>
+    <string name="home">Home</string>
+    <string name="id_with_value">ID: %1$s</string>
+    <string name="job_aids">Job Aids</string>
+    <string name="male">Male</string>
+    <string name="member">Members</string>
+    <string name="new_registration_saved">New registration saved !</string>
+    <string name="no_matching_record_found_on_this_device">No matching record found on this device.</string>
+    <string name="no_unique_id">No unique ids found. Click on the sync button to get more and if this error persists contact the system admin.</string>
+    <string name="physically_challenged">Physically Challenged</string>
+    <string name="primary_care_giver">Primary Caregiver</string>
+    <string name="registration_info_updated">Registration info updated !</string>
+    <string name="return_to_all_families">Return to all households</string>
+    <string name="return_to_family_profile">Return to household profile</string>
+    <string name="saving_dialog_title">Saving…</string>
+    <string name="scan_qr">Scan QR</string>
+    <string name="sort">Sort</string>
+    <string name="title_family_detail">Household Detail</string>
+    <string name="unique_id_text">ID: %1$s</string>
+    <style name="FamilyTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primaryDark</item>
+        <item name="colorAccent">@color/accent</item>
+    </style>
+    <style name="FamilyTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="FamilyTheme.DarkAppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:windowContentOverlay">@null</item>
+        
+        <item name="colorControlNormal">@android:color/black</item>
+    </style>
+    <style name="FamilyTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="FamilyTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+</resources>

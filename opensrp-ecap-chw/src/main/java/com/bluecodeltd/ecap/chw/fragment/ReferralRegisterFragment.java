@@ -99,8 +99,8 @@ public class ReferralRegisterFragment extends BaseReferralRegisterFragment {
         dueOnlyLayout.setOnClickListener(registerActionHandler);
 
         if (getSearchView() != null) {
-            getSearchView().setBackgroundResource(org.smartregister.family.R.color.white);
-            getSearchView().setCompoundDrawablesWithIntrinsicBounds(org.smartregister.family.R.drawable.ic_action_search, 0, 0, 0);
+            getSearchView().setBackgroundResource(android.R.color.white);
+            getSearchView().setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.ic_menu_search, 0, 0, 0);
             getSearchView().setTextColor(getResources().getColor(org.smartregister.R.color.text_black));
         }
     }

@@ -43,7 +43,7 @@ public class ChwMalariaRegisterProvider extends MalariaRegisterProvider {
         dueButton.setVisibility(View.VISIBLE);
         dueButton.setOnClickListener(onClickListener);
         if (CoreConstants.VISIT_STATE.OVERDUE.equalsIgnoreCase(followStatus)) {
-            dueButton.setTextColor(context.getResources().getColor(org.smartregister.R.color.white));
+            dueButton.setTextColor(context.getResources().getColor(R.color.white));
             dueButton.setBackgroundResource(R.drawable.overdue_red_btn_selector);
         }
         if (CoreConstants.VISIT_STATE.DUE.equalsIgnoreCase(followStatus)) {

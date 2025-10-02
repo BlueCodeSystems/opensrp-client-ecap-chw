@@ -6,7 +6,7 @@ import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.chw.fp.util.FpUtil.getClientProcessorForJava;
 import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_EXTRA.STEP1;
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static com.bluecodeltd.ecap.chw.util.EventMetadataUtils.tagSyncMetadata;
 
 import android.content.Context;
 import android.content.Intent;
@@ -27,7 +27,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
-import androidx.preference.PreferenceManager;
+import android.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
@@ -194,7 +194,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
                 buttonText = "Visit Overdue: " + visitDate;
             } else {
                 backgroundResource = org.smartregister.family.R.drawable.due_contact;
-                textColorResource = org.smartregister.R.color.btn_blue;
+                textColorResource = android.R.color.holo_blue_dark;
                 buttonText = "Conduct Visit";
             }
 
@@ -206,11 +206,11 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
         else {
             if(indexVCA != null && (indexVCA.getCase_status().equals("0") || indexVCA.getCase_status().equals("2")) ){
                 dueButton.setBackgroundResource(R.drawable.inactive_button);
-                dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), org.smartregister.R.color.btn_blue));
+                dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), android.R.color.holo_blue_dark));
                 dueButton.setText("Case Closed");
             } else {
                 dueButton.setBackgroundResource(org.smartregister.family.R.drawable.due_contact);
-                dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), org.smartregister.R.color.btn_blue));
+                dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), android.R.color.holo_blue_dark));
                 dueButton.setText("Conduct Visit");
             }
         }

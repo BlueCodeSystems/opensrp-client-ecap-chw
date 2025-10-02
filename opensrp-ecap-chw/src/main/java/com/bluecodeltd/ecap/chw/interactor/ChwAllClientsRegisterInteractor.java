@@ -9,7 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import org.smartregister.clientandeventmodel.Client;
-import org.smartregister.clientandeventmodel.Event;
+import org.smartregister.domain.Event;
 import org.smartregister.domain.UniqueId;
 import org.smartregister.family.util.Constants;
 import org.smartregister.family.util.JsonFormUtils;

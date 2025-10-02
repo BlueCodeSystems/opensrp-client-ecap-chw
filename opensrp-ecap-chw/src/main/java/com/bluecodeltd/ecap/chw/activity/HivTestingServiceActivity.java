@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.preference.PreferenceManager;
+import android.preference.PreferenceManager;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;

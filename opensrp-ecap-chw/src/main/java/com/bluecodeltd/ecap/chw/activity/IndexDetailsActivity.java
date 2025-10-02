@@ -3,7 +3,7 @@ package com.bluecodeltd.ecap.chw.activity;
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.chw.core.utils.CoreJsonFormUtils.getSyncHelper;
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static com.bluecodeltd.ecap.chw.util.EventMetadataUtils.tagSyncMetadata;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -36,7 +36,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.preference.PreferenceManager;
+import android.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;

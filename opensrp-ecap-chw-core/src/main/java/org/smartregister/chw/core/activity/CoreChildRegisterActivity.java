@@ -102,7 +102,7 @@ public class CoreChildRegisterActivity extends BaseRegisterActivity implements C
             }
         } catch (Exception e) {
             Timber.e(e);
-            displayToast(getString(org.smartregister.family.R.string.error_unable_to_start_form));
+            displayToast(getString(R.string.error_unable_to_start_form));
         }
     }
 
@@ -112,9 +112,9 @@ public class CoreChildRegisterActivity extends BaseRegisterActivity implements C
         intent.putExtra(Constants.JSON_FORM_EXTRA.JSON, jsonForm.toString());
 
         Form form = new Form();
-        form.setName(getString(org.smartregister.family.R.string.add_fam));
-        form.setActionBarBackground(org.smartregister.family.R.color.family_actionbar);
-        form.setNavigationBackground(org.smartregister.family.R.color.family_navigation);
+        form.setName(getString(R.string.add_fam));
+        form.setActionBarBackground(R.color.family_actionbar);
+        form.setNavigationBackground(R.color.family_navigation);
         form.setHomeAsUpIndicator(org.smartregister.family.R.mipmap.ic_cross_white);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
 

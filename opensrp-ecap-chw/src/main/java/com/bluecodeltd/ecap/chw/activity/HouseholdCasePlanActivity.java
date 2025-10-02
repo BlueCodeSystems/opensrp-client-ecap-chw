@@ -2,7 +2,7 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static com.bluecodeltd.ecap.chw.util.EventMetadataUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.app.Dialog;

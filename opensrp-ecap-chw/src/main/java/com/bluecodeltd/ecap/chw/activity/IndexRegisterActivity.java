@@ -7,7 +7,7 @@ import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.chw.fp.util.FpUtil.getClientProcessorForJava;
 import static org.smartregister.family.util.JsonFormUtils.STEP2;
 import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_EXTRA.STEP3;
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static com.bluecodeltd.ecap.chw.util.EventMetadataUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.content.Intent;
@@ -21,7 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.preference.PreferenceManager;
+import android.preference.PreferenceManager;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;

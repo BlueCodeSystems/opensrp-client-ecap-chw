@@ -89,14 +89,14 @@ public class IndicatorCategoryView extends LinearLayout {
                 } catch (Exception ex) {
                     Timber.e(ex);
                 }
-                nameTextView.setTextColor(getResources().getColor(org.smartregister.fp.R.color.client_list_grey));
+                nameTextView.setTextColor(getResources().getColor(R.color.client_list_grey));
                 curRow.addView(nameTextView);
 
                 TextView valueTextView = new TextView(context);
                 valueTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                         getResources().getDimension(R.dimen.indicator_table_contents_text_size));
                 valueTextView.setGravity(Gravity.END | Gravity.CENTER_VERTICAL);
-                valueTextView.setTextColor(getResources().getColor(org.smartregister.fp.R.color.client_list_grey));
+                valueTextView.setTextColor(getResources().getColor(R.color.client_list_grey));
                 valueTextView.setText(curTally.getValue());
                 TableRow.LayoutParams valueTextViewLp = new TableRow.LayoutParams(1);
                 valueTextView.setLayoutParams(valueTextViewLp);
@@ -106,3 +106,5 @@ public class IndicatorCategoryView extends LinearLayout {
         }
     }
 }
+
+

@@ -72,7 +72,7 @@ public class ChwAncRegisterProvider extends AncRegisterProvider {
     }
 
     private void setVisitButtonOverdueStatus(Context context, Button dueButton, String lastVisitDays) {
-        dueButton.setTextColor(context.getResources().getColor(org.smartregister.R.color.white));
+        dueButton.setTextColor(context.getResources().getColor(R.color.white));
         if (TextUtils.isEmpty(lastVisitDays)) {
             dueButton.setText(context.getString(R.string.record_visit));
         } else {

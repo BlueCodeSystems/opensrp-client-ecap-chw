@@ -7,7 +7,7 @@ import org.jeasy.rules.api.Rules;
 import org.jeasy.rules.api.RulesEngine;
 import org.jeasy.rules.core.DefaultRulesEngine;
 import org.jeasy.rules.core.InferenceRulesEngine;
-import org.jeasy.rules.core.RulesEngineParameters;
+import org.jeasy.rules.api.RulesEngineParameters;
 import org.jeasy.rules.mvel.MVELRuleFactory;
 import org.smartregister.chw.core.rule.ICommonRule;
 import org.smartregister.chw.core.rule.MalariaFollowUpRule;

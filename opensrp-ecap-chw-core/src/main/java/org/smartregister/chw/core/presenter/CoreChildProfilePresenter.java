@@ -417,7 +417,7 @@ public class CoreChildProfilePresenter implements CoreChildProfileContract.Prese
         getView().setGender(gender);
 
         String uniqueId = Utils.getValue(client.getColumnmaps(), DBConstants.KEY.UNIQUE_ID, false);
-        uniqueId = String.format(getView().getString(org.smartregister.family.R.string.unique_id_text), uniqueId);
+        uniqueId = String.format(getView().getString(R.string.unique_id_text), uniqueId);
         getView().setId(uniqueId);
 
         getView().setProfileImage(client.getCaseId());

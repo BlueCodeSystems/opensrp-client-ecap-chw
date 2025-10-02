@@ -5,6 +5,7 @@ import android.content.Context;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Triple;
 import org.smartregister.chw.anc.util.NCUtils;
+import org.smartregister.chw.core.R;
 import org.smartregister.chw.core.application.CoreChwApplication;
 import org.smartregister.chw.core.contract.FamilyOtherMemberProfileExtendedContract;
 import org.smartregister.chw.core.contract.FamilyProfileExtendedContract;
@@ -149,7 +150,7 @@ public abstract class CoreFamilyOtherMemberActivityPresenter extends BaseFamilyO
     public void updateFamilyMember(Context context, String jsonString, boolean isIndependent) {
 
         try {
-            getView().showProgressDialog(org.smartregister.family.R.string.saving_dialog_title);
+            getView().showProgressDialog(R.string.saving_dialog_title);
 
             FamilyEventClient familyEventClient = profileModel.processUpdateMemberRegistration(jsonString, familyBaseEntityId);
             FamilyMember familyMember = CoreJsonFormUtils.getFamilyMemberFromRegistrationForm(jsonString, familyBaseEntityId, familyBaseEntityId);

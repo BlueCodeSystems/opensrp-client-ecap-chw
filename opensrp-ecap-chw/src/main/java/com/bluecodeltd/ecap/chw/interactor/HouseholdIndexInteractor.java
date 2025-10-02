@@ -8,7 +8,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
-import androidx.preference.PreferenceManager;
+import android.preference.PreferenceManager;
 
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.contract.HouseholdIndexContract;

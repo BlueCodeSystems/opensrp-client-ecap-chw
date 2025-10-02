@@ -83,7 +83,7 @@ public class CoreFamilyPlanningFloatingMenu extends BaseFpFloatingMenu {
         if (isFabMenuOpen) {
             activityMain.setBackgroundResource(org.smartregister.R.color.transparent);
             fab.startAnimation(rotateBack);
-            fab.setImageResource(com.vijay.jsonwizard.R.drawable.ic_edit_white);
+            fab.setImageResource(R.drawable.ic_edit_white);
 
             callLayout.startAnimation(fabClose);
             callLayout.setClickable(false);

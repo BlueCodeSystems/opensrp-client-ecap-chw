@@ -123,7 +123,7 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
                     image.setImageResource(org.smartregister.family.R.mipmap.ic_girl_child);
 
                 } else {
-                    image.setImageResource(org.smartregister.family.R.drawable.ic_person_black_24dp);
+                    image.setImageResource(android.R.drawable.ic_menu_myplaces);
                     image.setColorFilter(ContextCompat.getColor(context, org.smartregister.R.color.dark_grey));
                 }
 

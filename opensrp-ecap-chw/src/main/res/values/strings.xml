@@ -25,6 +25,8 @@
     <string name="last_visit_40_days_ago">Last visit %1$s ago</string>
 
     <string name="not_visiting_this_month">Not visiting this month</string>
+    <string name="pnc_visit_done">PNC visit done on day {0}</string>
+    <string name="record_pnc_visit">Record PNC visit</string>
     <string name="undo">UNDO</string>
 
     <string name="edit">EDIT</string>

@@ -1,7 +1,7 @@
 package com.bluecodeltd.ecap.chw.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceManager;
+import android.preference.PreferenceManager;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

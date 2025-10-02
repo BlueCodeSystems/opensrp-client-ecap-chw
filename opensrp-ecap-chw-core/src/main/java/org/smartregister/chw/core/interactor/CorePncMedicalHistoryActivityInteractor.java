@@ -17,10 +17,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.smartregister.chw.anc.util.AppExecutors;
+
 public abstract class CorePncMedicalHistoryActivityInteractor extends BasePncMedicalHistoryInteractor {
 
     @Override
     public void getMemberHistory(final String memberID, final Context context, final BasePncMedicalHistoryContract.InteractorCallBack callBack) {
+        final AppExecutors appExecutors = new AppExecutors();
         final Runnable runnable = () -> {
 
             List<Visit> visits = VisitDao.getPNCVisitsMedicalHistory(memberID);
@@ -68,3 +71,5 @@ public abstract class CorePncMedicalHistoryActivityInteractor extends BasePncMed
         appExecutors.diskIO().execute(runnable);
     }
 }
+
+

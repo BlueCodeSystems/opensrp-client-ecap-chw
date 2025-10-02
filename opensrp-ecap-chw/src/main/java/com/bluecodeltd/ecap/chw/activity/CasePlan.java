@@ -2,7 +2,7 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static com.bluecodeltd.ecap.chw.util.EventMetadataUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.annotation.SuppressLint;
@@ -37,6 +37,7 @@ import org.json.JSONObject;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
+import org.smartregister.domain.tag.FormTag;
 import org.smartregister.domain.db.EventClient;
 import org.smartregister.domain.tag.FormTag;
 import org.smartregister.family.util.AppExecutors;

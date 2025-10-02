@@ -1,1 +1,1 @@
-include ':opensrp-ecap-chw', ':opensrp-ecap-chw-core'
+include ':opensrp-ecap-chw', ':opensrp-ecap-chw-core', ':opensrp-household-stripped'

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="abbrv_days">d</string>
+    <string name="abbrv_months">m</string>
+    <string name="abbrv_weeks">w</string>
+    <string name="abbrv_years">y</string>
+    <string name="activity">Huduma</string>
+    <string name="add_fam">Sajili Kaya</string>
+    <string name="add_family">Sajili Kaya</string>
+    <string name="add_member">Sajili mwanafamilia</string>
+    <string name="age_text">Umri: %1$s</string>
+    <string name="all_families">Kaya Zote</string>
+    <string name="any_changes_you_make">Mabadiliko yoyote uliyofanya yatapotea</string>
+    <string name="app_name">opensrp-client-family</string>
+    <string name="back">RUDI NYUMA</string>
+    <string name="deceased_brackets">(marehemu)</string>
+    <string name="due">Imefika</string>
+    <string name="error_unable_to_start_form">Hitilafu imejitokeza wakati wa kufungua fomu</string>
+    <string name="families">Kaya</string>
+    <string name="family_head">Mkuu wa Kaya</string>
+    <string name="family_profile_title">Kaya ya %1$s</string>
+    <string name="family_profile_title_with_firstname">Kaya ya %1$s %2$s</string>
+    <string name="family_title">Kaya ya {0} </string>
+    <string name="female">Ke</string>
+    <string name="home">Nyumbani</string>
+    <string name="id_with_value">Kitambulisho: %1$s</string>
+    <string name="job_aids">Vitendea kazi</string>
+    <string name="male">Me</string>
+    <string name="member">Wahusika</string>
+    <string name="new_registration_saved">Usajili mpya umehifadhiwa !</string>
+    <string name="no_matching_record_found_on_this_device">Hakuna rekodi zinazoshabihiana kwenye kifaa hiki</string>
+    <string name="no_unique_id">Kitambulisho hakipatikani. Bonyeza kitufe cha sync kupata rekodi zaidi na kama bado hakipatikani, wasiliana na mtaalamu wa mifumo</string>
+    <string name="primary_care_giver">Mlezi</string>
+    <string name="registration_info_updated">Taarifa za usajili zimeboreshwa !</string>
+    <string name="return_to_all_families">Rudi kwenye kaya zote</string>
+    <string name="return_to_family_profile">Rudi kwenye taarifa za kaya</string>
+    <string name="saving_dialog_title">Kuhifadhi....</string>
+    <string name="scan_qr">Scan QR</string>
+    <string name="sort">Panga</string>
+    <string name="title_family_detail">Taarifa za Kaya</string>
+    <string name="unique_id_text">Kitambulisho %1$s</string>
+</resources>

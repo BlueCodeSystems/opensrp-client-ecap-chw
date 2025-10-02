@@ -82,7 +82,7 @@ public class CoreFpProvider extends BaseFpRegisterProvider {
     }
 
     private void setVisitButtonOverdueStatus(Context context, String visitDue, Button dueButton) {
-        dueButton.setTextColor(context.getResources().getColor(org.smartregister.R.color.white));
+        dueButton.setTextColor(context.getResources().getColor(R.color.white));
         if (visitDue.equalsIgnoreCase("0")) {
             dueButton.setText(context.getString(org.smartregister.fp.R.string.fp_visit_day_overdue_today));
 
