@@ -28,7 +28,7 @@
     <!-- Fallback color used by some library references -->
     <color name="translucent_yellow">#80FFFF00</color>
     <!-- Bottom navigation background color -->
-    <color name="bottom_nav_bar_background">#218CC5</color>
+    <color name="bottom_nav_bar_background">#FFFFFF</color>
     
     <!-- Commonly referenced colors in layouts/styles -->
     <color name="white">#FFFFFF</color>
@@ -42,3 +42,4 @@
     <color name="me_page_line_separator">#E0E0E0</color>
     <color name="progress_orange">#FFA726</color>
 </resources>
+

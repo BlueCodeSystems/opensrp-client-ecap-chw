@@ -517,3 +517,4 @@ public class IndexFragmentRegister extends BaseSafeRegisterFragment implements I
         }
     }
 }
+

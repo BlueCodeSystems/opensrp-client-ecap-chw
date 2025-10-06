@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -95,26 +96,39 @@ public class HouseholdServiceActivity extends AppCompatActivity {
         hh_id = binding.hhid;
         updatedCaregiverName = binding.updatedCaregiverName;
 
-        intent_householdId = getIntent().getExtras().getString("householdId");
-        intent_cname = getIntent().getExtras().getString("cname");
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            intent_householdId = extras.getString("householdId");
+            intent_cname = extras.getString("cname");
+        }
 
         // Load updated caregiver name off-UI
         Threading.io(() -> {
             newCaregiverModel updated = null;
-            try { updated = newCaregiverDao.getNewCaregiverById(intent_householdId); } catch (Exception ignored) {}
+            try {
+                if (!TextUtils.isEmpty(intent_householdId)) {
+                    updated = newCaregiverDao.getNewCaregiverById(intent_householdId);
+                }
+            } catch (Exception ignored) {}
             newCaregiverModel finalUpdated = updated;
             Threading.main(() -> {
                 updatedCaregiver = finalUpdated;
-                if(updatedCaregiver != null && updatedCaregiver.getNew_caregiver_name() != null && !updatedCaregiver.getNew_caregiver_name().isEmpty()) {
+                if(updatedCaregiver != null && !TextUtils.isEmpty(updatedCaregiver.getNew_caregiver_name())) {
                     updatedCaregiverName.setVisibility(View.VISIBLE);
                     updatedCaregiverName.setText("Current: "+ updatedCaregiver.getNew_caregiver_name()+" Household");
+                } else {
+                    updatedCaregiverName.setVisibility(View.GONE);
                 }
             });
         });
 
 
-        hh_id.setText(intent_householdId);
-        cname.setText(intent_cname);
+        if (!TextUtils.isEmpty(intent_householdId)) {
+            hh_id.setText(intent_householdId);
+        }
+        if (!TextUtils.isEmpty(intent_cname)) {
+            cname.setText(intent_cname);
+        }
 
         View progress = binding.progressLoading;
         // Initialize RecyclerView + Adapter early to avoid nulls on resume
@@ -129,7 +143,10 @@ public class HouseholdServiceActivity extends AppCompatActivity {
         }
         if (progress != null) progress.setVisibility(View.VISIBLE);
         Threading.io(() -> {
-            ArrayList<HouseholdServiceReportModel> results = new ArrayList<>(HouseholdServiceReportDao.getServicesByHousehold(intent_householdId));
+            ArrayList<HouseholdServiceReportModel> results = new ArrayList<>();
+            if (!TextUtils.isEmpty(intent_householdId)) {
+                results.addAll(HouseholdServiceReportDao.getServicesByHousehold(intent_householdId));
+            }
             Threading.main(() -> {
                 familyServiceList.clear();
                 familyServiceList.addAll(results);

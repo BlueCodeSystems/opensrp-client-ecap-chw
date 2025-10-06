@@ -7,7 +7,7 @@ import com.bluecodeltd.ecap.chw.util.Threading;
 import androidx.lifecycle.ViewModelProvider;
 import com.bluecodeltd.ecap.chw.viewmodel.ProfileOverviewViewModel;
 import com.bluecodeltd.ecap.chw.viewmodel.ProfileOverviewState;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -149,22 +149,23 @@ public class ProfileOverviewFragment extends Fragment {
         new_child_relation.setText(updateCaregiver != null && updateCaregiver.getNew_relation() != null ? updateCaregiver.getNew_relation() : "Not Set");
         new_caregiver_phone.setText(updateCaregiver != null && updateCaregiver.getNew_caregiver_phone() != null ? updateCaregiver.getNew_caregiver_phone() : "Not Set");
 
-        try {
-            if(updateCaregiver.getNew_caregiver_name() != null && !updateCaregiver.getNew_caregiver_name().isEmpty()){
-                overview_section_header3.setText("Previous Caregiver Details");
-                linearlayout_gender.setVisibility(View.VISIBLE);
-                linearlayout_dob.setVisibility(View.VISIBLE);
-                linearlayout_status.setVisibility(View.VISIBLE);
-                linearlayout_relation.setVisibility(View.VISIBLE);
-                linearlayout_phone.setVisibility(View.VISIBLE);
-                linearlayout_name.setVisibility(View.VISIBLE);
-                overview_section_header5.setVisibility(View.VISIBLE);
-            }
-
-
-        } catch (NullPointerException e) {
-            Log.e("TAG", "Error: " + e.getMessage());
-
+        if(updateCaregiver != null && !TextUtils.isEmpty(updateCaregiver.getNew_caregiver_name())){
+            overview_section_header3.setText("Previous Caregiver Details");
+            linearlayout_gender.setVisibility(View.VISIBLE);
+            linearlayout_dob.setVisibility(View.VISIBLE);
+            linearlayout_status.setVisibility(View.VISIBLE);
+            linearlayout_relation.setVisibility(View.VISIBLE);
+            linearlayout_phone.setVisibility(View.VISIBLE);
+            linearlayout_name.setVisibility(View.VISIBLE);
+            overview_section_header5.setVisibility(View.VISIBLE);
+        } else {
+            overview_section_header5.setVisibility(View.GONE);
+            linearlayout_gender.setVisibility(View.GONE);
+            linearlayout_dob.setVisibility(View.GONE);
+            linearlayout_status.setVisibility(View.GONE);
+            linearlayout_relation.setVisibility(View.GONE);
+            linearlayout_phone.setVisibility(View.GONE);
+            linearlayout_name.setVisibility(View.GONE);
         }
 //        if(updateCaregiver.getHousehold_case_status() == null && updateCaregiver.getHousehold_case_status().equals("1") || updateCaregiver.getHousehold_case_status().equals("2")){
 //            overview_section_header5.setVisibility(View.GONE);

@@ -2,6 +2,7 @@ package com.bluecodeltd.ecap.chw.util;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
@@ -12,6 +13,8 @@ import com.bluecodeltd.ecap.chw.model.ReferralTypeModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.content.ContextCompat;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.smartregister.chw.core.utils.CoreConstants;
@@ -83,6 +86,18 @@ public class Utils extends org.smartregister.chw.core.utils.Utils {
             bottomNavigationView.inflateMenu(R.menu.bottom_nav_menu);
             bottomNavigationHelper.disableShiftMode(bottomNavigationView);
             bottomNavigationView.setOnNavigationItemSelectedListener(listener);
+
+            ColorStateList iconTint = AppCompatResources.getColorStateList(bottomNavigationView.getContext(), R.color.bottom_navigation_icon_selector);
+            if (iconTint != null) {
+                bottomNavigationView.setItemIconTintList(iconTint);
+            }
+
+            ColorStateList textColor = AppCompatResources.getColorStateList(bottomNavigationView.getContext(), R.color.bottom_navigation_selector);
+            if (textColor != null) {
+                bottomNavigationView.setItemTextColor(textColor);
+            }
+
+            bottomNavigationView.setBackgroundColor(ContextCompat.getColor(bottomNavigationView.getContext(), R.color.bottom_nav_bar_background));
         }
 
         if (bottomNavigationView != null && !ChwApplication.getApplicationFlavor().hasQR())
@@ -136,3 +151,4 @@ public class Utils extends org.smartregister.chw.core.utils.Utils {
     public static void startAsyncTask(SaveTeamLocationsTask saveTeamLocationsTask, Object params) {
     }
 }
+

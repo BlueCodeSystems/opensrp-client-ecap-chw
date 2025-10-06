@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -89,22 +90,35 @@ public class HouseholdServicesOnlyActivity extends AppCompatActivity {
         hh_id = binding.hhid;
         updatedCaregiverName = binding.updatedCaregiverName;
 
-        intent_householdId = getIntent().getExtras().getString("householdId");
-        String intent_cname = getIntent().getExtras().getString("cname");
+        Bundle extras = getIntent().getExtras();
+        String intent_cname = null;
+        if (extras != null) {
+            intent_householdId = extras.getString("householdId");
+            intent_cname = extras.getString("cname");
+        }
 
-        updatedCaregiver = newCaregiverDao.getNewCaregiverById(intent_householdId);
+        if (!TextUtils.isEmpty(intent_householdId)) {
+            updatedCaregiver = newCaregiverDao.getNewCaregiverById(intent_householdId);
+        }
 
+        if (!TextUtils.isEmpty(intent_householdId)) {
+            hh_id.setText(intent_householdId);
+        }
+        if (!TextUtils.isEmpty(intent_cname)) {
+            cname.setText(intent_cname);
+        }
 
-        hh_id.setText(intent_householdId);
-        cname.setText(intent_cname);
-
-        if(updatedCaregiver != null && updatedCaregiver.getNew_caregiver_name() != null && !updatedCaregiver.getNew_caregiver_name().isEmpty()) {
+        if(updatedCaregiver != null && !TextUtils.isEmpty(updatedCaregiver.getNew_caregiver_name())) {
             updatedCaregiverName.setVisibility(View.VISIBLE);
             updatedCaregiverName.setText("Current: "+ updatedCaregiver.getNew_caregiver_name()+" Household");
+        } else {
+            updatedCaregiverName.setVisibility(View.GONE);
         }
 
 
-        familyServiceList.addAll(HouseholdServiceReportDao.getServicesForHouseholdOnly(intent_householdId));
+        if (!TextUtils.isEmpty(intent_householdId)) {
+            familyServiceList.addAll(HouseholdServiceReportDao.getServicesForHouseholdOnly(intent_householdId));
+        }
 
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(HouseholdServicesOnlyActivity.this);
         recyclerView.setHasFixedSize(true);

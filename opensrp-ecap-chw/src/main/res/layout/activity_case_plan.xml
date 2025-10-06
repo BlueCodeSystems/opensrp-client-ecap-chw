@@ -1,51 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent"
+    android:paddingStart="@dimen/contact_small_padding"
+    android:paddingEnd="@dimen/contact_small_padding"
+    android:paddingBottom="@dimen/contact_small_padding"
+    android:paddingTop="@dimen/contact_drawable_padding"
+    android:fitsSystemWindows="true">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/domainrecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingTop="30dp"
+        android:paddingBottom="@dimen/contact_drawable_padding"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/domainBtn2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.rey.material.widget.Button
-        android:visibility="visible"
-        android:layout_centerInParent="true"
         android:id="@+id/domainBtn"
-        android:onClick="onClick"
-        android:background="#218CC5"
-        android:padding="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/contact_small_padding"
+        android:background="#218CC5"
+        android:onClick="onClick"
+        android:padding="8dp"
         android:text="Add Vulnerability"
-        android:textColor="@android:color/white"
         android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:visibility="visible"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:rd_enable="true"
-        app:rd_rippleType="wave"
-        />
+        app:rd_rippleType="wave" />
 
     <com.rey.material.widget.Button
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:visibility="gone"
-        android:layout_margin="10dp"
         android:id="@+id/domainBtn2"
-        android:onClick="onClick"
-        android:background="#218CC5"
-        android:padding="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/contact_small_padding"
+        android:background="#218CC5"
+        android:onClick="onClick"
+        android:padding="8dp"
         android:text="Add Vulnerability"
-        android:textColor="@android:color/white"
         android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:rd_enable="true"
-        app:rd_rippleType="wave"
-        />
+        app:rd_rippleType="wave" />
 
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 

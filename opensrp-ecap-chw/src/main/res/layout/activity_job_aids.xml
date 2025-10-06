@@ -108,9 +108,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|fill_horizontal"
-        android:background="?android:attr/windowBackground"
+        android:background="@color/bottom_nav_bar_background"
         app:itemBackground="@color/bottom_nav_bar_background"
+        app:itemIconTint="@color/bottom_navigation_icon_selector"
         app:itemTextColor="@color/bottom_navigation_selector"
         app:menu="@menu/bottom_nav_family_menu" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+

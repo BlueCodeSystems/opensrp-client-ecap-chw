@@ -121,13 +121,10 @@ public class ShowReferralsActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK) {
-
             boolean is_edit_mode = false;
-
             String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
 
             JSONObject jsonFormObject = null;
@@ -137,23 +134,37 @@ public class ShowReferralsActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+            if (!jsonFormObject.optString("entity_id").isEmpty()) {
+                is_edit_mode = true;
+            }
+            String EncounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
 
             try {
-
                 ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
 
                 if (childIndexEventClient == null) {
                     return;
                 }
 
-                saveRegistration(childIndexEventClient, false);
+                saveRegistration(childIndexEventClient, is_edit_mode,EncounterType);
 
-                Toasty.success(ShowReferralsActivity.this, "Referral Updated", Toast.LENGTH_LONG, true).show();
+                switch (EncounterType) {
 
+                    case "Referral":
+                        Toasty.success(ShowReferralsActivity.this, "Referral updated", Toast.LENGTH_LONG, true).show();
+                        recreate();
+                        refresh();
+                        break;
+
+                }
             } catch (Exception e) {
                 Timber.e(e);
             }
         }
+        finish();
+        startActivity(getIntent());
+    }
+    public void refresh(){
         finish();
         startActivity(getIntent());
     }
@@ -179,7 +190,6 @@ public class ShowReferralsActivity extends AppCompatActivity {
 
             switch (encounterType) {
                 case "Referral":
-                case "Referral Edit VCA":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
@@ -199,7 +209,7 @@ public class ShowReferralsActivity extends AppCompatActivity {
         return null;
     }
 
-    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode,String encounterType) {
 
         Runnable runnable = () -> {
 

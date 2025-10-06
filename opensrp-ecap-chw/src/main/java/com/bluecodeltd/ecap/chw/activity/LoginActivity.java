@@ -116,7 +116,7 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
             if (hasPinLogin() && !pinLogger.isFirstAuthentication()) {
                 menu.add(getString(R.string.reset_pin_login));
             }
-            menu.add(getString(R.string.export_database));
+//            menu.add(getString(R.string.export_database));
             return true;
         }
         menu.clear();

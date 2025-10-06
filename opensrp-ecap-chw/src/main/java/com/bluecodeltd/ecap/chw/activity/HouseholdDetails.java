@@ -17,6 +17,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -276,9 +277,11 @@ public class HouseholdDetails extends AppCompatActivity {
             } catch (Exception ignored){ }
 
             try {
-                if(updatedCaregiver != null && updatedCaregiver.getNew_caregiver_name() != null && !updatedCaregiver.getNew_caregiver_name().isEmpty()){
+                if(updatedCaregiver != null && !TextUtils.isEmpty(updatedCaregiver.getNew_caregiver_name())){
                     updatedCaregiverName.setVisibility(View.VISIBLE);
                     updatedCaregiverName.setText("Current Caregiver: "+ updatedCaregiver.getNew_caregiver_name());
+                } else {
+                    updatedCaregiverName.setVisibility(View.GONE);
                 }
             } catch (Exception e) {
                 Log.e("TAG", "Error: " + e.getMessage());

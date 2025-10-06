@@ -8,9 +8,12 @@ import static org.smartregister.util.JsonFormUtils.STEP1;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowInsetsController;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,6 +74,11 @@ public class CasePlan extends AppCompatActivity {
         binding = com.bluecodeltd.ecap.chw.databinding.ActivityCasePlanBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+        applyLightStatusBar();
+
         recyclerView = binding.domainrecyclerView;
         domainBtn = binding.domainBtn;
         domainBtn2 = binding.domainBtn2;
@@ -82,6 +90,23 @@ public class CasePlan extends AppCompatActivity {
 
         fetchData();
 
+    }
+
+    private void applyLightStatusBar() {
+        Window window = getWindow();
+        View decorView = window.getDecorView();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            WindowInsetsController controller = decorView.getWindowInsetsController();
+            if (controller != null) {
+                controller.setSystemBarsAppearance(
+                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS);
+            }
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int flags = decorView.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            decorView.setSystemUiVisibility(flags);
+        }
     }
 
     public void fetchData() {

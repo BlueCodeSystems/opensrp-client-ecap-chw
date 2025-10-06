@@ -5,6 +5,7 @@ import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -84,13 +85,18 @@ public class ShowHouseholdReferralActivity extends AppCompatActivity {
         updatedCaregiverName = findViewById(R.id.updated_caregiver_name);
 
         Bundle bundle = getIntent().getExtras();
-        intent_household_id = bundle.getString("householdId");
-        String intent_cname = bundle.getString("householdName");
+        String intent_cname = null;
+        if (bundle != null) {
+            intent_household_id = bundle.getString("householdId");
+            intent_cname = bundle.getString("householdName");
+        }
 
         try {
-            hh_id.setText("Household ID : " + intent_household_id);
+            if (!TextUtils.isEmpty(intent_household_id)) {
+                hh_id.setText("Household ID : " + intent_household_id);
+            }
 
-            if(intent_cname != null) {
+            if(!TextUtils.isEmpty(intent_cname)) {
                 vcaname.setText(intent_cname + " " + "Household");
                 txtReferral.setText("No referrals have been added for " + intent_cname + " " + "household");
             } else {
@@ -102,17 +108,23 @@ public class ShowHouseholdReferralActivity extends AppCompatActivity {
         }
 
 
-        updatedCaregiver = newCaregiverDao.getNewCaregiverById(intent_household_id);
+        if (!TextUtils.isEmpty(intent_household_id)) {
+            updatedCaregiver = newCaregiverDao.getNewCaregiverById(intent_household_id);
+        }
 
-        if((updatedCaregiver.getHousehold_case_status() != null && updatedCaregiver.getHousehold_case_status().equals("Update Caregiver Details")) || (updatedCaregiver.getHousehold_case_status() != null && updatedCaregiver.getHousehold_case_status().equals("0") && updatedCaregiver.getNew_caregiver_name() != null && !updatedCaregiver.getNew_caregiver_name().isEmpty())){
+        if(updatedCaregiver != null && (("Update Caregiver Details".equals(updatedCaregiver.getHousehold_case_status())) || ("0".equals(updatedCaregiver.getHousehold_case_status()) && !TextUtils.isEmpty(updatedCaregiver.getNew_caregiver_name())))){
 
             updatedCaregiverName.setVisibility(View.VISIBLE);
             updatedCaregiverName.setText("Current: "+ updatedCaregiver.getNew_caregiver_name()+" Household");
 
+        } else {
+            updatedCaregiverName.setVisibility(View.GONE);
         }
 
 
-        referralList.addAll(ReferralDao.getReferralsByHouseholdID(intent_household_id));
+        if (!TextUtils.isEmpty(intent_household_id)) {
+            referralList.addAll(ReferralDao.getReferralsByHouseholdID(intent_household_id));
+        }
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(ShowHouseholdReferralActivity.this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);

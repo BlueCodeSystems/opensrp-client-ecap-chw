@@ -20,6 +20,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -244,7 +245,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
         vcaVisitationModel = VcaVisitationDao.getVcaVisitation(childId);
         vcaCasePlanModel = VcaCasePlanDao.getVcaCasePlan(childId);
         weServiceVcaModel = WeServiceVcaDao.getWeServiceVca(childId);
-        updatedCaregiver = newCaregiverDao.getNewCaregiverById(indexVCA.getHousehold_id());
+        if (indexVCA != null && !TextUtils.isEmpty(indexVCA.getHousehold_id())) {
+            updatedCaregiver = newCaregiverDao.getNewCaregiverById(indexVCA.getHousehold_id());
+        } else {
+            updatedCaregiver = null;
+        }
 
 
 
@@ -311,6 +316,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         txtScreening = binding.vcaScreening;
         rassessment = binding.assessment;
         rcase_plan = binding.casePlan;
+        referral = binding.referral;
         referral = binding.referral;
         household_visitation_for_vca = binding.householdVisitationForVca;
 
