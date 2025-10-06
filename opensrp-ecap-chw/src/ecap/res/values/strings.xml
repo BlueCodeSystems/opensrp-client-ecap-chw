@@ -39,11 +39,11 @@
     <string name="add_index">VCA Screening</string>
     <string name="add_hts">Add HTS</string>
     <string name="saving_index">Saving Index Person</string>
-    <string name="all_index_title"></string>
-    <string name="hts_services"></string>
-    <string name="pmtct_services"></string>
-    <string name="all_mother_title"></string>
-    <string name="all_households_title"></string>
+    <string name="all_index_title">VCA Register</string>
+    <string name="hts_services">HTS Services</string>
+    <string name="pmtct_services">PMTCT Services</string>
+    <string name="all_mother_title">Mother Register</string>
+    <string name="all_households_title">Household Register</string>
     <string name="referrals">Referrals</string>
     <string name="hts">HTS Register</string>
     <string name="pmtct_register">PMTCT Register</string>

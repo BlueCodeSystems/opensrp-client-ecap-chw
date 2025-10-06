@@ -98,8 +98,15 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
             toolbar.setContentInsetStartWithNavigation(0);
             setSupportActionBar(toolbar);
             if (getSupportActionBar() != null) {
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 getSupportActionBar().setHomeButtonEnabled(true);
+            }
+            toolbar.setTitle("");
+            TextView titleLabel = toolbar.findViewById(org.smartregister.R.id.txt_title_label);
+            if (titleLabel != null) {
+                titleLabel.setVisibility(View.VISIBLE);
+                titleLabel.setText(R.string.all_index_title);
             }
             NavigationMenu.getInstance(this, null, toolbar);
         } else {

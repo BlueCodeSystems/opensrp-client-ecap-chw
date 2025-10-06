@@ -45,6 +45,29 @@ public class IndexFragmentRegister extends BaseSafeRegisterFragment implements I
         ((IndexRegisterFragmentPresenter)this.presenter).initView(this);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        View root = getView();
+        if (root != null) {
+            android.widget.TextView titleLabel = root.findViewById(org.smartregister.R.id.txt_title_label);
+            if (titleLabel != null) {
+                titleLabel.setVisibility(View.VISIBLE);
+                titleLabel.setText(getString(R.string.all_index_title));
+            }
+            Toolbar toolbar = root.findViewById(org.smartregister.R.id.register_toolbar);
+            if (toolbar != null) {
+                toolbar.setTitle("");
+            }
+        }
+        if (getActivity() instanceof AppCompatActivity) {
+            AppCompatActivity act = (AppCompatActivity) getActivity();
+            if (act.getSupportActionBar() != null) {
+                act.getSupportActionBar().setDisplayShowTitleEnabled(false);
+            }
+        }
+    }
+
 
     @Override
     public void setupViews(View view) {
@@ -133,9 +156,16 @@ public class IndexFragmentRegister extends BaseSafeRegisterFragment implements I
                     AppCompatActivity act = (AppCompatActivity) getActivity();
                     act.setSupportActionBar(toolbar);
                     if (act.getSupportActionBar() != null) {
+                        act.getSupportActionBar().setDisplayShowTitleEnabled(false);
                         act.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                         act.getSupportActionBar().setHomeButtonEnabled(true);
                     }
+                }
+                toolbar.setTitle("");
+                android.widget.TextView titleLabel = toolbar.findViewById(org.smartregister.R.id.txt_title_label);
+                if (titleLabel != null) {
+                    titleLabel.setVisibility(View.VISIBLE);
+                    titleLabel.setText(R.string.all_index_title);
                 }
                 NavigationMenu navigationMenu = NavigationMenu.getInstance(getActivity(), null, toolbar);
                 if (navigationMenu == null) {
@@ -180,9 +210,7 @@ public class IndexFragmentRegister extends BaseSafeRegisterFragment implements I
             }
 
             // Title Setup
-            android.widget.TextView titleView = null;
-            try { titleView = view.findViewById(org.smartregister.R.id.txt_title_label); } catch (Exception ignored) {}
-            if (titleView == null) { try { titleView = view.findViewById(R.id.txt_title_label); } catch (Exception ignored) {} }
+            android.widget.TextView titleView = view.findViewById(org.smartregister.R.id.txt_title_label);
             if (titleView != null) {
                 titleView.setVisibility(View.VISIBLE);
                 titleView.setText(getString(R.string.all_index_title));
@@ -307,8 +335,16 @@ public class IndexFragmentRegister extends BaseSafeRegisterFragment implements I
             }
         }
         if (actionBar != null) {
-            actionBar.setTitle("");
+            actionBar.setDisplayShowTitleEnabled(false);
             actionBar.setDisplayHomeAsUpEnabled(true);
+            View root = getView();
+            if (root != null) {
+                android.widget.TextView titleLabel = root.findViewById(org.smartregister.R.id.txt_title_label);
+                if (titleLabel != null) {
+                    titleLabel.setVisibility(View.VISIBLE);
+                    titleLabel.setText(getString(R.string.all_index_title));
+                }
+            }
         }
     }
 

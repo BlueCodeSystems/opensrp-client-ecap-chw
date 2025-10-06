@@ -125,7 +125,15 @@ public class PMTCTRegisterFragment extends BaseSafeRegisterFragment implements I
             }
         }
         if (actionBar != null) {
-            actionBar.setTitle("");
+            actionBar.setDisplayShowTitleEnabled(false);
+            View root = getView();
+            if (root != null) {
+                android.widget.TextView titleLabel = root.findViewById(org.smartregister.R.id.txt_title_label);
+                if (titleLabel != null) {
+                    titleLabel.setVisibility(View.VISIBLE);
+                    titleLabel.setText(R.string.pmtct_services);
+                }
+            }
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
@@ -220,13 +228,26 @@ public class PMTCTRegisterFragment extends BaseSafeRegisterFragment implements I
                 AppCompatActivity act = (AppCompatActivity) getActivity();
                 act.setSupportActionBar(toolbar);
                 if (act.getSupportActionBar() != null) {
+                    act.getSupportActionBar().setDisplayShowTitleEnabled(false);
                     act.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                     act.getSupportActionBar().setHomeButtonEnabled(true);
                 }
             }
-            NavigationMenu.getInstance(getActivity(), null, toolbar);
+            NavigationMenu menu = NavigationMenu.getInstance(getActivity(), null, toolbar);
+            toolbar.setTitle("");
+            android.widget.TextView titleLabelInner = toolbar.findViewById(org.smartregister.R.id.txt_title_label);
+            if (titleLabelInner != null) {
+                titleLabelInner.setText(R.string.pmtct_services);
+                titleLabelInner.setVisibility(View.VISIBLE);
+            }
+            if (menu != null && menu.getNavigationAdapter() != null) {
+                menu.getNavigationAdapter().setSelectedView(Constants.DrawerMenu.PMTCT);
+            }
         } else {
-            NavigationMenu.getInstance(getActivity(), null, null);
+            NavigationMenu menu = NavigationMenu.getInstance(getActivity(), null, null);
+            if (menu != null && menu.getNavigationAdapter() != null) {
+                menu.getNavigationAdapter().setSelectedView(Constants.DrawerMenu.PMTCT);
+            }
         }
         View navbarContainer = null;
         try { navbarContainer = view.findViewById(org.smartregister.R.id.register_nav_bar_container); } catch (Exception ignored) {}
@@ -246,9 +267,7 @@ public class PMTCTRegisterFragment extends BaseSafeRegisterFragment implements I
         if (logo != null) {
             logo.setVisibility(View.GONE);
         }
-        android.widget.TextView titleView = null;
-        try { titleView = view.findViewById(org.smartregister.R.id.txt_title_label); } catch (Exception ignored) {}
-        if (titleView == null) { try { titleView = view.findViewById(R.id.txt_title_label); } catch (Exception ignored) {} }
+        android.widget.TextView titleView = view.findViewById(org.smartregister.R.id.txt_title_label);
         if (titleView != null) {
             titleView.setVisibility(View.VISIBLE);
             titleView.setText(getString(R.string.pmtct_services));
@@ -287,6 +306,24 @@ public class PMTCTRegisterFragment extends BaseSafeRegisterFragment implements I
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        androidx.appcompat.widget.Toolbar toolbar = null;
+        View root = getView();
+        if (root != null) {
+            try { toolbar = root.findViewById(org.smartregister.R.id.register_toolbar); } catch (Exception ignored) {}
+        }
+        if (toolbar != null) {
+            toolbar.setTitle("");
+            android.widget.TextView titleLabel = toolbar.findViewById(org.smartregister.R.id.txt_title_label);
+            if (titleLabel != null) {
+                titleLabel.setText(R.string.pmtct_services);
+                titleLabel.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
 

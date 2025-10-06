@@ -176,13 +176,26 @@ public class MotherIndexFragment extends BaseSafeRegisterFragment implements Mot
                 AppCompatActivity act = (AppCompatActivity) getActivity();
                 act.setSupportActionBar(toolbar);
                 if (act.getSupportActionBar() != null) {
+                    act.getSupportActionBar().setDisplayShowTitleEnabled(false);
                     act.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                     act.getSupportActionBar().setHomeButtonEnabled(true);
                 }
             }
-            NavigationMenu.getInstance(getActivity(), null, toolbar);
+            toolbar.setTitle("");
+            android.widget.TextView titleLabel = toolbar.findViewById(org.smartregister.R.id.txt_title_label);
+            if (titleLabel != null) {
+                titleLabel.setVisibility(View.VISIBLE);
+                titleLabel.setText(R.string.all_mother_title);
+            }
+            NavigationMenu menu = NavigationMenu.getInstance(getActivity(), null, toolbar);
+            if (menu != null && menu.getNavigationAdapter() != null) {
+                menu.getNavigationAdapter().setSelectedView(Constants.DrawerMenu.MOTHER_REGISTER);
+            }
         } else {
-            NavigationMenu.getInstance(getActivity(), null, null);
+            NavigationMenu menu = NavigationMenu.getInstance(getActivity(), null, null);
+            if (menu != null && menu.getNavigationAdapter() != null) {
+                menu.getNavigationAdapter().setSelectedView(Constants.DrawerMenu.MOTHER_REGISTER);
+            }
         }
         View navbarContainer = null;
         try { navbarContainer = view.findViewById(org.smartregister.R.id.register_nav_bar_container); } catch (Exception ignored) {}
@@ -207,9 +220,7 @@ public class MotherIndexFragment extends BaseSafeRegisterFragment implements Mot
         if (logo != null) {
             logo.setVisibility(View.GONE);
         }
-        android.widget.TextView titleView = null;
-        try { titleView = view.findViewById(org.smartregister.R.id.txt_title_label); } catch (Exception ignored) {}
-        if (titleView == null) { try { titleView = view.findViewById(R.id.txt_title_label); } catch (Exception ignored) {} }
+        android.widget.TextView titleView = view.findViewById(org.smartregister.R.id.txt_title_label);
         if (titleView != null) {
             titleView.setVisibility(View.VISIBLE);
             titleView.setText(getString(R.string.all_mother_title));
@@ -244,6 +255,29 @@ public class MotherIndexFragment extends BaseSafeRegisterFragment implements Mot
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        View root = getView();
+        if (root != null) {
+            android.widget.TextView titleLabel = root.findViewById(org.smartregister.R.id.txt_title_label);
+            if (titleLabel != null) {
+                titleLabel.setVisibility(View.VISIBLE);
+                titleLabel.setText(getString(R.string.all_mother_title));
+            }
+            Toolbar toolbar = root.findViewById(org.smartregister.R.id.register_toolbar);
+            if (toolbar != null) {
+                toolbar.setTitle("");
+            }
+        }
+        if (getActivity() instanceof AppCompatActivity) {
+            AppCompatActivity act = (AppCompatActivity) getActivity();
+            if (act.getSupportActionBar() != null) {
+                act.getSupportActionBar().setDisplayShowTitleEnabled(false);
+            }
+        }
+    }
+
+    @Override
     protected void setUpActionBar() {
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         if (activity == null) return;
@@ -259,8 +293,16 @@ public class MotherIndexFragment extends BaseSafeRegisterFragment implements Mot
             }
         }
         if (actionBar != null) {
-            actionBar.setTitle("");
+            actionBar.setDisplayShowTitleEnabled(false);
             actionBar.setDisplayHomeAsUpEnabled(true);
+            View root = getView();
+            if (root != null) {
+                android.widget.TextView titleLabel = root.findViewById(org.smartregister.R.id.txt_title_label);
+                if (titleLabel != null) {
+                    titleLabel.setVisibility(View.VISIBLE);
+                    titleLabel.setText(getString(R.string.all_mother_title));
+                }
+            }
         }
     }
 

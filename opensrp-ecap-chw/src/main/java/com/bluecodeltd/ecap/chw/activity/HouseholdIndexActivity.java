@@ -7,7 +7,10 @@ import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_EXTRA.STEP3;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
@@ -55,7 +58,32 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        NavigationMenu.getInstance(HouseholdIndexActivity.this, null, null);
+        Toolbar toolbar = findViewById(org.smartregister.R.id.register_toolbar);
+        NavigationMenu menu;
+        if (toolbar != null) {
+            toolbar.setContentInsetsAbsolute(0, 0);
+            toolbar.setContentInsetsRelative(0, 0);
+            toolbar.setContentInsetStartWithNavigation(0);
+            setSupportActionBar(toolbar);
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setHomeButtonEnabled(true);
+            }
+            toolbar.setTitle("");
+            TextView titleLabel = toolbar.findViewById(org.smartregister.R.id.txt_title_label);
+            if (titleLabel != null) {
+                titleLabel.setVisibility(View.VISIBLE);
+                titleLabel.setText(R.string.all_households_title);
+            }
+            menu = NavigationMenu.getInstance(this, null, toolbar);
+        } else {
+            menu = NavigationMenu.getInstance(this, null, null);
+        }
+
+        if (menu != null && menu.getNavigationAdapter() != null) {
+            menu.getNavigationAdapter().setSelectedView(Constants.DrawerMenu.HOUSEHOLD_REGISTER);
+        }
     }
 
     @Override

@@ -182,11 +182,26 @@ public class HouseholdIndexFragment extends BaseSafeRegisterFragment implements 
                     AppCompatActivity act = (AppCompatActivity) getActivity();
                     act.setSupportActionBar(toolbar);
                     if (act.getSupportActionBar() != null) {
+                        act.getSupportActionBar().setDisplayShowTitleEnabled(false);
                         act.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                         act.getSupportActionBar().setHomeButtonEnabled(true);
                     }
                 }
-                NavigationMenu.getInstance(getActivity(), null, toolbar);
+                toolbar.setTitle("");
+                android.widget.TextView titleLabel = toolbar.findViewById(org.smartregister.R.id.txt_title_label);
+                if (titleLabel != null) {
+                    titleLabel.setVisibility(View.VISIBLE);
+                    titleLabel.setText(R.string.all_households_title);
+                }
+                NavigationMenu menu = NavigationMenu.getInstance(getActivity(), null, toolbar);
+                if (menu != null && menu.getNavigationAdapter() != null) {
+                    menu.getNavigationAdapter().setSelectedView(Constants.DrawerMenu.HOUSEHOLD_REGISTER);
+                }
+            } else {
+                NavigationMenu menu = NavigationMenu.getInstance(getActivity(), null, null);
+                if (menu != null && menu.getNavigationAdapter() != null) {
+                    menu.getNavigationAdapter().setSelectedView(Constants.DrawerMenu.HOUSEHOLD_REGISTER);
+                }
             }
 
             // Navbar container
@@ -219,9 +234,7 @@ public class HouseholdIndexFragment extends BaseSafeRegisterFragment implements 
             }
 
             // Title view customization
-            android.widget.TextView titleView = null;
-            try { titleView = view.findViewById(org.smartregister.R.id.txt_title_label); } catch (Exception ignored) {}
-            if (titleView == null) { try { titleView = view.findViewById(R.id.txt_title_label); } catch (Exception ignored) {} }
+            android.widget.TextView titleView = view.findViewById(org.smartregister.R.id.txt_title_label);
             if (titleView != null) {
                 titleView.setVisibility(View.VISIBLE);
                 titleView.setText(getString(R.string.all_households_title));
@@ -274,6 +287,29 @@ public class HouseholdIndexFragment extends BaseSafeRegisterFragment implements 
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        View root = getView();
+        if (root != null) {
+            android.widget.TextView titleLabel = root.findViewById(org.smartregister.R.id.txt_title_label);
+            if (titleLabel != null) {
+                titleLabel.setVisibility(View.VISIBLE);
+                titleLabel.setText(getString(R.string.all_households_title));
+            }
+            Toolbar toolbar = root.findViewById(org.smartregister.R.id.register_toolbar);
+            if (toolbar != null) {
+                toolbar.setTitle("");
+            }
+        }
+        if (getActivity() instanceof AppCompatActivity) {
+            AppCompatActivity act = (AppCompatActivity) getActivity();
+            if (act.getSupportActionBar() != null) {
+                act.getSupportActionBar().setDisplayShowTitleEnabled(false);
+            }
+        }
+    }
+
+    @Override
     protected void setUpActionBar() {
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         if (activity == null) return;
@@ -289,8 +325,16 @@ public class HouseholdIndexFragment extends BaseSafeRegisterFragment implements 
             }
         }
         if (actionBar != null) {
-            actionBar.setTitle("");
+            actionBar.setDisplayShowTitleEnabled(false);
             actionBar.setDisplayHomeAsUpEnabled(true);
+            View root = getView();
+            if (root != null) {
+                android.widget.TextView titleLabel = root.findViewById(org.smartregister.R.id.txt_title_label);
+                if (titleLabel != null) {
+                    titleLabel.setVisibility(View.VISIBLE);
+                    titleLabel.setText(getString(R.string.all_households_title));
+                }
+            }
         }
     }
 
