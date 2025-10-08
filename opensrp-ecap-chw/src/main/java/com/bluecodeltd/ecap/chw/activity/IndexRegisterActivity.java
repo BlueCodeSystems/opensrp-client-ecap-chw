@@ -93,22 +93,29 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         // Bind toolbar as ActionBar so BaseRegisterFragment can access a non-null ActionBar
         Toolbar toolbar = findViewById(org.smartregister.R.id.register_toolbar);
         if (toolbar != null) {
-            toolbar.setContentInsetsAbsolute(0, 0);
-            toolbar.setContentInsetsRelative(0, 0);
-            toolbar.setContentInsetStartWithNavigation(0);
-            setSupportActionBar(toolbar);
+            if (getSupportActionBar() == null) {
+                try { setSupportActionBar(toolbar); } catch (IllegalStateException ignored) {}
+            }
             if (getSupportActionBar() != null) {
                 getSupportActionBar().setDisplayShowTitleEnabled(false);
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setHomeButtonEnabled(true);
             }
             toolbar.setTitle("");
             TextView titleLabel = toolbar.findViewById(org.smartregister.R.id.txt_title_label);
             if (titleLabel != null) {
-                titleLabel.setVisibility(View.VISIBLE);
-                titleLabel.setText(R.string.all_index_title);
+                titleLabel.setVisibility(View.GONE);
             }
-            NavigationMenu.getInstance(this, null, toolbar);
+            org.smartregister.chw.core.custom_views.NavigationMenu menu = NavigationMenu.getInstance(this, null, toolbar);
+            try {
+                if (menu != null) {
+                    androidx.drawerlayout.widget.DrawerLayout drawer = menu.getDrawer();
+                    androidx.appcompat.graphics.drawable.DrawerArrowDrawable arrow = new androidx.appcompat.graphics.drawable.DrawerArrowDrawable(this);
+                    arrow.setColor(android.graphics.Color.WHITE);
+                    toolbar.setNavigationIcon(arrow);
+                    toolbar.setNavigationOnClickListener(v -> {
+                        if (drawer != null) drawer.openDrawer(androidx.core.view.GravityCompat.START);
+                    });
+                }
+            } catch (Throwable ignored) {}
         } else {
             NavigationMenu.getInstance(this, null, null);
         }

@@ -15,10 +15,13 @@
             android:layout_width="@dimen/pagination_bar_button_width"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:background="@drawable/transparent_blue_background"
+            android:background="@android:color/white"
             android:clickable="true"
             android:focusable="true"
             android:gravity="center"
+            android:minHeight="0dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
             android:text="@string/str_previous"
             android:textSize="@dimen/pagination_bar_text_size" />
 
@@ -33,12 +36,15 @@
         <Button
             android:id="@+id/btn_next_page"
             android:layout_width="@dimen/pagination_bar_button_width"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:background="@drawable/transparent_blue_background"
+            android:background="@android:color/white"
             android:clickable="true"
             android:focusable="true"
             android:gravity="center"
+            android:minHeight="0dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
             android:text="@string/str_next"
             android:textSize="@dimen/pagination_bar_text_size" />
 

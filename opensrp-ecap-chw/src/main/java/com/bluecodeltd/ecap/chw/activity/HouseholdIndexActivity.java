@@ -61,22 +61,27 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
         Toolbar toolbar = findViewById(org.smartregister.R.id.register_toolbar);
         NavigationMenu menu;
         if (toolbar != null) {
-            toolbar.setContentInsetsAbsolute(0, 0);
-            toolbar.setContentInsetsRelative(0, 0);
-            toolbar.setContentInsetStartWithNavigation(0);
             setSupportActionBar(toolbar);
             if (getSupportActionBar() != null) {
                 getSupportActionBar().setDisplayShowTitleEnabled(false);
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setHomeButtonEnabled(true);
             }
             toolbar.setTitle("");
             TextView titleLabel = toolbar.findViewById(org.smartregister.R.id.txt_title_label);
             if (titleLabel != null) {
-                titleLabel.setVisibility(View.VISIBLE);
-                titleLabel.setText(R.string.all_households_title);
+                titleLabel.setVisibility(View.GONE);
             }
             menu = NavigationMenu.getInstance(this, null, toolbar);
+            try {
+                if (menu != null) {
+                    androidx.drawerlayout.widget.DrawerLayout drawer = menu.getDrawer();
+                    androidx.appcompat.graphics.drawable.DrawerArrowDrawable arrow = new androidx.appcompat.graphics.drawable.DrawerArrowDrawable(this);
+                    arrow.setColor(android.graphics.Color.WHITE);
+                    toolbar.setNavigationIcon(arrow);
+                    toolbar.setNavigationOnClickListener(v -> {
+                        if (drawer != null) drawer.openDrawer(androidx.core.view.GravityCompat.START);
+                    });
+                }
+            } catch (Throwable ignored) {}
         } else {
             menu = NavigationMenu.getInstance(this, null, null);
         }

@@ -65,6 +65,7 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
     private static NavigationModel.Flavor modelFlavor;
     private static Map<String, Class> registeredActivities;
     private static boolean showDeviceToDeviceSync = true;
+    private static final float NAV_DRAWER_HEIGHT_RATIO = 0.9f;
     private DrawerLayout drawer;
     private Toolbar toolbar;
     private NavigationAdapter navigationAdapter;
@@ -167,6 +168,15 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
 
         drawer = activity.findViewById(R.id.drawer_layout);
         drawer.addDrawerListener(this);
+        if (rootView != null) {
+            DrawerLayout.LayoutParams params = (DrawerLayout.LayoutParams) rootView.getLayoutParams();
+            if (params != null) {
+                params.width = activity.getResources().getDimensionPixelSize(R.dimen.nav_drawer_width);
+                int screenHeight = activity.getResources().getDisplayMetrics().heightPixels;
+                params.height = (int) (screenHeight * NAV_DRAWER_HEIGHT_RATIO);
+                rootView.setLayoutParams(params);
+            }
+        }
         recyclerView = rootView.findViewById(R.id.rvOptions);
         tvLogout = rootView.findViewById(R.id.tvLogout);
         recyclerView = rootView.findViewById(R.id.rvOptions);

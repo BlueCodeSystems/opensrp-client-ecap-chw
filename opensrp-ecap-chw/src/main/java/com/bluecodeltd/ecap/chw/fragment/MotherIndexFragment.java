@@ -169,28 +169,34 @@ public class MotherIndexFragment extends BaseSafeRegisterFragment implements Mot
         Toolbar toolbar = null;
         try { toolbar = view.findViewById(org.smartregister.R.id.register_toolbar); } catch (Exception ignored) {}
         if (toolbar != null) {
-            toolbar.setContentInsetsAbsolute(0, 0);
-            toolbar.setContentInsetsRelative(0, 0);
-            toolbar.setContentInsetStartWithNavigation(0);
+            
             if (getActivity() instanceof AppCompatActivity) {
                 AppCompatActivity act = (AppCompatActivity) getActivity();
                 act.setSupportActionBar(toolbar);
                 if (act.getSupportActionBar() != null) {
                     act.getSupportActionBar().setDisplayShowTitleEnabled(false);
-                    act.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                    act.getSupportActionBar().setHomeButtonEnabled(true);
                 }
             }
             toolbar.setTitle("");
             android.widget.TextView titleLabel = toolbar.findViewById(org.smartregister.R.id.txt_title_label);
             if (titleLabel != null) {
-                titleLabel.setVisibility(View.VISIBLE);
-                titleLabel.setText(R.string.all_mother_title);
+                titleLabel.setVisibility(View.GONE);
             }
             NavigationMenu menu = NavigationMenu.getInstance(getActivity(), null, toolbar);
             if (menu != null && menu.getNavigationAdapter() != null) {
                 menu.getNavigationAdapter().setSelectedView(Constants.DrawerMenu.MOTHER_REGISTER);
             }
+            try {
+                if (menu != null && getActivity() != null) {
+                    androidx.drawerlayout.widget.DrawerLayout drawer = menu.getDrawer();
+                    androidx.appcompat.graphics.drawable.DrawerArrowDrawable arrow = new androidx.appcompat.graphics.drawable.DrawerArrowDrawable(getActivity());
+                    arrow.setColor(android.graphics.Color.WHITE);
+                    toolbar.setNavigationIcon(arrow);
+                    toolbar.setNavigationOnClickListener(v -> {
+                        if (drawer != null) drawer.openDrawer(androidx.core.view.GravityCompat.START);
+                    });
+                }
+            } catch (Throwable ignored) {}
         } else {
             NavigationMenu menu = NavigationMenu.getInstance(getActivity(), null, null);
             if (menu != null && menu.getNavigationAdapter() != null) {
@@ -201,6 +207,7 @@ public class MotherIndexFragment extends BaseSafeRegisterFragment implements Mot
         try { navbarContainer = view.findViewById(org.smartregister.R.id.register_nav_bar_container); } catch (Exception ignored) {}
         if (navbarContainer != null) {
             navbarContainer.setFocusable(false);
+            navbarContainer.bringToFront();
         }
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         View searchBarLayout = null;
@@ -222,12 +229,7 @@ public class MotherIndexFragment extends BaseSafeRegisterFragment implements Mot
         }
         android.widget.TextView titleView = view.findViewById(org.smartregister.R.id.txt_title_label);
         if (titleView != null) {
-            titleView.setVisibility(View.VISIBLE);
-            titleView.setText(getString(R.string.all_mother_title));
-            titleView.setClickable(false);
-            if (titleView instanceof CustomFontTextView) {
-                ((CustomFontTextView) titleView).setFontVariant(FontVariant.REGULAR);
-            }
+            titleView.setVisibility(View.GONE);
         }
         if (getSearchView() != null) {
             getSearchView().setBackgroundResource(R.color.white);
@@ -294,7 +296,6 @@ public class MotherIndexFragment extends BaseSafeRegisterFragment implements Mot
         }
         if (actionBar != null) {
             actionBar.setDisplayShowTitleEnabled(false);
-            actionBar.setDisplayHomeAsUpEnabled(true);
             View root = getView();
             if (root != null) {
                 android.widget.TextView titleLabel = root.findViewById(org.smartregister.R.id.txt_title_label);

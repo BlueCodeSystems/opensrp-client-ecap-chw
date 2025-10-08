@@ -75,7 +75,8 @@
         <activity
             android:name=".activity.CasePlan"
             android:exported="true"
-            android:label="VCA Case Plan" />
+            android:label="VCA Case Plan"
+            android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.HivTestingServiceActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
@@ -85,7 +86,8 @@
         <activity
             android:name=".activity.HouseholdCasePlanActivity"
             android:exported="true"
-            android:label="Caregiver Case Plan" />
+            android:label="Caregiver Case Plan"
+            android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.DashboardActivity"
             android:exported="true"
@@ -96,7 +98,8 @@
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.Profile"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.MemberActivity"
             android:exported="true" />

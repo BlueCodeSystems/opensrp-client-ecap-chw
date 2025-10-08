@@ -290,7 +290,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
 
         fab = binding.fab;
-        if(indexVCA.getCase_status() != null && (indexVCA.getCase_status().equals("0") || indexVCA.getCase_status().equals("2"))){
+        if (indexVCA != null && indexVCA.getCase_status() != null &&
+                ("0".equals(indexVCA.getCase_status()) || "2".equals(indexVCA.getCase_status()))) {
             fab.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
         }
 
@@ -351,32 +352,55 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
 
     public HashMap<String, Child> getData() {
-        String full_name = indexVCA.getFirst_name() + " " + indexVCA.getLast_name();
-        String gender =  indexVCA.getGender();
-        String birthdate = checkAndConvertDateFormat(indexVCA.getAdolescent_birthdate());
+        String displayFirstName = null;
+        String displayLastName = null;
+        String displayGender = null;
+        String displayBirthdate = null;
 
-        if(birthdate != null){
+        if (indexVCA != null) {
+            // Prefer adolescent fields when available, fall back to generic ones
+            displayFirstName = !TextUtils.isEmpty(indexVCA.getAdolescent_first_name()) ? indexVCA.getAdolescent_first_name() : indexVCA.getFirst_name();
+            displayLastName = !TextUtils.isEmpty(indexVCA.getAdolescent_last_name()) ? indexVCA.getAdolescent_last_name() : indexVCA.getLast_name();
+            displayGender = !TextUtils.isEmpty(indexVCA.getAdolescent_gender()) ? indexVCA.getAdolescent_gender() : indexVCA.getGender();
+            displayBirthdate = !TextUtils.isEmpty(indexVCA.getAdolescent_birthdate()) ? indexVCA.getAdolescent_birthdate() : indexVCA.getBirthdate();
+        }
+
+        // If no screening record, use values from the child index
+        if (TextUtils.isEmpty(displayFirstName) && child != null) displayFirstName = child.getAdolescent_first_name();
+        if (TextUtils.isEmpty(displayLastName) && child != null) displayLastName = child.getAdolescent_last_name();
+        if (TextUtils.isEmpty(displayGender) && child != null) displayGender = child.getAdolescent_gender();
+        if (TextUtils.isEmpty(displayBirthdate) && child != null) displayBirthdate = child.getAdolescent_birthdate();
+
+        String full_name = ((displayFirstName != null ? displayFirstName : "").trim() + " " + (displayLastName != null ? displayLastName : "").trim()).trim();
+
+        String birthdate = displayBirthdate != null ? checkAndConvertDateFormat(displayBirthdate) : null;
+
+        if (birthdate != null && !"Invalid date format".equals(birthdate)) {
             txtAge.setText(getAge(birthdate));
             vcaAge = getAgeWithoutText(birthdate);
-
         } else {
             txtAge.setText("Not Set");
         }
 
         try {
-            txtName.setText(full_name);
-            txtGender.setText(gender.toUpperCase());
-            txtChildid.setText("ID : " + indexVCA.getUnique_id());
+            if (!TextUtils.isEmpty(full_name)) {
+                txtName.setText(full_name);
+            }
+            if (!TextUtils.isEmpty(displayGender)) {
+                txtGender.setText(displayGender.toUpperCase());
+            } else {
+                txtGender.setText("");
+            }
+            String idForDisplay = indexVCA != null ? indexVCA.getUnique_id() : (child != null ? child.getUnique_id() : null);
+            if (!TextUtils.isEmpty(idForDisplay)) {
+                txtChildid.setText("ID : " + idForDisplay);
+            }
         } catch (NullPointerException e) {
             txtGender.setText("");
-            e.printStackTrace();
         }
 
-
         HashMap<String, Child> map = new HashMap<>();
-
-        map.put("Child",child);
-
+        map.put("Child", child);
         return map;
 
     }
@@ -460,7 +484,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         fragments.add(new ChildCasePlanFragment());
         fragments.add(new ChildVisitsFragment());
 
-        String hivStatus = indexVCA.getIs_hiv_positive();
+        String hivStatus = indexVCA != null ? indexVCA.getIs_hiv_positive() : null;
         if (hivStatus != null && "no".equalsIgnoreCase(hivStatus)) {
             fragments.add(new VcaHivAssesmentFragment());
         }

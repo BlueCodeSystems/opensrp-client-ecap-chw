@@ -51,7 +51,7 @@
     <color name="alert_urgent_red">#D32F2F</color>
     <color name="bluetext">#2196F3</color>
     <color name="grey_tranparent_50">#809E9E9E</color>
-    <color name="navigation_item_selected">#303F9F</color>
+    <color name="navigation_item_selected">@color/primary</color>
     <color name="navigation_item_unselected">#9E9E9E</color>
     <color name="light_pink">#FFCDD2</color>
     <color name="progress_orange">#FFA726</color>

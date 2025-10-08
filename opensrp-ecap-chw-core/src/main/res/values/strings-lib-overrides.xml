@@ -13,8 +13,8 @@
     <string name="primary_care_giver">Primary caregiver</string>
     <string name="return_to_family_profile">Return to family profile</string>
     <string name="save">Save</string>
-    <string name="str_next">Next</string>
-    <string name="str_previous">Previous</string>
+    <string name="str_next">NEXT &gt;&gt;&gt;</string>
+    <string name="str_previous">&lt;&lt;&lt; PREVIOUS</string>
     <string name="submit">Submit</string>
     <string name="undo">Undo</string>
     <string name="upcoming_services">Upcoming services</string>

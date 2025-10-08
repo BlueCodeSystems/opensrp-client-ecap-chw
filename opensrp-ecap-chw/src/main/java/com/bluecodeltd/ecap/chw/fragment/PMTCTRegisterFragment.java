@@ -134,7 +134,6 @@ public class PMTCTRegisterFragment extends BaseSafeRegisterFragment implements I
                     titleLabel.setText(R.string.pmtct_services);
                 }
             }
-            actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
 
@@ -221,28 +220,33 @@ public class PMTCTRegisterFragment extends BaseSafeRegisterFragment implements I
         Toolbar toolbar = null;
         try { toolbar = view.findViewById(org.smartregister.R.id.register_toolbar); } catch (Exception ignored) {}
         if (toolbar != null) {
-            toolbar.setContentInsetsAbsolute(0, 0);
-            toolbar.setContentInsetsRelative(0, 0);
-            toolbar.setContentInsetStartWithNavigation(0);
             if (getActivity() instanceof AppCompatActivity) {
                 AppCompatActivity act = (AppCompatActivity) getActivity();
                 act.setSupportActionBar(toolbar);
                 if (act.getSupportActionBar() != null) {
                     act.getSupportActionBar().setDisplayShowTitleEnabled(false);
-                    act.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                    act.getSupportActionBar().setHomeButtonEnabled(true);
                 }
             }
             NavigationMenu menu = NavigationMenu.getInstance(getActivity(), null, toolbar);
             toolbar.setTitle("");
             android.widget.TextView titleLabelInner = toolbar.findViewById(org.smartregister.R.id.txt_title_label);
             if (titleLabelInner != null) {
-                titleLabelInner.setText(R.string.pmtct_services);
-                titleLabelInner.setVisibility(View.VISIBLE);
+                titleLabelInner.setVisibility(View.GONE);
             }
             if (menu != null && menu.getNavigationAdapter() != null) {
                 menu.getNavigationAdapter().setSelectedView(Constants.DrawerMenu.PMTCT);
             }
+            try {
+                if (menu != null && getActivity() != null) {
+                    androidx.drawerlayout.widget.DrawerLayout drawer = menu.getDrawer();
+                    androidx.appcompat.graphics.drawable.DrawerArrowDrawable arrow = new androidx.appcompat.graphics.drawable.DrawerArrowDrawable(getActivity());
+                    arrow.setColor(android.graphics.Color.WHITE);
+                    toolbar.setNavigationIcon(arrow);
+                    toolbar.setNavigationOnClickListener(v -> {
+                        if (drawer != null) drawer.openDrawer(androidx.core.view.GravityCompat.START);
+                    });
+                }
+            } catch (Throwable ignored) {}
         } else {
             NavigationMenu menu = NavigationMenu.getInstance(getActivity(), null, null);
             if (menu != null && menu.getNavigationAdapter() != null) {
@@ -269,12 +273,7 @@ public class PMTCTRegisterFragment extends BaseSafeRegisterFragment implements I
         }
         android.widget.TextView titleView = view.findViewById(org.smartregister.R.id.txt_title_label);
         if (titleView != null) {
-            titleView.setVisibility(View.VISIBLE);
-            titleView.setText(getString(R.string.pmtct_services));
-            titleView.setClickable(false);
-            if (titleView instanceof CustomFontTextView) {
-                ((CustomFontTextView) titleView).setFontVariant(FontVariant.REGULAR);
-            }
+            titleView.setVisibility(View.GONE);
         }
         if (getSearchView() != null) {
             getSearchView().setBackgroundResource(R.color.white);
@@ -322,6 +321,12 @@ public class PMTCTRegisterFragment extends BaseSafeRegisterFragment implements I
             if (titleLabel != null) {
                 titleLabel.setText(R.string.pmtct_services);
                 titleLabel.setVisibility(View.VISIBLE);
+            }
+        }
+        if (getActivity() instanceof AppCompatActivity) {
+            AppCompatActivity act = (AppCompatActivity) getActivity();
+            if (act.getSupportActionBar() != null) {
+                act.getSupportActionBar().setDisplayShowTitleEnabled(false);
             }
         }
     }

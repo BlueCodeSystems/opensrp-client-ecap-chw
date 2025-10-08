@@ -1,10 +1,14 @@
 package com.bluecodeltd.ecap.chw.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.appcompat.app.ActionBar;
 import androidx.preference.PreferenceManager;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.view.View;
 import android.view.Window;
@@ -22,11 +26,22 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
+        Toolbar toolbar = findViewById(R.id.collapsing_toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setDisplayShowTitleEnabled(false);
+                final Drawable upArrow = getResources().getDrawable(R.drawable.ic_arrow_back_white_24dp);
+                upArrow.setColorFilter(getResources().getColor(org.smartregister.R.color.text_blue), PorterDuff.Mode.SRC_ATOP);
+                actionBar.setHomeAsUpIndicator(upArrow);
+            }
+            toolbar.setNavigationOnClickListener(v -> onBackPressed());
+            TextView tvTitle = findViewById(R.id.tvTitle);
+            if (tvTitle != null) tvTitle.setText("ECAP II Caseworker Profile");
         }
 
-        applyStatusBarPadding();
         applyLightStatusBar();
 
         txtName = findViewById(R.id.name);
@@ -63,27 +78,7 @@ public class Profile extends AppCompatActivity {
 
     }
 
-    private void applyStatusBarPadding() {
-        View root = findViewById(R.id.profile_scroll);
-        if (root == null) {
-            return;
-        }
-
-        int statusBarHeight = getStatusBarHeight();
-        if (statusBarHeight > 0) {
-            root.setPadding(root.getPaddingLeft(), root.getPaddingTop() + statusBarHeight,
-                    root.getPaddingRight(), root.getPaddingBottom());
-        }
-    }
-
-    private int getStatusBarHeight() {
-        int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
-    }
+    // Status bar padding no longer required now that toolbar occupies the top.
 
     private void applyLightStatusBar() {
         Window window = getWindow();

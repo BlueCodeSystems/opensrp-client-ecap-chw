@@ -17,6 +17,10 @@ import android.view.WindowInsetsController;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -74,9 +78,7 @@ public class CasePlan extends AppCompatActivity {
         binding = com.bluecodeltd.ecap.chw.databinding.ActivityCasePlanBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
-        }
+        setUpActionBar();
         applyLightStatusBar();
 
         recyclerView = binding.domainrecyclerView;
@@ -90,6 +92,25 @@ public class CasePlan extends AppCompatActivity {
 
         fetchData();
 
+    }
+
+    private void setUpActionBar() {
+        Toolbar toolbar = binding.collapsingToolbar;
+        TextView tvTitle = binding.tvTitle;
+        // Avoid IllegalStateException when theme already supplies an ActionBar
+        if (getSupportActionBar() == null) {
+            try { setSupportActionBar(toolbar); } catch (IllegalStateException ignored) {}
+        }
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            final Drawable upArrow = getResources().getDrawable(R.drawable.ic_arrow_back_white_24dp);
+            upArrow.setColorFilter(getResources().getColor(org.smartregister.R.color.text_blue), PorterDuff.Mode.SRC_ATOP);
+            actionBar.setHomeAsUpIndicator(upArrow);
+        }
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        tvTitle.setText("VCA Case Plan");
     }
 
     private void applyLightStatusBar() {

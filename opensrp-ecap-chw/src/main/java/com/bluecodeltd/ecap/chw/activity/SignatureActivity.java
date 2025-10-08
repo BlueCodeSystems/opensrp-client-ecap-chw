@@ -36,6 +36,7 @@ import org.json.JSONObject;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
+import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.domain.db.EventClient;
 import org.smartregister.domain.tag.FormTag;
 import org.smartregister.family.util.AppExecutors;
@@ -165,8 +166,20 @@ public class SignatureActivity extends AppCompatActivity {
 
                     switch (encounterType) {
                         case "Household Screening":
-                            Intent refreshActivity = new Intent(getApplicationContext(), HouseholdIndexActivity.class);
+                            String hid = getFieldValue(screeningFormObject, "step2", "household_id");
+                            Intent refreshActivity = new Intent(getApplicationContext(), HouseholdDetails.class);
+                            refreshActivity.putExtra("householdId", hid);
                             startActivity(refreshActivity);
+                            finish();
+                            break;
+
+                        case "Sub Population":
+                            String vca_id = getFieldValue(screeningFormObject, "step1", "unique_id");
+//                            CommonPersonObjectClient client =(CommonPersonObjectClient) view.getTag();
+                            Intent openVcaProfile = new Intent(getApplicationContext(), IndexDetailsActivity.class);
+                            openVcaProfile.putExtra("Child", vca_id);
+//                            openVcaProfile.putExtra("baseId",  client);
+                            startActivity(openVcaProfile);
                             finish();
                             break;
 
@@ -229,6 +242,23 @@ public class SignatureActivity extends AppCompatActivity {
 
 
 
+    }
+
+    String getFieldValue(JSONObject form, String step, String targetKey) {
+        if (form == null) return null;
+        JSONObject stepObj = form.optJSONObject(step);
+        if (stepObj == null) return null;
+        JSONArray fields = stepObj.optJSONArray("fields");
+        if (fields == null) return null;
+
+        for (int i = 0; i < fields.length(); i++) {
+            JSONObject field = fields.optJSONObject(i);
+            if (field != null && targetKey.equals(field.optString("key"))) {
+                // returns null if "value" missing instead of ""
+                return field.optString("value", null);
+            }
+        }
+        return null; // not found
     }
 
     public void goToHouseholdProfile(String id){

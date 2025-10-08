@@ -23,7 +23,7 @@
     <dimen name="ec_main_header_search_cancel_button_width">40dp</dimen>
 
     <!-- Pagination bar height used across registers/dialogs -->
-    <dimen name="pagination_bar_height">56dp</dimen>
+    <dimen name="pagination_bar_height">36dp</dimen>
 
     <!-- Misc dimensions referenced across app layouts -->
     <dimen name="app_bar_height">56dp</dimen>

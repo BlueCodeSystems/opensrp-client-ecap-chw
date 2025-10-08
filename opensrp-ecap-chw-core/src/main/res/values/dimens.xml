@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="nav_drawer_width">300dp</dimen>
+    <dimen name="nav_item_text_size">16sp</dimen>
+    <dimen name="nav_item_count_size">14sp</dimen>
     <!-- Margins for child home visit layouts -->
     <dimen name="child_home_visit_left_margin">16dp</dimen>
     <dimen name="child_home_visit_right_margin">16dp</dimen>
@@ -71,8 +74,8 @@
     <dimen name="noti_button_text_size">14sp</dimen>
     <dimen name="noti_message_text_size">14sp</dimen>
 
-    <dimen name="pagination_bar_button_width">48dp</dimen>
-    <dimen name="pagination_bar_text_size">14sp</dimen>
+    <dimen name="pagination_bar_button_width">88dp</dimen>
+    <dimen name="pagination_bar_text_size">12sp</dimen>
 
     <dimen name="profile_dot_separator_margin">4dp</dimen>
 
