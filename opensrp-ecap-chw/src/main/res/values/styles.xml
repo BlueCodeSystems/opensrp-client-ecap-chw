@@ -38,6 +38,17 @@
         <item name="colorAccent">@color/chw_family_accent</item>
     </style>
 
+    <!-- NoActionBar variant that resizes content to fit screen (incl. keyboard) -->
+    <style name="FamilyTheme.NoActionBar" parent="FamilyTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Ensure content resizes when keyboard appears and fits screen -->
+        <item name="android:windowSoftInputMode">stateHidden|adjustResize</item>
+        <!-- Use full available width on phones/tablets -->
+        <item name="android:windowMinWidthMajor">100%</item>
+        <item name="android:windowMinWidthMinor">100%</item>
+    </style>
+
 
     <style name="ChwTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

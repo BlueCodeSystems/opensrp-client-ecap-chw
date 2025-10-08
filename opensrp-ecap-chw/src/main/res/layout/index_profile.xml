@@ -16,9 +16,14 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/family_two_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/actionBarSize"
             android:background="@color/customAppThemeBlue"
-            app:theme="@style/FamilyTheme.PopupOverlay">
+            app:theme="@style/FamilyTheme.PopupOverlay"
+            app:contentInsetStart="0dp"
+            app:contentInsetEnd="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetStartWithNavigation="0dp">
 
             <RelativeLayout
                 android:id="@+id/profile_name_layout"
@@ -171,3 +176,4 @@
     <include layout="@layout/profile_content" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+

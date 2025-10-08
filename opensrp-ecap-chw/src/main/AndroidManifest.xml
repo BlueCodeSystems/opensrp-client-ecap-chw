@@ -180,7 +180,7 @@
             android:name=".activity.FamilyOtherMemberProfileActivity"
             android:label="@string/title_family_detail"
             android:parentActivityName=".activity.FamilyRegisterActivity"
-            android:theme="@style/FamilyTheme.NoActionBar">
+            android:theme="@style/ChwTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.bluecodeltd.ecap.chw.activity.FamilyProfileActivity" />
@@ -198,7 +198,7 @@
             android:name="org.smartregister.family.activity.FamilyWizardFormActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/FamilyTheme.NoActionBar"
+            android:theme="@style/ChwTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
             android:name=".activity.ChildRegisterActivity"
@@ -327,7 +327,7 @@
             android:name=".activity.AllClientsMemberProfileActivity"
             android:label="@string/title_family_detail"
             android:parentActivityName=".activity.AllClientsRegisterActivity"
-            android:theme="@style/FamilyTheme.NoActionBar" />
+            android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.AncMemberMapActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
