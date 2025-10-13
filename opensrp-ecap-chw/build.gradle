@@ -421,8 +421,8 @@ dependencies {
     testImplementation 'org.robolectric:robolectric:4.13'
     // Removed legacy Robolectric shadows; not needed at minSdk 28+
     testImplementation 'androidx.test:core:1.6.1'
-    implementation 'com.jakewharton:butterknife:10.0.0'
-    kapt 'com.jakewharton:butterknife-compiler:10.0.0'
+    implementation 'com.jakewharton:butterknife:10.2.3'
+    kapt 'com.jakewharton:butterknife-compiler:10.2.3'
     compileOnly 'com.google.android.wearable:wearable:2.9.0'
 
     // core library desugaring not required for minSdk 28+
@@ -476,6 +476,5 @@ coveralls {
     jacocoReportPath = "${buildDir}/reports/jacoco/jacocoRootReport/merged.xml"
     sourceDirs = ["$project.projectDir/src/main/java"]
 }
-
 
 

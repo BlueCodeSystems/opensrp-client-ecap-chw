@@ -419,7 +419,7 @@
     <string name="family_profile_title_with_firstname">Household %1$s %2$s</string>
     <string name="unauthorized_group">This account is not authorized to access this device</string>
     <string name="physically_challenged">Living with a disability</string>
-    <string name="balanced_diet_content_eight">Less than 10% of total energy intake should come from free sugars—about 50 g (12 teaspoons) for an adult consuming 2000 calories—ideally under 5% for added health benefits.</string>
+    <string name="balanced_diet_content_eight" formatted="false">Less than 10% of total energy intake should come from free sugars—about 50 g (12 teaspoons) for an adult consuming 2000 calories—ideally under 5% for added health benefits.</string>
     <string name="hello_world">Hello World!</string>
     
     <!-- Config for libraries expecting resource-based URL -->
