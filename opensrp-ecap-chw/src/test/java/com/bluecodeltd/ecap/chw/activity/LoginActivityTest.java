@@ -4,8 +4,9 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.MenuItem;
+
+import androidx.activity.result.ActivityResultLauncher;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -255,16 +256,17 @@ public class LoginActivityTest extends BaseActivityTest<LoginActivity> {
     }
 
     @Test
-    public void testOnOptionsItemSelected(){
-
+    public void testOnOptionsItemSelectedLaunchesExport() {
         LoginActivity spyActivity = Mockito.spy(getActivity());
+        ActivityResultLauncher<String> launcher = Mockito.mock(ActivityResultLauncher.class);
+        ReflectionHelpers.setField(spyActivity, "exportDatabaseLauncher", launcher);
 
         MenuItem item = Mockito.mock(MenuItem.class);
         Mockito.doReturn(spyActivity.getString(R.string.export_database)).when(item).getTitle();
-        Mockito.doReturn(true).when(spyActivity).hasPermissions();
 
         spyActivity.onOptionsItemSelected(item);
 
-        Mockito.verify(spyActivity).copyDatabase(Mockito.any(),Mockito.any(),Mockito.any());
+        Mockito.verify(launcher).launch(Mockito.contains(".db"));
+        Assert.assertEquals("drishti.db", ReflectionHelpers.getField(spyActivity, "pendingDatabaseName"));
     }
 }

@@ -2,6 +2,8 @@ package com.bluecodeltd.ecap.chw.model;
 
 import android.os.Environment;
 
+import org.smartregister.chw.core.application.CoreChwApplication;
+
 import com.bluecodeltd.ecap.chw.dao.CaregiverHivAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.CaregiverVisitationDao;
 import com.bluecodeltd.ecap.chw.dao.HivAssessmentUnder15Dao;
@@ -27,13 +29,12 @@ public class GenerateCSVsModel {
 
     public void createCSVFile(CSVCallback callback) {
         // Get the directory to save the file
-        String baseDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
         String fileName = "households.csv";
-        File file = new File(baseDir, fileName);
+        File file = null;
 
         FileWriter fileWriter = null;
         try {
-
+            file = resolveCsvFile(fileName);
             fileWriter = new FileWriter(file);
             fileWriter.append("base_entity_id, unique_id, household_id, new_caregiver_death_date, signature, status, date_edited, phone, facility, province, district, ward, household_location, partner, consent_check_box, village, mother_screening_date, screening_date, screening_location_home, caregiver_name, caregiver_nrc, relation, caregiver_sex, caregiver_birth_date, homeaddress, landmark, caregiver_phone, violence_six_months, children_violence_six_months, caregiver_hiv_status, active_on_treatment, date_started_art, caregiver_art_number, is_caregiver_virally_suppressed, date_next_vl, viral_load_results, vl_suppressed, date_of_last_viral_load, caregiver_mmd, level_mmd, biological_children, enrolled_pmtct, at_risk_reasons, reason_for_hiv_risk, is_biological_child_of_mother_living_with_hiv, is_mother_currently_on_treatment_wlhiv, mother_art_number_wlhiv, is_mother_adhering_to_treatment_wlhiv, is_mother_virally_suppressed_wlhiv, secure, carried_by, approved_family, adolescent_village, approved_by, date_approved, highest_grade, marriage_partner_name, spouse_name, relationship_partner_name, screened, enrollment_date, entry_type, other_entry_type, monthly_expenses, males_less_5, females_less_5, males_10_17, females_10_17, fam_source_income, pregnant_women, beds, malaria_itns, household_member_had_malaria, caregiver_education, marital_status, emergency_name, e_relationship, relationship_other, contact_number, case_status, household_case_status, de_registration_date, de_registration_reason, transfer_reason, other_de_registration_reason, reason_for_updating_caregiver, new_caregiver_name, new_caregiver_nrc, new_caregiver_birth_date, new_caregiver_sex, new_relation, new_caregiver_hiv_status, new_caregiver_phone, sub_population, household_receiving_caseworker, district_moved_to\n");
             List<HouseholdCSVModel> householdList = HouseholdDao.getAllHouseholdInDebug();
@@ -151,13 +152,12 @@ public class GenerateCSVsModel {
     }
     public void createVcaCSVFile(CSVCallback callback) {
         // Get the directory to save the file
-        String baseDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
         String fileName = "vcas.csv";
-        File file = new File(baseDir, fileName);
+        File file = null;
 
         FileWriter fileWriter = null;
         try {
-
+            file = resolveCsvFile(fileName);
             fileWriter = new FileWriter(file);
             fileWriter.append("deleted, household_id, unique_id, signature, date_edited, phone, caseworker_name, province, district, ward, facility, partner, adolescent_first_name, adolescent_last_name, adolescent_birthdate, homeaddress, landmark, adolescent_gender, school, schoolName, other_school, is_hiv_positive, is_on_hiv_treatment, art_number, viral_load_results_on_file, is_tb_screening_results_on_file, client_screened, client_result, tpt_client_eligibility, tpt_client_initiated, screened_for_malnutrition, takes_drugs_to_prevent_other_diseases, less_3, positive_mother, active_on_treatment, caregiver_art_number, adhering_to_treatment, is_mother_virally_suppressed, child_been_tested_for_hiv, child_receiving_breastfeeding, child_tested_for_hiv_inline_with_guidelines, receives_drugs_to_prevent_hiv_and_other_illnesses_hei, child_been_screened_for_malnutrition_hei, child_gets_drugs_to_prevent_tb_hei, child_enrolled_in_early_childhood_development_program, is_biological_child_of_mother_living_with_hiv, child_tested_for_hiv_with_mother_as_index_client, is_mother_currently_on_treatment_wlhiv, mother_art_number_wlhiv, is_mother_adhering_to_treatment_wlhiv, is_mother_virally_suppressed_wlhiv, child_receiving_any_hiv_and_violence_prevention_intervention, agyw_sexually_active, hiv_or_pregnancy_prevention_method_used, hiv_or_pregnancy_prevention_method_used_other, agyw_having_sex_with_older_men, agyw_transactional_sex, agyw_engaged_in_transactional_sex, agwy_engaged_in_sex_work, agyw_food_or_economically_insecure, agyw_marry_early, agyw_give_birth_before_the_age_of_18, agyw_have_a_partner_who_is_violent_or_has_experienced_violence, agyw_ever_been_diagnosed_with_a_Sexually_transmitted_illness, agyw_in_school, agyw_receiving_an_economic_strengthening_intervention, child_ever_experienced_sexual_violence, child_still_living_in_the_same_household_as_the_perpetrator, child_supported_to_seek_justice, did_the_child_access_clinical_care, child_clinical_care_services_received, child_clinical_care_services_received_other, other_child_clinical_care_services_received, is_the_child_caregiver_an_fsw, fsw_child_tested, fsw_child_positive, fsw_prevention_intervention, fsw_economic_strengthening_intervention, date_screened, approved_by, consent_check_box, subpop1, subpop2, subpop3, subpop4, subpop5, screening_location, subpop, first_name, last_name, gender, birthdate, index_check_box, case_status, date_referred, date_offered_enrollment, acceptance, date_enrolled, date_hiv_known, art_check_box, date_started_art, vl_check_box, date_last_vl, vl_last_result, date_next_vl, child_mmd, level_mmd, caregiver_name, caregiver_nrc, caregiver_sex, caregiver_birth_date, caregiver_hiv_status, relation, caregiver_phone, de_registration_date, reason, transfer_reason, other_reason, exited_graduation_reason, abym_years, abym_sexually_active, abym_preventions, abym_preventions_other, abym_sex_older_women, abym_transactional_sex, abym_sex_work, abym_economically_insecure, abym_violent_partner, abym_diagnosed, abym_hiv_tested, abym_test_positive, abym_undergone_vmmc, abym_in_school, abym_economic_strengthening, vca_receiving_caseworker, district_moved_to\n");
             List<VcaCSVModel> vcaList = VCAScreeningDao.getVcaCSV();
@@ -317,13 +317,12 @@ public class GenerateCSVsModel {
     }
     public void createVcaServicesCSVFile(CSVCallback callback) {
         // Get the directory to save the file
-        String baseDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
         String fileName = "services_for_VCAs.csv";
-        File file = new File(baseDir, fileName);
+        File file = null;
 
         FileWriter fileWriter = null;
         try {
-
+            file = resolveCsvFile(fileName);
             fileWriter = new FileWriter(file);
             fileWriter.append("unique_id, is_hiv_positive, date, art_clinic, date_last_vl, vl_last_result, date_next_vl, child_mmd, level_mmd, services, other_service, schooled_services, other_schooled_services, safe_services, other_safe_services, stable_services, other_stable_services, delete_status, vca_service_location, signature\n");
             List<VCAServiceModel> vcaServiceModel = VCAServiceReportDao.getVCAServicesCSV();
@@ -368,13 +367,12 @@ public class GenerateCSVsModel {
     }
     public void createHouseholdServicesCSVFile(CSVCallback callback) {
         // Get the directory to save the file
-        String baseDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
         String fileName = "services_for_Households.csv";
-        File file = new File(baseDir, fileName);
+        File file = null;
 
         FileWriter fileWriter = null;
         try {
-
+            file = resolveCsvFile(fileName);
             fileWriter = new FileWriter(file);
             fileWriter.append("services, services_household, services_caregiver, health_services, other_health_services, schooled_services, other_schooled_services, safe_services, other_safe_services, stable_services, other_stable_services, hh_level_services, other_hh_level_services, date, is_hiv_positive, art_clinic, date_last_vl, vl_last_result, date_next_vl, caregiver_mmd, level_mmd, household_id, base_entity_id, other_services_caregiver, other_services_household, delete_status, hh_service_location, signature\n");
             List<HouseholdServiceReportModel> householdServiceModel = HouseholdServiceReportDao.getCSVHouseholdServices();
@@ -428,13 +426,12 @@ public class GenerateCSVsModel {
     }
     public void createVCAVisitationsCSVFile(CSVCallback callback) {
         // Get the directory to save the file
-        String baseDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
         String fileName = "quarterly_assessment_for_VCAs.csv";
-        File file = new File(baseDir, fileName);
+        File file = null;
 
         FileWriter fileWriter = null;
         try {
-
+            file = resolveCsvFile(fileName);
             fileWriter = new FileWriter(file);
             fileWriter.append("unique_id, first_name, last_name, birthdate, vca_visit_location, hei, base_entity_id, age, visit_date, is_hiv_positive, hiv_status, child_art, clinical_care, art_appointment, counselling, art_medication, mmd, mmd_months, drug_regimen, date_art, six_months, health_facility, vl_last_result, date_hiv, visit_hiv_test, referred_for_testing, hiv_risk, hiv_muac, hiv_assessment, referred_facility, eid_test, age_appropriate, not_appropriate_age, breastfeeding, not_breastfeeding, not_tested, hiv_infection, infection_risk, against_hiv_risk, prevention_support, substance_support, under_five, attending_under_five_clinic, appropriate_vaccinations, all_appropriate_vaccinations, muac_measure, nutrition_counselling_a, heps_a, muac_other_a, muac_measurement_b, nutrition_counselling_b, heps_b, muac_other_b, nutrition_status, neglected, neglected_child_exploitation, neglected_child_relationships, child_above_12_a, type_of_neglect, signs_of_violence, relationships_neglected, physical_violence, experiencing_neglected, type_of_neglect_physical, sexually_abused, post_gbv_care, vsu_legal_support, parenting_intervention, sexual_abuse, type_of_neglect_sexual, child_psychosocial, psychosocial_needs, psychosocial_services, child_other_services, referred_services, currently_in_school, not_in_school, child_missed, challenges_barriers, child_household, child_household_services, ovc_caregiver, verified_by_school_days, verified_by_school, current_calendar, did_not_progress, progression_child_household, progression_child_household_services, caseworker_name, caseworker_date_signed, caseworker_signature, manager_name, manager_date_signed, manager_signature, school_administration_name, telephone_number, school_administration_date_signed, school_administration_signature, phone, indicate_vl_result, length_on_art, delete_status, status_color, signature\n");
             List<VcaVisitationModel> vcaVisitationModel = VcaVisitationDao.getVcaVisitationCSV();
@@ -565,13 +562,12 @@ public class GenerateCSVsModel {
     }
     public void createHouseholdsVisitationsCSVFile(CSVCallback callback) {
         // Get the directory to save the file
-        String baseDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
         String fileName = "quarterly_assessment_for_Households.csv";
-        File file = new File(baseDir, fileName);
+        File file = null;
 
         FileWriter fileWriter = null;
         try {
-
+            file = resolveCsvFile(fileName);
             fileWriter = new FileWriter(file);
             fileWriter.append("visit_date, household_id, caregiver_hiv_status, caregiver_art, clinical_care, date_art, art_appointment, counselling, art_medication, mmd, mmd_months, six_months, relation, health_facility, vl_last_result, date_hiv, visit_hiv_test, referred_for_testing, hiv_risk, hiv_assessment, prevention_support, referred_facility, number_children, hiv_awareness_status, caregiver_not_aware, hiv_test_referral, school_fees, unpaid_school_fees, linked_economic, referred_mcdss, source_income, list_source, bills_associated, barriers_challenges, economic_strengthening, social_cash, income_source_medical, list_source_medical, case_worker, caseworker_date_signed, case_manager, manager_date_signed, school_administration_name, telephone, school_administration_date_signed, visit_location, delete_status, signature\n");
             List<CaregiverVisitationModel> householdVisitationModel = CaregiverVisitationDao.getCSVVisits();
@@ -645,13 +641,12 @@ public class GenerateCSVsModel {
     }
     public void createCaregiverHivAssessmentCSVFile(CSVCallback callback) {
         // Get the directory to save the file
-        String baseDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
         String fileName = "Caregiver_Hiv_Assessment.csv";
-        File file = new File(baseDir, fileName);
+        File file = null;
 
         FileWriter fileWriter = null;
         try {
-
+            file = resolveCsvFile(fileName);
             fileWriter = new FileWriter(file);
             fileWriter.append("household_id, phone, base_entity_id, date_edited, caseworker_name, informed_consent, hiv_test, hiv_status, on_art, start_date,  art_number, symptoms, private_parts, exposed_to_HIV, unprotected_sex, pregnant_breastfeeding, hiv_tb_sti, hiv_test_result, date_of_hiv_test, delete_status\n");
             List<CaregiverHivAssessmentModel> caregiverHivAssessmentModel = CaregiverHivAssessmentDao.getAllHivAssessment();
@@ -693,13 +688,12 @@ public class GenerateCSVsModel {
 
     public void createVcaCasePlansCSVFile(CSVCallback callback) {
         // Get the directory to save the file
-        String baseDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
         String fileName = "Case_plans_for_VCA.csv";
-        File file = new File(baseDir, fileName);
+        File file = null;
 
         FileWriter fileWriter = null;
         try {
-
+            file = resolveCsvFile(fileName);
             fileWriter = new FileWriter(file);
             fileWriter.append("unique_id, case_plan_id, case_plan_date, case_plan_status, type, vulnerability, goal, services, service_referred, institution, due_date, status, comment, delete_status\n");
             List<CasePlanModel> casePlanModels = IndexPersonDao.getAllDomainsById();
@@ -736,13 +730,12 @@ public class GenerateCSVsModel {
     }
     public void createHouseholdCasePlansCSVFile(CSVCallback callback) {
         // Get the directory to save the file
-        String baseDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
         String fileName = "Case_plans_for_household.csv";
-        File file = new File(baseDir, fileName);
+        File file = null;
 
         FileWriter fileWriter = null;
         try {
-
+            file = resolveCsvFile(fileName);
             fileWriter = new FileWriter(file);
             fileWriter.append("household_id, case_plan_id, case_plan_date, case_plan_status, type, vulnerability, goal, services, service_referred, institution, due_date, status, comment, delete_status\n");
             List<CasePlanModel> casePlanModels = HouseholdDao.getAllDomainsById();
@@ -777,13 +770,12 @@ public class GenerateCSVsModel {
     }
     public void createVcaHivAssessmentCSVFile(CSVCallback callback) {
         // Get the directory to save the file
-        String baseDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
         String fileName = "Hiv_assessment_for_vca.csv";
-        File file = new File(baseDir, fileName);
+        File file = null;
 
         FileWriter fileWriter = null;
         try {
-
+            file = resolveCsvFile(fileName);
             fileWriter = new FileWriter(file);
             fileWriter.append("unique_id, caseworker_name, phone, informed_consent, assessment_date, hiv_test, on_art, start_date, health_facility, art_number, biological_mother, deceased_parents, tb_symptoms, child_been_sick, frequent_rashes, child_had_pus, hiv_risk, hiv_tb, hiv_test_result, date_of_hiv_test, hiv_exposure, delete_status, facility\n");
 
@@ -830,13 +822,12 @@ public class GenerateCSVsModel {
 
     public void createReferralsCSVFile(CSVCallback callback) {
         // Get the directory to save the file
-        String baseDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
         String fileName = "referrals.csv";
-        File file = new File(baseDir, fileName);
+        File file = null;
 
         FileWriter fileWriter = null;
         try {
-
+            file = resolveCsvFile(fileName);
             fileWriter = new FileWriter(file);
             fileWriter.append("unique_id, household_id, base_entity_id, relational_id, referral_location, referred_date, date_edited, caseworker_name, phone, receiving_organization, date_referred, covid_19, cd4, hiv_adherence, hiv_counseling_testing, post_gbv, substance_abuse, tb_screening, supplementary, prep, f_planning, insecticide, hiv_aids_treatment, f_w_health, vmmc, immunization, condom, routine_care, emergency_care, age_counselling, h_treatment_care, pmtct, hygiene_counselling, transmitted_infections, plha, viral_load, other_health_services, care_facility, post_violence_trauma, legal_assistance, other_safety_services, vca_uniforms_books, re_enrollment, bursaries, other_schooled_services, cash_transfer, cash_support, food_security, other_stability_services, dateCovidProvided, dateCD4Provided, dateHivAdherenceProvided, dateHivCounselingProvided, datePostGbvProvided, dateSubstanceAbuseProvided, dateTBScreeningProvided, dateSupplementaryProvided, datePlanningProvided, dateInsecticideProvided, dateTreatmentProvided, dateHealthProvided, dateVmmcProvided, dateImmunizationProvided, dateCondomProvided, dateCareProvided, dateEmergencyProvided, dateAgeCounsellingProvided, dateTreatmentCareProvided, datePmtctProvided, dateHygienceProvided, datePlhaProvided, dateViralLoadProvided, otherHealth, dateInfectionProvided, datePrepProvided, dateFacilityProvided, dateTraumaProvided, dateAssistanceProvided, dateOtherSafetyProvided, dateUniformsProvided, dateEnrollmentProvided, dateBursariesProvided, dateSchooledProvided, dateCashProvided, dateSupportProvided, dateSecurityProvided, dateStabilityProvided, specify_education, specify_safety, specify_school, specify_stability, delete_status\n");
             List<ReferralModel> referralModel = ReferralDao.getAllReferrals();
@@ -960,5 +951,31 @@ public class GenerateCSVsModel {
             escapedValue = "\"" + escapedValue + "\"";
         }
         return escapedValue;
+    }
+
+    private File resolveCsvFile(String fileName) throws IOException {
+        File directory = getCsvDirectory();
+        if (directory == null) {
+            throw new IOException("External files directory unavailable");
+        }
+        if (!directory.exists() && !directory.mkdirs()) {
+            throw new IOException("Unable to create directory " + directory.getAbsolutePath());
+        }
+        return new File(directory, fileName);
+    }
+
+    private File getCsvDirectory() {
+        CoreChwApplication application = CoreChwApplication.getInstance();
+        if (application == null) {
+            return null;
+        }
+        File directory = application.getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
+        if (directory == null) {
+            directory = application.getApplicationContext().getExternalFilesDir(null);
+        }
+        if (directory == null) {
+            directory = application.getApplicationContext().getFilesDir();
+        }
+        return directory;
     }
 }

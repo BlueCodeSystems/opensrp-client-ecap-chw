@@ -1,9 +1,7 @@
 package com.bluecodeltd.ecap.chw.application;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.text.TextUtils;
@@ -154,23 +152,17 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
 
     public static void prepareGuideBooksFolder() {
         String rootFolder = getGuideBooksDirectory();
-        createFolders(rootFolder, false);
-        boolean onSdCard = FileUtils.canWriteToExternalDisk();
-        if (onSdCard)
-            createFolders(rootFolder, true);
+        createFolders(rootFolder);
     }
 
     public static void prepareCounselingDocsFolder() {
         String rootFolder = getCounselingDocsDirectory();
-        createFolders(rootFolder, false);
-        boolean onSdCard = FileUtils.canWriteToExternalDisk();
-        if (onSdCard)
-            createFolders(rootFolder, true);
+        createFolders(rootFolder);
     }
 
-    private static void createFolders(String rootFolder, boolean onSdCard) {
+    private static void createFolders(String rootFolder) {
         try {
-            FileUtils.createDirectory(rootFolder, onSdCard);
+            FileUtils.createDirectory(rootFolder, false);
         } catch (Exception e) {
             Timber.v(e);
         }
@@ -260,14 +252,7 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
             saveLanguage(Locale.FRENCH.getLanguage());
         }
 
-        // create a folder for guidebooks
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                prepareDirectories();
-            }
-        } else {
-            prepareDirectories();
-        }
+        prepareDirectories();
 
         EventBus.getDefault().register(this);
 

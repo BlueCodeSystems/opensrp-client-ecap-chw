@@ -1,7 +1,5 @@
 package com.bluecodeltd.ecap.chw.activity;
 
-import android.Manifest;
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,7 +8,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
@@ -23,7 +20,6 @@ import com.google.android.material.tabs.TabLayout;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.jetbrains.annotations.NotNull;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import org.smartregister.chw.core.job.ChwIndicatorGeneratingJob;
@@ -34,7 +30,6 @@ import com.bluecodeltd.ecap.chw.util.Utils;
 import org.smartregister.helper.BottomNavigationHelper;
 import org.smartregister.reporting.domain.TallyStatus;
 import org.smartregister.reporting.event.IndicatorTallyEvent;
-import org.smartregister.util.PermissionUtils;
 
 import timber.log.Timber;
 
@@ -105,14 +100,7 @@ public class JobAidsActivity extends FamilyRegisterActivity {
         setContentView(R.layout.activity_job_aids);
         setUpView();
         registerBottomNavigation();
-
-
-        String[] request_permissions = new String[]{
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-        };
-        boolean hasPermission = PermissionUtils.isPermissionGranted(this, request_permissions, PermissionUtils.READ_EXTERNAL_STORAGE_REQUEST_CODE);
-        if (hasPermission) ChwApplication.prepareDirectories();
+        ChwApplication.prepareDirectories();
 
         ChwIndicatorGeneratingJob.scheduleJobImmediately(ChwIndicatorGeneratingJob.TAG);
     }
@@ -169,27 +157,6 @@ public class JobAidsActivity extends FamilyRegisterActivity {
         ChwIndicatorGeneratingJob.scheduleJobImmediately(ChwIndicatorGeneratingJob.TAG);
         Timber.d("ChwIndicatorGeneratingJob scheduled immediately to compute latest counts...");
         Toast.makeText(getApplicationContext(), getString(R.string.indicators_udpating), Toast.LENGTH_LONG).show();
-    }
-
-    public void showPermissionDeniedDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle(getString(R.string.permission_denied))
-                .setMessage(getString(R.string.storage_permissions_message))
-                .setPositiveButton(getString(R.string.no), (dialog, which) -> ActivityCompat.requestPermissions(this, new String[]{
-                        Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PermissionUtils.READ_EXTERNAL_STORAGE_REQUEST_CODE))
-                .setNegativeButton(getString(R.string.yes), (dialog, which) -> dialog.dismiss())
-                .show();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NotNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        boolean granted = PermissionUtils.verifyPermissionGranted(permissions, grantResults, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (!granted) {
-            showPermissionDeniedDialog();
-        } else {
-            ChwApplication.prepareDirectories();
-        }
     }
 
 }

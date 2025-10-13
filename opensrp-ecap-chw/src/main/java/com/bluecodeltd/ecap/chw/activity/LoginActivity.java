@@ -1,10 +1,8 @@
 package com.bluecodeltd.ecap.chw.activity;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
@@ -22,18 +22,16 @@ import com.bluecodeltd.ecap.chw.pinlogin.PinLoginUtil;
 import com.bluecodeltd.ecap.chw.presenter.LoginPresenter;
 import com.bluecodeltd.ecap.chw.util.Utils;
 
-import org.smartregister.chw.core.utils.CoreConstants;
 import org.smartregister.family.util.Constants;
 import org.smartregister.growthmonitoring.service.intent.WeightForHeightIntentService;
 import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.task.SaveTeamLocationsTask;
-import org.smartregister.util.PermissionUtils;
 import org.smartregister.view.activity.BaseLoginActivity;
 import org.smartregister.view.contract.BaseLoginContract;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -49,7 +47,8 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
     private PinLogger pinLogger = PinLoginUtil.getPinLogger();
     TextView txtUsername, txtPassword;
     boolean connected;
-    private Toast toast;
+    private ActivityResultLauncher<String> exportDatabaseLauncher;
+    private String pendingDatabaseName;
 
 
     @Override
@@ -58,6 +57,18 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
         //Sentry.captureMessage("testing SDK setup");
         txtUsername = findViewById(R.id.login_user_name_edit_text);
         txtPassword = findViewById(R.id.login_password_edit_text);
+        exportDatabaseLauncher = registerForActivityResult(
+                new ActivityResultContracts.CreateDocument("application/octet-stream"),
+                uri -> {
+                    if (uri == null || pendingDatabaseName == null) {
+                        pendingDatabaseName = null;
+                        return;
+                    }
+                    boolean success = exportDatabaseToUri(pendingDatabaseName, uri);
+                    int message = success ? R.string.export_db_done_notification : R.string.export_db_failed_notification;
+                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+                    pendingDatabaseName = null;
+                });
     }
 
     @Override
@@ -130,45 +141,32 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
             this.recreate();
             return true;
         } else if (item.getTitle().toString().equalsIgnoreCase(getString(R.string.export_database))) {
-            String DBNAME = "drishti.db";
-            String COPYDBNAME = "chw";
-
-//            toast.show();
+            String dbName = "drishti.db";
+            String exportBaseName = "chw";
             String currentTimeStamp = new SimpleDateFormat("yyyy-MM-dd-HHmmss", Locale.ENGLISH).format(new Date());
-            if (hasPermissions()) {
-                copyDatabase(DBNAME, COPYDBNAME + "-" + currentTimeStamp + ".db", this);
-                Toast.makeText(this, R.string.export_db_done_notification, Toast.LENGTH_SHORT).show();
-            }
+            pendingDatabaseName = dbName;
+            exportDatabaseLauncher.launch(exportBaseName + "-" + currentTimeStamp + ".db");
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public boolean hasPermissions(){
-        return PermissionUtils.isPermissionGranted(this
-                , new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}
-                , CoreConstants.RQ_CODE.STORAGE_PERMISIONS);
-    }
-
-    public void copyDatabase(String dbName, String copyDbName, Context context) {
-        try {
-            final String inFileName = context.getDatabasePath(dbName).getPath();
-            final String outFileName = Environment.getExternalStorageDirectory() + File.separator + Environment.DIRECTORY_DOWNLOADS + "/" + copyDbName;
-            File dbFile = new File(inFileName);
-            FileInputStream fis = new FileInputStream(dbFile);
-
-            OutputStream output = new FileOutputStream(outFileName);
-            byte[] buffer = new byte[1024];
+    private boolean exportDatabaseToUri(String dbName, Uri destinationUri) {
+        try (InputStream input = new FileInputStream(getDatabasePath(dbName));
+             OutputStream output = getContentResolver().openOutputStream(destinationUri)) {
+            if (output == null) {
+                return false;
+            }
+            byte[] buffer = new byte[8192];
             int length;
-            while ((length = fis.read(buffer)) > 0) {
+            while ((length = input.read(buffer)) > -1) {
                 output.write(buffer, 0, length);
             }
-
             output.flush();
-            output.close();
-            fis.close();
-
-        } catch (Exception e) {
-            Timber.e("copyDatabase: backup error " + e.toString());
+            return true;
+        } catch (IOException e) {
+            Timber.e(e, "exportDatabaseToUri: backup error");
+            return false;
         }
     }
 
