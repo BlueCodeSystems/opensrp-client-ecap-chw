@@ -316,7 +316,7 @@ dependencies {
         exclude group: 'io.github.bluecodesystems', module: 'opensrp-client-core'
         exclude group: 'io.github.bluecodesystems', module: 'android-p2p-sync'
     }
-    implementation 'com.github.BlueCodeSystems:opensrp-client-anc:v3.0.0'
+    implementation 'com.github.BlueCodeSystems:opensrp-client-anc:v3.0.1'
     implementation('com.github.BlueCodeSystems.opensrp-client-chw-anc:opensrp-client-chw-anc:v2.0.0') {
         exclude group: 'com.android.support'
         exclude group: 'androidx.appcompat'
