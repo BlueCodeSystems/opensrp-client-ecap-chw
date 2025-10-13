@@ -331,6 +331,96 @@
     <string name="add_index">Add index</string>
     <string name="add_hts">Add HTS</string>
     <string name="opv">OPV</string>
+
+    <!-- Default strings for translated resources -->
+    <string name="login_title">ECAP App</string>
+    <string name="title_family_detail">Household details</string>
+    <string name="go_to_family_s_profile">Go to household profile</string>
+    <string name="family_has_nothing_due">Household has no services due</string>
+    <string name="family_has_services_due">Household has services due</string>
+    <string name="vaccine_service_overdue"><![CDATA[%1$s <font color=#f04646>overdue (%2$s)</font></b>]]></string>
+    <string name="vaccine_service_due"><![CDATA[%1$s <font color=#000000>due (%2$s)</font></b>]]></string>
+    <string name="vaccine_service_upcoming"><![CDATA[%1$s <font color=#7f7f7f>upcoming (%2$s)</font></b>]]></string>
+    <string name="family_has_service_overdue"><![CDATA[Household has <font color=#FF0000>services overdue</font></b>]]></string>
+    <string name="view_upcoming_services">View upcoming services</string>
+    <string name="upcoming_services">Upcoming services</string>
+    <string name="view_medical_history">View medical history</string>
+    <string name="not_visiting_this_month">Not visiting this month</string>
+    <string name="edit">Edit</string>
+    <string name="visit_not_done_btn_child_profile">Visit not done</string>
+    <string name="medical_history">Medical history</string>
+    <string name="add_date_separately">+ ADD A DATE FOR EACH VACCINE</string>
+    <string name="which_vaccines_given_text">Which vaccines were given?</string>
+    <string name="vitamin_a">Vitamin A</string>
+    <string name="action_settings">Settings</string>
+    <string name="observations_illness_episodes"><![CDATA[Observations & illness episodes - <i>optional</i>]]></string>
+    <string name="observations_illness_episodes_medical"><![CDATA[Observations & illness episodes]]></string>
+    <string name="interpunct">・</string>
+    <string name="cancel">Cancel</string>
+    <string name="dose_not_given">Dose not given</string>
+    <string name="head_of_family">Head of household</string>
+    <string name="edit_anc_registration_form_title">Edit ANC registration</string>
+    <string name="anc_registration_form_title">ANC registration</string>
+    <string name="anc_pregnancy_outcome_form_title">Pregnancy outcome</string>
+    <string name="vaccines_not_done">Vaccines not done</string>
+    <string name="set">Set</string>
+    <string name="anc_registration_info">ANC registration info</string>
+    <string name="anc_pregnancy_out_come">Pregnancy outcome</string>
+    <string name="delivery_kit">Delivery kit</string>
+    <string name="anc_home_visit_delivery_kit_received">Delivery kit received</string>
+    <string name="menu_child">Child</string>
+    <string name="menu_malaria">Malaria</string>
+    <string name="january">January</string>
+    <string name="february">February</string>
+    <string name="march">March</string>
+    <string name="april">April</string>
+    <string name="may">May</string>
+    <string name="june">June</string>
+    <string name="july">July</string>
+    <string name="august">August</string>
+    <string name="september">September</string>
+    <string name="october">October</string>
+    <string name="november">November</string>
+    <string name="december">December</string>
+    <string name="gest_age">GA: %1$s</string>
+    <string name="gest_age_weeks">weeks</string>
+    <string name="llitn_label">Does the mother sleep under a long-lasting insecticide-treated net (LLIN)?</string>
+    <string name="llitn_label_child">Does the child sleep under a long-lasting insecticide-treated net (LLIN)?</string>
+    <string name="llitn_info_title">Pregnant woman sleeps under LLIN</string>
+    <string name="llitn_info_text">Malaria is very dangerous for pregnant women. In malaria-endemic areas, women should prevent infection by taking antimalarial tablets as advised by a trained health worker and by sleeping under an insecticide-treated net.</string>
+    <string name="malaria_follow_up">Malaria follow-up visit</string>
+    <string name="opv_1">OPV 1</string>
+    <string name="opv_2">OPV 2</string>
+    <string name="opv_3">OPV 3</string>
+    <string name="penta_1">Penta 1</string>
+    <string name="penta_2">Penta 2</string>
+    <string name="penta_3">Penta 3</string>
+    <string name="pcv_1">PCV 1</string>
+    <string name="pcv_2">PCV 2</string>
+    <string name="pcv_3">PCV 3</string>
+    <string name="rota_1">Rota 1</string>
+    <string name="rota_2">Rota 2</string>
+    <string name="rota_3">Rota 3</string>
+    <string name="ipv">IPV</string>
+    <string name="mcv_1">MCV 1</string>
+    <string name="mcv_2">MCV 2</string>
+    <string name="mcv_3">MCV 3</string>
+    <string name="yellow_fever">Yellow fever</string>
+    <string name="rubella_1">Rubella 1</string>
+    <string name="rubella_2">Rubella 2</string>
+    <string name="mena">MenA</string>
+    <string name="follow_up_visit">Follow-up visit</string>
+    <string name="pnc_visit">PNC visit</string>
+    <string name="anc_visit">ANC visit</string>
+    <string name="dose_number">Dose %s</string>
+    <string name="loading_content">Loading content</string>
+    <string name="family_title">Household {0}</string>
+    <string name="family_profile_title">Household %1$s</string>
+    <string name="family_profile_title_with_firstname">Household %1$s %2$s</string>
+    <string name="unauthorized_group">This account is not authorized to access this device</string>
+    <string name="physically_challenged">Living with a disability</string>
+    <string name="balanced_diet_content_eight">Less than 10% of total energy intake should come from free sugars—about 50 g (12 teaspoons) for an adult consuming 2000 calories—ideally under 5% for added health benefits.</string>
+    <string name="hello_world">Hello World!</string>
     
     <!-- Config for libraries expecting resource-based URL -->
     <string name="opensrp_url">https://opensrp.ecap.bluecodeltd.com/opensrp/</string>

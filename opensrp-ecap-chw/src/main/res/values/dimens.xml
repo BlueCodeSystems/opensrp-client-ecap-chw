@@ -22,6 +22,8 @@
     <dimen name="search_bar_min_margin">8dp</dimen>
     <dimen name="ec_main_header_search_cancel_button_width">40dp</dimen>
 
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+
     <!-- Pagination bar height used across registers/dialogs -->
     <dimen name="pagination_bar_height">36dp</dimen>
 
@@ -51,4 +53,28 @@
     <dimen name="login_title_text_size">25sp</dimen>
     <dimen name="login_opensrp_logo_height">60dp</dimen>
     <dimen name="register_list_bottom_inset">72dp</dimen>
+
+    <!-- Defaults for large-screen overrides -->
+    <dimen name="change_dialog_text_size">18sp</dimen>
+    <dimen name="remove_member_padding">16dp</dimen>
+    <dimen name="remove_member_text_size">16sp</dimen>
+    <dimen name="change_member_padding">8dp</dimen>
+    <dimen name="change_member_list_main">18sp</dimen>
+    <dimen name="change_member_list_details">14sp</dimen>
+
+    <dimen name="tool_bar_size">56dp</dimen>
+    <dimen name="tool_bar_title">20sp</dimen>
+    <dimen name="tool_bar_image">24dp</dimen>
+
+    <dimen name="call_widget_padding_top">8dp</dimen>
+    <dimen name="call_widget_padding_side">12dp</dimen>
+    <dimen name="call_widget_padding_bottom">16dp</dimen>
+
+    <dimen name="call_widget_font1">18sp</dimen>
+    <dimen name="call_widget_font2">16sp</dimen>
+    <dimen name="call_widget_font3">14sp</dimen>
+
+    <dimen name="family_register_text_size">14sp</dimen>
+    <dimen name="family_register_image_size">16dp</dimen>
+    <dimen name="family_register_count_size">20dp</dimen>
 </resources>
