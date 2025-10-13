@@ -254,8 +254,8 @@ android {
         ecap {
             dimension = 'baseDimension'
             applicationIdSuffix ".ecap"
-            versionCode 28
-            versionName "v6.2.6"
+            versionCode 33
+            versionName "v7.0.0"
             buildConfigField "String", 'opensrp_url', '"https://opensrp.ecap.bluecodeltd.com/opensrp/"'
             buildConfigField "String", 'guidebooks_url', '"https://opensrp.s3.amazonaws.com/media/ba/"'
             buildConfigField "String", 'opensrp_url_debug', '"https://opensrp.ecap.bluecodeltd.com/opensrp/"'
@@ -296,10 +296,10 @@ configurations.all {
             substitute module('io.github.bluecodesystems:opensrp-chw-family-planning') using module('com.github.BlueCodeSystems:opensrp-client-chw-family-planning:v1.0.27')
             substitute module('org.smartregister:opensrp-client-immunization') using module('com.github.BlueCodeSystems:opensrp-client-immunization:v5.1.1')
             substitute module('io.github.bluecodesystems:opensrp-client-immunization') using module('com.github.BlueCodeSystems:opensrp-client-immunization:v5.1.1')
-            substitute module('io.github.bluecodesystems:opensrp-client-native-form-new') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:opensrp-client-native-form:v3.2.1')
-            substitute module('com.github.BlueCodeSystems.Opensrp-client-native-form-new:opensrp-client-native-form') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:opensrp-client-native-form:v3.2.1')
-            substitute module('io.github.bluecodesystems:circleprogressbar') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:circleprogressbar:v3.2.1')
-            substitute module('com.github.BlueCodeSystems.Opensrp-client-native-form-new:circleprogressbar') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:circleprogressbar:v3.2.1')
+            substitute module('io.github.bluecodesystems:opensrp-client-native-form-new') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:opensrp-client-native-form:v3.2.2')
+            substitute module('com.github.BlueCodeSystems.Opensrp-client-native-form-new:opensrp-client-native-form') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:opensrp-client-native-form:v3.2.2')
+            substitute module('io.github.bluecodesystems:circleprogressbar') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:circleprogressbar:v3.2.2')
+            substitute module('com.github.BlueCodeSystems.Opensrp-client-native-form-new:circleprogressbar') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:circleprogressbar:v3.2.2')
             substitute module('io.github.bluecodesystems:opensrp-client-utils') using module('com.github.BlueCodeSystems:opensrp-client-utils:v1.0.0')
             substitute module('org.smartregister:opensrp-client-chw-anc') using module('com.github.BlueCodeSystems.opensrp-client-chw-anc:opensrp-client-chw-anc:v2.0.0')
             substitute module('org.smartregister:opensrp-client-growth-monitoring') using module('com.github.BlueCodeSystems:opensrp-client-growth-monitoring:v3.0.0')
@@ -319,7 +319,7 @@ dependencies {
     // Household features and utilities will come from core module's transitive
     // dependency on org.smartregister:opensrp-household
 
-    implementation 'com.github.BlueCodeSystems:neat-form:v1.1.6'
+    implementation 'com.github.BlueCodeSystems:neat-form:v1.1.7'
 //    implementation "io.ona.rdt-capture:lib:2.1.0"
     implementation "com.ibm.fhir:fhir-model:4.7.1"
     implementation "com.ibm.fhir:fhir-path:4.7.1"

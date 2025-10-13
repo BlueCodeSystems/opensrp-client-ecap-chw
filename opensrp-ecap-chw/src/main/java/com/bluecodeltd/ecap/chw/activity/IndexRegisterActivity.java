@@ -75,6 +75,9 @@ import timber.log.Timber;
 
 public class IndexRegisterActivity extends BaseRegisterActivity implements IndexRegisterContract.View {
 
+    // Local extra key to request compact wizard layout in native form
+    private static final String EXTRA_USE_COMPACT_WIZARD_LAYOUT = "use_compact_wizard_layout";
+
     public String action = null;
     ObjectMapper oMapper;
     ObjectMapper oMapper_hh_screen;
@@ -233,7 +236,16 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         }
             Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
             Form form = new Form();
+            // Keep wizard mode, but hide in-form nav and icons to free space
             form.setWizard(true);
+            try {
+                form.setShowNextInToolbarWhenWizard(true);
+                // Hide bottom navigation buttons and wizard icons to free space
+                form.setHideNextButton(true);
+                form.setHidePreviousButton(true);
+                form.setHideNextIcon(true);
+                form.setHidePreviousIcon(true);
+            } catch (Throwable ignored) { /* compatible with older Form APIs */ }
             form.setHideSaveLabel(true);
             form.setNextLabel(getString(R.string.next));
             form.setPreviousLabel(getString(R.string.previous));
@@ -241,6 +253,8 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
             form.setNavigationBackground(R.color.primary);
             intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
             intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
+            // Ask native form to use compact wizard layout to maximize space (works when using local native-form)
+            intent.putExtra(EXTRA_USE_COMPACT_WIZARD_LAYOUT, true);
             startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
 
     }
@@ -312,7 +326,16 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         }
         Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         Form form = new Form();
+        // Keep wizard mode, but hide in-form nav and icons to free space
         form.setWizard(true);
+        try {
+            form.setShowNextInToolbarWhenWizard(true);
+            // Hide bottom navigation buttons and wizard icons to free space
+            form.setHideNextButton(true);
+            form.setHidePreviousButton(true);
+            form.setHideNextIcon(true);
+            form.setHidePreviousIcon(true);
+        } catch (Throwable ignored) { /* compatible with older Form APIs */ }
         form.setHideSaveLabel(true);
         form.setNextLabel(getString(R.string.next));
         form.setPreviousLabel(getString(R.string.previous));
@@ -320,6 +343,8 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         form.setNavigationBackground(R.color.primary);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
+        // Ask native form to use compact wizard layout to maximize space (works when using local native-form)
+        intent.putExtra(EXTRA_USE_COMPACT_WIZARD_LAYOUT, true);
         startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
 
     }

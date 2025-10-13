@@ -42,7 +42,6 @@ import org.smartregister.view.customcontrols.CustomFontTextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.ona.kujaku.utils.CoordinateUtils;
 import io.ona.kujaku.views.KujakuMapView;
 import timber.log.Timber;
 
@@ -190,7 +189,7 @@ public class CoreAncMemberMapActivity extends AppCompatActivity {
             mapboxMap.addMarker(markerOptions);
         }
 
-        if (boundingBox != null && !CoordinateUtils.isLocationInBounds(userLocation, boundingBox.north(), boundingBox.south(), boundingBox.east(), boundingBox.west())) {
+        if (boundingBox != null && !isLocationInBounds(userLocation, boundingBox.north(), boundingBox.south(), boundingBox.east(), boundingBox.west())) {
             double north = boundingBox.north();
             double south = boundingBox.south();
             double east = boundingBox.east();
@@ -210,6 +209,25 @@ public class CoreAncMemberMapActivity extends AppCompatActivity {
 
             mapboxMap.animateCamera(CameraUpdateFactory.newLatLngBounds(LatLngBounds.from(north, east, south, west), BOUNDING_BOX_PADDING));
         }
+    }
+
+    private static boolean isLocationInBounds(@Nullable LatLng target,
+                                              double north,
+                                              double south,
+                                              double east,
+                                              double west) {
+        if (target == null) return false;
+        double lat = target.getLatitude();
+        double lon = target.getLongitude();
+        boolean inLat = lat <= north && lat >= south;
+        boolean inLon;
+        // Handle antimeridian-crossing bounds
+        if (east >= west) {
+            inLon = lon <= east && lon >= west;
+        } else {
+            inLon = lon >= west || lon <= east;
+        }
+        return inLat && inLon;
     }
 
     @Nullable
@@ -256,13 +274,11 @@ public class CoreAncMemberMapActivity extends AppCompatActivity {
         String[] latLong = communityResponderModel.getResponderLocation().split(" ");
         double latitude = Double.parseDouble(latLong[0]);
         double longitude = Double.parseDouble(latLong[1]);
-        com.cocoahero.android.geojson.Feature feature = new com.cocoahero.android.geojson.Feature();
-        feature.setGeometry(new com.cocoahero.android.geojson.Point(latitude, longitude));
-        JSONObject properties = new JSONObject();
-        properties.put(CoreConstants.JsonAssets.RESPONDER_NAME, communityResponderModel.getResponderName());
-        properties.put(CoreConstants.JsonAssets.RESPONDER_PHONE_NUMBER, communityResponderModel.getResponderPhoneNumber());
-        feature.setProperties(properties);
-        return Feature.fromJson(feature.toJSON().toString());
+        // Mapbox GeoJSON Point expects longitude, latitude order
+        Feature feature = Feature.fromGeometry(com.mapbox.geojson.Point.fromLngLat(longitude, latitude));
+        feature.addStringProperty(CoreConstants.JsonAssets.RESPONDER_NAME, communityResponderModel.getResponderName());
+        feature.addStringProperty(CoreConstants.JsonAssets.RESPONDER_PHONE_NUMBER, communityResponderModel.getResponderPhoneNumber());
+        return feature;
     }
 
     @Override

@@ -1212,7 +1212,7 @@
         "openmrs_entity_id": "muac_measure",
         "type": "edit_text",
         "hint": "What is the child’s MUAC measurement?",
-        "edit_type": "number",
+        "edit_type": "hidden",
         "read_only": false,
         "relevance": {
           "step1:appropriate_vaccinations": {
@@ -1363,6 +1363,24 @@
         }
       },
       {
+        "key": "toaster_red",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Severe Acute Malnutrition (SAM)",
+        "toaster_type": "problem",
+        "toaster_info_text": "",
+        "toaster_info_title": "",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "muac_reading.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "medical_complications",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -1382,7 +1400,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "home_visitation_muac.yml"
+              "rules-file": "muac_reading.yml"
             }
           }
         }
@@ -1422,6 +1440,24 @@
         }
       },
       {
+        "key": "toaster_yellow",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Moderate Acute Malnutrition (MAM)",
+        "toaster_type": "warning",
+        "toaster_info_text": "",
+        "toaster_info_title": "",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "muac_reading.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "patient toaster 3",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
@@ -1434,7 +1470,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "home_visitation_muac.yml"
+              "rules-file": "muac_reading.yml"
             }
           }
         }
@@ -1459,7 +1495,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "home_visitation_muac.yml"
+              "rules-file": "muac_reading.yml"
             }
           }
         }

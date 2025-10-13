@@ -30,7 +30,7 @@
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbarx"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="?attr/actionBarSize"
                     android:background="#A5023C"
                     app:layout_collapseMode="pin"
                     app:theme="@style/ThemeOverlay.AppCompat.Light" />
@@ -39,7 +39,7 @@
                     android:id="@+id/profile_name_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="56dp"
+                    android:layout_marginTop="?attr/actionBarSize"
                     android:background="#A5023C"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
