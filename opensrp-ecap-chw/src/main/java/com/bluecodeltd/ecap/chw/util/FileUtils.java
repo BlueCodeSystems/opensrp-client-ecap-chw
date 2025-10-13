@@ -1,5 +1,6 @@
 package com.bluecodeltd.ecap.chw.util;
 
+import android.content.Context;
 import android.os.Environment;
 
 import java.io.BufferedReader;
@@ -25,8 +26,9 @@ public class FileUtils {
     }
 
     public static File createDirectory(String directoryPath, boolean onSdCard) {
-        File location = onSdCard ? Environment.getExternalStorageDirectory() : Environment.getDataDirectory();
-        File dir = new File(location + File.separator + directoryPath);
+        Context ctx = com.bluecodeltd.ecap.chw.application.ChwApplication.getInstance().getApplicationContext();
+        File base = onSdCard ? ctx.getExternalFilesDir(null) : ctx.getFilesDir();
+        File dir = new File((base != null ? base.getAbsolutePath() : ctx.getFilesDir().getAbsolutePath()) + File.separator + directoryPath);
         if (dir.exists())
             return dir;
 
@@ -59,7 +61,7 @@ public class FileUtils {
     }
 
     public static boolean writeToExternalDisk(String directoryPath, byte[] bytes, String fileName) throws Exception {
-        File dir = createDirectory(directoryPath, canWriteToExternalDisk());
+        File dir = createDirectory(directoryPath, true);
         if (dir != null && dir.exists()) {
             File file = new File(dir, fileName);
             FileOutputStream os = new FileOutputStream(file);
@@ -70,8 +72,11 @@ public class FileUtils {
     }
 
     public static File[] getFiles(String folder) {
-        File directory = new File(Environment.getExternalStorageDirectory() + File.separator + folder);
-        return directory.listFiles();
+        Context ctx = com.bluecodeltd.ecap.chw.application.ChwApplication.getInstance().getApplicationContext();
+        File external = ctx.getExternalFilesDir(null);
+        File directory = new File((external != null ? external : ctx.getFilesDir()) + File.separator + folder);
+        File[] files = directory.listFiles();
+        return files != null ? files : new File[]{};
     }
 
 }

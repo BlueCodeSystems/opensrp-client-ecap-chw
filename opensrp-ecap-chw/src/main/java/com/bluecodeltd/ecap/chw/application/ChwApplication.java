@@ -260,14 +260,8 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
             saveLanguage(Locale.FRENCH.getLanguage());
         }
 
-        // create a folder for guidebooks
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                prepareDirectories();
-            }
-        } else {
-            prepareDirectories();
-        }
+        // Prepare app-private directories; no external storage permission required
+        prepareDirectories();
 
         EventBus.getDefault().register(this);
 

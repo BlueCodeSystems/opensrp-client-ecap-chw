@@ -24,7 +24,6 @@ public class GenerateCSVsModel {
         void onError(String error);
     }
 
-
     public void createCSVFile(CSVCallback callback) {
         // Get the directory to save the file
         String baseDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();

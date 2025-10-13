@@ -107,12 +107,8 @@ public class JobAidsActivity extends FamilyRegisterActivity {
         registerBottomNavigation();
 
 
-        String[] request_permissions = new String[]{
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-        };
-        boolean hasPermission = PermissionUtils.isPermissionGranted(this, request_permissions, PermissionUtils.READ_EXTERNAL_STORAGE_REQUEST_CODE);
-        if (hasPermission) ChwApplication.prepareDirectories();
+        // Prepare app-private directories; no external storage permission needed
+        ChwApplication.prepareDirectories();
 
         ChwIndicatorGeneratingJob.scheduleJobImmediately(ChwIndicatorGeneratingJob.TAG);
     }
@@ -171,25 +167,6 @@ public class JobAidsActivity extends FamilyRegisterActivity {
         Toast.makeText(getApplicationContext(), getString(R.string.indicators_udpating), Toast.LENGTH_LONG).show();
     }
 
-    public void showPermissionDeniedDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle(getString(R.string.permission_denied))
-                .setMessage(getString(R.string.storage_permissions_message))
-                .setPositiveButton(getString(R.string.no), (dialog, which) -> ActivityCompat.requestPermissions(this, new String[]{
-                        Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PermissionUtils.READ_EXTERNAL_STORAGE_REQUEST_CODE))
-                .setNegativeButton(getString(R.string.yes), (dialog, which) -> dialog.dismiss())
-                .show();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NotNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        boolean granted = PermissionUtils.verifyPermissionGranted(permissions, grantResults, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (!granted) {
-            showPermissionDeniedDialog();
-        } else {
-            ChwApplication.prepareDirectories();
-        }
-    }
+    // No runtime storage permissions required on modern scoped storage
 
 }

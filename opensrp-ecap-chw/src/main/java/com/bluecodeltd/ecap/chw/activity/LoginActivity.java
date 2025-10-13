@@ -144,19 +144,23 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
     }
 
     public boolean hasPermissions(){
-        return PermissionUtils.isPermissionGranted(this
-                , new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}
-                , CoreConstants.RQ_CODE.STORAGE_PERMISIONS);
+        // External storage permissions not required when writing to app-private directories
+        return true;
     }
 
     public void copyDatabase(String dbName, String copyDbName, Context context) {
         try {
             final String inFileName = context.getDatabasePath(dbName).getPath();
-            final String outFileName = Environment.getExternalStorageDirectory() + File.separator + Environment.DIRECTORY_DOWNLOADS + "/" + copyDbName;
             File dbFile = new File(inFileName);
             FileInputStream fis = new FileInputStream(dbFile);
 
-            OutputStream output = new FileOutputStream(outFileName);
+            // Save into app-private external Downloads directory (no permission needed)
+            File downloadsDir = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+            if (downloadsDir != null && !downloadsDir.exists()) {
+                downloadsDir.mkdirs();
+            }
+            File outFile = new File(downloadsDir != null ? downloadsDir : context.getFilesDir(), copyDbName);
+            OutputStream output = new FileOutputStream(outFile);
             byte[] buffer = new byte[1024];
             int length;
             while ((length = fis.read(buffer)) > 0) {

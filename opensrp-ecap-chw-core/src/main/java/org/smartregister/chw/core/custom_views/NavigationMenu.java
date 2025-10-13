@@ -401,11 +401,7 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
     }
 
     public void startP2PActivity(@NonNull Activity activity) {
-        if (PermissionUtils.isPermissionGranted(activity
-                , new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}
-                , CoreConstants.RQ_CODE.STORAGE_PERMISIONS)) {
-            activity.startActivity(new Intent(activity, ChwP2pModeSelectActivity.class));
-        }
+        activity.startActivity(new Intent(activity, ChwP2pModeSelectActivity.class));
     }
 
     public NavigationAdapter getNavigationAdapter() {
