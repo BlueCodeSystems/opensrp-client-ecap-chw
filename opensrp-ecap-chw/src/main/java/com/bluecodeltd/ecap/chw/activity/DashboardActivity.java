@@ -600,7 +600,7 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
 
                 csvGenerator.generateCSVWithProgress(this, presenter, () ->
                         showCustomDialog(DashboardActivity.this,
-                                "CSV files have been generated. You can find them in the device's file folder."));
+                                getString(R.string.csv_generated_location, getString(R.string.app_name))));
                 break;
         }
         return super.onOptionsItemSelected(item);

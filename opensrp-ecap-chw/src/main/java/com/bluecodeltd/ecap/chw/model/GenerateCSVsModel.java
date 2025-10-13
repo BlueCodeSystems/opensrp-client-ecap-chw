@@ -1,9 +1,16 @@
 package com.bluecodeltd.ecap.chw.model;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
+import android.provider.MediaStore;
 
 import org.smartregister.chw.core.application.CoreChwApplication;
 
+import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.dao.CaregiverHivAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.CaregiverVisitationDao;
 import com.bluecodeltd.ecap.chw.dao.HivAssessmentUnder15Dao;
@@ -16,14 +23,87 @@ import com.bluecodeltd.ecap.chw.dao.VCAServiceReportDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
+
+import timber.log.Timber;
 
 public class GenerateCSVsModel {
     public interface CSVCallback {
         void onSuccess(String filePath);
         void onError(String error);
+    }
+
+    private String publishCsv(File file) {
+        if (file == null) {
+            return "CSV generated";
+        }
+
+        CoreChwApplication application = CoreChwApplication.getInstance();
+        if (application == null) {
+            return file.getAbsolutePath();
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            try {
+                return copyToDownloads(application, file);
+            } catch (IOException e) {
+                Timber.e(e, "Failed to copy CSV to downloads");
+                return file.getAbsolutePath();
+            }
+        } else {
+            MediaScannerConnection.scanFile(application.getApplicationContext(),
+                    new String[]{file.getAbsolutePath()},
+                    new String[]{"text/csv"},
+                    null);
+            return file.getAbsolutePath();
+        }
+    }
+
+    private String copyToDownloads(CoreChwApplication application, File file) throws IOException {
+        ContentResolver resolver = application.getContentResolver();
+        String relativePath = Environment.DIRECTORY_DOWNLOADS + "/" + application.getString(R.string.app_name);
+
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.MediaColumns.DISPLAY_NAME, file.getName());
+        values.put(MediaStore.MediaColumns.MIME_TYPE, "text/csv");
+        values.put(MediaStore.MediaColumns.RELATIVE_PATH, relativePath);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            values.put(MediaStore.MediaColumns.IS_PENDING, 1);
+        }
+
+        Uri uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values);
+        if (uri == null) {
+            throw new IOException("Failed to create MediaStore entry for " + file.getName());
+        }
+
+        try (OutputStream outputStream = resolver.openOutputStream(uri);
+             InputStream inputStream = new FileInputStream(file)) {
+            if (outputStream == null) {
+                throw new IOException("Unable to open output stream for " + uri);
+            }
+            byte[] buffer = new byte[8192];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            outputStream.flush();
+        } catch (IOException ioe) {
+            resolver.delete(uri, null, null);
+            throw ioe;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            ContentValues completed = new ContentValues();
+            completed.put(MediaStore.MediaColumns.IS_PENDING, 0);
+            resolver.update(uri, completed, null, null);
+        }
+
+        return relativePath + "/" + file.getName();
     }
 
 
@@ -145,7 +225,7 @@ public class GenerateCSVsModel {
             fileWriter.flush();
             fileWriter.close();
 
-            callback.onSuccess(file.getAbsolutePath());
+            callback.onSuccess(publishCsv(file));
         } catch (IOException e) {
             callback.onError(e.getMessage());
         }
@@ -310,7 +390,7 @@ public class GenerateCSVsModel {
             fileWriter.flush();
             fileWriter.close();
 
-            callback.onSuccess(file.getAbsolutePath());
+            callback.onSuccess(publishCsv(file));
         } catch (IOException e) {
             callback.onError(e.getMessage());
         }
@@ -360,7 +440,7 @@ public class GenerateCSVsModel {
             fileWriter.flush();
             fileWriter.close();
 
-            callback.onSuccess(file.getAbsolutePath());
+            callback.onSuccess(publishCsv(file));
         } catch (IOException e) {
             callback.onError(e.getMessage());
         }
@@ -419,7 +499,7 @@ public class GenerateCSVsModel {
             fileWriter.flush();
             fileWriter.close();
 
-            callback.onSuccess(file.getAbsolutePath());
+            callback.onSuccess(publishCsv(file));
         } catch (IOException e) {
             callback.onError(e.getMessage());
         }
@@ -555,7 +635,7 @@ public class GenerateCSVsModel {
             fileWriter.flush();
             fileWriter.close();
 
-            callback.onSuccess(file.getAbsolutePath());
+            callback.onSuccess(publishCsv(file));
         } catch (IOException e) {
             callback.onError(e.getMessage());
         }
@@ -634,7 +714,7 @@ public class GenerateCSVsModel {
             fileWriter.flush();
             fileWriter.close();
 
-            callback.onSuccess(file.getAbsolutePath());
+            callback.onSuccess(publishCsv(file));
         } catch (IOException e) {
             callback.onError(e.getMessage());
         }
@@ -680,7 +760,7 @@ public class GenerateCSVsModel {
             fileWriter.flush();
             fileWriter.close();
 
-            callback.onSuccess(file.getAbsolutePath());
+            callback.onSuccess(publishCsv(file));
         } catch (IOException e) {
             callback.onError(e.getMessage());
         }
@@ -723,7 +803,7 @@ public class GenerateCSVsModel {
             fileWriter.flush();
             fileWriter.close();
 
-            callback.onSuccess(file.getAbsolutePath());
+            callback.onSuccess(publishCsv(file));
         } catch (IOException e) {
             callback.onError(e.getMessage());
         }
@@ -763,7 +843,7 @@ public class GenerateCSVsModel {
             fileWriter.flush();
             fileWriter.close();
 
-            callback.onSuccess(file.getAbsolutePath());
+            callback.onSuccess(publishCsv(file));
         } catch (IOException e) {
             callback.onError(e.getMessage());
         }
@@ -814,7 +894,7 @@ public class GenerateCSVsModel {
             fileWriter.flush();
             fileWriter.close();
 
-            callback.onSuccess(file.getAbsolutePath());
+            callback.onSuccess(publishCsv(file));
         } catch (IOException e) {
             callback.onError(e.getMessage());
         }
@@ -935,7 +1015,7 @@ public class GenerateCSVsModel {
             fileWriter.flush();
             fileWriter.close();
 
-            callback.onSuccess(file.getAbsolutePath());
+            callback.onSuccess(publishCsv(file));
         } catch (IOException e) {
             callback.onError(e.getMessage());
         }

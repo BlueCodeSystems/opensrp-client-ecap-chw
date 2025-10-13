@@ -421,6 +421,7 @@
     <string name="physically_challenged">Living with a disability</string>
     <string name="balanced_diet_content_eight" formatted="false">Less than 10% of total energy intake should come from free sugars—about 50 g (12 teaspoons) for an adult consuming 2000 calories—ideally under 5% for added health benefits.</string>
     <string name="hello_world">Hello World!</string>
+    <string name="csv_generated_location">CSV files have been generated. You can find them in the Downloads/%1$s folder.</string>
     
     <!-- Config for libraries expecting resource-based URL -->
     <string name="opensrp_url">https://opensrp.ecap.bluecodeltd.com/opensrp/</string>
