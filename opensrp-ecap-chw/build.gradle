@@ -339,7 +339,7 @@ dependencies {
     implementation 'com.github.BlueCodeSystems:opensrp-client-configurable-views:v2.0.1'
 
     // FP client referenced directly in app code (org.smartregister.fp.BuildConfig)
-    implementation 'com.github.BlueCodeSystems:opensrp-client-fp:v2.1.0'
+    implementation 'com.github.BlueCodeSystems:Opensrp-client-fp:v2.2.0'
     implementation 'com.github.BlueCodeSystems:pulsebridge:v0.1.1'
 
     // AndroidX Preference (for PreferenceManager usage)
