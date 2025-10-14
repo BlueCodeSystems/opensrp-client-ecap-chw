@@ -206,12 +206,22 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
             alert.show();
         });
 
-        Child childModel = IndexPersonDao.getChildByBaseId(visit.getUnique_id());
+        Child childModel = null;
+        try {
+            childModel = IndexPersonDao.getChildByBaseId(visit.getUnique_id());
+        } catch (Exception e) {
+            Timber.e(e);
+        }
 
-        if (childModel != null && childModel.getIs_hiv_positive() != null && "yes".equalsIgnoreCase(childModel.getIs_hiv_positive())) {
-            holder.exPandableView.setVisibility(View.GONE);
-            holder.expMore.setVisibility(View.GONE);
-            holder.expLess.setVisibility(View.GONE);
+        if (childModel == null) {
+            holder.intialHivStatus.setText("Unknown");
+            holder.initialHivStatusDate.setText("Date not set");
+        } else {
+            if (childModel.getIs_hiv_positive() != null && "yes".equalsIgnoreCase(childModel.getIs_hiv_positive())) {
+                holder.exPandableView.setVisibility(View.GONE);
+                holder.expMore.setVisibility(View.GONE);
+                holder.expLess.setVisibility(View.GONE);
+            }
         }
         holder.linearLayout.setOnClickListener(v -> {
 
@@ -274,10 +284,17 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
             holder.updatedHivStatusDate.setText(visit.getVisit_date() != null ? visit.getVisit_date() : "Date not set");
         }
 
-        Household household = HouseholdDao.getHousehold(childModel.getHousehold_id());
+        Household household = null;
+        if (childModel != null && childModel.getHousehold_id() != null) {
+            try {
+                household = HouseholdDao.getHousehold(childModel.getHousehold_id());
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+        }
 
         String encodedSignature = visit.getSignature();
-        String encodeSignatureHousehold = household.getSignature();
+        String encodeSignatureHousehold = household != null ? household.getSignature() : null;
 
 
         if(encodedSignature != null && encodedSignature != "") {
@@ -327,10 +344,28 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
         formToBeOpened = formUtils.getFormJson(formName);
 
         formToBeOpened.put("entity_id", visit.getBase_entity_id());
-        VcaScreeningModel vcaScreeningModel = VCAScreeningDao.getVcaScreening(visit.getUnique_id());
+        VcaScreeningModel vcaScreeningModel = null;
+        try {
+            vcaScreeningModel = VCAScreeningDao.getVcaScreening(visit.getUnique_id());
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+
+        if (vcaScreeningModel == null) {
+            Toast.makeText(context, "Member data incomplete", Toast.LENGTH_LONG).show();
+            return;
+        }
 
 
-        Double vAge = getAndCalculateAge(vcaScreeningModel.getAdolescent_birthdate());
+        Double vAge = null;
+        try {
+            vAge = getAndCalculateAge(vcaScreeningModel.getAdolescent_birthdate());
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+        if (vAge == null) {
+            vAge = -1.0;
+        }
 
         JSONObject hiv_infection = getFieldJSONObject(fields(formToBeOpened, "step1"), "hiv_infection");
 

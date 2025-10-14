@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -93,13 +94,26 @@ public class ChildSafetyPlanAdapter  extends RecyclerView.Adapter<ChildSafetyPla
             holder.numberOfAction.setText(ChildSafetyActionDao.countChildSafetyPlan(plan.getUnique_id(),plan.getInitial_date())+" Actions");
         }
 
+        Child child = null;
+        try {
+            child = IndexPersonDao.getChildByBaseId(plan.getUnique_id());
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+        final Child safeChild = child;
 
-        Child child = IndexPersonDao.getChildByBaseId(plan.getUnique_id());
+        if (safeChild == null) {
+            holder.linearLayout.setOnClickListener(v ->
+                    Toast.makeText(context, "Member data incomplete", Toast.LENGTH_LONG).show());
+            holder.delete.setVisibility(View.GONE);
+            return;
+        }
+
         holder.linearLayout.setOnClickListener(v -> {
 
             Intent openChildSafetyPlanActionActivity = new Intent(context, ChildSafetyPlanActions.class);
             openChildSafetyPlanActionActivity.putExtra("vca_id",plan.getUnique_id());
-            openChildSafetyPlanActionActivity.putExtra("vca_name",child.getFirst_name()+" "+child.getLast_name());
+            openChildSafetyPlanActionActivity.putExtra("vca_name",safeChild.getFirst_name()+" "+safeChild.getLast_name());
             openChildSafetyPlanActionActivity.putExtra("action_date",plan.getInitial_date());
             context.startActivity(openChildSafetyPlanActionActivity);
             if (context instanceof Activity) {
@@ -115,7 +129,7 @@ public class ChildSafetyPlanAdapter  extends RecyclerView.Adapter<ChildSafetyPla
 
         holder.delete.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setMessage("You are about to delete "+child.getFirst_name()+" "+child.getLast_name()+" child safety plan");
+            builder.setMessage("You are about to delete "+safeChild.getFirst_name()+" "+safeChild.getLast_name()+" child safety plan");
             builder.setNegativeButton("NO", (dialog, id) -> {
                 //  Action for 'NO' Button
                 dialog.cancel();
@@ -148,7 +162,7 @@ public class ChildSafetyPlanAdapter  extends RecyclerView.Adapter<ChildSafetyPla
                 } catch (Exception e) {
                     Timber.e(e);
                 }
-                callChildSafetyActivity(plan,child);
+                callChildSafetyActivity(plan,safeChild);
 
 
 //                if (context instanceof Activity) {
@@ -170,6 +184,11 @@ public class ChildSafetyPlanAdapter  extends RecyclerView.Adapter<ChildSafetyPla
         });
     }
     public void callChildSafetyActivity(ChildSafetyPlanModel plan, Child child) {
+        if (child == null) {
+            Toast.makeText(context, "Member data incomplete", Toast.LENGTH_LONG).show();
+            Timber.w("Skipping ChildSafetyPlanActivity launch: child record missing for %s", plan.getUnique_id());
+            return;
+        }
         Intent openChildSafetyPlanActivity = new Intent(context, ChildSafetyPlanActivity.class);
         openChildSafetyPlanActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         openChildSafetyPlanActivity.putExtra("vca_id", plan.getUnique_id());

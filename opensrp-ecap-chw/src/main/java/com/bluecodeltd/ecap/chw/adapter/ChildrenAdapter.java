@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,8 +86,27 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
     @Override
     public void onBindViewHolder(ChildrenAdapter.ViewHolder holder, final int position) {
 
-        final String childUniqueID = children.get(position).getUnique_id();
-        Child child  = IndexPersonDao.getChildByBaseId(childUniqueID);
+        final Child listChild = (position >= 0 && position < children.size()) ? children.get(position) : null;
+        if (listChild == null) {
+            Log.w("ChildrenAdapter", "Null child entry at adapter position " + position);
+            resetViewHolder(holder);
+            return;
+        }
+
+        final String childUniqueID = listChild.getUnique_id();
+        if (TextUtils.isEmpty(childUniqueID)) {
+            Log.w("ChildrenAdapter", "Missing unique_id for child at position " + position);
+            resetViewHolder(holder);
+            return;
+        }
+
+        Child fetchedChild = IndexPersonDao.getChildByBaseId(childUniqueID);
+        final Child child = fetchedChild != null ? fetchedChild : listChild;
+        if (child == null) {
+            Log.w("ChildrenAdapter", "Unable to load child record for unique_id: " + childUniqueID);
+            resetViewHolder(holder);
+            return;
+        }
 
         try{
 
@@ -137,13 +157,13 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
         holder.gradBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.grad_bg));
         holder.gradBtn.setColorFilter(ContextCompat.getColor(context, org.smartregister.R.color.dark_grey));
-        holder.gradBtn.setTag(child.getUnique_id());
+        holder.gradBtn.setTag(childUniqueID);
         Threading.io(() -> {
             GradModel gm = null;
             try { gm = GradDao.getGrad(child.getUnique_id()); } catch (Exception ignored) {}
             GradModel finalGm = gm;
             Threading.main(() -> {
-                if (!child.getUnique_id().equals(holder.gradBtn.getTag())) return;
+                if (!childUniqueID.equals(holder.gradBtn.getTag())) return;
                 if (finalGm != null) {
                     holder.gradBtn.setColorFilter(ContextCompat.getColor(context, org.smartregister.chw.core.R.color.colorGreen));
                 }
@@ -226,13 +246,13 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
             holder.muacButton.setVisibility(View.VISIBLE);
 
-            holder.muacButton.setTag(child.getUnique_id());
+            holder.muacButton.setTag(childUniqueID);
             Threading.io(() -> {
                 MuacModel localMuac = null;
                 try { localMuac = MuacDao.getMuac(child.getUnique_id()); } catch (Exception ignored) {}
                 MuacModel finalMuac = localMuac;
                 Threading.main(() -> {
-                    if (!child.getUnique_id().equals(holder.muacButton.getTag())) return;
+                    if (!childUniqueID.equals(holder.muacButton.getTag())) return;
                     if(finalMuac != null){
                         holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_outline_blue, 0, 0, 0);
                     } else {
@@ -316,6 +336,18 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
     }
 
 
+
+    private void resetViewHolder(ViewHolder holder) {
+        holder.fullName.setText("");
+        holder.age.setText("Not Set");
+        holder.gradBtn.setVisibility(View.GONE);
+        holder.muacButton.setVisibility(View.GONE);
+        holder.muacButton.setTag(null);
+        holder.gradBtn.setTag(null);
+        holder.gradBtn.setColorFilter(ContextCompat.getColor(context, org.smartregister.R.color.dark_grey));
+        holder.is_index.setVisibility(View.GONE);
+        holder.colorView.setBackgroundColor(Color.parseColor("#696969"));
+    }
 
     private String getAge(String birthdate){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
