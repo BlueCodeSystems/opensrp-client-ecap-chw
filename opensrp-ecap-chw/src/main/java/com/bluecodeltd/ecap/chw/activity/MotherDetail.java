@@ -129,7 +129,14 @@ public class MotherDetail extends AppCompatActivity {
         //Refresh activity using Intent
         refresh = getIntent().getExtras().getString("1");
 
-        family = HouseholdDao.getHousehold(commonPersonObjectClient.getColumnmaps().get("household_id"));
+        try {
+            family = HouseholdDao.getHousehold(commonPersonObjectClient.getColumnmaps().get("household_id"));
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+        if (family == null) {
+            Toasty.warning(MotherDetail.this, "Household record not found", Toast.LENGTH_LONG, true).show();
+        }
 
         motherName.setText(commonPersonObjectClient.getColumnmaps().get("caregiver_name"));
         String birthdate = commonPersonObjectClient.getColumnmaps().get("caregiver_birth_date");
@@ -288,7 +295,11 @@ public class MotherDetail extends AppCompatActivity {
 
                 formToBeOpened.put("entity_id", this.commonPersonObjectClient.getColumnmaps().get("base_entity_id"));
                 formToBeOpened.getJSONObject("step1").put("title", this.commonPersonObjectClient.getColumnmaps().get("caregiver_name") + " "  + txtAge.getText().toString());
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(family, Map.class));
+                if (family != null) {
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(family, Map.class));
+                } else {
+                    Timber.w("Skipping household population for mother_index form; household data missing");
+                }
 
                 break;
 

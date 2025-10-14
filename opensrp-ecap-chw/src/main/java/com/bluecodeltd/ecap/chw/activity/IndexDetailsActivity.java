@@ -603,8 +603,11 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
                 break;
 
-                case R.id.vca_screening:
+            case R.id.vca_screening:
 
+                    if (!ensureIndexVcaAvailable()) {
+                        break;
+                    }
                     try {
 
                         openFormUsingFormUtils(IndexDetailsActivity.this,"vca_screening");
@@ -616,6 +619,10 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
 
             case R.id.assessment:
+
+                if (!ensureIndexVcaAvailable()) {
+                    break;
+                }
 
                 if(indexVCA.getDate_screened() != null){
                     try {
@@ -664,6 +671,9 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
             case R.id.myservice:
 
+                if (!ensureIndexVcaAvailable()) {
+                    break;
+                }
                 if(indexVCA.getDate_screened() != null) {
 
                     Intent intent2 = new Intent(this, VcaServiceActivity.class);
@@ -679,6 +689,11 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 break;
             case R.id.show_referrals:
 
+                if (child == null) {
+                    Toast.makeText(IndexDetailsActivity.this, "Member data incomplete", Toast.LENGTH_LONG).show();
+                    Timber.w("Cannot open referrals: child record missing for %s", childId);
+                    break;
+                }
 
                 Intent showReferrals = new Intent(IndexDetailsActivity.this, ShowReferralsActivity.class);
                     Bundle referral = new Bundle();
@@ -697,20 +712,28 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
             case R.id.household_profile:
 
+                if (child == null) {
+                    Toast.makeText(IndexDetailsActivity.this, "Member data incomplete", Toast.LENGTH_LONG).show();
+                    Timber.w("Cannot open household profile: child record missing for %s", childId);
+                    break;
+                }
 
-            Intent intent = new Intent(this, HouseholdDetails.class);
-            intent.putExtra("childId",  child.getUnique_id());
-            intent.putExtra("householdId",  child.getHousehold_id());
+                Intent intent = new Intent(this, HouseholdDetails.class);
+                intent.putExtra("childId",  child.getUnique_id());
+                intent.putExtra("householdId",  child.getHousehold_id());
 //            intent.putExtra("householdId",  child.getHousehold_id());
            // intent.putExtra("household",  child.getHousehold_id());
 
-            startActivity(intent);
+                startActivity(intent);
 
 
                 break;
 
             case R.id.household_visitation_for_vca:
 
+                if (!ensureIndexVcaAvailable()) {
+                    break;
+                }
                 if(indexVCA.getDate_screened() != null) {
                     try {
 
@@ -728,6 +751,9 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
             case R.id.hiv_assessment:
 
+                if (!ensureIndexVcaAvailable()) {
+                    break;
+                }
                 if(indexVCA.getDate_screened() != null) {
                     openFormUsingFormUtils(IndexDetailsActivity.this, "hiv_risk_assessment_under_15_years");
                 } else {
@@ -736,6 +762,9 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 break;
 
             case R.id.hiv_assessment2:
+                if (!ensureIndexVcaAvailable()) {
+                    break;
+                }
                 if(indexVCA.getDate_screened() != null) {
                     openFormUsingFormUtils(IndexDetailsActivity.this, "hiv_risk_assessment_above_15_years");
                 }else{
@@ -744,6 +773,9 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 break;
 
             case R.id.we_services_vca:
+                if (!ensureIndexVcaAvailable()) {
+                    break;
+                }
                 if(indexVCA.getDate_screened() != null) {
                     openFormUsingFormUtils(IndexDetailsActivity.this, "we_services_vca");
                 }else{
@@ -751,6 +783,9 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 }
                 break;
             case R.id.childPlan:
+                if (!ensureIndexVcaAvailable()) {
+                    break;
+                }
                 Intent i = new Intent(IndexDetailsActivity.this, ChildSafetyPlanActivity.class);
                 i.putExtra("vca_id", indexVCA.getUnique_id());
                 i.putExtra("vca_name", indexVCA.getFirst_name() + ' ' + indexVCA.getLast_name());
@@ -759,6 +794,15 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 break;
 
         }
+    }
+
+    private boolean ensureIndexVcaAvailable() {
+        if (indexVCA != null) {
+            return true;
+        }
+        Toast.makeText(IndexDetailsActivity.this, "Member data incomplete", Toast.LENGTH_LONG).show();
+        Timber.w("IndexDetailsActivity action skipped: indexVCA missing for childId=%s", childId);
+        return false;
     }
 
 

@@ -17,6 +17,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -205,7 +206,16 @@ public class HeiDetailsActivity extends AppCompatActivity {
 //
         clientId = getIntent().getExtras().getString("client_id");
 //        pmtctChild = PmtctChildDao.getPmctChildHei(clientId);
-        pmtctChild = PmtctChildDao.getPMCTChild(clientId);
+        try {
+            pmtctChild = PmtctChildDao.getPMCTChild(clientId);
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+        if (pmtctChild == null) {
+            Toasty.warning(HeiDetailsActivity.this, "Infant record not found", Toast.LENGTH_LONG, true).show();
+                finish();
+            return;
+        }
         childMonitoring = ChildMonitoringDao.getPMCTChildMonitoring(clientId);
         childOutcomeModel = PmtctChildOutcomeDao.getPMCTChildOutcome(clientId);
 
@@ -270,7 +280,13 @@ public class HeiDetailsActivity extends AppCompatActivity {
         updateAncTabTitle();
 
 
-        motherProfile.setOnClickListener(v -> goToMotherDetailActivity(pmtctChild.getPmtct_id()));
+        motherProfile.setOnClickListener(v -> {
+            if (pmtctChild == null || TextUtils.isEmpty(pmtctChild.getPmtct_id())) {
+                Toasty.warning(HeiDetailsActivity.this, "Mother record not available", Toast.LENGTH_LONG, true).show();
+                return;
+            }
+            goToMotherDetailActivity(pmtctChild.getPmtct_id());
+        });
     }
 
     public void animateFAB(){
@@ -309,6 +325,10 @@ public class HeiDetailsActivity extends AppCompatActivity {
     }
 
     public HashMap<String, Child> getData() {
+        if (indexVCA == null) {
+            Timber.w("HeiDetailsActivity indexVCA data missing");
+            return new HashMap<>();
+        }
         String full_name = indexVCA.getFirst_name() + " " + indexVCA.getLast_name();
         String gender =  indexVCA.getGender();
         String birthdate = indexVCA.getAdolescent_birthdate();
