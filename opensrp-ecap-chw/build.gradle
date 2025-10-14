@@ -133,10 +133,8 @@ android {
 
         release {
             //debuggable true // Useful when debugging release builds
-
-         
             minifyEnabled false
-            //shrinkResources true
+            shrinkResources false
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_INITIAL_BATCH_SIZE", '200'
@@ -228,6 +226,10 @@ android {
         exclude group: 'io.github.bluecodesystems', module: 'opensrp-configurable-views'
         // Ensure only one Volley (use AndroidX volley)
         exclude group: 'com.mcxiaoke.volley', module: 'library'
+        // Android already ships XmlPull; drop legacy jar to keep R8 happy.
+        exclude group: 'xmlpull', module: 'xmlpull'
+        exclude group: 'xpp3', module: 'xpp3'
+        exclude group: 'xpp3', module: 'xpp3_min'
         resolutionStrategy {
             // Unify configurable-views to BlueCodeSystems JitPack coord
             dependencySubstitution {
@@ -246,6 +248,16 @@ android {
             force 'androidx.appcompat:appcompat:1.7.0'
             // Ensure Material Components is recent enough for ThemeOverlay.MaterialComponents.MaterialAlertDialog
             force 'com.google.android.material:material:1.12.0'
+        }
+    }
+
+    // Only package ARM ABIs to drop emulator-native binaries (~50 MB saved).
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'armeabi-v7a', 'arm64-v8a'
+            universalApk false
         }
     }
 

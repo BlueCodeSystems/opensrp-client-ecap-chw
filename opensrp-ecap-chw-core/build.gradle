@@ -145,6 +145,10 @@ tasks.withType(Test) {
     exclude group: 'com.mcxiaoke.volley', module: 'library'
     exclude group: 'com.github.BlueCodeSystems.Opensrp-client-native-form-new', module: 'opensrp-client-native-form'
     exclude group: 'com.github.BlueCodeSystems.Opensrp-client-native-form-new', module: 'circleprogressbar'
+    // Android provides XmlPull; remove duplicate jar to avoid R8 conflicts.
+    exclude group: 'xmlpull', module: 'xmlpull'
+    exclude group: 'xpp3', module: 'xpp3'
+    exclude group: 'xpp3', module: 'xpp3_min'
 
         resolutionStrategy {
             // Ensure we resolve to the requested JitPack variants
@@ -235,7 +239,6 @@ dependencies {
         exclude group: 'com.github.BlueCodeSystems.Opensrp-client-native-form-new', module: 'circleprogressbar'
     }
    // implementation 'com.jakewharton:butterknife:9.0.0-SNAPSHOT'
-
     implementation 'com.ibm.fhir:fhir-model:4.7.1'
 
     // Easy Rules (align with JsonWizard dependency compiled against v3.x)
