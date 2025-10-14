@@ -126,8 +126,19 @@ android {
 
     // dexOptions is obsolete in AGP 8+; removed
 
-
-
+    signingConfigs {
+        release {
+            def storeFileProp = findProperty("RELEASE_STORE_FILE")
+            if (storeFileProp) {
+                storeFile = rootProject.file(storeFileProp)
+                storePassword = findProperty("RELEASE_STORE_PASSWORD") ?: ""
+                keyAlias = findProperty("RELEASE_KEY_ALIAS") ?: ""
+                keyPassword = findProperty("RELEASE_KEY_PASSWORD") ?: ""
+            } else {
+                println("Release signing config not set; provide RELEASE_* properties to sign builds.")
+            }
+        }
+    }
 
     buildTypes {
 
@@ -152,6 +163,9 @@ android {
             buildConfigField "int", "STOCK_USAGE_REPORT_MINUTES", '1440'
             buildConfigField "boolean", "USE_UNIFIED_REFERRAL_APPROACH", "true"
             buildConfigField "boolean", "BUILD_FOR_BORESHA_AFYA_SOUTH", "false"
+            if (signingConfigs.release?.storeFile != null) {
+                signingConfig signingConfigs.release
+            }
         }
 
         debug {
