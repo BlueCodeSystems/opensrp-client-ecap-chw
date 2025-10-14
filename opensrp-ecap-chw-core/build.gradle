@@ -177,8 +177,8 @@ tasks.withType(Test) {
                 // Also route Maven Central coord to JitPack artifact
                 substitute module('io.github.bluecodesystems:opensrp-chw-family-planning') using module('com.github.BlueCodeSystems:opensrp-client-chw-family-planning:v1.0.27')
                 // Route FP client to BlueCodeSystems JitPack FP v2.1.0
-                substitute module('org.smartregister:opensrp-client-fp') using module('com.github.BlueCodeSystems:opensrp-client-fp:v2.1.0')
-                substitute module('io.github.bluecodesystems:opensrp-client-fp') using module('com.github.BlueCodeSystems:opensrp-client-fp:v2.1.0')
+                substitute module('org.smartregister:opensrp-client-fp') using module('com.github.BlueCodeSystems:opensrp-client-fp:v2.2.0')
+                substitute module('io.github.bluecodesystems:opensrp-client-fp') using module('com.github.BlueCodeSystems:opensrp-client-fp:v2.2.0')
                 // Route io.github.bluecodesystems:materialedittext to the forked artifact name
                 substitute module('io.github.bluecodesystems:materialedittext') using module('io.github.bluecodesystems:MaterialEditTextLibrary:3.1.5')
                 substitute module('org.smartregister:opensrp-client-immunization') using module('com.github.BlueCodeSystems:opensrp-client-immunization:v5.1.1')
