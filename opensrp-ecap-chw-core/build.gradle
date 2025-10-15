@@ -149,16 +149,18 @@ tasks.withType(Test) {
     exclude group: 'xmlpull', module: 'xmlpull'
     exclude group: 'xpp3', module: 'xpp3'
     exclude group: 'xpp3', module: 'xpp3_min'
+    // Ensure only one SQLCipher native library; keep android-database-sqlcipher
+    exclude group: 'net.zetetic', module: 'sqlcipher-android'
 
         resolutionStrategy {
             // Ensure we resolve to the requested JitPack variants
             dependencySubstitution {
-                substitute module('io.github.bluecodesystems:android-p2p-sync') using module('com.github.BlueCodeSystems:android-p2p-sync:v0.4.3')
+                substitute module('io.github.bluecodesystems:android-p2p-sync') using module('com.github.BlueCodeSystems:android-p2p-sync:v0.5.0')
                 substitute module('io.github.bluecodesystems:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v7.0.0')
                 substitute module('com.github.BlueCodeSystems:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v7.0.0')
-                substitute module('org.smartregister:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v6.2.2')
+                substitute module('org.smartregister:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v7.0.0')
                 // Route legacy OPD coordinates to BlueCodeSystems JitPack OPD
-                substitute module('org.smartregister:opensrp-opd') using module('com.github.BlueCodeSystems:opensrp-client-opd:v1.0.3')
+                substitute module('org.smartregister:opensrp-opd') using module('com.github.BlueCodeSystems:opensrp-client-opd:v1.0.4')
                 // Route legacy native-form to BlueCodeSystems native-form-new
                 substitute module('org.smartregister:opensrp-client-native-form') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:opensrp-client-native-form:v3.2.2')
                 // Route SmartRegister configurable-views to BlueCodeSystems JitPack
@@ -171,14 +173,14 @@ tasks.withType(Test) {
                 substitute module('com.github.BlueCodeSystems.Opensrp-client-native-form-new:opensrp-client-native-form') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:opensrp-client-native-form:v3.2.2')
                 substitute module('com.github.BlueCodeSystems.opensrp-client-native-form-new:circleprogressbar') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:circleprogressbar:v3.2.2')
                 substitute module('com.github.BlueCodeSystems.Opensrp-client-native-form-new:circleprogressbar') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:circleprogressbar:v3.2.2')
-                substitute module('io.github.bluecodesystems:circleprogressbar') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:circleprogressbar:v3.2.0')
+                substitute module('io.github.bluecodesystems:circleprogressbar') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:circleprogressbar:v3.2.2')
                 // Route CHW FP to BlueCodeSystems JitPack CHW Family Planning lib
                 substitute module('org.smartregister:opensrp-chw-fp') using module('com.github.BlueCodeSystems:opensrp-client-chw-family-planning:v1.0.27')
                 // Also route Maven Central coord to JitPack artifact
                 substitute module('io.github.bluecodesystems:opensrp-chw-family-planning') using module('com.github.BlueCodeSystems:opensrp-client-chw-family-planning:v1.0.27')
-                // Route FP client to BlueCodeSystems JitPack FP v2.1.0
-                substitute module('org.smartregister:opensrp-client-fp') using module('com.github.BlueCodeSystems:opensrp-client-fp:v2.1.0')
-                substitute module('io.github.bluecodesystems:opensrp-client-fp') using module('com.github.BlueCodeSystems:opensrp-client-fp:v2.1.0')
+                // Route FP client to BlueCodeSystems JitPack FP v2.2.0
+                substitute module('org.smartregister:opensrp-client-fp') using module('com.github.BlueCodeSystems:opensrp-client-fp:v2.2.0')
+                substitute module('io.github.bluecodesystems:opensrp-client-fp') using module('com.github.BlueCodeSystems:opensrp-client-fp:v2.2.0')
                 // Route io.github.bluecodesystems:materialedittext to the forked artifact name
                 substitute module('io.github.bluecodesystems:materialedittext') using module('io.github.bluecodesystems:MaterialEditTextLibrary:3.1.5')
                 substitute module('org.smartregister:opensrp-client-immunization') using module('com.github.BlueCodeSystems:opensrp-client-immunization:v5.1.1')
@@ -235,7 +237,7 @@ dependencies {
     implementation 'com.github.rey5137:material:1.2.5'
     // AndroidX Volley for networking used by core ImageLoaderRequest
     implementation 'com.android.volley:volley:1.2.1'
-    implementation('com.github.BlueCodeSystems.opensrp-client-native-form-new:circleprogressbar:v3.2.0') {
+    implementation('com.github.BlueCodeSystems.opensrp-client-native-form-new:circleprogressbar:v3.2.2') {
         exclude group: 'com.github.BlueCodeSystems.Opensrp-client-native-form-new', module: 'circleprogressbar'
     }
    // implementation 'com.jakewharton:butterknife:9.0.0-SNAPSHOT'
@@ -247,7 +249,7 @@ dependencies {
     api 'org.jeasy:easy-rules-mvel:3.4.0'
 
     implementation 'com.github.BlueCodeSystems:pulsebridge:v0.1.1'
-    api('com.github.BlueCodeSystems.opensrp-client-native-form-new:opensrp-client-native-form:v3.2.0') {
+    api('com.github.BlueCodeSystems.opensrp-client-native-form-new:opensrp-client-native-form:v3.2.2') {
         transitive = true
         exclude group: 'com.android.support', module: 'appcompat-v7'
         exclude group: 'commons-logging', module: 'commons-logging'
@@ -287,13 +289,15 @@ dependencies {
         exclude group: 'com.rengwuxian.materialedittext', module: 'library'
         exclude group: 'com.ibm.fhir', module: 'fhir-model'
     }
-    // P2P Sync from JitPack (v0.4.3)
-    api('com.github.BlueCodeSystems:android-p2p-sync:v0.4.3') {
+    // P2P Sync from JitPack (v0.5.0)
+    api('com.github.BlueCodeSystems:android-p2p-sync:v0.5.0') {
         // Guard against old SmartRegister core sneaking in transitively
         exclude group: 'org.smartregister', module: 'opensrp-client-core'
         exclude group: 'com.github.BlueCodeSystems.Opensrp-client-native-form-new', module: 'opensrp-client-native-form'
         exclude group: 'com.github.BlueCodeSystems.Opensrp-client-native-form-new', module: 'circleprogressbar'
         exclude group: 'io.github.bluecodesystems', module: 'opensrp-client-core'
+        // Use the direct android-database-sqlcipher dependency declared above
+        exclude group: 'net.zetetic', module: 'sqlcipher-android'
     }
     // Plan Evaluator on Maven Central
     api('io.github.bluecodesystems:opensrp-plan-evaluator:1.7.0') {
@@ -340,8 +344,16 @@ dependencies {
         exclude group: 'io.github.bluecodesystems', module: 'opensrp-client-core'
         exclude group: 'io.github.bluecodesystems', module: 'android-p2p-sync'
     }
-    // OPD module from BlueCodeSystems JitPack (v1.0.3)
-    api('com.github.BlueCodeSystems:opensrp-client-opd:v1.0.3') {
+    api('com.github.BlueCodeSystems:opensrp-client-utils:v1.0.0') {
+        transitive = true
+        exclude group: 'org.smartregister', module: 'opensrp-client-core'
+        exclude group: 'com.github.BlueCodeSystems.Opensrp-client-native-form-new', module: 'opensrp-client-native-form'
+        exclude group: 'com.github.BlueCodeSystems.Opensrp-client-native-form-new', module: 'circleprogressbar'
+        exclude group: 'io.github.bluecodesystems', module: 'opensrp-client-core'
+        exclude group: 'io.github.bluecodesystems', module: 'android-p2p-sync'
+    }
+    // OPD module from BlueCodeSystems JitPack (v1.0.4)
+    api('com.github.BlueCodeSystems:opensrp-client-opd:v1.0.4') {
         transitive = true
         // Guard against older core being brought in transitively
         exclude group: 'org.smartregister', module: 'opensrp-client-core'
@@ -353,6 +365,14 @@ dependencies {
     api('com.github.BlueCodeSystems:opensrp-client-chw-family-planning:v1.0.27') {
         transitive = true
         // Guard against older core brought in transitively
+        exclude group: 'org.smartregister', module: 'opensrp-client-core'
+        exclude group: 'com.github.BlueCodeSystems.Opensrp-client-native-form-new', module: 'opensrp-client-native-form'
+        exclude group: 'com.github.BlueCodeSystems.Opensrp-client-native-form-new', module: 'circleprogressbar'
+        exclude group: 'io.github.bluecodesystems', module: 'opensrp-client-core'
+        exclude group: 'io.github.bluecodesystems', module: 'android-p2p-sync'
+    }
+    api('com.github.BlueCodeSystems:opensrp-client-fp:v2.2.0') {
+        transitive = true
         exclude group: 'org.smartregister', module: 'opensrp-client-core'
         exclude group: 'com.github.BlueCodeSystems.Opensrp-client-native-form-new', module: 'opensrp-client-native-form'
         exclude group: 'com.github.BlueCodeSystems.Opensrp-client-native-form-new', module: 'circleprogressbar'
