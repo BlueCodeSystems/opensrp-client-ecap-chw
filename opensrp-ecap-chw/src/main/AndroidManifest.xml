@@ -313,7 +313,8 @@
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.SickChildJsonFormActivity"
-            android:theme="@style/ChwTheme.NoActionBar" />
+            android:theme="@style/ChwTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".activity.UpdatesRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />

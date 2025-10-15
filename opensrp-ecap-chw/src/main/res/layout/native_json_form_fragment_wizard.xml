@@ -1,16 +1,77 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:fitsSystemWindows="true"
+   >
 
-    <include layout="@layout/toolbar_container_form" />
+    <!-- Toolbar at the top -->
+    <include
+        android:id="@+id/toolbar_include"
+        layout="@layout/toolbar_container_form"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Fixed bottom navigation -->
+    <RelativeLayout
+        android:id="@+id/bottom_navigation_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/form_container_default_margin"
+        android:elevation="@dimen/form_container_navigation_elevation"
+        android:fitsSystemWindows="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <Button
+            android:id="@+id/previous"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/next"
+            android:paddingBottom="@dimen/form_container_top_bottom_navigation_padding"
+            android:paddingEnd="@dimen/form_container_start_end_navigation_padding"
+            android:paddingStart="@dimen/form_container_start_end_navigation_padding"
+            android:paddingTop="@dimen/form_container_top_bottom_navigation_padding"
+            android:text="@string/previous"
+            android:textAllCaps="true"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@color/button_navy_blue"
+            android:textSize="@dimen/form_container_navigation_text_size" />
+
+        <Button
+            android:id="@+id/next"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="@dimen/form_container_default_margin"
+            android:paddingBottom="@dimen/form_container_top_bottom_navigation_padding"
+            android:paddingEnd="@dimen/form_container_start_end_navigation_padding"
+            android:paddingStart="@dimen/form_container_start_end_navigation_padding"
+            android:paddingTop="@dimen/form_container_top_bottom_navigation_padding"
+            android:text="@string/next"
+            android:textAllCaps="true"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@color/button_navy_blue"
+            android:textSize="@dimen/form_container_navigation_text_size" />
+    </RelativeLayout>
+
+    <!-- Scrollable form content -->
     <ScrollView
         android:id="@+id/scroll_view"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:clipToPadding="false"
+        android:fitsSystemWindows="true"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_include"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
             android:id="@+id/container_layout"
@@ -22,55 +83,14 @@
                 android:id="@+id/main_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/form_container_default_margin"
+                android:layout_margin="0dp"
                 android:orientation="vertical"
                 android:padding="10dp"
-                android:paddingEnd="@dimen/form_container_default_padding"
                 android:paddingStart="@dimen/form_container_default_padding"
-                android:paddingTop="8dp" />
-
-            <RelativeLayout
-                android:id="@+id/bottom_navigation_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/form_container_default_margin"
-                android:elevation="@dimen/form_container_navigation_elevation">
-
-                <Button
-                    android:id="@+id/previous"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toStartOf="@+id/next"
-                    android:paddingBottom="@dimen/form_container_top_bottom_navigation_padding"
-                    android:paddingEnd="@dimen/form_container_start_end_navigation_padding"
-                    android:paddingStart="@dimen/form_container_start_end_navigation_padding"
-                    android:paddingTop="@dimen/form_container_top_bottom_navigation_padding"
-                    android:text="@string/previous"
-                    android:textAllCaps="true"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/button_navy_blue"
-                    android:textSize="@dimen/form_container_navigation_text_size" />
-
-                <Button
-                    android:id="@+id/next"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="@dimen/form_container_default_margin"
-                    android:paddingBottom="@dimen/form_container_top_bottom_navigation_padding"
-                    android:paddingEnd="@dimen/form_container_start_end_navigation_padding"
-                    android:paddingStart="@dimen/form_container_start_end_navigation_padding"
-                    android:paddingTop="@dimen/form_container_top_bottom_navigation_padding"
-                    android:text="@string/next"
-                    android:textAllCaps="true"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/button_navy_blue"
-                    android:textSize="@dimen/form_container_navigation_text_size" />
-            </RelativeLayout>
+                android:paddingEnd="@dimen/form_container_default_padding"
+                android:paddingTop="0dp" />
 
         </LinearLayout>
     </ScrollView>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
