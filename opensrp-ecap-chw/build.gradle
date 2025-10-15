@@ -266,11 +266,13 @@ android {
     }
 
     // Only package ARM ABIs to drop emulator-native binaries (~50 MB saved).
+    // Include emulator ABIs to avoid native crashes on x86 images
     splits {
         abi {
             enable true
             reset()
-            include 'armeabi-v7a', 'arm64-v8a'
+            // MapLibre GL / SQLCipher ship native libs; include x86 for emulators
+            include 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
             universalApk false
         }
     }
