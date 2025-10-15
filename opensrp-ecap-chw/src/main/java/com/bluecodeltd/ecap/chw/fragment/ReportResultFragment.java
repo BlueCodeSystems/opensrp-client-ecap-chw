@@ -37,6 +37,8 @@ import timber.log.Timber;
  */
 public abstract class ReportResultFragment<T extends ListContract.Identifiable> extends Fragment implements ListContract.View<T> {
 
+    private com.bluecodeltd.ecap.chw.databinding.ReportResultFragmentBinding binding;
+
     protected View view;
     private ListableAdapter<T, ListableViewHolder<T>> mAdapter;
     private ProgressBar progressBar;
@@ -51,10 +53,11 @@ public abstract class ReportResultFragment<T extends ListContract.Identifiable> 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.report_result_fragment, container, false);
+        binding = com.bluecodeltd.ecap.chw.databinding.ReportResultFragmentBinding.inflate(inflater, container, false);
+        view = binding.getRoot();
 
-        TextView tvDate = view.findViewById(R.id.tvDate);
-        TextView tvCommunity = view.findViewById(R.id.tvCommunity);
+        TextView tvDate = binding.tvDate;
+        TextView tvCommunity = binding.tvCommunity;
 
         Bundle bundle = getArguments();
         if (bundle != null) {
@@ -94,18 +97,24 @@ public abstract class ReportResultFragment<T extends ListContract.Identifiable> 
 
     @Override
     public void bindLayout() {
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = binding.recyclerView;
         recyclerView.setHasFixedSize(false);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        progressBar = view.findViewById(R.id.progress_bar);
+        progressBar = binding.progressBar;
         progressBar.setVisibility(View.GONE);
 
         mAdapter = adapter();
         recyclerView.setAdapter(mAdapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     @Override
@@ -116,7 +125,7 @@ public abstract class ReportResultFragment<T extends ListContract.Identifiable> 
     @Override
     public void refreshView() {
         mAdapter.reloadData(list);
-        mAdapter.notifyDataSetChanged();
+        try { if (mAdapter != null) mAdapter.notifyDataSetChanged(); } catch (Exception ignored) {}
     }
 
     @Override

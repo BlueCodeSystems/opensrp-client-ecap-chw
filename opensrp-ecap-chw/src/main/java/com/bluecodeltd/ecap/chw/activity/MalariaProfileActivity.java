@@ -512,7 +512,7 @@ public class MalariaProfileActivity extends CoreMalariaProfileActivity implement
         visitDone.setVisibility(View.GONE);
 
         if (pncVisitAlertRule.getButtonStatus().equalsIgnoreCase(CoreConstants.VISIT_STATE.DUE) || pncVisitAlertRule.getButtonStatus().equalsIgnoreCase(CoreConstants.VISIT_STATE.OVERDUE)) {
-            textViewRecordAnc.setText(org.smartregister.chw.pnc.R.string.record_pnc_visit);
+            textViewRecordAnc.setText(org.smartregister.pnc.R.string.record_pnc_visit);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             int topBottomMargin = getMarginPixel(10);
             int rightLeftMargin = getMarginPixel(30);

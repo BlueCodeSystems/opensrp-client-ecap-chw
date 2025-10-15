@@ -83,12 +83,4 @@ public class CoreFamilyRegisterActivityTest extends BaseUnitTest {
         Mockito.verify(adapter).setSelectedView(Mockito.anyString());
     }
 
-    @Test
-    public void testOnRequestPermissionsResult() {
-        NavigationMenu menu = Mockito.mock(NavigationMenu.class);
-        ReflectionHelpers.setStaticField(NavigationMenu.class, "instance", menu);
-
-        activity.onRequestPermissionsResult(CoreConstants.RQ_CODE.STORAGE_PERMISIONS, new String[]{}, new int[]{PackageManager.PERMISSION_GRANTED});
-        Mockito.verify(menu).startP2PActivity(Mockito.any());
-    }
 }

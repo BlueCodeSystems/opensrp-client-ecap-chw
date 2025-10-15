@@ -40,6 +40,8 @@ import static org.smartregister.chw.anc.util.Constants.ANC_MEMBER_OBJECTS.MEMBER
 
 public class SickFormMedicalHistory extends SecuredActivity implements SickFormMedicalHistoryContract.View {
 
+    private com.bluecodeltd.ecap.chw.databinding.SickVisitActivityBinding binding;
+
     protected MemberObject memberObject;
     protected SickFormMedicalHistoryContract.Presenter presenter;
     protected List<Visit> serviceList = new ArrayList<>();
@@ -58,7 +60,8 @@ public class SickFormMedicalHistory extends SecuredActivity implements SickFormM
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.sick_visit_activity);
+        binding = com.bluecodeltd.ecap.chw.databinding.SickVisitActivityBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             memberObject = (MemberObject) getIntent().getSerializableExtra(MEMBER_PROFILE_OBJECT);
@@ -79,8 +82,8 @@ public class SickFormMedicalHistory extends SecuredActivity implements SickFormM
     }
 
     private void setUpActionBar() {
-        Toolbar toolbar = findViewById(R.id.collapsing_toolbar);
-        tvTitle = toolbar.findViewById(R.id.toolbar_title);
+        Toolbar toolbar = binding.collapsingToolbar;
+        tvTitle = binding.tvTitle;
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
@@ -94,11 +97,11 @@ public class SickFormMedicalHistory extends SecuredActivity implements SickFormM
     }
 
     public void setUpView() {
-        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = binding.recyclerView;
         recyclerView.setHasFixedSize(false);
-        progressBar = findViewById(R.id.progressBarUpcomingServices);
+        progressBar = binding.progressBarUpcomingServices;
 
-        tvTitle = findViewById(R.id.tvTitle);
+        tvTitle = binding.tvTitle;
         tvTitle.setText(getString(org.smartregister.chw.opensrp_chw_anc.R.string.back_to, memberObject.getFullName()));
 
 

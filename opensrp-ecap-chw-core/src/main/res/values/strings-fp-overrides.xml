@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Local FP strings used by CoreFpUpcomingServicesInteractor with MessageFormat {0} placeholders -->
+    <string name="fp_refill">Refill {0}</string>
+    <string name="fp_follow_up_one">Follow-up 1 {0}</string>
+    <string name="fp_follow_up_two">Follow-up 2 {0}</string>
+    <string name="fp_follow_up_three">Follow-up 3 {0}</string>
+    
+    <!-- FP items and visit day labels -->
+    <string name="coc">COC</string>
+    <string name="pop">POP</string>
+    <string name="emergency_contraceptive">Emergency contraceptive</string>
+    <string name="fp_visit_day_next_due">Next due %s</string>
+    <string name="fp_visit_day_due_today">Due today</string>
+    <string name="fp_visit_day_due">Due %s</string>
+    <string name="fp_visit_day_overdue_today">Overdue today</string>
+    <string name="fp_visit_day_overdue">Overdue since %s</string>
+</resources>

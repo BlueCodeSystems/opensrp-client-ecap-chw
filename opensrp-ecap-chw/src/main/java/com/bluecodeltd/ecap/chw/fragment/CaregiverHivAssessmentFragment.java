@@ -97,7 +97,7 @@ public class CaregiverHivAssessmentFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerViewadapter = new CaregiverHivAssessmentAdapter( getContext(), assessmentList);
         recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
+        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
 
         if (recyclerViewadapter.getItemCount() > 0){
 

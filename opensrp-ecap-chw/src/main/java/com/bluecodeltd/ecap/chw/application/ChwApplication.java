@@ -1,11 +1,7 @@
 package com.bluecodeltd.ecap.chw.application;
 
-import static org.koin.core.context.GlobalContext.getOrNull;
-
-import android.Manifest;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.text.TextUtils;
@@ -46,6 +42,8 @@ import com.bluecodeltd.ecap.chw.util.FailSafeRecalledID;
 import com.bluecodeltd.ecap.chw.util.FileUtils;
 import com.bluecodeltd.ecap.chw.util.JsonFormUtils;
 import com.bluecodeltd.ecap.chw.util.Utils;
+import com.evernote.android.job.JobApi;
+import com.evernote.android.job.JobConfig;
 import com.evernote.android.job.JobManager;
 import com.vijay.jsonwizard.NativeFormLibrary;
 import com.vijay.jsonwizard.domain.Form;
@@ -55,7 +53,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
-import org.koin.core.context.GlobalContextKt;
 import org.smartregister.AllConstants;
 import org.smartregister.Context;
 import org.smartregister.CoreLibrary;
@@ -93,8 +90,8 @@ import org.smartregister.reporting.ReportingLibrary;
 import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.repository.Repository;
 import org.smartregister.sync.P2PClassifier;
-import org.smartregister.thinkmd.ThinkMDConfig;
-import org.smartregister.thinkmd.ThinkMDLibrary;
+import org.bluecodesystems.pulsebridge.PulseBridgeConfig;
+import org.bluecodesystems.pulsebridge.PulseBridgeLibrary;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -155,23 +152,17 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
 
     public static void prepareGuideBooksFolder() {
         String rootFolder = getGuideBooksDirectory();
-        createFolders(rootFolder, false);
-        boolean onSdCard = FileUtils.canWriteToExternalDisk();
-        if (onSdCard)
-            createFolders(rootFolder, true);
+        createFolders(rootFolder);
     }
 
     public static void prepareCounselingDocsFolder() {
         String rootFolder = getCounselingDocsDirectory();
-        createFolders(rootFolder, false);
-        boolean onSdCard = FileUtils.canWriteToExternalDisk();
-        if (onSdCard)
-            createFolders(rootFolder, true);
+        createFolders(rootFolder);
     }
 
-    private static void createFolders(String rootFolder, boolean onSdCard) {
+    private static void createFolders(String rootFolder) {
         try {
-            FileUtils.createDirectory(rootFolder, onSdCard);
+            FileUtils.createDirectory(rootFolder, false);
         } catch (Exception e) {
             Timber.v(e);
         }
@@ -238,6 +229,11 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         this.jsonSpecHelper = new JsonSpecHelper(this);
 
         //init Job Manager
+        try {
+            JobConfig.forceApi(JobApi.V_26);
+            JobConfig.setApiEnabled(JobApi.V_14, false);
+            JobConfig.setApiEnabled(JobApi.V_19, false);
+        } catch (Throwable ignored) { }
         JobManager.create(this).addJobCreator(new ChwJobCreator());
 
         initOfflineSchedules();
@@ -256,14 +252,7 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
             saveLanguage(Locale.FRENCH.getLanguage());
         }
 
-        // create a folder for guidebooks
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                prepareDirectories();
-            }
-        } else {
-            prepareDirectories();
-        }
+        prepareDirectories();
 
         EventBus.getDefault().register(this);
 
@@ -272,6 +261,15 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         }
 
         reloadLanguage();
+
+        // Ensure Timber does not reference Crashlytics when the dependency/plugin is not applied
+        // This prevents NoClassDefFoundError from org.smartregister.util.CrashLyticsTree
+        try {
+            Timber.uprootAll();
+            Timber.plant(new Timber.DebugTree());
+        } catch (Throwable t) {
+            // Ignore; logging is non-critical
+        }
     }
 
     protected void initializeMapBox() {
@@ -307,11 +305,16 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         growthMonitoringConfig.setWeightForHeightZScoreFile("weight_for_height.csv");
         GrowthMonitoringLibrary.init(context, getRepository(), BuildConfig.VERSION_CODE, BuildConfig.DATABASE_VERSION, growthMonitoringConfig);
 
-        if (hasReferrals() && getOrNull() == null) {
-            //Setup referral library and initialize Koin dependencies once
-            ReferralLibrary.init(this);
-            ReferralLibrary.getInstance().setAppVersion(BuildConfig.VERSION_CODE);
-            ReferralLibrary.getInstance().setDatabaseVersion(BuildConfig.DATABASE_VERSION);
+        if (hasReferrals()) {
+            try {
+                // Setup referral library; if Koin is available the library will manage its context.
+                ReferralLibrary.init(this);
+                ReferralLibrary.getInstance().setAppVersion(BuildConfig.VERSION_CODE);
+                ReferralLibrary.getInstance().setDatabaseVersion(BuildConfig.DATABASE_VERSION);
+            } catch (Throwable t) {
+                // Safely ignore if referral library is not fully available in this build variant
+                Timber.w(t, "Referral library initialization skipped");
+            }
         }
 
         OpdLibrary.init(context, getRepository(),
@@ -322,8 +325,14 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
                 BuildConfig.VERSION_CODE, BuildConfig.DATABASE_VERSION
         );
 
-        SyncStatusBroadcastReceiver.init(this);
-        SyncStatusBroadcastReceiver.getInstance().addSyncStatusListener(this);
+        try {
+            SyncStatusBroadcastReceiver.init(this);
+            SyncStatusBroadcastReceiver.getInstance().addSyncStatusListener(this);
+        } catch (SecurityException se) {
+            Timber.w(se, "Skipping SyncStatusBroadcastReceiver init on API 33+ (receiver flags required)");
+        } catch (Throwable t) {
+            Timber.w(t, "SyncStatusBroadcastReceiver init failed; continuing without it");
+        }
 
         if (p2pProcessingStatusBroadcastReceiver == null)
             p2pProcessingStatusBroadcastReceiver = new P2pProcessingStatusBroadcastReceiver(this);
@@ -344,17 +353,20 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
 
         NativeFormLibrary.getInstance().setPerformFormTranslation(true);
         NativeFormLibrary.getInstance().setClientFormDao(CoreLibrary.getInstance().context().getClientFormRepository());
-        // ThinkMD library
-        ThinkMDConfig thinkMDConfig = new ThinkMDConfig();
-        thinkMDConfig.setThinkmdEndPoint(BuildConfig.THINKMD_BASE_URL);
-        thinkMDConfig.setThinkmdBaseUrl(BuildConfig.THINKMD_END_POINT);
-        ThinkMDLibrary.init(getApplicationContext(), thinkMDConfig);
+        // PulseBridge health assessment library (ThinkMD successor)
+        PulseBridgeConfig pulseBridgeConfig = new PulseBridgeConfig();
+        pulseBridgeConfig.setServiceEndpoint(BuildConfig.THINKMD_BASE_URL);
+        pulseBridgeConfig.setWebAppPath(BuildConfig.THINKMD_END_POINT);
+        PulseBridgeLibrary.init(getApplicationContext(), pulseBridgeConfig);
     }
 
     @Override
     public void onTerminate() {
         super.onTerminate();
-        GlobalContextKt.stopKoin();
+        try {
+            Class<?> gc = Class.forName("org.koin.core.context.GlobalContextKt");
+            gc.getMethod("stopKoin").invoke(null);
+        } catch (Throwable ignored) { }
     }
 
     @Override

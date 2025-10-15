@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 import org.smartregister.dao.AbstractDao;
-import org.smartregister.thinkmd.model.FHIRBundleModel;
+import org.bluecodesystems.pulsebridge.model.FHIRBundleModel;
 
 import static org.smartregister.chw.core.dao.ChildDao.getChildProfileData;
 import static org.smartregister.chw.core.utils.CoreConstants.DB_CONSTANTS.BASE_ENTITY_ID;

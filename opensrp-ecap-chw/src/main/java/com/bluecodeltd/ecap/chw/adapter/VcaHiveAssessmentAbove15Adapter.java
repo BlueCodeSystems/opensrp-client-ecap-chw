@@ -3,7 +3,7 @@ package com.bluecodeltd.ecap.chw.adapter;
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getAllSharedPreferences;
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getFormTag;
 import static org.smartregister.chw.fp.util.FpUtil.getClientProcessorForJava;
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -102,13 +102,17 @@ public class VcaHiveAssessmentAbove15Adapter extends RecyclerView.Adapter<VcaHiv
         CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(assessment.getUnique_id());
 
         holder.editme.setOnClickListener(v -> {
-            if( caseStatusModel.getCase_status().equals("0") ||  caseStatusModel.getCase_status().equals("2")) {
+            String status = null;
+            try { status = caseStatusModel != null ? caseStatusModel.getCase_status() : null; } catch (Exception ignored) {}
+            if (status != null && (status.equals("0") || status.equals("2"))) {
                 Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.dialog_layout);
                 dialog.show();
 
                 TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                dialogMessage.setText(caseStatusModel.getFirst_name() + " " + caseStatusModel.getLast_name() + " was either de-registered or inactive in the program");
+                String first = caseStatusModel != null && caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "This beneficiary";
+                String last = caseStatusModel != null && caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "";
+                dialogMessage.setText(first + (last.isEmpty()? "":(" "+last)) + " was either de-registered or inactive in the program");
 
                 Button dialogButton = dialog.findViewById(R.id.dialog_button);
                 dialogButton.setOnClickListener(va -> dialog.dismiss());
@@ -414,4 +418,3 @@ public class VcaHiveAssessmentAbove15Adapter extends RecyclerView.Adapter<VcaHiv
         }
     }
 }
-

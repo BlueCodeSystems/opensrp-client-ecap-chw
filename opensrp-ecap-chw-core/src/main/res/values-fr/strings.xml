@@ -196,7 +196,7 @@
     <string name="confirm_remove_text">Êtes-vous certain de vouloir supprimer le dossier de %s? Cette action va enlever le dossier au complet de votre appareil. Cette action ne peût pas être annulée.</string>
     <string name="remove">ENLEVER</string>
     <string name="remove_entire_family">Enlever le ménage</string>
-    <string name="remove_warning_family">Êtes-vous certain de vouloir supprimer le dossier du ménage %s ? Cette action va enlever le dossier au complet ET toutes les données de santé sur le ménage %sseront éffacées de votre appareil. Cette action ne peût pas être annulée.</string>
+    <string name="remove_warning_family">Êtes-vous certain de vouloir supprimer le dossier du ménage %1$s ? Cette action va enlever le dossier au complet ET toutes les données de santé sur le ménage %2$s seront éffacées de votre appareil. Cette action ne peût pas être annulée.</string>
     <string name="family">Ménage %s </string>
 
     <!--Change care giver-->
@@ -206,7 +206,7 @@
     <string name="remove_familyhead_warning_message">Avant d\'enlever ce membre du ménage vous devez sélectionner un nouveau chef de ménage.</string>
     <string name="profile_change_dialog_message">Avant d\'enlever ce membre du ménage, vous devez sélectionner un nouveau chef de ménage.</string>
     <string name="select_a_new_family_head">Sélectionner un nouveau chef de ménage</string>
-    <string name="remove_family_count">%s adultes et %s enfants de moins de 5 ans</string>
+    <string name="remove_family_count">%1$s adultes et %2$s enfants de moins de 5 ans</string>
 
     <string name="yellow_fever">Fièvre Jaune</string>
 
@@ -385,7 +385,7 @@
     <string name="children_prefix">Enfants: %s</string>
     <string name="phone_not_provided">Aucun numéro de téléphone fourni</string>
     <string name="anc_danger_sign_prefix">Signes de danger de la CPN; Symptômes:%s</string>
-    <string name="client_name_age_suffix">%s, %s</string>
+    <string name="client_name_age_suffix">%1$s, %2$s</string>
 
     <!--PNC -->
     <string name="pnc_visit_day_due">JOUR %s VISITE DUE</string>
@@ -446,8 +446,8 @@
     <string name="pnc_medical_history_child_immunization_bcg">BCG: {0}</string>
 
     <!--Wcaro Upcoming Services -->
-    <string name="upcoming_immunizations">Immunisations (%s) (%s) \n%s \n%s</string>
-    <string name="up_immunizations">Immunisations (%s) (%s) \n%s</string>
+    <string name="upcoming_immunizations">Immunisations (%1$s) (%2$s) \n%3$s \n%4$s</string>
+    <string name="up_immunizations">Immunisations (%1$s) (%2$s) \n%3$s</string>
 
     <!-- dates -->
     <string name="date_days">Jours</string>

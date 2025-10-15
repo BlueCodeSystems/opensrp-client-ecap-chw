@@ -23,6 +23,8 @@ import java.util.HashMap;
 
 public class PMTCTMotherOverviewFragment extends Fragment {
 
+    private com.bluecodeltd.ecap.chw.databinding.FragmentPmtctMotherOverviewBinding binding;
+
     TextView txtHouseholdId, txtAddress, txtPhone, txtPmtctDateEnrolled, txtArt,
             txtdate_of_delivery,txtplace_of_delivery, txt_on_art_at_time_of_delivery;
     FloatingActionButton fab;
@@ -32,15 +34,16 @@ public class PMTCTMotherOverviewFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_pmtct_mother_overview, container, false);
+        binding = com.bluecodeltd.ecap.chw.databinding.FragmentPmtctMotherOverviewBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 
-        txtHouseholdId = view.findViewById(R.id.hh_id);
-        txtAddress = view.findViewById(R.id.p_address);
-        txtPhone = view.findViewById(R.id.phone);
-        txtPmtctDateEnrolled = view.findViewById(R.id.pmtct_date_enrolled);
-        txtdate_of_delivery = view.findViewById(R.id.date_of_delivery);
-        txtplace_of_delivery = view.findViewById(R.id.place_of_delivery);
-        txt_on_art_at_time_of_delivery = view.findViewById(R.id.on_art_at_time_of_delivery);
+        txtHouseholdId = binding.hhId;
+        txtAddress = binding.pAddress;
+        txtPhone = binding.phone;
+        txtPmtctDateEnrolled = binding.pmtctDateEnrolled;
+        txtdate_of_delivery = binding.dateOfDelivery;
+        txtplace_of_delivery = binding.placeOfDelivery;
+        txt_on_art_at_time_of_delivery = binding.onArtAtTimeOfDelivery;
         txtHouseholdId.setVisibility(View.GONE);
 
         fab = getActivity().findViewById(R.id.fabx);
@@ -87,6 +90,12 @@ public class PMTCTMotherOverviewFragment extends Fragment {
                 txt_on_art_at_time_of_delivery.setText(getSafeString(pmtctDeliveryModel.getOn_art_at_time_of_delivery()));
             }
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     private String getSafeString(String value) {

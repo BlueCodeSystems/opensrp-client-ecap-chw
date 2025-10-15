@@ -30,11 +30,10 @@ public class HTSRegisterFragmentPresenter implements IndexRegisterFragmentContra
 
     @Override
     public void initializeQueries(String s) {
-
         String hivTestingService = Constants.EcapClientTable.EC_HIV_TESTING_SERVICE;
-
-        String countSelect = "SELECT COUNT(*) FROM " + hivTestingService + " WHERE client_number IS NOT NULL AND delete_status IS NULL";
-        String mainSelect = "SELECT *, ec_hiv_testing_service.client_number as _id,ec_hiv_testing_service.health_facility AS facility, first_name,gender FROM ec_hiv_testing_service WHERE delete_status IS NULL";
+        // Provide base selects; BaseRegisterFragment will apply mainCondition and sort
+        String countSelect = "SELECT COUNT(*) FROM " + hivTestingService + " ";
+        String mainSelect = "SELECT *, ec_hiv_testing_service.client_number as _id, ec_hiv_testing_service.health_facility AS facility, first_name, gender FROM ec_hiv_testing_service ";
 
         getView().initializeQueryParams(Constants.EcapClientTable.EC_HIV_TESTING_SERVICE, countSelect, mainSelect);
         getView().initializeAdapter();

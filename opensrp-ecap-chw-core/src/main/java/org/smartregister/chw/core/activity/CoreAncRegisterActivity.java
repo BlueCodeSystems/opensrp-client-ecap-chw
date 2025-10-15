@@ -113,7 +113,12 @@ public class CoreAncRegisterActivity extends BaseAncRegisterActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Ensure an ActionBar exists to prevent BaseRegisterFragment NPEs
+        setTheme(org.smartregister.chw.core.R.style.FamilyTheme_AppBarOverlay);
         super.onCreate(savedInstanceState);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
         NavigationMenu.getInstance(this, null, null);
     }
 

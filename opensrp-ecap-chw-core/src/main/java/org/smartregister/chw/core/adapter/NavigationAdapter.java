@@ -58,6 +58,8 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.My
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         NavigationOption model = navigationOptionList.get(position);
         holder.tvName.setText(context.getResources().getText(model.getTitleID()));
+        holder.tvName.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX,
+                context.getResources().getDimension(R.dimen.nav_item_text_size));
         if(context.getResources().getText(model.getTitleID()).equals("Home"))
         {
             holder.tvCount.setText("");
@@ -65,6 +67,9 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.My
         else {
             holder.tvCount.setText(String.format(Locale.getDefault(), "%d", model.getRegisterCount()));
         }
+
+        holder.tvCount.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX,
+                context.getResources().getDimension(R.dimen.nav_item_count_size));
 
         holder.ivIcon.setImageResource(model.getResourceID());
 

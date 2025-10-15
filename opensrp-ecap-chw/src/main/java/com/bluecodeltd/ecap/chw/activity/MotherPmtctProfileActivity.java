@@ -3,7 +3,7 @@ package com.bluecodeltd.ecap.chw.activity;
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getFormTag;
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.annotation.SuppressLint;
@@ -26,7 +26,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
@@ -86,13 +87,16 @@ import timber.log.Timber;
 
 public class MotherPmtctProfileActivity extends AppCompatActivity {
 
+    private com.bluecodeltd.ecap.chw.databinding.ActivityMotherPmtctDetailBinding binding;
+
 
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     private Toolbar toolbar;
     public ProfileViewPagerAdapter mPagerAdapter;
     private TabLayout mTabLayout;
-    public ViewPager mViewPager;
+    public ViewPager2 mViewPager;
+    private TabLayoutMediator tabMediator;
     private String refresh;
     private TextView childTabCount, motherName, txtAge;
     private FloatingActionButton fab;
@@ -119,21 +123,22 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mother_pmtct_detail);
+        binding = com.bluecodeltd.ecap.chw.databinding.ActivityMotherPmtctDetailBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        toolbar = findViewById(R.id.toolbarx);
+        toolbar = binding.toolbarx;
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         NavigationMenu.getInstance(this, null, toolbar);
-        mTabLayout =  findViewById(R.id.tabs);
-        mViewPager  = findViewById(R.id.viewpager);
-        motherName = findViewById(R.id.mother_name);
-        txtAge = findViewById(R.id.mother_age);
-        mLayout = findViewById(R.id.mother_form);
-        cLayout = findViewById(R.id.child_form);
-        ancLayout = findViewById(R.id.anc_details);
-        labourLayout = findViewById(R.id.labour_details);
-        postnatalLayout = findViewById(R.id.postnatal_details);
+        mTabLayout =  binding.tabs;
+        mViewPager  = binding.viewpager;
+        motherName = binding.motherName;
+        txtAge = binding.motherAge;
+        mLayout = binding.motherForm;
+        cLayout = binding.childForm;
+        ancLayout = binding.ancDetails;
+        labourLayout = binding.labourDetails;
+        postnatalLayout = binding.postnatalDetails;
 
         builder = new AlertDialog.Builder(MotherPmtctProfileActivity.this);
 
@@ -176,7 +181,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
        oMapper = new ObjectMapper();
 //
-        fab = findViewById(R.id.fabx);
+        fab = binding.fabx;
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
@@ -207,21 +212,23 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
 
     private void setupViewPager(){
-        mPagerAdapter = new ProfileViewPagerAdapter(getSupportFragmentManager());
-        mPagerAdapter.addFragment(new PMTCTMotherOverviewFragment());
-//        mPagerAdapter.addFragment(new AncPmctFragment());
-        mPagerAdapter.addFragment(new PostnatalCareFragment());
-        mPagerAdapter.addFragment(new PmctMotherHeiFragment());
+        // Rebuild ViewPager2 adapter
+        java.util.List<androidx.fragment.app.Fragment> fragments = new java.util.ArrayList<>();
+        fragments.add(new PMTCTMotherOverviewFragment());
+        fragments.add(new PostnatalCareFragment());
+        fragments.add(new PmctMotherHeiFragment());
 
-
-        mViewPager.setAdapter(mPagerAdapter);
-
-        mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.getTabAt(0).setText("OVERVIEW");
-//        mTabLayout.getTabAt(1).setText("ANC");
-        mTabLayout.getTabAt(1).setText("POSTNATAL");
-        mTabLayout.getTabAt(2).setText("HEI");
-
+        com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter adapter = new com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter(this, fragments);
+        mViewPager.setAdapter(adapter);
+        if (tabMediator != null) { try { tabMediator.detach(); } catch (Exception ignored) {} }
+        tabMediator = new TabLayoutMediator(mTabLayout, mViewPager, (tab, position) -> {
+            switch (position) {
+                case 0: tab.setText("OVERVIEW"); break;
+                case 1: tab.setText("POSTNATAL"); break;
+                case 2: tab.setText("HEI"); break;
+            }
+        });
+        tabMediator.attach();
     }
 
 //    private void updateAncTabTitle() {

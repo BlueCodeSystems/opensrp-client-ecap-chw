@@ -1,6 +1,6 @@
 package com.bluecodeltd.ecap.chw.activity;
 
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -68,7 +68,13 @@ public class ShowReferralsActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbarx);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        if (toolbar != null) {
+            toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        }
         NavigationMenu.getInstance(this, null, toolbar);
 
 
@@ -78,28 +84,61 @@ public class ShowReferralsActivity extends AppCompatActivity {
         hh_id = findViewById(R.id.hhid);
 //        child_plan = findViewById(R.id.child_plan);
 //
-        Bundle bundle = getIntent().getExtras();
-        intent_vcaid = bundle.getString("childId");
-        String intent_cname = bundle.getString("name");
+        // Safely extract extras to avoid NullPointerException
+        Intent incomingIntent = getIntent();
+        intent_vcaid = incomingIntent != null ? incomingIntent.getStringExtra("childId") : null;
+        String intent_cname = incomingIntent != null ? incomingIntent.getStringExtra("name") : null;
 //
 //
-        hh_id.setText("VCA ID : " + intent_vcaid);
-        vcaname.setText(intent_cname);
+        if (hh_id != null) {
+            hh_id.setText("VCA ID : " + (intent_vcaid != null ? intent_vcaid : "-"));
+        }
+        if (vcaname != null) {
+            vcaname.setText(intent_cname != null ? intent_cname : "");
+        }
 //
 
-        referralList.addAll(ReferralDao.getReferralsByID(intent_vcaid));
+        if (intent_vcaid != null) {
+            referralList.addAll(ReferralDao.getReferralsByID(intent_vcaid));
+        }
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(ShowReferralsActivity.this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerViewadapter = new ShowReferralsAdapter(referralList, ShowReferralsActivity.this);
         recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
+        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
 
-        if (recyclerViewadapter.getItemCount() > 0){
+        if (recyclerViewadapter != null && recyclerViewadapter.getItemCount() > 0){
 
             linearLayout.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        // If IndexDetailsActivity is on the back stack, finishing is enough.
+        // As a fallback, navigate explicitly to IndexDetailsActivity with required extras.
+        if (!isFinishing()) {
+            finish();
+        }
+
+        // In case this activity was not launched from IndexDetailsActivity
+        // and is not returning there via finish(), ensure an explicit navigation.
+        // Guard against nulls for extras.
+        if (intent_vcaid != null) {
+            Intent intent = new Intent(ShowReferralsActivity.this, IndexDetailsActivity.class);
+            intent.putExtra("Child", intent_vcaid);
+            // Provide a hint where we came from (optional, safe if unused)
+            intent.putExtra("fromIndex", "referrals");
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     public void startFormActivity(JSONObject jsonObject) {
@@ -121,13 +160,10 @@ public class ShowReferralsActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK) {
-
             boolean is_edit_mode = false;
-
             String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
 
             JSONObject jsonFormObject = null;
@@ -137,23 +173,37 @@ public class ShowReferralsActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+            if (!jsonFormObject.optString("entity_id").isEmpty()) {
+                is_edit_mode = true;
+            }
+            String EncounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
 
             try {
-
                 ChildIndexEventClient childIndexEventClient = processRegistration(jsonString);
 
                 if (childIndexEventClient == null) {
                     return;
                 }
 
-                saveRegistration(childIndexEventClient, false);
+                saveRegistration(childIndexEventClient, is_edit_mode,EncounterType);
 
-                Toasty.success(ShowReferralsActivity.this, "Referral Updated", Toast.LENGTH_LONG, true).show();
+                switch (EncounterType) {
 
+                    case "Referral":
+                        Toasty.success(ShowReferralsActivity.this, "Referral updated", Toast.LENGTH_LONG, true).show();
+                        recreate();
+                        refresh();
+                        break;
+
+                }
             } catch (Exception e) {
                 Timber.e(e);
             }
         }
+        finish();
+        startActivity(getIntent());
+    }
+    public void refresh(){
         finish();
         startActivity(getIntent());
     }
@@ -198,7 +248,7 @@ public class ShowReferralsActivity extends AppCompatActivity {
         return null;
     }
 
-    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode,String encounterType) {
 
         Runnable runnable = () -> {
 

@@ -11,6 +11,7 @@ import com.evernote.android.job.JobCreator;
 
 import org.smartregister.job.DocumentConfigurationServiceJob;
 import org.smartregister.job.ExtendedSyncServiceJob;
+import com.evernote.android.job.Job;
 import org.smartregister.job.ImageUploadServiceJob;
 import org.smartregister.job.PullUniqueIdsServiceJob;
 import org.smartregister.job.SyncLocationsByLevelAndTagsServiceJob;
@@ -47,6 +48,10 @@ public class ChwJobCreator implements JobCreator {
                 return new SyncLocationsByLevelAndTagsServiceJob();
             case DocumentConfigurationServiceJob.TAG:
                 return new DocumentConfigurationServiceJob(DocumentConfigurationIntentService.class);
+            case "P2PServiceJob":
+                return new NoOpJob(tag);
+            case "SyncSettingsServiceJob":
+                return new NoOpJob(tag);
             default:
                 Timber.d("Looks like you tried to create a job " + tag + " that is not declared in the Chw Job Creator");
                 return null;

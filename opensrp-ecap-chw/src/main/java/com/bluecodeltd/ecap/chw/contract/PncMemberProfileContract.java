@@ -25,7 +25,7 @@ public interface PncMemberProfileContract {
         void createReferralEvent(AllSharedPreferences allSharedPreferences, String jsonString) throws Exception;
     }
 
-    interface Interactor extends BasePncMemberProfileContract.Interactor, BaseAncMemberProfileContract.Interactor {
+    interface Interactor extends BasePncMemberProfileContract.Interactor {
         void createReferralEvent(AllSharedPreferences allSharedPreferences, String jsonString, String entityID) throws Exception;
     }
 

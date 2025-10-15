@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.text.TextUtils;
 import android.util.Log;
 
-import net.sqlcipher.SQLException;
+// Avoid direct dependency on a specific SQLCipher exception type; use generic Exception handling
 import net.sqlcipher.database.SQLiteDatabase;
 
 import org.joda.time.LocalDate;
@@ -135,9 +135,7 @@ public class MonthlyTalliesRepository extends BaseRepository {
 
                 return unsentMonths;
             }
-        } catch (SQLException e) {
-            Log.e(TAG, Log.getStackTraceString(e));
-        } catch (ParseException e) {
+        } catch (Exception e) {
             Log.e(TAG, Log.getStackTraceString(e));
         } finally {
             if (cursor != null) {
@@ -174,9 +172,7 @@ public class MonthlyTalliesRepository extends BaseRepository {
                     }
                 }
             }
-        } catch (SQLException e) {
-            Log.e(TAG, Log.getStackTraceString(e));
-        } catch (ParseException e) {
+        } catch (Exception e) {
             Log.e(TAG, Log.getStackTraceString(e));
         } finally {
             if (cursor != null) {
@@ -202,7 +198,7 @@ public class MonthlyTalliesRepository extends BaseRepository {
                     COLUMN_MONTH + " = '" + month + "'",
                     null, null, null, null, null);
             monthlyTallies = readAllDataElements(cursor);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             Log.e(TAG, Log.getStackTraceString(e));
         } finally {
             if (cursor != null) {
@@ -260,10 +256,6 @@ public class MonthlyTalliesRepository extends BaseRepository {
                     }
                 }
             }
-        } catch (SQLException e) {
-            Log.e(TAG, Log.getStackTraceString(e));
-        } catch (ParseException e) {
-            Log.e(TAG, Log.getStackTraceString(e));
         } catch (Exception e) {
             Log.e(TAG, Log.getStackTraceString(e));
         } finally {
@@ -294,7 +286,7 @@ public class MonthlyTalliesRepository extends BaseRepository {
 
                 return true;
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             Log.e(TAG, Log.getStackTraceString(e));
         } finally {
             try {
@@ -346,7 +338,7 @@ public class MonthlyTalliesRepository extends BaseRepository {
 
                 return true;
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             Log.e(TAG, Log.getStackTraceString(e));
         } finally {
             try {
@@ -373,9 +365,7 @@ public class MonthlyTalliesRepository extends BaseRepository {
                     }
                 }
             }
-        } catch (SQLException e) {
-            Log.e(TAG, Log.getStackTraceString(e));
-        } catch (ParseException e) {
+        } catch (Exception e) {
             Log.e(TAG, Log.getStackTraceString(e));
         } finally {
             if (cursor != null) {
@@ -450,9 +440,7 @@ public class MonthlyTalliesRepository extends BaseRepository {
                     tallies.add(tally);
                 }
             }
-        } catch (SQLException e) {
-            Log.e(TAG, Log.getStackTraceString(e));
-        } catch (ParseException e) {
+        } catch (Exception e) {
             Log.e(TAG, Log.getStackTraceString(e));
         } finally {
             if (cursor != null) {

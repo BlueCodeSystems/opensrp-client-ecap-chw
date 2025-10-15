@@ -24,6 +24,8 @@ import java.util.HashMap;
  */
 public class HTSFragmentOverview extends Fragment {
 
+    private com.bluecodeltd.ecap.chw.databinding.FragmentHTSOverviewBinding binding;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -69,18 +71,19 @@ public class HTSFragmentOverview extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_h_t_s_overview, container, false);
+        binding = com.bluecodeltd.ecap.chw.databinding.FragmentHTSOverviewBinding.inflate(inflater, container, false);
+        rootView = binding.getRoot();
 
-        facility = rootView.findViewById(R.id.facility);
-        testing_modality = rootView.findViewById(R.id.testing_modality);
-        artNumber = rootView.findViewById(R.id.art_number);
-        entry_point = rootView.findViewById(R.id.entry_point);
-        caseworkerName = rootView.findViewById(R.id.caseworker_name);
-        phone = rootView.findViewById(R.id.phone);
-        partner = rootView.findViewById(R.id.implementing_partner);
-        date_edited = rootView.findViewById(R.id.date_edited);
-        date_case_created = rootView.findViewById(R.id.date_case_created);
-        artLayout = rootView.findViewById(R.id.artLayout);
+        facility = binding.facility;
+        testing_modality = binding.testingModality;
+        artNumber = binding.artNumber;
+        entry_point = binding.entryPoint;
+        caseworkerName = binding.caseworkerName;
+        phone = binding.phone;
+        partner = binding.implementingPartner;
+        date_edited = binding.dateEdited;
+        date_case_created = binding.dateCaseCreated;
+        artLayout = binding.artLayout;
 
 
 
@@ -105,5 +108,11 @@ if(htsModel.getTesting_modality() != null && htsModel.getTesting_modality().equa
 
 
         return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

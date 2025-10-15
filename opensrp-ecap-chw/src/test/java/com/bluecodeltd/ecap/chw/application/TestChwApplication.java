@@ -2,7 +2,6 @@ package com.bluecodeltd.ecap.chw.application;
 
 import net.sqlcipher.database.SQLiteDatabase;
 
-import org.koin.core.context.GlobalContext;
 import org.mockito.Mockito;
 import com.bluecodeltd.ecap.chw.R;
 import org.smartregister.family.util.AppExecutors;
@@ -33,7 +32,10 @@ public class TestChwApplication extends ChwApplication {
     @Override
     public void onTerminate() {
         super.onTerminate();
-        GlobalContext.stop();
+        try {
+            Class<?> gc = Class.forName("org.koin.core.context.GlobalContextKt");
+            gc.getMethod("stopKoin").invoke(null);
+        } catch (Throwable ignored) { }
     }
 
     @Override
@@ -52,3 +54,7 @@ public class TestChwApplication extends ChwApplication {
 
 
 }
+
+
+
+

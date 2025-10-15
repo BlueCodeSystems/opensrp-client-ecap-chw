@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
@@ -71,7 +72,38 @@ public class HivTestingServiceActivity extends BaseRegisterActivity implements I
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        NavigationMenu.getInstance(this, null, null);
+
+        Toolbar toolbar = findViewById(org.smartregister.R.id.register_toolbar);
+        NavigationMenu menu;
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
+            }
+            menu = NavigationMenu.getInstance(this, null, toolbar);
+            toolbar.setTitle("");
+            TextView titleLabel = toolbar.findViewById(org.smartregister.R.id.txt_title_label);
+            if (titleLabel != null) {
+                titleLabel.setVisibility(View.GONE);
+            }
+            try {
+                if (menu != null) {
+                    androidx.drawerlayout.widget.DrawerLayout drawer = menu.getDrawer();
+                    androidx.appcompat.graphics.drawable.DrawerArrowDrawable arrow = new androidx.appcompat.graphics.drawable.DrawerArrowDrawable(this);
+                    arrow.setColor(android.graphics.Color.WHITE);
+                    toolbar.setNavigationIcon(arrow);
+                    toolbar.setNavigationOnClickListener(v -> {
+                        if (drawer != null) drawer.openDrawer(androidx.core.view.GravityCompat.START);
+                    });
+                }
+            } catch (Throwable ignored) {}
+        } else {
+            menu = NavigationMenu.getInstance(this, null, null);
+        }
+
+        if (menu != null && menu.getNavigationAdapter() != null) {
+            menu.getNavigationAdapter().setSelectedView(Constants.DrawerMenu.HTS);
+        }
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(HivTestingServiceActivity.this);
         String phone = sp.getString("phone", "anonymous");
@@ -114,7 +146,7 @@ public class HivTestingServiceActivity extends BaseRegisterActivity implements I
 
         } catch (Exception e) {
             Timber.e(e);
-            displayToast(org.smartregister.family.R.string.error_unable_to_start_form);
+            displayToast(R.string.error_unable_to_start_form);
         }
     }
 
@@ -228,6 +260,12 @@ public class HivTestingServiceActivity extends BaseRegisterActivity implements I
         }
             Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
             Form form = new Form();
+            form.setWizard(true);
+            form.setHideSaveLabel(true);
+            form.setNextLabel(getString(R.string.next));
+            form.setPreviousLabel(getString(R.string.previous));
+            form.setSaveLabel(getString(R.string.submit));
+            form.setNavigationBackground(R.color.primary);
             intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
             intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
             startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
@@ -253,7 +291,7 @@ public class HivTestingServiceActivity extends BaseRegisterActivity implements I
                     RegisterParams registerParam = new RegisterParams();
                     registerParam.setEditMode(false);
                     registerParam.setFormTag(OpdJsonFormUtils.formTag(OpdUtils.context().allSharedPreferences()));
-                    showProgressDialog(org.smartregister.family.R.string.saving_dialog_title);
+                    showProgressDialog(R.string.saving_dialog_title);
                     indexRegisterPresenter().saveForm(jsonString, registerParam);
                     uniqueId = getFieldJSONObject(fields(jsonFormObject, STEP1), "unique_id").optString("value");
 
@@ -265,7 +303,7 @@ public class HivTestingServiceActivity extends BaseRegisterActivity implements I
                     RegisterParams registerParam = new RegisterParams();
                     registerParam.setEditMode(false);
                     registerParam.setFormTag(OpdJsonFormUtils.formTag(OpdUtils.context().allSharedPreferences()));
-                    showProgressDialog(org.smartregister.family.R.string.saving_dialog_title);
+                    showProgressDialog(R.string.saving_dialog_title);
                     indexRegisterPresenter().saveForm(jsonString, registerParam);
 
                     hid = getFieldJSONObject(fields(jsonFormObject, STEP2), "household_id").optString("value");
@@ -280,7 +318,7 @@ public class HivTestingServiceActivity extends BaseRegisterActivity implements I
                     RegisterParams registerParam = new RegisterParams();
                     registerParam.setEditMode(false);
                     registerParam.setFormTag(OpdJsonFormUtils.formTag(OpdUtils.context().allSharedPreferences()));
-                    showProgressDialog(org.smartregister.family.R.string.saving_dialog_title);
+                    showProgressDialog(R.string.saving_dialog_title);
                     indexRegisterPresenter().saveForm(jsonString, registerParam);
 
 //                    hid = getFieldJSONObject(fields(jsonFormObject, STEP2), "household_id").optString("value");

@@ -7,7 +7,10 @@ import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_EXTRA.STEP3;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
@@ -55,7 +58,37 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        NavigationMenu.getInstance(HouseholdIndexActivity.this, null, null);
+        Toolbar toolbar = findViewById(org.smartregister.R.id.register_toolbar);
+        NavigationMenu menu;
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
+            }
+            toolbar.setTitle("");
+            TextView titleLabel = toolbar.findViewById(org.smartregister.R.id.txt_title_label);
+            if (titleLabel != null) {
+                titleLabel.setVisibility(View.GONE);
+            }
+            menu = NavigationMenu.getInstance(this, null, toolbar);
+            try {
+                if (menu != null) {
+                    androidx.drawerlayout.widget.DrawerLayout drawer = menu.getDrawer();
+                    androidx.appcompat.graphics.drawable.DrawerArrowDrawable arrow = new androidx.appcompat.graphics.drawable.DrawerArrowDrawable(this);
+                    arrow.setColor(android.graphics.Color.WHITE);
+                    toolbar.setNavigationIcon(arrow);
+                    toolbar.setNavigationOnClickListener(v -> {
+                        if (drawer != null) drawer.openDrawer(androidx.core.view.GravityCompat.START);
+                    });
+                }
+            } catch (Throwable ignored) {}
+        } else {
+            menu = NavigationMenu.getInstance(this, null, null);
+        }
+
+        if (menu != null && menu.getNavigationAdapter() != null) {
+            menu.getNavigationAdapter().setSelectedView(Constants.DrawerMenu.HOUSEHOLD_REGISTER);
+        }
     }
 
     @Override
@@ -140,6 +173,12 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
 
         Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         Form form = new Form();
+        form.setWizard(true);
+        form.setHideSaveLabel(true);
+        form.setNextLabel(getString(R.string.next));
+        form.setPreviousLabel(getString(R.string.previous));
+        form.setSaveLabel(getString(R.string.submit));
+        form.setNavigationBackground(R.color.primary);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
         startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
@@ -154,7 +193,7 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
 
         } catch (Exception e) {
             Timber.e(e);
-            displayToast(org.smartregister.family.R.string.error_unable_to_start_form);
+            displayToast(R.string.error_unable_to_start_form);
         }
     }
 
@@ -183,6 +222,7 @@ public class HouseholdIndexActivity extends BaseRegisterActivity implements Hous
                     Intent passClosureForm   =  new Intent(this,SignatureActivity.class);
                     passClosureForm.putExtra("jsonForm", jsonString);
                     startActivity(passClosureForm);
+                    finish();
 
                 }
             } catch (JSONException e) {

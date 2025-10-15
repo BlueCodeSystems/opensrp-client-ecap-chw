@@ -1,7 +1,5 @@
 package com.bluecodeltd.ecap.chw.activity;
 
-import android.Manifest;
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,11 +8,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import com.github.ybq.android.spinkit.style.FadingCircle;
 import com.google.android.material.tabs.TabLayout;
@@ -22,7 +20,6 @@ import com.google.android.material.tabs.TabLayout;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.jetbrains.annotations.NotNull;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import org.smartregister.chw.core.job.ChwIndicatorGeneratingJob;
@@ -33,14 +30,14 @@ import com.bluecodeltd.ecap.chw.util.Utils;
 import org.smartregister.helper.BottomNavigationHelper;
 import org.smartregister.reporting.domain.TallyStatus;
 import org.smartregister.reporting.event.IndicatorTallyEvent;
-import org.smartregister.util.PermissionUtils;
 
 import timber.log.Timber;
 
 public class JobAidsActivity extends FamilyRegisterActivity {
 
     private static final String REPORT_LAST_PROCESSED_DATE = "REPORT_LAST_PROCESSED_DATE";
-    private ViewPager mViewPager;
+    private ViewPager2 mViewPager;
+    private TabLayoutMediator tabMediator;
     private ImageView refreshIndicatorsIcon;
     private ProgressBar refreshIndicatorsProgressBar;
 
@@ -74,14 +71,18 @@ public class JobAidsActivity extends FamilyRegisterActivity {
         }
     }
 
-    public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
+    public class SectionsPagerAdapter extends FragmentStateAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
+        public SectionsPagerAdapter(@NonNull androidx.fragment.app.FragmentActivity activity) {
+            super(activity);
         }
 
         @Override
-        public Fragment getItem(int position) {
+        public int getItemCount() { return 2; }
+
+        @NonNull
+        @Override
+        public Fragment createFragment(int position) {
             switch (position) {
                 case 0:
                     return JobAidsDashboardFragment.newInstance();
@@ -91,20 +92,6 @@ public class JobAidsActivity extends FamilyRegisterActivity {
                     return JobAidsDashboardFragment.newInstance();
             }
         }
-
-        @Override
-        public int getCount() {
-            // Show 3 total pages.
-            return 2;
-        }
-
-        @Override
-        public int getItemPosition(Object object) {
-            if (object instanceof JobAidsDashboardFragment) {
-                ((JobAidsDashboardFragment) object).loadIndicatorTallies();
-            }
-            return super.getItemPosition(object);
-        }
     }
 
     @Override
@@ -113,14 +100,7 @@ public class JobAidsActivity extends FamilyRegisterActivity {
         setContentView(R.layout.activity_job_aids);
         setUpView();
         registerBottomNavigation();
-
-
-        String[] request_permissions = new String[]{
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-        };
-        boolean hasPermission = PermissionUtils.isPermissionGranted(this, request_permissions, PermissionUtils.READ_EXTERNAL_STORAGE_REQUEST_CODE);
-        if (hasPermission) ChwApplication.prepareDirectories();
+        ChwApplication.prepareDirectories();
 
         ChwIndicatorGeneratingJob.scheduleJobImmediately(ChwIndicatorGeneratingJob.TAG);
     }
@@ -131,17 +111,16 @@ public class JobAidsActivity extends FamilyRegisterActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(" ");
         }
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
+        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(this);
         mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
         TabLayout tabLayout = findViewById(R.id.tabs);
-
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+        if (tabMediator != null) { try { tabMediator.detach(); } catch (Exception ignored) {} }
+        tabMediator = new TabLayoutMediator(tabLayout, mViewPager, (tab, pos) -> {
+            if (pos == 0) tab.setText(getString(R.string.tab_text_1));
+            else if (pos == 1) tab.setText(getString(R.string.tab_text_2));
+        });
+        tabMediator.attach();
 
         refreshIndicatorsIcon = findViewById(R.id.refreshIndicatorsIcon);
         refreshIndicatorsProgressBar = findViewById(R.id.refreshIndicatorsPB);
@@ -166,7 +145,7 @@ public class JobAidsActivity extends FamilyRegisterActivity {
         JobsAidsBottomNavigationListener navigationListener = new JobsAidsBottomNavigationListener(this);
         Utils.setupBottomNavigation(bottomNavigationHelper, bottomNavigationView, navigationListener);
         if (bottomNavigationView != null)
-            bottomNavigationView.getMenu().findItem(org.smartregister.family.R.id.action_job_aids).setChecked(true);
+            bottomNavigationView.getMenu().findItem(R.id.action_job_aids).setChecked(true);
     }
 
     /**
@@ -178,27 +157,6 @@ public class JobAidsActivity extends FamilyRegisterActivity {
         ChwIndicatorGeneratingJob.scheduleJobImmediately(ChwIndicatorGeneratingJob.TAG);
         Timber.d("ChwIndicatorGeneratingJob scheduled immediately to compute latest counts...");
         Toast.makeText(getApplicationContext(), getString(R.string.indicators_udpating), Toast.LENGTH_LONG).show();
-    }
-
-    public void showPermissionDeniedDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle(getString(R.string.permission_denied))
-                .setMessage(getString(R.string.storage_permissions_message))
-                .setPositiveButton(getString(R.string.no), (dialog, which) -> ActivityCompat.requestPermissions(this, new String[]{
-                        Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PermissionUtils.READ_EXTERNAL_STORAGE_REQUEST_CODE))
-                .setNegativeButton(getString(R.string.yes), (dialog, which) -> dialog.dismiss())
-                .show();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NotNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        boolean granted = PermissionUtils.verifyPermissionGranted(permissions, grantResults, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (!granted) {
-            showPermissionDeniedDialog();
-        } else {
-            ChwApplication.prepareDirectories();
-        }
     }
 
 }

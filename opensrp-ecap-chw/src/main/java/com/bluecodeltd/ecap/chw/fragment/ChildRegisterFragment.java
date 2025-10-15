@@ -22,12 +22,13 @@ import timber.log.Timber;
 import static org.smartregister.chw.core.utils.ChildDBConstants.KEY.FAMILY_LAST_NAME;
 
 public class ChildRegisterFragment extends CoreChildRegisterFragment {
+    private com.bluecodeltd.ecap.chw.databinding.FragmentBaseRegisterBinding binding;
 
     @Override
     protected void onViewClicked(android.view.View view) {
         super.onViewClicked(view);
         if (view.getTag() instanceof CommonPersonObjectClient
-                && view.getTag(org.smartregister.family.R.id.VIEW_ID) == CLICK_VIEW_DOSAGE_STATUS) {
+                && view.getTag(org.smartregister.chw.core.R.id.VIEW_ID) == CLICK_VIEW_DOSAGE_STATUS) {
             CommonPersonObjectClient client = (CommonPersonObjectClient) view.getTag();
             ChildHomeVisitActivity.startMe(getActivity(), new MemberObject(client), false, ChildHomeVisitActivity.class);
         }
@@ -62,7 +63,17 @@ public class ChildRegisterFragment extends CoreChildRegisterFragment {
 
     @Override
     public void setupViews(android.view.View view) {
+        try { binding = com.bluecodeltd.ecap.chw.databinding.FragmentBaseRegisterBinding.bind(view); } catch (Throwable ignored) {}
         super.setupViews(view);
+        try {
+            if (clientsView == null && binding != null && binding.recyclerView != null) {
+                clientsView = binding.recyclerView;
+                if (clientsView.getLayoutManager() == null && getContext() != null) {
+                    clientsView.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(getContext()));
+                }
+                clientsView.setHasFixedSize(true);
+            }
+        } catch (Exception ignored) { }
 
         if (ChwApplication.getApplicationFlavor().hasDefaultDueFilterForChildClient()) {
             android.view.View dueOnlyLayout = view.findViewById(org.smartregister.R.id.due_only_layout);
@@ -71,6 +82,12 @@ public class ChildRegisterFragment extends CoreChildRegisterFragment {
             dueOnlyLayout.setTag(null);
             toggleFilterSelection(dueOnlyLayout);
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
 }

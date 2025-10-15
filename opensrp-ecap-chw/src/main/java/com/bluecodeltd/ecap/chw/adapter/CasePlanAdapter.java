@@ -3,7 +3,7 @@ package com.bluecodeltd.ecap.chw.adapter;
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getAllSharedPreferences;
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getFormTag;
 import static org.smartregister.chw.fp.util.FpUtil.getClientProcessorForJava;
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 
 import android.app.Activity;
 import android.app.AlertDialog;

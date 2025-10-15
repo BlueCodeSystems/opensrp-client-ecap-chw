@@ -3,7 +3,7 @@ package com.bluecodeltd.ecap.chw.activity;
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.chw.core.utils.CoreJsonFormUtils.getSyncHelper;
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -35,7 +35,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
@@ -109,6 +110,7 @@ import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
 public class HTSDetailsActivity extends AppCompatActivity {
+    private com.bluecodeltd.ecap.chw.databinding.HtsProfileBinding binding;
     @Override
     protected void onResume() {
         super.onResume();
@@ -125,7 +127,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
 
     private TextView txtName, txtGender, txtAge, txtChildid;
     private TabLayout mTabLayout;
-    public ViewPager mViewPager;
+    public ViewPager2 mViewPager;
     private AppExecutors appExecutors;
     public ProfileViewPagerAdapter mPagerAdapter;
     private TextView htsCount,visitTabCount, plansTabCount, genderSpacer,ageSpacer;
@@ -153,37 +155,39 @@ public class HTSDetailsActivity extends AppCompatActivity {
     public VCAModel client;
     AlertDialog.Builder builder, screeningBuilder;
 
-    private ViewPager viewPager;
+    private ViewPager2 viewPager;
     TabLayout tabLayout;
+    private TabLayoutMediator tabMediator;
     private Dialog dimDialog;
 
     @SuppressLint({"RestrictedApi", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.hts_profile);
+        binding = com.bluecodeltd.ecap.chw.databinding.HtsProfileBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        toolbar = findViewById(R.id.toolbarx);
+        toolbar = binding.toolbarx;
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         toolbar.getOverflowIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
-        myAppbar = findViewById(R.id.collapsing_toolbar_appbarlayout);
+        myAppbar = binding.collapsingToolbarAppbarlayout;
         NavigationMenu.getInstance(this, null, toolbar);
-
-        fab = findViewById(R.id.fab);
+        
+        fab = binding.fab;
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
         rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
-        fabHiv = findViewById(R.id.hiv_risk);
-        fabHiv2 = findViewById(R.id.hiv_risk2);
-        fabVisitation = findViewById(R.id.household_visitation_for_vca_fab);
-        fabReferal = findViewById(R.id.refer_to_facility_fab);
-        fabCasePlan =  findViewById(R.id.case_plan_fab);
-        fabAssessment = findViewById(R.id.fabAssessment);
-        txtScreening = findViewById(R.id.vca_screening);
-        addIndexClients = findViewById(R.id.assessment);
+        fabHiv = binding.hivRisk;
+        fabHiv2 = binding.hivRisk2;
+        fabVisitation = binding.householdVisitationForVcaFab;
+        fabReferal = binding.referToFacilityFab;
+        fabCasePlan =  binding.casePlanFab;
+        fabAssessment = binding.fabAssessment;
+        txtScreening = binding.vcaScreening;
+        addIndexClients = binding.assessment;
 
         builder = new AlertDialog.Builder(HTSDetailsActivity.this);
 //        screeningBuilder = new AlertDialog.Builder(HTSDetailsActivity.this);
@@ -193,12 +197,12 @@ public class HTSDetailsActivity extends AppCompatActivity {
         hivTestingServiceModel = HivTestingServiceDao.getHivServiceClient(clientId);
         htslinksModel = HTSLinksDao.getLinks(clientId);
 
-        txtName = findViewById(R.id.vca_name);
-        txtGender = findViewById(R.id.vca_gender);
-        txtAge = findViewById(R.id.vca_age);
-        txtChildid = findViewById(R.id.childid);
-        genderSpacer = findViewById(R.id.gender_spacer);
-        ageSpacer = findViewById(R.id.age_spacer);
+        txtName = binding.vcaName;
+        txtGender = binding.vcaGender;
+        txtAge = binding.vcaAge;
+        txtChildid = binding.childid;
+        genderSpacer = binding.genderSpacer;
+        ageSpacer = binding.ageSpacer;
         try {
             if(hivTestingServiceModel.getTesting_modality() !=null && hivTestingServiceModel.getTesting_modality().equals("Other Community")){
                 txtAge.setVisibility(View.GONE);
@@ -248,7 +252,6 @@ public class HTSDetailsActivity extends AppCompatActivity {
 
         viewPager = findViewById(R.id.viewpager);
         tabLayout = findViewById(R.id.tabs);
-//        updateTasksTabTitle();
         returnViewPager();
         updateTasksTabTitle();
 
@@ -369,21 +372,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
          else return "Not Set";
     }
 
-    private void setupViewPager(){
-        mPagerAdapter = new ProfileViewPagerAdapter(getSupportFragmentManager());
-        mPagerAdapter.addFragment(new ProfileOverviewFragment());
-        mPagerAdapter.addFragment(new ChildCasePlanFragment());
-        mPagerAdapter.addFragment(new ChildVisitsFragment());
-
-        mViewPager.setAdapter(mPagerAdapter);
-        //mViewPager.setOffscreenPageLimit(1);
-        mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.getTabAt(0).setText("OVERVIEW");
-        mTabLayout.getTabAt(1).setText("CASE PLANS");
-        mTabLayout.getTabAt(2).setText("VISITS");
-
-
-    }
+    private void setupViewPager(){ }
 
     private void updateVisitsTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
@@ -1173,13 +1162,14 @@ public class HTSDetailsActivity extends AppCompatActivity {
 
 
 
-        ViewPagerAdapterFragment adapter = new ViewPagerAdapterFragment(getSupportFragmentManager(), fragments);
+        com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter adapter = new com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter(this, fragments);
         viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.getTabAt(0).setText("OVERVIEW");
-        if (tabLayout.getTabAt(1) != null) {
-            tabLayout.getTabAt(1).setText("INDEX/SNT CONTACT");
-        }
+        if (tabMediator != null) { try { tabMediator.detach(); } catch (Exception ignored) {} }
+        tabMediator = new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+            if (position == 0) tab.setText("OVERVIEW");
+            else if (position == 1) tab.setText("INDEX/SNT CONTACT");
+        });
+        tabMediator.attach();
     }
     private void updateTasksTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.hts_tab_title, null);

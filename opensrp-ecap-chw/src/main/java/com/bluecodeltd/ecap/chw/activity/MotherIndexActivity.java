@@ -7,8 +7,11 @@ import static org.smartregister.util.JsonFormUtils.STEP1;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
@@ -53,7 +56,39 @@ public class MotherIndexActivity extends BaseRegisterActivity implements MotherI
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        NavigationMenu.getInstance(this, null, null);
+        Toolbar toolbar = findViewById(org.smartregister.R.id.register_toolbar);
+        NavigationMenu menu;
+        if (toolbar != null) {
+            if (getSupportActionBar() == null) {
+                try { setSupportActionBar(toolbar); } catch (IllegalStateException ignored) {}
+            }
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
+            }
+            toolbar.setTitle("");
+            TextView titleLabel = toolbar.findViewById(org.smartregister.R.id.txt_title_label);
+            if (titleLabel != null) {
+                titleLabel.setVisibility(View.GONE);
+            }
+            menu = NavigationMenu.getInstance(this, null, toolbar);
+            try {
+                if (menu != null) {
+                    androidx.drawerlayout.widget.DrawerLayout drawer = menu.getDrawer();
+                    androidx.appcompat.graphics.drawable.DrawerArrowDrawable arrow = new androidx.appcompat.graphics.drawable.DrawerArrowDrawable(this);
+                    arrow.setColor(android.graphics.Color.WHITE);
+                    toolbar.setNavigationIcon(arrow);
+                    toolbar.setNavigationOnClickListener(v -> {
+                        if (drawer != null) drawer.openDrawer(androidx.core.view.GravityCompat.START);
+                    });
+                }
+            } catch (Throwable ignored) {}
+        } else {
+            menu = NavigationMenu.getInstance(this, null, null);
+        }
+
+        if (menu != null && menu.getNavigationAdapter() != null) {
+            menu.getNavigationAdapter().setSelectedView(Constants.DrawerMenu.MOTHER_REGISTER);
+        }
     }
 
     @Override

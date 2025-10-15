@@ -25,7 +25,8 @@ public class FamilyPlanningMemberProfilePresenter extends CoreFamilyPlanningProf
     private FpMemberObject fpMemberObject;
     private List<ReferralTypeModel> referralTypeModels;
 
-    public FamilyPlanningMemberProfilePresenter(FamilyPlanningMemberProfileContract.View view, FamilyPlanningMemberProfileContract.Interactor interactor,
+    public FamilyPlanningMemberProfilePresenter(org.smartregister.chw.fp.contract.BaseFpProfileContract.View view,
+                                                org.smartregister.chw.fp.contract.BaseFpProfileContract.Interactor interactor,
                                                 FpMemberObject fpMemberObject) {
         super(view, interactor, fpMemberObject);
         this.fpMemberObject = fpMemberObject;
@@ -49,7 +50,9 @@ public class FamilyPlanningMemberProfilePresenter extends CoreFamilyPlanningProf
                 formJson.put(Constants.REFERRAL_TASK_FOCUS, referralTypeModels.get(0).getReferralType());
                 ReferralRegistrationActivity.startGeneralReferralFormActivityForResults((Activity) getView(), fpMemberObject.getBaseEntityId(), formJson, false);
             } else {
-                getView().startFormActivity(getFormUtils().getFormJson(CoreConstants.JSON_FORM.getFamilyPlanningReferralForm(fpMemberObject.getGender())), fpMemberObject);
+                org.smartregister.chw.core.contract.CoreFamilyPlanningMemberProfileContract.View v =
+                        (org.smartregister.chw.core.contract.CoreFamilyPlanningMemberProfileContract.View) getView();
+                v.startFormActivity(getFormUtils().getFormJson(CoreConstants.JSON_FORM.getFamilyPlanningReferralForm(fpMemberObject.getGender())), fpMemberObject);
             }
         } catch (Exception e) {
             Timber.e(e);

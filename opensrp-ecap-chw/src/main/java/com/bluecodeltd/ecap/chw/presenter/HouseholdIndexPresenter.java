@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HouseholdDetails;
 import com.bluecodeltd.ecap.chw.activity.HouseholdIndexActivity;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
@@ -129,7 +130,7 @@ public class HouseholdIndexPresenter implements HouseholdIndexContract.Presenter
     @Override
     public void onNoUniqueId() {
         if (getView() != null)
-            getView().displayShortToast(org.smartregister.family.R.string.no_unique_id);
+            getView().displayShortToast(R.string.no_unique_id);
     }
 
     @Override
@@ -139,7 +140,7 @@ public class HouseholdIndexPresenter implements HouseholdIndexContract.Presenter
                 startForm(triple.getLeft(), entityId, triple.getMiddle(), triple.getRight());
             } catch (Exception e) {
                 Timber.e(e);
-                getView().displayToast(org.smartregister.family.R.string.error_unable_to_start_form);
+                getView().displayToast(R.string.error_unable_to_start_form);
             }
         }
     }

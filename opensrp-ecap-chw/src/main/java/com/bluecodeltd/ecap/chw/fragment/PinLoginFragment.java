@@ -35,6 +35,8 @@ import timber.log.Timber;
  */
 public class PinLoginFragment extends Fragment implements View.OnClickListener, PinLoginContract.View {
 
+    private com.bluecodeltd.ecap.chw.databinding.PinLoginFragmentBinding binding;
+
     public static final String TAG = "PinLoginFragment";
 
     private PinLoginContract.Presenter mLoginPresenter;
@@ -48,16 +50,17 @@ public class PinLoginFragment extends Fragment implements View.OnClickListener, 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.pin_login_fragment, container, false);
+        binding = com.bluecodeltd.ecap.chw.databinding.PinLoginFragmentBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
         initializeBuildDetails(view);
 
         mLoginPresenter = new PinLoginPresenter(this);
 
-        showPasswordCheck = view.findViewById(R.id.login_show_password_checkbox);
-        showPinText = view.findViewById(R.id.login_show_password_text_view);
-        btnLogin = view.findViewById(R.id.login_login_btn);
-        passwordEditText = view.findViewById(R.id.login_password_edit_text);
-        progressBar = view.findViewById(R.id.progress_bar);
+        showPasswordCheck = binding.loginShowPasswordCheckbox;
+        showPinText = binding.loginShowPasswordTextView;
+        btnLogin = binding.loginLoginBtn;
+        passwordEditText = binding.loginPasswordEditText;
+        progressBar = binding.progressBar;
         progressBar.setVisibility(View.GONE);
 
         passwordEditText.setOnEditorActionListener((textView, actionId, keyEvent) -> {
@@ -68,13 +71,13 @@ public class PinLoginFragment extends Fragment implements View.OnClickListener, 
             return false;
         });
 
-        TextView enterPinTextView = view.findViewById(R.id.pin_title_text_view);
+        TextView enterPinTextView = binding.pinTitleTextView;
         enterPinTextView.setText(getString(R.string.enter_pin_for_user, getController().getPinLogger().loggedInUser()));
 
         setListenerOnShowPasswordCheckbox();
 
-        view.findViewById(R.id.forgot_pin).setOnClickListener(this);
-        view.findViewById(R.id.use_your_password).setOnClickListener(this);
+        binding.forgotPin.setOnClickListener(this);
+        binding.useYourPassword.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
         return view;
     }
@@ -151,6 +154,12 @@ public class PinLoginFragment extends Fragment implements View.OnClickListener, 
 
     private void showProgress(final boolean show) {
         progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     @Override

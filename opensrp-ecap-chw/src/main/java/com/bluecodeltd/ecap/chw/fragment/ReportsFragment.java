@@ -28,6 +28,8 @@ import java.util.List;
  */
 public class ReportsFragment extends Fragment implements ListContract.View<ReportType> {
 
+    private com.bluecodeltd.ecap.chw.databinding.ReportsFragmentBinding binding;
+
     private View view;
     private ListableAdapter<ReportType, ListableViewHolder<ReportType>> mAdapter;
     private ProgressBar progressBar;
@@ -37,7 +39,8 @@ public class ReportsFragment extends Fragment implements ListContract.View<Repor
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.reports_fragment, container, false);
+        binding = com.bluecodeltd.ecap.chw.databinding.ReportsFragmentBinding.inflate(inflater, container, false);
+        view = binding.getRoot();
         bindLayout();
         loadPresenter();
 
@@ -54,17 +57,23 @@ public class ReportsFragment extends Fragment implements ListContract.View<Repor
 
     @Override
     public void bindLayout() {
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = binding.recyclerView;
         recyclerView.setHasFixedSize(false);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        progressBar = view.findViewById(R.id.progress_bar);
+        progressBar = binding.progressBar;
         progressBar.setVisibility(View.GONE);
 
         mAdapter = adapter();
         recyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     @Override
@@ -75,7 +84,7 @@ public class ReportsFragment extends Fragment implements ListContract.View<Repor
     @Override
     public void refreshView() {
         mAdapter.reloadData(list);
-        mAdapter.notifyDataSetChanged();
+        try { if (mAdapter != null) mAdapter.notifyDataSetChanged(); } catch (Exception ignored) {}
     }
 
     @Override
