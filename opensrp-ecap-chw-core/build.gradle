@@ -149,11 +149,13 @@ tasks.withType(Test) {
     exclude group: 'xmlpull', module: 'xmlpull'
     exclude group: 'xpp3', module: 'xpp3'
     exclude group: 'xpp3', module: 'xpp3_min'
+    // Ensure only one SQLCipher native library; keep android-database-sqlcipher
+    exclude group: 'net.zetetic', module: 'sqlcipher-android'
 
         resolutionStrategy {
             // Ensure we resolve to the requested JitPack variants
             dependencySubstitution {
-                substitute module('io.github.bluecodesystems:android-p2p-sync') using module('com.github.BlueCodeSystems:android-p2p-sync:v0.4.3')
+                substitute module('io.github.bluecodesystems:android-p2p-sync') using module('com.github.BlueCodeSystems:android-p2p-sync:v0.5.0')
                 substitute module('io.github.bluecodesystems:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v7.0.0')
                 substitute module('com.github.BlueCodeSystems:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v7.0.0')
                 substitute module('org.smartregister:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v6.2.2')
@@ -177,8 +179,8 @@ tasks.withType(Test) {
                 // Also route Maven Central coord to JitPack artifact
                 substitute module('io.github.bluecodesystems:opensrp-chw-family-planning') using module('com.github.BlueCodeSystems:opensrp-client-chw-family-planning:v1.0.27')
                 // Route FP client to BlueCodeSystems JitPack FP v2.1.0
-                substitute module('org.smartregister:opensrp-client-fp') using module('com.github.BlueCodeSystems:opensrp-client-fp:v2.2.0')
-                substitute module('io.github.bluecodesystems:opensrp-client-fp') using module('com.github.BlueCodeSystems:opensrp-client-fp:v2.2.0')
+                substitute module('org.smartregister:opensrp-client-fp') using module('com.github.BlueCodeSystems:opensrp-client-fp:v2.1.0')
+                substitute module('io.github.bluecodesystems:opensrp-client-fp') using module('com.github.BlueCodeSystems:opensrp-client-fp:v2.1.0')
                 // Route io.github.bluecodesystems:materialedittext to the forked artifact name
                 substitute module('io.github.bluecodesystems:materialedittext') using module('io.github.bluecodesystems:MaterialEditTextLibrary:3.1.5')
                 substitute module('org.smartregister:opensrp-client-immunization') using module('com.github.BlueCodeSystems:opensrp-client-immunization:v5.1.1')
