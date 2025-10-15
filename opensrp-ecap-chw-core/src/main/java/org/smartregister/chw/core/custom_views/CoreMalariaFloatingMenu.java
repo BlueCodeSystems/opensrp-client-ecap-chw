@@ -80,7 +80,7 @@ public abstract class CoreMalariaFloatingMenu extends BaseMalariaFloatingMenu {
         fab.startAnimation(rotateForward);
 
         if (isFabMenuOpen) {
-            activityMain.setBackgroundResource(org.smartregister.R.color.transparent);
+            activityMain.setBackgroundResource(R.color.transparent);
 
             fab.setImageResource(com.vijay.jsonwizard.R.drawable.ic_edit_white);
 
@@ -106,7 +106,7 @@ public abstract class CoreMalariaFloatingMenu extends BaseMalariaFloatingMenu {
 
 
     public void launchCallWidget() {
-        BaseMalariaCallDialogFragment.launchDialog((Activity) this.getContext(), MEMBER_OBJECT);
+        BaseMalariaCallDialogFragment.launchDialog((androidx.fragment.app.FragmentActivity) this.getContext(), MEMBER_OBJECT);
     }
 
     public void redraw(boolean hasPhoneNumber) {

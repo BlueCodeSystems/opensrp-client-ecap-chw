@@ -81,12 +81,12 @@ public class FamilyProfileDueFragment extends BaseFamilyProfileDueFragment {
         super.onViewClicked(view);
         switch (view.getId()) {
             case org.smartregister.chw.core.R.id.patient_column:
-                if (view.getTag() != null && view.getTag(org.smartregister.family.R.id.VIEW_ID) == CLICK_VIEW_NORMAL) {
+                if (view.getTag() != null && view.getTag(org.smartregister.chw.core.R.id.VIEW_ID) == CLICK_VIEW_NORMAL) {
                     getNextAction(view, getArguments());
                 }
                 break;
             case org.smartregister.chw.core.R.id.next_arrow:
-                if (view.getTag() != null && view.getTag(org.smartregister.family.R.id.VIEW_ID) == CLICK_VIEW_NEXT_ARROW) {
+                if (view.getTag() != null && view.getTag(org.smartregister.chw.core.R.id.VIEW_ID) == CLICK_VIEW_NEXT_ARROW) {
                     getNextAction(view, getArguments());
                 }
                 break;

@@ -3,7 +3,7 @@ package com.bluecodeltd.ecap.chw.activity;
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.chw.core.utils.CoreJsonFormUtils.getSyncHelper;
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -20,6 +20,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -37,7 +38,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.preference.PreferenceManager;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
@@ -124,6 +126,7 @@ import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
 public class IndexDetailsActivity extends AppCompatActivity {
+    private com.bluecodeltd.ecap.chw.databinding.VcaContentBinding binding;
 //    @Override
 //    protected void onResume() {
 //        super.onResume();
@@ -139,7 +142,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private  VcaAssessmentModel assessmentModel;
     private TextView txtName, txtGender, txtAge, txtChildid;
     private TabLayout mTabLayout;
-    public ViewPager mViewPager;
+    public ViewPager2 mViewPager;
+    private TabLayoutMediator tabMediator;
     private AppExecutors appExecutors;
     public ProfileViewPagerAdapter mPagerAdapter;
     private TextView visitTabCount, plansTabCount;
@@ -171,14 +175,15 @@ public class IndexDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.vca_content);
+        binding = com.bluecodeltd.ecap.chw.databinding.VcaContentBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        toolbar = findViewById(R.id.toolbarx);
+        toolbar = binding.toolbarx;
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         toolbar.getOverflowIcon().setColorFilter(Color.WHITE , PorterDuff.Mode.SRC_ATOP);
-        myAppbar = findViewById(R.id.collapsing_toolbar_appbarlayout);
+        myAppbar = binding.collapsingToolbarAppbarlayout;
         NavigationMenu.getInstance(this, null, toolbar);
 
         builder = new AlertDialog.Builder(IndexDetailsActivity.this);
@@ -226,12 +231,12 @@ public class IndexDetailsActivity extends AppCompatActivity {
             }
         }
 
-        fabHiv = findViewById(R.id.hiv_risk);
-        fabHiv2 = findViewById(R.id.hiv_risk2);
-        fabVisitation = findViewById(R.id.household_visitation_for_vca_fab);
-        fabReferal = findViewById(R.id.refer_to_facility_fab);
-        fabCasePlan =  findViewById(R.id.case_plan_fab);
-        fabAssessment = findViewById(R.id.fabAssessment);
+        fabHiv = binding.hivRisk;
+        fabHiv2 = binding.hivRisk2;
+        fabVisitation = binding.householdVisitationForVcaFab;
+        fabReferal = binding.referToFacilityFab;
+        fabCasePlan =  binding.casePlanFab;
+        fabAssessment = binding.fabAssessment;
 
         vcaAssessmentModel = VcaAssessmentDao.getVcaAssessment(childId);
         referralModel = ReferralDao.getReferral(childId);
@@ -240,7 +245,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
         vcaVisitationModel = VcaVisitationDao.getVcaVisitation(childId);
         vcaCasePlanModel = VcaCasePlanDao.getVcaCasePlan(childId);
         weServiceVcaModel = WeServiceVcaDao.getWeServiceVca(childId);
-        updatedCaregiver = newCaregiverDao.getNewCaregiverById(indexVCA.getHousehold_id());
+        if (indexVCA != null && !TextUtils.isEmpty(indexVCA.getHousehold_id())) {
+            updatedCaregiver = newCaregiverDao.getNewCaregiverById(indexVCA.getHousehold_id());
+        } else {
+            updatedCaregiver = null;
+        }
 
 
 
@@ -280,8 +289,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
         }
 
 
-        fab = findViewById(R.id.fab);
-        if(indexVCA.getCase_status() != null && (indexVCA.getCase_status().equals("0") || indexVCA.getCase_status().equals("2"))){
+        fab = binding.fab;
+        if (indexVCA != null && indexVCA.getCase_status() != null &&
+                ("0".equals(indexVCA.getCase_status()) || "2".equals(indexVCA.getCase_status()))) {
             fab.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
         }
 
@@ -304,26 +314,27 @@ public class IndexDetailsActivity extends AppCompatActivity {
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
         rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
 
-        txtScreening = findViewById(R.id.vca_screening);
-        rassessment = findViewById(R.id.assessment);
-        rcase_plan = findViewById(R.id.case_plan);
-        referral = findViewById(R.id.referral);
-        household_visitation_for_vca = findViewById(R.id.household_visitation_for_vca);
+        txtScreening = binding.vcaScreening;
+        rassessment = binding.assessment;
+        rcase_plan = binding.casePlan;
+        referral = binding.referral;
+        referral = binding.referral;
+        household_visitation_for_vca = binding.householdVisitationForVca;
 
 
 
-        hiv_assessment = findViewById(R.id.hiv_assessment);
-        hiv_assessment2 = findViewById(R.id.hiv_assessment2);
-        childPlan = findViewById(R.id.childPlan);
-        weServicesVca = findViewById(R.id.we_services_vca);
+        hiv_assessment = binding.hivAssessment;
+        hiv_assessment2 = binding.hivAssessment2;
+        childPlan = binding.childPlan;
+        weServicesVca = binding.weServicesVca;
 
-        txtName = findViewById(R.id.vca_name);
-        txtGender = findViewById(R.id.vca_gender);
-        txtAge = findViewById(R.id.vca_age);
-        txtChildid = findViewById(R.id.childid);
+        txtName = binding.vcaName;
+        txtGender = binding.vcaGender;
+        txtAge = binding.vcaAge;
+        txtChildid = binding.childid;
 
-        mTabLayout =  findViewById(R.id.tabs);
-        mViewPager  = findViewById(R.id.viewpager);
+        mTabLayout =  binding.tabs;
+        mViewPager  = binding.viewpager;
 
         setupViewPager();
         setupFabVisibility();
@@ -332,7 +343,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         updatePlanTabTitle();
 
         int page = getIntent().getIntExtra("tab",0);
-        mViewPager.setCurrentItem(page);
+        mViewPager.setCurrentItem(page, false);
 
 createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE);
 
@@ -341,32 +352,55 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
 
     public HashMap<String, Child> getData() {
-        String full_name = indexVCA.getFirst_name() + " " + indexVCA.getLast_name();
-        String gender =  indexVCA.getGender();
-        String birthdate = checkAndConvertDateFormat(indexVCA.getAdolescent_birthdate());
+        String displayFirstName = null;
+        String displayLastName = null;
+        String displayGender = null;
+        String displayBirthdate = null;
 
-        if(birthdate != null){
+        if (indexVCA != null) {
+            // Prefer adolescent fields when available, fall back to generic ones
+            displayFirstName = !TextUtils.isEmpty(indexVCA.getAdolescent_first_name()) ? indexVCA.getAdolescent_first_name() : indexVCA.getFirst_name();
+            displayLastName = !TextUtils.isEmpty(indexVCA.getAdolescent_last_name()) ? indexVCA.getAdolescent_last_name() : indexVCA.getLast_name();
+            displayGender = !TextUtils.isEmpty(indexVCA.getAdolescent_gender()) ? indexVCA.getAdolescent_gender() : indexVCA.getGender();
+            displayBirthdate = !TextUtils.isEmpty(indexVCA.getAdolescent_birthdate()) ? indexVCA.getAdolescent_birthdate() : indexVCA.getBirthdate();
+        }
+
+        // If no screening record, use values from the child index
+        if (TextUtils.isEmpty(displayFirstName) && child != null) displayFirstName = child.getAdolescent_first_name();
+        if (TextUtils.isEmpty(displayLastName) && child != null) displayLastName = child.getAdolescent_last_name();
+        if (TextUtils.isEmpty(displayGender) && child != null) displayGender = child.getAdolescent_gender();
+        if (TextUtils.isEmpty(displayBirthdate) && child != null) displayBirthdate = child.getAdolescent_birthdate();
+
+        String full_name = ((displayFirstName != null ? displayFirstName : "").trim() + " " + (displayLastName != null ? displayLastName : "").trim()).trim();
+
+        String birthdate = displayBirthdate != null ? checkAndConvertDateFormat(displayBirthdate) : null;
+
+        if (birthdate != null && !"Invalid date format".equals(birthdate)) {
             txtAge.setText(getAge(birthdate));
             vcaAge = getAgeWithoutText(birthdate);
-
         } else {
             txtAge.setText("Not Set");
         }
 
         try {
-            txtName.setText(full_name);
-            txtGender.setText(gender.toUpperCase());
-            txtChildid.setText("ID : " + indexVCA.getUnique_id());
+            if (!TextUtils.isEmpty(full_name)) {
+                txtName.setText(full_name);
+            }
+            if (!TextUtils.isEmpty(displayGender)) {
+                txtGender.setText(displayGender.toUpperCase());
+            } else {
+                txtGender.setText("");
+            }
+            String idForDisplay = indexVCA != null ? indexVCA.getUnique_id() : (child != null ? child.getUnique_id() : null);
+            if (!TextUtils.isEmpty(idForDisplay)) {
+                txtChildid.setText("ID : " + idForDisplay);
+            }
         } catch (NullPointerException e) {
             txtGender.setText("");
-            e.printStackTrace();
         }
 
-
         HashMap<String, Child> map = new HashMap<>();
-
-        map.put("Child",child);
-
+        map.put("Child", child);
         return map;
 
     }
@@ -445,35 +479,34 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
     }
 
     private void setupViewPager(){
-        mPagerAdapter = new ProfileViewPagerAdapter(getSupportFragmentManager());
-        mPagerAdapter.addFragment(new ProfileOverviewFragment());
-        mPagerAdapter.addFragment(new ChildCasePlanFragment());
-        mPagerAdapter.addFragment(new ChildVisitsFragment());
+        java.util.List<androidx.fragment.app.Fragment> fragments = new java.util.ArrayList<>();
+        fragments.add(new ProfileOverviewFragment());
+        fragments.add(new ChildCasePlanFragment());
+        fragments.add(new ChildVisitsFragment());
 
-        String hivStatus = indexVCA.getIs_hiv_positive();
-
+        String hivStatus = indexVCA != null ? indexVCA.getIs_hiv_positive() : null;
         if (hivStatus != null && "no".equalsIgnoreCase(hivStatus)) {
-            mPagerAdapter.addFragment(new VcaHivAssesmentFragment());
+            fragments.add(new VcaHivAssesmentFragment());
         }
 
-        mViewPager.setAdapter(mPagerAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
-
-        mTabLayout.getTabAt(0).setText("OVERVIEW");
-        mTabLayout.getTabAt(1).setText("CASE PLANS");
-        mTabLayout.getTabAt(2).setText("VISITS");
-        if (mPagerAdapter.getCount() > 3) {
-            mTabLayout.getTabAt(3).setText("HIV ASSESSMENT");
+        com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter adapter = new com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter(this, fragments);
+        mViewPager.setAdapter(adapter);
+        if (tabMediator != null) { try { tabMediator.detach(); } catch (Exception ignored) {} }
+        tabMediator = new TabLayoutMediator(mTabLayout, mViewPager, (tab, position) -> {
+            switch (position) {
+                case 0: tab.setText("OVERVIEW"); break;
+                case 1: tab.setText("CASE PLANS"); break;
+                case 2: tab.setText("VISITS"); break;
+                case 3: tab.setText("HIV ASSESSMENT"); break;
+            }
+        });
+        tabMediator.attach();
+        if (fragments.size() > 3) {
             updateHivAssessmentTabTitle();
         }
     }
     private void setupFabVisibility() {
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @SuppressLint("RestrictedApi")
+        mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 if (position == 1 || position == 2 || position == 3) {
@@ -483,10 +516,6 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 }
             }
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
         });
     }
     private void updateOverviewTabTitle() {
@@ -574,8 +603,11 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
                 break;
 
-                case R.id.vca_screening:
+            case R.id.vca_screening:
 
+                    if (!ensureIndexVcaAvailable()) {
+                        break;
+                    }
                     try {
 
                         openFormUsingFormUtils(IndexDetailsActivity.this,"vca_screening");
@@ -587,6 +619,10 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
 
             case R.id.assessment:
+
+                if (!ensureIndexVcaAvailable()) {
+                    break;
+                }
 
                 if(indexVCA.getDate_screened() != null){
                     try {
@@ -635,6 +671,9 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
             case R.id.myservice:
 
+                if (!ensureIndexVcaAvailable()) {
+                    break;
+                }
                 if(indexVCA.getDate_screened() != null) {
 
                     Intent intent2 = new Intent(this, VcaServiceActivity.class);
@@ -650,6 +689,11 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 break;
             case R.id.show_referrals:
 
+                if (child == null) {
+                    Toast.makeText(IndexDetailsActivity.this, "Member data incomplete", Toast.LENGTH_LONG).show();
+                    Timber.w("Cannot open referrals: child record missing for %s", childId);
+                    break;
+                }
 
                 Intent showReferrals = new Intent(IndexDetailsActivity.this, ShowReferralsActivity.class);
                     Bundle referral = new Bundle();
@@ -668,20 +712,28 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
             case R.id.household_profile:
 
+                if (child == null) {
+                    Toast.makeText(IndexDetailsActivity.this, "Member data incomplete", Toast.LENGTH_LONG).show();
+                    Timber.w("Cannot open household profile: child record missing for %s", childId);
+                    break;
+                }
 
-            Intent intent = new Intent(this, HouseholdDetails.class);
-            intent.putExtra("childId",  child.getUnique_id());
-            intent.putExtra("householdId",  child.getHousehold_id());
+                Intent intent = new Intent(this, HouseholdDetails.class);
+                intent.putExtra("childId",  child.getUnique_id());
+                intent.putExtra("householdId",  child.getHousehold_id());
 //            intent.putExtra("householdId",  child.getHousehold_id());
            // intent.putExtra("household",  child.getHousehold_id());
 
-            startActivity(intent);
+                startActivity(intent);
 
 
                 break;
 
             case R.id.household_visitation_for_vca:
 
+                if (!ensureIndexVcaAvailable()) {
+                    break;
+                }
                 if(indexVCA.getDate_screened() != null) {
                     try {
 
@@ -699,6 +751,9 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
             case R.id.hiv_assessment:
 
+                if (!ensureIndexVcaAvailable()) {
+                    break;
+                }
                 if(indexVCA.getDate_screened() != null) {
                     openFormUsingFormUtils(IndexDetailsActivity.this, "hiv_risk_assessment_under_15_years");
                 } else {
@@ -707,6 +762,9 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 break;
 
             case R.id.hiv_assessment2:
+                if (!ensureIndexVcaAvailable()) {
+                    break;
+                }
                 if(indexVCA.getDate_screened() != null) {
                     openFormUsingFormUtils(IndexDetailsActivity.this, "hiv_risk_assessment_above_15_years");
                 }else{
@@ -715,6 +773,9 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 break;
 
             case R.id.we_services_vca:
+                if (!ensureIndexVcaAvailable()) {
+                    break;
+                }
                 if(indexVCA.getDate_screened() != null) {
                     openFormUsingFormUtils(IndexDetailsActivity.this, "we_services_vca");
                 }else{
@@ -722,6 +783,9 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 }
                 break;
             case R.id.childPlan:
+                if (!ensureIndexVcaAvailable()) {
+                    break;
+                }
                 Intent i = new Intent(IndexDetailsActivity.this, ChildSafetyPlanActivity.class);
                 i.putExtra("vca_id", indexVCA.getUnique_id());
                 i.putExtra("vca_name", indexVCA.getFirst_name() + ' ' + indexVCA.getLast_name());
@@ -730,6 +794,15 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 break;
 
         }
+    }
+
+    private boolean ensureIndexVcaAvailable() {
+        if (indexVCA != null) {
+            return true;
+        }
+        Toast.makeText(IndexDetailsActivity.this, "Member data incomplete", Toast.LENGTH_LONG).show();
+        Timber.w("IndexDetailsActivity action skipped: indexVCA missing for childId=%s", childId);
+        return false;
     }
 
 

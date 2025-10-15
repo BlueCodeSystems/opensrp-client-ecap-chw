@@ -145,8 +145,16 @@ public class AllClientsUtils {
         locationDetailsEvent.getEvent().setEntityType(CoreConstants.TABLE_NAME.INDEPENDENT_CLIENT);
         clientDetailsEvent.getEvent().setEntityType(CoreConstants.TABLE_NAME.INDEPENDENT_CLIENT);
 
-        allClientMemberEvents.add(new OpdEventClient(locationDetailsEvent.getClient(), locationDetailsEvent.getEvent()));
-        allClientMemberEvents.add(new OpdEventClient(clientDetailsEvent.getClient(), clientDetailsEvent.getEvent()));
+        // Convert clientandeventmodel.Event to domain.Event for OpdEventClient
+        org.smartregister.domain.Event locationEvent = org.smartregister.util.JsonFormUtils.gson.fromJson(
+                org.smartregister.util.JsonFormUtils.gson.toJson(locationDetailsEvent.getEvent()),
+                org.smartregister.domain.Event.class);
+        org.smartregister.domain.Event clientEvent = org.smartregister.util.JsonFormUtils.gson.fromJson(
+                org.smartregister.util.JsonFormUtils.gson.toJson(clientDetailsEvent.getEvent()),
+                org.smartregister.domain.Event.class);
+
+        allClientMemberEvents.add(new OpdEventClient(locationDetailsEvent.getClient(), locationEvent));
+        allClientMemberEvents.add(new OpdEventClient(clientDetailsEvent.getClient(), clientEvent));
         return allClientMemberEvents;
     }
 }

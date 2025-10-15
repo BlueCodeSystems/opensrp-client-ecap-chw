@@ -82,4 +82,19 @@ public class DatabaseMigrationUtilsTest extends DatabaseMigrationUtils{
         String updateQuery = buildUpdateQuery(jsonList);
         Assert.assertEquals(updateQuery, "UPDATE ec_family_member_location SET provider_id = (case when form_submission_id = 'd5ff0ea1-bbc5-424d-84c2-5b084e10ef90' then 'chaone'when form_submission_id = 'd5ff0ea1-bbc5-424d-84c2-5b084e10ef80' then 'chaone' end)");
     }
+    @Test
+    public void testFillFamilyMemberLocationTableWithProviderIdsExecutesUpdate() {
+        MatrixCursor formCursor = new MatrixCursor(new String[]{"form_submission_id"});
+        formCursor.addRow(new Object[]{"d5ff0ea1-bbc5-424d-84c2-5b084e10ef90"});
+
+        MatrixCursor jsonCursor = new MatrixCursor(new String[]{"json"});
+        jsonCursor.addRow(new Object[]{"{\"formSubmissionId\":\"d5ff0ea1-bbc5-424d-84c2-5b084e10ef90\",\"providerId\":\"chaone\"}"});
+
+        Mockito.when(database.rawQuery(Mockito.anyString(), Mockito.any())).thenReturn(formCursor, jsonCursor);
+        Mockito.when(database.isOpen()).thenReturn(true);
+
+        fillFamilyMemberLocationTableWithProviderIds(database);
+
+        Mockito.verify(database).rawExecSQL(Mockito.contains("UPDATE ec_family_member_location SET provider_id"));
+    }
 }

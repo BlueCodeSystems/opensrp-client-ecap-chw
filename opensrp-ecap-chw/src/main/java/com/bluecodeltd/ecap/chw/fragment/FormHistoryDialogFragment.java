@@ -95,7 +95,7 @@ public class FormHistoryDialogFragment extends DialogFragment implements View.On
                         questions.clear();
                         questions.addAll(questionList);
 
-                        mAdapter.notifyDataSetChanged();
+                        try { if (mAdapter != null) mAdapter.notifyDataSetChanged(); } catch (Exception ignored) {}
                         recyclerView.setAdapter(mAdapter);
                         progressBar.setVisibility(View.GONE);
                     }

@@ -1,7 +1,7 @@
 package com.bluecodeltd.ecap.chw.fragment;
 
 import static android.app.Activity.RESULT_OK;
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -100,7 +100,7 @@ public class HTSlinksFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerViewAdapter = new HTSlinksAdapter(getContext(), htsLinksModel);
         recyclerView.setAdapter(recyclerViewAdapter);
-        recyclerViewAdapter.notifyDataSetChanged();
+        try { if (recyclerViewAdapter != null) recyclerViewAdapter.notifyDataSetChanged(); } catch (Exception ignored) {}
 
         return rootView;
     }
@@ -276,7 +276,7 @@ public class HTSlinksFragment extends Fragment {
         htsLinksModel.clear();
         List<HTSlinksModel> updatedList = HTSLinksDao.getHTSLinks(id);
         htsLinksModel.addAll(updatedList);
-        recyclerViewAdapter.notifyDataSetChanged();
+        try { if (recyclerViewAdapter != null) recyclerViewAdapter.notifyDataSetChanged(); } catch (Exception ignored) {}
         Toasty.success(getContext(), "Form Updated", Toast.LENGTH_LONG, true).show();
     }
 

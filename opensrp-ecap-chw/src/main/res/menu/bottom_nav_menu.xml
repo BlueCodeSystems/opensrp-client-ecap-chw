@@ -33,7 +33,6 @@
         android:id="@+id/action_fsw"
         android:enabled="true"
         android:icon="@drawable/baseline_woman_24"
-        android:iconTint="#696969"
         app:showAsAction="ifRoom"
         android:title="FSW Screening" />
 

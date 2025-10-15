@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.bluecodeltd.ecap.chw.activity.HivTestingServiceActivity;
+import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
 import com.bluecodeltd.ecap.chw.interactor.IndexRegisterInteractor;
 import com.bluecodeltd.ecap.chw.model.EventClient;
@@ -88,7 +89,7 @@ public class HivTestingRegisterPresenter implements IndexRegisterContract.Presen
     @Override
     public void onNoUniqueId() {
         if (getView() != null)
-            getView().displayShortToast(org.smartregister.family.R.string.no_unique_id);
+            getView().displayShortToast(R.string.no_unique_id);
     }
 
     @Override
@@ -98,7 +99,7 @@ public class HivTestingRegisterPresenter implements IndexRegisterContract.Presen
                 startForm(triple.getLeft(), entityId, triple.getMiddle(), triple.getRight());
             } catch (Exception e) {
                 Timber.e(e);
-                getView().displayToast(org.smartregister.family.R.string.error_unable_to_start_form);
+                getView().displayToast(R.string.error_unable_to_start_form);
             }
         }
     }

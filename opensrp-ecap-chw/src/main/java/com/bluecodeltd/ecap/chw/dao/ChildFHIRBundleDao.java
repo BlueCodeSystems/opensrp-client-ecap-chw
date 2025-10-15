@@ -5,8 +5,8 @@ import android.content.Context;
 import com.bluecodeltd.ecap.chw.R;
 import org.smartregister.chw.core.dao.FHIRBundleDao;
 import com.bluecodeltd.ecap.chw.util.Constants;
-import org.smartregister.fp.BuildConfig;
-import org.smartregister.thinkmd.model.FHIRBundleModel;
+import com.bluecodeltd.ecap.chw.BuildConfig;
+import org.bluecodesystems.pulsebridge.model.FHIRBundleModel;
 
 public class ChildFHIRBundleDao extends FHIRBundleDao {
 

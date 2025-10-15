@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HeiDetailsActivity;
@@ -24,6 +25,8 @@ import java.util.HashMap;
  */
 public class UnderFiveCardFragment extends Fragment {
 
+    private com.bluecodeltd.ecap.chw.databinding.FragmentUnderFiveCardBinding binding;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -39,6 +42,7 @@ public class UnderFiveCardFragment extends Fragment {
     ImageView imageviewProfile;
 
     ChildMonitoringModel childMonitoring;
+    // Use centralized Threading
 
     public UnderFiveCardFragment() {
         // Required empty public constructor
@@ -74,8 +78,8 @@ public class UnderFiveCardFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        inflateView = inflater.inflate(R.layout.fragment_under_five_card, container, false);
+        binding = com.bluecodeltd.ecap.chw.databinding.FragmentUnderFiveCardBinding.inflate(inflater, container, false);
+        inflateView = binding.getRoot();
 
         HashMap<String, PmtctChildModel> mymap = ((HeiDetailsActivity) requireActivity()).getClientDetails();
 
@@ -100,17 +104,17 @@ public class UnderFiveCardFragment extends Fragment {
 
         }
 
-        cardNumber = inflateView.findViewById(R.id.card_number);
-        childBirthDate = inflateView.findViewById(R.id.child_dob);
-        weight = inflateView.findViewById(R.id.child_weight);
-        childFeedingOption = inflateView.findViewById(R.id.infant_feeding_option);
+        cardNumber = binding.cardNumber;
+        childBirthDate = binding.childDob;
+        weight = binding.childWeight;
+        childFeedingOption = binding.infantFeedingOption;
 
-        followUpVisitDate = inflateView.findViewById(R.id.pediatic_visit);
-        pediaticDate = inflateView.findViewById(R.id.pediatic_date);
-        hiv_status= inflateView.findViewById(R.id.hiv_status_r_nr);
+        followUpVisitDate = binding.pediaticVisit;
+        pediaticDate = binding.pediaticDate;
+        hiv_status= binding.hivStatusRNr;
 //        hiv_status = inflateView.findViewById(R.id.nvp_date_start);
 //        childMonitoringVisit = inflateView.findViewById(R.id.child_monitoring_visit);
-        imageviewProfile = inflateView.findViewById(R.id.imageview_profile);
+        imageviewProfile = binding.imageviewProfile;
 
         try {
             imageviewProfile.setImageResource((motherDetails != null && motherDetails.getInfants_sex() != null && motherDetails.getInfants_sex().equals("male"))
@@ -130,24 +134,34 @@ public class UnderFiveCardFragment extends Fragment {
 
 
 //        childMonitoring = new PtmctMotherMonitoringModel();
-        childMonitoring = ChildMonitoringDao.getRecentChildVisit(uniqueId);
-
-        if (childMonitoring != null) {
-            followUpVisitDate.setText(childMonitoring.getPediatic_care_follow_up() != null ? childMonitoring.getPediatic_care_follow_up() : "Not set");
-            pediaticDate.setText(childMonitoring.getDate() != null ? childMonitoring.getDate() : "Not set");
-            hiv_status.setText(childMonitoring.getHiv_test() != null ? childMonitoring.getHiv_test() : "Not set");
-//            childMonitoringVisit.setText(childMonitoring.getDate_tested() != null ? childMonitoring.getDate_tested() : "Not set");
-        } else {
-            followUpVisitDate.setText("Not Conducted");
-            pediaticDate.setText("Not Conducted");
-//            dateTested.setText("Not Conducted");
-            hiv_status.setText("Not Conducted");
-//            childMonitoringVisit.setText("Not Conducted");
-        }
+        // Load monitoring record off main thread
+        final String uid = uniqueId;
+        Threading.io(() -> {
+            ChildMonitoringModel cm = ChildMonitoringDao.getRecentChildVisit(uid);
+            Threading.main(() -> {
+                if (!isAdded()) return;
+                childMonitoring = cm;
+                if (childMonitoring != null) {
+                    followUpVisitDate.setText(childMonitoring.getPediatic_care_follow_up() != null ? childMonitoring.getPediatic_care_follow_up() : "Not set");
+                    pediaticDate.setText(childMonitoring.getDate() != null ? childMonitoring.getDate() : "Not set");
+                    hiv_status.setText(childMonitoring.getHiv_test() != null ? childMonitoring.getHiv_test() : "Not set");
+                } else {
+                    followUpVisitDate.setText("Not Conducted");
+                    pediaticDate.setText("Not Conducted");
+                    hiv_status.setText("Not Conducted");
+                }
+            });
+        });
 
 
 
 
         return inflateView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

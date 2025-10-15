@@ -69,6 +69,19 @@ public class CaregiverVisitationDao extends AbstractDao {
         return values != null ? values : new ArrayList<>();
     }
 
+    // Lightweight fetch for visit dates only to avoid heavy row mapping
+    public static List<String> getAllVisitDates() {
+        String sql = "SELECT visit_date FROM ec_household_visitation_for_caregiver";
+        DataMap<String> dataMap = c -> getCursorValue(c, "visit_date");
+        try {
+            List<String> values = AbstractDao.readData(sql, dataMap);
+            return values != null ? values : new ArrayList<>();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
     public static CaregiverVisitationModel getCaregiverVisitation (String householdID) {
 
         String sql = "SELECT * FROM ec_household_visitation_for_caregiver WHERE household_id = '" + householdID + "' ";

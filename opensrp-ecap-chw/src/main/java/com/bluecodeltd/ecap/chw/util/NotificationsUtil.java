@@ -48,7 +48,7 @@ public class NotificationsUtil {
                                                    NotificationListAdapter notificationListAdapter) {
         notificationListAdapter.getNotificationRecords().clear();
         notificationListAdapter.getNotificationRecords().addAll(notifications);
-        notificationListAdapter.notifyDataSetChanged();
+        try { if (notificationListAdapter != null) notificationListAdapter.notifyDataSetChanged(); } catch (Exception ignored) {}
         activity.findViewById(org.smartregister.chw.core.R.id.notification_and_referral_row).setVisibility(View.VISIBLE);
         activity.findViewById(org.smartregister.chw.core.R.id.notification_and_referral_row).setVisibility(View.VISIBLE);
     }

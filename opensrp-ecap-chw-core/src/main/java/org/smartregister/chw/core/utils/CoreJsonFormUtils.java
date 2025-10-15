@@ -188,8 +188,8 @@ public class CoreJsonFormUtils extends org.smartregister.family.util.JsonFormUti
 
     public static HashMap<String, String> getChoice(Context context) {
         HashMap<String, String> choices = new HashMap<>();
-        choices.put(context.getResources().getString(org.smartregister.R.string.yes), "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        choices.put(context.getResources().getString(org.smartregister.R.string.no), "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        choices.put(context.getResources().getString(R.string.yes), "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        choices.put(context.getResources().getString(R.string.no), "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         return choices;
     }
 

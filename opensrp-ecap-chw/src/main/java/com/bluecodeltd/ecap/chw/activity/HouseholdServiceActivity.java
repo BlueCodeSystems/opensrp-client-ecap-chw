@@ -2,13 +2,14 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -59,8 +60,11 @@ import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 public class HouseholdServiceActivity extends AppCompatActivity {
+
+    private com.bluecodeltd.ecap.chw.databinding.ActivityHouseholdServiceBinding binding;
 
     private RecyclerView recyclerView;
     HouseholdServiceAdapter recyclerViewadapter;
@@ -72,69 +76,98 @@ public class HouseholdServiceActivity extends AppCompatActivity {
     String intent_householdId;
     String intent_cname;
     newCaregiverModel updatedCaregiver;
+    // Use centralized Threading
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_household_service);
+        binding = com.bluecodeltd.ecap.chw.databinding.ActivityHouseholdServiceBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        toolbar = findViewById(R.id.toolbarx);
+        toolbar = binding.toolbarx;
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         NavigationMenu.getInstance(this, null, toolbar);
 
-        recyclerView = findViewById(R.id.hhrecyclerView);
-        linearLayout = findViewById(R.id.service_container);
-        cname = findViewById(R.id.caregiver_name);
-        hh_id = findViewById(R.id.hhid);
-        updatedCaregiverName = findViewById(R.id.updated_caregiver_name);
+        recyclerView = binding.hhrecyclerView;
+        linearLayout = binding.serviceContainer;
+        cname = binding.caregiverName;
+        hh_id = binding.hhid;
+        updatedCaregiverName = binding.updatedCaregiverName;
 
-        intent_householdId = getIntent().getExtras().getString("householdId");
-        intent_cname = getIntent().getExtras().getString("cname");
-
-        updatedCaregiver = newCaregiverDao.getNewCaregiverById(intent_householdId);
-
-
-        hh_id.setText(intent_householdId);
-        cname.setText(intent_cname);
-
-        if(updatedCaregiver != null && updatedCaregiver.getNew_caregiver_name() != null && !updatedCaregiver.getNew_caregiver_name().isEmpty()) {
-            updatedCaregiverName.setVisibility(View.VISIBLE);
-            updatedCaregiverName.setText("Current: "+ updatedCaregiver.getNew_caregiver_name()+" Household");
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            intent_householdId = extras.getString("householdId");
+            intent_cname = extras.getString("cname");
         }
 
+        // Load updated caregiver name off-UI
+        Threading.io(() -> {
+            newCaregiverModel updated = null;
+            try {
+                if (!TextUtils.isEmpty(intent_householdId)) {
+                    updated = newCaregiverDao.getNewCaregiverById(intent_householdId);
+                }
+            } catch (Exception ignored) {}
+            newCaregiverModel finalUpdated = updated;
+            Threading.main(() -> {
+                updatedCaregiver = finalUpdated;
+                if(updatedCaregiver != null && !TextUtils.isEmpty(updatedCaregiver.getNew_caregiver_name())) {
+                    updatedCaregiverName.setVisibility(View.VISIBLE);
+                    updatedCaregiverName.setText("Current: "+ updatedCaregiver.getNew_caregiver_name()+" Household");
+                } else {
+                    updatedCaregiverName.setVisibility(View.GONE);
+                }
+            });
+        });
 
 
-        familyServiceList.addAll(HouseholdServiceReportDao.getServicesByHousehold(intent_householdId));
+        if (!TextUtils.isEmpty(intent_householdId)) {
+            hh_id.setText(intent_householdId);
+        }
+        if (!TextUtils.isEmpty(intent_cname)) {
+            cname.setText(intent_cname);
+        }
 
+        View progress = binding.progressLoading;
+        // Initialize RecyclerView + Adapter early to avoid nulls on resume
+        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(HouseholdServiceActivity.this);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(eLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
         if (recyclerViewadapter == null) {
-            RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(HouseholdServiceActivity.this);
-            recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(eLayoutManager);
-            recyclerView.setItemAnimator(new DefaultItemAnimator());
             recyclerViewadapter = new HouseholdServiceAdapter(familyServiceList, HouseholdServiceActivity.this);
             recyclerView.setAdapter(recyclerViewadapter);
-            recyclerViewadapter.notifyDataSetChanged();
-
-            recyclerViewadapter.setOnDataUpdateListener(() -> runOnUiThread(() -> {
-                recreate();
-            }));
-        } else {
-            recyclerViewadapter.notifyDataSetChanged();
+            recyclerViewadapter.setOnDataUpdateListener(() -> runOnUiThread(this::recreate));
         }
-
-        if (recyclerViewadapter.getItemCount() > 0){
-
-            linearLayout.setVisibility(View.GONE);
-        }
+        if (progress != null) progress.setVisibility(View.VISIBLE);
+        Threading.io(() -> {
+            ArrayList<HouseholdServiceReportModel> results = new ArrayList<>();
+            if (!TextUtils.isEmpty(intent_householdId)) {
+                results.addAll(HouseholdServiceReportDao.getServicesByHousehold(intent_householdId));
+            }
+            Threading.main(() -> {
+                familyServiceList.clear();
+                familyServiceList.addAll(results);
+                if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged();
+                if (recyclerViewadapter.getItemCount() > 0){
+                    linearLayout.setVisibility(View.GONE);
+                } else {
+                    linearLayout.setVisibility(View.VISIBLE);
+                }
+                if (progress != null) progress.setVisibility(View.GONE);
+            });
+        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
+        if (recyclerViewadapter != null) {
+            recyclerView.setAdapter(recyclerViewadapter);
+            try { recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
+        }
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -144,38 +177,37 @@ public class HouseholdServiceActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.services1:
-                GraduationBenchmarkModel model = HouseholdDao.getGraduationStatus(intent_householdId);
-                Household house = HouseholdDao.getHousehold(intent_householdId);
-                if(CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId) == 0){
-                    showDialogBox("Unable to add service(s) for "+house.getCaregiver_name() + "`s household  because no Case Plan(s) have been added");
-
-                } else if (house.getHousehold_case_status() !=null && (house.getHousehold_case_status().equals("0") || house.getHousehold_case_status().equals("2"))) {
-                    showDialogBox(house.getCaregiver_name() + "`s household has been inactive or de-registered");
-
-                } else {
-                    try {
-                        FormUtils formUtils = new FormUtils(this);
-                        JSONObject indexRegisterForm;
-
-                        indexRegisterForm = formUtils.getFormJson("service_report_household");
-
-                        JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "household_id");
-                        cId.put("value",hh_id.getText().toString());
-
-                        JSONObject hivStatus = getFieldJSONObject(fields(indexRegisterForm, STEP1), "is_hiv_positive");
-                        hivStatus.put("value",house.getCaregiver_hiv_status());
-
-
-                        startFormActivity(indexRegisterForm);
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-
-                }
-
-
+                Threading.io(() -> {
+                    Household houseBg = null;
+                    int casePlanCount = 0;
+                    try { houseBg = HouseholdDao.getHousehold(intent_householdId); } catch (Exception ignored) {}
+                    try { casePlanCount = CasePlanDao.getByIDNumberOfCaregiverCasepalns(intent_householdId); } catch (Exception ignored) {}
+                    Household finalHouseBg = houseBg;
+                    int finalCasePlanCount = casePlanCount;
+                    Threading.main(() -> {
+                        if (finalHouseBg == null) {
+                            showDialogBox("Household details unavailable");
+                            return;
+                        }
+                        if (finalCasePlanCount == 0){
+                            showDialogBox("Unable to add service(s) for "+finalHouseBg.getCaregiver_name() + "`s household  because no Case Plan(s) have been added");
+                        } else if (finalHouseBg.getHousehold_case_status() !=null && (finalHouseBg.getHousehold_case_status().equals("0") || finalHouseBg.getHousehold_case_status().equals("2"))) {
+                            showDialogBox(finalHouseBg.getCaregiver_name() + "`s household has been inactive or de-registered");
+                        } else {
+                            try {
+                                FormUtils formUtils = new FormUtils(this);
+                                JSONObject indexRegisterForm = formUtils.getFormJson("service_report_household");
+                                JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "household_id");
+                                cId.put("value",hh_id.getText().toString());
+                                JSONObject hivStatus = getFieldJSONObject(fields(indexRegisterForm, STEP1), "is_hiv_positive");
+                                hivStatus.put("value",finalHouseBg.getCaregiver_hiv_status());
+                                startFormActivity(indexRegisterForm);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                });
                 break;
         }
     }
@@ -271,7 +303,13 @@ public class HouseholdServiceActivity extends AppCompatActivity {
         familyServiceList.clear();
         List<HouseholdServiceReportModel> updatedList = HouseholdServiceReportDao.getServicesByHousehold(intent_householdId);
         familyServiceList.addAll(updatedList);
-        recyclerViewadapter.notifyDataSetChanged();
+        if (recyclerViewadapter == null) {
+            try {
+                recyclerViewadapter = new HouseholdServiceAdapter(familyServiceList, HouseholdServiceActivity.this);
+                if (recyclerView != null) recyclerView.setAdapter(recyclerViewadapter);
+            } catch (Exception ignored) {}
+        }
+        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
     }
     public ChildIndexEventClient processRegistration(String jsonString){
 

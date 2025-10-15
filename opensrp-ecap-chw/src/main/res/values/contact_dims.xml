@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="contact_drawable_padding">8dp</dimen>
+    <dimen name="contact_small_padding">4dp</dimen>
+    <dimen name="register_member_toolbar_margin">16dp</dimen>
+    <dimen name="register_member_nav_margin">8dp</dimen>
+</resources>

@@ -112,7 +112,7 @@ public class CoreStockInventoryItemDetailsReportActivity extends SecuredActivity
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             final Drawable upArrow = getResources().getDrawable(R.drawable.ic_arrow_white_24);
-            upArrow.setColorFilter(getResources().getColor(org.smartregister.family.R.color.text_blue), PorterDuff.Mode.SRC_ATOP);
+            upArrow.setColorFilter(getResources().getColor(R.color.text_blue), PorterDuff.Mode.SRC_ATOP);
             upArrow.setVisible(true, true);
             actionBar.setHomeAsUpIndicator(upArrow);
             actionBar.setElevation(0);

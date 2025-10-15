@@ -48,7 +48,15 @@ public class AboveFiveChildProfileActivity extends CoreAboveFiveChildProfileActi
         initializePresenter();
         setupViews();
         setUpToolbar();
-        registerReceiver(mDateTimeChangedReceiver, sIntentFilter);
+        try {
+            if (android.os.Build.VERSION.SDK_INT >= 33) {
+                registerReceiver(mDateTimeChangedReceiver, sIntentFilter, RECEIVER_NOT_EXPORTED);
+            } else {
+                registerReceiver(mDateTimeChangedReceiver, sIntentFilter);
+            }
+        } catch (SecurityException se) {
+            // Ignore if platform requires explicit flags and we're not in foreground yet
+        }
         invisibleRecordVisitPanel();
         if (((ChwApplication) ChwApplication.getInstance()).hasReferrals()) {
             addChildReferralTypes();

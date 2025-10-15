@@ -926,10 +926,6 @@ public class CoreConstants {
         public static final String UNIQUE_IDENTIFIER_KEY = "opensrp_id";
     }
 
-    public static final class RQ_CODE {
-        public static final int STORAGE_PERMISIONS = 1;
-    }
-
     public static final class PEER_TO_PEER {
         public static final String LOCATION_ID = "location-id";
     }

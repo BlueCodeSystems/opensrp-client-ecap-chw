@@ -1,6 +1,5 @@
 package org.smartregister.chw.core.custom_views;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -42,7 +41,6 @@ import org.smartregister.chw.core.utils.CoreConstants;
 import org.smartregister.domain.FetchStatus;
 import org.smartregister.receiver.SyncStatusBroadcastReceiver;
 import org.smartregister.util.LangUtils;
-import org.smartregister.util.PermissionUtils;
 
 import java.lang.ref.WeakReference;
 import java.text.MessageFormat;
@@ -65,6 +63,7 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
     private static NavigationModel.Flavor modelFlavor;
     private static Map<String, Class> registeredActivities;
     private static boolean showDeviceToDeviceSync = true;
+    private static final float NAV_DRAWER_HEIGHT_RATIO = 0.9f;
     private DrawerLayout drawer;
     private Toolbar toolbar;
     private NavigationAdapter navigationAdapter;
@@ -167,6 +166,15 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
 
         drawer = activity.findViewById(R.id.drawer_layout);
         drawer.addDrawerListener(this);
+        if (rootView != null) {
+            DrawerLayout.LayoutParams params = (DrawerLayout.LayoutParams) rootView.getLayoutParams();
+            if (params != null) {
+                params.width = activity.getResources().getDimensionPixelSize(R.dimen.nav_drawer_width);
+                int screenHeight = activity.getResources().getDisplayMetrics().heightPixels;
+                params.height = (int) (screenHeight * NAV_DRAWER_HEIGHT_RATIO);
+                rootView.setLayoutParams(params);
+            }
+        }
         recyclerView = rootView.findViewById(R.id.rvOptions);
         tvLogout = rootView.findViewById(R.id.tvLogout);
         recyclerView = rootView.findViewById(R.id.rvOptions);
@@ -391,11 +399,7 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
     }
 
     public void startP2PActivity(@NonNull Activity activity) {
-        if (PermissionUtils.isPermissionGranted(activity
-                , new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}
-                , CoreConstants.RQ_CODE.STORAGE_PERMISIONS)) {
-            activity.startActivity(new Intent(activity, ChwP2pModeSelectActivity.class));
-        }
+        activity.startActivity(new Intent(activity, ChwP2pModeSelectActivity.class));
     }
 
     public NavigationAdapter getNavigationAdapter() {
