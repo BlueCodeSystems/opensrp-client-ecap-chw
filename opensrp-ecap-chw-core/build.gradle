@@ -190,6 +190,9 @@ tasks.withType(Test) {
                 substitute module('org.smartregister:opensrp-household') using module('com.github.BlueCodeSystems:opensrp-household:v2.1.3')
                 substitute module('org.smartregister:opensrp-client-household') using module('com.github.BlueCodeSystems:opensrp-household:v2.1.3')
                 substitute module('io.github.bluecodesystems:opensrp-client-household') using module('com.github.BlueCodeSystems:opensrp-household:v2.1.3')
+                substitute module('org.smartregister:opensrp-client-utils') using module('com.github.BlueCodeSystems:opensrp-client-utils:v1.0.0')
+                substitute module('org.smartregister:opensrp-client-chw-referral') using module('com.github.BlueCodeSystems:opensrp-client-chw-referral:v2.0.0')
+                substitute module('io.github.bluecodesystems:opensrp-client-chw-referral') using module('com.github.BlueCodeSystems:opensrp-client-chw-referral:v2.0.0')
             }
         // Lock the Saferoom.X version
         force 'com.commonsware.cwac:saferoom.x:1.3.0'
@@ -410,6 +413,14 @@ dependencies {
     api 'com.github.BlueCodeSystems:opensrp-client-chw-malaria:v2.0.0'
     api('com.github.BlueCodeSystems:opensrp-client-pnc:v0.2.0') {
         transitive = true
+    }
+    api('com.github.BlueCodeSystems:opensrp-client-chw-referral:v2.0.0') {
+        transitive = true
+        exclude group: 'org.smartregister', module: 'opensrp-client-core'
+        exclude group: 'com.github.BlueCodeSystems.Opensrp-client-native-form-new', module: 'opensrp-client-native-form'
+        exclude group: 'com.github.BlueCodeSystems.Opensrp-client-native-form-new', module: 'circleprogressbar'
+        exclude group: 'io.github.bluecodesystems', module: 'opensrp-client-core'
+        exclude group: 'io.github.bluecodesystems', module: 'android-p2p-sync'
     }
     implementation('com.github.BlueCodeSystems:opensrp-household:v2.1.3') {
         transitive = true
