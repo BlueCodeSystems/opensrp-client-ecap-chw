@@ -1,12 +1,14 @@
 package com.bluecodeltd.ecap.chw.dao;
 
+import android.database.Cursor;
+
 import com.bluecodeltd.ecap.chw.model.VcaCSVModel;
 import com.bluecodeltd.ecap.chw.model.VcaScreeningModel;
 
 import org.smartregister.dao.AbstractDao;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class VCAScreeningDao extends AbstractDao {
     public static VcaScreeningModel getVcaScreening (String UID) {
@@ -23,18 +25,26 @@ public class VCAScreeningDao extends AbstractDao {
         return values.get(0);
     }
 
-    public static List<VcaCSVModel> getVcaCSV () {
+    public static void streamCsvVcas(Consumer<VcaCSVModel> consumer) {
 
         String sql = "SELECT * FROM ec_client_index";
-
-        List<VcaCSVModel> values = AbstractDao.readData(sql, getVcaCSVModelMap());
-
-        if (values.isEmpty()) {
-            return new ArrayList<>();
+        DataMap<VcaCSVModel> mapper = getVcaCSVModelMap();
+        Cursor cursor = null;
+        try {
+            cursor = getRepository().getReadableDatabase().rawQuery(sql, new String[]{});
+            if (cursor == null) {
+                return;
+            }
+            while (cursor.moveToNext()) {
+                consumer.accept(mapper.readCursor(cursor));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
-
-
-        return values;
     }
 
     public static String checkStatus (String UID) {

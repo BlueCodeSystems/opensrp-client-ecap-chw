@@ -4,8 +4,11 @@ import com.bluecodeltd.ecap.chw.model.HouseholdServiceReportModel;
 
 import org.smartregister.dao.AbstractDao;
 
+import android.database.Cursor;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class HouseholdServiceReportDao extends AbstractDao {
     public static boolean hasHouseholdServices(String householdId) {
@@ -29,19 +32,28 @@ public class HouseholdServiceReportDao extends AbstractDao {
         return values;
 
     }
-    public static List<HouseholdServiceReportModel> getCSVHouseholdServices() {
-
+    public static void streamCsvHouseholdServices(Consumer<HouseholdServiceReportModel> consumer) {
         String sql = "SELECT *, strftime('%Y-%m-%d', substr(date,7,4) || '-' || substr(date,4,2) || '-' || substr(date,1,2)) as sortable_date\n" +
                 "FROM ec_household_service_report\n" +
                 "WHERE (delete_status IS NULL OR delete_status <> '1')\n" +
                 "ORDER BY sortable_date DESC";
-
-        List<HouseholdServiceReportModel> values = AbstractDao.readData(sql, getServiceModelMap());
-        if (values == null || values.size() == 0)
-            return new ArrayList<>();
-
-        return values;
-
+        DataMap<HouseholdServiceReportModel> mapper = getServiceModelMap();
+        Cursor cursor = null;
+        try {
+            cursor = getRepository().getReadableDatabase().rawQuery(sql, new String[]{});
+            if (cursor == null) {
+                return;
+            }
+            while (cursor.moveToNext()) {
+                consumer.accept(mapper.readCursor(cursor));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
     }
     public static List<HouseholdServiceReportModel> getServicesForHouseholdOnly(String householdId) {
 

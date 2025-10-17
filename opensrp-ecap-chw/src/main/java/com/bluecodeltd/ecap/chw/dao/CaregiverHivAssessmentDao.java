@@ -1,11 +1,14 @@
 package com.bluecodeltd.ecap.chw.dao;
 
+import android.database.Cursor;
+
 import com.bluecodeltd.ecap.chw.model.CaregiverHivAssessmentModel;
 
 import org.smartregister.dao.AbstractDao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class CaregiverHivAssessmentDao extends AbstractDao {
     public static CaregiverHivAssessmentModel getCaregiverHivAssessment (String householdID) {
@@ -33,16 +36,26 @@ public class CaregiverHivAssessmentDao extends AbstractDao {
 
     }
 
-    public static List<CaregiverHivAssessmentModel > getAllHivAssessment() {
+    public static void streamAllHivAssessments(Consumer<CaregiverHivAssessmentModel> consumer) {
 
         String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_edited,7,4) || '-' || substr(date_edited,4,2) || '-' || substr(date_edited,1,2)) as sortable_date FROM ec_caregiver_hiv_assessment  ORDER BY sortable_date DESC";
-
-        List<CaregiverHivAssessmentModel > values = AbstractDao.readData(sql, getCaregiverHivAssessmentModelMap());
-        if (values == null || values.size() == 0)
-            return new ArrayList<>();
-
-        return values;
-
+        DataMap<CaregiverHivAssessmentModel> mapper = getCaregiverHivAssessmentModelMap();
+        Cursor cursor = null;
+        try {
+            cursor = getRepository().getReadableDatabase().rawQuery(sql, new String[]{});
+            if (cursor == null) {
+                return;
+            }
+            while (cursor.moveToNext()) {
+                consumer.accept(mapper.readCursor(cursor));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
     }
 
     public static DataMap<CaregiverHivAssessmentModel> getCaregiverHivAssessmentModelMap() {

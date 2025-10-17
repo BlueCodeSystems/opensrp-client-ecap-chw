@@ -4,10 +4,13 @@ import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
 
 import org.smartregister.dao.AbstractDao;
 
+import android.database.Cursor;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 
 public class VCAServiceReportDao extends AbstractDao {
 
@@ -54,17 +57,26 @@ public class VCAServiceReportDao extends AbstractDao {
         return values;
 
     }
-    public static List<VCAServiceModel> getVCAServicesCSV() {
-
+    public static void streamCsvServices(Consumer<VCAServiceModel> consumer) {
         String sql = "SELECT *,is_hiv_positive, vl_last_result, child_mmd, level_mmd,date, unique_id,strftime('%Y-%m-%d', substr(date,7,4) || '-' || substr(date,4,2) || '-' || substr(date,1,2)) as sortable_date\n" +
                 "FROM ec_vca_service_report WHERE  (delete_status IS NULL OR delete_status <> '1') ORDER BY sortable_date";
-
-        List<VCAServiceModel> values = AbstractDao.readData(sql, getServiceModelMap());
-        if (values == null || values.size() == 0)
-            return new ArrayList<>();
-
-        return values;
-
+        DataMap<VCAServiceModel> mapper = getServiceModelMap();
+        Cursor cursor = null;
+        try {
+            cursor = getRepository().getReadableDatabase().rawQuery(sql, new String[]{});
+            if (cursor == null) {
+                return;
+            }
+            while (cursor.moveToNext()) {
+                consumer.accept(mapper.readCursor(cursor));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
     }
     public static List<VCAServiceModel> getServicesByVCAID(String vcaid) {
         String sql = "SELECT *, strftime('%Y-%m-%d', substr(date,7,4) || '-' || substr(date,4,2) || '-' || substr(date,1,2)) as sortable_date\n" +

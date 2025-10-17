@@ -4,10 +4,13 @@ import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 
 import org.smartregister.dao.AbstractDao;
 
+import android.database.Cursor;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 
 public class VcaVisitationDao extends AbstractDao {
 
@@ -121,18 +124,26 @@ public class VcaVisitationDao extends AbstractDao {
 
         return values.get(0);
     }
-    public static List<VcaVisitationModel> getVcaVisitationCSV () {
+    public static void streamCsvVisitations(Consumer<VcaVisitationModel> consumer) {
 
-        String sql = "SELECT * FROM ec_household_visitation_for_vca_0_20_years" ;
-
-        List<VcaVisitationModel> values = AbstractDao.readData(sql, getVcaVisitationModelMap());
-
-        if (values.size() == 0) {
-            return null;
+        String sql = "SELECT * FROM ec_household_visitation_for_vca_0_20_years";
+        DataMap<VcaVisitationModel> mapper = getVcaVisitationModelMap();
+        Cursor cursor = null;
+        try {
+            cursor = getRepository().getReadableDatabase().rawQuery(sql, new String[]{});
+            if (cursor == null) {
+                return;
+            }
+            while (cursor.moveToNext()) {
+                consumer.accept(mapper.readCursor(cursor));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
-
-
-        return values;
     }
     public static VcaVisitationModel getVcaVisitationNotification (String vcaID) {
         String sql = "SELECT *, " +

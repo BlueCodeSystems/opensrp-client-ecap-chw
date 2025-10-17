@@ -4,8 +4,11 @@ import com.bluecodeltd.ecap.chw.model.CaregiverVisitationModel;
 
 import org.smartregister.dao.AbstractDao;
 
+import android.database.Cursor;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class CaregiverVisitationDao extends AbstractDao {
     public static boolean hasVisitsByID(String householdID) {
@@ -31,17 +34,26 @@ public class CaregiverVisitationDao extends AbstractDao {
         return values;
 
     }
-    public static List<CaregiverVisitationModel> getCSVVisits() {
-
+    public static void streamCsvVisits(Consumer<CaregiverVisitationModel> consumer) {
         String sql = "SELECT *,strftime('%Y-%m-%d', substr(visit_date,7,4) || '-' || substr(visit_date,4,2) || '-' || substr(visit_date,1,2)) as sortable_date" +
                 " FROM ec_household_visitation_for_caregiver WHERE  (delete_status IS NULL OR delete_status <> '1') ORDER BY sortable_date DESC";
-
-        List<CaregiverVisitationModel> values = AbstractDao.readData(sql, getCaregiverVisitationMap());
-        if (values == null || values.size() == 0)
-            return new ArrayList<>();
-
-        return values;
-
+        DataMap<CaregiverVisitationModel> mapper = getCaregiverVisitationMap();
+        Cursor cursor = null;
+        try {
+            cursor = getRepository().getReadableDatabase().rawQuery(sql, new String[]{});
+            if (cursor == null) {
+                return;
+            }
+            while (cursor.moveToNext()) {
+                consumer.accept(mapper.readCursor(cursor));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
     }
 
     public static int countVisits(String householdID){
@@ -55,30 +67,37 @@ public class CaregiverVisitationDao extends AbstractDao {
         return Integer.parseInt(values.get(0));
 
     }
-    public static List<CaregiverVisitationModel> countAllVisits() {
-        String sql = "SELECT * FROM ec_household_visitation_for_caregiver";
-        List<CaregiverVisitationModel> values;
-
+    public static int countAllVisits() {
+        String sql = "SELECT COUNT(*) AS visitCount FROM ec_household_visitation_for_caregiver WHERE (delete_status IS NULL OR delete_status <> '1')";
+        DataMap<String> dataMap = c -> getCursorValue(c, "visitCount");
         try {
-            values = AbstractDao.readData(sql, getCaregiverVisitationMap());
+            String value = readSingleValue(sql, dataMap);
+            return value != null ? Integer.parseInt(value) : 0;
         } catch (Exception e) {
             e.printStackTrace();
-            return new ArrayList<>();
+            return 0;
         }
-
-        return values != null ? values : new ArrayList<>();
     }
 
-    // Lightweight fetch for visit dates only to avoid heavy row mapping
-    public static List<String> getAllVisitDates() {
-        String sql = "SELECT visit_date FROM ec_household_visitation_for_caregiver";
-        DataMap<String> dataMap = c -> getCursorValue(c, "visit_date");
+    public static int countVisitsDue() {
+        String sql = "SELECT COUNT(*) AS dueCount " +
+                "FROM ec_household_visitation_for_caregiver " +
+                "WHERE (delete_status IS NULL OR delete_status <> '1') " +
+                "AND visit_date IS NOT NULL AND visit_date NOT IN ('', 'null') " +
+                "AND LENGTH(visit_date) = 10 " +
+                "AND date(substr(visit_date,7,4) || '-' || substr(visit_date,4,2) || '-' || substr(visit_date,1,2)) >= date('now', 'localtime')";
+
+        DataMap<String> dataMap = c -> getCursorValue(c, "dueCount");
+
         try {
-            List<String> values = AbstractDao.readData(sql, dataMap);
-            return values != null ? values : new ArrayList<>();
+            List<String> results = AbstractDao.readData(sql, dataMap);
+            if (results == null || results.isEmpty()) {
+                return 0;
+            }
+            return Integer.parseInt(results.get(0));
         } catch (Exception e) {
             e.printStackTrace();
-            return new ArrayList<>();
+            return 0;
         }
     }
 

@@ -27,8 +27,7 @@ class DashboardViewModel : ViewModel() {
     fun refresh(caseworkerPhone: String? = null) {
         viewModelScope.launch(Dispatchers.IO) {
             val now = LocalTime.now()
-            val visitDates = CaregiverVisitationDao.getAllVisitDates()
-            val visitsDue = computeVisitsDue(visitDates)
+            val visitsDue = CaregiverVisitationDao.countVisitsDue()
             val subpops: ArrayList<Int> = if (caseworkerPhone.isNullOrEmpty())
                 countSubpop(IndexPersonDao.getAllChildrenSubpops())
             else
@@ -50,22 +49,6 @@ class DashboardViewModel : ViewModel() {
         }
     }
 
-    private fun computeVisitsDue(dates: List<String>?): Int {
-        if (dates.isNullOrEmpty()) return 0
-        // Dates formatted as dd-MM-u in app logic; keep logic consistent using Java time via helpers if needed
-        // To avoid parsing overhead here, keep behavior aligned with existing Java code paths
-        return try {
-            val formatter = java.time.format.DateTimeFormatter.ofPattern("dd-MM-u")
-            val today = java.time.LocalDate.now()
-            dates.count { d ->
-                try {
-                    if (d.isNullOrEmpty()) false
-                    else java.time.Period.between(java.time.LocalDate.parse(d, formatter), today).days < 1
-                } catch (_: Exception) { false }
-            }
-        } catch (_: Exception) { 0 }
-    }
-
     private fun countSubpop(childList: List<Child>?): ArrayList<Int> {
         val totals = arrayListOf(0, 0, 0, 0, 0, 0)
         if (childList == null) return totals
@@ -80,4 +63,3 @@ class DashboardViewModel : ViewModel() {
         return totals
     }
 }
-
