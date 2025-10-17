@@ -1,23 +1,18 @@
-buildscript {
-    ext.kotlinVersion = '1.9.23'
-    repositories {
-        mavenLocal()
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:8.6.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-    }
+plugins {
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.kapt")
+    id("jacoco")
+    id("com.github.kt3k.coveralls") version "2.12.2" apply false
+    id("maven-publish")
 }
 
-apply plugin: 'com.android.library'
-apply plugin: 'jacoco'
-apply plugin: 'com.github.kt3k.coveralls'
-apply plugin: 'maven-publish'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
+
+if (!plugins.hasPlugin("com.github.kt3k.coveralls")) {
+    apply plugin: "com.github.kt3k.coveralls"
+}
+
+def kotlinVersion = "1.9.23"
 
 jacoco {
     toolVersion = "0.8.5"
@@ -33,8 +28,7 @@ if (project.rootProject.file("local.properties").exists()) {
 android {
     namespace = "org.smartregister.chw.core"
     useLibrary 'org.apache.http.legacy'
-    compileSdkVersion 35
-    buildToolsVersion "35.0.0"
+    compileSdk = 35
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
@@ -52,8 +46,8 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 28
-        targetSdkVersion 35
+        minSdk = 28
+        targetSdk = 35
         versionCode 2
         versionName "v2.0.0"
         // multidex not required (minSdk 28+)
@@ -97,6 +91,13 @@ android {
         buildConfig true
     }
 
+    flavorDimensions "environment"
+    productFlavors {
+        create("ecap") {
+            dimension = "environment"
+        }
+    }
+
     testOptions {
         unitTests {
             returnDefaultValues = true
@@ -110,7 +111,7 @@ android {
 
     // Ensure sources and javadoc jars for publishing
     publishing {
-        singleVariant("release") {
+        singleVariant("ecapRelease") {
             withSourcesJar()
             withJavadocJar()
         }
@@ -121,7 +122,7 @@ android {
 // Apply publishing wiring after android is fully configured (ensures compileSdk is set)
 apply from: '../maven.gradle'
 
-tasks.withType(Test) {
+tasks.withType(Test).configureEach {
     jacoco.includeNoLocationClasses = true
 }
 
@@ -165,6 +166,10 @@ tasks.withType(Test) {
                 substitute module('org.smartregister:opensrp-client-native-form') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:opensrp-client-native-form:v3.2.2')
                 // Route SmartRegister configurable-views to BlueCodeSystems JitPack
                 substitute module('org.smartregister:opensrp-client-configurable-views') using module('com.github.BlueCodeSystems:opensrp-client-configurable-views:v2.0.1')
+                // Ensure FP artifacts resolve to BlueCodeSystems JitPack builds
+                substitute module('org.smartregister:opensrp-chw-fp') using module('com.github.BlueCodeSystems:opensrp-client-chw-family-planning:v1.0.28')
+                substitute module('io.github.bluecodesystems:opensrp-chw-family-planning') using module('com.github.BlueCodeSystems:opensrp-client-chw-family-planning:v1.0.28')
+                substitute module('io.github.bluecodesystems:opensrp-client-chw-family-planning') using module('com.github.BlueCodeSystems:opensrp-client-chw-family-planning:v1.0.28')
                 // Also route io.github group to JitPack coord to avoid Central/GH Packages lookups
                 substitute module('io.github.bluecodesystems:opensrp-configurable-views') using module('com.github.BlueCodeSystems:opensrp-client-configurable-views:v2.0.1')
                 substitute module('io.github.bluecodesystems:opensrp-client-immunization') using module('com.github.BlueCodeSystems:opensrp-client-immunization:v5.1.1')
@@ -173,14 +178,10 @@ tasks.withType(Test) {
                 substitute module('com.github.BlueCodeSystems.Opensrp-client-native-form-new:opensrp-client-native-form') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:opensrp-client-native-form:v3.2.2')
                 substitute module('com.github.BlueCodeSystems.opensrp-client-native-form-new:circleprogressbar') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:circleprogressbar:v3.2.2')
                 substitute module('com.github.BlueCodeSystems.Opensrp-client-native-form-new:circleprogressbar') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:circleprogressbar:v3.2.2')
-                substitute module('io.github.bluecodesystems:circleprogressbar') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:circleprogressbar:v3.2.0')
-                // Route CHW FP to BlueCodeSystems JitPack CHW Family Planning lib
-                substitute module('org.smartregister:opensrp-chw-fp') using module('com.github.BlueCodeSystems:opensrp-client-chw-family-planning:v1.0.27')
-                // Also route Maven Central coord to JitPack artifact
-                substitute module('io.github.bluecodesystems:opensrp-chw-family-planning') using module('com.github.BlueCodeSystems:opensrp-client-chw-family-planning:v1.0.27')
-                // Route FP client to BlueCodeSystems JitPack FP v2.1.0
-                substitute module('org.smartregister:opensrp-client-fp') using module('com.github.BlueCodeSystems:opensrp-client-fp:v2.1.0')
-                substitute module('io.github.bluecodesystems:opensrp-client-fp') using module('com.github.BlueCodeSystems:opensrp-client-fp:v2.1.0')
+                substitute module('io.github.bluecodesystems:circleprogressbar') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:circleprogressbar:v3.2.2')
+                // Route FP client to BlueCodeSystems JitPack FP v2.2.0
+                substitute module('org.smartregister:opensrp-client-fp') using module('com.github.BlueCodeSystems:opensrp-client-fp:v2.2.0')
+                substitute module('io.github.bluecodesystems:opensrp-client-fp') using module('com.github.BlueCodeSystems:opensrp-client-fp:v2.2.0')
                 // Route io.github.bluecodesystems:materialedittext to the forked artifact name
                 substitute module('io.github.bluecodesystems:materialedittext') using module('io.github.bluecodesystems:MaterialEditTextLibrary:3.1.5')
                 substitute module('org.smartregister:opensrp-client-immunization') using module('com.github.BlueCodeSystems:opensrp-client-immunization:v5.1.1')
@@ -309,7 +310,7 @@ dependencies {
     // BlueCodeSystems configurable views - using preferred version (JitPack)
     implementation 'com.github.BlueCodeSystems:opensrp-client-configurable-views:v2.0.1'
     // FP client is provided by the app module and via CHW FP; not needed here
-    api('org.smartregister:opensrp-household:1.0.0-RELEASE@aar') {
+    api('com.github.BlueCodeSystems:opensrp-household:v2.1.3') {
         transitive = true
         exclude group: 'org.smartregister', module: 'opensrp-client-core'
         exclude group: 'com.github.BlueCodeSystems.Opensrp-client-native-form-new', module: 'opensrp-client-native-form'
@@ -351,10 +352,8 @@ dependencies {
         exclude group: 'com.github.BlueCodeSystems.Opensrp-client-native-form-new', module: 'circleprogressbar'
         exclude group: 'io.github.bluecodesystems', module: 'opensrp-client-core'
     }
-    // CHW FP library (org.smartregister.chw.fp.*)
-    api('com.github.BlueCodeSystems:opensrp-client-chw-family-planning:v1.0.27') {
+    api('com.github.BlueCodeSystems:opensrp-client-chw-family-planning:v1.0.28') {
         transitive = true
-        // Guard against older core brought in transitively
         exclude group: 'org.smartregister', module: 'opensrp-client-core'
         exclude group: 'com.github.BlueCodeSystems.Opensrp-client-native-form-new', module: 'opensrp-client-native-form'
         exclude group: 'com.github.BlueCodeSystems.Opensrp-client-native-form-new', module: 'circleprogressbar'
@@ -458,101 +457,17 @@ coveralls {
     jacocoReportPath = "${buildDir}/reports/jacoco/jacocoRootReport/merged.xml"
 }
 
-task javadoc(type: Javadoc) {
-    failOnError false
-    def mainSrc = "$project.projectDir/src/main/java"
-    source = files([mainSrc])
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-//    classpath += configurations.compile
-}
-
-task androidJavadocs(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    android.libraryVariants.all { variant ->
-        if (variant.name == 'release') {
-            if (variant.hasProperty('javaCompileProvider')) {
-                // Android 3.3.0+
-                owner.classpath += variant.javaCompileProvider.get().classpath
-            } else {
-                owner.classpath += variant.javaCompile.classpath
-            }
-        }
-    }
-    exclude '**/R.html', '**/R.*.html', '**/index.html'
-}
-
-
-task androidSourcesJar(type: Jar) {
-    archiveClassifier.set('sources')
-    from android.sourceSets.main.java.srcDirs
-}
-
 version = project.findProperty('VERSION_NAME') ?: "1.2.1-SNAPSHOT"
 
 def properties = new Properties()
-properties.load(new FileInputStream(rootProject.file("github.properties")))
+def githubPropsFile = rootProject.file("github.properties")
+if (githubPropsFile.exists()) {
+    properties.load(new FileInputStream(githubPropsFile))
+}
+
+def publicationArtifactId = project.findProperty('POM_SETTING_ARTIFACT_ID') ?: project.name
 
 publishing {
-    publications {
-        ChwCore(MavenPublication) {
-            groupId 'org.smartregister'
-            artifactId getArtifactId()
-            version this.version
-            artifact("$buildDir/outputs/aar/${getArtifactId()}-release.aar")
-            artifact androidSourcesJar
-
-            pom {
-                name = 'ECAP CHW Core'
-                description = 'A module of OPENSRP CHW-Core library that holds common CHW based funtionalities'
-                url = 'https://github.com/BlueCodeSystems/opensrp-client-ecap-chw-core'
-                licenses {
-                    license {
-                        name = 'The Apache License, Version 2.0'
-                        url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-            }
-            //Refer to this gist https://gist.github.com/Robyer/a6578e60127418b380ca133a1291f017
-            pom.withXml {
-                final dependenciesNode = asNode().appendNode('dependencies')
-
-                ext.addDependency = { dep, String scope ->
-                    if (dep.group == null || dep.version == null || dep.name == null || dep.name == "unspecified")
-                        return // ignore invalid dependencies
-
-                    final dependencyNode = dependenciesNode.appendNode('dependency')
-                    dependencyNode.appendNode('groupId', dep.group)
-                    dependencyNode.appendNode('artifactId', dep.name)
-                    dependencyNode.appendNode('version', dep.version)
-                    dependencyNode.appendNode('scope', scope)
-
-                    if (!dep.transitive) {
-                        // If this dependency is not transitive, we should force exclude all its dependencies from the POM
-                        final exclusionNode = dependencyNode.appendNode('exclusions').appendNode('exclusion')
-                        exclusionNode.appendNode('groupId', '*')
-                        exclusionNode.appendNode('artifactId', '*')
-                    } else if (!dep.properties.excludeRules.empty) {
-                        // Otherwise add specified exclude rules
-                        final exclusionsNode = dependencyNode.appendNode('exclusions')
-                        dep.properties.excludeRules.each { rule ->
-                            final exclusionNode = exclusionsNode.appendNode('exclusion')
-                            exclusionNode.appendNode('groupId', rule.group ?: '*')
-                            exclusionNode.appendNode('artifactId', rule.module ?: '*')
-                        }
-                    }
-                }
-
-                // List all "implementation" dependencies (for old Gradle)
-                configurations.implementation.getDependencies().each { dep -> addDependency(dep, "implementation") }
-                // List all "api" dependencies (for new Gradle) as "implementation" dependencies
-                configurations.api.getDependencies().each { dep -> addDependency(dep, "implementation") }
-                // List all "implementation" dependencies (for new Gradle) as "runtime" dependencies
-                configurations.implementation.getDependencies().each { dep -> addDependency(dep, "runtime") }
-            }
-        }
-    }
-
     repositories {
         maven {
             name = "GitHubPackages"
@@ -575,3 +490,34 @@ publishing {
 }
 
 // KAPT defaults are sufficient for AGP 8.x; no custom flags needed
+
+afterEvaluate {
+    publishing {
+        publications {
+            if (!findByName("ChwCore")) {
+                create("ChwCore", MavenPublication) {
+                    def releaseComponent = components.findByName("ecapRelease") ?: components.findByName("release")
+                    if (releaseComponent == null) {
+                        logger.warn("Skipping Maven publication: no release component available")
+                    } else {
+                        from(releaseComponent)
+                    }
+                    groupId = 'org.smartregister'
+                    artifactId = publicationArtifactId
+                    version = project.version?.toString()
+                    pom {
+                        name = 'ECAP CHW Core'
+                        description = 'A module of OPENSRP CHW-Core library that holds common CHW based funtionalities'
+                        url = 'https://github.com/BlueCodeSystems/opensrp-client-ecap-chw-core'
+                        licenses {
+                            license {
+                                name = 'The Apache License, Version 2.0'
+                                url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -14,7 +14,7 @@ afterEvaluate { project ->
   publishing {
     publications {
       maven(MavenPublication) {
-        def relComp = components.findByName("release")
+        def relComp = components.findByName("release") ?: components.findByName("ecapRelease")
         if (relComp != null) {
           from relComp
         }
@@ -93,10 +93,20 @@ afterEvaluate { project ->
   tasks.register("packageReleaseZip", Zip) {
     group = "distribution"
     description = "Packages release AAR, POM, sources and javadoc into a zip"
-    dependsOn "assembleRelease", "sourcesJar", "javadocJar", "generatePomFileForMavenPublication"
+    dependsOn "assembleRelease", "releaseSourcesJar", "javaDocReleaseJar", "generatePomFileForMavenPublication"
     from("$buildDir/outputs/aar") { include "*-release.aar" }
     from("$buildDir/publications/maven") { include "pom-default.xml"; into("maven") }
-    from("$buildDir/libs") { include "*-sources.jar", "*-javadoc.jar" }
+    if (file("$buildDir/libs").exists()) {
+      from("$buildDir/libs") { include "*-sources.jar", "*-javadoc.jar" }
+    }
+    def variantSourcesDir = file("$buildDir/intermediates/source_jar/release")
+    if (variantSourcesDir.exists()) {
+      from(variantSourcesDir) { include "*-sources.jar" }
+    }
+    def variantJavadocDir = file("$buildDir/intermediates/java_doc_jar/release")
+    if (variantJavadocDir.exists()) {
+      from(variantJavadocDir) { include "*-javadoc.jar" }
+    }
     def artifactId = project.findProperty("POM_SETTING_ARTIFACT_ID") ?: project.name
     def versionName = (project.version?.toString()) ?: (project.findProperty("VERSION_NAME") ?: "unspecified")
     archiveBaseName.set(artifactId)
