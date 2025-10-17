@@ -149,7 +149,11 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
         }
 
 
-        if(is_screened != null && is_screened.equals("true")){
+        boolean householdScreened = "true".equalsIgnoreCase(is_screened)
+                || "1".equals(is_screened)
+                || "yes".equalsIgnoreCase(is_screened);
+
+        if(householdScreened){
             warningIcon.setVisibility(View.GONE);
         } else {
             warningIcon.setVisibility(View.VISIBLE);

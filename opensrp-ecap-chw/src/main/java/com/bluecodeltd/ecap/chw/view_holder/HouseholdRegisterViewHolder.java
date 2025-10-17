@@ -50,7 +50,11 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
         villageTextView.setText(village);
 
         // Set a baseline icon quickly; async refine below
-        if ("true".equals(screened)) {
+        boolean householdScreened = "true".equalsIgnoreCase(screened)
+                || "1".equals(screened)
+                || "yes".equalsIgnoreCase(screened);
+
+        if (householdScreened) {
             homeIcon.setImageResource(R.drawable.tabmenu_home_active);
         } else {
             homeIcon.setImageResource(R.drawable.tabmenu_home);
@@ -77,7 +81,7 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
                             homeIcon.setImageResource(R.drawable.tabmenu_home);
                             homeIcon.setColorFilter(ContextCompat.getColor(context, com.nerdstone.neatformcore.R.color.colorRed));
                         } else {
-                            if ("true".equals(screened)) {
+                            if (householdScreened) {
                                 homeIcon.setImageResource(R.drawable.tabmenu_home_active);
                             } else {
                                 homeIcon.setImageResource(R.drawable.tabmenu_home);

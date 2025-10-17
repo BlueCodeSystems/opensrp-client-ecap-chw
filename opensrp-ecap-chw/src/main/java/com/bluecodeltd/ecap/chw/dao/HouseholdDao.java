@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class HouseholdDao extends AbstractDao {
 
@@ -93,20 +94,32 @@ public class HouseholdDao extends AbstractDao {
 
     }
 
-    public static String checkIfScreened (String household_id) {
+    public static String checkIfScreened(String householdId) {
+        if (householdId == null || householdId.trim().isEmpty()) {
+            return "false";
+        }
 
-        String sql = "SELECT screened FROM ec_household WHERE screened = 'true' AND household_id = '" + household_id + "' GROUP BY household_id";
+        String sql = "SELECT screened FROM ec_household WHERE household_id = '" + householdId + "'";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "screened");
 
         List<String> values = AbstractDao.readData(sql, dataMap);
 
-        if(values.size() > 0 ){
-            return "true";
-        } else {
+        if (values == null || values.isEmpty()) {
             return "false";
         }
 
+        for (String value : values) {
+            if (value == null) {
+                continue;
+            }
+            String normalized = value.trim().toLowerCase(Locale.US);
+            if ("true".equals(normalized) || "1".equals(normalized) || "yes".equals(normalized)) {
+                return "true";
+            }
+        }
+
+        return "false";
     }
     public static boolean isCaregiverPositive(String householdID) {
         String sql = "SELECT caregiver_hiv_status FROM ec_household WHERE household_id = '" + householdID + "' AND (status IS NULL OR status <> '1')";

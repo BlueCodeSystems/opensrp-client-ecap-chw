@@ -316,14 +316,18 @@ public class HouseholdOverviewFragment extends Fragment {
         }
 
         txtGpsLocation.setText(house.getHousehold_location() != null ? formatGpsCoordinates(house.getHousehold_location()) : "Not Set");
-        if(is_screened != null && is_screened.equals("true")){
+        boolean householdScreened = "true".equalsIgnoreCase(is_screened)
+                || "1".equals(is_screened)
+                || "yes".equalsIgnoreCase(is_screened);
+
+        if(householdScreened){
 
             screenBtn.setVisibility(View.GONE);
             fab.setVisibility(View.VISIBLE);
             housetitle.setVisibility(View.VISIBLE);
             linearLayout.setVisibility(View.VISIBLE);
 
-        } else if (is_screened == null) {
+        } else {
 
             screenBtn.setVisibility(View.VISIBLE);
             fab.setVisibility(View.GONE);

@@ -9,6 +9,8 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -71,6 +73,7 @@ public class CasePlan extends AppCompatActivity {
     private ArrayList<CasePlanModel> domainList = new ArrayList<>();
     private Button domainBtn, domainBtn2;
     String childId, caseDate, hivStatus,case_plan_id;
+    private final Handler uiHandler = new Handler(Looper.getMainLooper());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,9 +145,7 @@ public class CasePlan extends AppCompatActivity {
             recyclerViewadapter = new DomainPlanAdapter(domainList, CasePlan.this, "domain");
             recyclerView.setAdapter(recyclerViewadapter);
 
-            recyclerViewadapter.setOnDataUpdateListener(() -> runOnUiThread(() -> {
-                recreate();
-            }));
+            recyclerViewadapter.setOnDataUpdateListener(() -> uiHandler.postDelayed(this::fetchData, 250));
         } else {
             try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
         }
@@ -262,8 +263,7 @@ public class CasePlan extends AppCompatActivity {
 
                     case "Domain":
                         Toasty.success(CasePlan.this, "Vulnerability Saved", Toast.LENGTH_LONG, true).show();
-                        recreate();
-                        refresh();
+                        uiHandler.postDelayed(this::fetchData, 250);
                         break;
 
                 }
@@ -387,11 +387,4 @@ public class CasePlan extends AppCompatActivity {
     private ClientProcessorForJava getClientProcessorForJava() {
         return ChwApplication.getInstance().getClientProcessorForJava();
     }
-    public void refresh(){
-        finish();
-        startActivity(getIntent());
-    }
-
-
-
 }

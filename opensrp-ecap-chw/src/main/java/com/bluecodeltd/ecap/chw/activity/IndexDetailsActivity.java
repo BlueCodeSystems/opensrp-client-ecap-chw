@@ -17,6 +17,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
@@ -29,6 +30,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -77,6 +79,7 @@ import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.model.WeServiceVcaModel;
 import com.bluecodeltd.ecap.chw.model.newCaregiverModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -121,6 +124,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
@@ -167,6 +171,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
     public VCAModel client;
     AlertDialog.Builder builder, screeningBuilder;
+    private AlertDialog formLoadingDialog;
+    private Map<String, String> indexVcaFieldCache;
+    private static final Map<String, String> FORM_JSON_CACHE = new ConcurrentHashMap<>();
 
     Random number;
     int rNumber;
@@ -196,6 +203,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         }
 
         indexVCA = VCAScreeningDao.getVcaScreening(childId);
+        warmFormAsync("vca_screening");
         child = IndexPersonDao.getChildByBaseId(childId);
         gender = null;
 
@@ -215,12 +223,13 @@ public class IndexDetailsActivity extends AppCompatActivity {
         }
 
 //        is_screened = HouseholdDao.checkIfScreened(indexVCA.getHousehold_id());
-        if (indexVCA != null) {
-            String householdId = indexVCA.getHousehold_id();
-            if (householdId != null) {
-                is_screened = HouseholdDao.checkIfScreened(householdId);
-            }
+        String householdId = null;
+        if (indexVCA != null && !TextUtils.isEmpty(indexVCA.getHousehold_id())) {
+            householdId = indexVCA.getHousehold_id();
+        } else if (child != null && !TextUtils.isEmpty(child.getHousehold_id())) {
+            householdId = child.getHousehold_id();
         }
+        is_screened = HouseholdDao.checkIfScreened(householdId);
 
         is_hiv_positive = null;
 
@@ -608,12 +617,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     if (!ensureIndexVcaAvailable()) {
                         break;
                     }
-                    try {
-
-                        openFormUsingFormUtils(IndexDetailsActivity.this,"vca_screening");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                   }
+                    openFormUsingFormUtils(IndexDetailsActivity.this,"vca_screening");
 
                 break;
 
@@ -625,11 +629,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 }
 
                 if(indexVCA.getDate_screened() != null){
-                    try {
-                        openFormUsingFormUtils(IndexDetailsActivity.this,"vca_assessment");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    openFormUsingFormUtils(IndexDetailsActivity.this,"vca_assessment");
                 } else {
                     Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
@@ -639,12 +639,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             case R.id.case_plan:
 
                 if(indexVCA.getDate_screened() != null){
-                    try {
-                        openFormUsingFormUtils(IndexDetailsActivity.this,"case_plan");
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    openFormUsingFormUtils(IndexDetailsActivity.this,"case_plan");
                 } else {
                     Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
@@ -653,15 +648,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             case R.id.referral:
 
                 if(indexVCA.getDate_screened() != null){
-
-                    try {
-
-                        openFormUsingFormUtils(IndexDetailsActivity.this,"referral");
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
+                    openFormUsingFormUtils(IndexDetailsActivity.this,"referral");
                 } else {
                     Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
@@ -735,13 +722,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     break;
                 }
                 if(indexVCA.getDate_screened() != null) {
-                    try {
-
-                        openFormUsingFormUtils(IndexDetailsActivity.this,"household_visitation_for_vca_0_20_years");
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    openFormUsingFormUtils(IndexDetailsActivity.this,"household_visitation_for_vca_0_20_years");
                 } else{
                     Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
@@ -1284,7 +1265,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             txtScreening.setVisibility(View.VISIBLE);
 
 
-            if (is_screened != null && is_screened.equals("true")){
+            if (isHouseholdScreened()){
 
                 rcase_plan.setVisibility(View.VISIBLE);
                 referral.setVisibility(View.VISIBLE);
@@ -1343,31 +1324,26 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
     }
 
 
-    public void openFormUsingFormUtils(Context context, String formName) throws JSONException {
+    public void openFormUsingFormUtils(Context context, String formName) {
+        final String headerAge = txtAge != null && txtAge.getText() != null ? txtAge.getText().toString() : "";
+        final String headerGender = txtGender != null && txtGender.getText() != null ? txtGender.getText().toString() : "";
 
+        showFormLoading();
 
-        FormUtils formUtils = null;
-        try {
-            formUtils = new FormUtils(context);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        JSONObject formToBeOpened;
+        Threading.io(() -> {
+            try {
+                JSONObject formToBeOpened = obtainFormTemplate(context, formName);
+                formToBeOpened.getJSONObject("step1").put("title", this.indexVCA.getFirst_name() + " " + this.indexVCA.getLast_name() + " : " + headerAge + " - " + headerGender);
+                formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", indexVCA.getUnique_id());
 
-        formToBeOpened = formUtils.getFormJson(formName);
-        formToBeOpened.getJSONObject("step1").put("title", this.indexVCA.getFirst_name() + " " + this.indexVCA.getLast_name() + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
-        formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", indexVCA.getUnique_id());
-
-        switch (formName) {
+                switch (formName) {
 
             case "case_status":
+                Map<String, String> caseStatusData = new HashMap<>(getIndexVcaFieldMap());
                 if(indexVCA.getIs_on_hiv_treatment() == null){
-                    @NotNull Map<String, String> indexVCAMap = oMapper.convertValue(indexVCA, Map.class);
-                    indexVCAMap.remove("date_started_art");
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, indexVCAMap);
-                } else {
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+                    caseStatusData.remove("date_started_art");
                 }
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, caseStatusData);
 
                 //Populate Caseworker Name
                 populateCaseworkerPhoneAndName(formToBeOpened);
@@ -1407,13 +1383,11 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 break;
 
             case "vca_screening":
+                Map<String, String> screeningData = new HashMap<>(getIndexVcaFieldMap());
                 if(indexVCA.getIs_on_hiv_treatment() == null){
-                    @NotNull Map<String, String> indexVCAMap = oMapper.convertValue(indexVCA(), Map.class);
-                    indexVCAMap.remove("date_started_art");
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, indexVCAMap);
-                } else {
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA(), Map.class));
+                    screeningData.remove("date_started_art");
                 }
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, screeningData);
 
                 //Populate Caseworker Name
                 populateCaseworkerPhoneAndName(formToBeOpened);
@@ -1432,8 +1406,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             case "vca_assessment":
                 if(vcaAssessmentModel == null){
 
-                    //Pulls data for populating from indexchild when adding data for the very first time
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, new HashMap<>(getIndexVcaFieldMap()));
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(49).getJSONArray("options").getJSONObject(0).put("value", indexVCA.getSubpop1());
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(49).getJSONArray("options").getJSONObject(1).put("value", indexVCA.getSubpop2());
@@ -1516,15 +1489,14 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
 
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, new HashMap<>(getIndexVcaFieldMap()));
 
 
                     break;
             case "we_services_vca":
                 if(weServiceVcaModel == null){
 
-                    //Pulls data for populating from indexchild when adding data for the very first time
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, new HashMap<>(getIndexVcaFieldMap()));
 
                 } else {
 
@@ -1549,7 +1521,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     }
                 }
 
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, new HashMap<>(getIndexVcaFieldMap()));
                 formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
 
              /*   if(vcaCasePlanModel == null){
@@ -1567,7 +1539,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 //                if(hivRiskAssessmentUnder15Model == null){
 
                     //Pulls data for populating from indexchild when adding data for the very first time
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, new HashMap<>(getIndexVcaFieldMap()));
 
 //                } else {
 //
@@ -1582,7 +1554,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 //                if(hivRiskAssessmentAbove15Model == null){
 
                     //Pulls data for populating from indexchild when adding data for the very first time
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, new HashMap<>(getIndexVcaFieldMap()));
 
 //                } else {
 //
@@ -1594,13 +1566,26 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
             case "child_safety_plan":
             case "referral":
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, new HashMap<>(getIndexVcaFieldMap()));
                 populateCaseworkerPhoneAndName(formToBeOpened);
             break;
 
-    }
+                }
 
-        startFormActivity(formToBeOpened);
+                final JSONObject preparedForm = formToBeOpened;
+                Threading.main(() -> {
+                    hideFormLoading();
+                    startFormActivity(preparedForm);
+                });
+            } catch (Exception e) {
+                Timber.e(e, "Error preparing form %s", formName);
+                Threading.main(() -> {
+                    hideFormLoading();
+                    Toasty.error(IndexDetailsActivity.this,
+                            "Unable to open form. Please try again.", Toast.LENGTH_LONG, true).show();
+                });
+            }
+        });
     }
 
     @Override
@@ -1637,13 +1622,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 return true;
             case R.id.case_status:
 
-                try {
-                    openFormUsingFormUtils(IndexDetailsActivity.this, "case_status");
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                openFormUsingFormUtils(IndexDetailsActivity.this, "case_status");
                 break;
 
             case R.id.delete_record:
@@ -1717,7 +1696,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
     }
  public void createDialogForScreening(String entryPoint, String message){
         if(entryPoint != null ) {
-            if (entryPoint.equals("123") && is_screened.equals("false")) {
+            if (entryPoint.equals("123") && !isHouseholdScreened()) {
 
                 builder.setMessage(message + indexVCA.getFirst_name() + " " + indexVCA.getLast_name() + "?");
                 builder.setNegativeButton("Later", (dialog, id) -> {
@@ -1727,15 +1706,11 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
                 }).setPositiveButton(Constants.EcapConstants.PROCEED, ((dialogInterface, i) -> {
                     getIntent().removeExtra("fromHousehold");
-                    try {
-                        openFormUsingFormUtils(IndexDetailsActivity.this, "vca_screening");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    openFormUsingFormUtils(IndexDetailsActivity.this, "vca_screening");
                 }));
                 buildDialog();
 
-            } else if (entryPoint.equals("321") && is_screened.equals("false")) {
+            } else if (entryPoint.equals("321") && !isHouseholdScreened()) {
                 builder.setMessage(Constants.EcapConstants.POP_UP_DIALOG_MESSAGE_FOR_HOUSEHOLD + indexVCA.getFirst_name() + " " + indexVCA.getLast_name() + "?");
                 builder.setNegativeButton("Later", (dialog, id) -> {
                     //  Action for 'NO' Button
@@ -1816,6 +1791,76 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         //Setting the title manually
         alert.setTitle("VCA Screening");
         alert.show();
+    }
+    private void showFormLoading() {
+        Threading.main(() -> {
+            if (isFinishing() || (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && isDestroyed())) {
+                return;
+            }
+            if (formLoadingDialog == null) {
+                int padding = (int) (16 * getResources().getDisplayMetrics().density);
+                ProgressBar progressBar = new ProgressBar(this);
+                progressBar.setPadding(padding, padding, padding, padding);
+                formLoadingDialog = new AlertDialog.Builder(this)
+                        .setView(progressBar)
+                        .setCancelable(false)
+                        .create();
+            }
+            if (!formLoadingDialog.isShowing()) {
+                formLoadingDialog.show();
+            }
+        });
+    }
+
+    private void hideFormLoading() {
+        Threading.main(() -> {
+            if (formLoadingDialog != null && formLoadingDialog.isShowing()) {
+                try {
+                    formLoadingDialog.dismiss();
+                } catch (Exception ignored) {
+                }
+            }
+        });
+    }
+
+    private void warmFormAsync(String formName) {
+        Threading.io(() -> {
+            if (FORM_JSON_CACHE.containsKey(formName)) {
+                return;
+            }
+            try {
+                FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
+                JSONObject fetched = formUtils.getFormJson(formName);
+                FORM_JSON_CACHE.put(formName, fetched.toString());
+            } catch (Exception e) {
+                Timber.w(e, "Unable to warm form %s", formName);
+            }
+        });
+    }
+
+    private JSONObject obtainFormTemplate(Context context, String formName) throws Exception {
+        String cached = FORM_JSON_CACHE.get(formName);
+        if (cached != null) {
+            return new JSONObject(cached);
+        }
+        FormUtils formUtils = new FormUtils(context);
+        JSONObject fetched = formUtils.getFormJson(formName);
+        String serialized = fetched.toString();
+        FORM_JSON_CACHE.put(formName, serialized);
+        return new JSONObject(serialized);
+    }
+
+    @SuppressWarnings("unchecked")
+    private Map<String, String> getIndexVcaFieldMap() {
+        if (indexVcaFieldCache == null) {
+            indexVcaFieldCache = oMapper.convertValue(indexVCA(), Map.class);
+        }
+        return indexVcaFieldCache;
+    }
+    private boolean isHouseholdScreened() {
+        return "true".equalsIgnoreCase(is_screened)
+                || "1".equals(is_screened)
+                || "yes".equalsIgnoreCase(is_screened);
     }
     public Object indexVCA() {
         VcaScreeningModel screeningModel = new VcaScreeningModel();

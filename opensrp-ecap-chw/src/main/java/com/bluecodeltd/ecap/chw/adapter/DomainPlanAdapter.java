@@ -11,6 +11,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +67,7 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
     ObjectMapper oMapper;
     private static final long REFRESH_DELAY = 100;
     private Handler handler = new Handler();
+    private final Handler mainHandler = new Handler(Looper.getMainLooper());
 
     public interface OnDataUpdateListener {
         void onDataUpdate();
@@ -215,7 +217,7 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
                 saveRegistration(childIndexEventClient,true);
 
                 if (onDataUpdateListener != null) {
-                    onDataUpdateListener.onDataUpdate();
+                    mainHandler.post(onDataUpdateListener::onDataUpdate);
                 }
 
 
@@ -399,7 +401,7 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
 
                     if (onDataUpdateListener != null) {
-                        onDataUpdateListener.onDataUpdate();
+                        mainHandler.post(onDataUpdateListener::onDataUpdate);
                     }
 
                 } catch (Exception e) {
