@@ -5,7 +5,6 @@ import android.os.Looper;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -16,15 +15,20 @@ import java.util.concurrent.TimeUnit;
  */
 public final class Threading {
     private static final int CPU_COUNT = Math.max(2, Runtime.getRuntime().availableProcessors());
-    // IO pool: elastic up to 4x CPU (prevents starvation of blocking I/O)
-    private static final ExecutorService IO = new ThreadPoolExecutor(
-            /* core */ 2,
-            /* max  */ CPU_COUNT * 4,
+    private static final int IO_THREADS = Math.max(4, CPU_COUNT * 2);
+    // IO pool: bounded worker count with queue to avoid rejected executions under bursty load
+    private static final ThreadPoolExecutor IO_EXECUTOR = new ThreadPoolExecutor(
+            /* core */ IO_THREADS,
+            /* max  */ IO_THREADS,
             /* keepAlive */ 60L,
             TimeUnit.SECONDS,
-            new SynchronousQueue<>(),
+            new LinkedBlockingQueue<>(),
             named("IO-")
     );
+    static {
+        IO_EXECUTOR.allowCoreThreadTimeOut(true);
+    }
+    private static final ExecutorService IO = IO_EXECUTOR;
     // CPU pool: bound to CPU cores for compute-bound work
     private static final ExecutorService CPU = new ThreadPoolExecutor(
             /* core */ CPU_COUNT,
