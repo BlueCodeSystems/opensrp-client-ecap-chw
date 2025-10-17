@@ -84,7 +84,8 @@ public class PMTCTRegisterActivity extends BaseRegisterActivity implements Index
             toolbar.setTitle("");
             TextView titleLabel = toolbar.findViewById(org.smartregister.R.id.txt_title_label);
             if (titleLabel != null) {
-                titleLabel.setVisibility(View.GONE);
+                titleLabel.setText(R.string.pmtct_register_title);
+                titleLabel.setVisibility(View.VISIBLE);
             }
             try {
                 if (menu != null) {

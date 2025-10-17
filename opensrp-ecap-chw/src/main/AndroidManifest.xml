@@ -259,7 +259,7 @@
             android:launchMode="singleTask"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:screenOrientation="portrait"
-            android:theme="@style/ChwTheme.Login"
+            android:theme="@style/ChwTheme.AppCompatLogin"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

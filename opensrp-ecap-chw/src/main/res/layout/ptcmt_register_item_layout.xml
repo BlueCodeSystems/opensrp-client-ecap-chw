@@ -1,114 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/register_columns"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="5dp"
-    android:layout_marginTop="5dp"
-    android:background="@color/white">
+    android:layout_marginStart="12dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+    android:foreground="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardUseCompatPadding="false"
+    app:cardElevation="2dp"
+    app:cardCornerRadius="12dp"
+    app:cardBackgroundColor="@android:color/white">
 
-
-    <LinearLayout
-        android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"
-        android:orientation="horizontal"
-        android:id="@+id/itemm"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="110dp">
+        android:layout_height="wrap_content"
+        android:minHeight="92dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp">
 
-
-
+        <!-- Left status stripe -->
         <View
             android:id="@+id/mystatusx"
-            android:layout_width="5dp"
-            android:layout_height="match_parent"
-            />
+            android:layout_width="6dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_status_stripe"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        
+
+        <!-- Main content column -->
         <LinearLayout
-            android:visibility="gone"
-            android:orientation="horizontal"
-            android:id="@+id/case_plan_wrapper"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/grey_left_border"
-            android:paddingBottom="@dimen/register_list_top_bottom_padding"
-            android:paddingEnd="@dimen/register_list_item_padding"
-            android:paddingLeft="@dimen/register_list_item_padding"
-            android:paddingRight="@dimen/register_list_item_padding"
-            android:paddingStart="@dimen/register_list_item_padding"
-            android:paddingTop="@dimen/register_list_top_bottom_padding">
-
-
-
-            <TextView
-                android:visibility="gone"
-                android:id="@+id/index_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginRight="2dp"
-                android:background="@drawable/rounded_corner_index"
-                android:padding="8dp"
-                android:text="Index"
-                android:textColor="@color/dark_grey_text"
-                android:textSize="12dp"
-                />
-
-            <ImageView
-                android:visibility="gone"
-                android:onClick="onClick"
-                android:id="@+id/index_warning"
-                android:src="@drawable/ic_icon_warning"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginRight="2dp"
-                />
-
-
-            <ImageView
-                android:id="@+id/index_visit"
-                android:src="@drawable/active_bulb"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginRight="5dp"
-                />
-
-            <ImageView
-                android:visibility="gone"
-                android:tint="@color/light_grey_text"
-                android:id="@+id/index_case_plan"
-                android:src="@drawable/ic_baseline_content_paste_24"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginRight="5dp"
-                />
-
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginLeft="20dp"
+            android:id="@+id/content_column"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toEndOf="@id/mystatusx"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/action_cluster">
 
-            <org.smartregister.view.customcontrols.CustomFontTextView
-                android:id="@+id/familyNameTextView"
-                style="@style/CustomFontTextViewStyle.ClientList"
-                android:layout_width="wrap_content"
+            <!-- Title row: name + mother/child icons inline to save space -->
+            <LinearLayout
+                android:id="@+id/row_title"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:layout_marginTop="10dp"
-                android:singleLine="true"
-                android:text="Patient Name"
-                android:textColor="@color/text_black"
-                android:textSize="18sp" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <org.smartregister.view.customcontrols.CustomFontTextView
+                    android:id="@+id/familyNameTextView"
+                    style="@style/CustomFontTextViewStyle.ClientList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:text="Patient Name"
+                    android:textColor="@color/text_black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
+                <!-- Mother icon (inline next to name) -->
+                <ImageView
+                    android:id="@+id/icon_mother"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="4dp"
+                    android:padding="2dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/icon_mother_desc"
+                    android:src="@drawable/baseline_woman_24"
+                    app:tint="@color/primary" />
+
+                <!-- Child icon (inline next to name) -->
+                <ImageView
+                    android:id="@+id/icon_child"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="2dp"
+                    android:padding="2dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/icon_child_desc"
+                    android:src="@drawable/ic_person_black_24dp"
+                    app:tint="@color/primary" />
+            </LinearLayout>
 
             <org.smartregister.view.customcontrols.CustomFontTextView
                 android:id="@+id/gender_age"
@@ -116,20 +102,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Female : 3 Years Old"
+                android:text="Female · 3 years"
                 android:textColor="@color/light_grey_text"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="14sp"/>
+
             <org.smartregister.view.customcontrols.CustomFontTextView
                 android:id="@+id/client_type"
                 style="@style/CustomFontTextViewStyle.ClientList.Light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="2dp"
                 android:text="Client Type: SNT"
                 android:textColor="@color/light_grey_text"
-                android:textSize="16sp"
-                android:textStyle="bold"
+                android:textSize="14sp"
                 android:visibility="gone"/>
 
             <org.smartregister.view.customcontrols.CustomFontTextView
@@ -138,16 +123,95 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Lavington #445"
+                android:text="Village / Facility"
                 android:textColor="@color/light_grey_text"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-
+                android:textSize="14sp"/>
         </LinearLayout>
 
-    </LinearLayout>
+        <!-- Right-side action cluster -->
+        <LinearLayout
+            android:id="@+id/action_cluster"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <!-- Unsuppressed VL flag chip (shown when VL is unsuppressed) -->
+            <Button
+                android:id="@+id/unsuppressed_vl_flag"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:layout_marginEnd="12dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="@string/unsuppressed_vl_flag"
+                android:textAllCaps="false"
+                android:textColor="@color/colorRed"
+                android:textSize="12sp"
+                android:fontFamily="sans-serif-medium"
+                android:background="@drawable/ripple_button_alert"
+                android:visibility="gone"/>
+
+            <!-- Suppressed VL flag button (shown when VL is suppressed) -->
+            <Button
+                android:id="@+id/suppressed_vl_flag"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="@string/suppressed_vl_flag"
+                android:textAllCaps="false"
+                android:textColor="@color/pie_chart_yes_green"
+                android:textSize="12sp"
+                android:fontFamily="sans-serif-medium"
+                android:background="@drawable/ripple_button_success"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/index_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:background="@drawable/rounded_corner_index"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:text="Index"
+                android:textColor="@color/dark_grey_text"
+                android:textSize="12sp"
+                android:visibility="gone"/>
+
+            <!-- index_warning removed -->
 
 
 
-</RelativeLayout>
+            <ImageView
+                android:id="@+id/index_case_plan"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="8dp"
+                android:contentDescription="Case plan"
+                android:src="@drawable/ic_baseline_content_paste_24"
+                android:visibility="gone"
+                app:tint="@color/light_grey_text" />
+        </LinearLayout>
+
+        <!-- Inline alert panel for Unsuppressed VL (collapsed by default) -->
+        <include
+            android:id="@+id/unsuppressed_alert"
+            layout="@layout/view_pmtct_alert_unsuppressed_vl"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/content_column"
+            app:layout_constraintStart_toStartOf="@id/content_column"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

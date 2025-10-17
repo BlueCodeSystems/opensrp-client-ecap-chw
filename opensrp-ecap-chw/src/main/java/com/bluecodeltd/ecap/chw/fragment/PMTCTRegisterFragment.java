@@ -231,7 +231,8 @@ public class PMTCTRegisterFragment extends BaseSafeRegisterFragment implements I
             toolbar.setTitle("");
             android.widget.TextView titleLabelInner = toolbar.findViewById(org.smartregister.R.id.txt_title_label);
             if (titleLabelInner != null) {
-                titleLabelInner.setVisibility(View.GONE);
+                titleLabelInner.setText(R.string.pmtct_register_title);
+                titleLabelInner.setVisibility(View.VISIBLE);
             }
             if (menu != null && menu.getNavigationAdapter() != null) {
                 menu.getNavigationAdapter().setSelectedView(Constants.DrawerMenu.PMTCT);

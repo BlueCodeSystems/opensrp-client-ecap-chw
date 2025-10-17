@@ -1,6 +1,6 @@
 <resources>
 
-    <!-- Base application theme. -->
+    <!-- Base application theme back to AppCompat to preserve legacy colors -->
     <style name="ChwTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/chw_primary</item>
@@ -9,7 +9,8 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 
-    <style name="ChwTheme.NoActionBar">
+    <!-- NoActionBar variant should inherit from ChwTheme -->
+    <style name="ChwTheme.NoActionBar" parent="ChwTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -26,12 +27,12 @@
         <item name="colorAccent">@color/chw_family_accent</item>
     </style>
 
-    <style name="ChwFamilyTheme.NoActionBar">
+    <style name="ChwFamilyTheme.NoActionBar" parent="ChwFamilyTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <!-- Base Family theme used by some library references -->
+    <!-- Base Family theme used by some library references (AppCompat) -->
     <style name="FamilyTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/chw_family_primary</item>
         <item name="colorPrimaryDark">@color/chw_family_primary_dark</item>
@@ -54,10 +55,23 @@
 
     <style name="ChwTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="ChwTheme.Login" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!-- Login screen needs an ActionBar due to BaseLoginActivity usage -->
+    <style name="ChwTheme.Login" parent="ChwTheme">
         <item name="colorControlNormal">@android:color/white</item>
         <item name="android:textSize">@dimen/login_font_size</item>
         <item name="colorControlActivated">@android:color/black</item>
+        <!-- Ensure ActionBar is present for BaseLoginActivity -->
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
+    </style>
+
+    <!-- Dedicated AppCompat theme for Login, in case BaseLoginActivity requires AppCompat specifically -->
+    <style name="ChwTheme.AppCompatLogin" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/chw_primary</item>
+        <item name="colorPrimaryDark">@color/chw_primary_dark</item>
+        <item name="colorAccent">@color/chw_accent</item>
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
     </style>
 
     <style name="ChwTheme.AppBarOverlay.NavigationDrawerStyle">

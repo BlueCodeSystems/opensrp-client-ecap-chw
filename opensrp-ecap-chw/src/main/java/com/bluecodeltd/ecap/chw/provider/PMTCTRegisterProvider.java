@@ -10,6 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.view_holder.PMTCTRegisterViewHolder;
+import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
+import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
+import android.media.ToneGenerator;
+import android.media.AudioManager;
 
 import org.smartregister.chw.core.holders.FooterViewHolder;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
@@ -33,6 +37,7 @@ public class PMTCTRegisterProvider implements RecyclerViewProvider<PMTCTRegister
     private View.OnClickListener onClickListener;
     private View.OnClickListener paginationViewHandler;
     String age;
+    private static final java.util.Set<String> alertedBeep = new java.util.HashSet<>();
 
 
     public PMTCTRegisterProvider(Context context, View.OnClickListener onClickListener, View.OnClickListener paginationViewHandler) {
@@ -96,8 +101,49 @@ public class PMTCTRegisterProvider implements RecyclerViewProvider<PMTCTRegister
         }
 
         pmtctRegisterViewHolder.setupViews(firstName+" "+lastName,"ID : " + clientId, gender, age,client_type);
+
+        // Determine unsuppressed VL flag using PMTCTMotherDao (Agyw_unsuppressed_vl_1st or Unsuppressed_vl_1st)
+        boolean unsuppressed = false;
+        boolean suppressed = false;
+        try {
+            if (clientId != null && !clientId.trim().isEmpty()) {
+                PtctMotherModel mother = PMTCTMotherDao.getPMCTMother(clientId);
+                if (mother != null) {
+                    String agywUnsupp = safe(mother.getAgyw_unsuppressed_vl_1st());
+                    String unsupp = safe(mother.getUnsuppressed_vl_1st());
+                    unsuppressed = "yes".equalsIgnoreCase(agywUnsupp) || "yes".equalsIgnoreCase(unsupp);
+                    if (!unsuppressed) {
+                        // Consider suppressed when explicit 'no' present or VL result fields contain 'suppressed'
+                        suppressed = "no".equalsIgnoreCase(agywUnsupp) || "no".equalsIgnoreCase(unsupp)
+                                || containsWord(mother.getAgyw_vl_result_1st_trimester(), "suppressed")
+                                || containsWord(mother.getVl_result_1st_trimester(), "suppressed")
+                                || containsWord(mother.getAgyw_vl_result_2nd_trimester(), "suppressed")
+                                || containsWord(mother.getVl_result_2nd_trimester(), "suppressed")
+                                || containsWord(mother.getAgyw_vl_result_3rd_trimester(), "suppressed")
+                                || containsWord(mother.getVl_result_3rd_trimester(), "suppressed");
+                    }
+                }
+            }
+        } catch (Exception ignored) { }
+        pmtctRegisterViewHolder.setUnsuppressedVlFlag(unsuppressed);
+        pmtctRegisterViewHolder.setSuppressedVlFlag(suppressed);
+        if (unsuppressed && clientId != null && !alertedBeep.contains(clientId)) {
+            try {
+                ToneGenerator tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION, 80);
+                tg.startTone(ToneGenerator.TONE_PROP_BEEP, 200);
+                alertedBeep.add(clientId);
+            } catch (Throwable ignored) { }
+        }
+
+        // If flagged, clicking the chip or warning toggles inline XML alert; otherwise fallback to default listener
+        View flagView = pmtctRegisterViewHolder.itemView.findViewById(R.id.unsuppressed_vl_flag);
+        View closeAlert = pmtctRegisterViewHolder.itemView.findViewById(R.id.btn_close_alert);
+        View suppressedBtn = pmtctRegisterViewHolder.itemView.findViewById(R.id.suppressed_vl_flag);
+        View.OnClickListener toggleInlineAlert = v -> pmtctRegisterViewHolder.toggleUnsuppressedAlert();
+        if (flagView != null) flagView.setOnClickListener(unsuppressed ? toggleInlineAlert : null);
+        if (closeAlert != null) closeAlert.setOnClickListener(v -> pmtctRegisterViewHolder.toggleUnsuppressedAlert());
+        if (suppressedBtn != null) suppressedBtn.setOnClickListener(v -> suppressedBtn.setVisibility(View.GONE));
         pmtctRegisterViewHolder.itemView.setOnClickListener(onClickListener);
-        pmtctRegisterViewHolder.itemView.findViewById(R.id.index_warning).setOnClickListener(onClickListener);
         pmtctRegisterViewHolder.itemView.setTag(smartRegisterClient);
     }
 
@@ -137,8 +183,14 @@ public class PMTCTRegisterProvider implements RecyclerViewProvider<PMTCTRegister
 
     @Override
     public PMTCTRegisterViewHolder createViewHolder(ViewGroup viewGroup) {
-        View viewHolder = inflater().inflate(R.layout.ptcmt_register_item_layout, null);
+        View viewHolder = inflater().inflate(R.layout.ptcmt_register_item_layout, viewGroup, false);
         return new PMTCTRegisterViewHolder(viewHolder);
+    }
+
+    private static String safe(String s) { return s == null ? "" : s.trim(); }
+    private static boolean containsWord(String s, String needle) {
+        if (s == null) return false;
+        return s.toLowerCase(java.util.Locale.ENGLISH).contains(needle.toLowerCase(java.util.Locale.ENGLISH));
     }
 
     @Override
