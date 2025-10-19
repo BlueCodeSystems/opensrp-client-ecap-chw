@@ -79,7 +79,9 @@ import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.model.WeServiceVcaModel;
 import com.bluecodeltd.ecap.chw.model.newCaregiverModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.FormCache;
 import com.bluecodeltd.ecap.chw.util.Threading;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -116,6 +118,8 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -124,12 +128,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
 public class IndexDetailsActivity extends AppCompatActivity {
+    private static final Pattern DMY_DATE_PATTERN = Pattern.compile("^(\\d{2})[-/](\\d{2})[-/](\\d{4})$");
+    private static final Pattern ISO_DATE_PATTERN = Pattern.compile("^(\\d{4})-(\\d{2})-(\\d{2})$");
+    private static final String[] LEGACY_DATE_PATTERNS = new String[]{"dd-MM-yyyy", "dd/MM/yyyy"};
     private com.bluecodeltd.ecap.chw.databinding.VcaContentBinding binding;
 //    @Override
 //    protected void onResume() {
@@ -173,7 +181,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
     AlertDialog.Builder builder, screeningBuilder;
     private AlertDialog formLoadingDialog;
     private Map<String, String> indexVcaFieldCache;
-    private static final Map<String, String> FORM_JSON_CACHE = new ConcurrentHashMap<>();
 
     Random number;
     int rNumber;
@@ -203,7 +210,16 @@ public class IndexDetailsActivity extends AppCompatActivity {
         }
 
         indexVCA = VCAScreeningDao.getVcaScreening(childId);
-        warmFormAsync("vca_screening");
+        FormCache.warmFormsAsync(this,
+                "vca_screening",
+                "case_status",
+                "vca_assessment",
+                "case_plan",
+                "referral",
+                "household_visitation_for_vca_0_20_years",
+                "hiv_risk_assessment_under_15_years",
+                "hiv_risk_assessment_above_15_years",
+                "we_services_vca");
         child = IndexPersonDao.getChildByBaseId(childId);
         gender = null;
 
@@ -1332,7 +1348,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
         Threading.io(() -> {
             try {
-                JSONObject formToBeOpened = obtainFormTemplate(context, formName);
+                JSONObject formToBeOpened = FormCache.obtainFormTemplate(context, formName);
                 formToBeOpened.getJSONObject("step1").put("title", this.indexVCA.getFirst_name() + " " + this.indexVCA.getLast_name() + " : " + headerAge + " - " + headerGender);
                 formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", indexVCA.getUnique_id());
 
@@ -1823,39 +1839,87 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         });
     }
 
-    private void warmFormAsync(String formName) {
-        Threading.io(() -> {
-            if (FORM_JSON_CACHE.containsKey(formName)) {
-                return;
-            }
-            try {
-                FormUtils formUtils = new FormUtils(IndexDetailsActivity.this);
-                JSONObject fetched = formUtils.getFormJson(formName);
-                FORM_JSON_CACHE.put(formName, fetched.toString());
-            } catch (Exception e) {
-                Timber.w(e, "Unable to warm form %s", formName);
-            }
-        });
-    }
-
-    private JSONObject obtainFormTemplate(Context context, String formName) throws Exception {
-        String cached = FORM_JSON_CACHE.get(formName);
-        if (cached != null) {
-            return new JSONObject(cached);
-        }
-        FormUtils formUtils = new FormUtils(context);
-        JSONObject fetched = formUtils.getFormJson(formName);
-        String serialized = fetched.toString();
-        FORM_JSON_CACHE.put(formName, serialized);
-        return new JSONObject(serialized);
-    }
-
     @SuppressWarnings("unchecked")
     private Map<String, String> getIndexVcaFieldMap() {
         if (indexVcaFieldCache == null) {
-            indexVcaFieldCache = oMapper.convertValue(indexVCA(), Map.class);
+            Map<String, Object> rawFieldMap = oMapper.convertValue(indexVCA(), new TypeReference<Map<String, Object>>() { });
+            indexVcaFieldCache = sanitizeFieldMap(rawFieldMap);
         }
         return indexVcaFieldCache;
+    }
+
+    private Map<String, String> sanitizeFieldMap(Map<String, Object> rawFieldMap) {
+        Map<String, String> sanitized = new HashMap<>();
+        if (rawFieldMap == null) {
+            return sanitized;
+        }
+        for (Map.Entry<String, Object> entry : rawFieldMap.entrySet()) {
+            String key = entry.getKey();
+            Object valueObj = entry.getValue();
+            if (valueObj == null) {
+                sanitized.put(key, null);
+                continue;
+            }
+            String value = String.valueOf(valueObj);
+            sanitized.put(key, normalizeDateIfNeeded(value));
+        }
+        return sanitized;
+    }
+
+    private String normalizeDateIfNeeded(String value) {
+        if (value == null) {
+            return null;
+        }
+        String trimmed = value.trim();
+        if (trimmed.isEmpty()) {
+            return trimmed;
+        }
+
+        Date parsedDate = tryParseWithPatterns(trimmed);
+        if (parsedDate != null) {
+            SimpleDateFormat targetFormatter = new SimpleDateFormat(getTargetDatePattern(), Locale.ENGLISH);
+            targetFormatter.setLenient(false);
+            return targetFormatter.format(parsedDate);
+        }
+
+        return trimmed;
+    }
+
+    private String getTargetDatePattern() {
+        String displayFormat = Form.getDatePickerDisplayFormat();
+        if (displayFormat != null && !displayFormat.trim().isEmpty()) {
+            return displayFormat;
+        }
+        return com.vijay.jsonwizard.utils.FormUtils.NATIIVE_FORM_DATE_FORMAT_PATTERN;
+    }
+
+    private Date tryParseWithPatterns(String value) {
+        if (value == null) {
+            return null;
+        }
+
+        List<String> patterns = new ArrayList<>();
+        if (DMY_DATE_PATTERN.matcher(value).matches()) {
+            patterns.addAll(Arrays.asList(LEGACY_DATE_PATTERNS));
+        }
+        if (ISO_DATE_PATTERN.matcher(value).matches()) {
+            patterns.add("yyyy-MM-dd");
+        }
+        if (value.contains("T")) {
+            patterns.add("yyyy-MM-dd'T'HH:mm:ss");
+            patterns.add("yyyy-MM-dd'T'HH:mm:ss.SSS");
+        }
+
+        for (String pattern : patterns) {
+            try {
+                SimpleDateFormat formatter = new SimpleDateFormat(pattern, Locale.ENGLISH);
+                formatter.setLenient(false);
+                return formatter.parse(value);
+            } catch (ParseException ignored) {
+                // keep trying other patterns
+            }
+        }
+        return null;
     }
     private boolean isHouseholdScreened() {
         return "true".equalsIgnoreCase(is_screened)
