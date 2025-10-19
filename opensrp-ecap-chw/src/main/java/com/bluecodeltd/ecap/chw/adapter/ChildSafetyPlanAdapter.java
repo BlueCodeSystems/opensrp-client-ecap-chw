@@ -9,6 +9,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +61,17 @@ public class ChildSafetyPlanAdapter  extends RecyclerView.Adapter<ChildSafetyPla
     Context context;
     ArrayList<ChildSafetyPlanModel> plans;
     ObjectMapper oMapper;
+    private final Handler mainHandler = new Handler(Looper.getMainLooper());
+
+    public interface OnDataUpdateListener {
+        void onDataUpdate();
+    }
+
+    private OnDataUpdateListener onDataUpdateListener;
+
+    public void setOnDataUpdateListener(OnDataUpdateListener onDataUpdateListener) {
+        this.onDataUpdateListener = onDataUpdateListener;
+    }
 
 
     public ChildSafetyPlanAdapter(ArrayList<ChildSafetyPlanModel> plans, Context context){
@@ -116,9 +129,6 @@ public class ChildSafetyPlanAdapter  extends RecyclerView.Adapter<ChildSafetyPla
             openChildSafetyPlanActionActivity.putExtra("vca_name",safeChild.getFirst_name()+" "+safeChild.getLast_name());
             openChildSafetyPlanActionActivity.putExtra("action_date",plan.getInitial_date());
             context.startActivity(openChildSafetyPlanActionActivity);
-            if (context instanceof Activity) {
-                ((Activity) context).finish();
-            }
 
         });
         if(ChildSafetyActionDao.countChildSafetyPlan(plan.getUnique_id(),plan.getInitial_date()).equals("0")){
@@ -162,17 +172,9 @@ public class ChildSafetyPlanAdapter  extends RecyclerView.Adapter<ChildSafetyPla
                 } catch (Exception e) {
                     Timber.e(e);
                 }
-                callChildSafetyActivity(plan,safeChild);
-
-
-//                if (context instanceof Activity) {
-//                    ((Activity) context).finish();
-//                }
-//                Intent openChildSafetyPlanActivity = new Intent(context, ChildSafetyPlanActivity.class);
-//                openChildSafetyPlanActivity.putExtra("vca_id",plan.getUnique_id());
-//                openChildSafetyPlanActivity.putExtra("vca_name",child.getFirst_name()+" "+child.getLast_name());
-//                openChildSafetyPlanActivity.putExtra("action_date",plan.getInitial_date());
-//                context.startActivity(openChildSafetyPlanActivity);
+                if (onDataUpdateListener != null) {
+                    mainHandler.post(onDataUpdateListener::onDataUpdate);
+                }
 
             }));
 
@@ -183,27 +185,6 @@ public class ChildSafetyPlanAdapter  extends RecyclerView.Adapter<ChildSafetyPla
             alert.show();
         });
     }
-    public void callChildSafetyActivity(ChildSafetyPlanModel plan, Child child) {
-        if (child == null) {
-            Toast.makeText(context, "Member data incomplete", Toast.LENGTH_LONG).show();
-            Timber.w("Skipping ChildSafetyPlanActivity launch: child record missing for %s", plan.getUnique_id());
-            return;
-        }
-        Intent openChildSafetyPlanActivity = new Intent(context, ChildSafetyPlanActivity.class);
-        openChildSafetyPlanActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        openChildSafetyPlanActivity.putExtra("vca_id", plan.getUnique_id());
-        openChildSafetyPlanActivity.putExtra("vca_name", child.getFirst_name() + " " + child.getLast_name());
-        openChildSafetyPlanActivity.putExtra("action_date", plan.getInitial_date());
-
-        if (context instanceof ChildSafetyPlanActivity) {
-            Activity activity = (ChildSafetyPlanActivity) context;
-            activity.finish();
-            activity.startActivity(openChildSafetyPlanActivity);
-        } else {
-            context.startActivity(openChildSafetyPlanActivity);
-        }
-    }
-
     public ChildIndexEventClient processRegistration(String jsonString){
 
         try {
@@ -278,6 +259,9 @@ public class ChildSafetyPlanAdapter  extends RecyclerView.Adapter<ChildSafetyPla
                     getClientProcessorForJava().processClient(savedEvents);
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
 
+                    if (onDataUpdateListener != null) {
+                        mainHandler.post(onDataUpdateListener::onDataUpdate);
+                    }
 
                 } catch (Exception e) {
                     Timber.e(e);

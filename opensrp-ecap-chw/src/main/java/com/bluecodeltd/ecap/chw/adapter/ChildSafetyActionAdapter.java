@@ -9,6 +9,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +61,17 @@ public class ChildSafetyActionAdapter extends RecyclerView.Adapter<ChildSafetyAc
     List<ChildSafetyActionModel> action_plan;
 
     ObjectMapper oMapper;
+    private final Handler mainHandler = new Handler(Looper.getMainLooper());
+
+    public interface OnDataUpdateListener {
+        void onDataUpdate();
+    }
+
+    private OnDataUpdateListener onDataUpdateListener;
+
+    public void setOnDataUpdateListener(OnDataUpdateListener onDataUpdateListener) {
+        this.onDataUpdateListener = onDataUpdateListener;
+    }
 
     public ChildSafetyActionAdapter(ArrayList<ChildSafetyActionModel> action_plan, Context context){
 
@@ -187,8 +200,9 @@ public class ChildSafetyActionAdapter extends RecyclerView.Adapter<ChildSafetyAc
                 } catch (Exception e) {
                     Timber.e(e);
                 }
-                callChildActionActivity(plan,safeChild);
-
+                if (onDataUpdateListener != null) {
+                    mainHandler.post(onDataUpdateListener::onDataUpdate);
+                }
 
             }));
 
@@ -199,32 +213,6 @@ public class ChildSafetyActionAdapter extends RecyclerView.Adapter<ChildSafetyAc
             alert.show();
         });
     }
-    public void callChildActionActivity(ChildSafetyActionModel plan, Child child) {
-        if (child == null) {
-            Toast.makeText(context, "Member data incomplete", Toast.LENGTH_LONG).show();
-            Timber.w("Skipping ChildSafetyPlanActions launch: child record missing for %s", plan.getUnique_id());
-            return;
-        }
-        Intent openChildSafetyPlanActionActivity = new Intent(context, ChildSafetyPlanActions.class);
-        openChildSafetyPlanActionActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        openChildSafetyPlanActionActivity.putExtra("vca_id", plan.getUnique_id());
-        openChildSafetyPlanActionActivity.putExtra("vca_name", child.getFirst_name() + " " + child.getLast_name());
-        openChildSafetyPlanActionActivity.putExtra("action_date", plan.getInitial_date());
-
-        if (context instanceof ChildSafetyPlanActions) {
-            Activity activity = (ChildSafetyPlanActions) context;
-            activity.finish();
-            activity.startActivity(openChildSafetyPlanActionActivity);
-            activity.recreate();
-        } else {
-            context.startActivity(openChildSafetyPlanActionActivity);
-        }
-
-    }
-
-
-
-
     public ChildIndexEventClient processRegistration(String jsonString){
 
         try {
@@ -300,6 +288,9 @@ public class ChildSafetyActionAdapter extends RecyclerView.Adapter<ChildSafetyAc
                     getClientProcessorForJava().processClient(savedEvents);
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
 
+                    if (onDataUpdateListener != null) {
+                        mainHandler.post(onDataUpdateListener::onDataUpdate);
+                    }
 
                 } catch (Exception e) {
                     Timber.e(e);

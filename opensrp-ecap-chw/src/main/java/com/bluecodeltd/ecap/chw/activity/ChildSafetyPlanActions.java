@@ -8,6 +8,8 @@ import static org.smartregister.util.JsonFormUtils.STEP1;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Toast;
 
@@ -49,15 +51,18 @@ import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 public class ChildSafetyPlanActions extends AppCompatActivity {
 
 
     private RecyclerView recyclerView;
-    RecyclerView.Adapter recyclerViewadapter;
-    private ArrayList<ChildSafetyActionModel> actionList = new ArrayList<>();
+    private LinearLayoutManager layoutManager;
+    private ChildSafetyActionAdapter recyclerViewadapter;
+    private final ArrayList<ChildSafetyActionModel> actionList = new ArrayList<>();
     private Button actionBtn, actionBtn2;
     String vcaName, childId, actionDate;
+    private final Handler uiHandler = new Handler(Looper.getMainLooper());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,27 +77,16 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
         vcaName = getIntent().getExtras().getString("vca_name");
         actionDate = getIntent().getExtras().getString("action_date");
 
-        fetchData();
-
-    }
-
-    public void fetchData(){
-
-        actionList.addAll(ChildSafetyActionDao.getActionsById(childId, actionDate));
-
-        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(ChildSafetyPlanActions.this);
+        layoutManager = new LinearLayoutManager(this);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(eLayoutManager);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new ChildSafetyActionAdapter(actionList, ChildSafetyPlanActions.this);
+        recyclerViewadapter = new ChildSafetyActionAdapter(actionList, this);
+        recyclerViewadapter.setOnDataUpdateListener(() -> uiHandler.post(() -> loadActions(true)));
         recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
 
-        if (recyclerViewadapter.getItemCount() > 0 && actionList.size() > 0){
+        loadActions(false);
 
-            actionBtn.setVisibility(View.GONE);
-            actionBtn2.setVisibility(View.VISIBLE);
-        }
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -180,20 +174,8 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
                 Timber.e(e);
             }
         }
-        goBackToSafetyPlan();
         Toasty.success(ChildSafetyPlanActions.this, "Child Safety Action Saved", Toast.LENGTH_LONG, true).show();
-
-    }
-
-    private void goBackToSafetyPlan() {
-        Intent i = new Intent(getApplicationContext(),ChildSafetyPlanActions.class);
-        i.putExtra("vca_id",childId);
-        i.putExtra("vca_name",vcaName);
-        i.putExtra("action_date",actionDate);
-        startActivity(i);
-        finish();
-        recreate();
-
+        loadActions(true);
     }
 
     public ChildIndexEventClient processRegistration(String jsonString){
@@ -270,6 +252,7 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
                     getClientProcessorForJava().processClient(savedEvents);
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
 
+                    uiHandler.post(() -> loadActions(true));
 
                 } catch (Exception e) {
                     Timber.e(e);
@@ -319,5 +302,56 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
         directToSafetyPlans.putExtra("action_date",actionDate);
         startActivity(directToSafetyPlans);
         finish();
+    }
+
+    private void loadActions(boolean maintainScroll) {
+        if (recyclerViewadapter == null) {
+            return;
+        }
+
+        int firstVisible = RecyclerView.NO_POSITION;
+        int offset = 0;
+        if (maintainScroll && layoutManager != null) {
+            firstVisible = layoutManager.findFirstVisibleItemPosition();
+            View firstChild = recyclerView.getChildAt(0);
+            if (firstChild != null) {
+                offset = firstChild.getTop() - recyclerView.getPaddingTop();
+            }
+        }
+
+        final int positionToRestore = firstVisible;
+        final int offsetToRestore = offset;
+
+        Threading.io(() -> {
+            List<ChildSafetyActionModel> results = new ArrayList<>();
+            try {
+                results = ChildSafetyActionDao.getActionsById(childId, actionDate);
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+            List<ChildSafetyActionModel> finalResults = results;
+            Threading.main(() -> {
+                actionList.clear();
+                actionList.addAll(finalResults);
+                recyclerViewadapter.notifyDataSetChanged();
+                updateButtons();
+                if (maintainScroll && layoutManager != null && positionToRestore != RecyclerView.NO_POSITION) {
+                    layoutManager.scrollToPositionWithOffset(positionToRestore, offsetToRestore);
+                }
+            });
+        });
+    }
+
+    private void updateButtons() {
+        if (recyclerViewadapter == null) {
+            return;
+        }
+        if (recyclerViewadapter.getItemCount() > 0) {
+            actionBtn.setVisibility(View.GONE);
+            actionBtn2.setVisibility(View.VISIBLE);
+        } else {
+            actionBtn.setVisibility(View.VISIBLE);
+            actionBtn2.setVisibility(View.GONE);
+        }
     }
 }
