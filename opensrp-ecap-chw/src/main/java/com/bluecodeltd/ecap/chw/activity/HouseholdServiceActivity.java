@@ -9,6 +9,8 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -68,6 +70,7 @@ public class HouseholdServiceActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     HouseholdServiceAdapter recyclerViewadapter;
+    private LinearLayoutManager layoutManager;
     private ArrayList<HouseholdServiceReportModel> familyServiceList = new ArrayList<>();
     private LinearLayout linearLayout;
     private TextView cname, hh_id,updatedCaregiverName;
@@ -76,6 +79,7 @@ public class HouseholdServiceActivity extends AppCompatActivity {
     String intent_householdId;
     String intent_cname;
     newCaregiverModel updatedCaregiver;
+    private final Handler uiHandler = new Handler(Looper.getMainLooper());
     // Use centralized Threading
 
     @SuppressLint("MissingInflatedId")
@@ -130,44 +134,21 @@ public class HouseholdServiceActivity extends AppCompatActivity {
             cname.setText(intent_cname);
         }
 
-        View progress = binding.progressLoading;
-        // Initialize RecyclerView + Adapter early to avoid nulls on resume
-        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(HouseholdServiceActivity.this);
+        layoutManager = new LinearLayoutManager(this);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(eLayoutManager);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        if (recyclerViewadapter == null) {
-            recyclerViewadapter = new HouseholdServiceAdapter(familyServiceList, HouseholdServiceActivity.this);
-            recyclerView.setAdapter(recyclerViewadapter);
-            recyclerViewadapter.setOnDataUpdateListener(() -> runOnUiThread(this::recreate));
-        }
-        if (progress != null) progress.setVisibility(View.VISIBLE);
-        Threading.io(() -> {
-            ArrayList<HouseholdServiceReportModel> results = new ArrayList<>();
-            if (!TextUtils.isEmpty(intent_householdId)) {
-                results.addAll(HouseholdServiceReportDao.getServicesByHousehold(intent_householdId));
-            }
-            Threading.main(() -> {
-                familyServiceList.clear();
-                familyServiceList.addAll(results);
-                if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged();
-                if (recyclerViewadapter.getItemCount() > 0){
-                    linearLayout.setVisibility(View.GONE);
-                } else {
-                    linearLayout.setVisibility(View.VISIBLE);
-                }
-                if (progress != null) progress.setVisibility(View.GONE);
-            });
-        });
+        recyclerViewadapter = new HouseholdServiceAdapter(familyServiceList, this);
+        recyclerViewadapter.setOnDataUpdateListener(() -> uiHandler.post(() -> loadServices(true)));
+        recyclerView.setAdapter(recyclerViewadapter);
+
+        loadServices(false);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (recyclerViewadapter != null) {
-            recyclerView.setAdapter(recyclerViewadapter);
-            try { recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
-        }
+        loadServices(true);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -299,17 +280,66 @@ public class HouseholdServiceActivity extends AppCompatActivity {
             }
         }
     }
-    private void refreshData() {
-        familyServiceList.clear();
-        List<HouseholdServiceReportModel> updatedList = HouseholdServiceReportDao.getServicesByHousehold(intent_householdId);
-        familyServiceList.addAll(updatedList);
+    private void loadServices(boolean maintainScroll) {
         if (recyclerViewadapter == null) {
-            try {
-                recyclerViewadapter = new HouseholdServiceAdapter(familyServiceList, HouseholdServiceActivity.this);
-                if (recyclerView != null) recyclerView.setAdapter(recyclerViewadapter);
-            } catch (Exception ignored) {}
+            return;
         }
-        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
+        int firstVisible = RecyclerView.NO_POSITION;
+        int offset = 0;
+        if (maintainScroll && layoutManager != null) {
+            firstVisible = layoutManager.findFirstVisibleItemPosition();
+            View firstChild = recyclerView.getChildAt(0);
+            if (firstChild != null) {
+                offset = firstChild.getTop() - recyclerView.getPaddingTop();
+            }
+        }
+
+        View progress = binding.progressLoading;
+        if (progress != null) {
+            progress.setVisibility(View.VISIBLE);
+        }
+
+        final int positionToRestore = firstVisible;
+        final int offsetToRestore = offset;
+
+        Threading.io(() -> {
+            List<HouseholdServiceReportModel> results = new ArrayList<>();
+            if (!TextUtils.isEmpty(intent_householdId)) {
+                try {
+                    results = HouseholdServiceReportDao.getServicesByHousehold(intent_householdId);
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+            }
+            List<HouseholdServiceReportModel> finalResults = results;
+            Threading.main(() -> {
+                familyServiceList.clear();
+                familyServiceList.addAll(finalResults);
+                recyclerViewadapter.notifyDataSetChanged();
+                updateEmptyState();
+                if (progress != null) {
+                    progress.setVisibility(View.GONE);
+                }
+                if (maintainScroll && layoutManager != null && positionToRestore != RecyclerView.NO_POSITION) {
+                    layoutManager.scrollToPositionWithOffset(positionToRestore, offsetToRestore);
+                }
+            });
+        });
+    }
+
+    private void updateEmptyState() {
+        if (linearLayout == null) {
+            return;
+        }
+        if (recyclerViewadapter != null && recyclerViewadapter.getItemCount() > 0) {
+            linearLayout.setVisibility(View.GONE);
+        } else {
+            linearLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void refreshData() {
+        loadServices(true);
     }
     public ChildIndexEventClient processRegistration(String jsonString){
 
@@ -426,10 +456,6 @@ public class HouseholdServiceActivity extends AppCompatActivity {
 
     private ClientProcessorForJava getClientProcessorForJava() {
         return ChwApplication.getInstance().getClientProcessorForJava();
-    }
-    public void refresh(){
-        finish();
-        startActivity(getIntent());
     }
     @Override
     public void onBackPressed() {

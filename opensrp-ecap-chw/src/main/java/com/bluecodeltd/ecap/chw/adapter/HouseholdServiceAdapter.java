@@ -25,7 +25,6 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.activity.HouseholdServiceActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.util.Threading;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
@@ -54,8 +53,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import android.os.Looper;
 
 import timber.log.Timber;
@@ -66,16 +63,15 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
     Context context;
     List<HouseholdServiceReportModel> services;
     ObjectMapper oMapper;
-    private static final long REFRESH_DELAY = 100;
-    private Handler handler = new Handler();
+    private final Handler mainHandler = new Handler(Looper.getMainLooper());
     // Use centralized Threading for background name lookups
 
     public interface OnDataUpdateListener {
         void onDataUpdate();
     }
-    private HouseholdServiceAdapter.OnDataUpdateListener onDataUpdateListener;
+    private OnDataUpdateListener onDataUpdateListener;
 
-    public void setOnDataUpdateListener(HouseholdServiceAdapter.OnDataUpdateListener onDataUpdateListener) {
+    public void setOnDataUpdateListener(OnDataUpdateListener onDataUpdateListener) {
         this.onDataUpdateListener = onDataUpdateListener;
     }
 
@@ -238,9 +234,6 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
                     } catch (Exception e) {
                         Timber.e(e);
                     }
-                    if (context instanceof Activity) {
-                        ((Activity) context).finish();
-                    }
 
                 }));
 
@@ -257,17 +250,6 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
 
 
     }
-    public void refreshActivity() {
-        handler.postDelayed(refreshRunnable, REFRESH_DELAY);
-    }
-
-    private Runnable refreshRunnable = new Runnable() {
-        @Override
-        public void run() {
-            Activity activity = (HouseholdServiceActivity) context;
-            activity.recreate();
-        }
-    };
     public void showDialogBox(String householdId,String message){
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_layout);
@@ -437,6 +419,9 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
                     List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
                     getClientProcessorForJava().processClient(savedEvents);
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
+                    if (onDataUpdateListener != null) {
+                        mainHandler.post(onDataUpdateListener::onDataUpdate);
+                    }
 
 
                 } catch (Exception e) {
