@@ -12,6 +12,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,6 +37,7 @@ import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
 import com.bluecodeltd.ecap.chw.model.VcaScreeningModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -56,7 +59,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import com.bluecodeltd.ecap.chw.util.Threading;
 
 import timber.log.Timber;
 
@@ -65,7 +67,7 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
     Context context;
     List<VCAServiceModel> services;
     ObjectMapper oMapper;
-    // Use centralized Threading
+    private final Handler mainHandler = new Handler(Looper.getMainLooper());
 
     public interface OnDataUpdateListener {
         void onDataUpdate();
@@ -259,10 +261,6 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
                 } catch (Exception e) {
                     Timber.e(e);
                 }
-                if (context instanceof Activity) {
-                    ((Activity) context).finish();
-                }
-
             }));
 
             //Creating dialog box
@@ -389,6 +387,9 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
                     getClientProcessorForJava().processClient(savedEvents);
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
 
+                    if (onDataUpdateListener != null) {
+                        mainHandler.post(onDataUpdateListener::onDataUpdate);
+                    }
 
                 } catch (Exception e) {
                     Timber.e(e);

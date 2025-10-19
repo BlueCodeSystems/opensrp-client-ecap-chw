@@ -9,6 +9,8 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -55,6 +57,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import com.bluecodeltd.ecap.chw.util.Threading;
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
@@ -63,8 +66,9 @@ public class VcaServiceActivity extends AppCompatActivity {
     private com.bluecodeltd.ecap.chw.databinding.ActivityVcaServiceBinding binding;
 
     private RecyclerView recyclerView;
+    private LinearLayoutManager layoutManager;
     VCAServiceAdapter recyclerViewadapter;
-    private ArrayList<VCAServiceModel> familyServiceList = new ArrayList<>();
+    private final ArrayList<VCAServiceModel> familyServiceList = new ArrayList<>();
     private LinearLayout linearLayout;
     private TextView vcaname,hh_id;
 
@@ -73,6 +77,7 @@ public class VcaServiceActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     public String hivstatus, household_id,c_name,intent_vcaid,signature;
+    private final Handler uiHandler = new Handler(Looper.getMainLooper());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,38 +108,21 @@ public class VcaServiceActivity extends AppCompatActivity {
 
         hh_id.setText(intent_vcaid);
         vcaname.setText(intent_cname);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewadapter = new VCAServiceAdapter(familyServiceList, this);
+        recyclerViewadapter.setOnDataUpdateListener(() -> uiHandler.post(() -> loadServices(true)));
+        recyclerView.setAdapter(recyclerViewadapter);
+        updateEmptyState();
 
-
-        familyServiceList.addAll(VCAServiceReportDao.getServicesByVCAID(intent_vcaid));
-        vcaServiceModel = VCAServiceReportDao.getVcaService(intent_vcaid);
-
-
-        if (recyclerViewadapter == null) {
-            RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(VcaServiceActivity.this);
-            recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(eLayoutManager);
-            recyclerView.setItemAnimator(new DefaultItemAnimator());
-            recyclerViewadapter = new VCAServiceAdapter(familyServiceList, VcaServiceActivity.this);
-            recyclerView.setAdapter(recyclerViewadapter);
-            try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
-
-            recyclerViewadapter.setOnDataUpdateListener(() -> runOnUiThread(() -> {
-                recreate();
-            }));
-        } else {
-            try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
-        }
-
-        if (recyclerViewadapter.getItemCount() > 0){
-
-            linearLayout.setVisibility(View.GONE);
-        }
+        loadServices(false);
     }
     @Override
     public void onResume() {
         super.onResume();
-        recyclerView.setAdapter(recyclerViewadapter);
-        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
+        loadServices(true);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -262,9 +250,7 @@ public class VcaServiceActivity extends AppCompatActivity {
 
                 case "VCA Service Report Edit":
                     Toasty.success(VcaServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
-                    familyServiceList.clear();
-                    familyServiceList.addAll(VCAServiceReportDao.getServicesByVCAID(intent_vcaid));
-                    try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
+                    loadServices(true);
                     break;
 
             }
@@ -273,9 +259,6 @@ public class VcaServiceActivity extends AppCompatActivity {
                 Timber.e(e);
             }
         }
-//        finish();
-//        startActivity(getIntent());
-        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
     }
 
     public ChildIndexEventClient processRegistration(String jsonString){
@@ -351,7 +334,7 @@ public class VcaServiceActivity extends AppCompatActivity {
                     getClientProcessorForJava().processClient(savedEvents);
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
 
-                    runOnUiThread(this::refreshData);
+                    uiHandler.post(() -> loadServices(true));
 
                 } catch (Exception e) {
                     Timber.e(e);
@@ -389,11 +372,54 @@ public class VcaServiceActivity extends AppCompatActivity {
     private ClientProcessorForJava getClientProcessorForJava() {
         return ChwApplication.getInstance().getClientProcessorForJava();
     }
-    private void refreshData() {
-        familyServiceList.clear();
-        List<VCAServiceModel> updatedList = VCAServiceReportDao.getServicesByVCAID(intent_vcaid);
-        familyServiceList.addAll(updatedList);
-        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
+    private void loadServices(boolean maintainScroll) {
+        if (recyclerViewadapter == null) {
+            return;
+        }
+
+        int firstVisible = RecyclerView.NO_POSITION;
+        int offset = 0;
+        if (maintainScroll && layoutManager != null) {
+            firstVisible = layoutManager.findFirstVisibleItemPosition();
+            View firstChild = recyclerView.getChildAt(0);
+            if (firstChild != null) {
+                offset = firstChild.getTop() - recyclerView.getPaddingTop();
+            }
+        }
+
+        final int positionToRestore = firstVisible;
+        final int offsetToRestore = offset;
+
+        Threading.io(() -> {
+            List<VCAServiceModel> results = new ArrayList<>();
+            try {
+                results = VCAServiceReportDao.getServicesByVCAID(intent_vcaid);
+                vcaServiceModel = VCAServiceReportDao.getVcaService(intent_vcaid);
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+            List<VCAServiceModel> finalResults = results;
+            Threading.main(() -> {
+                familyServiceList.clear();
+                familyServiceList.addAll(finalResults);
+                recyclerViewadapter.notifyDataSetChanged();
+                updateEmptyState();
+                if (maintainScroll && layoutManager != null && positionToRestore != RecyclerView.NO_POSITION) {
+                    layoutManager.scrollToPositionWithOffset(positionToRestore, offsetToRestore);
+                }
+            });
+        });
+    }
+
+    private void updateEmptyState() {
+        if (linearLayout == null || recyclerViewadapter == null) {
+            return;
+        }
+        if (recyclerViewadapter.getItemCount() > 0) {
+            linearLayout.setVisibility(View.GONE);
+        } else {
+            linearLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     public void HouseholdLinkFromVca(){
