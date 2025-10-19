@@ -29,6 +29,9 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildSafetyActionModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.FormCache;
+import com.bluecodeltd.ecap.chw.util.FormLoadingDialog;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -53,6 +56,7 @@ import java.util.List;
 import java.util.Map;
 
 import timber.log.Timber;
+import es.dmoral.toasty.Toasty;
 
 public class ChildSafetyActionAdapter extends RecyclerView.Adapter<ChildSafetyActionAdapter.ViewHolder>{
 
@@ -79,6 +83,7 @@ public class ChildSafetyActionAdapter extends RecyclerView.Adapter<ChildSafetyAc
 
         this.action_plan = action_plan;
         this.context = context;
+        FormCache.warmFormAsync(context, "child_safety_action");
     }
 
     @Override
@@ -135,17 +140,10 @@ public class ChildSafetyActionAdapter extends RecyclerView.Adapter<ChildSafetyAc
         holder.editme.setOnClickListener(v -> {
 
             if (v.getId() == R.id.edit_me) {
-
-                try {
-                    if(context instanceof ChildSafetyPlanActions){
-                        openFormUsingFormUtils(context, "child_safety_action", plan);
-                    } else {
-                        openFormUsingFormUtils(context, "caregiver_domain", plan);
-                    }
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if(context instanceof ChildSafetyPlanActions){
+                    openFormUsingFormUtils(context, "child_safety_action", plan);
+                } else {
+                    openFormUsingFormUtils(context, "caregiver_domain", plan);
                 }
             }
         });
@@ -173,36 +171,36 @@ public class ChildSafetyActionAdapter extends RecyclerView.Adapter<ChildSafetyAc
                 dialog.cancel();
 
             }).setPositiveButton("YES",((dialogInterface, i) -> {
-                FormUtils formUtils = null;
-                try {
-                    formUtils = new FormUtils(context);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
                 plan.setDelete_status("1");
-                JSONObject childSafetyPlanForm = formUtils.getFormJson("child_safety_action");
-                try {
-                    CoreJsonFormUtils.populateJsonForm(childSafetyPlanForm, new ObjectMapper().convertValue( plan, Map.class));
-                    childSafetyPlanForm.put("entity_id", plan.getBase_entity_id());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                AlertDialog loading = FormLoadingDialog.show(context instanceof Activity ? (Activity) context : null);
+                Threading.io(() -> {
+                    try {
+                        JSONObject childSafetyPlanForm = FormCache.obtainFormTemplate(context, "child_safety_action");
+                        CoreJsonFormUtils.populateJsonForm(childSafetyPlanForm, new ObjectMapper().convertValue(plan, Map.class));
+                        childSafetyPlanForm.put("entity_id", plan.getBase_entity_id());
 
-                try {
+                        ChildIndexEventClient childIndexEventClient = processRegistration(childSafetyPlanForm.toString());
+                        if (childIndexEventClient == null) {
+                            Threading.main(() -> FormLoadingDialog.dismiss(loading));
+                            return;
+                        }
+                        saveRegistration(childIndexEventClient,true);
+                        Threading.main(() -> {
+                            FormLoadingDialog.dismiss(loading);
+                            if (onDataUpdateListener != null) {
+                                onDataUpdateListener.onDataUpdate();
+                            }
+                        });
 
-                    ChildIndexEventClient childIndexEventClient = processRegistration(childSafetyPlanForm.toString());
-                    if (childIndexEventClient == null) {
-                        return;
+
+                    } catch (Exception e) {
+                        Timber.e(e);
+                        Threading.main(() -> {
+                            FormLoadingDialog.dismiss(loading);
+                            Toasty.error(context, "Unable to update action", Toast.LENGTH_LONG, true).show();
+                        });
                     }
-                    saveRegistration(childIndexEventClient,true);
-
-
-                } catch (Exception e) {
-                    Timber.e(e);
-                }
-                if (onDataUpdateListener != null) {
-                    mainHandler.post(onDataUpdateListener::onDataUpdate);
-                }
+                });
 
             }));
 
@@ -313,27 +311,30 @@ public class ChildSafetyActionAdapter extends RecyclerView.Adapter<ChildSafetyAc
     }
 
 
-    public void openFormUsingFormUtils(Context context, String formName, ChildSafetyActionModel caseplan) throws JSONException {
+    public void openFormUsingFormUtils(Context context, String formName, ChildSafetyActionModel caseplan) {
+        Activity activity = context instanceof Activity ? (Activity) context : null;
+        AlertDialog loading = FormLoadingDialog.show(activity);
+        Threading.io(() -> {
+            try {
+                oMapper = new ObjectMapper();
+                JSONObject formToBeOpened = FormCache.obtainFormTemplate(context, formName);
 
-        oMapper = new ObjectMapper();
+                formToBeOpened.put("entity_id", caseplan.getBase_entity_id());
 
-        FormUtils formUtils = null;
-        try {
-            formUtils = new FormUtils(context);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        JSONObject formToBeOpened;
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(caseplan, Map.class));
+                Threading.main(() -> {
+                    FormLoadingDialog.dismiss(loading);
+                    startFormActivity(formToBeOpened);
+                });
 
-        formToBeOpened = formUtils.getFormJson(formName);
-
-        formToBeOpened.put("entity_id", caseplan.getBase_entity_id());
-
-//        formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("read_only",true);
-
-        CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(caseplan, Map.class));
-
-        startFormActivity(formToBeOpened);
+            } catch (Exception e) {
+                Timber.e(e);
+                Threading.main(() -> {
+                    FormLoadingDialog.dismiss(loading);
+                    Toasty.error(context, "Unable to open form", Toast.LENGTH_LONG, true).show();
+                });
+            }
+        });
 
     }
 

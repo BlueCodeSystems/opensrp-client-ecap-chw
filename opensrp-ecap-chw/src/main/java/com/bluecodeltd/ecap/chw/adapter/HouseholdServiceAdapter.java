@@ -21,17 +21,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
-import com.bluecodeltd.ecap.chw.util.Threading;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.HouseholdServiceReportModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.FormCache;
+import com.bluecodeltd.ecap.chw.util.FormLoadingDialog;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -47,14 +50,13 @@ import org.smartregister.domain.tag.FormTag;
 import org.smartregister.family.util.AppExecutors;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.sync.helper.ECSyncHelper;
-import org.smartregister.util.FormUtils;
-
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import android.os.Looper;
 
+import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
 public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServiceAdapter.ViewHolder>{
@@ -82,6 +84,8 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
 
         this.services = services;
         this.context = context;
+        FormCache.warmFormAsync(context, "service_report_household");
+        FormCache.warmFormAsync(context, "service_report_household_edit");
 
     }
 
@@ -164,12 +168,7 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
                     (household.getHousehold_case_status().equals("0") || household.getHousehold_case_status().equals("2"))) {
                 showDialogBox(service.getHousehold_id(), "`s has been inactive or de-registered");
             } else {
-                try {
-                    FormUtils formUtils = new FormUtils(context);
-                    openFormUsingFormUtils(context, "service_report_household_edit", service);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                openFormUsingFormUtils(context, "service_report_household_edit", service);
             }
         });
         holder.linearLayout.setOnClickListener(v -> {
@@ -179,20 +178,7 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
             } else {
                 if (v.getId() == R.id.itemm) {
 
-                    FormUtils formUtils = null;
-                    try {
-                        formUtils = new FormUtils(context);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-
-                    try {
-                        openFormUsingFormUtils(context, "service_report_household_edit", service);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    openFormUsingFormUtils(context, "service_report_household_edit", service);
 
                 }
             }
@@ -203,43 +189,36 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage("You are about to delete this household service ");
                 builder.setNegativeButton("NO", (dialog, id) -> {
-                    //  Action for 'NO' Button
                     dialog.cancel();
 
                 }).setPositiveButton("YES",((dialogInterface, i) -> {
-                    FormUtils formUtils = null;
-                    try {
-                        formUtils = new FormUtils(context);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
                     service.setDelete_status("1");
-                    JSONObject vcaScreeningForm = formUtils.getFormJson("service_report_household");
-                    try {
-                        CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(service, Map.class));
-                        vcaScreeningForm.put("entity_id", service .getBase_entity_id());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    AlertDialog loading = FormLoadingDialog.show(context instanceof Activity ? (Activity) context : null);
+                    Threading.io(() -> {
+                        try {
+                            JSONObject vcaScreeningForm = FormCache.obtainFormTemplate(context, "service_report_household");
+                            CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(service, Map.class));
+                            vcaScreeningForm.put("entity_id", service .getBase_entity_id());
 
-                    try {
-
-                        ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
-                        if (childIndexEventClient == null) {
-                            return;
+                            ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
+                            if (childIndexEventClient == null) {
+                                Threading.main(() -> FormLoadingDialog.dismiss(loading));
+                                return;
+                            }
+                            saveRegistration(childIndexEventClient,true);
+                            Threading.main(() -> FormLoadingDialog.dismiss(loading));
+                        } catch (Exception e) {
+                            Timber.e(e);
+                            Threading.main(() -> {
+                                FormLoadingDialog.dismiss(loading);
+                                Toasty.error(context, "Unable to update service", Toast.LENGTH_LONG, true).show();
+                            });
                         }
-                        saveRegistration(childIndexEventClient,true);
-
-
-                    } catch (Exception e) {
-                        Timber.e(e);
-                    }
+                    });
 
                 }));
 
-                //Creating dialog box
                 AlertDialog alert = builder.create();
-                //Setting the title manually
                 alert.setTitle("Alert");
                 alert.show();
 
@@ -272,60 +251,63 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
         dialogButton.setOnClickListener(v -> dialog.dismiss());
     }
 
-    public void openFormUsingFormUtils(Context context, String formName, HouseholdServiceReportModel service) throws JSONException {
+    public void openFormUsingFormUtils(Context context, String formName, HouseholdServiceReportModel service) {
+        Activity activity = context instanceof Activity ? (Activity) context : null;
+        AlertDialog loading = FormLoadingDialog.show(activity);
+        Threading.io(() -> {
+            try {
+                oMapper = new ObjectMapper();
+                JSONObject formToBeOpened = FormCache.obtainFormTemplate(context, formName);
+                formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).remove("read_only");
+                formToBeOpened.put("entity_id", service.getBase_entity_id());
 
-        oMapper = new ObjectMapper();
+                HouseholdServiceReportModel householdReport = new HouseholdServiceReportModel();
+                householdReport.setServices(service.getServices());
+                householdReport.setServices_household(service.getServices_household());
 
+                if (service.getHealth_services() == null && service.getServices_caregiver() != null) {
+                    householdReport.setHealth_services(service.getServices_caregiver());
+                } else {
+                    householdReport.setHealth_services(service.getHealth_services());
+                }
 
-        FormUtils formUtils = null;
-        try {
-            formUtils = new FormUtils(context);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        JSONObject formToBeOpened;
+                householdReport.setOther_health_services(service.getOther_health_services());
+                householdReport.setHh_service_location(service.getHh_service_location());
+                householdReport.setSchooled_services(service.getSchooled_services());
+                householdReport.setOther_schooled_services(service.getOther_schooled_services());
+                householdReport.setSafe_services(service.getSafe_services());
+                householdReport.setOther_safe_services(service.getOther_safe_services());
+                householdReport.setStable_services(service.getStable_services());
+                householdReport.setOther_stable_services(service.getOther_stable_services());
+                householdReport.setHh_level_services(service.getHh_level_services());
+                householdReport.setOther_hh_level_services(service.getOther_hh_level_services());
+                householdReport.setDate(service.getDate());
+                householdReport.setIs_hiv_positive(service.getIs_hiv_positive());
+                householdReport.setArt_clinic(service.getArt_clinic());
+                householdReport.setDate_last_vl(service.getDate_last_vl());
+                householdReport.setVl_last_result(service.getVl_last_result());
+                householdReport.setDate_next_vl(service.getDate_next_vl());
+                householdReport.setCaregiver_mmd(service.getCaregiver_mmd());
+                householdReport.setLevel_mmd(service.getLevel_mmd());
+                householdReport.setHousehold_id(service.getHousehold_id());
+                householdReport.setBase_entity_id(service.getBase_entity_id());
+                householdReport.setOther_services_caregiver(service.getOther_services_caregiver());
+                householdReport.setOther_services_household(service.getOther_services_household());
+                householdReport.setDelete_status(service.getDelete_status());
 
-        formToBeOpened = formUtils.getFormJson(formName);
-
-        formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).remove("read_only");
-        formToBeOpened.put("entity_id", service.getBase_entity_id());
-        HouseholdServiceReportModel householdReport = new HouseholdServiceReportModel();
-        householdReport.setServices(service.getServices());
-        householdReport.setServices_household(service.getServices_household());
-
-        if (service.getHealth_services() == null && service.getServices_caregiver() != null){
-            householdReport.setHealth_services(service.getServices_caregiver());
-        } else {
-            householdReport.setHealth_services(service.getHealth_services());
-        }
-
-        householdReport.setOther_health_services(service.getOther_health_services());
-        householdReport.setHh_service_location(service.getHh_service_location());
-        householdReport.setSchooled_services(service.getSchooled_services());
-        householdReport.setOther_schooled_services(service.getOther_schooled_services());
-        householdReport.setSafe_services(service.getSafe_services());
-        householdReport.setOther_safe_services(service.getOther_safe_services());
-        householdReport.setStable_services(service.getStable_services());
-        householdReport.setOther_stable_services(service.getOther_stable_services());
-        householdReport.setHh_level_services(service.getHh_level_services());
-        householdReport.setOther_hh_level_services(service.getOther_hh_level_services());
-        householdReport.setDate(service.getDate());
-        householdReport.setIs_hiv_positive(service.getIs_hiv_positive());
-        householdReport.setArt_clinic(service.getArt_clinic());
-        householdReport.setDate_last_vl(service.getDate_last_vl());
-        householdReport.setVl_last_result(service.getVl_last_result());
-        householdReport.setDate_next_vl(service.getDate_next_vl());
-        householdReport.setCaregiver_mmd(service.getCaregiver_mmd());
-        householdReport.setLevel_mmd(service.getLevel_mmd());
-        householdReport.setHousehold_id(service.getHousehold_id());
-        householdReport.setBase_entity_id(service.getBase_entity_id());
-        householdReport.setOther_services_caregiver(service.getOther_services_caregiver());
-        householdReport.setOther_services_household(service.getOther_services_household());
-        householdReport.setDelete_status(service.getDelete_status());
-        CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(householdReport, Map.class));
-
-        startFormActivity(formToBeOpened);
-
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(householdReport, Map.class));
+                Threading.main(() -> {
+                    FormLoadingDialog.dismiss(loading);
+                    startFormActivity(formToBeOpened);
+                });
+            } catch (Exception e) {
+                Timber.e(e);
+                Threading.main(() -> {
+                    FormLoadingDialog.dismiss(loading);
+                    Toasty.error(context, "Unable to open form", Toast.LENGTH_LONG, true).show();
+                });
+            }
+        });
     }
 
     public void startFormActivity(JSONObject jsonObject) {

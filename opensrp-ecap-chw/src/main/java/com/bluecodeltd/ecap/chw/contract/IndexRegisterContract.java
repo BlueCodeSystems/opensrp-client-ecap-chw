@@ -48,7 +48,7 @@ public interface IndexRegisterContract {
         List<EventClient> processRegistration(String jsonString, FormTag formTag);
 
         @Nullable
-        JSONObject getFormAsJson(String formName, String entityId,
+        JSONObject getFormAsJson(Context context, String formName, String entityId,
                                  String currentLocationId) throws JSONException;
 
 

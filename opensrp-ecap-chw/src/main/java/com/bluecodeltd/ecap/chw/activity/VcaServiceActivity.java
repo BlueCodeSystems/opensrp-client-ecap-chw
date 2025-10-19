@@ -6,6 +6,7 @@ import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_EXTRA.STEP1;
 import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,6 +34,8 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.FormCache;
+import com.bluecodeltd.ecap.chw.util.FormLoadingDialog;
 import com.rey.material.widget.Button;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -50,7 +53,6 @@ import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
-import org.smartregister.util.FormUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -78,6 +80,9 @@ public class VcaServiceActivity extends AppCompatActivity {
     private Toolbar toolbar;
     public String hivstatus, household_id,c_name,intent_vcaid,signature;
     private final Handler uiHandler = new Handler(Looper.getMainLooper());
+    private interface FormModifier {
+        void apply(JSONObject form) throws Exception;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +113,9 @@ public class VcaServiceActivity extends AppCompatActivity {
 
         hh_id.setText(intent_vcaid);
         vcaname.setText(intent_cname);
+
+        FormCache.warmFormAsync(this, "service_report_vca");
+        FormCache.warmFormAsync(this, "service_report_vca_edit");
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
@@ -166,16 +174,13 @@ public class VcaServiceActivity extends AppCompatActivity {
                     dialogButton.setOnClickListener(view -> dialog.dismiss());
                 } else {
                     try {
-                        FormUtils formUtils = new FormUtils(this);
-                        JSONObject indexRegisterForm = formUtils.getFormJson("service_report_vca");
+                        launchFormAsync("service_report_vca", form -> {
+                            JSONObject cId = getFieldJSONObject(fields(form, STEP1), "unique_id");
+                            cId.put("value", hh_id.getText().toString());
 
-                        JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
-                        cId.put("value", hh_id.getText().toString());
-
-                        JSONObject hiv = getFieldJSONObject(fields(indexRegisterForm, STEP1), "is_hiv_positive");
-                        hiv.put("value", hivstatus);
-
-                        startFormActivity(indexRegisterForm);
+                            JSONObject hiv = getFieldJSONObject(fields(form, STEP1), "is_hiv_positive");
+                            hiv.put("value", hivstatus);
+                        });
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -372,6 +377,29 @@ public class VcaServiceActivity extends AppCompatActivity {
     private ClientProcessorForJava getClientProcessorForJava() {
         return ChwApplication.getInstance().getClientProcessorForJava();
     }
+
+    private void launchFormAsync(String formName, FormModifier modifier) {
+        AlertDialog loading = FormLoadingDialog.show(this);
+        Threading.io(() -> {
+            try {
+                JSONObject form = FormCache.obtainFormTemplate(this, formName);
+                if (modifier != null) {
+                    modifier.apply(form);
+                }
+                Threading.main(() -> {
+                    FormLoadingDialog.dismiss(loading);
+                    startFormActivity(form);
+                });
+            } catch (Exception e) {
+                Timber.e(e);
+                Threading.main(() -> {
+                    FormLoadingDialog.dismiss(loading);
+                    Toasty.error(this, "Unable to open form", Toast.LENGTH_LONG, true).show();
+                });
+            }
+        });
+    }
+
     private void loadServices(boolean maintainScroll) {
         if (recyclerViewadapter == null) {
             return;

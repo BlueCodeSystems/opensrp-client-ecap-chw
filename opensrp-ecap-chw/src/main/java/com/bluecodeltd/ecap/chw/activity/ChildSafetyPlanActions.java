@@ -6,6 +6,7 @@ import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,6 +27,9 @@ import com.bluecodeltd.ecap.chw.dao.ChildSafetyActionDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.ChildSafetyActionModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.FormCache;
+import com.bluecodeltd.ecap.chw.util.FormLoadingDialog;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.rey.material.widget.Button;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -42,7 +46,6 @@ import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
-import org.smartregister.util.FormUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -63,6 +66,9 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
     private Button actionBtn, actionBtn2;
     String vcaName, childId, actionDate;
     private final Handler uiHandler = new Handler(Looper.getMainLooper());
+    private interface FormModifier {
+        void apply(JSONObject form) throws Exception;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +91,7 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
         recyclerViewadapter.setOnDataUpdateListener(() -> uiHandler.post(() -> loadActions(true)));
         recyclerView.setAdapter(recyclerViewadapter);
 
+        FormCache.warmFormAsync(this, "child_safety_action");
         loadActions(false);
 
     }
@@ -98,26 +105,11 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
             case R.id.actionBtn:
             case R.id.actionBtn2:
 
-                try {
-                    FormUtils formUtils = new FormUtils(ChildSafetyPlanActions.this);
-                    JSONObject indexRegisterForm;
-
-                    indexRegisterForm = formUtils.getFormJson("child_safety_action");
-
-                    // indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", childId);
-                    indexRegisterForm.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", actionDate);
-
-                    JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
-                    cId.put("value",childId);
-
-                    // JSONObject cDate = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_date");
-                    // cDate.put("value", actionDate);
-
-                    startFormActivity(indexRegisterForm);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                launchFormAsync("child_safety_action", form -> {
+                    form.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", actionDate);
+                    JSONObject cId = getFieldJSONObject(fields(form, STEP1), "unique_id");
+                    cId.put("value", childId);
+                });
 
                 break;
         }
@@ -291,6 +283,28 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
 
     private ClientProcessorForJava getClientProcessorForJava() {
         return ChwApplication.getInstance().getClientProcessorForJava();
+    }
+
+    private void launchFormAsync(String formName, FormModifier modifier) {
+        AlertDialog loading = FormLoadingDialog.show(this);
+        Threading.io(() -> {
+            try {
+                JSONObject form = FormCache.obtainFormTemplate(this, formName);
+                if (modifier != null) {
+                    modifier.apply(form);
+                }
+                Threading.main(() -> {
+                    FormLoadingDialog.dismiss(loading);
+                    startFormActivity(form);
+                });
+            } catch (Exception e) {
+                Timber.e(e);
+                Threading.main(() -> {
+                    FormLoadingDialog.dismiss(loading);
+                    Toasty.error(this, "Unable to open form", Toast.LENGTH_LONG, true).show();
+                });
+            }
+        });
     }
 
     @Override

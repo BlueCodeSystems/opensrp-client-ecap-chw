@@ -137,16 +137,22 @@ public class PMTCTRegisterPresenter implements IndexRegisterContract.Presenter, 
 
    public void startForm(String formName, String entityId, String metadata, String currentLocationId) throws Exception {
 
-
-       if (StringUtils.isBlank(entityId)) {
-           Triple<String, String, String> triple = Triple.of(formName, metadata, currentLocationId);
-           interactor.getNextUniqueId(getView().getContext(), triple, this);
+       PMTCTRegisterActivity view = getView();
+       if (view == null) {
+           Timber.w("Unable to start form %s because view is null", formName);
            return;
        }
 
-       JSONObject form = model.getFormAsJson(formName, entityId, currentLocationId);
-       if (getView() != null)
-           getView().startFormActivity(form);
+       if (StringUtils.isBlank(entityId)) {
+           Triple<String, String, String> triple = Triple.of(formName, metadata, currentLocationId);
+           interactor.getNextUniqueId(view.getContext(), triple, this);
+           return;
+       }
+
+       JSONObject form = model.getFormAsJson(view, formName, entityId, currentLocationId);
+       if (form != null) {
+           view.startFormActivity(form);
+       }
 
    }
 }

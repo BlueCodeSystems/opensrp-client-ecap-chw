@@ -1,14 +1,11 @@
 package com.bluecodeltd.ecap.chw.model;
 
-import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.METADATA;
-import static com.vijay.jsonwizard.utils.FormUtils.fields;
-import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
-import static org.smartregister.util.JsonFormUtils.ENCOUNTER_LOCATION;
-import static org.smartregister.util.JsonFormUtils.STEP1;
+import android.content.Context;
 
 import androidx.annotation.Nullable;
 
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
+import com.bluecodeltd.ecap.chw.util.FormCache;
 import com.bluecodeltd.ecap.chw.util.IndexClientsUtils;
 
 import org.apache.commons.lang3.StringUtils;
@@ -21,15 +18,33 @@ import java.util.List;
 
 import timber.log.Timber;
 
+import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.METADATA;
+import static com.vijay.jsonwizard.utils.FormUtils.fields;
+import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
+import static org.smartregister.util.JsonFormUtils.ENCOUNTER_LOCATION;
+import static org.smartregister.util.JsonFormUtils.STEP1;
+
 public class IndexRegisterModel implements IndexRegisterContract.Model {
 
     @Nullable
     @Override
-    public JSONObject getFormAsJson(String formName, String entityId, String currentLocationId) {
+    public JSONObject getFormAsJson(Context context, String formName, String entityId, String currentLocationId) {
         try {
-            JSONObject form = OpdUtils.getJsonFormToJsonObject(formName);
+            JSONObject form = null;
+
+            if (context != null) {
+                try {
+                    form = FormCache.obtainFormTemplate(context, formName);
+                } catch (Exception e) {
+                    Timber.w(e, "Falling back to uncached load for form %s", formName);
+                }
+            }
+
             if (form == null) {
-                return null;
+                form = OpdUtils.getJsonFormToJsonObject(formName);
+                if (form == null) {
+                    return null;
+                }
             }
 
             form.getJSONObject(METADATA).put(ENCOUNTER_LOCATION, currentLocationId);

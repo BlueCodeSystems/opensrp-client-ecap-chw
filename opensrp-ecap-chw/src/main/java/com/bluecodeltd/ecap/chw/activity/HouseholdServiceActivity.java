@@ -6,6 +6,7 @@ import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,6 +38,8 @@ import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.HouseholdServiceReportModel;
 import com.bluecodeltd.ecap.chw.model.newCaregiverModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.FormCache;
+import com.bluecodeltd.ecap.chw.util.FormLoadingDialog;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONArray;
@@ -53,7 +56,6 @@ import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
-import org.smartregister.util.FormUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -80,6 +82,9 @@ public class HouseholdServiceActivity extends AppCompatActivity {
     String intent_cname;
     newCaregiverModel updatedCaregiver;
     private final Handler uiHandler = new Handler(Looper.getMainLooper());
+    private interface FormModifier {
+        void apply(JSONObject form) throws Exception;
+    }
     // Use centralized Threading
 
     @SuppressLint("MissingInflatedId")
@@ -134,6 +139,9 @@ public class HouseholdServiceActivity extends AppCompatActivity {
             cname.setText(intent_cname);
         }
 
+        FormCache.warmFormAsync(this, "service_report_household");
+        FormCache.warmFormAsync(this, "service_report_household_edit");
+
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
@@ -175,17 +183,12 @@ public class HouseholdServiceActivity extends AppCompatActivity {
                         } else if (finalHouseBg.getHousehold_case_status() !=null && (finalHouseBg.getHousehold_case_status().equals("0") || finalHouseBg.getHousehold_case_status().equals("2"))) {
                             showDialogBox(finalHouseBg.getCaregiver_name() + "`s household has been inactive or de-registered");
                         } else {
-                            try {
-                                FormUtils formUtils = new FormUtils(this);
-                                JSONObject indexRegisterForm = formUtils.getFormJson("service_report_household");
-                                JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "household_id");
-                                cId.put("value",hh_id.getText().toString());
-                                JSONObject hivStatus = getFieldJSONObject(fields(indexRegisterForm, STEP1), "is_hiv_positive");
-                                hivStatus.put("value",finalHouseBg.getCaregiver_hiv_status());
-                                startFormActivity(indexRegisterForm);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                            launchFormAsync("service_report_household", form -> {
+                                JSONObject cId = getFieldJSONObject(fields(form, STEP1), "household_id");
+                                cId.put("value", hh_id.getText().toString());
+                                JSONObject hivStatus = getFieldJSONObject(fields(form, STEP1), "is_hiv_positive");
+                                hivStatus.put("value", finalHouseBg.getCaregiver_hiv_status());
+                            });
                         }
                     });
                 });
@@ -340,6 +343,28 @@ public class HouseholdServiceActivity extends AppCompatActivity {
 
     private void refreshData() {
         loadServices(true);
+    }
+
+    private void launchFormAsync(String formName, FormModifier modifier) {
+        AlertDialog loading = FormLoadingDialog.show(this);
+        Threading.io(() -> {
+            try {
+                JSONObject form = FormCache.obtainFormTemplate(this, formName);
+                if (modifier != null) {
+                    modifier.apply(form);
+                }
+                Threading.main(() -> {
+                    FormLoadingDialog.dismiss(loading);
+                    startFormActivity(form);
+                });
+            } catch (Exception e) {
+                Timber.e(e);
+                Threading.main(() -> {
+                    FormLoadingDialog.dismiss(loading);
+                    Toasty.error(this, "Unable to open form", Toast.LENGTH_LONG, true).show();
+                });
+            }
+        });
     }
     public ChildIndexEventClient processRegistration(String jsonString){
 

@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,6 +38,8 @@ import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
 import com.bluecodeltd.ecap.chw.model.VcaScreeningModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.FormCache;
+import com.bluecodeltd.ecap.chw.util.FormLoadingDialog;
 import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -53,13 +56,12 @@ import org.smartregister.domain.tag.FormTag;
 import org.smartregister.family.util.AppExecutors;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.sync.helper.ECSyncHelper;
-import org.smartregister.util.FormUtils;
-
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
 public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.ViewHolder>{
@@ -83,6 +85,8 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
 
         this.services = services;
         this.context = context;
+        FormCache.warmFormAsync(context, "service_report_vca");
+        FormCache.warmFormAsync(context, "service_report_vca_edit");
 
     }
 
@@ -169,18 +173,7 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
                 dialogButton.setOnClickListener(va -> dialog.dismiss());
 //                }
             } else {
-                FormUtils formUtils = null;
-                try {
-                    formUtils = new FormUtils(context);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                try {
-                    openFormUsingFormUtils(context, "service_report_vca_edit", service);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                openFormUsingFormUtils(context, "service_report_vca_edit", service);
             }
 
 
@@ -210,18 +203,7 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
             }
 
             if (v != null && v.getId() == R.id.itemm) {
-                FormUtils formUtils = null;
-                try {
-                    formUtils = new FormUtils(context);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                try {
-                    openFormUsingFormUtils(context, "service_report_vca_edit", service);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                openFormUsingFormUtils(context, "service_report_vca_edit", service);
             }
 
         });
@@ -234,33 +216,29 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
                 dialog.cancel();
 
             }).setPositiveButton("YES",((dialogInterface, i) -> {
-                FormUtils formUtils = null;
-                try {
-                    formUtils = new FormUtils(context);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
                 service.setDelete_status("1");
-                JSONObject vcaScreeningForm = formUtils.getFormJson("service_report_vca_edit");
-                try {
-                    CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(service, Map.class));
-                    vcaScreeningForm.put("entity_id", service.getBase_entity_id());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                AlertDialog loading = FormLoadingDialog.show(context instanceof Activity ? (Activity) context : null);
+                Threading.io(() -> {
+                    try {
+                        JSONObject vcaScreeningForm = FormCache.obtainFormTemplate(context, "service_report_vca_edit");
+                        CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(service, Map.class));
+                        vcaScreeningForm.put("entity_id", service.getBase_entity_id());
 
-                try {
-
-                    ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
-                    if (childIndexEventClient == null) {
-                        return;
+                        ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
+                        if (childIndexEventClient == null) {
+                            Threading.main(() -> FormLoadingDialog.dismiss(loading));
+                            return;
+                        }
+                        saveRegistration(childIndexEventClient,true);
+                        Threading.main(() -> FormLoadingDialog.dismiss(loading));
+                    } catch (Exception e) {
+                        Timber.e(e);
+                        Threading.main(() -> {
+                            FormLoadingDialog.dismiss(loading);
+                            Toasty.error(context, "Unable to update service", Toast.LENGTH_LONG, true).show();
+                        });
                     }
-                    saveRegistration(childIndexEventClient,true);
-
-
-                } catch (Exception e) {
-                    Timber.e(e);
-                }
+                });
             }));
 
             //Creating dialog box
@@ -271,29 +249,29 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
         });
     }
 
-    public void openFormUsingFormUtils(Context context, String formName, VCAServiceModel service) throws JSONException {
+    public void openFormUsingFormUtils(Context context, String formName, VCAServiceModel service) {
+        Activity activity = context instanceof Activity ? (Activity) context : null;
+        AlertDialog loading = FormLoadingDialog.show(activity);
+        Threading.io(() -> {
+            try {
+                oMapper = new ObjectMapper();
+                JSONObject formToBeOpened = FormCache.obtainFormTemplate(context, formName);
+                formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).remove("read_only");
+                formToBeOpened.put("entity_id", service.getBase_entity_id());
 
-        oMapper = new ObjectMapper();
-
-
-        FormUtils formUtils = null;
-        try {
-            formUtils = new FormUtils(context);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        JSONObject formToBeOpened;
-
-        formToBeOpened = formUtils.getFormJson(formName);
-
-        formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).remove("read_only");
-
-        formToBeOpened.put("entity_id", service.getBase_entity_id());
-
-        CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(service, Map.class));
-
-        startFormActivity(formToBeOpened);
-
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(service, Map.class));
+                Threading.main(() -> {
+                    FormLoadingDialog.dismiss(loading);
+                    startFormActivity(formToBeOpened);
+                });
+            } catch (Exception e) {
+                Timber.e(e);
+                Threading.main(() -> {
+                    FormLoadingDialog.dismiss(loading);
+                    Toasty.error(context, "Unable to open form", Toast.LENGTH_LONG, true).show();
+                });
+            }
+        });
     }
 
     public void startFormActivity(JSONObject jsonObject) {

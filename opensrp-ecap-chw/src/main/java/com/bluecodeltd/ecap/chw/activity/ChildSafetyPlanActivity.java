@@ -6,6 +6,7 @@ import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -31,6 +32,8 @@ import com.bluecodeltd.ecap.chw.dao.ChildSafetyPlanDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.ChildSafetyPlanModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.FormCache;
+import com.bluecodeltd.ecap.chw.util.FormLoadingDialog;
 import com.rey.material.widget.Button;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -48,7 +51,6 @@ import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
-import org.smartregister.util.FormUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -72,6 +74,9 @@ public class ChildSafetyPlanActivity extends AppCompatActivity {
     public String hivstatus, household_id, intent_vcaid,  intent_cname;
     private Button child_plan;
     private final Handler uiHandler = new Handler(Looper.getMainLooper());
+    private interface FormModifier {
+        void apply(JSONObject form) throws Exception;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +110,7 @@ public class ChildSafetyPlanActivity extends AppCompatActivity {
         recyclerView.setAdapter(recyclerViewadapter);
         updateEmptyState();
 
+        FormCache.warmFormAsync(this, "child_safety_plan");
         loadPlans(false);
     }
     @Override
@@ -121,21 +127,11 @@ public class ChildSafetyPlanActivity extends AppCompatActivity {
         switch (id) {
             case R.id.child_plan:
 
-                try {
-                    FormUtils formUtils = new FormUtils(this);
-                    JSONObject indexRegisterForm;
-
-                    indexRegisterForm = formUtils.getFormJson("child_safety_plan");
-                    populateCaseworkerPhoneAndName(indexRegisterForm);
-                    JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
-                    cId.put("value",intent_vcaid);
-
-
-                    startFormActivity(indexRegisterForm);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                launchFormAsync("child_safety_plan", form -> {
+                    populateCaseworkerPhoneAndName(form);
+                    JSONObject cId = getFieldJSONObject(fields(form, STEP1), "unique_id");
+                    cId.put("value", intent_vcaid);
+                });
 
                 break;
         }
@@ -387,6 +383,28 @@ public class ChildSafetyPlanActivity extends AppCompatActivity {
         } else {
             linearLayout.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void launchFormAsync(String formName, FormModifier modifier) {
+        AlertDialog loading = FormLoadingDialog.show(this);
+        Threading.io(() -> {
+            try {
+                JSONObject form = FormCache.obtainFormTemplate(this, formName);
+                if (modifier != null) {
+                    modifier.apply(form);
+                }
+                Threading.main(() -> {
+                    FormLoadingDialog.dismiss(loading);
+                    startFormActivity(form);
+                });
+            } catch (Exception e) {
+                Timber.e(e);
+                Threading.main(() -> {
+                    FormLoadingDialog.dismiss(loading);
+                    Toasty.error(this, "Unable to open form", Toast.LENGTH_LONG, true).show();
+                });
+            }
+        });
     }
 
     @Override

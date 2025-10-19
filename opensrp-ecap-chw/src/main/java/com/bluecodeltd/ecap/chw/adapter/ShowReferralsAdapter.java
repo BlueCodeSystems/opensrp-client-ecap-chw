@@ -36,6 +36,9 @@ import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.FormCache;
+import com.bluecodeltd.ecap.chw.util.FormLoadingDialog;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -51,13 +54,12 @@ import org.smartregister.domain.tag.FormTag;
 import org.smartregister.family.util.AppExecutors;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.sync.helper.ECSyncHelper;
-import org.smartregister.util.FormUtils;
-
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
 public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdapter.ViewHolder> {
@@ -84,6 +86,7 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
 
         this.referrals = referrals;
         this.context = context;
+        FormCache.warmFormAsync(context, "referral_for_vca_edit");
     }
 
     @Override
@@ -107,17 +110,8 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
         holder.txtDate.setText(showReferrals.getReferred_date());
 
         holder.linearLayout.setOnClickListener(v -> {
-
             if (v.getId() == R.id.itemm) {
-
-                try {
-
-                    openFormUsingFormUtils(context, "referral_for_vca_edit", showReferrals);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
+                openFormUsingFormUtils(context, "referral_for_vca_edit", showReferrals);
             }
         });
         CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(showReferrals.getUnique_id());
@@ -139,17 +133,11 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
 
                         Button dialogButton = dialog.findViewById(R.id.dialog_button);
                         dialogButton.setOnClickListener(va -> dialog.dismiss());
-                    } else {
-                        if (v.getId() == R.id.edit_me) {
-                            try {
-                                openFormUsingFormUtils(context, "referral_for_vca_edit", showReferrals);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
+                    } else if (v.getId() == R.id.edit_me) {
+                        openFormUsingFormUtils(context, "referral_for_vca_edit", showReferrals);
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Timber.e(e);
                     Toast.makeText(context, "An error occurred while handling the action.", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -166,36 +154,36 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
                 dialog.cancel();
 
             }).setPositiveButton("YES",((dialogInterface, i) -> {
-                FormUtils formUtils = null;
-                try {
-                    formUtils = new FormUtils(context);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
                 showReferrals.setDelete_status("1");
-                JSONObject vcaScreeningForm = formUtils.getFormJson("referral_for_vca_edit");
-                try {
-                    CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(showReferrals, Map.class));
-                    vcaScreeningForm.put("entity_id", showReferrals.getBase_entity_id());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                AlertDialog loading = FormLoadingDialog.show(context instanceof Activity ? (Activity) context : null);
+                Threading.io(() -> {
+                    try {
+                        JSONObject vcaScreeningForm = FormCache.obtainFormTemplate(context, "referral_for_vca_edit");
+                        CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(showReferrals, Map.class));
+                        vcaScreeningForm.put("entity_id", showReferrals.getBase_entity_id());
 
-                try {
+                        ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
+                        if (childIndexEventClient == null) {
+                            Threading.main(() -> FormLoadingDialog.dismiss(loading));
+                            return;
+                        }
+                        saveRegistration(childIndexEventClient,true);
+                        Threading.main(() -> {
+                            FormLoadingDialog.dismiss(loading);
+                            if (onDataUpdateListener != null) {
+                                onDataUpdateListener.onDataUpdate();
+                            }
+                        });
 
-                    ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
-                    if (childIndexEventClient == null) {
-                        return;
+
+                    } catch (Exception e) {
+                        Timber.e(e);
+                        Threading.main(() -> {
+                            FormLoadingDialog.dismiss(loading);
+                            Toasty.error(context, "Unable to update referral", Toast.LENGTH_LONG, true).show();
+                        });
                     }
-                    saveRegistration(childIndexEventClient,true);
-
-
-                } catch (Exception e) {
-                    Timber.e(e);
-                }
-                if (onDataUpdateListener != null) {
-                    mainHandler.post(onDataUpdateListener::onDataUpdate);
-                }
+                });
 
             }));
 
@@ -246,25 +234,30 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
         }
     }
 
-    public void openFormUsingFormUtils(Context context, String formName, ReferralModel referral) throws JSONException {
+    public void openFormUsingFormUtils(Context context, String formName, ReferralModel referral) {
+        Activity activity = context instanceof Activity ? (Activity) context : null;
+        AlertDialog loading = FormLoadingDialog.show(activity);
+        Threading.io(() -> {
+            try {
+                oMapper = new ObjectMapper();
+                JSONObject formToBeOpened = FormCache.obtainFormTemplate(context, formName);
 
-        oMapper = new ObjectMapper();
+                formToBeOpened.put("entity_id", referral.getBase_entity_id());
 
-        FormUtils formUtils = null;
-        try {
-            formUtils = new FormUtils(context);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        JSONObject formToBeOpened;
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(referral, Map.class));
+                Threading.main(() -> {
+                    FormLoadingDialog.dismiss(loading);
+                    startFormActivity(formToBeOpened);
+                });
 
-        formToBeOpened = formUtils.getFormJson(formName);
-
-        formToBeOpened.put("entity_id", referral.getBase_entity_id());
-
-        CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(referral, Map.class));
-
-        startFormActivity(formToBeOpened);
+            } catch (Exception e) {
+                Timber.e(e);
+                Threading.main(() -> {
+                    FormLoadingDialog.dismiss(loading);
+                    Toasty.error(context, "Unable to open form", Toast.LENGTH_LONG, true).show();
+                });
+            }
+        });
 
     }
 
