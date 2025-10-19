@@ -463,9 +463,12 @@ public class HivTestingServiceRegisterFragment extends BaseSafeRegisterFragment 
     @Override
     public void onSyncComplete(FetchStatus fetchStatus) {
         if (!SyncStatusBroadcastReceiver.getInstance().isSyncing() && (FetchStatus.fetched.equals(fetchStatus) || FetchStatus.nothingFetched.equals(fetchStatus))) {
-            Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_complete));
-            getActivity().recreate();
-            UpdateManager.startOnce(getActivity());
+            if (isAdded()) {
+                Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_complete));
+                refreshListView();
+                refreshSyncProgressSpinner();
+                UpdateManager.startOnce(getActivity());
+            }
         } else {
             super.onSyncComplete(fetchStatus);
         }

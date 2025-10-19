@@ -543,13 +543,15 @@ public class IndexFragmentRegister extends BaseSafeRegisterFragment implements I
     @Override
     public void onSyncComplete(FetchStatus fetchStatus) {
         if (!SyncStatusBroadcastReceiver.getInstance().isSyncing() && (FetchStatus.fetched.equals(fetchStatus) || FetchStatus.nothingFetched.equals(fetchStatus))) {
-            Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_complete));
-            getActivity().recreate();
-            AppUpdater appUpdater = new AppUpdater(getActivity());
-            appUpdater.start();
+            if (isAdded()) {
+                Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_complete));
+                refreshListView();
+                refreshSyncProgressSpinner();
+                AppUpdater appUpdater = new AppUpdater(getActivity());
+                appUpdater.start();
+            }
         } else {
             super.onSyncComplete(fetchStatus);
         }
     }
 }
-
