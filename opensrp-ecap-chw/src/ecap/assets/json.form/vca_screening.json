@@ -199,6 +199,16 @@
         "type": "edit_text",
         "hint": "VCA Screening Location",
         "edit_type": "name",
+        "relevance": {
+          "step1:is_hiv_positive": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          },
+          "step2:consent_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"consent_check_box\")"
+          }
+        },
         "v_required": {
           "value": true,
           "err": "Required"
@@ -233,6 +243,12 @@
         "type": "edit_text",
         "hint": "VCA First Name",
         "edit_type": "name",
+        "relevance": {
+          "step2:consent_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"consent_check_box\")"
+          }
+        },
         "v_required": {
           "value": true,
           "err": "This field is Required"
@@ -246,6 +262,12 @@
         "type": "edit_text",
         "hint": "VCA Last Name",
         "edit_type": "name",
+        "relevance": {
+          "step2:consent_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"consent_check_box\")"
+          }
+        },
         "v_required": {
           "value": true,
           "err": "This field is Required"
@@ -258,6 +280,12 @@
         "openmrs_entity_id": "gender",
         "type": "native_radio",
         "label": "VCA Gender",
+        "relevance": {
+          "step2:consent_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"consent_check_box\")"
+          }
+        },
         "options": [
           {
             "key": "male",
@@ -287,6 +315,12 @@
         },
         "min_date": "today-100y",
         "max_date": "today",
+        "relevance": {
+          "step2:consent_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"consent_check_box\")"
+          }
+        },
         "v_required": {
           "value": true,
           "err": "Please enter Birth Date"
@@ -503,10 +537,17 @@
         "edit_type": "name",
         "hint": "ART Number",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step1:is_hiv_positive": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          },
+          "step2:consent_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"consent_check_box\")"
+          },
+          "step4:acceptance": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -1961,10 +2002,9 @@
           "err": "This field is required"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step2:consent_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"consent_check_box\")"
           }
         }
       },
@@ -2393,10 +2433,13 @@
         "toaster_info_text": "Children/Adolescents Living with HIV (C/ALHIV)",
         "toaster_info_title": "Sub Population",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step1:is_hiv_positive": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          },
+          "step2:consent_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"consent_check_box\")"
           }
         }
       },
@@ -2598,6 +2641,12 @@
         },
         "min_date": "today-100y",
         "max_date": "",
+        "relevance": {
+          "step2:consent_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"consent_check_box\")"
+          }
+        },
         "v_required": {
           "value": true,
           "err": "Required"
@@ -2617,6 +2666,12 @@
         },
         "min_date": "today-100y",
         "max_date": "today",
+        "relevance": {
+          "step2:consent_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"consent_check_box\")"
+          }
+        },
         "v_required": {
           "value": true,
           "err": "Required"
@@ -2644,6 +2699,12 @@
 
           }
         ],
+        "relevance": {
+          "step2:consent_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"consent_check_box\")"
+          }
+        },
         "v_required": {
           "value": true,
           "err": "Required"
@@ -2668,6 +2729,10 @@
           "err": "Required"
         },
         "relevance": {
+          "step2:consent_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"consent_check_box\")"
+          },
           "step4:acceptance": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
@@ -2690,10 +2755,17 @@
           "err": "Required"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step1:is_hiv_positive": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          },
+          "step2:consent_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"consent_check_box\")"
+          },
+          "step4:acceptance": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2733,10 +2805,17 @@
           }
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step1:is_hiv_positive": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          },
+          "step2:consent_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"consent_check_box\")"
+          },
+          "step4:acceptance": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2759,6 +2838,18 @@
           "err": "Required"
         },
         "relevance": {
+          "step1:is_hiv_positive": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          },
+          "step2:consent_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"consent_check_box\")"
+          },
+          "step4:acceptance": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          },
           "step1:is_on_hiv_treatment": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
@@ -2794,10 +2885,17 @@
           "err": "Required"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step1:is_hiv_positive": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          },
+          "step2:consent_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"consent_check_box\")"
+          },
+          "step4:acceptance": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2819,6 +2917,18 @@
           "err": "This field is Required"
         },
         "relevance": {
+          "step1:is_hiv_positive": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          },
+          "step2:consent_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"consent_check_box\")"
+          },
+          "step4:acceptance": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          },
           "step4:vl_check_box": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
@@ -2834,6 +2944,18 @@
         "hint": "Last VL results",
         "edit_type": "number",
         "relevance": {
+          "step1:is_hiv_positive": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          },
+          "step2:consent_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"consent_check_box\")"
+          },
+          "step4:acceptance": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          },
           "step4:vl_check_box": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
@@ -2866,9 +2988,21 @@
           "err": "This field is Required"
         },
         "relevance": {
+          "step1:is_hiv_positive": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          },
+          "step2:consent_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"consent_check_box\")"
+          },
+          "step4:acceptance": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          },
           "step4:vl_check_box": {
             "type": "string",
-            "ex": "equalTo(., \"yees\")"
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -2888,6 +3022,18 @@
           "err": "This field is Required"
         },
         "relevance": {
+          "step1:is_hiv_positive": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          },
+          "step2:consent_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"consent_check_box\")"
+          },
+          "step4:acceptance": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          },
           "step4:vl_check_box": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
@@ -2938,6 +3084,18 @@
           "err": "Select level of MMD for child"
         },
         "relevance": {
+          "step1:is_hiv_positive": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          },
+          "step2:consent_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"consent_check_box\")"
+          },
+          "step4:acceptance": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          },
           "step4:child_mmd": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
@@ -2980,10 +3138,9 @@
           "err": "Please enter a valid name"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step2:consent_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"consent_check_box\")"
           }
         }
       },
@@ -2999,10 +3156,9 @@
           "err": "Number must take the format of ######/##/#"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step2:consent_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"consent_check_box\")"
           }
         }
       },
@@ -3025,10 +3181,9 @@
           "err": "Please enter Birth Date"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step2:consent_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"consent_check_box\")"
           }
         }
       },
@@ -3052,6 +3207,12 @@
         "v_required": {
           "value": true,
           "err": "Required"
+        },
+        "relevance": {
+          "step2:consent_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"consent_check_box\")"
+          }
         }
       },
       {
@@ -3113,10 +3274,9 @@
           "err": "Select HIV status"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step2:consent_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"consent_check_box\")"
           }
         },
         "calculation": {
@@ -3140,10 +3300,9 @@
           "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "vca_screening_relevance.yml"
-            }
+          "step2:consent_check_box": {
+            "type": "string",
+            "ex": "equalTo(., \"consent_check_box\")"
           }
         },
         "calculation": {
