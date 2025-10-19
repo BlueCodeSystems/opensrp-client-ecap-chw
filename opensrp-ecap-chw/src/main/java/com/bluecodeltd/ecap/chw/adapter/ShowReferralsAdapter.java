@@ -12,6 +12,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -64,6 +66,17 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
 
     List<ReferralModel> referrals;
     ObjectMapper oMapper;
+    private final Handler mainHandler = new Handler(Looper.getMainLooper());
+
+    public interface OnDataUpdateListener {
+        void onDataUpdate();
+    }
+
+    private OnDataUpdateListener onDataUpdateListener;
+
+    public void setOnDataUpdateListener(OnDataUpdateListener onDataUpdateListener) {
+        this.onDataUpdateListener = onDataUpdateListener;
+    }
 
     public ShowReferralsAdapter(List<ReferralModel> referrals, Context context){
 
@@ -180,8 +193,8 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
                 } catch (Exception e) {
                     Timber.e(e);
                 }
-                if (context instanceof Activity) {
-                    ((Activity) context).finish();
+                if (onDataUpdateListener != null) {
+                    mainHandler.post(onDataUpdateListener::onDataUpdate);
                 }
 
             }));
@@ -345,6 +358,9 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
                     getClientProcessorForJava().processClient(savedEvents);
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
 
+                    if (onDataUpdateListener != null) {
+                        mainHandler.post(onDataUpdateListener::onDataUpdate);
+                    }
 
                 } catch (Exception e) {
                     Timber.e(e);

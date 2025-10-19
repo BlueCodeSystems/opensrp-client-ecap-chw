@@ -4,6 +4,8 @@ import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -48,18 +50,21 @@ import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 public class ShowReferralsActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    RecyclerView.Adapter recyclerViewadapter;
-    private ArrayList<ReferralModel> referralList = new ArrayList<>();
+    private LinearLayoutManager layoutManager;
+    private ShowReferralsAdapter recyclerViewadapter;
+    private final ArrayList<ReferralModel> referralList = new ArrayList<>();
     private LinearLayout linearLayout;
     private TextView vcaname,hh_id;
 
     private Toolbar toolbar;
     public String hivstatus, household_id, intent_vcaid;
     private Button child_plan;
+    private final Handler uiHandler = new Handler(Looper.getMainLooper());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,21 +103,16 @@ public class ShowReferralsActivity extends AppCompatActivity {
         }
 //
 
-        if (intent_vcaid != null) {
-            referralList.addAll(ReferralDao.getReferralsByID(intent_vcaid));
-        }
-        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(ShowReferralsActivity.this);
+        layoutManager = new LinearLayoutManager(this);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(eLayoutManager);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new ShowReferralsAdapter(referralList, ShowReferralsActivity.this);
+        recyclerViewadapter = new ShowReferralsAdapter(referralList, this);
+        recyclerViewadapter.setOnDataUpdateListener(() -> uiHandler.post(() -> loadReferrals(true)));
         recyclerView.setAdapter(recyclerViewadapter);
-        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
+        updateEmptyState();
 
-        if (recyclerViewadapter != null && recyclerViewadapter.getItemCount() > 0){
-
-            linearLayout.setVisibility(View.GONE);
-        }
+        loadReferrals(false);
     }
 
     @Override
@@ -191,8 +191,7 @@ public class ShowReferralsActivity extends AppCompatActivity {
 
                     case "Referral":
                         Toasty.success(ShowReferralsActivity.this, "Referral updated", Toast.LENGTH_LONG, true).show();
-                        recreate();
-                        refresh();
+                        loadReferrals(true);
                         break;
 
                 }
@@ -200,12 +199,6 @@ public class ShowReferralsActivity extends AppCompatActivity {
                 Timber.e(e);
             }
         }
-        finish();
-        startActivity(getIntent());
-    }
-    public void refresh(){
-        finish();
-        startActivity(getIntent());
     }
 
     public ChildIndexEventClient processRegistration(String jsonString){
@@ -282,6 +275,7 @@ public class ShowReferralsActivity extends AppCompatActivity {
                     getClientProcessorForJava().processClient(savedEvents);
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
 
+                    uiHandler.post(() -> loadReferrals(true));
 
                 } catch (Exception e) {
                     Timber.e(e);
@@ -320,5 +314,56 @@ public class ShowReferralsActivity extends AppCompatActivity {
 
     private ClientProcessorForJava getClientProcessorForJava() {
         return ChwApplication.getInstance().getClientProcessorForJava();
+    }
+
+    private void loadReferrals(boolean maintainScroll) {
+        if (recyclerViewadapter == null) {
+            return;
+        }
+
+        int firstVisible = RecyclerView.NO_POSITION;
+        int offset = 0;
+        if (maintainScroll && layoutManager != null) {
+            firstVisible = layoutManager.findFirstVisibleItemPosition();
+            View firstChild = recyclerView.getChildAt(0);
+            if (firstChild != null) {
+                offset = firstChild.getTop() - recyclerView.getPaddingTop();
+            }
+        }
+
+        final int positionToRestore = firstVisible;
+        final int offsetToRestore = offset;
+
+        Threading.io(() -> {
+            List<ReferralModel> results = new ArrayList<>();
+            if (intent_vcaid != null) {
+                try {
+                    results = ReferralDao.getReferralsByID(intent_vcaid);
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+            }
+            List<ReferralModel> finalResults = results;
+            Threading.main(() -> {
+                referralList.clear();
+                referralList.addAll(finalResults);
+                recyclerViewadapter.notifyDataSetChanged();
+                updateEmptyState();
+                if (maintainScroll && layoutManager != null && positionToRestore != RecyclerView.NO_POSITION) {
+                    layoutManager.scrollToPositionWithOffset(positionToRestore, offsetToRestore);
+                }
+            });
+        });
+    }
+
+    private void updateEmptyState() {
+        if (linearLayout == null || recyclerViewadapter == null) {
+            return;
+        }
+        if (recyclerViewadapter.getItemCount() > 0) {
+            linearLayout.setVisibility(View.GONE);
+        } else {
+            linearLayout.setVisibility(View.VISIBLE);
+        }
     }
 }
