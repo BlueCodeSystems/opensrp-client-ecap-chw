@@ -15,16 +15,16 @@
 - [x] **Household service flows**  
   In both `HouseholdServiceActivity` and `HouseholdServiceAdapter` (`opensrp-ecap-chw/src/main/java/com/bluecodeltd/ecap/chw/activity/HouseholdServiceActivity.java`, `.../adapter/HouseholdServiceAdapter.java`) replace `runOnUiThread(this::recreate)`/`activity.recreate()` with a shared refresh method that reloads `familyServiceList` and uses `notifyDataSetChanged()`. Mirror the callback structure used by `DomainPlanAdapter`.
 
-- [ ] **VCA service history refresh**  
+- [x] **VCA service history refresh**  
   Adjust `VcaServiceActivity` and `VCAServiceAdapter` (`opensrp-ecap-chw/src/main/java/com/bluecodeltd/ecap/chw/activity/VcaServiceActivity.java`, `.../adapter/VCAServiceAdapter.java`) to remove `recreate()` calls, wiring an `OnDataUpdateListener` that triggers a targeted `fetchServices()` method.
 
-- [ ] **Safety-plan activities**  
+- [x] **Safety-plan activities**  
   For `ChildSafetyPlanActivity` and `ChildSafetyPlanActions` (`opensrp-ecap-chw/src/main/java/com/bluecodeltd/ecap/chw/activity/ChildSafetyPlanActivity.java`, `.../ChildSafetyPlanActions.java`), eliminate the `finish()/startActivity()`/`recreate()` cycle in `onActivityResult`. Introduce a reusable loader that repopulates the adapter data and refreshes summary counters.
 
-- [ ] **Referral list refresh**  
+- [x] **Referral list refresh**  
   Update `ShowReferralsActivity` (`opensrp-ecap-chw/src/main/java/com/bluecodeltd/ecap/chw/activity/ShowReferralsActivity.java`) to refresh the list in place rather than finishing and relaunching the activity.
 
-- [ ] **Register fragments (`recreate()` removal)**  
+- [x] **Register fragments (`recreate()` removal)**  
   In `PMTCTRegisterFragment`, `HivTestingServiceRegisterFragment`, and `IndexFragmentRegister`, replace `getActivity().recreate()` with fragment-level data reloads so the register stays responsive post submission (`opensrp-ecap-chw/src/main/java/com/bluecodeltd/ecap/chw/fragment/PMTCTRegisterFragment.java`, `.../HivTestingServiceRegisterFragment.java`, `.../IndexFragmentRegister.java`).
 
 - [ ] **Extend JSON form caching**  
