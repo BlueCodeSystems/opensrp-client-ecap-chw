@@ -5,11 +5,11 @@ import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getFormTag;
 import static org.smartregister.chw.fp.util.FpUtil.getClientProcessorForJava;
 import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.os.Looper;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.CasePlan;
-import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
@@ -57,9 +56,12 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
     Context context;
     List<CasePlanModel> caseplans;
     String hivStatus;
-    AlertDialog.Builder builder;
-    private static final long REFRESH_DELAY = 100;
-    private Handler handler = new Handler();
+    private final Handler mainHandler = new Handler(Looper.getMainLooper());
+    public interface OnCasePlanUpdateListener {
+        void onCasePlanUpdate();
+    }
+
+    private OnCasePlanUpdateListener onCasePlanUpdateListener;
 
 
     public CasePlanAdapter(List<CasePlanModel> caseplans, Context context, String hivStatus){
@@ -69,6 +71,10 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
         this.caseplans = caseplans;
         this.context = context;
         this.hivStatus = hivStatus;
+    }
+
+    public void setOnCasePlanUpdateListener(OnCasePlanUpdateListener listener) {
+        this.onCasePlanUpdateListener = listener;
     }
 
     @Override
@@ -177,7 +183,6 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
                 } catch (Exception e) {
                     Timber.e(e);
                 }
-              callActivity(casePlan);
 
             }));
 
@@ -188,33 +193,6 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
             alert.show();
         });
 
-
-    }
-    public void refreshActivity() {
-        handler.postDelayed(refreshRunnable, REFRESH_DELAY);
-    }
-
-    private Runnable refreshRunnable = new Runnable() {
-        @Override
-        public void run() {
-            Activity activity = (CasePlan) context;
-            activity.recreate();
-        }
-    };
-
-    public void callActivity(CasePlanModel casePlan) {
-        Intent openActivity = new Intent(context, IndexDetailsActivity.class);
-        openActivity.putExtra("Child",  casePlan.getUnique_id());
-        openActivity.putExtra("dateId",  casePlan.getCase_plan_date());
-        openActivity.putExtra("hivStatus",  hivStatus);
-        if (context instanceof IndexDetailsActivity) {
-            Activity activity = (IndexDetailsActivity) context;
-            activity.finish();
-            activity.startActivity(openActivity);
-//            activity.recreate();
-        } else {
-            context.startActivity(openActivity);
-        }
 
     }
     public ChildIndexEventClient processRegistration(String jsonString){
@@ -291,6 +269,9 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
                     getClientProcessorForJava().processClient(savedEvents);
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
 
+                    if (onCasePlanUpdateListener != null) {
+                        mainHandler.post(onCasePlanUpdateListener::onCasePlanUpdate);
+                    }
 
                 } catch (Exception e) {
                     Timber.e(e);

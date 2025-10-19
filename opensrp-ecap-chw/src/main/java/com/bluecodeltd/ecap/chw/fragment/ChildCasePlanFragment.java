@@ -29,15 +29,16 @@ import java.util.HashMap;
 public class ChildCasePlanFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    RecyclerView.Adapter recyclerViewadapter;
+    private CasePlanAdapter recyclerViewadapter;
     private ArrayList<CasePlanModel> casePlanList = new ArrayList<>();
     private LinearLayout linearLayout;
+    private String childId;
+    private String hivStatus;
 
     @Override
     public void onResume() {
         super.onResume();
-        recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
+        reloadCasePlans();
     }
 
     @Nullable
@@ -45,8 +46,8 @@ public class ChildCasePlanFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_childcaseplans, container, false);
 
-        String childId  = ((IndexDetailsActivity) requireActivity()).uniqueId;
-        String hivStatus = ((IndexDetailsActivity) requireActivity()).is_hiv_positive;
+        childId  = ((IndexDetailsActivity) requireActivity()).uniqueId;
+        hivStatus = ((IndexDetailsActivity) requireActivity()).is_hiv_positive;
 
         recyclerView = view.findViewById(R.id.planrecyclerView);
         linearLayout = view.findViewById(R.id.visit_container);
@@ -59,15 +60,41 @@ public class ChildCasePlanFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerViewadapter = new CasePlanAdapter(casePlanList, getContext(), hivStatus);
         recyclerView.setAdapter(recyclerViewadapter);
+        recyclerViewadapter.setOnCasePlanUpdateListener(() -> {
+            if (!isAdded()) {
+                return;
+            }
+            requireActivity().runOnUiThread(this::reloadCasePlans);
+        });
         recyclerViewadapter.notifyDataSetChanged();
 
-        if (recyclerViewadapter.getItemCount() > 0){
-
-            linearLayout.setVisibility(View.GONE);
-        }
+        updateEmptyState();
 
 
         return view;
 
+    }
+
+    private void reloadCasePlans() {
+        if (childId == null) {
+            return;
+        }
+        casePlanList.clear();
+        casePlanList.addAll(IndexPersonDao.getCasePlansById(childId));
+        if (recyclerViewadapter != null) {
+            recyclerViewadapter.notifyDataSetChanged();
+        }
+        updateEmptyState();
+    }
+
+    private void updateEmptyState() {
+        if (linearLayout == null) {
+            return;
+        }
+        if (recyclerViewadapter != null && recyclerViewadapter.getItemCount() > 0) {
+            linearLayout.setVisibility(View.GONE);
+        } else {
+            linearLayout.setVisibility(View.VISIBLE);
+        }
     }
 }

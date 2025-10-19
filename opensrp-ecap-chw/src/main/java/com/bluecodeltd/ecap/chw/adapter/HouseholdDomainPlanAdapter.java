@@ -14,6 +14,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +28,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.CasePlan;
-import com.bluecodeltd.ecap.chw.activity.HouseholdCasePlanActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
@@ -71,15 +71,14 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
     List<CasePlanModel> caseplans;
 
     ObjectMapper oMapper;
-    private static final long REFRESH_DELAY = 100;
-    private Handler handler = new Handler();
+    private final Handler mainHandler = new Handler(Looper.getMainLooper());
     public interface OnDataUpdateListener {
         void onDataUpdate();
     }
 
-    private DomainPlanAdapter.OnDataUpdateListener onDataUpdateListener;
+    private OnDataUpdateListener onDataUpdateListener;
 
-    public void setOnDataUpdateListener(DomainPlanAdapter.OnDataUpdateListener onDataUpdateListener) {
+    public void setOnDataUpdateListener(OnDataUpdateListener onDataUpdateListener) {
         this.onDataUpdateListener = onDataUpdateListener;
     }
 
@@ -206,13 +205,12 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
                     saveRegistration(childIndexEventClient,true);
 
                     if (onDataUpdateListener != null) {
-                        onDataUpdateListener.onDataUpdate();
+                        mainHandler.post(onDataUpdateListener::onDataUpdate);
                     }
 
                 } catch (Exception e) {
                     Timber.e(e);
                 }
-               refreshActivity();
 
             }));
 
@@ -234,17 +232,6 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
         });
     }
 
-    public void refreshActivity() {
-        handler.postDelayed(refreshRunnable, REFRESH_DELAY);
-    }
-
-    private Runnable refreshRunnable = new Runnable() {
-        @Override
-        public void run() {
-            Activity activity = (HouseholdCasePlanActivity) context;
-            activity.recreate();
-        }
-    };
     public void showDialogBox(String householdId,String message){
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_layout);
@@ -425,7 +412,7 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
 
                     if (onDataUpdateListener != null) {
-                        onDataUpdateListener.onDataUpdate();
+                        mainHandler.post(onDataUpdateListener::onDataUpdate);
                     }
 
                 } catch (Exception e) {

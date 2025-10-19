@@ -9,6 +9,8 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowInsetsController;
@@ -65,10 +67,12 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
 
 
     private RecyclerView recyclerView;
+    private LinearLayoutManager layoutManager;
     HouseholdDomainPlanAdapter recyclerViewadapter;
     private ArrayList<CasePlanModel> domainList = new ArrayList<>();
     private Button domainBtn, domainBtn2;
     String householdId, caseDate,uniqueId, hivStatus,case_plan_id;
+    private final Handler uiHandler = new Handler(Looper.getMainLooper());
 
 
     @Override
@@ -82,6 +86,10 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
         recyclerView = binding.householdDomainrecyclerView;
         domainBtn = binding.householdDomainBtn;
         domainBtn2 = binding.householdDomainBtn2;
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
         Bundle bundle = getIntent().getExtras();
         householdId = getIntent().getExtras().getString("householdId");
         caseDate = getIntent().getExtras().getString("dateId");
@@ -89,7 +97,7 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
         hivStatus = getIntent().getStringExtra("status");
         case_plan_id = getIntent().getExtras().getString("case_plan_id");
 
-        fetchData();
+        fetchData(false);
         domainBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,27 +150,46 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
     }
 
     public void fetchData() {
+        fetchData(true);
+    }
+
+    private void fetchData(boolean maintainScroll) {
+        int firstVisiblePosition = RecyclerView.NO_POSITION;
+        int firstVisibleOffset = 0;
+        if (maintainScroll && layoutManager != null) {
+            firstVisiblePosition = layoutManager.findFirstVisibleItemPosition();
+            View firstVisibleView = recyclerView.getChildAt(0);
+            if (firstVisibleView != null) {
+                firstVisibleOffset = firstVisibleView.getTop() - recyclerView.getPaddingTop();
+            }
+        }
+
         domainList.clear();
         domainList.addAll(HouseholdDao.getDomainsById(householdId, caseDate));
 
         if (recyclerViewadapter == null) {
-            RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(HouseholdCasePlanActivity.this);
-            recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(eLayoutManager);
-            recyclerView.setItemAnimator(new DefaultItemAnimator());
             recyclerViewadapter = new HouseholdDomainPlanAdapter(domainList, HouseholdCasePlanActivity.this, "caregiver_domain");
             recyclerView.setAdapter(recyclerViewadapter);
 
-            recyclerViewadapter.setOnDataUpdateListener(() -> runOnUiThread(() -> {
-                recreate();
-            }));
+            recyclerViewadapter.setOnDataUpdateListener(() -> uiHandler.post(() -> fetchData(true)));
         } else {
-            try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
+            recyclerViewadapter.notifyDataSetChanged();
         }
 
-        if (recyclerViewadapter.getItemCount() > 0) {
+        updateActionButtons();
+
+        if (maintainScroll && layoutManager != null && firstVisiblePosition != RecyclerView.NO_POSITION) {
+            layoutManager.scrollToPositionWithOffset(firstVisiblePosition, firstVisibleOffset);
+        }
+    }
+
+    private void updateActionButtons() {
+        if (recyclerViewadapter != null && recyclerViewadapter.getItemCount() > 0) {
             domainBtn.setVisibility(View.GONE);
             domainBtn2.setVisibility(View.VISIBLE);
+        } else {
+            domainBtn.setVisibility(View.VISIBLE);
+            domainBtn2.setVisibility(View.GONE);
         }
     }
 
@@ -216,8 +243,7 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
 
                     case "Caregiver Domain":
                         Toasty.success(HouseholdCasePlanActivity.this, "Vulnerability Saved", Toast.LENGTH_LONG, true).show();
-                        recreate();
-                        refresh();
+                        fetchData(true);
                         break;
 
                 }
@@ -225,8 +251,6 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
                 Timber.e(e);
             }
         }
-        finish();
-        startActivity(getIntent());
     }
 
     public ChildIndexEventClient processRegistration(String jsonString){
@@ -404,11 +428,6 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
         }
 
     }
-    public void refresh(){
-        finish();
-        startActivity(getIntent());
-    }
-
     public void showDialogBox(String householdId,String message){
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_layout);
