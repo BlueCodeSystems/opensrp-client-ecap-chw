@@ -3,13 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.kapt")
     id("jacoco")
-    id("com.github.kt3k.coveralls") apply false
     id("maven-publish")
-}
-
-
-if (!plugins.hasPlugin("com.github.kt3k.coveralls")) {
-    apply plugin: "com.github.kt3k.coveralls"
 }
 
 def kotlinVersion = "1.9.23"
@@ -447,14 +441,6 @@ tasks.register('jacocoTestReport', JacocoReport) {
     executionData.setFrom(fileTree(dir: project.buildDir, includes: [
             'jacoco/testDebugUnitTest.exec', 'outputs/code-coverage/connected/*coverage.ec'
     ]))
-}
-
-tasks.coveralls {
-    dependsOn 'jacocoTestReport'
-}
-
-coveralls {
-    jacocoReportPath = "${buildDir}/reports/jacoco/jacocoRootReport/merged.xml"
 }
 
 version = project.findProperty('VERSION_NAME') ?: "1.2.1-SNAPSHOT"
