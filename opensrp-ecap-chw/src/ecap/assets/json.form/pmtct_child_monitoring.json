@@ -329,7 +329,319 @@
           "value": false,
           "err": "This field is required"
         }
+      },
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "text": "MUAC Screening"
+      },
+      {
+        "key": "nutrition_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "nutrition_status",
+        "type": "edit_text",
+        "hint": "What is the child’s MUAC measurement?",
+        "edit_type": "number",
+        "read_only": false,
+        "v_regex": {
+          "value": "^(0|[1-9]|1[0-9]|2[0-6])(\\.\\d+)?$",
+          "err": "Please enter a valid MUAC measurement (0–26 cm)"
+        }
+      },
+      {
+        "key": "toaster_red",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Severe Acute Malnutrition (SAM)",
+        "toaster_type": "problem",
+        "toaster_info_text": "",
+        "toaster_info_title": "",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "muac_reading.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "medical_complications",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "medical_complications",
+        "type": "native_radio",
+        "label": "Medical Complications?",
+        "options": [
+          {
+            "key": "Medical Complications present",
+            "text": "Medical Complications present"
+          },
+          {
+            "key": "No Medical Complications",
+            "text": "No Medical Complications"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "muac_reading.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "patient toaster",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions_a",
+        "type": "toaster_notes",
+        "text": "-Refer for in-patient care and rehabilitation according to IMCI protocal\n-Rehydrate if necessary\n-Give phased feeding following IMAM guidelines",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:medical_complications": {
+            "type": "string",
+            "ex": "equalTo(., \"Medical Complications present\")"
+          }
+        }
+      },
+      {
+        "key": "patient toaster 2",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions_a",
+        "type": "toaster_notes",
+        "text": "-Treat as outpatient with RUTF & medications following IMAM guidelines",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:medical_complications": {
+            "type": "string",
+            "ex": "equalTo(., \"No Medical Complications\")"
+          }
+        }
+      },
+      {
+        "key": "toaster_yellow",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Moderate Acute Malnutrition (MAM)",
+        "toaster_type": "warning",
+        "toaster_info_text": "",
+        "toaster_info_title": "",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "muac_reading.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "patient toaster 3",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions_a",
+        "type": "toaster_notes",
+        "text": " -Treat any infections\n-Prevent further weight loss and infections with fortified blended flours\n -Ensure adequate micronutrient intake",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_type": "info",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "muac_reading.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "child_oedema",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "child_oedema",
+        "type": "native_radio",
+        "label": "Does the child have Oedema?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "muac_reading.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "oedema_stage",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "oedema_stage",
+        "type": "native_radio",
+        "label": "Oedema Stage",
+        "options": [
+          {
+            "key": "Grade 1",
+            "text": "Grade 1"
+          },
+          {
+            "key": "Grade 2",
+            "text": "Grade 2"
+          },
+          {
+            "key": "Grade 3",
+            "text": "Grade 3"
+          },
+          {
+            "key": "nill",
+            "text": "Nil"
+          }
+        ],
+        "relevance": {
+          "step1:child_oedema": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "text": "TB Screening"
+      },
+      {
+        "key": "tb_screening_symptoms",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "tb_screening_symptoms",
+        "label": "Symptoms/Signs for Children below 10 years old (Tick applicable)",
+        "label_info_text": "Tick all symptoms/signs observed in children under 10 years old. Select 'None' if no symptoms are present, or 'Other Specify' if not listed.",
+        "type": "check_box",
+        "exclusive": [
+          "none"
+        ],
+        "options": [
+          {
+            "key": "History of close TB contact",
+            "text": "History of close TB contact"
+          },
+          {
+            "key": "Fever",
+            "text": "Fever"
+          },
+          {
+            "key": "Current cough",
+            "text": "Current cough"
+          },
+          {
+            "key": "Anorexia (poor appetite)",
+            "text": "Anorexia (poor appetite)"
+          },
+          {
+            "key": "Underweight/ Poor weight gain/Weight loss",
+            "text": "Underweight/ Poor weight gain/Weight loss"
+          },
+          {
+            "key": "Reduced playfulness",
+            "text": "Reduced playfulness"
+          },
+          {
+            "key": "Swelling in the neck",
+            "text": "Swelling in the neck"
+          },
+          {
+            "key": "none",
+            "text": "None"
+          },
+          {
+            "key": "other",
+            "text": "Other Specify"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to select at least one symptom/sign. Select 'None' if not applicable."
+        }
+      },
+      {
+        "key": "other_tb_symptom",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_tb_symptom",
+        "type": "edit_text",
+        "hint": "Specify any other TB-related symptom/sign observed",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:tb_screening_symptoms": {
+            "ex-checkbox": [
+              {
+                "or": ["other"]
+              }
+            ]
+          }
+        }
+      },
+
+      {
+        "key": "tb_referral",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "tb_referral",
+        "type": "native_radio",
+        "label": "If the program participant screens positive for TB (presumptive TB case), has s/he been referred to the health facility for further evaluation?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Please indicate whether the participant was referred to a health facility for further TB evaluation."
+        }
+      },
+
+      {
+        "key": "comments_tb",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "comments_tb",
+        "type": "edit_text",
+        "hint": "Add any additional comments or observations related to TB screening and referral",
+        "edit_type": "name"
       }
+
     ]
   }
 }

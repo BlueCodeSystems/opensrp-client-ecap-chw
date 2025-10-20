@@ -101,6 +101,26 @@
             android:fontFamily="sans-serif-medium"
             android:background="@drawable/ripple_button_alert"
             android:visibility="gone"/>
+
+        <Space
+            android:layout_width="8dp"
+            android:layout_height="0dp" />
+
+        <Button
+            android:id="@+id/hei_hiv_positive_flag"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="@string/hei_hiv_positive_flag"
+            android:textAllCaps="false"
+            android:textColor="@color/colorRed"
+            android:textSize="12sp"
+            android:fontFamily="sans-serif-medium"
+            android:background="@drawable/ripple_button_alert"
+            android:visibility="gone"/>
     </LinearLayout>
 
     <!-- Inline alert panel (collapsed by default) -->
@@ -115,5 +135,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <!-- Inline HIV-positive alert panel (collapsed by default) -->
+    <include
+        android:id="@+id/hei_hiv_positive_alert"
+        layout="@layout/view_hei_alert_hiv_positive"
+        android:visibility="gone"
+        android:layout_below="@id/hei_unsuppressed_alert"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>

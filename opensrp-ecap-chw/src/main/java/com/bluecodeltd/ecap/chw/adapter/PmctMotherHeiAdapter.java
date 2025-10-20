@@ -52,8 +52,9 @@ Context context;
 
                 holder.genderIcon.setImageResource((monitoringModel.getInfants_sex() != null && monitoringModel.getInfants_sex().equals("male")) ? org.smartregister.R.drawable.child_boy_infant : org.smartregister.R.drawable.child_girl_infant);
 
-        // Flag HEI as high risk when mother has unsuppressed VL
-        boolean heiHighRisk = false;
+        // Flag conditions
+        boolean heiHighRisk = false; // Mother unsuppressed VL
+        boolean heiHivPositive = false; // HEI tests HIV-positive at birth
         try {
             String pmtctId = monitoringModel.getPmtct_id();
             if (pmtctId != null && !pmtctId.trim().isEmpty()) {
@@ -64,23 +65,59 @@ Context context;
                     heiHighRisk = "yes".equalsIgnoreCase(agywUnsupp) || "yes".equalsIgnoreCase(unsupp);
                 }
             }
+            // HIV positive at birth flag (D = Detected)
+            String trBirth = safe(monitoringModel.getTest_result_at_birth());
+            heiHivPositive = "d".equalsIgnoreCase(trBirth);
         } catch (Throwable ignored) {}
 
+        // Show separate flag buttons and alerts
         holder.heiHighRiskButton.setVisibility(heiHighRisk ? View.VISIBLE : View.GONE);
-        if (!heiHighRisk) {
-            holder.heiAlert.setVisibility(View.GONE);
-        }
-        holder.heiHighRiskButton.setOnClickListener(v -> {
-            toggleAlert(holder);
-            try { timber.log.Timber.i("HEI_HIGH_RISK_ALERT_VIEWED pmtct_id=%s", monitoringModel.getPmtct_id()); } catch (Throwable ignored) {}
-        });
-        View close = holder.itemView.findViewById(R.id.btn_close_alert);
-        if (close != null) close.setOnClickListener(v -> hideAlert(holder));
+        if (!heiHighRisk && holder.heiUnsuppressedAlert != null) holder.heiUnsuppressedAlert.setVisibility(View.GONE);
 
-        // Visual stripe: red when high risk, default otherwise
+        if (holder.heiHivPositiveButton != null)
+            holder.heiHivPositiveButton.setVisibility(heiHivPositive ? View.VISIBLE : View.GONE);
+        if (!heiHivPositive && holder.heiHivPositiveAlert != null) holder.heiHivPositiveAlert.setVisibility(View.GONE);
+
+        // Final copies for lambda capture
+        final boolean finalHeiHivPositive = heiHivPositive;
+        final boolean finalHeiHighRisk = heiHighRisk;
+
+        holder.heiHighRiskButton.setOnClickListener(v -> {
+            // Toggle unsuppressed alert and ensure HIV alert is closed
+            if (holder.heiUnsuppressedAlert != null) toggleAlert(holder.heiUnsuppressedAlert);
+            if (holder.heiHivPositiveAlert != null) hideAlert(holder.heiHivPositiveAlert);
+            try {
+                timber.log.Timber.i("HEI_ALERT_UNSUPPRESSED_VIEWED pmtct_id=%s mother_unsuppressed=%s",
+                        monitoringModel.getPmtct_id(), String.valueOf(finalHeiHighRisk));
+            } catch (Throwable ignored) {}
+        });
+
+        if (holder.heiHivPositiveButton != null) {
+            holder.heiHivPositiveButton.setOnClickListener(v -> {
+                // Toggle HIV positive alert and ensure other alert is closed
+                if (holder.heiHivPositiveAlert != null) toggleAlert(holder.heiHivPositiveAlert);
+                if (holder.heiUnsuppressedAlert != null) hideAlert(holder.heiUnsuppressedAlert);
+                try {
+                    timber.log.Timber.i("HEI_ALERT_HIV_POS_VIEWED pmtct_id=%s hiv_positive=%s",
+                            monitoringModel.getPmtct_id(), String.valueOf(finalHeiHivPositive));
+                } catch (Throwable ignored) {}
+            });
+        }
+
+        // Close buttons for each inline alert
+        if (holder.heiUnsuppressedAlert != null) {
+            View close1 = holder.heiUnsuppressedAlert.findViewById(R.id.btn_close_alert);
+            if (close1 != null) close1.setOnClickListener(v -> hideAlert(holder.heiUnsuppressedAlert));
+        }
+        if (holder.heiHivPositiveAlert != null) {
+            View close2 = holder.heiHivPositiveAlert.findViewById(R.id.btn_close_alert);
+            if (close2 != null) close2.setOnClickListener(v -> hideAlert(holder.heiHivPositiveAlert));
+        }
+
+        // Visual stripe: red when any flagged, default otherwise
         View stripe = holder.itemView.findViewById(R.id.hei_status_stripe);
         if (stripe != null) {
-            if (heiHighRisk) {
+            if (heiHighRisk || heiHivPositive) {
                 stripe.setBackgroundColor(0xFFE53935);
             } else {
                 stripe.setBackgroundResource(R.drawable.bg_status_stripe);
@@ -107,16 +144,20 @@ Context context;
         TextView fullName,age;
         ImageView genderIcon;
         RelativeLayout relativeLayout;
-        View heiAlert;
+        View heiUnsuppressedAlert;
+        View heiHivPositiveAlert;
         android.widget.Button heiHighRiskButton;
+        android.widget.Button heiHivPositiveButton;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             fullName = itemView.findViewById(R.id.familyNameTextView);
             age = itemView.findViewById(R.id.child_age);
             genderIcon = itemView.findViewById(R.id.gender_icon);
             relativeLayout = itemView.findViewById(R.id.register_columns);
-            heiAlert = itemView.findViewById(R.id.hei_unsuppressed_alert);
+            heiUnsuppressedAlert = itemView.findViewById(R.id.hei_unsuppressed_alert);
+            heiHivPositiveAlert = itemView.findViewById(R.id.hei_hiv_positive_alert);
             heiHighRiskButton = itemView.findViewById(R.id.hei_high_risk_flag);
+            heiHivPositiveButton = itemView.findViewById(R.id.hei_hiv_positive_flag);
         }
     }
 
@@ -140,32 +181,32 @@ Context context;
     }
     private static String safe(String s) { return s == null ? "" : s.trim(); }
 
-    private void toggleAlert(ViewHolder holder) {
-        if (holder.heiAlert == null) return;
-        if (holder.heiAlert.getVisibility() == View.VISIBLE) {
-            hideAlert(holder);
+    private void toggleAlert(View alertView) {
+        if (alertView == null) return;
+        if (alertView.getVisibility() == View.VISIBLE) {
+            hideAlert(alertView);
         } else {
-            holder.heiAlert.clearAnimation();
-            holder.heiAlert.setVisibility(View.VISIBLE);
+            alertView.clearAnimation();
+            alertView.setVisibility(View.VISIBLE);
             try {
                 android.view.animation.Animation a = android.view.animation.AnimationUtils.loadAnimation(context, R.anim.expand_in);
-                holder.heiAlert.startAnimation(a);
+                alertView.startAnimation(a);
             } catch (Throwable ignored) {}
         }
     }
 
-    private void hideAlert(ViewHolder holder) {
-        if (holder.heiAlert == null) return;
+    private void hideAlert(View alertView) {
+        if (alertView == null) return;
         try {
             android.view.animation.Animation a = android.view.animation.AnimationUtils.loadAnimation(context, R.anim.collapse_out);
             a.setAnimationListener(new android.view.animation.Animation.AnimationListener() {
                 @Override public void onAnimationStart(android.view.animation.Animation animation) {}
-                @Override public void onAnimationEnd(android.view.animation.Animation animation) { holder.heiAlert.setVisibility(View.GONE); }
+                @Override public void onAnimationEnd(android.view.animation.Animation animation) { alertView.setVisibility(View.GONE); }
                 @Override public void onAnimationRepeat(android.view.animation.Animation animation) {}
             });
-            holder.heiAlert.startAnimation(a);
+            alertView.startAnimation(a);
         } catch (Throwable e) {
-            holder.heiAlert.setVisibility(View.GONE);
+            alertView.setVisibility(View.GONE);
         }
     }
 }
