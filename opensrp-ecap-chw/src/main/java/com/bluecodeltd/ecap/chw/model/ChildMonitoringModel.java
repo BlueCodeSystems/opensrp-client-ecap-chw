@@ -24,6 +24,15 @@ public class ChildMonitoringModel {
     private String high_risk_hei_outcome;
     private String deleted_status;
 
+    private String nutrition_status;
+    private String medical_complications;
+    private String child_oedema;
+    private String oedema_stage;
+    private String tb_screening_symptoms;
+    private String other_tb_symptom;
+    private String tb_referral;
+    private String comments_tb;
+
     public String getBase_entity_id() {
         return base_entity_id;
     }
@@ -182,5 +191,69 @@ public class ChildMonitoringModel {
 
     public void setDeleted_status(String deleted_status) {
         this.deleted_status = deleted_status;
+    }
+
+    public String getNutrition_status() {
+        return nutrition_status;
+    }
+
+    public void setNutrition_status(String nutrition_status) {
+        this.nutrition_status = nutrition_status;
+    }
+
+    public String getMedical_complications() {
+        return medical_complications;
+    }
+
+    public void setMedical_complications(String medical_complications) {
+        this.medical_complications = medical_complications;
+    }
+
+    public String getChild_oedema() {
+        return child_oedema;
+    }
+
+    public void setChild_oedema(String child_oedema) {
+        this.child_oedema = child_oedema;
+    }
+
+    public String getOedema_stage() {
+        return oedema_stage;
+    }
+
+    public void setOedema_stage(String oedema_stage) {
+        this.oedema_stage = oedema_stage;
+    }
+
+    public String getTb_screening_symptoms() {
+        return tb_screening_symptoms;
+    }
+
+    public void setTb_screening_symptoms(String tb_screening_symptoms) {
+        this.tb_screening_symptoms = tb_screening_symptoms;
+    }
+
+    public String getOther_tb_symptom() {
+        return other_tb_symptom;
+    }
+
+    public void setOther_tb_symptom(String other_tb_symptom) {
+        this.other_tb_symptom = other_tb_symptom;
+    }
+
+    public String getTb_referral() {
+        return tb_referral;
+    }
+
+    public void setTb_referral(String tb_referral) {
+        this.tb_referral = tb_referral;
+    }
+
+    public String getComments_tb() {
+        return comments_tb;
+    }
+
+    public void setComments_tb(String comments_tb) {
+        this.comments_tb = comments_tb;
     }
 }

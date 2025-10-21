@@ -35,6 +35,9 @@ public class PmtctMotherPostnatalDao extends AbstractDao {
             record.setFamily_planning_counselling(getCursorValue(c, "family_planning_counselling"));
             record.setNumber_of_condoms_distributed(getCursorValue(c, "number_of_condoms_distributed"));
             record.setComments_at_postnatal_care_visit(getCursorValue(c, "comments_at_postnatal_care_visit"));
+            record.setTb_screening_symptoms_10plus(getCursorValue(c,"tb_screening_symptoms_10plus"));
+            record.setOther_tb_symptom_10plus(getCursorValue(c,"other_tb_symptom_10plus"));
+            record.setComments_tb_10plus(getCursorValue(c,"comments_tb_10plus"));
             record.setDelete_status(getCursorValue(c, "delete_status"));
 
             return record;

@@ -207,6 +207,14 @@
     <string name="pmtct_alert_unsuppressed_actions_bullets">• Conduct enhanced adherence counselling
 • Case conferencing
 • Refer for further clinical management</string>
+    <string name="pmtct_alert_unsuppressed_actions_bullets_child">
+1: • Conduct enhanced adherence counselling\n
+    • Case conferencing\n\n
+2: • Check if they are on CTX and AZT+3TC+NVP
+</string>
+
+
+
     <string name="unsuppressed_vl_flag">Unsuppressed VL</string>
     <string name="suppressed_vl_flag">Suppressed VL</string>
     <string name="hei_high_risk_flag">HEI: High Risk</string>

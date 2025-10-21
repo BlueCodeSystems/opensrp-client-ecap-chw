@@ -13,6 +13,9 @@ public class PmtctMotherPostnatalModel {
     private String family_planning_counselling;
     private String number_of_condoms_distributed;
     private String comments_at_postnatal_care_visit;
+    private String tb_screening_symptoms_10plus;
+    private String other_tb_symptom_10plus;
+    private String comments_tb_10plus;
     private String delete_status;
 
     // Getters and Setters
@@ -110,6 +113,30 @@ public class PmtctMotherPostnatalModel {
 
     public void setComments_at_postnatal_care_visit(String comments_at_postnatal_care_visit) {
         this.comments_at_postnatal_care_visit = comments_at_postnatal_care_visit;
+    }
+
+    public String getTb_screening_symptoms_10plus() {
+        return tb_screening_symptoms_10plus;
+    }
+
+    public void setTb_screening_symptoms_10plus(String tb_screening_symptoms_10plus) {
+        this.tb_screening_symptoms_10plus = tb_screening_symptoms_10plus;
+    }
+
+    public String getOther_tb_symptom_10plus() {
+        return other_tb_symptom_10plus;
+    }
+
+    public void setOther_tb_symptom_10plus(String other_tb_symptom_10plus) {
+        this.other_tb_symptom_10plus = other_tb_symptom_10plus;
+    }
+
+    public String getComments_tb_10plus() {
+        return comments_tb_10plus;
+    }
+
+    public void setComments_tb_10plus(String comments_tb_10plus) {
+        this.comments_tb_10plus = comments_tb_10plus;
     }
 
     public String getDelete_status() {

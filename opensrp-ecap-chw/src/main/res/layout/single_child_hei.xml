@@ -126,7 +126,7 @@
     <!-- Inline alert panel (collapsed by default) -->
     <include
         android:id="@+id/hei_unsuppressed_alert"
-        layout="@layout/view_pmtct_alert_unsuppressed_vl"
+        layout="@layout/view_pmtct_unsuppressed_vl_child"
         android:visibility="gone"
         android:layout_below="@id/itemm"
         android:layout_marginTop="6dp"

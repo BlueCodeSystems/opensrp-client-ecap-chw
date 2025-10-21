@@ -9328,15 +9328,72 @@
           }
         },
         {
+          "column_name": "nutrition_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.nutrition_status"
+          }
+        },
+        {
+          "column_name": "medical_complications",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.medical_complications"
+          }
+        },
+        {
+          "column_name": "child_oedema",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.child_oedema"
+          }
+        },
+        {
+          "column_name": "oedema_stage",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.oedema_stage"
+          }
+        },
+        {
+          "column_name": "tb_screening_symptoms",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_screening_symptoms"
+          }
+        },
+        {
+          "column_name": "other_tb_symptom",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_tb_symptom"
+          }
+        },
+        {
+          "column_name": "tb_referral",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_referral"
+          }
+        },
+        {
+          "column_name": "comments_tb",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.comments_tb"
+          }
+        },
+
+        {
           "column_name": "deleted_status",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.deleted_status"
           }
         }
-
       ]
     },
+
     {
       "name": "ec_pmtct_child",
       "columns": [
@@ -9647,6 +9704,27 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.comments_at_postnatal_care_visit"
+          }
+        },
+        {
+          "column_name": "tb_screening_symptoms_10plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_screening_symptoms_10plus"
+          }
+        },
+        {
+          "column_name": "other_tb_symptom_10plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_tb_symptom_10plust"
+          }
+        },
+        {
+          "column_name": "comments_tb_10plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.comments_tb_10plus"
           }
         },
         {

@@ -148,7 +148,7 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
 
                 try {
 
-                    openFormUsingFormUtils(context, "mother_pmtct_monitoring", visit);
+                    openFormUsingFormUtils(context, "pmtct_child_monitoring", visit);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -441,9 +441,9 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
             }
 
             if (ageInYears > 1) {
-                openFormUsingFormUtils(context, "pmtct_child_monitoring_nr_r", visit);
+                openFormUsingFormUtils(context, "pmtct_child_monitoring", visit);
             } else {
-                openFormUsingFormUtils(context, "pmtct_child_monitoring_nd_d", visit);
+                openFormUsingFormUtils(context, "pmtct_child_monitoring", visit);
             }
         } catch (ParseException | JSONException e) {
             e.printStackTrace();

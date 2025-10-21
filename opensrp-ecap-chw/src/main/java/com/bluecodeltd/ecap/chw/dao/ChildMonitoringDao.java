@@ -76,6 +76,7 @@ public class ChildMonitoringDao  extends AbstractDao {
             record.setIycf_counselling(getCursorValue(c, "iycf_counselling"));
             record.setInfant_feeding_options(getCursorValue(c, "infant_feeding_options"));
             record.setHigh_risk_hei(getCursorValue(c, "high_risk_hei"));
+
             record.setHiv_test_outcome(getCursorValue(c, "hiv_test_outcome"));
             record.setAzt_3tc_npv_outcome(getCursorValue(c, "azt_3tc_npv_outcome"));
             record.setCtx_outcome(getCursorValue(c, "ctx_outcome"));
@@ -83,7 +84,18 @@ public class ChildMonitoringDao  extends AbstractDao {
             record.setIycf_counselling_outcome(getCursorValue(c, "iycf_counselling_outcome"));
             record.setInfant_feeding_options_outcome(getCursorValue(c, "infant_feeding_options_outcome"));
             record.setHigh_risk_hei_outcome(getCursorValue(c, "high_risk_hei_outcome"));
-            record.setDeleted_status(getCursorValue(c,"delete_status"));
+
+
+            record.setNutrition_status(getCursorValue(c, "nutrition_status"));
+            record.setMedical_complications(getCursorValue(c, "medical_complications"));
+            record.setChild_oedema(getCursorValue(c, "child_oedema"));
+            record.setOedema_stage(getCursorValue(c, "oedema_stage"));
+            record.setTb_screening_symptoms(getCursorValue(c, "tb_screening_symptoms"));
+            record.setOther_tb_symptom(getCursorValue(c, "other_tb_symptom"));
+            record.setTb_referral(getCursorValue(c, "tb_referral"));
+            record.setComments_tb(getCursorValue(c, "comments_tb"));
+
+            record.setDeleted_status(getCursorValue(c, "deleted_status"));
 
             return record;
         };

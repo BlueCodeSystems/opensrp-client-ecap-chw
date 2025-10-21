@@ -331,12 +331,19 @@
         }
       },
       {
-        "key": "info",
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "hd1",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "purpose",
-        "type": "toaster_notes",
-        "toaster_type": "info",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
         "text": "MUAC Screening"
       },
       {
@@ -524,12 +531,19 @@
         }
       },
       {
-        "key": "info",
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "hd1",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "purpose",
-        "type": "toaster_notes",
-        "toaster_type": "info",
+        "openmrs_entity_id": "hd1",
+        "type": "label",
         "text": "TB Screening"
       },
       {

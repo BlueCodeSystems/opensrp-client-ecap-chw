@@ -240,7 +240,87 @@
         "type": "edit_text",
         "hint": "Comments",
         "edit_type": "name"
+      },
+      {
+        "key": "tb_screening_symptoms_10plus",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "tb_screening_symptoms_10plus",
+        "label": "Symptoms/Signs for Individuals 10+ years old (Tick applicable)",
+        "label_info_text": "Tick all symptoms/signs observed in individuals aged 10 years and above. Select 'None' if no symptoms are present, or 'Other Specify' if not listed.",
+        "type": "check_box",
+        "exclusive": [
+          "none"
+        ],
+        "options": [
+          {
+            "key": "current_cough",
+            "text": "Current cough"
+          },
+          {
+            "key": "night_sweats",
+            "text": "Night sweats"
+          },
+          {
+            "key": "fever",
+            "text": "Fever"
+          },
+          {
+            "key": "chest_pains",
+            "text": "Chest Pains"
+          },
+          {
+            "key": "weight_loss",
+            "text": "Weight loss / Wasting"
+          },
+          {
+            "key": "none",
+            "text": "None"
+          },
+          {
+            "key": "other",
+            "text": "Other Specify"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to select at least one symptom/sign. Select 'None' if not applicable."
+        }
+      },
+      {
+        "key": "other_tb_symptom_10plus",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_tb_symptom_10plus",
+        "type": "edit_text",
+        "hint": "Specify any other TB-related symptom/sign observed (10+ years old)",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:tb_screening_symptoms_10plus": {
+            "ex-checkbox": [
+              {
+                "or": ["other"]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "key": "comments_tb_10plus",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "comments_tb_10plus",
+        "type": "edit_text",
+        "hint": "Add any additional comments or observations related to TB screening and referral (10+ years old)",
+        "edit_type": "name"
       }
+
+
+
 
     ]
   }
