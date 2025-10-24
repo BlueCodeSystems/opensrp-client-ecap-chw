@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
@@ -176,6 +177,10 @@ public class ChildSafetyActionAdapter extends RecyclerView.Adapter<ChildSafetyAc
                 Threading.io(() -> {
                     try {
                         JSONObject childSafetyPlanForm = FormCache.obtainFormTemplate(context, "child_safety_action");
+                        if (childSafetyPlanForm == null) {
+                            Threading.main(() -> FormLoadingDialog.dismiss(loading));
+                            return;
+                        }
                         CoreJsonFormUtils.populateJsonForm(childSafetyPlanForm, new ObjectMapper().convertValue(plan, Map.class));
                         childSafetyPlanForm.put("entity_id", plan.getBase_entity_id());
 
@@ -313,17 +318,31 @@ public class ChildSafetyActionAdapter extends RecyclerView.Adapter<ChildSafetyAc
 
     public void openFormUsingFormUtils(Context context, String formName, ChildSafetyActionModel caseplan) {
         Activity activity = context instanceof Activity ? (Activity) context : null;
+        if (!isActivityActive(activity)) {
+            return;
+        }
         AlertDialog loading = FormLoadingDialog.show(activity);
+        if (!isActivityActive(activity)) {
+            FormLoadingDialog.dismiss(loading);
+            return;
+        }
         Threading.io(() -> {
             try {
                 oMapper = new ObjectMapper();
                 JSONObject formToBeOpened = FormCache.obtainFormTemplate(context, formName);
+                if (formToBeOpened == null) {
+                    Threading.main(() -> FormLoadingDialog.dismiss(loading));
+                    return;
+                }
 
                 formToBeOpened.put("entity_id", caseplan.getBase_entity_id());
 
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(caseplan, Map.class));
                 Threading.main(() -> {
                     FormLoadingDialog.dismiss(loading);
+                    if (!isActivityActive(activity)) {
+                        return;
+                    }
                     startFormActivity(formToBeOpened);
                 });
 
@@ -331,11 +350,24 @@ public class ChildSafetyActionAdapter extends RecyclerView.Adapter<ChildSafetyAc
                 Timber.e(e);
                 Threading.main(() -> {
                     FormLoadingDialog.dismiss(loading);
+                    if (!isActivityActive(activity)) {
+                        return;
+                    }
                     Toasty.error(context, "Unable to open form", Toast.LENGTH_LONG, true).show();
                 });
             }
         });
 
+    }
+
+    private static boolean isActivityActive(Activity activity) {
+        if (activity == null) {
+            return false;
+        }
+        if (activity.isFinishing()) {
+            return false;
+        }
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1 || !activity.isDestroyed();
     }
 
     public void startFormActivity(JSONObject jsonObject) {

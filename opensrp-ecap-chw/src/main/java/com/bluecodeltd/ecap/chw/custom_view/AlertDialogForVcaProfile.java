@@ -42,6 +42,10 @@ public class AlertDialogForVcaProfile {
                         if(Constants.SCREENING.equalsIgnoreCase(selectedItem)){
 
                             indexRegisterForm = FormCache.obtainFormTemplate(context, "vca_screening");
+                            if (indexRegisterForm == null) {
+                                FormUtils fallbackFormUtils = new FormUtils(context);
+                                indexRegisterForm = fallbackFormUtils.getFormJson("vca_screening");
+                            }
 
                         } else if (Constants.MOTHER.equalsIgnoreCase(selectedItem)) {
                             FormUtils formUtils = new FormUtils(context);
@@ -55,7 +59,9 @@ public class AlertDialogForVcaProfile {
 
                         }
 
-                        idRegisterActivity.startFormActivity(indexRegisterForm);
+                        if (indexRegisterForm != null) {
+                            idRegisterActivity.startFormActivity(indexRegisterForm);
+                        }
 
                     } catch (Exception e) {
                         Timber.e(e);

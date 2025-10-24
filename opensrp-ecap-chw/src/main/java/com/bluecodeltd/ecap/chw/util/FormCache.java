@@ -45,9 +45,10 @@ public final class FormCache {
                     continue;
                 }
                 try {
+                    String key = cacheKey(context, formName);
                     boolean alreadyCached;
                     synchronized (CACHE) {
-                        alreadyCached = CACHE.containsKey(formName);
+                        alreadyCached = CACHE.containsKey(key);
                     }
                     if (!alreadyCached) {
                         loadAndCache(context, formName);
@@ -59,21 +60,34 @@ public final class FormCache {
         });
     }
 
-    public static boolean isWarmed(String formName) {
+    public static boolean isWarmed(Context context, String formName) {
+        if (formName == null) {
+            return false;
+        }
         synchronized (CACHE) {
-            return CACHE.containsKey(formName);
+            return CACHE.containsKey(cacheKey(context, formName));
         }
     }
 
     public static JSONObject obtainFormTemplate(Context context, String formName) throws Exception {
+        if (formName == null) {
+            return null;
+        }
+        String key = cacheKey(context, formName);
         String serialized;
         synchronized (CACHE) {
-            serialized = CACHE.get(formName);
+            serialized = CACHE.get(key);
         }
         if (serialized == null) {
             serialized = loadAndCache(context, formName);
         }
-        return new JSONObject(serialized);
+        return serialized == null ? null : new JSONObject(serialized);
+    }
+
+    public static void clear() {
+        synchronized (CACHE) {
+            CACHE.clear();
+        }
     }
 
     private static String loadAndCache(Context context, String formName) throws Exception {
@@ -82,10 +96,50 @@ public final class FormCache {
         }
         FormUtils formUtils = new FormUtils(context);
         JSONObject formJson = formUtils.getFormJson(formName);
+        if (formJson == null) {
+            return null;
+        }
         String serialized = formJson.toString();
         synchronized (CACHE) {
-            CACHE.put(formName, serialized);
+            CACHE.put(cacheKey(context, formName), serialized);
         }
         return serialized;
+    }
+
+    private static String cacheKey(Context context, String formName) {
+        String localeTag = resolveLocaleTag(context);
+        return formName + "|" + localeTag;
+    }
+
+    private static String resolveLocaleTag(Context context) {
+        if (context == null) {
+            return "";
+        }
+        try {
+            android.content.res.Configuration configuration = context.getResources().getConfiguration();
+            java.util.Locale locale;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                locale = configuration.getLocales().isEmpty() ? java.util.Locale.getDefault() : configuration.getLocales().get(0);
+            } else {
+                locale = configuration.locale;
+            }
+            if (locale == null) {
+                return "";
+            }
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                return locale.toLanguageTag();
+            }
+            StringBuilder builder = new StringBuilder(locale.getLanguage());
+            if (!locale.getCountry().isEmpty()) {
+                builder.append('-').append(locale.getCountry());
+            }
+            if (!locale.getVariant().isEmpty()) {
+                builder.append('-').append(locale.getVariant());
+            }
+            return builder.toString();
+        } catch (Exception e) {
+            Timber.w(e, "Unable to resolve locale tag");
+            return "";
+        }
     }
 }

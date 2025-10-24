@@ -38,6 +38,7 @@ import com.bluecodeltd.ecap.chw.repository.ChwRepository;
 import com.bluecodeltd.ecap.chw.schedulers.ChwScheduleTaskExecutor;
 import com.bluecodeltd.ecap.chw.sync.ChwClientProcessor;
 import com.bluecodeltd.ecap.chw.util.ChwLocationBasedClassifier;
+import com.bluecodeltd.ecap.chw.util.FormCache;
 import com.bluecodeltd.ecap.chw.util.FailSafeRecalledID;
 import com.bluecodeltd.ecap.chw.util.FileUtils;
 import com.bluecodeltd.ecap.chw.util.JsonFormUtils;
@@ -206,6 +207,15 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         context.updateApplicationContext(getApplicationContext());
         context.updateCommonFtsObject(getCommonFtsObject());
 
+        // Ensure Timber does not reference Crashlytics when the dependency/plugin is not applied
+        // Some upstream libraries plant CrashLyticsTree during initialization, which crashes when Firebase isn't configured.
+        try {
+            Timber.uprootAll();
+            Timber.plant(new Timber.DebugTree());
+        } catch (Throwable t) {
+            // Ignore; logging is non-critical
+        }
+
         //TODO set this up afresh - OneSignal is deprecated
      /*   // Enable verbose OneSignal logging to debug issues if needed.
         OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE);
@@ -261,15 +271,6 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         }
 
         reloadLanguage();
-
-        // Ensure Timber does not reference Crashlytics when the dependency/plugin is not applied
-        // This prevents NoClassDefFoundError from org.smartregister.util.CrashLyticsTree
-        try {
-            Timber.uprootAll();
-            Timber.plant(new Timber.DebugTree());
-        } catch (Throwable t) {
-            // Ignore; logging is non-critical
-        }
     }
 
     protected void initializeMapBox() {
@@ -358,6 +359,12 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         pulseBridgeConfig.setServiceEndpoint(BuildConfig.THINKMD_BASE_URL);
         pulseBridgeConfig.setWebAppPath(BuildConfig.THINKMD_END_POINT);
         PulseBridgeLibrary.init(getApplicationContext(), pulseBridgeConfig);
+    }
+
+    @Override
+    public void reloadLanguage() {
+        super.reloadLanguage();
+        FormCache.clear();
     }
 
     @Override

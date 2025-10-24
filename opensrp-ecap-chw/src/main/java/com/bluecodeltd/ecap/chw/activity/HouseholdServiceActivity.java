@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -345,22 +346,39 @@ public class HouseholdServiceActivity extends AppCompatActivity {
         loadServices(true);
     }
 
+    private boolean isActivityActive() {
+        if (isFinishing()) {
+            return false;
+        }
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1 || !isDestroyed();
+    }
+
     private void launchFormAsync(String formName, FormModifier modifier) {
         AlertDialog loading = FormLoadingDialog.show(this);
+        if (!isActivityActive()) {
+            FormLoadingDialog.dismiss(loading);
+            return;
+        }
         Threading.io(() -> {
             try {
                 JSONObject form = FormCache.obtainFormTemplate(this, formName);
-                if (modifier != null) {
+                if (modifier != null && form != null) {
                     modifier.apply(form);
                 }
                 Threading.main(() -> {
                     FormLoadingDialog.dismiss(loading);
+                    if (!isActivityActive() || form == null) {
+                        return;
+                    }
                     startFormActivity(form);
                 });
             } catch (Exception e) {
                 Timber.e(e);
                 Threading.main(() -> {
                     FormLoadingDialog.dismiss(loading);
+                    if (!isActivityActive()) {
+                        return;
+                    }
                     Toasty.error(this, "Unable to open form", Toast.LENGTH_LONG, true).show();
                 });
             }
