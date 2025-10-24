@@ -65,6 +65,7 @@ import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.model.WeServiceVcaModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.BottomSheetActionHelper;
+import com.bluecodeltd.ecap.chw.util.ToastRouter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -113,6 +114,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        ToastRouter.maybeShowQueuedToast(this);
     }
 
     private FloatingActionButton fab;
@@ -474,17 +476,16 @@ public class HTSDetailsActivity extends AppCompatActivity {
 
                 saveRegistration(childIndexEventClient, is_edit_mode);
 
+                String successMessage = getString(R.string.toast_form_saved);
+
                 switch (encounterType) {
-                    case "VCA Case Plan":
-
+                    case "VCA Case Plan": {
                         JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
-                        String dateId = cpdate.optString("value");
-                        finish();
-                        startActivity(getIntent());
-                        openVcaCasplanToAddVulnarabilities(dateId);
-
-                        break;
-
+                        String dateId = cpdate != null ? cpdate.optString("value") : null;
+                        relaunchSelfWithToast(successMessage);
+                        openVcaCasplanToAddVulnarabilities(dateId, successMessage);
+                        return;
+                    }
                     case "Household Visitation Form 0-20 years":
                     case "Member Sub Population":
                     case "Sub Population":
@@ -493,23 +494,19 @@ public class HTSDetailsActivity extends AppCompatActivity {
                     case "HIV Risk Assessment Below 15":
                     case "HIV Testing Links":
                     case "HIV Testing Service":
-
-                        finish();
-                        startActivity(getIntent());
-
-                        break;
-                    case "Case Record Status":
-
-                        finish();
-                        startActivity(getIntent());
+                        relaunchSelfWithToast(successMessage);
+                        return;
+                    case "Case Record Status": {
+                        relaunchSelfWithToast(successMessage);
                         Intent i = new Intent(getApplicationContext(), IndexRegisterActivity.class);
+                        ToastRouter.withSuccessToast(i, successMessage);
                         startActivity(i);
-
-                        break;
-
+                        return;
+                    }
+                    default:
+                        relaunchSelfWithToast(successMessage);
+                        return;
                 }
-
-                Toasty.success(HTSDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
 
             } catch (Exception e) {
                 Timber.e(e);
@@ -519,12 +516,27 @@ public class HTSDetailsActivity extends AppCompatActivity {
 
     }
 
-    private void openVcaCasplanToAddVulnarabilities(String dateId) {
+    private void openVcaCasplanToAddVulnarabilities(String dateId, String toastMessage) {
         Intent i = new Intent(HTSDetailsActivity.this, CasePlan.class);
         i.putExtra("childId", indexVCA.getUnique_id());
         i.putExtra("dateId",  dateId);
         i.putExtra("hivStatus",  indexVCA.getIs_hiv_positive());
+        ToastRouter.withSuccessToast(i, toastMessage);
         startActivity(i);
+    }
+
+    private void relaunchSelfWithToast(String message) {
+        Intent restart = new Intent(this, HTSDetailsActivity.class);
+        restart.setFlags(getIntent().getFlags());
+        if (getIntent().getData() != null) {
+            restart.setData(getIntent().getData());
+        }
+        if (getIntent().getExtras() != null) {
+            restart.putExtras(new Bundle(getIntent().getExtras()));
+        }
+        ToastRouter.withSuccessToast(restart, message);
+        finish();
+        startActivity(restart);
     }
 
     @NonNull

@@ -46,6 +46,7 @@ import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
 import com.bluecodeltd.ecap.chw.model.PtmctMotherMonitoringModel;
 import com.bluecodeltd.ecap.chw.util.BottomSheetActionHelper;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.ToastRouter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -196,6 +197,12 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
 
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ToastRouter.maybeShowQueuedToast(this);
+    }
 
     private void setupViewPager(){
         // Rebuild ViewPager2 adapter
@@ -577,6 +584,7 @@ break;
 
                 getUniqueIdRepository().close(vca_id);
                 String encounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
+                String successMessage = getString(R.string.toast_form_saved);
 
                 switch (encounterType) {
 
@@ -584,18 +592,13 @@ break;
                     case "Mother Pmtct":
                     case "Mother Pmtct Postnatal":
                     case "Mother Pmtct Delivery":
-
-                        finish();
-                        startActivity(getIntent());
-
-                        break;
+                        relaunchSelfWithToast(successMessage);
+                        return;
 
                 }
 
-                Toasty.success(MotherPmtctProfileActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
-
-                finish();
-                startActivity(getIntent());
+                relaunchSelfWithToast(successMessage);
+                return;
 
             } catch (Exception e) {
                 Timber.e(e);
@@ -709,6 +712,20 @@ break;
     }
 
         return null;
+    }
+
+    private void relaunchSelfWithToast(String message) {
+        Intent restart = new Intent(this, MotherPmtctProfileActivity.class);
+        restart.setFlags(getIntent().getFlags());
+        if (getIntent().getData() != null) {
+            restart.setData(getIntent().getData());
+        }
+        if (getIntent().getExtras() != null) {
+            restart.putExtras(new Bundle(getIntent().getExtras()));
+        }
+        ToastRouter.withSuccessToast(restart, message);
+        finish();
+        startActivity(restart);
     }
 
     public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {

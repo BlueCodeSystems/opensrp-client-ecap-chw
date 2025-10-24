@@ -78,6 +78,7 @@ import com.bluecodeltd.ecap.chw.model.WeServiceCaregiverModel;
 import com.bluecodeltd.ecap.chw.model.newCaregiverModel;
 import com.bluecodeltd.ecap.chw.util.BottomSheetActionHelper;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.ToastRouter;
 import com.bluecodeltd.ecap.chw.util.FormCache;
 import com.bluecodeltd.ecap.chw.util.FormLoadingDialog;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -425,6 +426,12 @@ public class HouseholdDetails extends AppCompatActivity {
 
         // Debug: log fragments after adapter
         logFragments("after_setAdapter");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ToastRouter.maybeShowQueuedToast(this);
     }
 
     @Override
@@ -1275,68 +1282,53 @@ public class HouseholdDetails extends AppCompatActivity {
                 switch (EncounterType) {
 
                     case "Caregiver Assessment":
-
                         closeFab();
-                        Toasty.success(HouseholdDetails.this, "Vulnerabilities Saved", Toast.LENGTH_LONG, true).show();
-                        finish();
-                        startActivity(getIntent());
-                        break;
+                        relaunchSelfWithToast(getString(R.string.toast_vulnerabilities_saved));
+                        return;
 
                     case "Household Screening":
-
                         closeFab();
-                        Toasty.success(HouseholdDetails.this, "Household Updated", Toast.LENGTH_LONG, true).show();
-//                        finish();
-//                        startActivity(getIntent());
-                        Intent intent = getIntent();
-                        finish();
-                        startActivity(intent);
-                        break;
+                        relaunchSelfWithToast(getString(R.string.toast_household_updated));
+                        return;
+
                     case "WE Services Caregiver":
-
                         closeFab();
-                        Toasty.success(HouseholdDetails.this, "WE form Updated", Toast.LENGTH_LONG, true).show();
-                        finish();
-                        startActivity(getIntent());
-                        break;
+                        relaunchSelfWithToast(getString(R.string.toast_we_form_updated));
+                        return;
 
                     case "Family Member":
                         closeFab();
-                        Toasty.success(HouseholdDetails.this, "Family Member Saved", Toast.LENGTH_LONG, true).show();
-                        finish();
-                        startActivity(getIntent());
-                        break;
+                        relaunchSelfWithToast(getString(R.string.toast_family_member_saved));
+                        return;
 
                     case "MUAC Score":
-
                         closeFab();
-                        Toasty.success(HouseholdDetails.this, "MUAC Updated", Toast.LENGTH_LONG, true).show();
-                        finish();
-                        startActivity(getIntent());
-                        break;
+                        relaunchSelfWithToast(getString(R.string.toast_muac_updated));
+                        return;
 
                     case "Grad":
                     case "Graduation":
                     case "Household Case Status":
                     case "Household Visitation For Caregiver Edit":
-
                         closeFab();
-                        Toasty.success(HouseholdDetails.this, "Form Updated and Saved", Toast.LENGTH_LONG, true).show();
-                        finish();
-                        startActivity(getIntent());
-                        break;
+                        relaunchSelfWithToast(getString(R.string.toast_form_updated_saved));
+                        return;
 
-                    case "Caregiver Case Plan":
-
+                    case "Caregiver Case Plan": {
                         JSONObject date = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
-                        String dateId = date.optString("value");
+                        String dateId = date != null ? date.optString("value") : null;
 
                         JSONObject cpId = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_id");
-                        String cp_Id = cpId.optString("value");
+                        String cp_Id = cpId != null ? cpId.optString("value") : null;
 
-                        AddVulnarabilitiesToCasePlan(dateId,cp_Id);
-                        break;
+                        AddVulnarabilitiesToCasePlan(dateId, cp_Id, getString(R.string.toast_form_saved));
+                        return;
+                    }
 
+                    default:
+                        closeFab();
+                        relaunchSelfWithToast(getString(R.string.toast_form_saved));
+                        return;
                 }
             } catch (Exception e) {
                 Timber.e(e);
@@ -1353,14 +1345,29 @@ public class HouseholdDetails extends AppCompatActivity {
     }
 
 
-    private void AddVulnarabilitiesToCasePlan(String dateId,String cpId) {
+    private void AddVulnarabilitiesToCasePlan(String dateId,String cpId, String toastMessage) {
         Intent i = new Intent(HouseholdDetails.this, HouseholdCasePlanActivity.class);
         i.putExtra("unique_id",  house.getUnique_id());
         i.putExtra("householdId",  house.getHousehold_id());
         i.putExtra("status",house.getCaregiver_hiv_status());
         i.putExtra("dateId",  dateId);
         i.putExtra("case_plan_id",cpId);
+        ToastRouter.withSuccessToast(i, toastMessage);
         startActivity(i);
+    }
+
+    private void relaunchSelfWithToast(String message) {
+        Intent restart = new Intent(this, HouseholdDetails.class);
+        restart.setFlags(getIntent().getFlags());
+        if (getIntent().getData() != null) {
+            restart.setData(getIntent().getData());
+        }
+        if (getIntent().getExtras() != null) {
+            restart.putExtras(new Bundle(getIntent().getExtras()));
+        }
+        ToastRouter.withSuccessToast(restart, message);
+        finish();
+        startActivity(restart);
     }
 
     @NonNull

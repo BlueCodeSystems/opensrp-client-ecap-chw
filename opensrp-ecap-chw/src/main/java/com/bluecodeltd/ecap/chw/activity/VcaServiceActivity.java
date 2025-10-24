@@ -35,6 +35,7 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.ToastRouter;
 import com.bluecodeltd.ecap.chw.util.FormCache;
 import com.bluecodeltd.ecap.chw.util.FormLoadingDialog;
 import com.rey.material.widget.Button;
@@ -131,6 +132,7 @@ public class VcaServiceActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+        ToastRouter.maybeShowQueuedToast(this);
         loadServices(true);
     }
 

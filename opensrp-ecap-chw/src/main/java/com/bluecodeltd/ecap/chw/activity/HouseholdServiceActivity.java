@@ -39,6 +39,7 @@ import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.HouseholdServiceReportModel;
 import com.bluecodeltd.ecap.chw.model.newCaregiverModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.ToastRouter;
 import com.bluecodeltd.ecap.chw.util.FormCache;
 import com.bluecodeltd.ecap.chw.util.FormLoadingDialog;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -157,6 +158,7 @@ public class HouseholdServiceActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+        ToastRouter.maybeShowQueuedToast(this);
         loadServices(true);
     }
 

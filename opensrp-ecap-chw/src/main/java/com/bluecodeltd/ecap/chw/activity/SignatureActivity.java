@@ -26,6 +26,7 @@ import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.JsonFormUtils;
+import com.bluecodeltd.ecap.chw.util.ToastRouter;
 import com.github.gcacace.signaturepad.views.SignaturePad;
 import com.google.android.material.appbar.AppBarLayout;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -165,70 +166,76 @@ public class SignatureActivity extends AppCompatActivity {
                     }
 
                     switch (encounterType) {
-                        case "Household Screening":
+                        case "Household Screening": {
                             String hid = getFieldValue(screeningFormObject, "step2", "household_id");
                             Intent refreshActivity = new Intent(getApplicationContext(), HouseholdDetails.class);
                             refreshActivity.putExtra("householdId", hid);
+                            ToastRouter.withSuccessToast(refreshActivity, getString(R.string.toast_household_updated));
                             startActivity(refreshActivity);
                             finish();
                             break;
-
-                        case "Sub Population":
+                        }
+                        case "Sub Population": {
                             String vca_id = getFieldValue(screeningFormObject, "step1", "unique_id");
-//                            CommonPersonObjectClient client =(CommonPersonObjectClient) view.getTag();
                             Intent openVcaProfile = new Intent(getApplicationContext(), IndexDetailsActivity.class);
                             openVcaProfile.putExtra("Child", vca_id);
-//                            openVcaProfile.putExtra("baseId",  client);
+                            ToastRouter.withSuccessToast(openVcaProfile, getString(R.string.toast_form_saved));
                             startActivity(openVcaProfile);
                             finish();
                             break;
-
-                        case "Household Service Report":
-                            Toasty.success(getApplicationContext(), "Service Report Saved", Toast.LENGTH_LONG, true).show();
+                        }
+                        case "Household Service Report": {
                             Intent openHouseholdIntent = new Intent(SignatureActivity.this, HouseholdServiceActivity.class);
                             openHouseholdIntent.putExtra("cname", intent_caregivername);
                             openHouseholdIntent.putExtra("householdId", householdId);
+                            ToastRouter.withSuccessToast(openHouseholdIntent, getString(R.string.toast_service_report_saved));
                             startActivity(openHouseholdIntent);
                             finish();
                             break;
-
-                        case "VCA Service Report":
-                            Toasty.success(getApplicationContext(), "Service Report Saved", Toast.LENGTH_LONG, true).show();
+                        }
+                        case "VCA Service Report": {
                             Intent openVcaIntent = new Intent(SignatureActivity.this, VcaServiceActivity.class);
                             openVcaIntent.putExtra("vcaid", intent_vcaid);
                             openVcaIntent.putExtra("vcaname", c_name);
                             openVcaIntent.putExtra("hivtstatus", hivstatus);
                             openVcaIntent.putExtra("hh_id", household_id);
+                            ToastRouter.withSuccessToast(openVcaIntent, getString(R.string.toast_service_report_saved));
                             startActivity(openVcaIntent);
                             finish();
                             break;
-
-                        case "Household Visitation Form 0-20 years":
-                            Toasty.success(getApplicationContext(), "Visitation Saved", Toast.LENGTH_LONG, true).show();
+                        }
+                        case "Household Visitation Form 0-20 years": {
                             Intent intent = new Intent(SignatureActivity.this, IndexDetailsActivity.class);
                             intent.putExtra("Child", childId);
+                            ToastRouter.withSuccessToast(intent, getString(R.string.toast_visitation_saved));
                             startActivity(intent);
                             finish();
                             break;
-
-                        case "Household Visitation For Caregiver":
-                            Toasty.success(getApplicationContext(), "Visitation Saved", Toast.LENGTH_LONG, true).show();
+                        }
+                        case "Household Visitation For Caregiver": {
                             Intent openHouseholdProfile = new Intent(SignatureActivity.this, HouseholdDetails.class);
                             openHouseholdProfile.putExtra("householdId", householdId);
+                            ToastRouter.withSuccessToast(openHouseholdProfile, getString(R.string.toast_visitation_saved));
                             startActivity(openHouseholdProfile);
                             finish();
                             break;
-
-                        case "Hiv Assessment For Caregiver":
-                            Toasty.success(getApplicationContext(), "HIV assessment Saved", Toast.LENGTH_LONG, true).show();
+                        }
+                        case "Hiv Assessment For Caregiver": {
+                            Intent openHouseholdProfile = new Intent(SignatureActivity.this, HouseholdDetails.class);
+                            openHouseholdProfile.putExtra("householdId", householdId);
+                            ToastRouter.withSuccessToast(openHouseholdProfile, getString(R.string.toast_hiv_assessment_saved));
+                            startActivity(openHouseholdProfile);
                             finish();
                             break;
-
-                        case "Referral":
-                            Toasty.success(getApplicationContext(), "Referral Saved", Toast.LENGTH_LONG, true).show();
+                        }
+                        case "Referral": {
+                            Intent referralIntent = new Intent(SignatureActivity.this, IndexDetailsActivity.class);
+                            referralIntent.putExtra("Child", childId);
+                            ToastRouter.withSuccessToast(referralIntent, getString(R.string.toast_referral_saved));
+                            startActivity(referralIntent);
                             finish();
                             break;
-
+                        }
                         default:
                             finish();
                             break;

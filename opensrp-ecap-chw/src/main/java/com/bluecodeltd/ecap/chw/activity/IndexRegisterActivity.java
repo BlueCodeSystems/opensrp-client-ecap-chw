@@ -36,6 +36,7 @@ import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.presenter.IndexRegisterPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.Utils;
+import com.bluecodeltd.ecap.chw.util.ToastRouter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -129,6 +130,12 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         notificationsList.addAll(VcaVisitationDao.getVisitsByCaseWorkerPhone(phone));
         mCartItemCount = notificationsList.size();
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ToastRouter.maybeShowQueuedToast(this);
     }
 
 

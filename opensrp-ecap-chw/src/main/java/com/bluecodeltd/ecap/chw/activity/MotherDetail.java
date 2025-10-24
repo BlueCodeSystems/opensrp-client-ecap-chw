@@ -35,6 +35,7 @@ import com.bluecodeltd.ecap.chw.fragment.MotherOverviewFragment;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.util.BottomSheetActionHelper;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.ToastRouter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -144,6 +145,12 @@ public class MotherDetail extends AppCompatActivity {
         setupViewPager();
         updateChildTabTitle();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ToastRouter.maybeShowQueuedToast(this);
     }
 
     public HashMap<String, CommonPersonObjectClient> getData() {
@@ -377,10 +384,8 @@ public class MotherDetail extends AppCompatActivity {
 
                 getUniqueIdRepository().close(vca_id);
 
-                Toasty.success(MotherDetail.this, "Form Saved", Toast.LENGTH_LONG, true).show();
-
-                finish();
-                startActivity(getIntent());
+                relaunchSelfWithToast(getString(R.string.toast_form_saved));
+                return;
 
             } catch (Exception e) {
                 Timber.e(e);
@@ -391,6 +396,20 @@ public class MotherDetail extends AppCompatActivity {
         getData();
         setupViewPager();
         updateChildTabTitle();
+    }
+
+    private void relaunchSelfWithToast(String message) {
+        Intent restart = new Intent(this, MotherDetail.class);
+        restart.setFlags(getIntent().getFlags());
+        if (getIntent().getData() != null) {
+            restart.setData(getIntent().getData());
+        }
+        if (getIntent().getExtras() != null) {
+            restart.putExtras(new Bundle(getIntent().getExtras()));
+        }
+        ToastRouter.withSuccessToast(restart, message);
+        finish();
+        startActivity(restart);
     }
 
     @NonNull
