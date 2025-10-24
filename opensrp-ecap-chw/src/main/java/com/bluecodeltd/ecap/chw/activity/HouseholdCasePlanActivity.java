@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowInsetsController;
@@ -35,6 +36,7 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.ToastRouter;
 import com.rey.material.widget.Button;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -97,6 +99,40 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
         hivStatus = getIntent().getStringExtra("status");
         case_plan_id = getIntent().getExtras().getString("case_plan_id");
 
+        if (TextUtils.isEmpty(case_plan_id)) {
+            try {
+                List<CasePlanModel> existingPlans = HouseholdDao.getCasePlansById(householdId);
+                for (CasePlanModel plan : existingPlans) {
+                    String planDate = plan.getCase_plan_date();
+                    if (!TextUtils.isEmpty(caseDate) && !TextUtils.isEmpty(planDate)
+                            && caseDate.trim().equalsIgnoreCase(planDate.trim())
+                            && !TextUtils.isEmpty(plan.getCase_plan_id())) {
+                        case_plan_id = plan.getCase_plan_id();
+                        break;
+                    }
+                }
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+        }
+
+        if (TextUtils.isEmpty(case_plan_id)) {
+            try {
+                List<CasePlanModel> existingPlans = HouseholdDao.getCasePlansById(householdId);
+                for (CasePlanModel plan : existingPlans) {
+                    String planDate = plan.getCase_plan_date();
+                    if (!TextUtils.isEmpty(caseDate) && !TextUtils.isEmpty(planDate)
+                            && caseDate.trim().equalsIgnoreCase(planDate.trim())
+                            && !TextUtils.isEmpty(plan.getBase_entity_id())) {
+                        case_plan_id = plan.getBase_entity_id();
+                        break;
+                    }
+                }
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+        }
+
         fetchData(false);
         domainBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,6 +150,12 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ToastRouter.maybeShowQueuedToast(this);
     }
 
     private void setUpActionBar() {
@@ -223,6 +265,18 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
                 jsonFormObject = new JSONObject(jsonString);
             } catch (JSONException e) {
                 e.printStackTrace();
+            }
+
+            JSONObject cpIdField = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_id");
+            if (cpIdField != null) {
+                String currentValue = cpIdField.optString("value", "");
+                if (TextUtils.isEmpty(currentValue) && !TextUtils.isEmpty(case_plan_id)) {
+                    try {
+                        cpIdField.put("value", case_plan_id);
+                    } catch (JSONException e) {
+                        Timber.e(e);
+                    }
+                }
             }
 
             if (!jsonFormObject.optString("entity_id").isEmpty()) {
