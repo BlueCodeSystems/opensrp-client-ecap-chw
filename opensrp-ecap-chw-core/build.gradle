@@ -284,8 +284,8 @@ dependencies {
         exclude group: 'com.rengwuxian.materialedittext', module: 'library'
         exclude group: 'com.ibm.fhir', module: 'fhir-model'
     }
-    // P2P Sync from JitPack (v0.4.3)
-    api('com.github.BlueCodeSystems:android-p2p-sync:v0.4.3') {
+    // P2P Sync from JitPack (v0.5.0)
+    api('com.github.BlueCodeSystems:android-p2p-sync:v0.5.0') {
         // Guard against old SmartRegister core sneaking in transitively
         exclude group: 'org.smartregister', module: 'opensrp-client-core'
         exclude group: 'com.github.BlueCodeSystems.Opensrp-client-native-form-new', module: 'opensrp-client-native-form'
@@ -393,7 +393,7 @@ dependencies {
     api 'io.reactivex.rxjava2:rxjava:2.2.15'
     api 'com.evernote:android-job:1.4.3'
     api 'org.greenrobot:eventbus:3.1.1'
-    api("org.smartregister:android-p2p-sync:0.3.8-aplha4-SNAPSHOT") {
+    api("com.github.BlueCodeSystems:android-p2p-sync:v0.5.0") {
         transitive = true
         exclude group: 'com.github.BlueCodeSystems', module: 'opensrp-client-core'
         exclude group: 'org.smartregister', module: 'opensrp-client-core'
