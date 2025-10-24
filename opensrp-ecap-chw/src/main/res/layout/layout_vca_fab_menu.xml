@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="24dp">
+
+    <TextView
+        android:id="@+id/vca_menu_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@string/menu_more_actions"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        android:textColor="@color/text_black" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/vca_screening"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/vca_menu_screening"
+        android:textColor="@color/text_black"
+        android:gravity="start|center_vertical"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        android:drawableStart="@drawable/baseline_mode_edit_24"
+        android:drawablePadding="16dp"
+        android:drawableTint="@color/text_black"
+        android:backgroundTint="@android:color/transparent"
+        android:background="@android:color/transparent"
+        android:textAllCaps="false" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/assessment"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/vca_menu_assessment"
+        android:textColor="@color/text_black"
+        android:gravity="start|center_vertical"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        android:drawableStart="@drawable/baseline_mode_edit_24"
+        android:drawablePadding="16dp"
+        android:drawableTint="@color/text_black"
+        android:backgroundTint="@android:color/transparent"
+        android:background="@android:color/transparent"
+        android:textAllCaps="false" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/case_plan"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/vca_menu_case_plan"
+        android:textColor="@color/text_black"
+        android:gravity="start|center_vertical"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        android:drawableStart="@drawable/baseline_mode_edit_24"
+        android:drawablePadding="16dp"
+        android:drawableTint="@color/text_black"
+        android:backgroundTint="@android:color/transparent"
+        android:background="@android:color/transparent"
+        android:textAllCaps="false" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/referral"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/vca_menu_referral"
+        android:textColor="@color/text_black"
+        android:gravity="start|center_vertical"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        android:drawableStart="@drawable/baseline_mode_edit_24"
+        android:drawablePadding="16dp"
+        android:drawableTint="@color/text_black"
+        android:backgroundTint="@android:color/transparent"
+        android:background="@android:color/transparent"
+        android:textAllCaps="false" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/household_visitation_for_vca"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/vca_menu_quarterly_reassessment"
+        android:textColor="@color/text_black"
+        android:gravity="start|center_vertical"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        android:drawableStart="@android:drawable/ic_input_add"
+        android:drawablePadding="16dp"
+        android:drawableTint="@color/text_black"
+        android:backgroundTint="@android:color/transparent"
+        android:background="@android:color/transparent"
+        android:textAllCaps="false" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/hiv_assessment"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/vca_menu_hiv_under_15"
+        android:textColor="@color/text_black"
+        android:gravity="start|center_vertical"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        android:drawableStart="@drawable/baseline_mode_edit_24"
+        android:drawablePadding="16dp"
+        android:drawableTint="@color/text_black"
+        android:backgroundTint="@android:color/transparent"
+        android:background="@android:color/transparent"
+        android:textAllCaps="false" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/hiv_assessment2"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/vca_menu_hiv_over_15"
+        android:textColor="@color/text_black"
+        android:gravity="start|center_vertical"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        android:drawableStart="@drawable/baseline_mode_edit_24"
+        android:drawablePadding="16dp"
+        android:drawableTint="@color/text_black"
+        android:backgroundTint="@android:color/transparent"
+        android:background="@android:color/transparent"
+        android:textAllCaps="false" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/we_services_vca"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/vca_menu_we_services"
+        android:textColor="@color/text_black"
+        android:gravity="start|center_vertical"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        android:drawableStart="@drawable/baseline_mode_edit_24"
+        android:drawablePadding="16dp"
+        android:drawableTint="@color/text_black"
+        android:backgroundTint="@android:color/transparent"
+        android:background="@android:color/transparent"
+        android:textAllCaps="false" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/childPlan"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/vca_menu_child_safety"
+        android:textColor="@color/text_black"
+        android:gravity="start|center_vertical"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        android:drawableStart="@android:drawable/ic_input_add"
+        android:drawablePadding="16dp"
+        android:backgroundTint="@android:color/transparent"
+        android:background="@android:color/transparent"
+        android:textAllCaps="false" />
+
+</LinearLayout>

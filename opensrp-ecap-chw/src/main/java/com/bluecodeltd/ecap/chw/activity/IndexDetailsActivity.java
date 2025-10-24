@@ -27,9 +27,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -81,6 +80,7 @@ import com.bluecodeltd.ecap.chw.model.newCaregiverModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.FormCache;
 import com.bluecodeltd.ecap.chw.util.Threading;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
@@ -144,11 +144,18 @@ public class IndexDetailsActivity extends AppCompatActivity {
 //        super.onResume();
 //    }
 
-    private FloatingActionButton fab, fabHiv,fabHiv2, fabGradSub, fabGrad, fabCasePlan, fabVisitation, fabReferal,  fabAssessment;
-    private Animation fab_open,fab_close,rotate_forward,rotate_backward;
-    private Boolean isFabOpen = false;
+    private FloatingActionButton fab;
+    private BottomSheetDialog fabMenuDialog;
+    private View menuItemVcaScreening;
+    private View menuItemAssessment;
+    private View menuItemCasePlan;
+    private View menuItemReferral;
+    private View menuItemQuarterly;
+    private View menuItemHivUnder15;
+    private View menuItemHivOver15;
+    private View menuItemWeServices;
+    private View menuItemChildPlan;
     public String childId, uniqueId, vcaAge,is_screened, is_hiv_positive, caseworkerphone;
-    private RelativeLayout txtScreening, rassessment, rcase_plan, referral,  household_visitation_for_vca, hiv_assessment,hiv_assessment2,childPlan,weServicesVca;
 
     public VcaScreeningModel indexVCA;
     private  VcaAssessmentModel assessmentModel;
@@ -256,12 +263,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
             }
         }
 
-        fabHiv = binding.hivRisk;
-        fabHiv2 = binding.hivRisk2;
-        fabVisitation = binding.householdVisitationForVcaFab;
-        fabReferal = binding.referToFacilityFab;
-        fabCasePlan =  binding.casePlanFab;
-        fabAssessment = binding.fabAssessment;
 
         vcaAssessmentModel = VcaAssessmentDao.getVcaAssessment(childId);
         referralModel = ReferralDao.getReferral(childId);
@@ -280,26 +281,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         oMapper = new ObjectMapper();
         clientMapper = new ObjectMapper();
-
-        if(vcaAssessmentModel == null){
-            fabAssessment.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
-        }
-
-        if(referralModel == null){
-            fabReferal.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
-        }
-//        if(hivRiskAssessmentUnder15Model == null){
-            fabHiv.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
-//        }
-//        if(hivRiskAssessmentAbove15Model == null){
-            fabHiv2.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
-//        }
-        if(vcaVisitationModel == null){
-            fabVisitation.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
-        }
-        if(vcaCasePlanModel == null){
-            fabCasePlan.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
-        }
 
         if( gender != null && gender.equals("male")){
 
@@ -334,24 +315,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 //        else {
 //            fab.setVisibility(View.INVISIBLE);
 //        }
-        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
-        fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
-        rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
-        rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
-
-        txtScreening = binding.vcaScreening;
-        rassessment = binding.assessment;
-        rcase_plan = binding.casePlan;
-        referral = binding.referral;
-        referral = binding.referral;
-        household_visitation_for_vca = binding.householdVisitationForVca;
-
-
-
-        hiv_assessment = binding.hivAssessment;
-        hiv_assessment2 = binding.hivAssessment2;
-        childPlan = binding.childPlan;
-        weServicesVca = binding.weServicesVca;
+        initFabMenu();
 
         txtName = binding.vcaName;
         txtGender = binding.vcaGender;
@@ -612,6 +576,9 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
     @SuppressLint("RestrictedApi")
     public void onClick(View v) throws JSONException {
         int id = v.getId();
+        if (id != R.id.fab) {
+            closeFabMenu();
+        }
 
         switch (id){
             case R.id.fab:
@@ -1269,74 +1236,131 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
     }
 
     public void animateFAB(){
+        initFabMenu();
+        if (fabMenuDialog == null) {
+            return;
+        }
 
+        if (!isHouseholdScreened()) {
+            Toasty.warning(IndexDetailsActivity.this, "VCA Household Hasn't Been Screened", Toast.LENGTH_LONG, true).show();
+        }
 
-        if (isFabOpen){
+        updateFabMenuVisibility();
 
-            closeFab();
+        if (fabMenuDialog.isShowing()) {
+            fabMenuDialog.dismiss();
         } else {
+            fabMenuDialog.show();
+        }
+    }
 
-            isFabOpen = true;
-            fab.startAnimation(rotate_forward);
-            txtScreening.setVisibility(View.VISIBLE);
+    private void initFabMenu() {
+        if (fabMenuDialog != null) {
+            return;
+        }
+        fabMenuDialog = new BottomSheetDialog(this, R.style.ChwBottomSheetDialogTheme);
+        View sheetView = LayoutInflater.from(this).inflate(R.layout.layout_vca_fab_menu, null);
+        fabMenuDialog.setContentView(sheetView);
 
-
-            if (isHouseholdScreened()){
-
-                rcase_plan.setVisibility(View.VISIBLE);
-                referral.setVisibility(View.VISIBLE);
-                household_visitation_for_vca.setVisibility(View.VISIBLE);
-                childPlan.setVisibility(View.VISIBLE);
-
-
-
-                if(indexVCA.getIs_hiv_positive() != null){
-                    rassessment.setVisibility(View.VISIBLE);
-                }
-                if(indexVCA.getIs_hiv_positive() != null && indexVCA.getIs_hiv_positive().equals("yes")){
-                    hiv_assessment.setVisibility(View.GONE);
-                } else {
-                    if(Integer.parseInt(vcaAge) > 1){
-                        if(Integer.parseInt(vcaAge) < 15){
-                            hiv_assessment.setVisibility(View.VISIBLE);
-                        }
-
-                        if(Integer.parseInt(vcaAge) >= 15){
-                            hiv_assessment2.setVisibility(View.VISIBLE);
-                        }
-
-
-                    }
-                }
-
-
-                if(Integer.parseInt(vcaAge) > 18){
-                    weServicesVca.setVisibility(View.VISIBLE);
-                }
+        View.OnClickListener listener = v -> {
+            try {
+                onClick(v);
+            } catch (JSONException e) {
+                Timber.e(e);
             }
-            else{
+        };
 
-                Toasty.warning(IndexDetailsActivity.this, "VCA Household Hasn't Been Screened", Toast.LENGTH_LONG, true).show();
+        menuItemVcaScreening = sheetView.findViewById(R.id.vca_screening);
+        menuItemAssessment = sheetView.findViewById(R.id.assessment);
+        menuItemCasePlan = sheetView.findViewById(R.id.case_plan);
+        menuItemReferral = sheetView.findViewById(R.id.referral);
+        menuItemQuarterly = sheetView.findViewById(R.id.household_visitation_for_vca);
+        menuItemHivUnder15 = sheetView.findViewById(R.id.hiv_assessment);
+        menuItemHivOver15 = sheetView.findViewById(R.id.hiv_assessment2);
+        menuItemWeServices = sheetView.findViewById(R.id.we_services_vca);
+        menuItemChildPlan = sheetView.findViewById(R.id.childPlan);
 
+        if (menuItemVcaScreening != null) menuItemVcaScreening.setOnClickListener(listener);
+        if (menuItemAssessment != null) menuItemAssessment.setOnClickListener(listener);
+        if (menuItemCasePlan != null) menuItemCasePlan.setOnClickListener(listener);
+        if (menuItemReferral != null) menuItemReferral.setOnClickListener(listener);
+        if (menuItemQuarterly != null) menuItemQuarterly.setOnClickListener(listener);
+        if (menuItemHivUnder15 != null) menuItemHivUnder15.setOnClickListener(listener);
+        if (menuItemHivOver15 != null) menuItemHivOver15.setOnClickListener(listener);
+        if (menuItemWeServices != null) menuItemWeServices.setOnClickListener(listener);
+        if (menuItemChildPlan != null) menuItemChildPlan.setOnClickListener(listener);
+
+        fabMenuDialog.setOnShowListener(dialog -> {
+            if (fab != null) {
+                fab.setImageResource(android.R.drawable.ic_input_add);
+            }
+        });
+
+        fabMenuDialog.setOnDismissListener(dialog -> {
+            if (fab != null) {
+                fab.setImageResource(com.vijay.jsonwizard.R.drawable.ic_edit_white);
+            }
+        });
+    }
+
+    private void updateFabMenuVisibility() {
+        setMenuItemVisible(menuItemVcaScreening, true);
+
+        boolean hasIndex = indexVCA != null;
+        boolean screened = hasIndex && isHouseholdScreened();
+
+        setMenuItemVisible(menuItemAssessment, hasIndex && indexVCA.getIs_hiv_positive() != null);
+        setMenuItemVisible(menuItemCasePlan, screened);
+        setMenuItemVisible(menuItemReferral, screened);
+        setMenuItemVisible(menuItemQuarterly, screened);
+        setMenuItemVisible(menuItemChildPlan, screened);
+
+        boolean showHivUnder = false;
+        boolean showHivOver = false;
+        boolean showWeServices = false;
+
+        if (screened && hasIndex) {
+            String hivPositive = indexVCA.getIs_hiv_positive();
+            if (!"yes".equalsIgnoreCase(hivPositive)) {
+                int ageValue = parseAgeValue(vcaAge);
+                if (ageValue > 1 && ageValue < 15) {
+                    showHivUnder = true;
+                }
+                if (ageValue >= 15) {
+                    showHivOver = true;
+                }
+                if (ageValue > 18) {
+                    showWeServices = true;
+                }
             }
         }
 
+        setMenuItemVisible(menuItemHivUnder15, showHivUnder);
+        setMenuItemVisible(menuItemHivOver15, showHivOver);
+        setMenuItemVisible(menuItemWeServices, showWeServices);
     }
 
-    public void closeFab(){
-        fab.startAnimation(rotate_backward);
-        isFabOpen = false;
-        txtScreening.setVisibility(View.GONE);
-        rassessment.setVisibility(View.GONE);
-        rcase_plan.setVisibility(View.GONE);
-        referral.setVisibility(View.GONE);
-        household_visitation_for_vca.setVisibility(View.GONE);
-        hiv_assessment.setVisibility(View.GONE);
-        hiv_assessment2.setVisibility(View.GONE);
-        childPlan.setVisibility(View.GONE);
-        weServicesVca.setVisibility(View.GONE);
+    private void setMenuItemVisible(View view, boolean visible) {
+        if (view != null) {
+            view.setVisibility(visible ? View.VISIBLE : View.GONE);
+        }
+    }
 
+    private void closeFabMenu() {
+        if (fabMenuDialog != null && fabMenuDialog.isShowing()) {
+            fabMenuDialog.dismiss();
+        }
+    }
 
+    private int parseAgeValue(String ageValue) {
+        if (TextUtils.isEmpty(ageValue)) {
+            return -1;
+        }
+        try {
+            return Integer.parseInt(ageValue.trim());
+        } catch (NumberFormatException e) {
+            return -1;
+        }
     }
 
 
@@ -1349,6 +1373,10 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         Threading.io(() -> {
             try {
                 JSONObject formToBeOpened = FormCache.obtainFormTemplate(context, formName);
+                if (formToBeOpened == null) {
+                    Threading.main(this::hideFormLoading);
+                    return;
+                }
                 formToBeOpened.getJSONObject("step1").put("title", this.indexVCA.getFirst_name() + " " + this.indexVCA.getLast_name() + " : " + headerAge + " - " + headerGender);
                 formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", indexVCA.getUnique_id());
 

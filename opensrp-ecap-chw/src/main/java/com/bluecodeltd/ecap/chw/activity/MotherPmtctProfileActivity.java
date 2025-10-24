@@ -16,9 +16,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,8 +44,10 @@ import com.bluecodeltd.ecap.chw.model.PmctMotherOutcomeModel;
 import com.bluecodeltd.ecap.chw.model.PmtctDeliveryDetailsModel;
 import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
 import com.bluecodeltd.ecap.chw.model.PtmctMotherMonitoringModel;
+import com.bluecodeltd.ecap.chw.util.BottomSheetActionHelper;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -75,6 +74,7 @@ import org.smartregister.util.FormUtils;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -88,10 +88,6 @@ import timber.log.Timber;
 public class MotherPmtctProfileActivity extends AppCompatActivity {
 
     private com.bluecodeltd.ecap.chw.databinding.ActivityMotherPmtctDetailBinding binding;
-
-
-    private Animation fab_open,fab_close,rotate_forward,rotate_backward;
-    private Boolean isFabOpen = false;
     private Toolbar toolbar;
     public ProfileViewPagerAdapter mPagerAdapter;
     private TabLayout mTabLayout;
@@ -100,9 +96,9 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
     private String refresh;
     private TextView childTabCount, motherName, txtAge;
     private FloatingActionButton fab;
+    private BottomSheetDialog pmtctMenuDialog;
     CommonPersonObjectClient commonPersonObjectClient, commonMother;
     ObjectMapper oMapper;
-    private RelativeLayout cLayout, mLayout,ancLayout,labourLayout,postnatalLayout;
     private UniqueIdRepository uniqueIdRepository;
     public String vca_id;
     public Household family;
@@ -134,11 +130,6 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         mViewPager  = binding.viewpager;
         motherName = binding.motherName;
         txtAge = binding.motherAge;
-        mLayout = binding.motherForm;
-        cLayout = binding.childForm;
-        ancLayout = binding.ancDetails;
-        labourLayout = binding.labourDetails;
-        postnatalLayout = binding.postnatalDetails;
 
         builder = new AlertDialog.Builder(MotherPmtctProfileActivity.this);
 
@@ -180,12 +171,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         }
 
        oMapper = new ObjectMapper();
-//
         fab = binding.fabx;
-        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
-        fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
-        rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
-        rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
 
         setupViewPager();
 //        updateAncTabTitle();
@@ -792,32 +778,44 @@ break;
 
 
     public void animateFAB(){
+        java.util.List<BottomSheetActionHelper.ActionItem> items = new ArrayList<>();
+        items.add(new BottomSheetActionHelper.ActionItem(
+                R.id.mother_form,
+                R.string.action_edit_mother,
+                R.drawable.baseline_mode_edit_24
+        ));
+        items.add(new BottomSheetActionHelper.ActionItem(
+                R.id.child_form,
+                R.string.action_add_child,
+                android.R.drawable.ic_input_add
+        ));
+        items.add(new BottomSheetActionHelper.ActionItem(
+                R.id.anc_details,
+                R.string.action_anc_details,
+                R.drawable.baseline_mode_edit_24
+        ));
+        items.add(new BottomSheetActionHelper.ActionItem(
+                R.id.labour_details,
+                R.string.action_labour_delivery_details,
+                R.drawable.baseline_mode_edit_24
+        ));
+        items.add(new BottomSheetActionHelper.ActionItem(
+                R.id.postnatal_details,
+                R.string.action_postnatal_details,
+                R.drawable.baseline_mode_edit_24
+        ));
 
-        if (isFabOpen){
-
-            closeFab();
-
-        } else {
-
-            isFabOpen = true;
-            fab.startAnimation(rotate_forward);
-            mLayout.setVisibility(View.VISIBLE);
-            cLayout.setVisibility(View.VISIBLE);
-            ancLayout.setVisibility(View.VISIBLE);
-            labourLayout.setVisibility(View.VISIBLE);
-            postnatalLayout.setVisibility(View.VISIBLE);
-
-        }
+        closeFab();
+        pmtctMenuDialog = BottomSheetActionHelper.build(this, items, this::onClick);
+        pmtctMenuDialog.setOnDismissListener(dialog -> pmtctMenuDialog = null);
+        pmtctMenuDialog.show();
     }
 
     public void closeFab(){
-        fab.startAnimation(rotate_backward);
-        isFabOpen = false;
-        cLayout.setVisibility(View.GONE);
-        mLayout.setVisibility(View.GONE);
-        ancLayout.setVisibility(View.GONE);
-        labourLayout.setVisibility(View.GONE);
-        postnatalLayout.setVisibility(View.GONE);
+        if (pmtctMenuDialog != null) {
+            pmtctMenuDialog.dismiss();
+            pmtctMenuDialog = null;
+        }
     }
     public HashMap<String, PtctMotherModel> getClientDetails() {
 

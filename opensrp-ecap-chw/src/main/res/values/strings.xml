@@ -115,6 +115,15 @@
     <string name="dev_warning_sign">Development warning sign</string>
     <string name="care_stim_skill">Care and stimulation skills</string>
     <string name="early_learning">Early learning</string>
+    <string name="vca_menu_screening">VCA Screening</string>
+    <string name="vca_menu_assessment">Vulnerability Assessment</string>
+    <string name="vca_menu_case_plan">VCA Case Plan</string>
+    <string name="vca_menu_referral">Referral Form</string>
+    <string name="vca_menu_quarterly_reassessment">VCA Quarterly Re-assessment Form</string>
+    <string name="vca_menu_hiv_under_15">HIV Risk Assessment (Under 15)</string>
+    <string name="vca_menu_hiv_over_15">HIV Risk Assessment (15+)</string>
+    <string name="vca_menu_we_services">WE Services</string>
+    <string name="vca_menu_child_safety">Child Safety Plan</string>
     <string name="counseling_visit">Counseling visit</string>
     <string name="anc_visit_counselling">ANC visit counselling</string>
     <string name="delivery_at_facilty_counselling">Delivery at facility counselling</string>
@@ -428,5 +437,23 @@
 
     <!-- Common menu/action strings expected by library menus -->
     <string name="logout_text">Logout</string>
+
+    <!-- Bottom sheet action labels -->
+    <string name="action_add_household_member">Add Household Member</string>
+    <string name="action_household_screening">Household Screening</string>
+    <string name="action_caregiver_assessment">Caregiver Vulnerability Assessment</string>
+    <string name="action_caregiver_case_plan">Caregiver Case Plan</string>
+    <string name="action_caregiver_referral">Caregiver Referral</string>
+    <string name="action_household_visitation">Quarterly Re-assessment Form</string>
+    <string name="action_caregiver_hiv_assessment">HIV Assessment for Caregiver</string>
+    <string name="action_we_services_caregiver">WE Services - Caregiver</string>
+    <string name="action_graduation_benchmark">Graduation Benchmark Assessment</string>
+    <string name="action_edit_mother">Edit Mother</string>
+    <string name="action_add_child">Add Child</string>
+    <string name="action_anc_details">ANC Details</string>
+    <string name="action_labour_delivery_details">Labour &amp; Delivery Details</string>
+    <string name="action_postnatal_details">Postnatal Care</string>
+    <string name="action_edit_hts_details">Edit Details</string>
+    <string name="action_add_contact">Add Contact</string>
 
 </resources>

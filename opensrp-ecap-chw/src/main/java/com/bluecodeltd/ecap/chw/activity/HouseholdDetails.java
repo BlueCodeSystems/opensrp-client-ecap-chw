@@ -16,6 +16,7 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -24,10 +25,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -78,11 +76,15 @@ import com.bluecodeltd.ecap.chw.model.GraduationModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.WeServiceCaregiverModel;
 import com.bluecodeltd.ecap.chw.model.newCaregiverModel;
+import com.bluecodeltd.ecap.chw.util.BottomSheetActionHelper;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.FormCache;
+import com.bluecodeltd.ecap.chw.util.FormLoadingDialog;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import androidx.lifecycle.ViewModelProvider;
 import com.bluecodeltd.ecap.chw.viewmodel.HouseholdDetailsViewModel;
 import com.bluecodeltd.ecap.chw.viewmodel.HouseholdDetailsState;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -135,10 +137,8 @@ public class HouseholdDetails extends AppCompatActivity {
     private Toolbar toolbar;
     private TextView visitTabCount, cname,updatedCaregiverName, txtDistrict, txtVillage,casePlanTabCount;
     public TextView childTabCount;
-    private FloatingActionButton fab,callFab;
-    private Animation fab_open,fab_close,rotate_forward,rotate_backward;
-    private Boolean isFabOpen = false;
-    private RelativeLayout refferal, rcase_plan, rassessment, rscreen, child_form, household_visitation_caregiver, grad_form, chivAssessment,we_service_caregiver;
+    private FloatingActionButton fab;
+    private BottomSheetDialog householdMenuDialog;
     public String countFemales, countMales, virally_suppressed, childrenCount, householdId, positiveChildren;
     private UniqueIdRepository uniqueIdRepository;
     public Household house;
@@ -185,30 +185,15 @@ public class HouseholdDetails extends AppCompatActivity {
         builder = new AlertDialog.Builder(HouseholdDetails.this);
 
         // init views
-        callFab = binding.callFab;
         fab = binding.fabx;
         // Defer FAB color update until house is loaded
         if (house != null) {
             changeFabIconColor();
         }
-        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
-        fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
-        rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
-        rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
-
-        rscreen = binding.hhScreening;
-        grad_form = binding.graduation;
-        we_service_caregiver = binding.weServiceCaregiver;
-        chivAssessment = binding.hivAssessmentCaregiver;
         cname = binding.caregiverName;
         updatedCaregiverName = binding.updatedCaregiverName;
         txtDistrict = binding.myaddress;
         txtVillage = binding.address1;
-        rassessment = binding.cassessment;
-        rcase_plan = binding.hcasePlan;
-        refferal = binding.hReferral;
-        child_form = binding.childForm;
-        household_visitation_caregiver = binding.householdVisitationCaregiver;
         mTabLayout =  binding.tabs;
         mViewPager  = binding.viewpager;
         try {
@@ -269,12 +254,6 @@ public class HouseholdDetails extends AppCompatActivity {
             } else {
                 cname.setText("No Household");
             }
-
-            try{
-                if(caregiverAssessmentModel == null || caregiverAssessmentModel.getHousehold_type() == null){
-                    callFab.setImageResource(android.R.drawable.ic_input_add);
-                }
-            } catch (Exception ignored){ }
 
             try {
                 if(updatedCaregiver != null && !TextUtils.isEmpty(updatedCaregiver.getNew_caregiver_name())){
@@ -844,21 +823,11 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     Log.e("GraduationCheck", "Failed conditions: " + String.join(", ", errorMessages));
 
-                    // Display each error message as a separate toast
-                    if (!errorMessages.isEmpty()) {
-                        for (String message : errorMessages) {
-                            Toasty.error(HouseholdDetails.this, message, Toast.LENGTH_LONG, true).show();
-                            // Add a slight delay to prevent overlapping toasts
-                            try {
-                                Thread.sleep(1000); // 1-second delay between toasts
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    } else {
-                        // Fallback message if no specific conditions are identified (unlikely)
-                        Toasty.error(HouseholdDetails.this, "Cannot proceed with graduation. Please check household requirements.", Toast.LENGTH_LONG, true).show();
-                    }
+                    // Display combined guidance to avoid flashing multiple toasts and blocking the UI thread
+                    String messageBody = errorMessages.isEmpty()
+                            ? "Cannot proceed with graduation. Please check household requirements."
+                            : "Cannot proceed with graduation until you:\n• " + TextUtils.join("\n• ", errorMessages);
+                    Toasty.error(HouseholdDetails.this, messageBody, Toast.LENGTH_LONG, true).show();
                 }
                 break;
 
@@ -1768,48 +1737,77 @@ public class HouseholdDetails extends AppCompatActivity {
     }
 
     public void animateFAB(){
+        List<BottomSheetActionHelper.ActionItem> actionItems = new ArrayList<>();
+        actionItems.add(new BottomSheetActionHelper.ActionItem(
+                R.id.child_form,
+                R.string.action_add_household_member,
+                android.R.drawable.ic_input_add
+        ));
+        actionItems.add(new BottomSheetActionHelper.ActionItem(
+                R.id.hh_screening,
+                R.string.action_household_screening,
+                R.drawable.baseline_mode_edit_24
+        ));
+        actionItems.add(new BottomSheetActionHelper.ActionItem(
+                R.id.cassessment,
+                R.string.action_caregiver_assessment,
+                R.drawable.baseline_mode_edit_24
+        ));
+        actionItems.add(new BottomSheetActionHelper.ActionItem(
+                R.id.hcase_plan,
+                R.string.action_caregiver_case_plan,
+                android.R.drawable.ic_input_add
+        ));
+        actionItems.add(new BottomSheetActionHelper.ActionItem(
+                R.id.h_referral,
+                R.string.action_caregiver_referral,
+                R.drawable.baseline_mode_edit_24
+        ));
+        actionItems.add(new BottomSheetActionHelper.ActionItem(
+                R.id.household_visitation_caregiver,
+                R.string.action_household_visitation,
+                R.drawable.baseline_mode_edit_24
+        ));
+        actionItems.add(new BottomSheetActionHelper.ActionItem(
+                R.id.hiv_assessment_caregiver,
+                R.string.action_caregiver_hiv_assessment,
+                R.drawable.baseline_mode_edit_24,
+                this::shouldShowCaregiverHivAssessment
+        ));
+        actionItems.add(new BottomSheetActionHelper.ActionItem(
+                R.id.we_service_caregiver,
+                R.string.action_we_services_caregiver,
+                R.drawable.baseline_mode_edit_24
+        ));
+        actionItems.add(new BottomSheetActionHelper.ActionItem(
+                R.id.graduation,
+                R.string.action_graduation_benchmark,
+                R.drawable.baseline_mode_edit_24
+        ));
 
-
-        if (isFabOpen){
-
-            closeFab();
-
-        } else {
-
-            isFabOpen = true;
-            fab.startAnimation(rotate_forward);
-            rscreen.setVisibility(View.VISIBLE);
-            grad_form.setVisibility(View.VISIBLE);
-            if(house != null && house.getCaregiver_hiv_status() != null &&
-                    (house.getCaregiver_hiv_status().equals("positive") || house.getCaregiver_hiv_status().equals("HIV+")
-                    )) {
-                chivAssessment.setVisibility(View.GONE);
-            } else {
-                chivAssessment.setVisibility(View.VISIBLE);
-            }
-
-            rassessment.setVisibility(View.VISIBLE);
-            rcase_plan.setVisibility(View.VISIBLE);
-            refferal.setVisibility(View.VISIBLE);
-            child_form.setVisibility(View.VISIBLE);
-            household_visitation_caregiver.setVisibility(View.VISIBLE);
-            we_service_caregiver.setVisibility(View.VISIBLE);
-
-        }
+        closeFab();
+        householdMenuDialog = BottomSheetActionHelper.build(this, actionItems, this::onClick);
+        householdMenuDialog.setOnDismissListener(dialog -> householdMenuDialog = null);
+        householdMenuDialog.show();
     }
 
     public void closeFab(){
-        fab.startAnimation(rotate_backward);
-        isFabOpen = false;
-        rscreen.setVisibility(View.GONE);
-        chivAssessment.setVisibility(View.GONE);
-        grad_form.setVisibility(View.GONE);
-        rassessment.setVisibility(View.GONE);
-        rcase_plan.setVisibility(View.GONE);
-        refferal.setVisibility(View.GONE);
-        child_form.setVisibility(View.GONE);
-        household_visitation_caregiver.setVisibility(View.GONE);
-        we_service_caregiver.setVisibility(View.GONE);
+        if (householdMenuDialog != null) {
+            householdMenuDialog.dismiss();
+            householdMenuDialog = null;
+        }
+    }
+
+    private boolean shouldShowCaregiverHivAssessment() {
+        if (house == null) {
+            return false;
+        }
+        String status = house.getCaregiver_hiv_status();
+        if (status == null) {
+            return true;
+        }
+        String normalized = status.trim().toLowerCase(Locale.US);
+        return !(normalized.equals("positive") || normalized.equals("hiv+"));
     }
 
     public void countNumberOfMales(List<String> allBirthDates) {
@@ -2039,37 +2037,10 @@ public class HouseholdDetails extends AppCompatActivity {
 
                 break;
             case R.id.case_status:
-//                Boolean status = IndexPersonDao.checkGraduationStatus(householdId);
-//                if(status.equals(false)){
-//                    showDialogBox("You need to deregister all the vcas in the household");
-//                } else {
-                    try {
-                        openFormUsingFormUtils(getBaseContext(),"household_case_status");
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
-//                }
-//                FormUtils formUtils = null;
-//                try {
-//                    formUtils = new FormUtils(HouseholdDetails.this);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//                JSONObject indexRegisterForm = formUtils.getFormJson("household_case_status");
-//
-//                startFormActivity(indexRegisterForm);
-
-
-
-
+                openFormUsingFormUtils("household_case_status");
                 break;
             case R.id.update_caregiver_details:
-                try {
-                    openFormUsingFormUtils(getBaseContext(),"update_caregiver_details");
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-
+                openFormUsingFormUtils("update_caregiver_details");
                 break;
 
 
@@ -2207,91 +2178,126 @@ public class HouseholdDetails extends AppCompatActivity {
         dialogButton.setOnClickListener(v -> dialog.dismiss());
 
     }
-    public void openFormUsingFormUtils(Context context, String formName) throws JSONException {
+    private interface FormModifier {
+        void apply(JSONObject form) throws Exception;
+    }
 
+    public void openFormUsingFormUtils(String formName) {
+        launchFormAsync(formName, form -> {
+            switch (formName) {
+                case "household_case_status":
+                    CoreJsonFormUtils.populateJsonForm(form, oMapper.convertValue(house, Map.class));
+                    form.put("entity_id", this.house.getBase_entity_id());
+                    Boolean vcaGradStatus = IndexPersonDao.checkGraduationStatus(householdId);
+                    if (Boolean.FALSE.equals(vcaGradStatus)) {
+                        JSONObject status = getFieldJSONObject(fields(form, "step1"), "household_case_status");
+                        if (status != null) {
+                            JSONArray options = status.optJSONArray("options");
+                            if (options != null) {
+                                for (int i = 0; i < options.length(); i++) {
+                                    JSONObject option = options.getJSONObject(i);
+                                    if ("0".equals(option.optString("key"))) {
+                                        options.remove(i);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
 
-        FormUtils formUtils = null;
-        try {
-            formUtils = new FormUtils(context);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        JSONObject formToBeOpened;
+                        JSONObject info = getFieldJSONObject(fields(form, "step1"), "info");
+                        if (info != null) {
+                            info.put("type", "toaster_notes");
+                            info.put("text", "If you need to close the case for this household, please deregister the following VCA(s) in the household: \n\n" + IndexPersonDao.returnVcaNames(householdId));
+                        }
 
-        formToBeOpened = formUtils.getFormJson(formName);
-
-        switch (formName) {
-
-            case "household_case_status":
-
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(house, Map.class));
-                formToBeOpened.put("entity_id", this.house.getBase_entity_id());
-                Boolean vcaGradStatus = IndexPersonDao.checkGraduationStatus(householdId);
-                if(vcaGradStatus.equals(false)){
-                    JSONObject status = getFieldJSONObject(fields(formToBeOpened, "step1"), "household_case_status");
-                    JSONArray options = status.getJSONArray("options");
-
-                    for (int i = 0; i < options.length(); i++) {
-                        JSONObject option = options.getJSONObject(i);
-                        if ("0".equals(option.getString("key"))) {
-                            options.remove(i);
-                            break;
+                    } else {
+                        JSONObject info = getFieldJSONObject(fields(form, "step1"), "info");
+                        if (info != null) {
+                            info.put("type", "hidden");
                         }
                     }
 
+                    GraduationModel graduationModel = GraduationDao.getGraduationStatus(householdId);
+                    if (graduationModel == null || "0".equals(graduationModel.getGraduation_status()) || graduationModel.getGraduation_status() == null) {
 
-                    JSONObject info = getFieldJSONObject(fields(formToBeOpened, "step1"), "info");
-                    info.put("type", "toaster_notes");
-                    info.put("text","If you need to close the case for this household, please deregister the following VCA(s) in the household: \n\n"+IndexPersonDao.returnVcaNames(householdId));
+                        JSONObject graduationStatus = getFieldJSONObject(fields(form, "step1"), "graduation_benchmark");
+                        if (graduationStatus != null) {
+                            graduationStatus.put("type", "toaster_notes");
+                            graduationStatus.put("text", house.getCaregiver_name() + "' " + " household needs to meet all eight graduation benchmarks in order to graduate");
+                        }
 
-                } else {
-                    JSONObject info = getFieldJSONObject(fields(formToBeOpened, "step1"), "info");
-                    info.put("type", "hidden");
-                }
-
-                GraduationModel graduationModel = GraduationDao.getGraduationStatus(householdId);
-                if (graduationModel == null || "0".equals(graduationModel.getGraduation_status()) || graduationModel.getGraduation_status() == null) {
-
-                    JSONObject graduationStatus = getFieldJSONObject(fields(formToBeOpened, "step1"), "graduation_benchmark");
-                    if (graduationStatus != null) {
-                        graduationStatus.put("type", "toaster_notes");
-                        graduationStatus.put("text", house.getCaregiver_name() + "' "  + " household needs to meet all eight graduation benchmarks in order to graduate");
-                    }
-
-                    JSONObject reasonField = getFieldJSONObject(fields(formToBeOpened, "step1"), "de_registration_reason");
-                    if (reasonField != null) {
-                        JSONArray optionsArray = reasonField.getJSONArray("options");
-                        if (optionsArray != null) {
-                            for (int i = 0; i < optionsArray.length(); i++) {
-                                JSONObject option = optionsArray.getJSONObject(i);
-                                if (option != null && "Graduated (Household has met the graduation benchmarks in ALL domains)".equals(option.getString("key"))) {
-                                    optionsArray.remove(i);
-                                    break;
+                        JSONObject reasonField = getFieldJSONObject(fields(form, "step1"), "de_registration_reason");
+                        if (reasonField != null) {
+                            JSONArray optionsArray = reasonField.optJSONArray("options");
+                            if (optionsArray != null) {
+                                for (int i = 0; i < optionsArray.length(); i++) {
+                                    JSONObject option = optionsArray.getJSONObject(i);
+                                    if (option != null && "Graduated (Household has met the graduation benchmarks in ALL domains)".equals(option.optString("key"))) {
+                                        optionsArray.remove(i);
+                                        break;
+                                    }
                                 }
                             }
                         }
                     }
-                }
-
-
-                break;
-            case "update_caregiver_details":
-                if (updatedCaregiver != null){
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(updatedCaregiver, Map.class));
-                    formToBeOpened.put("entity_id", this.house.getBase_entity_id());
-                } else {
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(house, Map.class));
-                    formToBeOpened.put("entity_id", this.house.getBase_entity_id());
-                }
-
-
-                break;
-
-        }
-
-        startFormActivity(formToBeOpened);
+                    break;
+                case "update_caregiver_details":
+                    if (updatedCaregiver != null) {
+                        CoreJsonFormUtils.populateJsonForm(form, oMapper.convertValue(updatedCaregiver, Map.class));
+                    } else {
+                        CoreJsonFormUtils.populateJsonForm(form, oMapper.convertValue(house, Map.class));
+                    }
+                    form.put("entity_id", this.house.getBase_entity_id());
+                    break;
+                default:
+                    break;
+            }
+        });
     }
 
+    private void launchFormAsync(String formName, FormModifier modifier) {
+        AlertDialog loading = FormLoadingDialog.show(this);
+        if (!isActivityActive()) {
+            FormLoadingDialog.dismiss(loading);
+            return;
+        }
+        Threading.io(() -> {
+            try {
+                JSONObject form = FormCache.obtainFormTemplate(this, formName);
+                if (form == null) {
+                    throw new IllegalStateException("Form not found: " + formName);
+                }
+                if (modifier != null) {
+                    modifier.apply(form);
+                }
+                Threading.main(() -> {
+                    FormLoadingDialog.dismiss(loading);
+                    if (!isActivityActive()) {
+                        return;
+                    }
+                    startFormActivity(form);
+                });
+            } catch (Exception e) {
+                Timber.e(e, "Unable to launch form %s", formName);
+                Threading.main(() -> {
+                    FormLoadingDialog.dismiss(loading);
+                    if (!isActivityActive()) {
+                        return;
+                    }
+                    Toasty.error(this, "Unable to open form", Toast.LENGTH_LONG, true).show();
+                });
+            }
+        });
+    }
+
+
+
+    private boolean isActivityActive() {
+        if (isFinishing()) {
+            return false;
+        }
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1 || !isDestroyed();
+    }
 
     public void buildDialog(){
         //Creating dialog box

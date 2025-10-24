@@ -13,9 +13,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,8 +33,10 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.MotherChildrenFragment;
 import com.bluecodeltd.ecap.chw.fragment.MotherOverviewFragment;
 import com.bluecodeltd.ecap.chw.model.Household;
+import com.bluecodeltd.ecap.chw.util.BottomSheetActionHelper;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -66,6 +65,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -79,10 +79,6 @@ import timber.log.Timber;
 public class MotherDetail extends AppCompatActivity {
 
     private com.bluecodeltd.ecap.chw.databinding.ActivityMotherDetailBinding binding;
-
-
-    private Animation fab_open,fab_close,rotate_forward,rotate_backward;
-    private Boolean isFabOpen = false;
     private Toolbar toolbar;
     public ProfileViewPagerAdapter mPagerAdapter;
     private TabLayout mTabLayout;
@@ -91,9 +87,9 @@ public class MotherDetail extends AppCompatActivity {
     private String refresh;
     private TextView childTabCount, motherName, txtAge;
     private FloatingActionButton fab;
+    private BottomSheetDialog motherMenuDialog;
     CommonPersonObjectClient commonPersonObjectClient, commonMother;
     ObjectMapper oMapper;
-    private RelativeLayout cLayout, mLayout;
     private UniqueIdRepository uniqueIdRepository;
     public String vca_id;
     public Household family;
@@ -115,8 +111,6 @@ public class MotherDetail extends AppCompatActivity {
         mViewPager  = binding.viewpager;
         motherName = binding.motherName;
         txtAge = binding.motherAge;
-        mLayout = binding.motherForm;
-        cLayout = binding.childForm;
 
         commonMother = (CommonPersonObjectClient) getIntent().getSerializableExtra("mother");
 
@@ -146,10 +140,6 @@ public class MotherDetail extends AppCompatActivity {
         oMapper = new ObjectMapper();
 
         fab = binding.fabx;
-        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
-        fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
-        rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
-        rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
 
         setupViewPager();
         updateChildTabTitle();
@@ -528,25 +518,28 @@ public class MotherDetail extends AppCompatActivity {
 
 
     public void animateFAB(){
+        java.util.List<BottomSheetActionHelper.ActionItem> actionItems = new ArrayList<>();
+        actionItems.add(new BottomSheetActionHelper.ActionItem(
+                R.id.mother_form,
+                R.string.action_edit_mother,
+                R.drawable.baseline_mode_edit_24
+        ));
+        actionItems.add(new BottomSheetActionHelper.ActionItem(
+                R.id.child_form,
+                R.string.action_add_child,
+                android.R.drawable.ic_input_add
+        ));
 
-        if (isFabOpen){
-
-            closeFab();
-
-        } else {
-
-            isFabOpen = true;
-            fab.startAnimation(rotate_forward);
-            mLayout.setVisibility(View.VISIBLE);
-            cLayout.setVisibility(View.VISIBLE);
-
-        }
+        closeFab();
+        motherMenuDialog = BottomSheetActionHelper.build(this, actionItems, this::onClick);
+        motherMenuDialog.setOnDismissListener(dialog -> motherMenuDialog = null);
+        motherMenuDialog.show();
     }
 
     public void closeFab(){
-        fab.startAnimation(rotate_backward);
-        isFabOpen = false;
-        cLayout.setVisibility(View.GONE);
-        mLayout.setVisibility(View.GONE);
+        if (motherMenuDialog != null) {
+            motherMenuDialog.dismiss();
+            motherMenuDialog = null;
+        }
     }
 }

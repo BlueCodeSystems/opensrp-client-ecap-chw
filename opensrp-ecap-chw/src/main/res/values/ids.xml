@@ -9,4 +9,19 @@
     <item name="referral_type_form_name" type="id" />
     <item name="action_scan_qr" type="id" />
     <item name="action_job_aids" type="id" />
+    <item name="hh_screening" type="id" />
+    <item name="cassessment" type="id" />
+    <item name="hcase_plan" type="id" />
+    <item name="h_referral" type="id" />
+    <item name="household_visitation_caregiver" type="id" />
+    <item name="hiv_assessment_caregiver" type="id" />
+    <item name="child_form" type="id" />
+    <item name="we_service_caregiver" type="id" />
+    <item name="graduation" type="id" />
+    <item name="mother_form" type="id" />
+    <item name="anc_details" type="id" />
+    <item name="labour_details" type="id" />
+    <item name="postnatal_details" type="id" />
+    <item name="assessment" type="id" />
+    <item name="vca_screening" type="id" />
 </resources>

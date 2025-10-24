@@ -22,10 +22,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,8 +64,10 @@ import com.bluecodeltd.ecap.chw.model.VcaScreeningModel;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.model.WeServiceVcaModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.BottomSheetActionHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -116,11 +115,9 @@ public class HTSDetailsActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    private FloatingActionButton fab, fabHiv,fabHiv2, fabGradSub, fabGrad, fabCasePlan, fabVisitation, fabReferal,  fabAssessment;
-    private Animation fab_open,fab_close,rotate_forward,rotate_backward;
-    private Boolean isFabOpen = false;
+    private FloatingActionButton fab;
+    private BottomSheetDialog htsMenuDialog;
     public String clientId, uniqueId, vcaAge,is_screened, is_hiv_positive, caseworkerphone;
-    private RelativeLayout txtScreening, addIndexClients, rcase_plan, referral,  household_visitation_for_vca, hiv_assessment,hiv_assessment2,childPlan,weServicesVca;
     public VcaScreeningModel indexVCA;
     private  VcaAssessmentModel assessmentModel;
 
@@ -176,18 +173,6 @@ public class HTSDetailsActivity extends AppCompatActivity {
         NavigationMenu.getInstance(this, null, toolbar);
         
         fab = binding.fab;
-        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
-        fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
-        rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
-        rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
-        fabHiv = binding.hivRisk;
-        fabHiv2 = binding.hivRisk2;
-        fabVisitation = binding.householdVisitationForVcaFab;
-        fabReferal = binding.referToFacilityFab;
-        fabCasePlan =  binding.casePlanFab;
-        fabAssessment = binding.fabAssessment;
-        txtScreening = binding.vcaScreening;
-        addIndexClients = binding.assessment;
 
         builder = new AlertDialog.Builder(HTSDetailsActivity.this);
 //        screeningBuilder = new AlertDialog.Builder(HTSDetailsActivity.this);
@@ -257,38 +242,38 @@ public class HTSDetailsActivity extends AppCompatActivity {
 
     }
     public void animateFAB(){
+        java.util.List<BottomSheetActionHelper.ActionItem> items = new ArrayList<>();
+        items.add(new BottomSheetActionHelper.ActionItem(
+                R.id.vca_screening,
+                R.string.action_edit_hts_details,
+                R.drawable.baseline_mode_edit_24
+        ));
+        items.add(new BottomSheetActionHelper.ActionItem(
+                R.id.assessment,
+                R.string.action_add_contact,
+                android.R.drawable.ic_input_add,
+                this::shouldShowAddContact
+        ));
 
-
-        if (isFabOpen){
-
-            closeFab();
-        } else {
-
-            isFabOpen = true;
-            fab.startAnimation(rotate_forward);
-            txtScreening.setVisibility(View.VISIBLE);
-            if(hivTestingServiceModel.getTesting_modality() != null && (hivTestingServiceModel.getTesting_modality().equals("SNT") || hivTestingServiceModel.getTesting_modality().equals("Index"))){
-                addIndexClients.setVisibility(View.VISIBLE);
-            }
-
-        }
-
+        closeFab();
+        htsMenuDialog = BottomSheetActionHelper.build(this, items, this::onClick);
+        htsMenuDialog.setOnDismissListener(dialog -> htsMenuDialog = null);
+        htsMenuDialog.show();
     }
 
     public void closeFab(){
-        fab.startAnimation(rotate_backward);
-        isFabOpen = false;
-        txtScreening.setVisibility(View.GONE);
-        addIndexClients.setVisibility(View.GONE);
-//        rcase_plan.setVisibility(View.GONE);
-//        referral.setVisibility(View.GONE);
-//        household_visitation_for_vca.setVisibility(View.GONE);
-//        hiv_assessment.setVisibility(View.GONE);
-//        hiv_assessment2.setVisibility(View.GONE);
-//        childPlan.setVisibility(View.GONE);
-//        weServicesVca.setVisibility(View.GONE);
+        if (htsMenuDialog != null) {
+            htsMenuDialog.dismiss();
+            htsMenuDialog = null;
+        }
+    }
 
-
+    private boolean shouldShowAddContact() {
+        if (hivTestingServiceModel == null || hivTestingServiceModel.getTesting_modality() == null) {
+            return false;
+        }
+        String modality = hivTestingServiceModel.getTesting_modality();
+        return "SNT".equalsIgnoreCase(modality) || "Index".equalsIgnoreCase(modality);
     }
 
     public HashMap<String, Child> getData() {
