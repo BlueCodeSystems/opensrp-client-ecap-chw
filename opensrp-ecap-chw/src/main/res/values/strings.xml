@@ -455,5 +455,19 @@
     <string name="action_postnatal_details">Postnatal Care</string>
     <string name="action_edit_hts_details">Edit Details</string>
     <string name="action_add_contact">Add Contact</string>
+    <string name="toast_form_saved">Form Saved</string>
+    <string name="toast_vulnerabilities_saved">Vulnerabilities Saved</string>
+    <string name="toast_household_updated">Household Updated</string>
+    <string name="toast_we_form_updated">WE form Updated</string>
+    <string name="toast_family_member_saved">Family Member Saved</string>
+    <string name="toast_muac_updated">MUAC Updated</string>
+    <string name="toast_form_updated_saved">Form Updated and Saved</string>
+    <string name="toast_service_report_saved">Service Report Saved</string>
+    <string name="toast_visitation_saved">Visitation Saved</string>
+    <string name="toast_hiv_assessment_saved">HIV assessment Saved</string>
+    <string name="toast_referral_saved">Referral Saved</string>
+    <string name="toast_mother_saved">Mother Saved</string>
+    <string name="toast_form_updated">Form Updated</string>
+    <string name="toast_vulnerability_saved">Vulnerability Saved</string>
 
 </resources>
