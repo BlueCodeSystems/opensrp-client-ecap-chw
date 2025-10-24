@@ -1,13 +1,12 @@
 package org.smartregister.chw.core.custom_views;
 
-import android.app.Activity;
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
+import androidx.fragment.app.FragmentActivity;
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.smartregister.chw.core.R;
@@ -18,24 +17,20 @@ import org.smartregister.chw.malaria.fragment.BaseMalariaCallDialogFragment;
 
 import static org.smartregister.chw.core.utils.Utils.redrawWithOption;
 
-public abstract class CoreMalariaFloatingMenu extends BaseMalariaFloatingMenu {
+public abstract class CoreMalariaFloatingMenu extends BaseMalariaFloatingMenu implements BottomSheetMenu {
     public FloatingActionButton fab;
-    private Animation fabOpen;
-    private Animation fabClose;
-    private Animation rotateForward;
-    private Animation rotateBack;
-    private View callLayout;
-    private View referLayout;
-    private RelativeLayout activityMain;
-    private boolean isFabMenuOpen = false;
-    private LinearLayout menuBar;
-    private OnClickFloatingMenu onClickFloatingMenu;
-    private MemberObject MEMBER_OBJECT;
+    protected View referLayout;
+    protected View callLayout;
+    protected BottomSheetDialog bottomSheetDialog;
+    protected View bottomSheetView;
+    protected boolean isFabMenuOpen = false;
+    protected OnClickFloatingMenu onClickFloatingMenu;
 
+    private final MemberObject memberObject;
 
-    public CoreMalariaFloatingMenu(Context context, MemberObject MEMBER_OBJECT) {
-        super(context, MEMBER_OBJECT);
-        this.MEMBER_OBJECT = MEMBER_OBJECT;
+    public CoreMalariaFloatingMenu(Context context, MemberObject memberObject) {
+        super(context, memberObject);
+        this.memberObject = memberObject;
     }
 
     public void setFloatMenuClickListener(OnClickFloatingMenu onClickFloatingMenu) {
@@ -45,68 +40,45 @@ public abstract class CoreMalariaFloatingMenu extends BaseMalariaFloatingMenu {
     @Override
     protected void initUi() {
         inflate(getContext(), R.layout.view_malaria_floating_menu, this);
-
-        fabOpen = AnimationUtils.loadAnimation(getContext(), R.anim.fab_open);
-        fabClose = AnimationUtils.loadAnimation(getContext(), R.anim.fab_close);
-        rotateForward = AnimationUtils.loadAnimation(getContext(), R.anim.rotate_forward);
-        rotateBack = AnimationUtils.loadAnimation(getContext(), R.anim.rotate_back);
-
-        activityMain = findViewById(R.id.activity_main);
-        menuBar = findViewById(R.id.menu_bar);
-
-        fab = findViewById(R.id.malaria_fab);
-        fab.setOnClickListener(this);
-
-        callLayout = findViewById(R.id.call_layout);
-        callLayout.setOnClickListener(this);
-        callLayout.setClickable(false);
-
-        referLayout = findViewById(R.id.refer_to_facility_layout);
-        referLayout.setOnClickListener(this);
-        referLayout.setClickable(false);
-
-
-        menuBar.setVisibility(GONE);
-
+        fab = (FloatingActionButton) findViewById(R.id.malaria_fab);
+        if (fab != null) {
+            fab.setOnClickListener(v -> animateFAB());
+        }
+        setupBottomSheet();
     }
 
     @Override
     public void onClick(View view) {
-        onClickFloatingMenu.onClickMenu(view.getId());
+        if (view.getId() == R.id.malaria_fab) {
+            animateFAB();
+            return;
+        }
+
+        if (onClickFloatingMenu != null) {
+            onClickFloatingMenu.onClickMenu(view.getId());
+        }
+        dismissMenu();
     }
 
     public void animateFAB() {
-        menuBar.setVisibility(VISIBLE);
-        fab.startAnimation(rotateForward);
+        if (bottomSheetDialog == null) {
+            setupBottomSheet();
+        }
+        if (bottomSheetDialog == null) {
+            return;
+        }
 
-        if (isFabMenuOpen) {
-            activityMain.setBackgroundResource(R.color.transparent);
-
-            fab.setImageResource(com.vijay.jsonwizard.R.drawable.ic_edit_white);
-
-            callLayout.startAnimation(fabClose);
-            callLayout.setClickable(false);
-
-            referLayout.startAnimation(fabClose);
-            referLayout.setClickable(false);
-            isFabMenuOpen = false;
+        if (bottomSheetDialog.isShowing()) {
+            bottomSheetDialog.dismiss();
         } else {
-            activityMain.setBackgroundResource(R.color.grey_tranparent_50);
-
-            fab.setImageResource(com.vijay.jsonwizard.R.drawable.ic_edit_white);
-
-            callLayout.startAnimation(fabOpen);
-            callLayout.setClickable(true);
-
-            referLayout.startAnimation(fabOpen);
-            referLayout.setClickable(true);
+            bottomSheetDialog.show();
             isFabMenuOpen = true;
         }
     }
 
-
     public void launchCallWidget() {
-        BaseMalariaCallDialogFragment.launchDialog((androidx.fragment.app.FragmentActivity) this.getContext(), MEMBER_OBJECT);
+        FragmentActivity activity = (FragmentActivity) getContext();
+        BaseMalariaCallDialogFragment.launchDialog(activity, memberObject);
     }
 
     public void redraw(boolean hasPhoneNumber) {
@@ -115,5 +87,50 @@ public abstract class CoreMalariaFloatingMenu extends BaseMalariaFloatingMenu {
 
     public View getCallLayout() {
         return callLayout;
+    }
+
+    private void setupBottomSheet() {
+        if (bottomSheetDialog != null) {
+            return;
+        }
+        bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.ChwBottomSheetDialogTheme);
+        View sheetView = LayoutInflater.from(getContext()).inflate(R.layout.menu_call_refer_bottom_sheet, null);
+        bottomSheetDialog.setContentView(sheetView);
+        bottomSheetView = sheetView;
+
+        callLayout = sheetView.findViewById(R.id.call_layout);
+        referLayout = sheetView.findViewById(R.id.refer_to_facility_layout);
+
+        if (callLayout != null) {
+            callLayout.setOnClickListener(this);
+        }
+        if (referLayout != null) {
+            referLayout.setOnClickListener(this);
+        }
+
+        bottomSheetDialog.setOnShowListener(dialog -> {
+            isFabMenuOpen = true;
+            if (fab != null) {
+                fab.setImageResource(R.drawable.ic_input_add);
+            }
+        });
+
+        bottomSheetDialog.setOnDismissListener(dialog -> {
+            isFabMenuOpen = false;
+            if (fab != null) {
+                fab.setImageResource(com.vijay.jsonwizard.R.drawable.ic_edit_white);
+            }
+        });
+    }
+
+    private void dismissMenu() {
+        if (bottomSheetDialog != null && bottomSheetDialog.isShowing()) {
+            bottomSheetDialog.dismiss();
+        }
+    }
+
+    @Override
+    public View getBottomSheetView() {
+        return bottomSheetView;
     }
 }

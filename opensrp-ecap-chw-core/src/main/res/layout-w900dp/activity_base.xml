@@ -19,7 +19,7 @@
         app:itemBackground="@drawable/drawer_item_background"
         app:itemIconTint="@android:color/white"
         app:itemTextColor="@android:color/white"
-        app:theme="@style/NavigationDrawerStyle">
+        android:theme="@style/NavigationDrawerStyle">
 
         <RelativeLayout
             android:layout_width="match_parent"

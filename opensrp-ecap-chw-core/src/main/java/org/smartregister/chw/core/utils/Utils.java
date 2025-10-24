@@ -19,6 +19,8 @@ import android.net.Uri;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,6 +56,7 @@ import org.smartregister.chw.core.activity.CoreAllClientsRegisterActivity;
 import org.smartregister.chw.core.activity.CoreFamilyProfileActivity;
 import org.smartregister.chw.core.application.CoreChwApplication;
 import org.smartregister.chw.core.contract.FamilyCallDialogContract;
+import org.smartregister.chw.core.custom_views.BottomSheetMenu;
 import org.smartregister.chw.core.custom_views.CoreAncFloatingMenu;
 import org.smartregister.chw.core.custom_views.CoreFamilyMemberFloatingMenu;
 import org.smartregister.chw.core.custom_views.CoreFamilyPlanningFloatingMenu;
@@ -507,23 +510,52 @@ public abstract class Utils extends org.smartregister.family.util.Utils {
         return "";
     }
 
+    @SuppressWarnings("unchecked")
+    private static <T extends View> T resolveMenuView(LinearLayout menu, int id) {
+        View view = menu.findViewById(id);
+        if (view == null && menu instanceof BottomSheetMenu) {
+            View sheet = ((BottomSheetMenu) menu).getBottomSheetView();
+            if (sheet != null) {
+                view = sheet.findViewById(id);
+            }
+        }
+        return (T) view;
+    }
+
     public static void redrawWithOption(LinearLayout menu, boolean has_phone) {
-        TextView callTextView = menu.findViewById(R.id.CallTextView);
-        TextView callTextViewHint = menu.findViewById(R.id.CallTextViewHint);
+        TextView callTextView = resolveMenuView(menu, R.id.CallTextView);
+        TextView callTextViewHint = resolveMenuView(menu, R.id.CallTextViewHint);
+        View callIconView = resolveMenuView(menu, R.id.callFab);
+
+        if (callTextView == null || callTextViewHint == null || callIconView == null) {
+            return;
+        }
+
         setCallLayoutListener(has_phone, menu);
         if (has_phone) {
             callTextViewHint.setVisibility(GONE);
             callTextView.setTypeface(null, Typeface.NORMAL);
             callTextView.setTextColor(menu.getResources().getColor(android.R.color.black));
-            ((FloatingActionButton) menu.findViewById(R.id.callFab)).getDrawable().setAlpha(255);
+            updateCallIconAlpha(callIconView, 255);
 
         } else {
             callTextViewHint.setVisibility(VISIBLE);
             callTextView.setTypeface(null, Typeface.ITALIC);
             callTextView.setTextColor(menu.getResources().getColor(org.smartregister.pnc.R.color.grey));
-            ((FloatingActionButton) menu.findViewById(R.id.callFab)).getDrawable().setAlpha(122);
+            updateCallIconAlpha(callIconView, 122);
         }
 
+    }
+
+    private static void updateCallIconAlpha(View iconView, int alpha) {
+        if (iconView instanceof FloatingActionButton) {
+            FloatingActionButton fabIcon = (FloatingActionButton) iconView;
+            if (fabIcon.getDrawable() != null) {
+                fabIcon.getDrawable().setAlpha(alpha);
+            }
+        } else if (iconView instanceof ImageView) {
+            ((ImageView) iconView).setImageAlpha(alpha);
+        }
     }
 
     private static void setCallLayoutListener(boolean has_phone, LinearLayout menu) {
