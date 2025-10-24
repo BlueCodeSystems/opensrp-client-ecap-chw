@@ -78,6 +78,7 @@ import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.model.WeServiceVcaModel;
 import com.bluecodeltd.ecap.chw.model.newCaregiverModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.ToastRouter;
 import com.bluecodeltd.ecap.chw.util.FormCache;
 import com.bluecodeltd.ecap.chw.util.Threading;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -339,6 +340,12 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ToastRouter.maybeShowQueuedToast(this);
+    }
+
 
     public HashMap<String, Child> getData() {
         String displayFirstName = null;
@@ -541,16 +548,38 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
     }
 
     private void updatePlanTabTitle() {
-        ConstraintLayout plansTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.plan_tab_title, null);
-        TextView visitTabTitle = plansTabTitleLayout.findViewById(R.id.plans_title);
-        visitTabTitle.setText("CASE PLANS");
-        plansTabCount = plansTabTitleLayout.findViewById(R.id.plans_count);
+        ConstraintLayout plansTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
+        TextView title = plansTabTitleLayout.findViewById(R.id.visits_title);
+        title.setText("CASE PLANS");
+        plansTabCount = plansTabTitleLayout.findViewById(R.id.visits_count);
 
-        int plans = CasePlanDao.checkCasePlan(uniqueId);
-
-        plansTabCount.setText(String.valueOf(plans));
+        plansTabCount.setText(String.valueOf(getCasePlanCount()));
 
         mTabLayout.getTabAt(1).setCustomView(plansTabTitleLayout);
+        Timber.d("IndexDetailsActivity#updatePlanTabTitle count=%s viewId=%s", plansTabCount.getText(), plansTabCount.getId());
+    }
+
+    private int getCasePlanCount() {
+        if (TextUtils.isEmpty(uniqueId)) {
+            return 0;
+        }
+        try {
+            return CasePlanDao.checkCasePlan(uniqueId);
+        } catch (Exception e) {
+            Timber.e(e);
+            return 0;
+        }
+    }
+
+    public void refreshPlanTabCount() {
+        if (mTabLayout == null) {
+            return;
+        }
+        if (plansTabCount == null) {
+            updatePlanTabTitle();
+            return;
+        }
+        plansTabCount.setText(String.valueOf(getCasePlanCount()));
     }
 
 
@@ -815,45 +844,39 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
                     saveRegistration(childIndexEventClient, is_edit_mode);
 
+                    String successMessage = getString(R.string.toast_form_saved);
 
                     switch (encounterType) {
-                        case "VCA Case Plan":
-
+                        case "VCA Case Plan": {
                             JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
-                            String dateId = cpdate.optString("value");
+                            String dateId = cpdate != null ? cpdate.optString("value") : null;
 
                             JSONObject cpId = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_id");
-                            String cp_Id = cpId.optString("value");
+                            String cp_Id = cpId != null ? cpId.optString("value") : null;
 
-                            finish();
-                            startActivity(getIntent());
-                            openVcaCasplanToAddVulnarabilities(dateId, cp_Id);
-
-                            break;
-
+                            relaunchSelfWithToast(successMessage);
+                            openVcaCasplanToAddVulnarabilities(dateId, cp_Id, successMessage);
+                            return;
+                        }
                         case "Household Visitation Form 0-20 years":
                         case "Member Sub Population":
                         case "Sub Population":
                         case "VCA Assessment":
                         case "HIV Risk Assessment Above 15":
                         case "HIV Risk Assessment Below 15":
-
-                            finish();
-                            startActivity(getIntent());
-
-                            break;
-                        case "Case Record Status":
-
-                            finish();
-                            startActivity(getIntent());
-                            Intent i = new Intent(getApplicationContext(), IndexRegisterActivity.class);
-                            startActivity(i);
-
-                            break;
-
+                            relaunchSelfWithToast(successMessage);
+                            return;
+                        case "Case Record Status": {
+                            relaunchSelfWithToast(successMessage);
+                            Intent listIntent = new Intent(getApplicationContext(), IndexRegisterActivity.class);
+                            ToastRouter.withSuccessToast(listIntent, successMessage);
+                            startActivity(listIntent);
+                            return;
+                        }
+                        default:
+                            relaunchSelfWithToast(successMessage);
+                            return;
                     }
-
-                    Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
 
                 } catch (Exception e) {
                     Timber.e(e);
@@ -864,13 +887,28 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
     }
 
-    private void openVcaCasplanToAddVulnarabilities(String dateId,String cpId) {
+    private void openVcaCasplanToAddVulnarabilities(String dateId,String cpId, String toastMessage) {
         Intent i = new Intent(IndexDetailsActivity.this, CasePlan.class);
         i.putExtra("childId", indexVCA.getUnique_id());
         i.putExtra("dateId",  dateId);
         i.putExtra("case_plan_id",cpId);
         i.putExtra("hivStatus",  indexVCA.getIs_hiv_positive());
+        ToastRouter.withSuccessToast(i, toastMessage);
         startActivity(i);
+    }
+
+    private void relaunchSelfWithToast(String message) {
+        Intent restart = new Intent(this, IndexDetailsActivity.class);
+        restart.setFlags(getIntent().getFlags());
+        if (getIntent().getData() != null) {
+            restart.setData(getIntent().getData());
+        }
+        if (getIntent().getExtras() != null) {
+            restart.putExtras(new Bundle(getIntent().getExtras()));
+        }
+        ToastRouter.withSuccessToast(restart, message);
+        finish();
+        startActivity(restart);
     }
 
     @NonNull

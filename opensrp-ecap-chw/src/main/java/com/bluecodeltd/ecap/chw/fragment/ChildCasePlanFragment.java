@@ -39,6 +39,7 @@ public class ChildCasePlanFragment extends Fragment {
     public void onResume() {
         super.onResume();
         reloadCasePlans();
+        notifyParentToRefreshTab();
     }
 
     @Nullable
@@ -85,6 +86,7 @@ public class ChildCasePlanFragment extends Fragment {
             recyclerViewadapter.notifyDataSetChanged();
         }
         updateEmptyState();
+        notifyParentToRefreshTab();
     }
 
     private void updateEmptyState() {
@@ -96,5 +98,15 @@ public class ChildCasePlanFragment extends Fragment {
         } else {
             linearLayout.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void notifyParentToRefreshTab() {
+        if (!isAdded()) {
+            return;
+        }
+        try {
+            IndexDetailsActivity activity = (IndexDetailsActivity) requireActivity();
+            activity.refreshPlanTabCount();
+        } catch (Exception ignored) { }
     }
 }
