@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -110,6 +111,9 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
         holder.txtServicesReferred.setText(casePlan.getService_referred());
         holder.txtInstitution.setText(casePlan.getInstitution());
         holder.txtDueDate.setText("Due Date : " + casePlan.getDue_date());
+        holder.txtCasePlanId.setText(TextUtils.isEmpty(casePlan.getCase_plan_id())
+                ? context.getString(R.string.case_plan_id_not_set)
+                : casePlan.getCase_plan_id());
 
 
         if(casePlan.getStatus().equals(("C"))){
@@ -288,6 +292,17 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
 
         CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(caseplan, Map.class));
 
+        JSONObject casePlanIdField = getFieldJSONObject(fields(formToBeOpened, STEP1), "case_plan_id");
+        if (casePlanIdField != null) {
+            String planId = caseplan.getCase_plan_id();
+            if (TextUtils.isEmpty(planId)) {
+                planId = caseplan.getBase_entity_id() != null ? caseplan.getBase_entity_id() : "";
+                casePlanIdField.put("read_only", false);
+                casePlanIdField.put("hint", context.getString(R.string.enter_case_plan_id));
+            }
+            casePlanIdField.put("value", TextUtils.isEmpty(planId) ? "" : planId);
+        }
+
         startFormActivity(formToBeOpened);
 
     }
@@ -442,7 +457,7 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtType, txtVulnerability,txtCasePlanStatus,
-                txtGoal, txtServices, txtServicesReferred, txtInstitution, txtDueDate, txtStatus, txtComment;
+                txtGoal, txtServices, txtServicesReferred, txtInstitution, txtDueDate, txtStatus, txtComment, txtCasePlanId;
 
         LinearLayout linearLayout, exPandableView;
 
@@ -466,6 +481,7 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
             txtDueDate = itemView.findViewById(R.id.due_date);
             txtStatus = itemView.findViewById(R.id.statusx);
             txtComment = itemView.findViewById(R.id.comment);
+            txtCasePlanId = itemView.findViewById(R.id.case_plan_id);
             delete = itemView.findViewById(R.id.delete_record);
 
 
