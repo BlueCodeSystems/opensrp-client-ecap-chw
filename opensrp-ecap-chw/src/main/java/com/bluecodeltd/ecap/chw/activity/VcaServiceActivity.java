@@ -36,7 +36,6 @@ import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.ToastRouter;
-import com.bluecodeltd.ecap.chw.util.FormCache;
 import com.bluecodeltd.ecap.chw.util.FormLoadingDialog;
 import com.rey.material.widget.Button;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -55,6 +54,7 @@ import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
+import org.smartregister.util.FormUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -116,8 +116,6 @@ public class VcaServiceActivity extends AppCompatActivity {
         hh_id.setText(intent_vcaid);
         vcaname.setText(intent_cname);
 
-        FormCache.warmFormAsync(this, "service_report_vca");
-        FormCache.warmFormAsync(this, "service_report_vca_edit");
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
@@ -389,7 +387,7 @@ public class VcaServiceActivity extends AppCompatActivity {
         }
         Threading.io(() -> {
             try {
-                JSONObject form = FormCache.obtainFormTemplate(this, formName);
+                JSONObject form = new FormUtils(this).getFormJson(formName);
                 if (modifier != null && form != null) {
                     modifier.apply(form);
                 }

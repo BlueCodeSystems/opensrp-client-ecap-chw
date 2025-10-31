@@ -14,7 +14,6 @@ import com.bluecodeltd.ecap.chw.activity.HouseholdIndexActivity;
 import com.bluecodeltd.ecap.chw.activity.IndexRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.MotherIndexActivity;
 import com.bluecodeltd.ecap.chw.activity.PMTCTRegisterActivity;
-import com.bluecodeltd.ecap.chw.util.FormCache;
 
 import org.json.JSONObject;
 import org.smartregister.chw.core.listener.CoreBottomNavigationListener;
@@ -56,15 +55,9 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
 
                 IndexRegisterActivity idRegisterActivity = (IndexRegisterActivity) context;
 
-                FormCache.warmFormAsync(context, "vca_screening");
-
                 try {
-
-                    JSONObject indexRegisterForm = FormCache.obtainFormTemplate(context, "vca_screening");
-                    if (indexRegisterForm == null) {
-                        FormUtils formUtils = new FormUtils(context);
-                        indexRegisterForm = formUtils.getFormJson("vca_screening");
-                    }
+                    FormUtils formUtils = new FormUtils(context);
+                    JSONObject indexRegisterForm = formUtils.getFormJson("vca_screening");
 
                     if (indexRegisterForm != null) {
                         idRegisterActivity.startFormActivity(indexRegisterForm);

@@ -28,7 +28,6 @@ import com.bluecodeltd.ecap.chw.dao.ChildSafetyActionDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.ChildSafetyActionModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
-import com.bluecodeltd.ecap.chw.util.FormCache;
 import com.bluecodeltd.ecap.chw.util.FormLoadingDialog;
 import com.bluecodeltd.ecap.chw.util.Threading;
 import com.rey.material.widget.Button;
@@ -47,6 +46,7 @@ import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
+import org.smartregister.util.FormUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -92,7 +92,6 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
         recyclerViewadapter.setOnDataUpdateListener(() -> uiHandler.post(() -> loadActions(true)));
         recyclerView.setAdapter(recyclerViewadapter);
 
-        FormCache.warmFormAsync(this, "child_safety_action");
         loadActions(false);
 
     }
@@ -294,7 +293,7 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
         }
         Threading.io(() -> {
             try {
-                JSONObject form = FormCache.obtainFormTemplate(this, formName);
+                JSONObject form = new FormUtils(this).getFormJson(formName);
                 if (modifier != null && form != null) {
                     modifier.apply(form);
                 }

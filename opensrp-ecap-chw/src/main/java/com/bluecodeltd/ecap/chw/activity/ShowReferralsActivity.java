@@ -25,7 +25,6 @@ import com.bluecodeltd.ecap.chw.dao.ReferralDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
-import com.bluecodeltd.ecap.chw.util.FormCache;
 import com.rey.material.widget.Button;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -113,7 +112,6 @@ public class ShowReferralsActivity extends AppCompatActivity {
         recyclerView.setAdapter(recyclerViewadapter);
         updateEmptyState();
 
-        FormCache.warmFormAsync(this, "referral_for_vca_edit");
         loadReferrals(false);
     }
 
