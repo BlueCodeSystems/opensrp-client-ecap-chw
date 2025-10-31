@@ -79,7 +79,6 @@ import com.bluecodeltd.ecap.chw.model.newCaregiverModel;
 import com.bluecodeltd.ecap.chw.util.BottomSheetActionHelper;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.ToastRouter;
-import com.bluecodeltd.ecap.chw.util.FormCache;
 import com.bluecodeltd.ecap.chw.util.FormLoadingDialog;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import androidx.lifecycle.ViewModelProvider;
@@ -1805,6 +1804,89 @@ public class HouseholdDetails extends AppCompatActivity {
         }
     }
 
+    private boolean isHouseholdInactive() {
+        if (house == null) {
+            return true;
+        }
+        String status = house.getHousehold_case_status();
+        if (TextUtils.isEmpty(status)) {
+            status = house.getCase_status();
+        }
+        if (TextUtils.isEmpty(status)) {
+            return false;
+        }
+        status = status.trim();
+        return "0".equals(status) || "2".equals(status);
+    }
+
+    private boolean ensureHouseholdReadyForAction() {
+        if (house == null) {
+            Toast.makeText(this, "Household still loading…", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (isHouseholdInactive()) {
+            showDialogBox(house.getCaregiver_name() + "`s household has been inactive or de-registered");
+            return false;
+        }
+        return true;
+    }
+
+    public boolean canShowHouseholdCasePlanAddIcon() {
+        return house != null && !isHouseholdInactive();
+    }
+
+    public boolean canShowHouseholdVisitAddIcon() {
+        return house != null && !isHouseholdInactive();
+    }
+
+    public boolean canShowHouseholdHivAssessmentAddIcon() {
+        return house != null && !isHouseholdInactive() && shouldShowCaregiverHivAssessment();
+    }
+
+    public boolean canShowHouseholdMemberAddIcon() {
+        return house != null && !isHouseholdInactive();
+    }
+
+    public void launchHouseholdCasePlanForm() {
+        if (!ensureHouseholdReadyForAction()) {
+            return;
+        }
+        View trigger = new View(this);
+        trigger.setId(R.id.hcase_plan);
+        onClick(trigger);
+    }
+
+    public void launchHouseholdVisitForm() {
+        if (!ensureHouseholdReadyForAction()) {
+            return;
+        }
+        View trigger = new View(this);
+        trigger.setId(R.id.household_visitation_caregiver);
+        onClick(trigger);
+    }
+
+    public void launchCaregiverHivAssessmentForm() {
+        if (!ensureHouseholdReadyForAction()) {
+            return;
+        }
+        if (!shouldShowCaregiverHivAssessment()) {
+            Toasty.warning(this, getString(R.string.vca_hiv_assessment_unavailable), Toast.LENGTH_LONG, true).show();
+            return;
+        }
+        View trigger = new View(this);
+        trigger.setId(R.id.hiv_assessment_caregiver);
+        onClick(trigger);
+    }
+
+    public void launchAddHouseholdMemberForm() {
+        if (!ensureHouseholdReadyForAction()) {
+            return;
+        }
+        View trigger = new View(this);
+        trigger.setId(R.id.child_form);
+        onClick(trigger);
+    }
+
     private boolean shouldShowCaregiverHivAssessment() {
         if (house == null) {
             return false;
@@ -2270,7 +2352,7 @@ public class HouseholdDetails extends AppCompatActivity {
         }
         Threading.io(() -> {
             try {
-                JSONObject form = FormCache.obtainFormTemplate(this, formName);
+                JSONObject form = new FormUtils(this).getFormJson(formName);
                 if (form == null) {
                     throw new IllegalStateException("Form not found: " + formName);
                 }

@@ -79,7 +79,6 @@ import com.bluecodeltd.ecap.chw.model.WeServiceVcaModel;
 import com.bluecodeltd.ecap.chw.model.newCaregiverModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.ToastRouter;
-import com.bluecodeltd.ecap.chw.util.FormCache;
 import com.bluecodeltd.ecap.chw.util.Threading;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -211,23 +210,27 @@ public class IndexDetailsActivity extends AppCompatActivity {
         builder = new AlertDialog.Builder(IndexDetailsActivity.this);
         screeningBuilder = new AlertDialog.Builder(IndexDetailsActivity.this);
 
-        childId = getIntent().getExtras().getString("Child");
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            childId = extras.getString("Child");
+            if (TextUtils.isEmpty(childId)) {
+                childId = extras.getString("childId");
+            }
+        }
+
+        if (TextUtils.isEmpty(childId)) {
+            Timber.e("IndexDetailsActivity launched without child identifier extras");
+            Toast.makeText(this, "Member data incomplete", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+
         String hhIntent = getIntent().getExtras().getString("fromHousehold");
         if(hhIntent == null){
             hhIntent = getIntent().getExtras().getString("fromIndex");
         }
 
         indexVCA = VCAScreeningDao.getVcaScreening(childId);
-        FormCache.warmFormsAsync(this,
-                "vca_screening",
-                "case_status",
-                "vca_assessment",
-                "case_plan",
-                "referral",
-                "household_visitation_for_vca_0_20_years",
-                "hiv_risk_assessment_under_15_years",
-                "hiv_risk_assessment_above_15_years",
-                "we_services_vca");
         child = IndexPersonDao.getChildByBaseId(childId);
         gender = null;
 
@@ -519,7 +522,6 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
         visitTabTitle.setText("OVERVIEW");
         visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
-
         visitTabCount.setVisibility(View.GONE);
 
         mTabLayout.getTabAt(0).setCustomView(taskTabTitleLayout);
@@ -529,9 +531,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
         visitTabTitle.setText("HIV ASSESSMENT");
         visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
-
         visitTabCount.setVisibility(View.GONE);
-
         mTabLayout.getTabAt(3).setCustomView(taskTabTitleLayout);
     }
     private void updateVisitsTabTitle() {
@@ -580,6 +580,140 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             return;
         }
         plansTabCount.setText(String.valueOf(getCasePlanCount()));
+    }
+
+    public boolean canShowCasePlanAddIcon() {
+        return !isCaseInactive()
+                && indexVCA != null
+                && indexVCA.getDate_screened() != null
+                && isHouseholdScreened();
+    }
+
+    public boolean canShowVisitAddIcon() {
+        return !isCaseInactive()
+                && indexVCA != null
+                && indexVCA.getDate_screened() != null
+                && isHouseholdScreened();
+    }
+
+    public boolean canShowHivAssessmentAddIcon() {
+        return canAddHivAssessmentUnder15() || canAddHivAssessmentOver15();
+    }
+
+    private boolean canAddHivAssessmentUnder15() {
+        if (indexVCA == null || indexVCA.getDate_screened() == null || isCaseInactive()) {
+            return false;
+        }
+        if (!isHouseholdScreened()) {
+            return false;
+        }
+        if ("yes".equalsIgnoreCase(indexVCA.getIs_hiv_positive())) {
+            return false;
+        }
+        int ageValue = parseAgeValue(vcaAge);
+        return ageValue > 1 && ageValue < 15;
+    }
+
+    private boolean canAddHivAssessmentOver15() {
+        if (indexVCA == null || indexVCA.getDate_screened() == null || isCaseInactive()) {
+            return false;
+        }
+        if (!isHouseholdScreened()) {
+            return false;
+        }
+        if ("yes".equalsIgnoreCase(indexVCA.getIs_hiv_positive())) {
+            return false;
+        }
+        int ageValue = parseAgeValue(vcaAge);
+        return ageValue >= 15;
+    }
+
+    private boolean ensureCommonFormPreconditions() {
+        if (isCaseInactive()) {
+            showDeregisteredStatus();
+            return false;
+        }
+        if (!ensureIndexVcaAvailable()) {
+            return false;
+        }
+        if (!isHouseholdScreened()) {
+            Toasty.warning(IndexDetailsActivity.this, "VCA Household Hasn't Been Screened", Toast.LENGTH_LONG, true).show();
+            return false;
+        }
+        return ensureScreeningComplete();
+    }
+
+    public void launchCasePlanForm() {
+        if (!ensureCommonFormPreconditions()) {
+            return;
+        }
+        openFormUsingFormUtils(IndexDetailsActivity.this, "case_plan");
+    }
+
+    public void launchVisitForm() {
+        if (!ensureCommonFormPreconditions()) {
+            return;
+        }
+        openFormUsingFormUtils(IndexDetailsActivity.this, "household_visitation_for_vca_0_20_years");
+    }
+
+    public void launchHivAssessmentForm() {
+        if (!ensureCommonFormPreconditions()) {
+            return;
+        }
+        if ("yes".equalsIgnoreCase(indexVCA.getIs_hiv_positive())) {
+            Toasty.warning(IndexDetailsActivity.this, getString(R.string.vca_hiv_assessment_unavailable), Toast.LENGTH_LONG, true).show();
+            return;
+        }
+        if (canAddHivAssessmentUnder15()) {
+            openFormUsingFormUtils(IndexDetailsActivity.this, "hiv_risk_assessment_under_15_years");
+            return;
+        }
+        if (canAddHivAssessmentOver15()) {
+            openFormUsingFormUtils(IndexDetailsActivity.this, "hiv_risk_assessment_above_15_years");
+            return;
+        }
+        Toasty.warning(IndexDetailsActivity.this, getString(R.string.vca_hiv_assessment_unavailable), Toast.LENGTH_LONG, true).show();
+    }
+
+    private void launchHivAssessmentUnder15Form() {
+        if (!ensureCommonFormPreconditions()) {
+            return;
+        }
+        if (!canAddHivAssessmentUnder15()) {
+            Toasty.warning(IndexDetailsActivity.this, getString(R.string.vca_hiv_assessment_unavailable), Toast.LENGTH_LONG, true).show();
+            return;
+        }
+        openFormUsingFormUtils(IndexDetailsActivity.this, "hiv_risk_assessment_under_15_years");
+    }
+
+    private void launchHivAssessmentOver15Form() {
+        if (!ensureCommonFormPreconditions()) {
+            return;
+        }
+        if (!canAddHivAssessmentOver15()) {
+            Toasty.warning(IndexDetailsActivity.this, getString(R.string.vca_hiv_assessment_unavailable), Toast.LENGTH_LONG, true).show();
+            return;
+        }
+        openFormUsingFormUtils(IndexDetailsActivity.this, "hiv_risk_assessment_above_15_years");
+    }
+
+    private boolean ensureScreeningComplete() {
+        if (indexVCA != null && indexVCA.getDate_screened() != null) {
+            return true;
+        }
+        Toasty.warning(IndexDetailsActivity.this, getString(R.string.vca_screening_not_done), Toast.LENGTH_LONG, true).show();
+        return false;
+    }
+
+    private boolean isCaseInactive() {
+        String status = null;
+        if (child != null && !TextUtils.isEmpty(child.getCase_status())) {
+            status = child.getCase_status();
+        } else if (indexVCA != null && !TextUtils.isEmpty(indexVCA.getCase_status())) {
+            status = indexVCA.getCase_status();
+        }
+        return "0".equals(status) || "2".equals(status);
     }
 
 
@@ -650,11 +784,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 break;
             case R.id.case_plan:
 
-                if(indexVCA.getDate_screened() != null){
-                    openFormUsingFormUtils(IndexDetailsActivity.this,"case_plan");
-                } else {
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
-                }
+                launchCasePlanForm();
 
                 break;
             case R.id.referral:
@@ -730,39 +860,18 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
             case R.id.household_visitation_for_vca:
 
-                if (!ensureIndexVcaAvailable()) {
-                    break;
-                }
-                if(indexVCA.getDate_screened() != null) {
-                    openFormUsingFormUtils(IndexDetailsActivity.this,"household_visitation_for_vca_0_20_years");
-                } else{
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
-                }
+                launchVisitForm();
 
 
                 break;
 
             case R.id.hiv_assessment:
 
-                if (!ensureIndexVcaAvailable()) {
-                    break;
-                }
-                if(indexVCA.getDate_screened() != null) {
-                    openFormUsingFormUtils(IndexDetailsActivity.this, "hiv_risk_assessment_under_15_years");
-                } else {
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
-                }
+                launchHivAssessmentUnder15Form();
                 break;
 
             case R.id.hiv_assessment2:
-                if (!ensureIndexVcaAvailable()) {
-                    break;
-                }
-                if(indexVCA.getDate_screened() != null) {
-                    openFormUsingFormUtils(IndexDetailsActivity.this, "hiv_risk_assessment_above_15_years");
-                }else{
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
-                }
+                launchHivAssessmentOver15Form();
                 break;
 
             case R.id.we_services_vca:
@@ -888,8 +997,20 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
     }
 
     private void openVcaCasplanToAddVulnarabilities(String dateId,String cpId, String toastMessage) {
+        if (!ensureIndexVcaAvailable()) {
+            Timber.w("Skipping CasePlan launch: indexVCA missing for childId=%s", childId);
+            return;
+        }
+
+        String uniqueId = indexVCA.getUnique_id();
+        if (TextUtils.isEmpty(uniqueId)) {
+            Timber.w("Skipping CasePlan launch: unique_id missing for indexVCA childId=%s", childId);
+            Toast.makeText(this, "Member data incomplete", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         Intent i = new Intent(IndexDetailsActivity.this, CasePlan.class);
-        i.putExtra("childId", indexVCA.getUnique_id());
+        i.putExtra("childId", uniqueId);
         i.putExtra("dateId",  dateId);
         i.putExtra("case_plan_id",cpId);
         i.putExtra("hivStatus",  indexVCA.getIs_hiv_positive());
@@ -962,6 +1083,17 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
             switch (encounterType) {
+                case "VCA Screening":
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_CLIENT_INDEX);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
                 case "Member Sub Population":
                 case "Sub Population":
 
@@ -1171,6 +1303,8 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     getClientProcessorForJava().processClient(savedEvents);
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
 
+                    maybeMarkHouseholdScreened(event, client);
+
 
                 } catch (Exception e) {
                     Timber.e(e);
@@ -1187,6 +1321,63 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             Timber.e(exception);
             return false;
         }
+    }
+
+    private void maybeMarkHouseholdScreened(Event event, Client client) {
+        if (event == null) {
+            return;
+        }
+        String type = event.getEventType();
+        Timber.v("maybeMarkHouseholdScreened evaluating event %s type=%s", event.getFormSubmissionId(), type);
+        if (type == null) {
+            return;
+        }
+        if (!"Sub Population".equalsIgnoreCase(type) && !"Member Sub Population".equalsIgnoreCase(type)) {
+            Timber.v("Event %s not a screening encounter", event.getFormSubmissionId());
+            return;
+        }
+
+        String householdId = null;
+        if (event.getDetails() != null) {
+            householdId = event.getDetails().get("household_id");
+            if (TextUtils.isEmpty(householdId)) {
+                householdId = event.getDetails().get("householdId");
+            }
+            Timber.v("Event details householdId=%s", householdId);
+        }
+        if (TextUtils.isEmpty(householdId) && client != null && client.getAttributes() != null) {
+            Object attr = client.getAttributes().get("household_id");
+            if (attr instanceof String && !TextUtils.isEmpty((String) attr)) {
+                householdId = (String) attr;
+            }
+            if (TextUtils.isEmpty(householdId)) {
+                Object alt = client.getAttributes().get("householdId");
+                if (alt instanceof String && !TextUtils.isEmpty((String) alt)) {
+                    householdId = (String) alt;
+                }
+            }
+            Timber.v("Client attributes householdId=%s", householdId);
+        }
+        if (TextUtils.isEmpty(householdId)) {
+            if (indexVCA != null && !TextUtils.isEmpty(indexVCA.getHousehold_id())) {
+                householdId = indexVCA.getHousehold_id();
+            } else if (child != null && !TextUtils.isEmpty(child.getHousehold_id())) {
+                householdId = child.getHousehold_id();
+            }
+            Timber.v("Fallback householdId=%s", householdId);
+        }
+
+        if (TextUtils.isEmpty(householdId)) {
+            Timber.w("Unable to mark household screened: missing household_id for event %s", event.getFormSubmissionId());
+            return;
+        }
+
+        HouseholdDao.markHouseholdScreened(householdId, true);
+        Timber.i("Marked household %s as screened due to event %s", householdId, event.getFormSubmissionId());
+        Threading.main(() -> {
+            is_screened = "true";
+            updateFabMenuVisibility();
+        });
     }
 
     private ECSyncHelper getECSyncHelper() {
@@ -1376,6 +1567,14 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         setMenuItemVisible(menuItemHivUnder15, showHivUnder);
         setMenuItemVisible(menuItemHivOver15, showHivOver);
         setMenuItemVisible(menuItemWeServices, showWeServices);
+
+        if (mTabLayout != null) {
+            updatePlanTabTitle();
+            updateVisitsTabTitle();
+            if (mTabLayout.getTabCount() > 3) {
+                updateHivAssessmentTabTitle();
+            }
+        }
     }
 
     private void setMenuItemVisible(View view, boolean visible) {
@@ -1410,7 +1609,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
         Threading.io(() -> {
             try {
-                JSONObject formToBeOpened = FormCache.obtainFormTemplate(context, formName);
+                JSONObject formToBeOpened = new FormUtils(context).getFormJson(formName);
                 if (formToBeOpened == null) {
                     Threading.main(this::hideFormLoading);
                     return;

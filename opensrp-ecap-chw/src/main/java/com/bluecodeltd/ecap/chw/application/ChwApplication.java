@@ -38,7 +38,6 @@ import com.bluecodeltd.ecap.chw.repository.ChwRepository;
 import com.bluecodeltd.ecap.chw.schedulers.ChwScheduleTaskExecutor;
 import com.bluecodeltd.ecap.chw.sync.ChwClientProcessor;
 import com.bluecodeltd.ecap.chw.util.ChwLocationBasedClassifier;
-import com.bluecodeltd.ecap.chw.util.FormCache;
 import com.bluecodeltd.ecap.chw.util.FailSafeRecalledID;
 import com.bluecodeltd.ecap.chw.util.FileUtils;
 import com.bluecodeltd.ecap.chw.util.JsonFormUtils;
@@ -246,7 +245,11 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         } catch (Throwable ignored) { }
         JobManager.create(this).addJobCreator(new ChwJobCreator());
 
-        initOfflineSchedules();
+        try {
+            initOfflineSchedules();
+        } catch (Exception e) {
+            Timber.e(e, "ChwApplication: initOfflineSchedules failed");
+        }
 
         setOpenSRPUrl();
 
@@ -364,7 +367,6 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
     @Override
     public void reloadLanguage() {
         super.reloadLanguage();
-        FormCache.clear();
     }
 
     @Override
