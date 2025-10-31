@@ -32,7 +32,6 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildSafetyPlanModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
-import com.bluecodeltd.ecap.chw.util.FormCache;
 import com.bluecodeltd.ecap.chw.util.FormLoadingDialog;
 import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -50,6 +49,7 @@ import org.smartregister.domain.tag.FormTag;
 import org.smartregister.family.util.AppExecutors;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.sync.helper.ECSyncHelper;
+import org.smartregister.util.FormUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -83,7 +83,6 @@ public class ChildSafetyPlanAdapter  extends RecyclerView.Adapter<ChildSafetyPla
 
         this.plans = plans;
         this.context = context;
-        FormCache.warmFormAsync(context, "child_safety_plan");
 
     }
 
@@ -153,7 +152,7 @@ public class ChildSafetyPlanAdapter  extends RecyclerView.Adapter<ChildSafetyPla
                 AlertDialog loading = FormLoadingDialog.show(context instanceof Activity ? (Activity) context : null);
                 Threading.io(() -> {
                     try {
-                        JSONObject childSafetyPlanForm = FormCache.obtainFormTemplate(context, "child_safety_plan");
+                        JSONObject childSafetyPlanForm = new FormUtils(context).getFormJson("child_safety_plan");
                         if (childSafetyPlanForm == null) {
                             Threading.main(() -> FormLoadingDialog.dismiss(loading));
                             return;
@@ -302,7 +301,7 @@ public class ChildSafetyPlanAdapter  extends RecyclerView.Adapter<ChildSafetyPla
         Threading.io(() -> {
             try {
                 oMapper = new ObjectMapper();
-                JSONObject formToBeOpened = FormCache.obtainFormTemplate(context, formName);
+                JSONObject formToBeOpened = new FormUtils(context).getFormJson(formName);
                 if (formToBeOpened == null) {
                     Threading.main(() -> FormLoadingDialog.dismiss(loading));
                     return;

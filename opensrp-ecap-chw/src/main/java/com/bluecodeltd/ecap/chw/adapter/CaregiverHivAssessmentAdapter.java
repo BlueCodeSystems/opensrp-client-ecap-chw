@@ -14,6 +14,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -117,7 +118,7 @@ public class CaregiverHivAssessmentAdapter extends RecyclerView.Adapter<Caregive
                 holder.exPandableView.setVisibility(View.GONE);
                 holder.expMore.setVisibility(View.VISIBLE);
                 holder.expLess.setVisibility(View.GONE);
-                holder.editme.setVisibility(View.VISIBLE);
+                holder.editme.setVisibility(View.GONE);
                 holder.delete.setVisibility(View.VISIBLE);
             }
         });
@@ -255,25 +256,25 @@ public class CaregiverHivAssessmentAdapter extends RecyclerView.Adapter<Caregive
 
     }
     private void setImageViewFromBase64(String base64Str, ImageView imageView) {
+        if (TextUtils.isEmpty(base64Str)) {
+            imageView.setVisibility(View.GONE);
+            return;
+        }
         try {
-            // Decode the Base64 string into bytes
             byte[] decodedBytes = Base64.decode(base64Str, Base64.DEFAULT);
-
-            // Convert bytes to a Bitmap
             Bitmap originalBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
 
             if (originalBitmap != null) {
-                // Resize the Bitmap to 36x36
                 Bitmap resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, 80, 80, true);
-
-                // Set the resized Bitmap to the ImageView
                 imageView.setImageBitmap(resizedBitmap);
+                imageView.setVisibility(View.VISIBLE);
             } else {
                 Log.e("ImageDecode", "Bitmap is null. Check Base64 input.");
+                imageView.setVisibility(View.GONE);
             }
         } catch (IllegalArgumentException e) {
-            // Handle invalid Base64 string
             Log.e("ImageDecode", "Invalid Base64 string: " + e.getMessage());
+            imageView.setVisibility(View.GONE);
         }
     }
     public void showDialogBox(String householdId,String message){

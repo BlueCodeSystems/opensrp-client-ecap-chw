@@ -35,7 +35,8 @@
         android:layout_centerInParent="true"
         android:src="@drawable/ic_edit"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
     <ImageView
         android:id="@+id/delete_record"
         android:layout_alignParentEnd="true"
@@ -59,6 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:src="@drawable/ic_edit"
+            android:visibility="gone"
             android:paddingLeft="@dimen/contact_drawable_padding"
             android:paddingTop="@dimen/contact_small_padding"
             android:paddingBottom="@dimen/contact_small_padding"

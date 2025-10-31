@@ -37,7 +37,6 @@ import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
-import com.bluecodeltd.ecap.chw.util.FormCache;
 import com.bluecodeltd.ecap.chw.util.FormLoadingDialog;
 import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -55,6 +54,7 @@ import org.smartregister.domain.tag.FormTag;
 import org.smartregister.family.util.AppExecutors;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.sync.helper.ECSyncHelper;
+import org.smartregister.util.FormUtils;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -87,7 +87,6 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
 
         this.referrals = referrals;
         this.context = context;
-        FormCache.warmFormAsync(context, "referral_for_vca_edit");
     }
 
     @Override
@@ -159,7 +158,7 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
                 AlertDialog loading = FormLoadingDialog.show(context instanceof Activity ? (Activity) context : null);
                 Threading.io(() -> {
                     try {
-                        JSONObject vcaScreeningForm = FormCache.obtainFormTemplate(context, "referral_for_vca_edit");
+                        JSONObject vcaScreeningForm = new FormUtils(context).getFormJson("referral_for_vca_edit");
                         if (vcaScreeningForm == null) {
                             Threading.main(() -> FormLoadingDialog.dismiss(loading));
                             return;
@@ -252,7 +251,7 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
         Threading.io(() -> {
             try {
                 oMapper = new ObjectMapper();
-                JSONObject formToBeOpened = FormCache.obtainFormTemplate(context, formName);
+                JSONObject formToBeOpened = new FormUtils(context).getFormJson(formName);
                 if (formToBeOpened == null) {
                     Threading.main(() -> FormLoadingDialog.dismiss(loading));
                     return;

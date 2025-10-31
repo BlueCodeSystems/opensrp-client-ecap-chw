@@ -4,6 +4,8 @@ import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getAllSharedPrefer
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getFormTag;
 import static org.smartregister.chw.fp.util.FpUtil.getClientProcessorForJava;
 import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
+import static com.vijay.jsonwizard.utils.FormUtils.fields;
+import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,6 +14,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +33,6 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildSafetyActionModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
-import com.bluecodeltd.ecap.chw.util.FormCache;
 import com.bluecodeltd.ecap.chw.util.FormLoadingDialog;
 import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -84,7 +86,6 @@ public class ChildSafetyActionAdapter extends RecyclerView.Adapter<ChildSafetyAc
 
         this.action_plan = action_plan;
         this.context = context;
-        FormCache.warmFormAsync(context, "child_safety_action");
     }
 
     @Override
@@ -176,7 +177,7 @@ public class ChildSafetyActionAdapter extends RecyclerView.Adapter<ChildSafetyAc
                 AlertDialog loading = FormLoadingDialog.show(context instanceof Activity ? (Activity) context : null);
                 Threading.io(() -> {
                     try {
-                        JSONObject childSafetyPlanForm = FormCache.obtainFormTemplate(context, "child_safety_action");
+                        JSONObject childSafetyPlanForm = new FormUtils(context).getFormJson("child_safety_action");
                         if (childSafetyPlanForm == null) {
                             Threading.main(() -> FormLoadingDialog.dismiss(loading));
                             return;
@@ -329,7 +330,7 @@ public class ChildSafetyActionAdapter extends RecyclerView.Adapter<ChildSafetyAc
         Threading.io(() -> {
             try {
                 oMapper = new ObjectMapper();
-                JSONObject formToBeOpened = FormCache.obtainFormTemplate(context, formName);
+                JSONObject formToBeOpened = new FormUtils(context).getFormJson(formName);
                 if (formToBeOpened == null) {
                     Threading.main(() -> FormLoadingDialog.dismiss(loading));
                     return;
