@@ -5,7 +5,6 @@ import android.content.Context;
 import androidx.annotation.Nullable;
 
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
-import com.bluecodeltd.ecap.chw.util.FormCache;
 import com.bluecodeltd.ecap.chw.util.IndexClientsUtils;
 
 import org.apache.commons.lang3.StringUtils;
@@ -30,21 +29,9 @@ public class IndexRegisterModel implements IndexRegisterContract.Model {
     @Override
     public JSONObject getFormAsJson(Context context, String formName, String entityId, String currentLocationId) {
         try {
-            JSONObject form = null;
-
-            if (context != null) {
-                try {
-                    form = FormCache.obtainFormTemplate(context, formName);
-                } catch (Exception e) {
-                    Timber.w(e, "Falling back to uncached load for form %s", formName);
-                }
-            }
-
+            JSONObject form = OpdUtils.getJsonFormToJsonObject(formName);
             if (form == null) {
-                form = OpdUtils.getJsonFormToJsonObject(formName);
-                if (form == null) {
-                    return null;
-                }
+                return null;
             }
 
             form.getJSONObject(METADATA).put(ENCOUNTER_LOCATION, currentLocationId);

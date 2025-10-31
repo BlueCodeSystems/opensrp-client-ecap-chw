@@ -6,7 +6,6 @@ import android.content.Context;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexRegisterActivity;
 import com.bluecodeltd.ecap.chw.util.Constants;
-import com.bluecodeltd.ecap.chw.util.FormCache;
 
 import org.json.JSONObject;
 import org.smartregister.util.FormUtils;
@@ -27,8 +26,6 @@ public class AlertDialogForVcaProfile {
     }
 
     public AlertDialog buildAlertDialogForIndexRegistration() {
-        FormCache.warmFormAsync(context, "vca_screening");
-
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         builder.setTitle("Choose Index to register")
@@ -37,26 +34,15 @@ public class AlertDialogForVcaProfile {
                     selectedItem = items[i];
 
                     try {
+                        FormUtils formUtils = new FormUtils(context);
                         JSONObject indexRegisterForm;
 
-                        if(Constants.SCREENING.equalsIgnoreCase(selectedItem)){
-
-                            indexRegisterForm = FormCache.obtainFormTemplate(context, "vca_screening");
-                            if (indexRegisterForm == null) {
-                                FormUtils fallbackFormUtils = new FormUtils(context);
-                                indexRegisterForm = fallbackFormUtils.getFormJson("vca_screening");
-                            }
-
+                        if (Constants.SCREENING.equalsIgnoreCase(selectedItem)) {
+                            indexRegisterForm = formUtils.getFormJson("vca_screening");
                         } else if (Constants.MOTHER.equalsIgnoreCase(selectedItem)) {
-                            FormUtils formUtils = new FormUtils(context);
-
                             indexRegisterForm = formUtils.getFormJson("mother_index");
-
                         } else {
-                            FormUtils formUtils = new FormUtils(context);
-
                             indexRegisterForm = formUtils.getFormJson("female_sex_worker");
-
                         }
 
                         if (indexRegisterForm != null) {
