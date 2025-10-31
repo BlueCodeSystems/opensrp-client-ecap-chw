@@ -601,7 +601,13 @@ public class IndexPersonDao  extends AbstractDao {
 
 
     public static Child getChildByBaseId(String UID){
-        String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE unique_id = '" + UID + "' AND (adolescent_first_name IS NOT NULL OR adolescent_last_name IS NOT NULL OR adolescent_birthdate IS NOT NULL)";
+        // Do not filter out rows when adolescent_* fields are null. Prefer adolescent_* values when present,
+        // but fall back to the generic first_name/last_name/gender so a record is always returned.
+        String sql = "SELECT *, " +
+                "COALESCE(adolescent_first_name, first_name) AS adolescent_first_name, " +
+                "COALESCE(adolescent_last_name, last_name)  AS adolescent_last_name,  " +
+                "COALESCE(adolescent_gender, gender)        AS adolescent_gender " +
+                "FROM ec_client_index WHERE unique_id = '" + UID + "'";
         DataMap<Child> dataMap = c -> {
             return new Child(
                     getCursorValue(c, "last_interacted_with"),
