@@ -273,9 +273,13 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(currentValue) && !TextUtils.isEmpty(case_plan_id)) {
                     try {
                         cpIdField.put("value", case_plan_id);
+                        currentValue = case_plan_id;
                     } catch (JSONException e) {
                         Timber.e(e);
                     }
+                }
+                if (!TextUtils.isEmpty(currentValue)) {
+                    case_plan_id = currentValue;
                 }
             }
 
@@ -441,7 +445,17 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
 
 
             JSONObject casePlanId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_id");
-            casePlanId.put("value", case_plan_id);
+            if (casePlanId != null) {
+                String initialId = TextUtils.isEmpty(case_plan_id) ? householdId : case_plan_id;
+                if (TextUtils.isEmpty(initialId)) {
+                    initialId = "";
+                }
+                casePlanId.put("value", initialId);
+                if (TextUtils.isEmpty(case_plan_id)) {
+                    casePlanId.put("read_only", false);
+                    casePlanId.put("hint", getString(R.string.enter_case_plan_id));
+                }
+            }
 
 
 

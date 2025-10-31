@@ -129,6 +129,11 @@ public class CasePlan extends AppCompatActivity {
             }
         }
 
+        String displayCasePlanId = TextUtils.isEmpty(case_plan_id)
+                ? getString(R.string.case_plan_id_not_set)
+                : case_plan_id;
+        binding.casePlanIdValue.setText(displayCasePlanId);
+
         fetchData();
 
     }
@@ -230,7 +235,15 @@ public class CasePlan extends AppCompatActivity {
                             cDate.put("value", caseDate);
 
                             JSONObject casePlanId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_id");
-                            casePlanId.put("value", case_plan_id);
+                            String initialId = TextUtils.isEmpty(case_plan_id) ? childId : case_plan_id;
+                            if (TextUtils.isEmpty(initialId)) {
+                                initialId = "";
+                            }
+                            casePlanId.put("value", initialId);
+                            if (TextUtils.isEmpty(case_plan_id)) {
+                                casePlanId.put("read_only", false);
+                                casePlanId.put("hint", getString(R.string.enter_case_plan_id));
+                            }
 
                             if(hivStatus == null || !hivStatus.equals("yes")){
                                 JSONArray domainType = getFieldJSONObject(fields(indexRegisterForm, STEP1), "type").getJSONArray("options");
@@ -292,11 +305,19 @@ public class CasePlan extends AppCompatActivity {
                 if (TextUtils.isEmpty(currentValue) && !TextUtils.isEmpty(case_plan_id)) {
                     try {
                         cpIdField.put("value", case_plan_id);
+                        currentValue = case_plan_id;
                     } catch (JSONException e) {
                         Timber.e(e);
                     }
                 }
+                if (!TextUtils.isEmpty(currentValue)) {
+                    case_plan_id = currentValue;
+                }
             }
+
+            binding.casePlanIdValue.setText(TextUtils.isEmpty(case_plan_id)
+                    ? getString(R.string.case_plan_id_not_set)
+                    : case_plan_id);
 
             if (!jsonFormObject.optString("entity_id").isEmpty()) {
                 is_edit_mode = true;

@@ -49,7 +49,6 @@
     <string name="remarks_and__comments">Remarks and comments</string>
     <string name="reports">Home</string>
     <string name="section_format">Section</string>
-    <string name="select_communities">Select communities</string>
     <string name="severe">Severe</string>
     <string name="slept_under_net">Slept under net</string>
     <string name="storage_permissions_message">Storage permission required</string>
@@ -120,6 +119,12 @@
     <string name="vca_menu_case_plan">VCA Case Plan</string>
     <string name="vca_menu_referral">Referral Form</string>
     <string name="vca_menu_quarterly_reassessment">VCA Quarterly Re-assessment Form</string>
+    <string name="vca_add_form">Add form</string>
+    <string name="vca_add_case_plan">Add case plan</string>
+    <string name="vca_add_visit">Add visit</string>
+    <string name="vca_add_hiv_assessment">Add HIV assessment</string>
+    <string name="vca_hiv_assessment_unavailable">HIV assessment form unavailable for this VCA</string>
+    <string name="vca_screening_not_done">VCA Screening has not been done</string>
     <string name="vca_menu_hiv_under_15">HIV Risk Assessment (Under 15)</string>
     <string name="vca_menu_hiv_over_15">HIV Risk Assessment (15+)</string>
     <string name="vca_menu_we_services">WE Services</string>
@@ -347,6 +352,7 @@
     <string name="go_to_family_s_profile">Go to household profile</string>
     <string name="family_has_nothing_due">Household has no services due</string>
     <string name="family_has_services_due">Household has services due</string>
+    <string name="select_communities">Select communities</string>
     <string name="vaccine_service_overdue"><![CDATA[%1$s <font color=#f04646>overdue (%2$s)</font></b>]]></string>
     <string name="vaccine_service_due"><![CDATA[%1$s <font color=#000000>due (%2$s)</font></b>]]></string>
     <string name="vaccine_service_upcoming"><![CDATA[%1$s <font color=#7f7f7f>upcoming (%2$s)</font></b>]]></string>
@@ -428,7 +434,7 @@
     <string name="family_profile_title_with_firstname">Household %1$s %2$s</string>
     <string name="unauthorized_group">This account is not authorized to access this device</string>
     <string name="physically_challenged">Living with a disability</string>
-    <string name="balanced_diet_content_eight" formatted="false">Less than 10% of total energy intake should come from free sugars—about 50 g (12 teaspoons) for an adult consuming 2000 calories—ideally under 5% for added health benefits.</string>
+    <string name="balanced_diet_content_eight" formatted="false">Less than 10%% of total energy intake should come from free sugars—about 50 g (12 teaspoons) for an adult consuming 2000 calories—ideally under 5%% for added health benefits.</string>
     <string name="hello_world">Hello World!</string>
     <string name="csv_generated_location">CSV files have been generated. You can find them in the Downloads/%1$s folder.</string>
     
@@ -456,6 +462,8 @@
     <string name="action_edit_hts_details">Edit Details</string>
     <string name="action_add_contact">Add Contact</string>
     <string name="toast_form_saved">Form Saved</string>
+    <string name="enter_case_plan_id">Enter Case Plan ID</string>
+    <string name="case_plan_id_not_set">Not Set (tap to assign)</string>
     <string name="toast_vulnerabilities_saved">Vulnerabilities Saved</string>
     <string name="toast_household_updated">Household Updated</string>
     <string name="toast_we_form_updated">WE form Updated</string>
