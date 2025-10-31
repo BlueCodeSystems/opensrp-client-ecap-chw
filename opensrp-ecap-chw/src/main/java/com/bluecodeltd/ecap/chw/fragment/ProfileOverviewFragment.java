@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -41,6 +42,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+
+import timber.log.Timber;
 
 public class ProfileOverviewFragment extends Fragment {
 
@@ -137,7 +140,13 @@ public class ProfileOverviewFragment extends Fragment {
 
 
         HashMap<String, Child> mymap = ( (IndexDetailsActivity) requireActivity()).getData();
-        Child childIndex =mymap.get("Child");
+        Child childIndex = mymap != null ? mymap.get("Child") : null;
+
+        if (childIndex == null) {
+            Timber.w("ProfileOverviewFragment: missing child data, skipping UI population");
+            Toast.makeText(requireContext(), "Member data incomplete", Toast.LENGTH_LONG).show();
+            return view;
+        }
 
         HashMap<String, newCaregiverModel> caregiverDetails = ((IndexDetailsActivity) requireActivity()).getUpdatedCaregiverData();
         newCaregiverModel updateCaregiver = caregiverDetails.get("UpdatedCaregiver");
@@ -198,11 +207,22 @@ public class ProfileOverviewFragment extends Fragment {
         // Subpopulation details loaded asynchronously below
 
 
-        long timestamp = Long.parseLong(childIndex.getLast_interacted_with());
+        String lastInteracted = childIndex.getLast_interacted_with();
+        Long timestamp = null;
+        if (!TextUtils.isEmpty(lastInteracted)) {
+            try {
+                timestamp = Long.parseLong(lastInteracted);
+            } catch (NumberFormatException e) {
+                Timber.w(e, "ProfileOverviewFragment: invalid last_interacted_with value '%s'", lastInteracted);
+            }
+        }
 
-        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
-        cal.setTimeInMillis(timestamp);
-        String date_time = DateFormat.format("dd-MM-yyyy HH:mm:ss", cal).toString();
+        String date_time = null;
+        if (timestamp != null) {
+            Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+            cal.setTimeInMillis(timestamp);
+            date_time = DateFormat.format("dd-MM-yyyy HH:mm:ss", cal).toString();
+        }
 
         if (childIndex.getDate_started_art() != null && childIndex.getIs_hiv_positive() != null &&
                 childIndex.getIs_hiv_positive().equals("yes")){

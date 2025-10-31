@@ -3,6 +3,7 @@ package com.bluecodeltd.ecap.chw.fragment;
 import android.app.FragmentTransaction;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
@@ -134,8 +135,22 @@ public class FamilyProfileActivityFragment extends BaseFamilyProfileActivityFrag
     }
 
     private void displayWashCheckHistory(CommonPersonObjectClient commonPersonObjectClient) {
+        if (commonPersonObjectClient == null) {
+            Timber.w("FamilyProfileActivityFragment: commonPersonObjectClient is null");
+            return;
+        }
+
         String type = commonPersonObjectClient.getColumnmaps().get("visit_type");
-        Long visitDate = Long.parseLong(commonPersonObjectClient.getColumnmaps().get("visit_date"));
+        String visitDateString = commonPersonObjectClient.getColumnmaps().get("visit_date");
+        Long visitDate = safeParseLong(visitDateString);
+
+        if (visitDate == null) {
+            Timber.w("FamilyProfileActivityFragment: missing or invalid visit_date for baseEntityId=%s", commonPersonObjectClient.getCaseId());
+            if (getActivity() != null) {
+                Toast.makeText(getActivity(), "Visit data incomplete", Toast.LENGTH_LONG).show();
+            }
+            return;
+        }
 
         if (CoreConstants.EventType.WASH_CHECK.equalsIgnoreCase(type)) {
             WashCheckDialogFragment dialogFragment = WashCheckDialogFragment.getInstance(familyBaseEntityId, visitDate);
@@ -157,6 +172,18 @@ public class FamilyProfileActivityFragment extends BaseFamilyProfileActivityFrag
             FamilyKitDialogFragment dialogFragment = FamilyKitDialogFragment.getInstance(familyBaseEntityId, visitDate);
             FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
             dialogFragment.show(ft, FamilyKitDialogFragment.DIALOG_TAG);
+        }
+    }
+
+    private Long safeParseLong(String value) {
+        if (value == null) {
+            return null;
+        }
+        try {
+            return Long.parseLong(value);
+        } catch (NumberFormatException e) {
+            Timber.w(e, "FamilyProfileActivityFragment: unable to parse long from '%s'", value);
+            return null;
         }
     }
 
