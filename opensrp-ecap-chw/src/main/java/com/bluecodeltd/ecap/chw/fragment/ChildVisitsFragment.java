@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.adapter.CasePlanAdapter;
@@ -33,6 +35,7 @@ public class ChildVisitsFragment extends Fragment {
     private ArrayList<VcaVisitationModel> visitList = new ArrayList<>();
     private LinearLayout linearLayout;
     View vieww;
+    private FloatingActionButton addVisitButton;
     // Use ViewModel + centralized Threading
     private ChildVisitsViewModel viewModel;
 
@@ -46,6 +49,13 @@ public class ChildVisitsFragment extends Fragment {
 
         recyclerView = vieww.findViewById(R.id.visitrecyclerView);
         linearLayout = vieww.findViewById(R.id.visit_container);
+        addVisitButton = vieww.findViewById(R.id.btn_add_visit);
+        if (addVisitButton != null) {
+            addVisitButton.setOnClickListener(v -> {
+                IndexDetailsActivity activity = (IndexDetailsActivity) requireActivity();
+                activity.launchVisitForm();
+            });
+        }
 
         visitList.clear();
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
@@ -68,13 +78,28 @@ public class ChildVisitsFragment extends Fragment {
             } else {
                 linearLayout.setVisibility(View.VISIBLE);
             }
+            updateAddButtonVisibility();
             if (progress != null) progress.setVisibility(View.GONE);
         });
         viewModel.refresh(childId);
 
+        updateAddButtonVisibility();
 
         return vieww;
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateAddButtonVisibility();
+    }
+
+    private void updateAddButtonVisibility() {
+        if (!isAdded() || addVisitButton == null) {
+            return;
+        }
+        IndexDetailsActivity activity = (IndexDetailsActivity) requireActivity();
+        addVisitButton.setVisibility(activity.canShowVisitAddIcon() ? View.VISIBLE : View.GONE);
+    }
 }

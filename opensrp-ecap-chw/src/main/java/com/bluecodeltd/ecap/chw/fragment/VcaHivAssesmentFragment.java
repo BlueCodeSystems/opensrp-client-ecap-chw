@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.adapter.VcaHivAssessmentUnder15Adapter;
@@ -46,6 +48,7 @@ public class VcaHivAssesmentFragment extends Fragment {
     private LinearLayout linearLayout;
     View vieww;
     public VcaScreeningModel indexVCA;
+    private FloatingActionButton addHivAssessmentButton;
     // Use centralized Threading
 
     private static final String ARG_PARAM1 = "param1";
@@ -87,6 +90,14 @@ public class VcaHivAssesmentFragment extends Fragment {
         recyclerView = binding.visitrecyclerView;
         linearLayout = binding.visitContainer;
         View progress = binding.progressLoading;
+        addHivAssessmentButton = binding.btnAddHivAssessment;
+        if (addHivAssessmentButton != null) {
+            addHivAssessmentButton.setOnClickListener(v -> {
+                IndexDetailsActivity activity = (IndexDetailsActivity) requireActivity();
+                activity.launchHivAssessmentForm();
+            });
+        }
+        updateAddButtonVisibility();
 
         // Load screening and assessments off main thread
         if (progress != null) progress.setVisibility(View.VISIBLE);
@@ -95,6 +106,7 @@ public class VcaHivAssesmentFragment extends Fragment {
             Threading.main(() -> {
                 if (!isAdded()) return;
                 indexVCA = screen;
+                updateAddButtonVisibility();
                 if (indexVCA != null && indexVCA.getAdolescent_birthdate() != null) {
                     int compareAge = calculateAge(indexVCA.getAdolescent_birthdate());
                     if (compareAge <= 14){
@@ -151,6 +163,7 @@ public class VcaHivAssesmentFragment extends Fragment {
                 if (recyclerViewadapter.getItemCount() > 0){
                     linearLayout.setVisibility(View.GONE);
                 }
+                updateAddButtonVisibility();
                 if (progressLocal != null) progressLocal.setVisibility(View.GONE);
             });
         });
@@ -176,6 +189,7 @@ public class VcaHivAssesmentFragment extends Fragment {
                 if (recyclerViewadapter.getItemCount() > 0){
                     linearLayout.setVisibility(View.GONE);
                 }
+                updateAddButtonVisibility();
                 if (progressLocal != null) progressLocal.setVisibility(View.GONE);
             });
         });
@@ -185,7 +199,23 @@ public class VcaHivAssesmentFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        addHivAssessmentButton = null;
         binding = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateAddButtonVisibility();
+    }
+
+    private void updateAddButtonVisibility() {
+        if (!isAdded() || addHivAssessmentButton == null) {
+            return;
+        }
+        IndexDetailsActivity activity = (IndexDetailsActivity) requireActivity();
+        addHivAssessmentButton.setVisibility(activity.canShowHivAssessmentAddIcon() ? View.VISIBLE : View.GONE);
+        addHivAssessmentButton.setEnabled(activity.canShowHivAssessmentAddIcon());
     }
 
 }

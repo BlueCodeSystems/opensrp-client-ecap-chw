@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.CasePlan;
 import com.bluecodeltd.ecap.chw.activity.HouseholdDetails;
@@ -34,6 +36,7 @@ public class ChildCasePlanFragment extends Fragment {
     private LinearLayout linearLayout;
     private String childId;
     private String hivStatus;
+    private FloatingActionButton addCasePlanButton;
 
     @Override
     public void onResume() {
@@ -52,6 +55,13 @@ public class ChildCasePlanFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.planrecyclerView);
         linearLayout = view.findViewById(R.id.visit_container);
+        addCasePlanButton = view.findViewById(R.id.btn_add_case_plan);
+        if (addCasePlanButton != null) {
+            addCasePlanButton.setOnClickListener(v -> {
+                IndexDetailsActivity activity = (IndexDetailsActivity) requireActivity();
+                activity.launchCasePlanForm();
+            });
+        }
 
         casePlanList.addAll(IndexPersonDao.getCasePlansById(childId));
 
@@ -70,6 +80,7 @@ public class ChildCasePlanFragment extends Fragment {
         recyclerViewadapter.notifyDataSetChanged();
 
         updateEmptyState();
+        updateAddButtonVisibility();
 
 
         return view;
@@ -87,6 +98,7 @@ public class ChildCasePlanFragment extends Fragment {
         }
         updateEmptyState();
         notifyParentToRefreshTab();
+        updateAddButtonVisibility();
     }
 
     private void updateEmptyState() {
@@ -108,5 +120,13 @@ public class ChildCasePlanFragment extends Fragment {
             IndexDetailsActivity activity = (IndexDetailsActivity) requireActivity();
             activity.refreshPlanTabCount();
         } catch (Exception ignored) { }
+    }
+
+    private void updateAddButtonVisibility() {
+        if (!isAdded() || addCasePlanButton == null) {
+            return;
+        }
+        IndexDetailsActivity activity = (IndexDetailsActivity) requireActivity();
+        addCasePlanButton.setVisibility(activity.canShowCasePlanAddIcon() ? View.VISIBLE : View.GONE);
     }
 }
