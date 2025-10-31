@@ -9,11 +9,16 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
+import android.widget.Toast;
+
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.model.Child;
 
 import java.util.HashMap;
+
+import timber.log.Timber;
 
 public class ProfileContactFragment extends Fragment {
 
@@ -31,22 +36,38 @@ public class ProfileContactFragment extends Fragment {
         txtRelation = view.findViewById(R.id.child_relation);
         txtPhone = view.findViewById(R.id.caregiver_phone);
 
-        HashMap<String, Child> childHashMap = ( (IndexDetailsActivity) requireActivity()).getData();
-        Child child =childHashMap.get("Child");
-        /* map.put("caregiver_sex", client.getColumnmaps().get("caregiver_sex"));
-        map.put("caregiver_hiv_status", client.getColumnmaps().get("caregiver_hiv_status"));
-        map.put("relation", client.getColumnmaps().get("relation"));
-        map.put("caregiver_phone", client.getColumnmaps().get("caregiver_phone"));*/
+        HashMap<String, Child> childHashMap = ((IndexDetailsActivity) requireActivity()).getData();
+        Child child = childHashMap != null ? childHashMap.get("Child") : null;
 
-        txtCaregiverName.setText(child.getCaregiver_name());
-        txtGender.setText(child.getCaregiver_sex());
-        txtDob.setText(child.getCaregiver_birth_date());
-        txtHiv.setText(child.getCaregiver_hiv_status());
-        txtRelation.setText(child.getRelation());
-        txtPhone.setText(child.getCaregiver_phone());
+        if (child == null) {
+            Timber.w("ProfileContactFragment: missing child data, using placeholder values");
+            Toast.makeText(requireContext(), "Member data incomplete", Toast.LENGTH_LONG).show();
+            applyFallbackValues();
+            return view;
+        }
+
+        txtCaregiverName.setText(valueOrDefault(child.getCaregiver_name()));
+        txtGender.setText(valueOrDefault(child.getCaregiver_sex()));
+        txtDob.setText(valueOrDefault(child.getCaregiver_birth_date()));
+        txtHiv.setText(valueOrDefault(child.getCaregiver_hiv_status()));
+        txtRelation.setText(valueOrDefault(child.getRelation()));
+        txtPhone.setText(valueOrDefault(child.getCaregiver_phone()));
 
 
         return view;
 
+    }
+
+    private String valueOrDefault(String value) {
+        return TextUtils.isEmpty(value) ? "Not Set" : value;
+    }
+
+    private void applyFallbackValues() {
+        txtCaregiverName.setText("Not Set");
+        txtGender.setText("Not Set");
+        txtDob.setText("Not Set");
+        txtHiv.setText("Not Set");
+        txtRelation.setText("Not Set");
+        txtPhone.setText("Not Set");
     }
 }
