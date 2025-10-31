@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HouseholdDetails;
 import com.bluecodeltd.ecap.chw.adapter.CaregiverHivAssessmentAdapter;
@@ -34,6 +36,7 @@ public class CaregiverHivAssessmentFragment extends Fragment {
     private ArrayList<CaregiverHivAssessmentModel> assessmentList = new ArrayList<>();
     private LinearLayout linearLayout;
     View vieww;
+    private FloatingActionButton addHivAssessmentButton;
 
 
     private static final String ARG_PARAM1 = "param1";
@@ -86,6 +89,13 @@ public class CaregiverHivAssessmentFragment extends Fragment {
 
         recyclerView = vieww.findViewById(R.id.visitrecyclerView);
         linearLayout = vieww.findViewById(R.id.visit_container);
+        addHivAssessmentButton = vieww.findViewById(R.id.btn_add_caregiver_hiv);
+        if (addHivAssessmentButton != null) {
+            addHivAssessmentButton.setOnClickListener(v -> {
+                HouseholdDetails activity = (HouseholdDetails) requireActivity();
+                activity.launchCaregiverHivAssessmentForm();
+            });
+        }
 
         assessmentList.clear();
 
@@ -104,9 +114,27 @@ public class CaregiverHivAssessmentFragment extends Fragment {
             linearLayout.setVisibility(View.GONE);
         }
 
+        updateAddButtonVisibility();
+
 
         return vieww;
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateAddButtonVisibility();
+    }
+
+    private void updateAddButtonVisibility() {
+        if (!isAdded() || addHivAssessmentButton == null) {
+            return;
+        }
+        HouseholdDetails activity = (HouseholdDetails) requireActivity();
+        boolean visible = activity.canShowHouseholdHivAssessmentAddIcon();
+        addHivAssessmentButton.setVisibility(visible ? View.VISIBLE : View.GONE);
+        addHivAssessmentButton.setEnabled(visible);
     }
 
 }

@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HouseholdDetails;
 import com.bluecodeltd.ecap.chw.adapter.CaregiverVisitAdapter;
@@ -36,6 +38,7 @@ public class HouseholdVisitsFragment extends Fragment {
     RecyclerView.Adapter recyclerViewadapter;
     private final ArrayList<CaregiverVisitationModel> visitList = new ArrayList<>();
     private LinearLayout linearLayout;
+    private FloatingActionButton addVisitButton;
     // Use centralized Threading
 
     @SuppressLint("MissingInflatedId")
@@ -52,6 +55,13 @@ public class HouseholdVisitsFragment extends Fragment {
 
         recyclerView = binding.visitrecyclerView;
         linearLayout = binding.visitContainer;
+        addVisitButton = binding.btnAddVisit;
+        if (addVisitButton != null) {
+            addVisitButton.setOnClickListener(v -> {
+                HouseholdDetails activity = (HouseholdDetails) requireActivity();
+                activity.launchHouseholdVisitForm();
+            });
+        }
 
         visitList.clear();
 
@@ -78,11 +88,14 @@ public class HouseholdVisitsFragment extends Fragment {
             } else {
                 linearLayout.setVisibility(View.VISIBLE);
             }
+            updateAddButtonVisibility();
             if (progress != null) progress.setVisibility(View.GONE);
         });
         if (houseId != null) {
             vm.refresh(houseId);
         }
+
+        updateAddButtonVisibility();
 
         return view;
     }
@@ -91,5 +104,21 @@ public class HouseholdVisitsFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateAddButtonVisibility();
+    }
+
+    private void updateAddButtonVisibility() {
+        if (!isAdded() || addVisitButton == null) {
+            return;
+        }
+        HouseholdDetails activity = (HouseholdDetails) requireActivity();
+        boolean visible = activity.canShowHouseholdVisitAddIcon();
+        addVisitButton.setVisibility(visible ? View.VISIBLE : View.GONE);
+        addVisitButton.setEnabled(visible);
     }
 }

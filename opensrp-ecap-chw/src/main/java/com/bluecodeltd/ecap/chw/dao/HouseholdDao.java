@@ -17,6 +17,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import timber.log.Timber;
+
 public class HouseholdDao extends AbstractDao {
 
 
@@ -120,6 +122,26 @@ public class HouseholdDao extends AbstractDao {
         }
 
         return "false";
+    }
+
+    public static void markHouseholdScreened(String householdId, boolean screened) {
+        if (householdId == null || householdId.trim().isEmpty()) {
+            return;
+        }
+
+        String flagValue = screened ? "true" : "false";
+        String updateHousehold = "UPDATE ec_household SET screened = '" + flagValue + "' WHERE household_id = '" + householdId + "'";
+        String updateSearch = "UPDATE ec_household_search SET screened = '" + flagValue + "' WHERE household_id = '" + householdId + "'";
+        try {
+            updateDB(updateHousehold);
+        } catch (Exception e) {
+            Timber.w(e, "Failed to update screened flag in ec_household for %s", householdId);
+        }
+        try {
+            updateDB(updateSearch);
+        } catch (Exception e) {
+            Timber.w(e, "Failed to update screened flag in ec_household_search for %s", householdId);
+        }
     }
     public static boolean isCaregiverPositive(String householdID) {
         String sql = "SELECT caregiver_hiv_status FROM ec_household WHERE household_id = '" + householdID + "' AND (status IS NULL OR status <> '1')";

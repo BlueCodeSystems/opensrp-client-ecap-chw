@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     android:padding="@dimen/contact_small_padding">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_add_household_case_plan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/contact_small_padding"
+        android:contentDescription="@string/vca_add_case_plan"
+        android:visibility="gone"
+        app:backgroundTint="@color/chw_primary"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_tab_add"
+        app:tint="@color/white" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/householdRecycler"
         android:layout_width="0dp"

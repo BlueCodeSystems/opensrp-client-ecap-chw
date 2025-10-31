@@ -40,6 +40,7 @@ public class HouseholdChildrenFragment extends Fragment {
     private HouseholdChildrenViewModel viewModel;
     CaregiverAssessmentModel caregiverAssessmentModel;
     String houseId;
+    private com.google.android.material.floatingactionbutton.FloatingActionButton addMemberButton;
     // Use centralized Threading
 
     @Nullable
@@ -72,6 +73,13 @@ public class HouseholdChildrenFragment extends Fragment {
 
         recyclerView = binding.recyclerView;
         View progress = binding.progressLoading;
+        addMemberButton = binding.btnAddMember;
+        if (addMemberButton != null) {
+            addMemberButton.setOnClickListener(v -> {
+                HouseholdDetails activity = (HouseholdDetails) requireActivity();
+                activity.launchAddHouseholdMemberForm();
+            });
+        }
 
         childList.clear();
 
@@ -87,6 +95,7 @@ public class HouseholdChildrenFragment extends Fragment {
         viewModel.getState().observe(getViewLifecycleOwner(), state -> applyChildrenState(state));
         if (progress != null) progress.setVisibility(View.VISIBLE);
         viewModel.refresh(houseId);
+        updateAddButtonVisibility();
 
 
         return view;
@@ -96,7 +105,8 @@ public class HouseholdChildrenFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-    reloadChildrenList(houseId);
+        reloadChildrenList(houseId);
+        updateAddButtonVisibility();
     }
 
 
@@ -115,6 +125,15 @@ public class HouseholdChildrenFragment extends Fragment {
         ((HouseholdDetails) requireActivity()).childTabCount.setText(state.getCount());
         View progress = (binding != null) ? binding.progressLoading : null;
         if (progress != null) progress.setVisibility(View.GONE);
+        updateAddButtonVisibility();
+    }
+
+    private void updateAddButtonVisibility() {
+        if (!isAdded() || addMemberButton == null) return;
+        HouseholdDetails activity = (HouseholdDetails) requireActivity();
+        boolean visible = activity.canShowHouseholdMemberAddIcon();
+        addMemberButton.setVisibility(visible ? View.VISIBLE : View.GONE);
+        addMemberButton.setEnabled(visible);
     }
 
     @Override

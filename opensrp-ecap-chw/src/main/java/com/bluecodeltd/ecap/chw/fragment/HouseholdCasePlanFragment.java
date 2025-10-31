@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HouseholdDetails;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
@@ -35,6 +37,7 @@ public class HouseholdCasePlanFragment extends Fragment {
     RecyclerView.Adapter recyclerViewadapter;
     private ArrayList<CasePlanModel> householdCasePlanList = new ArrayList<>();
     private LinearLayout linearLayout;
+    private FloatingActionButton addCasePlanButton;
     // Use centralized Threading
 
     @Nullable
@@ -47,6 +50,13 @@ public class HouseholdCasePlanFragment extends Fragment {
         Household house = ( (HouseholdDetails) requireActivity()).house;
         recyclerView = binding.householdRecycler;
         linearLayout = binding.householdVisitContainer;
+        addCasePlanButton = binding.btnAddHouseholdCasePlan;
+        if (addCasePlanButton != null) {
+            addCasePlanButton.setOnClickListener(v -> {
+                HouseholdDetails activity = (HouseholdDetails) requireActivity();
+                activity.launchHouseholdCasePlanForm();
+            });
+        }
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
@@ -68,9 +78,11 @@ public class HouseholdCasePlanFragment extends Fragment {
                 linearLayout.setVisibility(View.VISIBLE);
             }
             if (progress != null) progress.setVisibility(View.GONE);
+            updateAddButtonVisibility();
         });
         vm.refresh(householdId);
 
+        updateAddButtonVisibility();
 
         return view;
 
@@ -81,11 +93,21 @@ public class HouseholdCasePlanFragment extends Fragment {
         super.onResume();
         recyclerView.setAdapter(recyclerViewadapter);
         try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
+        updateAddButtonVisibility();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private void updateAddButtonVisibility() {
+        if (!isAdded() || addCasePlanButton == null) {
+            return;
+        }
+        HouseholdDetails activity = (HouseholdDetails) requireActivity();
+        addCasePlanButton.setVisibility(activity.canShowHouseholdCasePlanAddIcon() ? View.VISIBLE : View.GONE);
+        addCasePlanButton.setEnabled(activity.canShowHouseholdCasePlanAddIcon());
     }
 }
