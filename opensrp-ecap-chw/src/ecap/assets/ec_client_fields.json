@@ -156,6 +156,20 @@
           "json_mapping": {
             "field": "attributes.comment"
           }
+        },
+        {
+          "column_name": "pregnant_breastfeeding",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.pregnant_breastfeeding"
+          }
+        },
+        {
+          "column_name": "mother_age_range",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.mother_age_range"
+          }
         }
       ]
     },

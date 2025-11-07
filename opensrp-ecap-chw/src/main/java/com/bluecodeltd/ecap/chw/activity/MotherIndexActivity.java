@@ -153,7 +153,7 @@ public class MotherIndexActivity extends BaseRegisterActivity implements MotherI
 
 
             //******** POPULATE JSON FORM VCA UNIQUE ID ******//
-            JSONObject stepTwoUniqueId = getFieldJSONObject(fields(jsonObject, "step2"), "unique_id");
+            JSONObject stepTwoUniqueId = getFieldJSONObject(fields(jsonObject, "step1"), "unique_id");
             stepTwoUniqueId.put(JsonFormUtils.VALUE, uId);
 
 

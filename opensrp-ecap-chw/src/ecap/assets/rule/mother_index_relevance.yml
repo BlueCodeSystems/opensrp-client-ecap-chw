@@ -1,0 +1,91 @@
+---
+name: step1_mother_age_range
+description: mother_age_range
+priority: 1
+condition: "(step1_caregiver_hiv_status.contains('negative') && step1_pregnant_breastfeeding.contains('yes'))"
+actions:
+  - "isRelevant = true"
+---
+name: step1_pregnant_breastfeeding
+description: pregnant_breastfeeding
+priority: 1
+condition: "(step1_caregiver_hiv_status.contains('negative') || step1_caregiver_hiv_status.contains('positive'))"
+actions:
+  - "isRelevant = true"
+---
+name: step1_unique_id
+description: unique_id
+priority: 1
+condition: "!step1_mother_age_range.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_relation
+description: relation
+priority: 1
+condition: "!step1_mother_age_range.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_first_name
+description: first_name
+priority: 1
+condition: "!step1_mother_age_range.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_last_name
+description: last_name
+priority: 1
+condition: "!step1_mother_age_range.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_adolescent_birthdate
+description: adolescent_birthdate
+priority: 1
+condition: "!step1_mother_age_range.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_gender
+description: gender
+priority: 1
+condition: "!step1_mother_age_range.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_user_select_hiv
+description: user_select_hiv
+priority: 1
+condition: "!step1_mother_age_range.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_is_hiv_positive
+description: is_hiv_positive
+priority: 1
+condition: "!step1_mother_age_range.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_is_biological_child_of_mother_living_with_hiv
+description: is_biological_child_of_mother_living_with_hiv
+priority: 1
+condition: "!step1_mother_age_range.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_case_status
+description: case_status
+priority: 1
+condition: "!step1_mother_age_range.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_index_check_box
+description: index_check_box
+priority: 1
+condition: "!step1_mother_age_range.contains('no')"
+actions:
+  - "isRelevant = true"

@@ -220,9 +220,22 @@ android {
         }
         unitTests.all {
             systemProperty 'robolectric.enabledSdks', '28'
-            jvmArgs '-noverify'
+            // Open JDK internals needed by Robolectric/Gradle workers on JDK 17+
+            jvmArgs = [
+                    '--add-opens=java.base/java.lang=ALL-UNNAMED',
+                    '--add-opens=java.base/java.util=ALL-UNNAMED',
+                    '--add-opens=java.base/java.lang.invoke=ALL-UNNAMED',
+                    '--add-opens=java.base/java.io=ALL-UNNAMED',
+                    '--add-opens=java.base/java.nio=ALL-UNNAMED',
+                    '--add-opens=java.base/sun.nio.ch=ALL-UNNAMED',
+                    '--add-opens=java.management/sun.management=ALL-UNNAMED',
+                    '--add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED',
+                    '--add-opens=java.base/jdk.internal.reflect=ALL-UNNAMED'
+            ]
         }
     }
+
+    // Note: test toolchain configuration for workers is also set at the top level below.
 
     configurations.all {
         // Drop Mapbox GeoJSON/Turf to avoid conflicts with MapLibre
@@ -447,6 +460,7 @@ dependencies {
 
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+    androidTestImplementation 'androidx.test:rules:1.6.1'
     androidTestImplementation 'org.mockito:mockito-android:3.0.0'
 
     testImplementation "org.koin:koin-test:2.0.1"
@@ -461,6 +475,31 @@ dependencies {
 
     // core library desugaring not required for minSdk 28+
 
+}
+
+// Ensure Gradle test workers run on Java 17 consistently (outside android block)
+// This avoids serialization of JDK-internal reflection accessors across JVMs.
+def testToolchains = project.extensions.getByType(org.gradle.jvm.toolchain.JavaToolchainService)
+tasks.withType(Test).configureEach { t ->
+    javaLauncher.set(testToolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(17)
+    })
+    // Keep tests in a single forked worker to minimize cross-process serialization
+    maxParallelForks = 1
+    forkEvery = 0
+    // Make sure workers have the same opens as daemon/Robolectric needs
+    jvmArgs(
+            '--add-opens=java.base/java.lang=ALL-UNNAMED',
+            '--add-opens=java.base/java.util=ALL-UNNAMED',
+            '--add-opens=java.base/java.lang.invoke=ALL-UNNAMED',
+            '--add-opens=java.base/java.io=ALL-UNNAMED',
+            '--add-opens=java.base/java.nio=ALL-UNNAMED',
+            '--add-opens=java.base/sun.nio.ch=ALL-UNNAMED',
+            '--add-opens=java.management/sun.management=ALL-UNNAMED',
+            '--add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED',
+            '--add-opens=java.base/jdk.internal.reflect=ALL-UNNAMED',
+            '--add-exports=java.base/jdk.internal.reflect=ALL-UNNAMED'
+    )
 }
 
 def flavors = android.productFlavors.collect { flavor -> flavor.name }
