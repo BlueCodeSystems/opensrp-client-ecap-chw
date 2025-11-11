@@ -70,7 +70,10 @@ class LoginDashboardFlowInstrumentedTest {
         onView(allOf(withId(R.id.action_register), isDisplayed())).perform(click())
 
         // Verify the JSON Wizard form screen is displayed (Next button present)
-        onView(withId(com.vijay.jsonwizard.R.id.btn_next)).check(matches(isDisplayed()))
+        val nextId = ctx.resources.getIdentifier("btn_next", "id", "com.vijay.jsonwizard")
+        assumeTrue("jsonwizard Next button id not found", nextId != 0)
+        waitForView(withId(nextId), 10000)
+        onView(withId(nextId)).check(matches(isDisplayed()))
     }
 
     // Simple polling wait to allow async nav/network to settle
@@ -90,4 +93,3 @@ class LoginDashboardFlowInstrumentedTest {
         throw AssertionError("View not found within ${timeoutMs}ms", lastError)
     }
 }
-

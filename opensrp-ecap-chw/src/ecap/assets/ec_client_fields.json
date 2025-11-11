@@ -158,10 +158,17 @@
           }
         },
         {
-          "column_name": "pregnant_breastfeeding",
+          "column_name": "mother_pregnant",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.pregnant_breastfeeding"
+            "field": "attributes.mother_pregnant"
+          }
+        },
+        {
+          "column_name": "mother_breastfeeding",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.mother_breastfeeding"
           }
         },
         {
@@ -170,9 +177,328 @@
           "json_mapping": {
             "field": "attributes.mother_age_range"
           }
+        },
+        {
+          "column_name": "mother_children_age_band",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.mother_children_age_band"
+          }
         }
       ]
     },
+    {
+      "name": "ec_tb_screening",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_id"
+          }
+        },
+        {
+          "column_name": "unique_tb_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_tb_id"
+          }
+        },
+        {
+          "column_name": "history_close_tb_contact",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.history_close_tb_contact"
+          }
+        },
+        {
+          "column_name": "history_close_tb_contact_year",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.history_close_tb_contact_year"
+          }
+        },
+        {
+          "column_name": "tb_symptoms_child_lt10",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_symptoms_child_lt10"
+          }
+        },
+        {
+          "column_name": "tb_symptoms_child_lt10_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_symptoms_child_lt10_other"
+          }
+        },
+        {
+          "column_name": "tb_symptoms_10plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_symptoms_10plus"
+          }
+        },
+        {
+          "column_name": "tb_symptoms_10plus_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_symptoms_10plus_other"
+          }
+        },
+        {
+          "column_name": "referred_for_tb_evaluation",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.referred_for_tb_evaluation"
+          }
+        },
+        {
+          "column_name": "tb_referral_comment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_referral_comment"
+          }
+        },
+        {
+          "column_name": "entity_type",
+          "type": "Event",
+          "json_mapping": {
+            "field": "attributes.entityType"
+          }
+        },
+        {
+          "column_name": "last_interacted_with",
+          "type": "Event",
+          "json_mapping": {
+            "field": "version"
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "ec_tb_screening_outcome",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "unique_tb_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_tb_id"
+          }
+        },
+        {
+          "column_name": "followup_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.followup_date"
+          }
+        },
+        {
+          "column_name": "facility_referral_completed",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.facility_referral_completed"
+          }
+        },
+        {
+          "column_name": "date_screened_at_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_screened_at_facility"
+          }
+        },
+        {
+          "column_name": "tb_diagnosis_at_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_diagnosis_at_facility"
+          }
+        },
+        {
+          "column_name": "initiated_tb_treatment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.initiated_tb_treatment"
+          }
+        },
+        {
+          "column_name": "initiated_tpt",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.initiated_tpt"
+          }
+        },
+        {
+          "column_name": "section_c_comments",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.section_c_comments"
+          }
+        },
+        {
+          "column_name": "treatment_followup_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.treatment_followup_date"
+          }
+        },
+        {
+          "column_name": "tb_treatment_outcome",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_treatment_outcome"
+          }
+        },
+        {
+          "column_name": "tb_treatment_outcome_comment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_treatment_outcome_comment"
+          }
+        },
+        {
+          "column_name": "last_interacted_with",
+          "type": "Event",
+          "json_mapping": {
+            "field": "version"
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "ec_nutrition_assessment_intervention",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "unique_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_id"
+          }
+        },
+        {
+          "column_name": "date_of_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_of_assessment"
+          }
+        },
+        {
+          "column_name": "muac_category",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.muac_category"
+          }
+        },
+        {
+          "column_name": "oedema_stage",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.oedema_stage"
+          }
+        },
+        {
+          "column_name": "wfa_category",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.wfa_category"
+          }
+        },
+        {
+          "column_name": "intervention_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.intervention_status"
+          }
+        },
+        {
+          "column_name": "referral_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.referral_services"
+          }
+        },
+        {
+          "column_name": "other_referral_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_referral_services"
+          }
+        },
+        {
+          "column_name": "why_not_referred",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.why_not_referred"
+          }
+        },
+        {
+          "column_name": "referral_completed",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.referral_completed"
+          }
+        },
+        {
+          "column_name": "nutrition_counselling_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.nutrition_counselling_services"
+          }
+        },
+        {
+          "column_name": "other_nutrition_counselling_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_nutrition_counselling_services"
+          }
+        },
+        {
+          "column_name": "good_practices_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.good_practices_services"
+          }
+        },
+        {
+          "column_name": "other_good_practices_services",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_good_practices_services"
+          }
+        },
+        {
+          "column_name": "last_interacted_with",
+          "type": "Event",
+          "json_mapping": {
+            "field": "version"
+          }
+        }
+      ]
+    },
+
     {
       "name": "ec_family_member",
       "columns": [

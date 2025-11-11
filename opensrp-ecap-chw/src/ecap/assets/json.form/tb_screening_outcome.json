@@ -1,0 +1,310 @@
+{
+  "count": "1",
+  "encounter_type": "TB Screening Outcome",
+  "entity_id": "",
+  "relational_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1": {
+    "title": "Follow Up Actions",
+    "fields": [
+      {
+        "key": "unique_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "unique_id",
+        "type": "edit_text",
+        "hint": "VCA ID",
+        "edit_type": "name",
+        "read_only": "true"
+      },
+      {
+        "key": "unique_tb_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "unique_tb_id",
+        "type": "hidden",
+        "read_only": "true"
+      },
+      {
+        "key": "followup_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "followup_date",
+        "type": "date_picker",
+        "hint": "Date follow-up made",
+        "look_up": "true",
+        "expanded": false,
+        "duration": {
+          "label": "Time since follow-up"
+        },
+        "min_date": "today-5y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Date of follow-up is required"
+        }
+      },
+      {
+        "key": "facility_referral_completed",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "facility_referral_completed",
+        "type": "native_radio",
+        "label": "If referred to the health facility, did the program participant complete the referral?",
+        "label_info_text": "Mark only one option",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to indicate if the referral was completed."
+        }
+      },
+      {
+        "key": "date_screened_at_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_screened_at_facility",
+        "type": "date_picker",
+        "hint": "If referral completed, date screened at the health facility",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "today-5y",
+        "max_date": "today",
+        "relevance": {
+          "step1:facility_referral_completed": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "tb_diagnosis_at_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "tb_diagnosis_at_facility",
+        "type": "native_radio",
+        "label": "TB diagnosis at the health facility (tick applicable)",
+        "label_info_text": "Mark only one option",
+        "options": [
+          {
+            "key": "clinically_diagnosed",
+            "text": "Clinically diagnosed"
+          },
+          {
+            "key": "bacteriologically_confirmed",
+            "text": "Bacteriologically confirmed"
+          },
+          {
+            "key": "no_tb_diagnosis",
+            "text": "No TB diagnosis made"
+          }
+        ]
+      },
+      {
+        "key": "initiated_tb_treatment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "initiated_tb_treatment",
+        "type": "native_radio",
+        "label": "If TB diagnosis made, was participant initiated on TB treatment?",
+        "label_info_text": "Mark only one option",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          },
+          {
+            "key": "na",
+            "text": "N/A"
+          }
+        ],
+        "relevance": {
+          "step1:tb_diagnosis_at_facility": {
+            "type": "string",
+            "ex": "not(equalTo(., \"no_tb_diagnosis\"))"
+          }
+        }
+      },
+      {
+        "key": "initiated_tpt",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "initiated_tpt",
+        "type": "native_radio",
+        "label": "If no TB diagnosis, was participant initiated on TPT?",
+        "label_info_text": "Mark only one option",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          },
+          {
+            "key": "na",
+            "text": "N/A"
+          }
+        ],
+        "relevance": {
+          "step1:tb_diagnosis_at_facility": {
+            "type": "string",
+            "ex": "equalTo(., \"no_tb_diagnosis\")"
+          }
+        }
+      },
+      {
+        "key": "section_c_comments",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "section_c_comments",
+        "type": "edit_text",
+        "label": "Comments",
+        "hint": "Add any additional information on diagnosis, TPT or treatment",
+        "edit_type": "name"
+      }
+    ]
+  },
+  "step2": {
+    "title": "Section D: Treatment Outcome",
+    "fields": [
+      {
+        "key": "treatment_followup_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "treatment_followup_date",
+        "type": "date_picker",
+        "hint": "Date follow-up made",
+        "look_up": "true",
+        "expanded": false,
+        "duration": {
+          "label": "Time since follow-up"
+        },
+        "min_date": "today-5y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Date of follow-up is required"
+        }
+      },
+      {
+        "key": "tb_treatment_outcome",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "tb_treatment_outcome",
+        "type": "native_radio",
+        "label": "Treatment outcome",
+        "label_info_text": "Tick where applicable",
+        "options": [
+          {
+            "key": "cured",
+            "text": "Cured"
+          },
+          {
+            "key": "treatment_completed",
+            "text": "Treatment completed"
+          },
+          {
+            "key": "treatment_failed",
+            "text": "Treatment failed"
+          },
+          {
+            "key": "not_evaluated",
+            "text": "Not evaluated"
+          },
+          {
+            "key": "died",
+            "text": "Died"
+          },
+          {
+            "key": "exited_ovc_program",
+            "text": "Exited OVC Comprehensive Program"
+          },
+          {
+            "key": "other",
+            "text": "Other"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to select a treatment outcome."
+        }
+      },
+      {
+        "key": "tb_treatment_outcome_comment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "tb_treatment_outcome_comment",
+        "type": "edit_text",
+        "hint": "Other, specify or add comment",
+        "edit_type": "name",
+        "relevance": {
+          "step2:tb_treatment_outcome": {
+            "type": "string",
+            "ex": "equalTo(., \"other\")"
+          }
+        }
+      }
+    ]
+  }
+}

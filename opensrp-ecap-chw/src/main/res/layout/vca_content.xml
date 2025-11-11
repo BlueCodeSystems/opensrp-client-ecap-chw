@@ -282,6 +282,96 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/tb_screening"
+                android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:background="#666666"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_toLeftOf="@+id/fabTbScreening"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:minWidth="50dp"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:text="TB Screening"
+                        android:background="#666666"
+                        android:textColor="@android:color/white"
+                        android:textStyle="italic"
+                        android:visibility="visible" />
+
+                </RelativeLayout>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fabTbScreening"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    app:backgroundTint="@color/white"
+                    app:fabSize="mini"
+                    app:srcCompat="@drawable/baseline_mode_edit_24" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/nutrition_assessment_intervention"
+                android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:background="#666666"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_toLeftOf="@+id/fabNutrition"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:minWidth="50dp"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:text="Nutrition Assessment and Intervention"
+                        android:background="#666666"
+                        android:textColor="@android:color/white"
+                        android:textStyle="italic"
+                        android:visibility="visible" />
+
+                </RelativeLayout>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fabNutrition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    app:backgroundTint="@color/white"
+                    app:fabSize="mini"
+                    app:srcCompat="@drawable/baseline_mode_edit_24" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/assessment"
                 android:onClick="onClick"
                 android:layout_width="match_parent"

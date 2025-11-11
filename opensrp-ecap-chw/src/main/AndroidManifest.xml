@@ -338,6 +338,9 @@
         <activity
             android:name=".activity.GuideBooksCounselingActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
+            android:name=".activity.TbScreeningActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
 
         <meta-data
             android:name="io.fabric.ApiKey"

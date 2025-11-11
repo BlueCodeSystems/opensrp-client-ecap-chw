@@ -62,6 +62,16 @@ public class PMTCTMotherDao extends AbstractDao {
         return values.get(0);
     }
 
+    // Fetch PMTCT mother record using the mother's base_entity_id
+    public static PtctMotherModel getPMCTMotherByBaseEntityId(String baseEntityID) {
+        String sql = "SELECT * FROM ec_pmtct_mother WHERE base_entity_id = '" + baseEntityID + "' AND (delete_status IS NULL OR delete_status <> '1')";
+        List<PtctMotherModel> values = AbstractDao.readData(sql, getPtctMotherModelMap());
+        if (values == null || values.size() == 0) {
+            return null;
+        }
+        return values.get(0);
+    }
+
 
 
     public static List<PtctMotherModel> getPostnatalMother(String pmtctID) {

@@ -304,18 +304,8 @@
             "value": "false"
           },
           {
-            "key": "subpop4",
-            "text": "At Risk Adolescent Girls and Young Women (AGYW)",
-            "value": "false"
-          },
-          {
             "key": "subpop5",
             "text": "Survivors of Sexual Violence",
-            "value": "false"
-          },
-          {
-            "key": "subpop",
-            "text": "Children of Female Sex Workers (FSWs)",
             "value": "false"
           },
           {
@@ -327,10 +317,6 @@
             "key": "PBFW",
             "text": "PBFW"
 
-          },
-          {
-            "key": "ABYM",
-            "text": "At risk adolescent boys and young men (ABYM)"
           }
         ],
         "v_required": {

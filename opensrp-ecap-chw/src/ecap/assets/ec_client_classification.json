@@ -238,6 +238,27 @@
           },
           {
             "field": "eventType",
+            "field_value": "Nutrition Assessment and Intervention",
+            "creates_case": [
+              "ec_nutrition_assessment_intervention"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "TB Screening",
+            "creates_case": [
+              "ec_tb_screening"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "TB Screening Outcome",
+            "creates_case": [
+              "ec_tb_screening_outcome"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "Referral Registration",
             "creates_case": [
               "ec_referral"

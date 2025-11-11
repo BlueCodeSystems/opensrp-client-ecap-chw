@@ -37,6 +37,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager2.widget.ViewPager2;
+
+import com.bluecodeltd.ecap.chw.dao.IndexMotherDao;
+import com.bluecodeltd.ecap.chw.model.IndexMotherModel;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
@@ -164,6 +167,8 @@ public class HouseholdDetails extends AppCompatActivity {
     GraduationModel graduationModel;
     WeServiceCaregiverModel weServiceCaregiverModel;
     newCaregiverModel updatedCaregiver;
+
+    IndexMotherModel indexMotherModel;
     private ArrayList<Child> childList = new ArrayList<>();
     private HouseholdDetailsViewModel viewModel;
     // Background execution centralized via Threading
@@ -224,6 +229,8 @@ public class HouseholdDetails extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(HouseholdDetailsViewModel.class);
         viewModel.getState().observe(this, state -> applyState(state, householdId));
         viewModel.refresh(householdId);
+
+
     }
 
     @Override
@@ -245,6 +252,7 @@ public class HouseholdDetails extends AppCompatActivity {
             caregiverHivAssessmentModel = state.getCaregiverHivAssessmentModel();
             graduationModel = state.getGraduationModel();
             updatedCaregiver = state.getUpdatedCaregiver();
+
             house = state.getHouse();
 
             // Wait until house is loaded to bind UI that requires it

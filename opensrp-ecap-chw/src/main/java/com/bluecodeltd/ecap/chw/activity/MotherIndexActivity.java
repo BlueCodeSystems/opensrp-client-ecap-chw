@@ -182,6 +182,16 @@ public class MotherIndexActivity extends BaseRegisterActivity implements MotherI
                     if (Constants.EcapEncounterType.MOTHER_INDEX.equalsIgnoreCase(
                             jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
 
+                        // Block enrollment if mother_age_range == "no"
+                        try {
+                            org.json.JSONObject ageRangeField = getFieldJSONObject(fields(jsonFormObject, STEP1), "mother_age_range");
+                            String ageRange = ageRangeField != null ? ageRangeField.optString("value", "") : "";
+                            if ("no".equalsIgnoreCase(ageRange)) {
+                                Toasty.warning(this, "You can't enroll this household", Toast.LENGTH_LONG, true).show();
+                                return;
+                            }
+                        } catch (Exception ignored) { }
+
                         RegisterParams registerParam = new RegisterParams();
                         registerParam.setEditMode(false);
                         registerParam.setFormTag(OpdJsonFormUtils.formTag(OpdUtils.context().allSharedPreferences()));

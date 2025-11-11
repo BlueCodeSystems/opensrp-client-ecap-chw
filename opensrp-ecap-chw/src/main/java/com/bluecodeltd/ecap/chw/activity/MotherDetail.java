@@ -31,11 +31,13 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
+import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.MotherChildrenFragment;
 import com.bluecodeltd.ecap.chw.fragment.MotherOverviewFragment;
 import com.bluecodeltd.ecap.chw.model.Household;
+import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -120,14 +122,43 @@ public class MotherDetail extends AppCompatActivity {
 
         commonMother = (CommonPersonObjectClient) getIntent().getSerializableExtra("mother");
 
-        CommonPersonObject personObject = getCommonRepository("ec_mother_index").findByBaseEntityId(commonMother.getColumnmaps().get("base_entity_id"));
-        CommonPersonObjectClient client = new CommonPersonObjectClient(personObject.getCaseId(), personObject.getDetails(), "");
+        // Prefer the serialized mother passed via intent to avoid schema mismatches
+        if (commonMother != null) {
+            commonPersonObjectClient = commonMother;
+        } else {
+            // Fallback: try resolve using extras but guard for failures
+            String baseId = null;
+            try {
+                if (getIntent() != null && getIntent().getExtras() != null) {
+                    baseId = getIntent().getExtras().getString("base_entity_id", null);
+                    if (baseId == null) baseId = getIntent().getExtras().getString("baseId", null);
+                }
+            } catch (Exception ignored) {}
 
-        client.setColumnmaps(personObject.getColumnmaps());
-        commonPersonObjectClient = client;
+            if (baseId != null) {
+                try {
+                    CommonPersonObject personObject = getCommonRepository("ec_mother_index").findByBaseEntityId(baseId);
+                    if (personObject != null) {
+                        CommonPersonObjectClient client = new CommonPersonObjectClient(personObject.getCaseId(), personObject.getDetails(), "");
+                        client.setColumnmaps(personObject.getColumnmaps());
+                        commonPersonObjectClient = client;
+                    }
+                } catch (Exception e) {
+                    Timber.w(e, "Fallback repository lookup failed for baseId=%s", baseId);
+                }
+            }
 
-        //Refresh activity using Intent
-        refresh = getIntent().getExtras().getString("1");
+            if (commonPersonObjectClient == null) {
+                Toasty.error(MotherDetail.this, "Mother record not found", Toast.LENGTH_LONG, true).show();
+                finish();
+                return;
+            }
+        }
+
+        // Refresh flag (optional extra)
+        try {
+            refresh = getIntent() != null && getIntent().getExtras() != null ? getIntent().getExtras().getString("refresh") : null;
+        } catch (Exception ignored) {}
 
         try {
             family = HouseholdDao.getHousehold(commonPersonObjectClient.getColumnmaps().get("household_id"));
@@ -153,6 +184,26 @@ public class MotherDetail extends AppCompatActivity {
 
         setupViewPager();
         updateChildTabTitle();
+
+        // Show PMTCT button only if pregnant OR breastfeeding OR mother_age_range == yes
+        try {
+            View pmtctBtn = binding.pmtctProf;
+            if (pmtctBtn != null) {
+                String pregnant = commonPersonObjectClient.getColumnmaps().get("pregnant_mother");
+                String breastfeeding = commonPersonObjectClient.getColumnmaps().get("mother_breastfeeding");
+                String motherAgeRange = commonPersonObjectClient.getColumnmaps().get("mother_age_range");
+
+                boolean pregnantYes = pregnant != null && pregnant.equalsIgnoreCase("yes");
+                boolean breastfeedingYes = breastfeeding != null && breastfeeding.equalsIgnoreCase("yes");
+                boolean ageYes = motherAgeRange != null && motherAgeRange.equalsIgnoreCase("yes");
+
+                if (pregnantYes || breastfeedingYes || ageYes) {
+                    pmtctBtn.setVisibility(View.VISIBLE);
+                } else {
+                    pmtctBtn.setVisibility(View.GONE);
+                }
+            }
+        } catch (Exception ignored) { }
 
     }
 
@@ -271,6 +322,34 @@ public class MotherDetail extends AppCompatActivity {
 
                 break;
 
+            case R.id.pmtct_prof:
+
+                try {
+                    String baseId = commonPersonObjectClient.getColumnmaps().get("base_entity_id");
+                    PtctMotherModel pmtctMother = getPmtctMotherByBaseEntity(baseId);
+                    if (pmtctMother == null || pmtctMother.getPmtct_id() == null || pmtctMother.getPmtct_id().isEmpty()) {
+                        Toasty.warning(MotherDetail.this, "Mother not enrolled in PMTCT", Toast.LENGTH_LONG, true).show();
+                    } else {
+                        Intent intent = new Intent(this, MotherPmtctProfileActivity.class);
+                        intent.putExtra("client_id", pmtctMother.getPmtct_id());
+                        startActivity(intent);
+                    }
+                } catch (Exception e) {
+                    Timber.e(e);
+                    Toasty.error(MotherDetail.this, "Unable to open PMTCT profile", Toast.LENGTH_LONG, true).show();
+                }
+
+                break;
+
+        }
+    }
+
+    private PtctMotherModel getPmtctMotherByBaseEntity(String baseEntityId) {
+        try {
+            return PMTCTMotherDao.getPMCTMotherByBaseEntityId(baseEntityId);
+        } catch (Exception e) {
+            Timber.e(e);
+            return null;
         }
     }
 

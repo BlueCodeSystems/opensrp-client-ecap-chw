@@ -285,7 +285,7 @@
         "relevance": {
           "step1:caregiver_hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"Yes\")"
+            "ex": "equalTo(., \"positive\")"
           }
         }
       },
@@ -306,12 +306,48 @@
       },
 
       {
-        "key": "pregnant_breastfeeding",
+        "key": "pregnant_mother",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "pregnant_breastfeeding",
+        "openmrs_entity_id": "pregnant_mother",
         "type": "native_radio",
-        "label": "Is mother pregnant or Breastfeeding?",
+        "label": "Is mother pregnant?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "mother_breastfeeding",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mother_breastfeeding",
+        "type": "native_radio",
+        "label": "Is mother breastfeeding?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "mother_age_range",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mother_age_range",
+        "type": "native_radio",
+        "label": "Is mother between 10-25 years of age?",
         "options": [
           {
             "key": "yes",
@@ -332,22 +368,58 @@
       },
 
       {
-        "key": "mother_age_range",
+        "key": "mother_children_age_band",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "mother_age_range",
-        "type": "native_radio",
-        "label": "Is mother between 10-25 years of age?",
+        "openmrs_entity_id": "mother_children_age_band",
+        "label": "Check if mother has children and their age band",
+        "type": "check_box",
+        "exclusive": [
+          "n_a"
+        ],
         "options": [
           {
-            "key": "yes",
-            "text": "Yes"
+            "key": "0_15_months",
+            "text": "0 - 15 Months"
           },
           {
-            "key": "no",
-            "text": "No"
+            "key": "16_24_months",
+            "text": "16 - 24 Months"
+          },
+          {
+            "key": "above_24_months",
+            "text": "Above 24 Months"
+          },
+          {
+            "key": "n_a",
+            "text": "N/A"
           }
         ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to select at least one option. Select 'N/A' if not applicable."
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "mother_index_relevance.yml"
+            }
+          }
+        }
+      },
+
+      {
+        "key": "toasterHh",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "toasterHh",
+        "type": "toaster_notes",
+        "text_color": "#000000",
+        "text": "Do not enroll this household",
+        "label_text_style": "bold",
+        "toaster_info_text": "Do not enroll this household",
+        "toaster_info_title": "Introduction",
+        "toaster_type": "warning",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -683,27 +755,8 @@
             }
           }
         }
-      },
-      {
-        "key": "subpop1_toast",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop1_toast",
-        "value": "true",
-        "type": "toaster_notes",
-        "text": "This VCA has been enrolled into the Sub Population : Children/Adolescents Living with HIV (C/ALHIV)",
-        "toaster_type": "info",
-        "toaster_info_text": "Children/Adolescents Living with HIV (C/ALHIV)",
-        "toaster_info_title": "Sub Population"
       }
 
-    ],
-    "relevance": {
-      "rules-engine": {
-        "ex-rules": {
-          "rules-file": "mother_index_relevance.yml"
-        }
-      }
-    }
+    ]
   }
 }

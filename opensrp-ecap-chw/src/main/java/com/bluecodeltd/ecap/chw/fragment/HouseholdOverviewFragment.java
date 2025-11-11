@@ -20,7 +20,9 @@ import androidx.fragment.app.Fragment;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HouseholdDetails;
 import com.bluecodeltd.ecap.chw.dao.HouseholdServiceReportDao;
+import com.bluecodeltd.ecap.chw.dao.IndexMotherDao;
 import com.bluecodeltd.ecap.chw.model.CaregiverAssessmentModel;
+import com.bluecodeltd.ecap.chw.model.IndexMotherModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.HouseholdServiceReportModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -37,7 +39,7 @@ public class HouseholdOverviewFragment extends Fragment {
     private com.bluecodeltd.ecap.chw.databinding.FragmentHouseholdOverviewBinding binding;
 
 
-    TextView housetitle, txtIncome, txtIncomeSource, txtBeds, txtGpsLocation,txtMalaria, txtMalesLessThanFive, txtFemales, txtNumber, txtName,txtPhone, txtDate,txtEdited_by,txtMalesBetweenTenAndSeventeen,txtDateStartedArt, txtVlLastDate, txtVlResult, txtRecentVLResult, txtIsSuppressed, txtNextVl, txtIsMMD,txtRecentMMD, txtOnART, txtArtNumber, txtLevelMMD;
+    TextView housetitle, txtIncome, txtIncomeSource, txtBeds, txtGpsLocation,txtMalaria, txtMalesLessThanFive, txtFemales, txtNumber, txtName,txtPhone, txtDate,txtEdited_by,txtMalesBetweenTenAndSeventeen,txtDateStartedArt, txtVlLastDate, txtVlResult, txtRecentVLResult, txtIsSuppressed, txtNextVl, txtIsMMD,txtRecentMMD, txtOnART, txtArtNumber, txtLevelMMD, txtSubpopulation;
     LinearLayout linearLayout, muacView;
     Button screenBtn;
     ImageButton arrowButton;
@@ -50,6 +52,9 @@ public class HouseholdOverviewFragment extends Fragment {
     private TextView txtFemalesLessThanFive;
     RelativeLayout relativeLayout;
     LinearLayout layout;
+    LinearLayout layoutSubpopulation;
+    private String householdId;
+    private IndexMotherModel indexMotherModel;
 
 
     @SuppressLint({"RestrictedApi", "MissingInflatedId"})
@@ -93,9 +98,25 @@ public class HouseholdOverviewFragment extends Fragment {
         relativeLayout = binding.myview;
         layout = binding.mylayout;
         arrowButton = binding.arrowButton;
+        layoutSubpopulation = binding.layoutSubpopulation;
 
         fab = getActivity().findViewById(R.id.fabx);
         txtGpsLocation = binding.gpsLocation;
+        txtSubpopulation = binding.txtSubpopulation;
+
+
+
+        try {
+            // Get the householdId from the parent activity
+            HouseholdDetails parent = (HouseholdDetails) requireActivity();
+            householdId = parent != null ? parent.householdId : null;
+        } catch (Throwable ignored) {}
+
+        if (householdId != null) {
+            indexMotherModel = IndexMotherDao.getIndexMotherByHouseholdId(householdId);
+        } else {
+            indexMotherModel = null;
+        }
 
         setViews();
 
@@ -174,6 +195,49 @@ public class HouseholdOverviewFragment extends Fragment {
         if(encodedSignature!= null && encodedSignature != "") {
             setImageViewFromBase64(encodedSignature, signatureIV);
         }
+
+        // Show/Hide Subpopulation row based on pregnancy, breastfeeding, or mother_age_range
+        try {
+            if (layoutSubpopulation != null) {
+                boolean show = false;
+                if (indexMotherModel != null) {
+                    String isPregnant = indexMotherModel.getPregnant_mother();
+                    String isBreastfeeding = indexMotherModel.getMother_breastfeeding();
+                    String motherAgeRange = indexMotherModel.getMother_age_range();
+                    boolean pregnantYes = isPregnant != null && isPregnant.equalsIgnoreCase("yes");
+                    boolean breastfeedingYes = isBreastfeeding != null && isBreastfeeding.equalsIgnoreCase("yes");
+                    boolean ageYes = motherAgeRange != null && motherAgeRange.equalsIgnoreCase("yes");
+                    show = pregnantYes || breastfeedingYes || ageYes;
+                }
+                layoutSubpopulation.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        } catch (Exception ignored) {}
+
+        // Subpopulation indicator
+        try {
+            if (indexMotherModel != null) {
+                String hivStatus = indexMotherModel.getCaregiver_hiv_status();
+                String isPregnant = indexMotherModel.getPregnant_mother();
+                String isBreastfeeding = indexMotherModel.getMother_breastfeeding();
+                String motherAgeRange = indexMotherModel.getMother_age_range();
+
+                boolean hivPositive = hivStatus != null && hivStatus.equalsIgnoreCase("positive");
+                boolean hivNegative = hivStatus != null && hivStatus.equalsIgnoreCase("negative");
+                boolean pregnantYes = isPregnant != null && isPregnant.equalsIgnoreCase("yes");
+                boolean breastfeedingYes = isBreastfeeding != null && isBreastfeeding.equalsIgnoreCase("yes");
+                boolean motherAgeYes = motherAgeRange != null && motherAgeRange.equalsIgnoreCase("yes");
+
+                if (hivPositive && pregnantYes && breastfeedingYes) {
+                    txtSubpopulation.setText("HIV-positive Pregnant mother/HIV-positive Pregnant/Breastfeeding Women (P/BFW)");
+                } else if (hivPositive && pregnantYes && !breastfeedingYes) {
+                    txtSubpopulation.setText("HIV-positive Pregnant mother");
+                } else if (hivPositive && !pregnantYes && breastfeedingYes) {
+                    txtSubpopulation.setText("HIV-positive Pregnant/Breastfeeding Women (P/BFW)");
+                } else if (hivNegative && motherAgeYes) {
+                    txtSubpopulation.setText("HIV-negative PBFW");
+                }
+            }
+        } catch (Exception ignored) {}
         txtIncome.setText(income);
         txtBeds.setText(beds);
         txtIncomeSource.setText(incomeSource);

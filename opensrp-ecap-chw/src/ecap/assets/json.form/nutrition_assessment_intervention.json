@@ -1,0 +1,435 @@
+{
+  "count": "1",
+  "encounter_type": "Nutrition Assessment and Intervention",
+  "entity_id": "",
+  "relational_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1": {
+    "title": "Nutrition Assessment and Intervention",
+    "fields": [
+      {
+        "key": "unique_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "unique_id",
+        "type": "edit_text",
+        "hint": "VCA ID",
+        "edit_type": "name",
+        "read_only": "true"
+      },
+      {
+        "key": "date_of_assessment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_of_assessment",
+        "type": "date_picker",
+        "hint": "Date of Assessment",
+        "look_up": "true",
+        "expanded": false,
+        "duration": {
+          "label": "Time since assessment"
+        },
+        "min_date": "today-5y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Date of Assessment is required"
+        }
+      },
+
+      {
+        "key": "muac_category",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "muac_category",
+        "type": "native_radio",
+        "label": "Nutrition Assessment (MUAC)*",
+        "label_info_text": "Mark only one option",
+        "options": [
+          {
+            "key": "<11.5",
+            "text": "<11.5 cm"
+          },
+          {
+            "key": "≥11.5 - <12.5",
+            "text": "≥11.5 - <12.5 cm"
+          },
+          {
+            "key": "≥12.5",
+            "text": "≥12.5 cm"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to select a MUAC category."
+        }
+      },
+      {
+        "key": "oedema_stage",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "oedema_stage",
+        "type": "native_radio",
+        "label": "Nutrition Assessment (Oedema)*",
+        "label_info_text": "Mark only one option",
+        "options": [
+          {
+            "key": "Grade 1",
+            "text": "Grade 1"
+          },
+          {
+            "key": "Grade 2",
+            "text": "Grade 2"
+          },
+          {
+            "key": "Grade 3",
+            "text": "Grade 3"
+          },
+          {
+            "key": "Nil",
+            "text": "Nil"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to select an oedema stage."
+        }
+      },
+      {
+        "key": "wfa_category",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "wfa_category",
+        "type": "native_radio",
+        "label": "Nutrition Assessment (Weight-for-Age)*",
+        "label_info_text": "Mark only one option",
+        "options": [
+          {
+            "key": "Underweight",
+            "text": "Underweight (< -2 z-score)"
+          },
+          {
+            "key": "Overweight",
+            "text": "Overweight (> 2 z-score)"
+          },
+          {
+            "key": "Normal",
+            "text": "Normal"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to select a weight-for-age category."
+        }
+      },
+      {
+        "key": "intervention_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "intervention_status",
+        "type": "native_radio",
+        "label": "Intervention",
+        "label_info_text": "Mark only one option",
+        "options": [
+          {
+            "key": "Referred",
+            "text": "Referred"
+          },
+          {
+            "key": "Not referred",
+            "text": "Not referred"
+          },
+          {
+            "key": "Not applicable",
+            "text": "Not applicable"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to indicate the intervention status."
+        }
+      },
+      {
+        "key": "referral_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "referral_services",
+        "label": "Referrals",
+        "label_info_text": "Check all that apply",
+        "type": "check_box",
+        "exclusive": [
+          "not applicable"
+        ],
+        "options": [
+          {
+            "key": "Supplementary Feeding Program",
+            "text": "Supplementary Feeding Program"
+          },
+          {
+            "key": "Out-patient therapeutic program",
+            "text": "Out-patient therapeutic program"
+          },
+          {
+            "key": "In-patient / stabilization centre",
+            "text": "In-patient / stabilization centre"
+          },
+          {
+            "key": "Nutrition counselling",
+            "text": "Nutrition counselling"
+          },
+          {
+            "key": "Cookery demonstration",
+            "text": "Cookery demonstration"
+          },
+          {
+            "key": "other",
+            "text": "Other specify"
+          },
+          {
+            "key": "not applicable",
+            "text": "Not Applicable"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to select at least one referral service. Select 'Not Applicable' if it doesn't apply."
+        }
+      },
+      {
+        "key": "other_referral_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_referral_services",
+        "type": "edit_text",
+        "hint": "Specify any other referral service provided",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:referral_services": {
+            "ex-checkbox": [
+              {
+                "or": [
+                  "other"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "key": "why_not_referred",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "why_not_referred",
+        "type": "edit_text",
+        "label": "If child meets criteria to be referred but has not been referred, specify why not referred",
+        "hint": "Explain why referral was not made"
+      },
+      {
+        "key": "referral_completed",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "referral_completed",
+        "type": "native_radio",
+        "label": "Was referral completed?*",
+        "label_info_text": "Mark only one option",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
+          },
+          {
+            "key": "NA",
+            "text": "NA"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to indicate whether the referral was completed."
+        }
+      },
+      {
+        "key": "nutrition_counselling_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "nutrition_counselling_services",
+        "label": "Provide counselling, choose all applicable",
+        "label_info_text": "Check all that apply",
+        "type": "check_box",
+        "exclusive": [
+          "not applicable"
+        ],
+        "options": [
+          {
+            "key": "Breastfeeding / Exclusive Breastfeeding",
+            "text": "Breastfeeding / Exclusive Breastfeeding"
+          },
+          {
+            "key": "Complementary Feeding",
+            "text": "Complementary Feeding"
+          },
+          {
+            "key": "Minimum Dietary Diversity (Women)",
+            "text": "Minimum Dietary Diversity (Women)"
+          },
+          {
+            "key": "other",
+            "text": "Other specify"
+          },
+          {
+            "key": "not applicable",
+            "text": "Not Applicable"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to select at least one counselling topic. Select 'Not Applicable' if it doesn't apply."
+        }
+      },
+      {
+        "key": "other_nutrition_counselling_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_nutrition_counselling_services",
+        "type": "edit_text",
+        "hint": "Specify any other counselling topic provided",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:nutrition_counselling_services": {
+            "ex-checkbox": [
+              {
+                "or": [
+                  "other"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "key": "good_practices_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "good_practices_services",
+        "label": "Encourage program participants with good practices, choose all applicable",
+        "label_info_text": "Check all that apply",
+        "type": "check_box",
+        "exclusive": [
+          "not applicable"
+        ],
+        "options": [
+          {
+            "key": "Food processing, preservation & storage",
+            "text": "Food processing, preservation & storage"
+          },
+          {
+            "key": "Food consumption",
+            "text": "Food consumption"
+          },
+          {
+            "key": "Backyard gardening",
+            "text": "Backyard gardening"
+          },
+          {
+            "key": "Animal rearing",
+            "text": "Animal rearing"
+          },
+          {
+            "key": "other",
+            "text": "Other specify"
+          },
+          {
+            "key": "not applicable",
+            "text": "Not Applicable"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to select at least one good practice. Select 'Not Applicable' if it doesn't apply."
+        }
+      },
+      {
+        "key": "other_good_practices_services",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_good_practices_services",
+        "type": "edit_text",
+        "hint": "Specify any other good practice encouraged",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:good_practices_services": {
+            "ex-checkbox": [
+              {
+                "or": [
+                  "other"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

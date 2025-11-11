@@ -89,23 +89,43 @@
                     </LinearLayout>
 
 
-                    <Button
-                        android:id="@+id/hh_prof"
+                    <LinearLayout
+                        android:id="@+id/profile_buttons_row"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="20dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="20dp"
                         android:gravity="center"
-                        android:background="@drawable/transparent_white_button"
-                        android:paddingStart="@dimen/profile_btn_registration_info_padding"
-                        android:paddingTop="0dp"
-                        android:paddingEnd="@dimen/profile_btn_registration_info_padding"
-                        android:onClick="onClick"
-                        android:text="Household Profile"
-                        android:textAllCaps="false"
-                 />
+                        android:orientation="horizontal">
 
+                        <Button
+                            android:id="@+id/hh_prof"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="12dp"
+                            android:background="@drawable/transparent_white_button"
+                            android:gravity="center"
+                            android:onClick="onClick"
+                            android:paddingStart="@dimen/profile_btn_registration_info_padding"
+                            android:paddingEnd="@dimen/profile_btn_registration_info_padding"
+                            android:text="Household Profile"
+                            android:textAllCaps="false" />
+
+                        <Button
+                            android:id="@+id/pmtct_prof"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/transparent_white_button"
+                            android:gravity="center"
+                            android:onClick="onClick"
+                            android:paddingStart="@dimen/profile_btn_registration_info_padding"
+                            android:paddingEnd="@dimen/profile_btn_registration_info_padding"
+                            android:text="@string/pmtct_services"
+                            android:textAllCaps="false" />
+
+                    </LinearLayout>
+                 
 
                 </LinearLayout>
 

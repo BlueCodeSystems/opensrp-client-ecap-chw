@@ -125,6 +125,9 @@ public class Constants extends CoreConstants {
         String EC_HIV_TESTING_LINKS="ec_hiv_testing_links";
         String EC_VCA_SERVICE_REPORT="ec_vca_service_report";
         String EC_HOUSEHOLD_SERVICE ="ec_household_service_report";
+        String EC_NUTRITION_ASSESSMENT_INTERVENTION = "ec_nutrition_assessment_intervention";
+        String EC_TB_SCREENING = "ec_tb_screening";
+        String EC_TB_SCREENING_OUTCOME = "ec_tb_screening_outcome";
     }
     public  interface EcapConstants{
         String POP_UP_DIALOG_MESSAGE = "Continue with VCA Screening for ";

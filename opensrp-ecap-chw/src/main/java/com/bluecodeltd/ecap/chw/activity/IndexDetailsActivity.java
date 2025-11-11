@@ -136,7 +136,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     public String childId, uniqueId, vcaAge,is_screened, is_hiv_positive, caseworkerphone;
-    private RelativeLayout txtScreening, rassessment, rcase_plan, referral,  household_visitation_for_vca, hiv_assessment,hiv_assessment2,childPlan,weServicesVca;
+    private RelativeLayout txtScreening, rassessment, rcase_plan, referral,  household_visitation_for_vca, hiv_assessment,hiv_assessment2,childPlan,weServicesVca, nutrition_assessment_intervention, tb_screening;
 
     public VcaScreeningModel indexVCA;
     private  VcaAssessmentModel assessmentModel;
@@ -327,6 +327,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
         hiv_assessment2 = binding.hivAssessment2;
         childPlan = binding.childPlan;
         weServicesVca = binding.weServicesVca;
+        nutrition_assessment_intervention = binding.nutritionAssessmentIntervention;
+        tb_screening = binding.tbScreening;
 
         txtName = binding.vcaName;
         txtGender = binding.vcaGender;
@@ -488,6 +490,23 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         if (hivStatus != null && "no".equalsIgnoreCase(hivStatus)) {
             fragments.add(new VcaHivAssesmentFragment());
         }
+
+        // Add Nutrition Assessment fragment only for children 5 years and below
+        try {
+            String dob = indexVCA != null ? indexVCA.getAdolescent_birthdate() : null;
+            if (dob != null && !dob.trim().isEmpty()) {
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy");
+                java.util.Date d = sdf.parse(dob);
+                java.util.Calendar c = java.util.Calendar.getInstance();
+                c.setTime(d);
+                java.util.Calendar now = java.util.Calendar.getInstance();
+                int years = now.get(java.util.Calendar.YEAR) - c.get(java.util.Calendar.YEAR);
+                if (now.get(java.util.Calendar.DAY_OF_YEAR) < c.get(java.util.Calendar.DAY_OF_YEAR)) years--;
+                if (years <= 5) {
+                    fragments.add(new com.bluecodeltd.ecap.chw.fragment.VcaNutritionAssessmentFragment());
+                }
+            }
+        } catch (Exception ignored) { }
 
         com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter adapter = new com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter(this, fragments);
         mViewPager.setAdapter(adapter);
@@ -782,6 +801,34 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
                 break;
+            case R.id.tb_screening:
+                if (!ensureIndexVcaAvailable()) { break; }
+                if(indexVCA.getDate_screened() != null) {
+                    Intent tb = new Intent(IndexDetailsActivity.this, TbScreeningActivity.class);
+                    tb.putExtra(TbScreeningActivity.EXTRA_BASE_ENTITY_ID, indexVCA.getBase_entity_id());
+                    tb.putExtra(TbScreeningActivity.EXTRA_UNIQUE_ID, indexVCA.getUnique_id());
+                    tb.putExtra(TbScreeningActivity.EXTRA_VCA_NAME, txtName.getText().toString());
+                    startActivity(tb);
+                } else {
+                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                }
+                break;
+            case R.id.nutrition_assessment_intervention:
+                if (!ensureIndexVcaAvailable()) {
+                    break;
+                }
+                if(indexVCA.getDate_screened() != null) {
+                    int years = 0;
+                    try { years = calculateAge(indexVCA.getAdolescent_birthdate()); } catch (Exception ignore) {}
+                    if (years <= 5) {
+                        openFormUsingFormUtils(IndexDetailsActivity.this, "nutrition_assessment_intervention");
+                    } else {
+                        Toasty.warning(IndexDetailsActivity.this, "Only for VCA aged 5 years and below", Toast.LENGTH_LONG, true).show();
+                    }
+                } else{
+                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                }
+                break;
             case R.id.childPlan:
                 if (!ensureIndexVcaAvailable()) {
                     break;
@@ -1015,6 +1062,44 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
                                 encounterType, Constants.EcapClientTable.EC_WE_SERVICES_VCA);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
+                case "TB Screening":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_TB_SCREENING);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        ChildIndexEventClient out = new ChildIndexEventClient(event, client);
+                        return out;
+                    }
+                    break;
+
+                case "ECAPII TB Screening - Sections C and D":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_TB_SCREENING_OUTCOME);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        ChildIndexEventClient out = new ChildIndexEventClient(event, client);
+                        return out;
+                    }
+                    break;
+
+                case "Nutrition Assessment and Intervention":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_NUTRITION_ASSESSMENT_INTERVENTION);
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);
@@ -1316,6 +1401,15 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 if(Integer.parseInt(vcaAge) > 18){
                     weServicesVca.setVisibility(View.VISIBLE);
                 }
+                // Show Nutrition Assessment & Intervention only for VCA aged 5 years and below
+                try {
+                    int years = calculateAge(indexVCA.getAdolescent_birthdate());
+                    if (years <= 5) {
+                        nutrition_assessment_intervention.setVisibility(View.VISIBLE);
+                    }
+                    // TB screening available for all ages when screened
+                    tb_screening.setVisibility(View.VISIBLE);
+                } catch (Exception ignore) {}
             }
             else{
 
@@ -1338,6 +1432,8 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         hiv_assessment2.setVisibility(View.GONE);
         childPlan.setVisibility(View.GONE);
         weServicesVca.setVisibility(View.GONE);
+        nutrition_assessment_intervention.setVisibility(View.GONE);
+        tb_screening.setVisibility(View.GONE);
 
 
     }
@@ -1607,6 +1703,19 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
                 populateCaseworkerPhoneAndName(formToBeOpened);
             break;
+
+            case "nutrition_assessment_intervention":
+                // Pre-populate minimal identifiers and bind entity to VCA
+                try {
+                    formToBeOpened.put("entity_id", this.indexVCA.getBase_entity_id());
+                } catch (Exception ignore) {}
+                break;
+
+            case "tb_screening":
+                try {
+                    formToBeOpened.put("entity_id", this.indexVCA.getBase_entity_id());
+                } catch (Exception ignore) {}
+                break;
 
     }
 
