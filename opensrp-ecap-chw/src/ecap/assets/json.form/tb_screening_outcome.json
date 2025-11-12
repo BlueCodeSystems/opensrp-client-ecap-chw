@@ -1,6 +1,6 @@
 {
   "count": "1",
-  "encounter_type": "TB Screening Outcome",
+  "encounter_type": "TB Screening",
   "entity_id": "",
   "relational_id": "",
   "metadata": {
@@ -207,9 +207,9 @@
           }
         ],
         "relevance": {
-          "step1:tb_diagnosis_at_facility": {
+          "step1:initiated_tb_treatment": {
             "type": "string",
-            "ex": "equalTo(., \"no_tb_diagnosis\")"
+            "ex": "equalTo(., \"no\")"
           }
         }
       },
@@ -222,39 +222,15 @@
         "label": "Comments",
         "hint": "Add any additional information on diagnosis, TPT or treatment",
         "edit_type": "name"
-      }
-    ]
-  },
-  "step2": {
-    "title": "Section D: Treatment Outcome",
-    "fields": [
-      {
-        "key": "treatment_followup_date",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "treatment_followup_date",
-        "type": "date_picker",
-        "hint": "Date follow-up made",
-        "look_up": "true",
-        "expanded": false,
-        "duration": {
-          "label": "Time since follow-up"
-        },
-        "min_date": "today-5y",
-        "max_date": "today",
-        "v_required": {
-          "value": true,
-          "err": "Date of follow-up is required"
-        }
       },
       {
         "key": "tb_treatment_outcome",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "tb_treatment_outcome",
-        "type": "native_radio",
-        "label": "Treatment outcome",
-        "label_info_text": "Tick where applicable",
+        "type": "check_box",
+        "label": "Treatment Outcome (Tick where applicable)",
+        "label_info_text": "Tick one outcome that applies",
         "options": [
           {
             "key": "cured",
@@ -262,11 +238,11 @@
           },
           {
             "key": "treatment_completed",
-            "text": "Treatment completed"
+            "text": "Treatment Completed"
           },
           {
             "key": "treatment_failed",
-            "text": "Treatment failed"
+            "text": "Treatment Failed"
           },
           {
             "key": "not_evaluated",
@@ -277,31 +253,33 @@
             "text": "Died"
           },
           {
-            "key": "exited_ovc_program",
+            "key": "exited_ovc_comprehensive_program",
             "text": "Exited OVC Comprehensive Program"
           },
           {
             "key": "other",
-            "text": "Other"
+            "text": "Other, specify or comment"
           }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "You are required to select a treatment outcome."
-        }
+        ]
       },
       {
-        "key": "tb_treatment_outcome_comment",
+        "key": "tb_treatment_outcome_other_comment",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "tb_treatment_outcome_comment",
+        "openmrs_entity_id": "tb_treatment_outcome_other_comment",
         "type": "edit_text",
-        "hint": "Other, specify or add comment",
-        "edit_type": "name",
+        "label": "Other, specify or comment",
+        "label_info_text": "Specify other treatment outcome or add any comments",
+        "hint": "Enter other outcome or comments",
         "relevance": {
-          "step2:tb_treatment_outcome": {
-            "type": "string",
-            "ex": "equalTo(., \"other\")"
+          "step1:tb_treatment_outcome": {
+            "ex-checkbox": [
+              {
+                "or": [
+                  "other"
+                ]
+              }
+            ]
           }
         }
       }

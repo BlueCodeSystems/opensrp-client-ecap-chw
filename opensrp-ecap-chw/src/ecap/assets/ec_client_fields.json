@@ -268,40 +268,6 @@
           }
         },
         {
-          "column_name": "entity_type",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.entityType"
-          }
-        },
-        {
-          "column_name": "last_interacted_with",
-          "type": "Event",
-          "json_mapping": {
-            "field": "version"
-          }
-        }
-      ]
-    },
-
-    {
-      "name": "ec_tb_screening_outcome",
-      "columns": [
-        {
-          "column_name": "base_entity_id",
-          "type": "Client",
-          "json_mapping": {
-            "field": "baseEntityId"
-          }
-        },
-        {
-          "column_name": "unique_tb_id",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.unique_tb_id"
-          }
-        },
-        {
           "column_name": "followup_date",
           "type": "Client",
           "json_mapping": {
@@ -372,6 +338,20 @@
           }
         },
         {
+          "column_name": "tb_treatment_outcome_other_comment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_treatment_outcome_other_comment"
+          }
+        },
+        {
+          "column_name": "entity_type",
+          "type": "Event",
+          "json_mapping": {
+            "field": "attributes.entityType"
+          }
+        },
+        {
           "column_name": "last_interacted_with",
           "type": "Event",
           "json_mapping": {
@@ -380,6 +360,7 @@
         }
       ]
     },
+
 
     {
       "name": "ec_nutrition_assessment_intervention",

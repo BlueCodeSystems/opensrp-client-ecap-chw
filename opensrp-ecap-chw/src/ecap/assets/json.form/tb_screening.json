@@ -52,7 +52,7 @@
     }
   },
   "step1": {
-    "title": "Part B: TB Screening",
+    "title": "TB Screening",
     "fields": [
       {
         "key": "unique_id",

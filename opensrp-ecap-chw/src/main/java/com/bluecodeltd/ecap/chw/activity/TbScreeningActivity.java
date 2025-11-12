@@ -20,9 +20,9 @@ import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.TbScreeningDao;
-import com.bluecodeltd.ecap.chw.dao.TbScreeningOutcomeDao;
+// removed outcomes list usage
 import com.bluecodeltd.ecap.chw.model.TbScreeningModel;
-import com.bluecodeltd.ecap.chw.model.TbScreeningOutcomeModel;
+// removed outcomes list usage
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.google.android.material.snackbar.Snackbar;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -57,9 +57,9 @@ public class TbScreeningActivity extends AppCompatActivity {
     private String uniqueId;
     private String vcaName;
 
-    private RecyclerView rvScreenings, rvOutcomes;
-    private ScreeningAdapter screeningAdapter;
-    private OutcomeAdapter outcomeAdapter;
+    private RecyclerView rvScreenings;
+    private View emptyView;
+    private com.bluecodeltd.ecap.chw.adapter.TbScreeningAdapter screeningAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,15 +77,32 @@ public class TbScreeningActivity extends AppCompatActivity {
         btnNew.setOnClickListener(v -> startTbScreeningForm());
 
         rvScreenings = findViewById(R.id.rvScreenings);
-        rvOutcomes = findViewById(R.id.rvOutcomes);
+        emptyView = findViewById(R.id.emptyView);
         rvScreenings.setLayoutManager(new LinearLayoutManager(this));
-        rvOutcomes.setLayoutManager(new LinearLayoutManager(this));
 
-        screeningAdapter = new ScreeningAdapter(new ArrayList<>());
+        screeningAdapter = new com.bluecodeltd.ecap.chw.adapter.TbScreeningAdapter(
+                this,
+                new ArrayList<>(),
+                new com.bluecodeltd.ecap.chw.adapter.TbScreeningAdapter.Listener() {
+                    @Override public void onAddOutcome(com.bluecodeltd.ecap.chw.model.TbScreeningModel item) {
+                        startTbOutcomeForm(item.getUnique_tb_id());
+                    }
+                    @Override public void onEdit(com.bluecodeltd.ecap.chw.model.TbScreeningModel item) {
+                        openForm("tb_screening", item.getUnique_tb_id());
+                    }
+                }
+        );
         rvScreenings.setAdapter(screeningAdapter);
 
-        outcomeAdapter = new OutcomeAdapter(new ArrayList<>());
-        rvOutcomes.setAdapter(outcomeAdapter);
+        // no outcomes list
+        // Auto-open form when requested (from fragment)
+        try {
+            String autoForm = getIntent().getStringExtra("open_form");
+            String autoUniqueTbId = getIntent().getStringExtra("unique_tb_id");
+            if (autoForm != null) {
+                openForm(autoForm, autoUniqueTbId);
+            }
+        } catch (Exception ignored) {}
     }
 
     @Override
@@ -97,9 +114,11 @@ public class TbScreeningActivity extends AppCompatActivity {
     private void reloadLists() {
         List<TbScreeningModel> screenings = TbScreeningDao.listByVcaId(uniqueId);
         screeningAdapter.setItems(screenings);
+        try {
+            if (emptyView != null) emptyView.setVisibility((screenings == null || screenings.isEmpty()) ? View.VISIBLE : View.GONE);
+        } catch (Exception ignored) {}
 
-        List<TbScreeningOutcomeModel> outcomes = TbScreeningOutcomeDao.listByBaseEntityId(baseEntityId);
-        outcomeAdapter.setItems(outcomes);
+        // outcomes list removed
     }
 
     private void startTbScreeningForm() { openForm("tb_screening", org.smartregister.util.JsonFormUtils.generateRandomUUIDString()); }
@@ -124,10 +143,17 @@ public class TbScreeningActivity extends AppCompatActivity {
                         String val = uniqueTbId;
                         if (val == null || val.trim().isEmpty()) val = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
                         f.put("value", val);
+                        // Use per-screening unique id as entity_id so each submission persists as its own row
+                        formToBeOpened.put("entity_id", val);
                     }
                 }
             } catch (Exception ignored) {}
-            formToBeOpened.put("entity_id", baseEntityId);
+            // Ensure we have an entity_id set even if unique_tb_id field was not found
+            if (formToBeOpened.optString("entity_id", "").isEmpty()) {
+                String fallback = uniqueTbId;
+                if (fallback == null || fallback.trim().isEmpty()) fallback = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
+                formToBeOpened.put("entity_id", fallback);
+            }
 
             // launch
             Form form = new Form();
@@ -138,7 +164,15 @@ public class TbScreeningActivity extends AppCompatActivity {
             form.setPreviousLabel(getString(R.string.previous));
             form.setSaveLabel(getString(R.string.submit));
             form.setNavigationBackground(R.color.primary);
-            Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
+                        // Prefill from model when editing existing record (fallback)
+            try {
+                if (uniqueTbId != null && !uniqueTbId.trim().isEmpty()) {
+                    com.bluecodeltd.ecap.chw.model.TbScreeningModel m = com.bluecodeltd.ecap.chw.dao.TbScreeningDao.getByUniqueTbId(uniqueTbId);
+                    if (m != null) {
+                        org.smartregister.chw.core.utils.CoreJsonFormUtils.populateJsonForm(formToBeOpened, new com.fasterxml.jackson.databind.ObjectMapper().convertValue(m, java.util.Map.class));
+                    }
+                }
+            } catch (Exception ignored) {}Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
             intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
             intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, formToBeOpened.toString());
             startActivityForResult(intent, org.smartregister.family.util.JsonFormUtils.REQUEST_CODE_GET_JSON);
@@ -194,7 +228,7 @@ public class TbScreeningActivity extends AppCompatActivity {
             case "TB Screening Outcome": {
                 FormTag tag = getFormTag();
                 Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, tag, entityId,
-                        encounterType, Constants.EcapClientTable.EC_TB_SCREENING_OUTCOME);
+                        encounterType, Constants.EcapClientTable.EC_TB_SCREENING);
                 tagSyncMetadata(event);
                 Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, tag, entityId);
                 return new ChildIndexEventClient(event, client);
@@ -283,24 +317,12 @@ public class TbScreeningActivity extends AppCompatActivity {
         }
     }
 
-    class OutcomeAdapter extends RecyclerView.Adapter<OutcomeAdapter.VH> {
-        private List<TbScreeningOutcomeModel> items;
-        OutcomeAdapter(List<TbScreeningOutcomeModel> items) { this.items = items; }
-        void setItems(List<TbScreeningOutcomeModel> data) { this.items = data != null ? data : new ArrayList<>(); notifyDataSetChanged(); }
-
-        @NonNull @Override public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tb_outcome, parent, false);
-            return new VH(v);
-        }
-        @Override public void onBindViewHolder(@NonNull VH h, int pos) {
-            TbScreeningOutcomeModel m = items.get(pos);
-            h.tvDate.setText(fmt(m.getLast_interacted_with()));
-            h.tvOutcome.setText(m.getTb_treatment_outcome());
-        }
-        @Override public int getItemCount() { return items.size(); }
-        class VH extends RecyclerView.ViewHolder {
-            TextView tvDate, tvOutcome;
-            VH(@NonNull View itemView) { super(itemView); tvDate = itemView.findViewById(R.id.tvDate); tvOutcome = itemView.findViewById(R.id.tvOutcome); }
-        }
-    }
+    // Outcome list and adapter removed per requirements
 }
+
+
+
+
+
+
+

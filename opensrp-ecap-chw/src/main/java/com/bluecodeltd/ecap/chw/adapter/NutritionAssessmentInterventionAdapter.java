@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -82,8 +83,21 @@ public class NutritionAssessmentInterventionAdapter extends RecyclerView.Adapter
         h.edit.setOnClickListener(v -> {
             String status = null;
             try { status = caseStatusModel != null ? caseStatusModel.getCase_status() : null; } catch (Exception ignored) {}
-            if (status == null || status.equals("1")) return; // non-editable
-            openForm(m);
+            if (status != null && (status.equals("0") || status.equals("2"))) {
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.dialog_layout);
+                dialog.show();
+
+                TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                String first = caseStatusModel != null && caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "This beneficiary";
+                String last = caseStatusModel != null && caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "";
+                dialogMessage.setText(first + (last.isEmpty()? "":(" "+last)) + " was either de-registered or inactive in the program");
+
+                Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                dialogButton.setOnClickListener(va -> dialog.dismiss());
+            } else {
+                openForm(m);
+            }
         });
     }
 
@@ -205,4 +219,3 @@ public class NutritionAssessmentInterventionAdapter extends RecyclerView.Adapter
         }
     }
 }
-

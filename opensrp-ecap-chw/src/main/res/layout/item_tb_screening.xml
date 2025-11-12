@@ -3,16 +3,18 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    card_view:cardElevation="3dp"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="4dp"
+    card_view:cardElevation="2dp"
     card_view:cardUseCompatPadding="true"
-    card_view:cardCornerRadius="12dp">
+    card_view:cardCornerRadius="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="10dp">
 
         <!-- Top row: Date + Edit button -->
         <LinearLayout
@@ -28,18 +30,18 @@
                 android:layout_weight="1"
                 android:text="—"
                 android:textStyle="bold"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:textColor="#222222" />
 
             <ImageButton
                 android:id="@+id/btnEdit"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="4dp"
                 android:contentDescription="@string/edit"
                 android:src="@drawable/edit_icon"
-                card_view:tint="#666666" />
+                card_view:tint="#808080" />
         </LinearLayout>
 
         <!-- Summary / description -->
@@ -48,35 +50,47 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text=""
-            android:textSize="13sp"
+            android:textSize="12sp"
             android:textColor="#666666"
-            android:layout_marginTop="6dp" />
+            android:layout_marginTop="4dp"
+            android:maxLines="3"
+            android:ellipsize="end" />
 
         <!-- Divider -->
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:background="#11000000" />
+            android:layout_height="0.8dp"
+            android:layout_marginTop="8dp"
+            android:background="#14000000" />
 
-        <!-- Bottom row: Add Outcome button -->
+        <!-- Bottom row: Follow-up date + Outcome button -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="end"
-            android:layout_marginTop="8dp">
+            android:gravity="center_vertical"
+            android:layout_marginTop="6dp">
 
+            <!-- Follow-up date -->
+            <TextView
+                android:id="@+id/tvFollowUpDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Follow-up: —"
+                android:textSize="12sp"
+                android:textColor="#888888" />
+
+            <!-- Outcome button -->
             <Button
                 android:id="@+id/btnAddOutcome"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
                 android:text="Outcome"
                 android:textAllCaps="false"
-                android:textSize="13sp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:minHeight="36dp" />
+                android:textSize="12sp"
+                android:minHeight="0dp"
+                android:paddingHorizontal="14dp" />
         </LinearLayout>
 
     </LinearLayout>

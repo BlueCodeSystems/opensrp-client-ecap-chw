@@ -1,6 +1,8 @@
 package com.bluecodeltd.ecap.chw.dao;
 
 import com.bluecodeltd.ecap.chw.model.NutritionAssessmentInterventionModel;
+import com.bluecodeltd.ecap.chw.model.TbScreeningModel;
+
 import org.smartregister.dao.AbstractDao;
 
 import java.util.List;
@@ -15,8 +17,17 @@ public class NutritionAssessmentInterventionDao extends AbstractDao {
     }
 
     public static List<NutritionAssessmentInterventionModel> listByVcaId(String vcaId) {
-        String sql = "SELECT * FROM ec_nutrition_assessment_intervention WHERE unique_id = '" + vcaId + "' ORDER BY date_of_assessment DESC";
-        return AbstractDao.readData(sql, getMap());
+        String sql = "SELECT * FROM ec_nutrition_assessment_intervention WHERE unique_id = '" + vcaId + "' ";
+        List<NutritionAssessmentInterventionModel> values = AbstractDao.readData(sql, getMap());
+        return values;
+
+    }
+
+    public static int countByVcaId(String vcaId) {
+        String sql = "SELECT COUNT(*) AS count FROM ec_nutrition_assessment_intervention WHERE unique_id = '" + vcaId + "'";
+        DataMap<Integer> mapper = c -> Integer.parseInt(getCursorValue(c, "count"));
+        List<Integer> res = AbstractDao.readData(sql, mapper);
+        return res != null && res.size() > 0 ? res.get(0) : 0;
     }
 
     public static DataMap<NutritionAssessmentInterventionModel> getMap() {

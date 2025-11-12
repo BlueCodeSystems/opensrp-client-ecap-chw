@@ -39,6 +39,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager2.widget.ViewPager2;
+
+import com.bluecodeltd.ecap.chw.fragment.VcaNutritionAssessmentFragment;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
@@ -52,6 +54,7 @@ import com.bluecodeltd.ecap.chw.dao.HivAssessmentUnder15Dao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.ReferralDao;
+import com.bluecodeltd.ecap.chw.dao.NutritionAssessmentInterventionDao;
 import com.bluecodeltd.ecap.chw.dao.VCAScreeningDao;
 import com.bluecodeltd.ecap.chw.dao.VcaAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.VcaCasePlanDao;
@@ -63,6 +66,7 @@ import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.ChildVisitsFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.VcaHivAssesmentFragment;
+import com.bluecodeltd.ecap.chw.fragment.VcaTbScreeningFragment;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
 import com.bluecodeltd.ecap.chw.model.GraduationModel;
@@ -485,6 +489,8 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         fragments.add(new ProfileOverviewFragment());
         fragments.add(new ChildCasePlanFragment());
         fragments.add(new ChildVisitsFragment());
+        fragments.add(new VcaTbScreeningFragment());
+
 
         String hivStatus = indexVCA != null ? indexVCA.getIs_hiv_positive() : null;
         if (hivStatus != null && "no".equalsIgnoreCase(hivStatus)) {
@@ -513,17 +519,68 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         if (tabMediator != null) { try { tabMediator.detach(); } catch (Exception ignored) {} }
         tabMediator = new TabLayoutMediator(mTabLayout, mViewPager, (tab, position) -> {
             switch (position) {
-                case 0: tab.setText("OVERVIEW"); break;
-                case 1: tab.setText("CASE PLANS"); break;
-                case 2: tab.setText("VISITS"); break;
-                case 3: tab.setText("HIV ASSESSMENT"); break;
+                case 0:
+                    tab.setText("OVERVIEW");
+                    break;
+                case 1:
+                    tab.setText("CASE PLANS");
+                    break;
+                case 2:
+                    tab.setText("VISITS");
+                    break;
+                default:
+                    // For positions beyond the first three, determine label by fragment type
+                    try {
+                        androidx.fragment.app.Fragment f = fragments.get(position);
+                        if (f instanceof com.bluecodeltd.ecap.chw.fragment.VcaNutritionAssessmentFragment) {
+                            tab.setText("NUTRITION");
+                        } else if (f instanceof com.bluecodeltd.ecap.chw.fragment.VcaTbScreeningFragment) {
+                            tab.setText("TB SCREENING");
+                        } else if (f instanceof com.bluecodeltd.ecap.chw.fragment.VcaHivAssesmentFragment) {
+                            tab.setText("HIV ASSESSMENT");
+                        }
+                    } catch (Exception ignored) { }
+                    break;
             }
         });
         tabMediator.attach();
         if (fragments.size() > 3) {
-            updateHivAssessmentTabTitle();
+            // Apply custom titles like other tabs for better consistency
+            // HIV Assessment tab (if present at any index)
+            for (int i = 0; i < fragments.size(); i++) {
+                androidx.fragment.app.Fragment f = fragments.get(i);
+                if (f instanceof com.bluecodeltd.ecap.chw.fragment.VcaHivAssesmentFragment) {
+                    updateHivAssessmentTabTitleAtIndex(i);
+                    break;
+                }
+            }
+                        // TB Screening tab (if present at any index)
+            for (int i = 0; i < fragments.size(); i++) {
+                androidx.fragment.app.Fragment f = fragments.get(i);
+                if (f instanceof com.bluecodeltd.ecap.chw.fragment.VcaTbScreeningFragment) {
+                    updateTbTabTitleAtIndex(i);
+                    break;
+                }
+            }        }
+    }
+   private void updateTbTabTitleAtIndex(int index) {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
+        visitTabTitle.setText("TB SCREENING");
+        visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
+
+        int count = 0;
+        try {
+            count = com.bluecodeltd.ecap.chw.dao.TbScreeningDao.countByVcaId(uniqueId);
+        } catch (Exception ignored) { }
+        visitTabCount.setText(String.valueOf(count));
+        visitTabCount.setVisibility(View.VISIBLE);
+
+        if (mTabLayout.getTabCount() > index && mTabLayout.getTabAt(index) != null) {
+            mTabLayout.getTabAt(index).setCustomView(taskTabTitleLayout);
         }
     }
+
     private void setupFabVisibility() {
         mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
@@ -557,6 +614,20 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
         mTabLayout.getTabAt(3).setCustomView(taskTabTitleLayout);
     }
+
+    // Allows setting HIV tab title at a dynamic index when tab order changes
+    private void updateHivAssessmentTabTitleAtIndex(int index) {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
+        visitTabTitle.setText("HIV ASSESSMENT");
+        visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
+
+        visitTabCount.setVisibility(View.GONE);
+
+        if (mTabLayout.getTabCount() > index && mTabLayout.getTabAt(index) != null) {
+            mTabLayout.getTabAt(index).setCustomView(taskTabTitleLayout);
+        }
+    }
     private void updateVisitsTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
@@ -581,6 +652,26 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         plansTabCount.setText(String.valueOf(plans));
 
         mTabLayout.getTabAt(1).setCustomView(plansTabTitleLayout);
+    }
+
+    // New: Nutrition tab custom title similar to visits tab pattern
+    private void updateNutritionTabTitleAtIndex(int index) {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
+        visitTabTitle.setText("NUTRITION");
+        visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
+
+        int count = 0;
+        try {
+            // Count nutrition assessments for this beneficiary
+            count = NutritionAssessmentInterventionDao.countByVcaId(uniqueId);
+        } catch (Exception ignored) { }
+        visitTabCount.setText(String.valueOf(count));
+        visitTabCount.setVisibility(View.VISIBLE);
+
+        if (mTabLayout.getTabCount() > index && mTabLayout.getTabAt(index) != null) {
+            mTabLayout.getTabAt(index).setCustomView(taskTabTitleLayout);
+        }
     }
 
 
@@ -804,11 +895,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             case R.id.tb_screening:
                 if (!ensureIndexVcaAvailable()) { break; }
                 if(indexVCA.getDate_screened() != null) {
-                    Intent tb = new Intent(IndexDetailsActivity.this, TbScreeningActivity.class);
-                    tb.putExtra(TbScreeningActivity.EXTRA_BASE_ENTITY_ID, indexVCA.getBase_entity_id());
-                    tb.putExtra(TbScreeningActivity.EXTRA_UNIQUE_ID, indexVCA.getUnique_id());
-                    tb.putExtra(TbScreeningActivity.EXTRA_VCA_NAME, txtName.getText().toString());
-                    startActivity(tb);
+                    try { openFormUsingFormUtils(IndexDetailsActivity.this, "tb_screening"); } catch (org.json.JSONException e) { e.printStackTrace(); }
                 } else {
                     Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
@@ -1086,7 +1173,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     if (fields != null) {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                                encounterType, Constants.EcapClientTable.EC_TB_SCREENING_OUTCOME);
+                                encounterType, Constants.EcapClientTable.EC_TB_SCREENING);
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         ChildIndexEventClient out = new ChildIndexEventClient(event, client);
@@ -1705,16 +1792,13 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             break;
 
             case "nutrition_assessment_intervention":
-                // Pre-populate minimal identifiers and bind entity to VCA
-                try {
-                    formToBeOpened.put("entity_id", this.indexVCA.getBase_entity_id());
-                } catch (Exception ignore) {}
+                // For new nutrition entries leave entity_id blank so a new one is generated on save.
+                // Edits (opened from list) will set entity_id to the existing base_entity_id in the adapter.
+                try { formToBeOpened.put("entity_id", ""); } catch (Exception ignore) {}
                 break;
 
             case "tb_screening":
-                try {
-                    formToBeOpened.put("entity_id", this.indexVCA.getBase_entity_id());
-                } catch (Exception ignore) {}
+                try { formToBeOpened.put("entity_id", ""); } catch (Exception ignore) {}
                 break;
 
     }
@@ -2105,3 +2189,9 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         }
     }
 }
+
+
+
+
+
+
