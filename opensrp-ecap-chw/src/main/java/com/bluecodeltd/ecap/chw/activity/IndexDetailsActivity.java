@@ -558,14 +558,23 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     break;
                 }
             }
-                        // TB Screening tab (if present at any index)
+            // Nutrition tab (if present at any index)
+            for (int i = 0; i < fragments.size(); i++) {
+                androidx.fragment.app.Fragment f = fragments.get(i);
+                if (f instanceof com.bluecodeltd.ecap.chw.fragment.VcaNutritionAssessmentFragment) {
+                    updateNutritionTabTitleAtIndex(i);
+                    break;
+                }
+            }
+            // TB Screening tab (if present at any index)
             for (int i = 0; i < fragments.size(); i++) {
                 androidx.fragment.app.Fragment f = fragments.get(i);
                 if (f instanceof com.bluecodeltd.ecap.chw.fragment.VcaTbScreeningFragment) {
                     updateTbTabTitleAtIndex(i);
                     break;
                 }
-            }        }
+            }
+        }
     }
    private void updateTbTabTitleAtIndex(int index) {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
@@ -614,7 +623,14 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         visitTabTitle.setText("HIV ASSESSMENT");
         visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
 
-        visitTabCount.setVisibility(View.GONE);
+        int count = 0;
+        try {
+            int u15 = HivAssessmentUnder15Dao.getHivAssessment(uniqueId).size();
+            int a15 = HivAssessmentAbove15Dao.getHivAssessment(uniqueId).size();
+            count = u15 + a15;
+        } catch (Exception ignored) { }
+        visitTabCount.setText(String.valueOf(count));
+        visitTabCount.setVisibility(View.VISIBLE);
 
         mTabLayout.getTabAt(3).setCustomView(taskTabTitleLayout);
     }
@@ -626,7 +642,14 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         visitTabTitle.setText("HIV ASSESSMENT");
         visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
 
-        visitTabCount.setVisibility(View.GONE);
+        int count = 0;
+        try {
+            int u15 = HivAssessmentUnder15Dao.getHivAssessment(uniqueId).size();
+            int a15 = HivAssessmentAbove15Dao.getHivAssessment(uniqueId).size();
+            count = u15 + a15;
+        } catch (Exception ignored) { }
+        visitTabCount.setText(String.valueOf(count));
+        visitTabCount.setVisibility(View.VISIBLE);
 
         if (mTabLayout.getTabCount() > index && mTabLayout.getTabAt(index) != null) {
             mTabLayout.getTabAt(index).setCustomView(taskTabTitleLayout);
