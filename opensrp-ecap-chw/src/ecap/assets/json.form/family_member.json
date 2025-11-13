@@ -135,7 +135,7 @@
         "openmrs_entity_id": "unique_id",
         "type": "edit_text",
         "read_only": "true",
-        "hint": "VCA ID",
+        "hint": "Children/Adolescent (CA) ID",
         "edit_type": "name"
       },
       {

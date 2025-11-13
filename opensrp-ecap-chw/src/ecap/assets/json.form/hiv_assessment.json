@@ -87,16 +87,16 @@
         "openmrs_entity": "person_identifier",
         "openmrs_entity_id": "unique_id",
         "type": "edit_text",
-        "hint": "VCA ID",
+        "hint": "Children/Adolescent (CA) ID",
         "edit_type": "name",
         "read_only": false,
         "v_required": {
           "value": false,
-          "err": "Please enter VCA ID"
+          "err": "Please enter Children/Adolescent (CA) ID"
         },
         "v_regex": {
           "value": "[0-9]*",
-          "err": "VCA ID"
+          "err": "Children/Adolescent (CA) ID"
         }
       },
       {

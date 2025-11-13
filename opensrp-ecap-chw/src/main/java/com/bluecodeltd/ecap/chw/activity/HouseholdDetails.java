@@ -777,20 +777,20 @@ public class HouseholdDetails extends AppCompatActivity {
 
                         // Check for children between 6 months and 5 years
                         if (hasAtLeastOneVCABetweenSixMonthsAndFiveYearsOld) {
-                            if (checkForMuac && nutritionStatus) {
-                                malnutrition.put(JsonFormUtils.VALUE, "yes");
-                            } else {
-                                malnutrition.put(JsonFormUtils.VALUE, "no");
-                            }
+//                            if (checkForMuac && nutritionStatus) {
+//                                malnutrition.put(JsonFormUtils.VALUE, "yes");
+//                            } else {
+//                                malnutrition.put(JsonFormUtils.VALUE, "no");
+//                            }
                             // Remove N/A option
-                            JSONArray options = malnutrition.getJSONArray(OPTIONS_FIELD_NAME);
-                            for (int i = 0; i < options.length(); i++) {
-                                JSONObject option = options.getJSONObject(i);
-                                if (option.getString("key").equals("N/A")) {
-                                    options.remove(i);
-                                    break;
-                                }
-                            }
+//                            JSONArray options = malnutrition.getJSONArray(OPTIONS_FIELD_NAME);
+//                            for (int i = 0; i < options.length(); i++) {
+//                                JSONObject option = options.getJSONObject(i);
+//                                if (option.getString("key").equals("N/A")) {
+//                                    options.remove(i);
+//                                    break;
+//                                }
+//                            }
                         }
 
                         // Check for children 5 months and below

@@ -240,11 +240,11 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
         }
 
-
+        holder.muacButton.setVisibility(View.GONE);
         // Enable MUAC Button
         if(caseStatus != null && (caseStatus.equals("0") || caseStatus.equals("1")) && isAgeBetween6MonthsAnd5Years(dob)){
 
-            holder.muacButton.setVisibility(View.VISIBLE);
+//            holder.muacButton.setVisibility(View.VISIBLE);
 
             holder.muacButton.setTag(childUniqueID);
             Threading.io(() -> {

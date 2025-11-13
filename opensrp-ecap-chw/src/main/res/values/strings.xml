@@ -190,7 +190,7 @@
     <string name="pmtct_register_title">Prevention of Mother-to-Child Transmission</string>
     <string name="all_households">Household Register</string>
     <string name="all_households_title">Household Register</string>
-    <string name="all_index_title">VCA Register</string>
+    <string name="all_index_title">Children/Adolescent</string>
     <string name="all_mother_title">Mother Index Register</string>
     <string name="anc_danger_signs">Danger signs</string>
     <string name="anc_home_visit_counselling_task">Counselling</string>
@@ -247,7 +247,7 @@
     <string name="deworming_number_dose">Deworming dose number</string>
     <string name="error_opening_profile">Error opening profile</string>
     <string name="exclusive_breastfeeding_months">Exclusive breastfeeding (months)</string>
-    <string name="facility_ovc_register"> VCA Register</string>
+    <string name="facility_ovc_register">Children/Adolescent</string>
     <string name="family_has_nothing_else_due">Family has nothing else due</string>
     <string name="family_planning_not_done">Family planning not done</string>
     <string name="family_planning_done">Family planning counseling at the health facility was done</string>

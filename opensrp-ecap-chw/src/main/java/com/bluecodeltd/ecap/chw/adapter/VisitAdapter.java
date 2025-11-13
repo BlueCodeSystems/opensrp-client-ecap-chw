@@ -383,14 +383,14 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
         JSONObject nutrition_status = getFieldJSONObject(fields(formToBeOpened, "step1"), "nutrition_status");
         if (vAge == 0.5 || vAge == 0.4 || vAge == 0.3 || vAge == 0.1 || vAge == 0.0) {
             under_five.put("type", "native_radio");
-            nutrition_status.put("type", "edit_text");
+//            nutrition_status.put("type", "edit_text");
         } else if (vAge <= 5.0) {
             under_five.put("type", "native_radio");
-            nutrition_status.put("type", "edit_text");
+//            nutrition_status.put("type", "edit_text");
 
         } else {
             under_five.put("type", "hidden");
-            nutrition_status.put("type", "hidden");
+//            nutrition_status.put("type", "hidden");
         }
 
         JSONObject eid_test = getFieldJSONObject(fields(formToBeOpened, "step1"), "eid_test");

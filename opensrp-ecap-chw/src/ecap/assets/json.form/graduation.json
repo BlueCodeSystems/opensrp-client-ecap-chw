@@ -501,7 +501,7 @@
         "openmrs_entity_id": "undernourished",
         "label_info_text": "Refer to the Graduation Icon in the list of Household Members in the Household Profile. If no children in the family (registered in the project) are undernourished, the family has met Benchmark 4.",
         "label_info_title":"Benchmark 4: Not undernourished",
-        "read_only" : true,
+        "read_only" : false,
         "type": "native_radio",
         "label": "Are there no children below the age of 5 who are malnourished?",
         "options": [
