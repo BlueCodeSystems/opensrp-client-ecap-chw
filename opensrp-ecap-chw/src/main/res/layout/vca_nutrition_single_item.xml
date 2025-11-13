@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
         android:background="@drawable/bg_item_row"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -30,6 +31,7 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
+            <!-- Date of assessment -->
             <TextView
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
@@ -37,18 +39,129 @@
                 android:text="—"
                 android:textColor="@color/text_black"
                 android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium" />
 
-            <TextView
-                android:id="@+id/summary"
+            <!-- Small spacer -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="6dp" />
+
+            <!-- Removed summary; show individual fields below -->
+
+            <!-- Multi-line professional block -->
+
+            <!-- MUAC -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:text=""
-                android:textColor="@color/text_black"
-                android:textSize="13sp" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/label_muac"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MUAC:"
+                    android:textColor="@color/text_black"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-medium" />
+
+                <TextView
+                    android:id="@+id/value_muac"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="—"
+                    android:textColor="@color/text_black"
+                    android:textSize="13sp"
+                    android:fontFamily="sans-serif" />
+            </LinearLayout>
+
+            <!-- Oedema -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="2dp">
+
+                <TextView
+                    android:id="@+id/label_oedema"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Oedema:"
+                    android:textColor="@color/text_black"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-medium" />
+
+                <TextView
+                    android:id="@+id/value_oedema"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="—"
+                    android:textColor="@color/text_black"
+                    android:textSize="13sp"
+                    android:fontFamily="sans-serif" />
+            </LinearLayout>
+
+            <!-- WFA -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="2dp">
+
+                <TextView
+                    android:id="@+id/label_wfa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="WFA:"
+                    android:textColor="@color/text_black"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-medium" />
+
+                <TextView
+                    android:id="@+id/value_wfa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="—"
+                    android:textColor="@color/text_black"
+                    android:textSize="13sp"
+                    android:fontFamily="sans-serif" />
+            </LinearLayout>
+
+            <!-- Status -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="2dp">
+
+                <TextView
+                    android:id="@+id/label_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Status:"
+                    android:textColor="@color/text_black"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-medium" />
+
+                <TextView
+                    android:id="@+id/value_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="—"
+                    android:textColor="@color/text_black"
+                    android:textSize="13sp"
+                    android:fontFamily="sans-serif" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <!-- Pencil edit button -->
@@ -66,11 +179,11 @@
     </LinearLayout>
 
     <!-- Subtle divider below the row -->
-<View
-android:layout_below="@id/item_row"
-android:layout_width="match_parent"
-android:layout_height="1dp"
-android:layout_marginTop="4dp"
-android:background="@android:color/darker_gray" />
+    <View
+        android:layout_below="@id/item_row"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="4dp"
+        android:background="@android:color/darker_gray" />
 
-    </RelativeLayout>
+</RelativeLayout>

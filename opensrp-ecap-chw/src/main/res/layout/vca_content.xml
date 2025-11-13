@@ -205,9 +205,11 @@
                     app:tabContentStart="0dp"
                     app:tabGravity="fill"
                     app:tabIndicatorColor="#E2E363"
-                    app:tabIndicatorHeight="4dp"
+                    app:tabIndicatorHeight="3dp"
+                    app:tabIndicatorFullWidth="false"
                     app:tabMaxWidth="0dp"
-                    app:tabMode="fixed"
+                    app:tabMode="scrollable"
+                    app:tabRippleColor="@color/white"
                     app:tabSelectedTextColor="@color/white"
                     app:tabTextAppearance="@style/CustomFontTextViewStyle.tabIndicator.sub.white" />
 
@@ -219,6 +221,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/collapsing_toolbar_appbarlayout"
+            android:nestedScrollingEnabled="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 

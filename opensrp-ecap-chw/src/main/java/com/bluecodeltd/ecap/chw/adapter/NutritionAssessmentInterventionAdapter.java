@@ -75,7 +75,12 @@ public class NutritionAssessmentInterventionAdapter extends RecyclerView.Adapter
     public void onBindViewHolder(@NonNull ViewHolder h, int position) {
         NutritionAssessmentInterventionModel m = items.get(position);
         h.date.setText(m.getDate_of_assessment() != null ? m.getDate_of_assessment() : "");
-        h.summary.setText(buildSummary(m));
+
+        String dash = "—";
+        h.muac.setText(m.getMuac_category() != null && !m.getMuac_category().isEmpty() ? m.getMuac_category() : dash);
+        h.oedema.setText(m.getOedema_stage() != null && !m.getOedema_stage().isEmpty() ? m.getOedema_stage() : dash);
+        h.wfa.setText(m.getWfa_category() != null && !m.getWfa_category().isEmpty() ? m.getWfa_category() : dash);
+        h.status.setText(m.getIntervention_status() != null && !m.getIntervention_status().isEmpty() ? m.getIntervention_status() : dash);
 
         h.item.setOnClickListener(v -> openForm(m));
 
@@ -101,19 +106,7 @@ public class NutritionAssessmentInterventionAdapter extends RecyclerView.Adapter
         });
     }
 
-    private String buildSummary(NutritionAssessmentInterventionModel m) {
-        StringBuilder sb = new StringBuilder();
-        if (m.getMuac_category() != null && !m.getMuac_category().isEmpty()) sb.append("MUAC: ").append(m.getMuac_category());
-        if (m.getWfa_category() != null && !m.getWfa_category().isEmpty()) {
-            if (sb.length() > 0) sb.append(" • ");
-            sb.append("WFA: ").append(m.getWfa_category());
-        }
-        if (m.getIntervention_status() != null && !m.getIntervention_status().isEmpty()) {
-            if (sb.length() > 0) sb.append(" • ");
-            sb.append("Status: ").append(m.getIntervention_status());
-        }
-        return sb.toString();
-    }
+    
 
     private void openForm(NutritionAssessmentInterventionModel visit) {
         try {
@@ -207,14 +200,17 @@ public class NutritionAssessmentInterventionAdapter extends RecyclerView.Adapter
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         LinearLayout item;
-        TextView date, summary;
+        TextView date, muac, oedema, wfa, status;
         ImageView edit;
 
         ViewHolder(View itemView) {
             super(itemView);
             item = itemView.findViewById(R.id.item_row);
             date = itemView.findViewById(R.id.date);
-            summary = itemView.findViewById(R.id.summary);
+            muac = itemView.findViewById(R.id.value_muac);
+            oedema = itemView.findViewById(R.id.value_oedema);
+            wfa = itemView.findViewById(R.id.value_wfa);
+            status = itemView.findViewById(R.id.value_status);
             edit = itemView.findViewById(R.id.edit_me);
         }
     }

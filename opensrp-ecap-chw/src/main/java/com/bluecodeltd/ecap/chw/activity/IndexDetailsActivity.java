@@ -518,6 +518,8 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
         com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter adapter = new com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter(this, fragments);
         mViewPager.setAdapter(adapter);
+        try { mViewPager.setNestedScrollingEnabled(true); } catch (Throwable ignored) {}
+        try { mViewPager.setOffscreenPageLimit(Math.min(5, fragments.size())); } catch (Throwable ignored) {}
         if (tabMediator != null) { try { tabMediator.detach(); } catch (Exception ignored) {} }
         tabMediator = new TabLayoutMediator(mTabLayout, mViewPager, (tab, position) -> {
             switch (position) {
