@@ -897,15 +897,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             case R.id.tb_screening:
                 if (!ensureIndexVcaAvailable()) { break; }
                 if(indexVCA.getDate_screened() != null) {
-                    try {
-                        long todayMillis = java.util.Calendar.getInstance().getTimeInMillis();
-                        boolean alreadyToday = TbScreeningDao.existsOnSameDateByUniqueId(indexVCA.getUnique_id(), todayMillis);
-                        if (alreadyToday) {
-                            Toasty.warning(IndexDetailsActivity.this, "TB Screening already done today", Toast.LENGTH_LONG, true).show();
-                            break;
-                        }
-                        openFormUsingFormUtils(IndexDetailsActivity.this, "tb_screening");
-                    } catch (org.json.JSONException e) { e.printStackTrace(); }
+                    try { openFormUsingFormUtils(IndexDetailsActivity.this, "tb_screening"); } catch (org.json.JSONException e) { e.printStackTrace(); }
                 } else {
                     Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
@@ -1166,6 +1158,19 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     break;
 
                 case "TB Screening":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_TB_SCREENING);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        ChildIndexEventClient out = new ChildIndexEventClient(event, client);
+                        return out;
+                    }
+                    break;
+
+                case "ECAPII TB Screening - Sections C and D":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
@@ -1795,7 +1800,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 break;
 
             case "tb_screening":
-                try { formToBeOpened.put("entity_id", this.indexVCA.getBase_entity_id()); } catch (Exception ignore) {}
+                try { formToBeOpened.put("entity_id", ""); } catch (Exception ignore) {}
                 break;
 
     }
@@ -2192,4 +2197,49 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
 
 
-            
+            case "tb_screening":
+                try {
+                    String entityId = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
+                    TbScreeningModel todayRecord = null;
+                    try {
+                        java.util.List<TbScreeningModel> list = TbScreeningDao.listByVcaId(indexVCA.getUnique_id());
+                        if (list != null) {
+                            java.util.Calendar now = java.util.Calendar.getInstance();
+                            for (TbScreeningModel rec : list) {
+                                if (rec == null || rec.getLast_interacted_with() == null) continue;
+                                try {
+                                    long millis = Long.parseLong(rec.getLast_interacted_with());
+                                    java.util.Calendar last = java.util.Calendar.getInstance();
+                                    last.setTimeInMillis(millis);
+                                    if (now.get(java.util.Calendar.YEAR) == last.get(java.util.Calendar.YEAR)
+                                            && now.get(java.util.Calendar.DAY_OF_YEAR) == last.get(java.util.Calendar.DAY_OF_YEAR)) {
+                                        todayRecord = rec;
+                                        break;
+                                    }
+                                } catch (Exception ignored) {}
+                            }
+                        }
+                    } catch (Exception ignored) {}
+
+                    if (todayRecord != null) {
+                        entityId = todayRecord.getUnique_tb_id();
+                        CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(todayRecord, java.util.Map.class));
+                    }
+
+                    // Ensure both unique_id and unique_tb_id are set in fields
+                    try {
+                        org.json.JSONArray fields = formToBeOpened.getJSONObject("step1").getJSONArray("fields");
+                        for (int i = 0; i < fields.length(); i++) {
+                            org.json.JSONObject f = fields.getJSONObject(i);
+                            String key = f.optString("key");
+                            if ("unique_id".equals(key)) {
+                                f.put("value", indexVCA.getUnique_id());
+                            } else if ("unique_tb_id".equals(key)) {
+                                f.put("value", entityId);
+                            }
+                        }
+                    } catch (Exception ignored) {}
+
+                    formToBeOpened.put("entity_id", entityId);
+                } catch (Exception ignored) {}
+                break;

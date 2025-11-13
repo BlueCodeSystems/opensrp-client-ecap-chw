@@ -103,12 +103,17 @@ public class VcaTbScreeningFragment extends Fragment {
                         String val = item != null ? item.getUnique_tb_id() : null;
                         if (val == null || val.trim().isEmpty()) val = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
                         f.put("value", val);
-                        form.put("entity_id", val);
                     }
                 }
+                // Default entity_id to base_entity_id
+                String baseEntityId = null;
+                try { com.bluecodeltd.ecap.chw.model.VcaScreeningModel v = ((IndexDetailsActivity) requireActivity()).indexVCA; if (v != null) baseEntityId = v.getBase_entity_id(); } catch (Exception ignored) { }
+                if (baseEntityId == null || baseEntityId.trim().isEmpty()) baseEntityId = vcaId; // fallback defensively
+                form.put("entity_id", baseEntityId);
                 if ("tb_screening_outcome".equals(formName)) {
+                    // Outcome must use "TB Screening" encounter and TB screening base_entity_id
                     form.remove(JsonFormConstants.ENCOUNTER_TYPE);
-                    form.put(JsonFormConstants.ENCOUNTER_TYPE, "ECAPII TB Screening - Sections C and D");
+                    form.put(JsonFormConstants.ENCOUNTER_TYPE, "TB Screening");
                     try {
                         com.bluecodeltd.ecap.chw.model.TbScreeningModel latest = com.bluecodeltd.ecap.chw.dao.TbScreeningDao.getLatestByBaseEntityId(item.getBase_entity_id());
                         if (latest != null) {

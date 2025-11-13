@@ -143,17 +143,19 @@ public class TbScreeningActivity extends AppCompatActivity {
                         String val = uniqueTbId;
                         if (val == null || val.trim().isEmpty()) val = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
                         f.put("value", val);
-                        // Use per-screening unique id as entity_id so each submission persists as its own row
-                        formToBeOpened.put("entity_id", val);
                     }
                 }
             } catch (Exception ignored) {}
-            // Ensure we have an entity_id set even if unique_tb_id field was not found
-            if (formToBeOpened.optString("entity_id", "").isEmpty()) {
-                String fallback = uniqueTbId;
-                if (fallback == null || fallback.trim().isEmpty()) fallback = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
-                formToBeOpened.put("entity_id", fallback);
-            }
+            // Ensure entity_id is base_entity_id (align with other adapters)
+            try {
+                if (baseEntityId != null && !baseEntityId.trim().isEmpty()) {
+                    formToBeOpened.put("entity_id", baseEntityId);
+                } else if (uniqueId != null && !uniqueId.trim().isEmpty()) {
+                    formToBeOpened.put("entity_id", uniqueId);
+                } else {
+                    formToBeOpened.put("entity_id", org.smartregister.util.JsonFormUtils.generateRandomUUIDString());
+                }
+            } catch (Exception ignored) {}
 
             // launch
             Form form = new Form();

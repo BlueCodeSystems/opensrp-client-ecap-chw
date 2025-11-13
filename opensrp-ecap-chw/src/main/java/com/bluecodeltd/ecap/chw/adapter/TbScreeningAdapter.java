@@ -79,20 +79,18 @@ public class TbScreeningAdapter extends RecyclerView.Adapter<TbScreeningAdapter.
         }
 
         h.btnAddOutcome.setOnClickListener(v -> {
-
             if (isInactive(m)) { showInactiveDialog(m); return; }
+            // Open outcome form using the TB screening entity_id (unique_tb_id) with encounter type "TB Screening"
             openForm("tb_screening_outcome", m);
         });
         h.btnEdit.setOnClickListener(v -> {
-
             if (isInactive(m)) { showInactiveDialog(m); return; }
-            openForm("tb_screening", m);
+            if (listener != null) listener.onEdit(m);
         });
         h.itemView.setOnClickListener(v -> {
-
             if (isInactive(m)) { showInactiveDialog(m); return; }
             // Align with Nutrition adapter behavior: clicking row opens edit
-            openForm("tb_screening", m);
+            if (listener != null) listener.onEdit(m);
         });
     }
 
@@ -153,7 +151,8 @@ public class TbScreeningAdapter extends RecyclerView.Adapter<TbScreeningAdapter.
         try {
             FormUtils formUtils = new FormUtils(context);
             org.json.JSONObject form = formUtils.getFormJson(formName);
-            String entityId = visit != null ? visit.getUnique_tb_id() : null;
+            // Default entity_id to base_entity_id; outcomes also use TB screening base_entity_id
+            String entityId = visit != null ? visit.getBase_entity_id() : null;
             if (entityId == null || entityId.trim().isEmpty()) {
                 entityId = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
             }
@@ -166,8 +165,17 @@ public class TbScreeningAdapter extends RecyclerView.Adapter<TbScreeningAdapter.
                     if ("unique_id".equals(key)) {
                         f.put("value", visit.getUnique_id());
                     } else if ("unique_tb_id".equals(key)) {
-                        f.put("value", entityId);
+                        String val = visit != null ? visit.getUnique_tb_id() : null;
+                        if (val == null || val.trim().isEmpty()) {
+                            val = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
+                        }
+                        f.put("value", val);
                     }
+                }
+                // Ensure outcome uses encounter type "TB Screening" as requested
+                if ("tb_screening_outcome".equals(formName)) {
+                    form.remove(JsonFormConstants.ENCOUNTER_TYPE);
+                    form.put(JsonFormConstants.ENCOUNTER_TYPE, "TB Screening");
                 }
                 if (visit != null) {
                     CoreJsonFormUtils.populateJsonForm(form, new com.fasterxml.jackson.databind.ObjectMapper().convertValue(visit, java.util.Map.class));

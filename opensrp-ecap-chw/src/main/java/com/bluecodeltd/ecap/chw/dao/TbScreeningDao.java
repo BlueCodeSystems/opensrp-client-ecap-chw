@@ -70,5 +70,40 @@ public class TbScreeningDao extends AbstractDao {
         if (values == null || values.isEmpty()) return null;
         return values.get(0);
     }
-}
 
+    // Helper: Check existence of any record on the same calendar date as dayMillis
+    private static boolean existsOnSameDate(java.util.List<TbScreeningModel> records, long dayMillis) {
+        if (records == null || records.isEmpty()) return false;
+        java.util.Calendar day = java.util.Calendar.getInstance();
+        day.setTimeInMillis(dayMillis);
+        int y = day.get(java.util.Calendar.YEAR);
+        int d = day.get(java.util.Calendar.DAY_OF_YEAR);
+        for (TbScreeningModel m : records) {
+            if (m == null) continue;
+            String ts = m.getLast_interacted_with();
+            if (ts == null || ts.trim().isEmpty()) continue;
+            try {
+                long millis = Long.parseLong(ts);
+                java.util.Calendar last = java.util.Calendar.getInstance();
+                last.setTimeInMillis(millis);
+                if (y == last.get(java.util.Calendar.YEAR) && d == last.get(java.util.Calendar.DAY_OF_YEAR)) {
+                    return true;
+                }
+            } catch (Exception ignored) {}
+        }
+        return false;
+    }
+
+    public static boolean existsOnSameDateByBaseEntityId(String baseEntityId, long dayMillis) {
+        if (baseEntityId == null || baseEntityId.trim().isEmpty()) return false;
+        String sql = "SELECT * FROM ec_tb_screening WHERE base_entity_id = '" + baseEntityId + "' ORDER BY last_interacted_with DESC";
+        java.util.List<TbScreeningModel> values = org.smartregister.dao.AbstractDao.readData(sql, getMap());
+        return existsOnSameDate(values, dayMillis);
+    }
+
+    public static boolean existsOnSameDateByUniqueId(String uniqueId, long dayMillis) {
+        if (uniqueId == null || uniqueId.trim().isEmpty()) return false;
+        java.util.List<TbScreeningModel> values = listByVcaId(uniqueId);
+        return existsOnSameDate(values, dayMillis);
+    }
+}
