@@ -575,6 +575,20 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 }
             }
         }
+
+        // One-time self-serve tip to guide scrolling and swiping
+        try {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            boolean shown = prefs.getBoolean("index_scroll_tip_shown", false);
+            if (!shown) {
+                com.google.android.material.snackbar.Snackbar.make(findViewById(R.id.viewpager),
+                        "Scroll inside tabs to see more. Swipe tabs to navigate.",
+                        com.google.android.material.snackbar.Snackbar.LENGTH_LONG)
+                        .setAction("Got it", v -> {})
+                        .show();
+                prefs.edit().putBoolean("index_scroll_tip_shown", true).apply();
+            }
+        } catch (Exception ignored) { }
     }
    private void updateTbTabTitleAtIndex(int index) {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);

@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Button;
+import android.graphics.Color;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -81,6 +82,11 @@ public class NutritionAssessmentInterventionAdapter extends RecyclerView.Adapter
         h.oedema.setText(m.getOedema_stage() != null && !m.getOedema_stage().isEmpty() ? m.getOedema_stage() : dash);
         h.wfa.setText(m.getWfa_category() != null && !m.getWfa_category().isEmpty() ? m.getWfa_category() : dash);
         h.status.setText(m.getIntervention_status() != null && !m.getIntervention_status().isEmpty() ? m.getIntervention_status() : dash);
+
+        try {
+            int color = getColorForWfa(m.getWfa_category());
+            if (h.statusBar != null) h.statusBar.setBackgroundColor(color);
+        } catch (Exception ignored) {}
 
         h.item.setOnClickListener(v -> openForm(m));
 
@@ -202,6 +208,7 @@ public class NutritionAssessmentInterventionAdapter extends RecyclerView.Adapter
         LinearLayout item;
         TextView date, muac, oedema, wfa, status;
         ImageView edit;
+        View statusBar;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -212,6 +219,19 @@ public class NutritionAssessmentInterventionAdapter extends RecyclerView.Adapter
             wfa = itemView.findViewById(R.id.value_wfa);
             status = itemView.findViewById(R.id.value_status);
             edit = itemView.findViewById(R.id.edit_me);
+            statusBar = itemView.findViewById(R.id.status_bar);
         }
+    }
+
+    private int getColorForWfa(String categoryRaw) {
+        if (categoryRaw == null) return Color.parseColor("#BDBDBD"); // neutral grey
+        String c = categoryRaw.trim().toLowerCase();
+        if (c.contains("under")) return Color.parseColor("#E53935"); // red 600
+        if (c.contains("over")) return Color.parseColor("#FDD835"); // yellow 600
+        if (c.contains("normal")) return Color.parseColor("#43A047"); // green 600
+        // Fallbacks for possible synonyms
+        if (c.contains("severe") || c.contains("moderate")) return Color.parseColor("#E53935");
+        if (c.contains("obese") || c.contains("overweight")) return Color.parseColor("#FDD835");
+        return Color.parseColor("#BDBDBD");
     }
 }

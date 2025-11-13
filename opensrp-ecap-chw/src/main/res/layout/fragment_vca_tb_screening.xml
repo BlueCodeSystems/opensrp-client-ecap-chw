@@ -7,7 +7,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/visitrecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:fadeScrollbars="false"/>
 
     <ProgressBar
         android:id="@+id/progress_loading"
@@ -40,4 +42,3 @@
     </LinearLayout>
 
 </RelativeLayout>
-
