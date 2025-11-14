@@ -89,7 +89,8 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
     private static final int MAX_Y_VALUE = 50;
     private static final int MIN_Y_VALUE = 5;
     private static final String SET_LABEL = "Sub populations";
-    private static final String[] SUBPOPS = { "CALHIV", " HEI", " CWLHIV", "AGYW", "C/ASSV", "FSW"};
+    // Displayed subpopulations: AGYW and FSW removed
+    private static final String[] SUBPOPS = { "CALHIV", "HEI", "CWLHIV", "C/ASSV"};
     private BarChart chart;
     Handler handler = new Handler();
     List<Child> allChildren;
@@ -219,15 +220,21 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
     private BarData dataForBarchart(ArrayList<Integer> subpops)
     {
         ArrayList<BarEntry> values = new ArrayList<>();
-        for (int i = 0; i < subpops.size(); i++) {
-            float x = i;
-            float y = subpops.get(i);
-            //new Util .randomFloatBetween(MIN_Y_VALUE, MAX_Y_VALUE);
-            values.add(new BarEntry(x, y));
+        // Only include indices: 0=CALHIV, 1=HEI, 2=CWLHIV, 4=C/ASSV (skip 3=AGYW, 5=FSW)
+        int[] include = new int[]{0, 1, 2, 4};
+        int xIndex = 0;
+        if (subpops == null) subpops = new ArrayList<>();
+        for (int idx : include) {
+            float y = 0f;
+            if (idx >= 0 && idx < subpops.size()) {
+                Integer v = subpops.get(idx);
+                y = (v != null) ? v : 0f;
+            }
+            values.add(new BarEntry(xIndex, y));
+            xIndex++;
         }
         BarDataSet set1 = new BarDataSet(values, SET_LABEL);
         ArrayList<IBarDataSet> dataSets = new ArrayList<>();
-        set1.setColors(colors);
         set1.setColors(colors);
         dataSets.add(set1);
 
@@ -285,10 +292,8 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
         LegendEntry l1=new LegendEntry("CALHIV",Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#9B51E0"));
         LegendEntry l2=new LegendEntry("HEI", Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#E84AE0"));
         LegendEntry l3=new LegendEntry("CWLHIV",Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#BF51E0"));
-        LegendEntry l4=new LegendEntry("AGYW", Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#D338A0"));
         LegendEntry l5=new LegendEntry("C/ASSV",Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#DA617E"));
-        LegendEntry l6=new LegendEntry("FSW", Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#FBA1B7"));
-        l.setCustom(new LegendEntry[]{l1,l2,l3,l4,l5,l6});
+        l.setCustom(new LegendEntry[]{l1,l2,l3,l5});
         // l.setWordWrapEnabled(true);
 
         // LegendEntry l1=new LegendEntry("Male",Legend.LegendForm.CIRCLE,10f,2f,null,Color.YELLOW);
