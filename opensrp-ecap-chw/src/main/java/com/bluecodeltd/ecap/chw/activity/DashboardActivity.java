@@ -175,14 +175,15 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
                     textColor = Color.WHITE;
                     subTextColor = Color.WHITE;
                 } else {
-                    bgColor = Color.parseColor("#F6DE27"); // light yellow (Material Yellow 200)
+                    bgColor = Color.parseColor("#F1BA0B"); // light yellow (Material Yellow 200)
                     textColor = Color.BLACK;
                     subTextColor = Color.BLACK;
                 }
                 if (dueCardview != null) dueCardview.setCardBackgroundColor(bgColor);
-                allDueVisits.setTextColor(textColor);
-                try { binding.dueVisitsView.setTextColor(subTextColor); } catch (Exception ignored) {}
-                try { binding.iconDueVisits.setColorFilter(subTextColor, PorterDuff.Mode.SRC_IN); } catch (Exception ignored) {}
+                // Force calendar icon, count, and label to white as requested
+                allDueVisits.setTextColor(Color.WHITE);
+                try { binding.iconDueVisits.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN); } catch (Exception ignored) {}
+                try { binding.dueVisitsView.setTextColor(Color.WHITE); } catch (Exception ignored) {}
                 BarData data = dataForBarchart(state.getSubpops());
                 configureChartAppearance();
                 prepareChartData(data);
