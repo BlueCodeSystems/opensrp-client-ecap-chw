@@ -609,14 +609,16 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
     }
 
     private void setupFabVisibility() {
+        // Ensure initial state: show only on Overview (position 0)
+        try {
+            fab.setVisibility(mViewPager.getCurrentItem() == 0 ? View.VISIBLE : View.GONE);
+        } catch (Exception ignored) {}
+
         mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
-                if (position == 1 || position == 2 || position == 3) {
-                    fab.setVisibility(View.GONE);
-                } else {
-                    fab.setVisibility(View.VISIBLE);
-                }
+                // Floating menu should only appear on the Overview fragment
+                fab.setVisibility(position == 0 ? View.VISIBLE : View.GONE);
             }
 
         });
