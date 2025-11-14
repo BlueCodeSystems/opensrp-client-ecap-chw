@@ -10,14 +10,14 @@ import com.bluecodeltd.ecap.chw.dao.IndexPersonDao
 import com.bluecodeltd.ecap.chw.model.Child
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.time.LocalTime
+import java.time.LocalDateTime
 
 data class DashboardState(
     val visitsDue: Int = 0,
     val subpops: ArrayList<Int> = arrayListOf(),
     val householdsCount: String? = null,
     val vcasCount: String? = null,
-    val lastUpdated: LocalTime? = null
+    val lastUpdated: LocalDateTime? = null
 )
 
 class DashboardViewModel : ViewModel() {
@@ -26,7 +26,7 @@ class DashboardViewModel : ViewModel() {
 
     fun refresh(caseworkerPhone: String? = null) {
         viewModelScope.launch(Dispatchers.IO) {
-            val now = LocalTime.now()
+            val now = LocalDateTime.now()
             val visitDates = CaregiverVisitationDao.getAllVisitDates()
             val visitsDue = computeVisitsDue(visitDates)
             val subpops: ArrayList<Int> = if (caseworkerPhone.isNullOrEmpty())

@@ -63,6 +63,7 @@ import org.smartregister.chw.core.custom_views.NavigationMenu;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -151,7 +152,8 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
         Bundle extras = getIntent().getExtras();
         String username = extras.getString("username");
         String password = extras.getString("password");
-        dtf = DateTimeFormatter.ofPattern("HH:mm");
+        // Last updated format: 01 Jan 2025, 10:30
+        dtf = DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm");
         colors = new ArrayList<Integer>();
 
         appUpdater = new AppUpdater(DashboardActivity.this);
@@ -170,7 +172,10 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
                 allHouseHoldsCount = binding.allHouseholdsNumber;
                 allHouseHoldsCount.setText(state.getHouseholdsCount() != null ? state.getHouseholdsCount() : "0");
                 allVcasCount.setText(state.getVcasCount());
-                if (state.getLastUpdated() != null) lastUpdated.setText(String.valueOf(dtf.format(state.getLastUpdated())));
+                if (state.getLastUpdated() != null) {
+                    // state.lastUpdated is LocalDateTime
+                    lastUpdated.setText(dtf.format(state.getLastUpdated()));
+                }
                 loadingDataProgressBar.setVisibility(View.INVISIBLE);
             } catch (Exception ignored) {}
         });
