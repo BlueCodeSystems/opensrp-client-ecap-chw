@@ -164,8 +164,25 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
         dashboardViewModel.getState().observe(this, state -> {
             if (state == null) return;
             try {
-                allDueVisits.setText(String.valueOf(state.getVisitsDue()));
-                if (state.getVisitsDue() > 0) allDueVisits.setTextColor(Color.WHITE);
+                int visits = state.getVisitsDue();
+                allDueVisits.setText(String.valueOf(visits));
+                // Color code due card: <5 light yellow, >5 red
+                int bgColor;
+                int textColor;
+                int subTextColor;
+                if (visits > 5) {
+                    bgColor = Color.parseColor("#EF4444"); // red
+                    textColor = Color.WHITE;
+                    subTextColor = Color.WHITE;
+                } else {
+                    bgColor = Color.parseColor("#F6DE27"); // light yellow (Material Yellow 200)
+                    textColor = Color.BLACK;
+                    subTextColor = Color.BLACK;
+                }
+                if (dueCardview != null) dueCardview.setCardBackgroundColor(bgColor);
+                allDueVisits.setTextColor(textColor);
+                try { binding.dueVisitsView.setTextColor(subTextColor); } catch (Exception ignored) {}
+                try { binding.iconDueVisits.setColorFilter(subTextColor, PorterDuff.Mode.SRC_IN); } catch (Exception ignored) {}
                 BarData data = dataForBarchart(state.getSubpops());
                 configureChartAppearance();
                 prepareChartData(data);
