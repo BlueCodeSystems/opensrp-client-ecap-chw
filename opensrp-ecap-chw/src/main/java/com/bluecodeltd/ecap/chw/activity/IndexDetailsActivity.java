@@ -1837,6 +1837,26 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
             case "tb_screening":
                 try { formToBeOpened.put("entity_id", this.indexVCA.getBase_entity_id()); } catch (Exception ignore) {}
+                try {
+                    // Show age-appropriate TB symptom fields
+                    Double tbAge = getAndCalculateAge(indexVCA.getAdolescent_birthdate());
+                    JSONObject lt10 = getFieldJSONObject(fields(formToBeOpened, "step1"), "tb_symptoms_child_lt10");
+                    JSONObject lt10Other = getFieldJSONObject(fields(formToBeOpened, "step1"), "tb_symptoms_child_lt10_other");
+                    JSONObject plus10 = getFieldJSONObject(fields(formToBeOpened, "step1"), "tb_symptoms_10plus");
+                    JSONObject plus10Other = getFieldJSONObject(fields(formToBeOpened, "step1"), "tb_symptoms_10plus_other");
+
+                    if (tbAge != null) {
+                        if (tbAge < 10.0) {
+                            // Hide 10+ fields
+                            if (plus10 != null) plus10.put("type", "hidden");
+                            if (plus10Other != null) plus10Other.put("type", "hidden");
+                        } else {
+                            // Hide <10 fields
+                            if (lt10 != null) lt10.put("type", "hidden");
+                            if (lt10Other != null) lt10Other.put("type", "hidden");
+                        }
+                    }
+                } catch (Exception ignore) {}
                 break;
 
     }
