@@ -2,6 +2,7 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -134,6 +135,19 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
         loadingDataProgressBar = binding.dashProgressbar;
         facilityInformationSwitch = binding.informationSwitch;
         allHouseHoldsCount = binding.allHouseholdsNumber;
+        // Card taps: open respective registers
+        if (binding.cardView1 != null) {
+            binding.cardView1.setOnClickListener(v -> {
+                Intent intent = new Intent(DashboardActivity.this, IndexRegisterActivity.class);
+                startActivity(intent);
+            });
+        }
+        if (binding.cardView2 != null) {
+            binding.cardView2.setOnClickListener(v -> {
+                Intent intent = new Intent(DashboardActivity.this, HouseholdIndexActivity.class);
+                startActivity(intent);
+            });
+        }
         Bundle extras = getIntent().getExtras();
         String username = extras.getString("username");
         String password = extras.getString("password");
