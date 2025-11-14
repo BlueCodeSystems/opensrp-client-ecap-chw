@@ -180,12 +180,12 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
             } catch (Exception ignored) {}
         });
 
-        colors.add(Color.parseColor("#9B51E0"));
-        colors.add(Color.parseColor("#E84AE0"));
-        colors.add(Color.parseColor("#BF51E0"));
-        colors.add(Color.parseColor("#D338A0"));
-        colors.add(Color.parseColor("#DA617E"));
-        colors.add(Color.parseColor("#FBA1B7")  );
+        // Professional, high-contrast palette (4 series): Blue, Emerald, Violet, Amber
+        colors.clear();
+        colors.add(Color.parseColor("#B3CEE5")); // CALHIV
+        colors.add(Color.parseColor("#87CEEB")); // HEI
+        colors.add(Color.parseColor("#89A3B2")); // CWLHIV
+        colors.add(Color.parseColor("#967BB6")); // C/ASSV
         if (username != null && password != null) {
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(DashboardActivity.this);
             String code = sp.getString("code", "0000");
@@ -308,10 +308,11 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
         // l.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
 
         l.setYEntrySpace(10f);
-        LegendEntry l1=new LegendEntry("CALHIV",Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#9B51E0"));
-        LegendEntry l2=new LegendEntry("HEI", Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#E84AE0"));
-        LegendEntry l3=new LegendEntry("CWLHIV",Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#BF51E0"));
-        LegendEntry l5=new LegendEntry("C/ASSV",Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#DA617E"));
+
+        LegendEntry l1=new LegendEntry("CALHIV",Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#B3CEE5"));
+        LegendEntry l2=new LegendEntry("HEI", Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#87CEEB"));
+        LegendEntry l3=new LegendEntry("CWLHIV",Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#89A3B2"));
+        LegendEntry l5=new LegendEntry("C/ASSV",Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#967BB6"));
         l.setCustom(new LegendEntry[]{l1,l2,l3,l5});
         // l.setWordWrapEnabled(true);
 

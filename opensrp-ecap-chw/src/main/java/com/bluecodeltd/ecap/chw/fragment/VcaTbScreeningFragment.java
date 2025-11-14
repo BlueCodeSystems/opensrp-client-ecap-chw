@@ -123,6 +123,41 @@ public class VcaTbScreeningFragment extends Fragment {
                 } else if (item != null) {
                     CoreJsonFormUtils.populateJsonForm(form, new ObjectMapper().convertValue(item, Map.class));
                 }
+
+                // Age-based visibility for TB symptoms fields in tb_screening form
+                if ("tb_screening".equals(formName)) {
+                    try {
+                        com.bluecodeltd.ecap.chw.model.VcaScreeningModel v = ((IndexDetailsActivity) requireActivity()).indexVCA;
+                        String dob = v != null ? v.getAdolescent_birthdate() : null;
+                        if (dob != null && !dob.trim().isEmpty()) {
+                            java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                            java.time.LocalDate dobDate = java.time.LocalDate.parse(dob, formatter);
+                            java.time.LocalDate today = java.time.LocalDate.now();
+                            java.time.Period p = java.time.Period.between(dobDate, today);
+                            double years = p.getYears();
+                            // For under 1 year, keep it < 10 logic
+                            if (years == 0) years = 0.5d;
+
+                            org.json.JSONArray flds = form.getJSONObject("step1").getJSONArray("fields");
+                            org.json.JSONObject lt10 = null, lt10Other = null, plus10 = null, plus10Other = null;
+                            for (int i = 0; i < flds.length(); i++) {
+                                org.json.JSONObject fObj = flds.getJSONObject(i);
+                                String key = fObj.optString("key");
+                                if ("tb_symptoms_child_lt10".equals(key)) lt10 = fObj;
+                                else if ("tb_symptoms_child_lt10_other".equals(key)) lt10Other = fObj;
+                                else if ("tb_symptoms_10plus".equals(key)) plus10 = fObj;
+                                else if ("tb_symptoms_10plus_other".equals(key)) plus10Other = fObj;
+                            }
+                            if (years < 10.0) {
+                                if (plus10 != null) plus10.put("type", "hidden");
+                                if (plus10Other != null) plus10Other.put("type", "hidden");
+                            } else {
+                                if (lt10 != null) lt10.put("type", "hidden");
+                                if (lt10Other != null) lt10Other.put("type", "hidden");
+                            }
+                        }
+                    } catch (Exception ignored) { }
+                }
             } catch (Exception ignored) {}
 
             Form f = new Form();
