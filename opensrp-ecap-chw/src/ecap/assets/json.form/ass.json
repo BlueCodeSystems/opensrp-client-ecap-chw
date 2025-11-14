@@ -59,7 +59,7 @@
         "key": "index_vca_sub_pop_part1",
         "type": "label",
         "label_text_style": "bold",
-        "text": "Part A: Index VCA Sub Population",
+        "text": "Part A: Index CA Sub Population",
         "text_color": "#000000",
         "v_required": {
           "value": false
@@ -73,7 +73,7 @@
         "read_only": "true",
         "font": "bald",
         "type": "edit_text",
-        "hint": "VCA First Name",
+        "hint": "CA First Name",
         "edit_type": "name",
         "value": "",
         "v_regex": {
@@ -89,7 +89,7 @@
         "read_only": "true",
         "font": "bald",
         "type": "edit_text",
-        "hint": "VCA Last Name",
+        "hint": "CA Last Name",
         "edit_type": "name",
         "value": "",
         "v_regex": {
@@ -104,7 +104,7 @@
         "openmrs_entity_id": "subpop_dob",
         "read_only": "true",
         "type": "date_picker",
-        "hint": "VCA Date Of Birth",
+        "hint": "CA Date Of Birth",
         "look_up": "true",
         "expanded": false,
         "duration": {
@@ -121,7 +121,7 @@
         "read_only": "true",
         "font": "bald",
         "type": "edit_text",
-        "hint": "Age of VCA",
+        "hint": "Age of CA",
         "calculation": {
           "rules-engine": {
             "ex-rules": {
@@ -138,7 +138,7 @@
         "read_only": "true",
         "font": "bald",
         "type": "edit_text",
-        "hint": "Gender of VCA",
+        "hint": "Gender of CA",
         "value": "",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",

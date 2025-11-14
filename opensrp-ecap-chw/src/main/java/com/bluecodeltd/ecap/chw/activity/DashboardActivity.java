@@ -148,7 +148,7 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
             if (state == null) return;
             try {
                 allDueVisits.setText(String.valueOf(state.getVisitsDue()));
-                if (state.getVisitsDue() > 0) allDueVisits.setTextColor(Color.RED);
+                if (state.getVisitsDue() > 0) allDueVisits.setTextColor(Color.WHITE);
                 BarData data = dataForBarchart(state.getSubpops());
                 configureChartAppearance();
                 prepareChartData(data);

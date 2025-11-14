@@ -72,7 +72,7 @@
         "openmrs_entity_id": "age",
         "type": "edit_text",
         "read_only": "true",
-        "hint": "VCA Age",
+        "hint": "CA Age",
         "calculation": {
           "rules-engine": {
             "ex-rules": {
@@ -173,7 +173,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_on_hiv_treatment",
         "type": "native_radio",
-        "label": "Is the VCA on ART?",
+        "label": "Is the CA on ART?",
         "read_only": true,
         "options": [
           {
@@ -231,7 +231,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_started_art",
         "type": "date_picker",
-        "hint": "When was the VCA initiated on ART?",
+        "hint": "When was the CA initiated on ART?",
         "expanded": false,
         "duration": {
           "label": ""
@@ -241,7 +241,7 @@
         "max_date": "today",
         "v_required": {
           "value": false,
-          "err": "When was the VCA initiated on ART"
+          "err": "When was the CA initiated on ART"
         },
         "relevance": {
           "step1:is_on_hiv_treatment": {
@@ -256,7 +256,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "appointment",
         "type": "native_radio",
-        "label": "Has the VCA been regularly \nattending ART appointments \nand collecting drugs from the \nfacility on schedule?",
+        "label": "Has the CA been regularly \nattending ART appointments \nand collecting drugs from the \nfacility on schedule?",
         "options": [
           {
             "key": "yes",
@@ -299,7 +299,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "taking_art",
         "type": "native_radio",
-        "label": "In the past year, has the VCA been taking ART regularly as prescribed ?",
+        "label": "In the past year, has the CA been taking ART regularly as prescribed ?",
         "options": [
           {
             "key": "yes",
@@ -375,7 +375,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "viral_load",
         "type": "native_radio",
-        "label": "Has the VCA had a viral load test in the past 12 months?",
+        "label": "Has the CA had a viral load test in the past 12 months?",
         "value": "yes",
         "read_only": true,
         "options": [
@@ -437,7 +437,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "documented",
         "type": "native_radio",
-        "label": "Was the VCA documented as virally suppressed (1000 copies/mL) in the most recent viral load test?",
+        "label": "Was the CA documented as virally suppressed (1000 copies/mL) in the most recent viral load test?",
         "options": [
           {
             "key": "Less than 1000 copies/ml",
@@ -546,7 +546,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "vca_exposed",
         "type": "native_radio",
-        "label": "Since the last HIV test, has the VCA been exposed to: Breastfeeding, \nSexual   abuse   or Rape,\n Tattoos/piercings",
+        "label": "Since the last HIV test, has the CA been exposed to: Breastfeeding, \nSexual   abuse   or Rape,\n Tattoos/piercings",
         "label_text_style": "",
         "text_color": "#000000",
         "exclusive": [
@@ -598,7 +598,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "toaster_age",
         "type": "toaster_notes",
-        "text": "The following questions should not be asked directly to VCA less than 10 years",
+        "text": "The following questions should not be asked directly to CA less than 10 years",
         "toaster_type": "info",
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
@@ -838,7 +838,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "The following questions are to be asked directly to the VCA",
+        "text": "The following questions are to be asked directly to the CA",
         "toaster_type": "info",
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",

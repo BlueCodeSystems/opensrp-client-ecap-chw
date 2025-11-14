@@ -186,7 +186,7 @@
 
           {
             "key": "VCA died",
-            "text": "VCA died"
+            "text": "CA died"
           },
           {
             "key": "Moved (Relocated)",
@@ -198,7 +198,7 @@
           },
           {
             "key": "HH does not have VCA who falls under priority sub-population",
-            "text": "HH does not have VCA who falls under priority sub-population"
+            "text": "HH does not have CA who falls under priority sub-population"
           },
           {
             "key": "other",

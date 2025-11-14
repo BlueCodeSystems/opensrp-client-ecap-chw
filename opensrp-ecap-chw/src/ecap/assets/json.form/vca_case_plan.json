@@ -53,7 +53,7 @@
     }
   },
   "step1": {
-    "title": "VCA Case Plan",
+    "title": "CA Case Plan",
     "fields": [
       {
         "key": "base_entity_id",
@@ -206,7 +206,7 @@
         "openmrs_entity_id": "first_name",
         "read_only": "true",
         "type": "edit_text",
-        "hint": "VCA First Name"
+        "hint": "CA First Name"
       },
       {
         "key": "last_name",
@@ -215,7 +215,7 @@
         "openmrs_entity_id": "last_name",
         "read_only": "true",
         "type": "edit_text",
-        "hint": "VCA Last Name"
+        "hint": "CA Last Name"
       },
       {
         "key": "dob",
@@ -232,7 +232,7 @@
         "openmrs_entity_id": "age",
         "read_only": "true",
         "type": "edit_text",
-        "hint": "VCA`s Age",
+        "hint": "CA`s Age",
         "calculation": {
           "rules-engine": {
             "ex-rules": {
@@ -248,7 +248,7 @@
         "openmrs_entity_id": "gender",
         "read_only": "true",
         "type": "edit_text",
-        "hint": "VCA`s Gender"
+        "hint": "CA`s Gender"
       },
       {
         "key": "calhiv",

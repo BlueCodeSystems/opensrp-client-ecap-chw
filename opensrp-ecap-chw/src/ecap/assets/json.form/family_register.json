@@ -63,7 +63,7 @@
         "text_color": "#000000",
         "label_text_style": "bold",
         "type": "label",
-        "text": "A. Index VCA Sub Population"
+        "text": "A. Index CA Sub Population"
       },
       {
         "key": "vca_age",
@@ -71,7 +71,7 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "vca_age",
         "type": "edit_text",
-        "hint": "VCA Age",
+        "hint": "CA Age",
         "read_only": "true",
         "edit_type": "name",
         "value": ""
@@ -195,7 +195,7 @@
         "key": "other_vca_sub_pop_screening_in_household",
         "type": "label",
         "label_text_style": "bold",
-        "text": "D. Screening for other VCA Sub Populations and other vulnerable children/adolescents in the Household",
+        "text": "D. Screening for other CA Sub Populations and other vulnerable children/adolescents in the Household",
         "text_color": "#000000",
         "v_required": {
           "value": false
@@ -205,7 +205,7 @@
         "key": "refer_to_vca_screening_form",
         "type": "label",
         "label_text_style": "italic",
-        "text": "* Please Use Household Member Form to Screen for other VCA Sub Populations and VCAs in Household.",
+        "text": "* Please Use Household Member Form to Screen for other CA Sub Populations and CAs in Household.",
         "text_color": "#051204255",
         "v_required": {
           "value": false
