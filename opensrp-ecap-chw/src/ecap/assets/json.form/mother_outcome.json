@@ -1,0 +1,163 @@
+{
+  "count": "1",
+  "encounter_type": "Final Outcome of Mother",
+  "entity_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": ""
+  },
+  "step1": {
+    "title": "Final Outcome of Mother",
+    "display_back_button": "true",
+    "fields": [
+      {
+        "key": "mother_final_outcome_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mother_final_outcome_date",
+        "type": "date_picker",
+        "hint": "Date of Final Outcome",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "01-01-1900",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Please enter Date of Final Outcome"
+        }
+      },
+      {
+        "key": "mother_lost_to_follow_up",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mother_lost_to_follow_up",
+        "type": "native_radio",
+        "label": "Lost to follow up",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate Lost to follow up"
+        }
+      },
+      {
+        "key": "mother_dead",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mother_dead",
+        "type": "native_radio",
+        "label": "Dead",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate if mother is dead"
+        }
+      },
+      {
+        "key": "mother_transited_out",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mother_transited_out",
+        "type": "native_radio",
+        "label": "Transited out",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate if mother has transited out"
+        }
+      },
+      {
+        "key": "mother_transferred_community_pmtct",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mother_transferred_community_pmtct",
+        "type": "native_radio",
+        "label": "Transferred to community PMTCT",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate if transferred to community PMTCT"
+        }
+      },
+      {
+        "key": "mother_exited_ovc_program",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mother_exited_ovc_program",
+        "type": "native_radio",
+        "label": "Exited From the OVC Comprehensive Program",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate if exited from the OVC program"
+        }
+      },
+      {
+        "key": "mother_exited_ovc_reason",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mother_exited_ovc_reason",
+        "type": "edit_text",
+        "hint": "If Yes, state reason for exit",
+        "v_required": {
+          "value": false,
+          "err": "Please state reason for exit"
+        }
+      }
+    ]
+  }
+}

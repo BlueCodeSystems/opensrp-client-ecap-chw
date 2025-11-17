@@ -95,7 +95,10 @@ public class MotherDetail extends AppCompatActivity {
     private FloatingActionButton fab;
     CommonPersonObjectClient commonPersonObjectClient, commonMother;
     ObjectMapper oMapper;
-    private RelativeLayout cLayout, mLayout;
+    private RelativeLayout cLayout, mLayout,
+            motherAncLayout, motherDeliveryLayout, motherLongitudinalLayout,
+            motherOutcomeLayout, motherPostnatalLayout,
+            childFinalOutcomeLayout, childLongitudinalLayout, childPostnatalLayout;
     private UniqueIdRepository uniqueIdRepository;
     public String vca_id;
     public Household family;
@@ -119,6 +122,14 @@ public class MotherDetail extends AppCompatActivity {
         txtAge = binding.motherAge;
         mLayout = binding.motherForm;
         cLayout = binding.childForm;
+        motherAncLayout = findViewById(R.id.mother_anc);
+        motherDeliveryLayout = findViewById(R.id.mother_delivery);
+        motherLongitudinalLayout = findViewById(R.id.mother_longitudinal_follow_up);
+        motherOutcomeLayout = findViewById(R.id.mother_outcome);
+        motherPostnatalLayout = findViewById(R.id.mother_postnatal_care);
+        childFinalOutcomeLayout = findViewById(R.id.child_final_outcome);
+        childLongitudinalLayout = findViewById(R.id.child_longitudinal_follow_up);
+        childPostnatalLayout = findViewById(R.id.child_postnatal_care);
 
         commonMother = (CommonPersonObjectClient) getIntent().getSerializableExtra("mother");
 
@@ -293,6 +304,86 @@ public class MotherDetail extends AppCompatActivity {
 
                 try {
                     openFormUsingFormUtils(MotherDetail.this,"child");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+
+            case R.id.mother_anc:
+
+                try {
+                    openFormUsingFormUtils(MotherDetail.this,"mother_anc");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+
+            case R.id.mother_delivery:
+
+                try {
+                    openFormUsingFormUtils(MotherDetail.this,"mother_delivery");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+
+            case R.id.mother_longitudinal_follow_up:
+
+                try {
+                    openFormUsingFormUtils(MotherDetail.this,"mother_longitudinal_follow_up");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+
+            case R.id.mother_outcome:
+
+                try {
+                    openFormUsingFormUtils(MotherDetail.this,"mother_outcome");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+
+            case R.id.mother_postnatal_care:
+
+                try {
+                    openFormUsingFormUtils(MotherDetail.this,"mother_postnatal_care");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+
+            case R.id.child_final_outcome:
+
+                try {
+                    openFormUsingFormUtils(MotherDetail.this,"child_final_outcome");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+
+            case R.id.child_longitudinal_follow_up:
+
+                try {
+                    openFormUsingFormUtils(MotherDetail.this,"child_longitudinal_follow_up");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+
+            case R.id.child_postnatal_care:
+
+                try {
+                    openFormUsingFormUtils(MotherDetail.this,"child_postnatal_care");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -618,6 +709,14 @@ public class MotherDetail extends AppCompatActivity {
             fab.startAnimation(rotate_forward);
             mLayout.setVisibility(View.VISIBLE);
             cLayout.setVisibility(View.VISIBLE);
+            if (motherAncLayout != null) motherAncLayout.setVisibility(View.VISIBLE);
+            if (motherDeliveryLayout != null) motherDeliveryLayout.setVisibility(View.VISIBLE);
+            if (motherLongitudinalLayout != null) motherLongitudinalLayout.setVisibility(View.VISIBLE);
+            if (motherOutcomeLayout != null) motherOutcomeLayout.setVisibility(View.VISIBLE);
+            if (motherPostnatalLayout != null) motherPostnatalLayout.setVisibility(View.VISIBLE);
+            if (childFinalOutcomeLayout != null) childFinalOutcomeLayout.setVisibility(View.VISIBLE);
+            if (childLongitudinalLayout != null) childLongitudinalLayout.setVisibility(View.VISIBLE);
+            if (childPostnatalLayout != null) childPostnatalLayout.setVisibility(View.VISIBLE);
 
         }
     }
@@ -627,5 +726,13 @@ public class MotherDetail extends AppCompatActivity {
         isFabOpen = false;
         cLayout.setVisibility(View.GONE);
         mLayout.setVisibility(View.GONE);
+        if (motherAncLayout != null) motherAncLayout.setVisibility(View.GONE);
+        if (motherDeliveryLayout != null) motherDeliveryLayout.setVisibility(View.GONE);
+        if (motherLongitudinalLayout != null) motherLongitudinalLayout.setVisibility(View.GONE);
+        if (motherOutcomeLayout != null) motherOutcomeLayout.setVisibility(View.GONE);
+        if (motherPostnatalLayout != null) motherPostnatalLayout.setVisibility(View.GONE);
+        if (childFinalOutcomeLayout != null) childFinalOutcomeLayout.setVisibility(View.GONE);
+        if (childLongitudinalLayout != null) childLongitudinalLayout.setVisibility(View.GONE);
+        if (childPostnatalLayout != null) childPostnatalLayout.setVisibility(View.GONE);
     }
 }

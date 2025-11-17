@@ -96,4 +96,11 @@ priority: 1
 condition: "step1_pregnant_mother.contains('yes') || step1_mother_breastfeeding.contains('yes')"
 actions:
   - "isRelevant = true"
+---
+name: step1_mother_children_age_band
+description: mother_children_age_band
+priority: 1
+condition: "step1_pregnant_mother.contains('yes') || step1_mother_breastfeeding.contains('yes')"
+actions:
+  - "isRelevant = true"
 

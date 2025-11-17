@@ -1,0 +1,225 @@
+{
+  "count": "1",
+  "encounter_type": "Post Natal Care-Infant",
+  "entity_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": ""
+  },
+  "step1": {
+    "title": "Post Natal Care-Infant",
+    "display_back_button": "true",
+    "fields": [
+      {
+        "key": "pnc_infant_visit_type",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pnc_infant_visit_type",
+        "type": "native_radio",
+        "label": "PNC Visit (Infant)",
+        "options": [
+          { "key": "6_days", "text": "6 Days" },
+          { "key": "6_weeks", "text": "6 Weeks" },
+          { "key": "6_months", "text": "6 Months" },
+          { "key": "12_months", "text": "12 Months" },
+          { "key": "18_months", "text": "18 Months" }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Please select the PNC visit"
+        }
+      },
+      {
+        "key": "pnc_infant_feeding_type",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pnc_infant_feeding_type",
+        "type": "native_radio",
+        "label": "Type of Feeding",
+        "options": [
+          { "key": "exclusive_bf", "text": "Exclusive Breastfeeding" },
+          { "key": "mixed_feeding", "text": "Mixed Feeding" },
+          { "key": "replacement_feeding", "text": "Replacement / Non-breastfeeding" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please select the type of feeding"
+        }
+      },
+      {
+        "key": "pnc_infant_hiv_test_done",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pnc_infant_hiv_test_done",
+        "type": "native_radio",
+        "label": "HIV Test Result (Infant)",
+        "options": [
+          { "key": "positive", "text": "Positive" },
+          { "key": "negative", "text": "Negative" },
+          { "key": "inconclusive", "text": "Inconclusive" },
+          { "key": "not_done", "text": "Not Done" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please select the HIV test result"
+        }
+      },
+      {
+        "key": "pnc_infant_on_art_if_positive",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pnc_infant_on_art_if_positive",
+        "type": "native_radio",
+        "label": "If HIV-positive, Infant on ART",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" },
+          { "key": "not_applicable", "text": "Not Applicable" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate if infant is on ART"
+        },
+        "relevance": {
+          "step1:pnc_infant_hiv_test_done": {
+            "type": "string",
+            "ex": "equalTo(., \"positive\")"
+          }
+        }
+      },
+      {
+        "key": "pnc_infant_ctx_given",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pnc_infant_ctx_given",
+        "type": "native_radio",
+        "label": "Cotrimoxazole (CTX) Given",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate if CTX was given"
+        }
+      },
+      {
+        "key": "pnc_infant_immunization_up_to_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pnc_infant_immunization_up_to_date",
+        "type": "native_radio",
+        "label": "Immunizations Up To Date",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate immunization status"
+        }
+      },
+      {
+        "key": "pnc_infant_growth_monitoring_done",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pnc_infant_growth_monitoring_done",
+        "type": "native_radio",
+        "label": "Growth Monitoring Done",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate if growth monitoring was done"
+        }
+      },
+      {
+        "key": "pnc_infant_growth_normal",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pnc_infant_growth_normal",
+        "type": "native_radio",
+        "label": "Growth Within Normal Range",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" },
+          { "key": "not_applicable", "text": "Not Applicable" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate growth status"
+        }
+      },
+      {
+        "key": "pnc_infant_referred_for_complications",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pnc_infant_referred_for_complications",
+        "type": "native_radio",
+        "label": "Referred for Complications/Illness",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate if infant was referred"
+        }
+      },
+      {
+        "key": "pnc_infant_comments",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pnc_infant_comments",
+        "type": "edit_text",
+        "hint": "Comments",
+        "v_required": {
+          "value": false,
+          "err": "Please enter comments"
+        }
+      }
+    ]
+  }
+}

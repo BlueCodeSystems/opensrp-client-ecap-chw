@@ -1,0 +1,186 @@
+{
+  "count": "1",
+  "encounter_type": "Post Natal Care-Mother",
+  "entity_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": ""
+  },
+  "step1": {
+    "title": "Post Natal Care-Mother",
+    "display_back_button": "true",
+    "fields": [
+      {
+        "key": "pnc_visit_type",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pnc_visit_type",
+        "type": "native_radio",
+        "label": "PNC Visit",
+        "options": [
+          { "key": "6_days", "text": "6 Days" },
+          { "key": "6_weeks", "text": "6 Weeks" },
+          { "key": "6_months", "text": "6 Months" },
+          { "key": "12_months", "text": "12 Months" },
+          { "key": "18_months", "text": "18 Months" }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Please select the PNC visit"
+        }
+      },
+      {
+        "key": "pnc_type_of_feeding",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pnc_type_of_feeding",
+        "type": "native_radio",
+        "label": "Type of Feeding (1. Exclusive Breastfeeding, 2. Mixed Feeding, 3. Non-breastfeeding)",
+        "options": [
+          { "key": "exclusive_bf", "text": "Exclusive Breastfeeding" },
+          { "key": "mixed_feeding", "text": "Mixed Feeding" },
+          { "key": "non_breastfeeding", "text": "Non-breastfeeding" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please select the type of feeding"
+        }
+      },
+      {
+        "key": "pnc_hiv_test_done",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pnc_hiv_test_done",
+        "type": "native_radio",
+        "label": "HIV Test Done (P/N/I/Not Done)",
+        "options": [
+          { "key": "positive", "text": "Positive" },
+          { "key": "negative", "text": "Negative" },
+          { "key": "inconclusive", "text": "Inconclusive" },
+          { "key": "not_done", "text": "Not Done" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please select the HIV test result"
+        }
+      },
+      {
+        "key": "pnc_on_prep",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pnc_on_prep",
+        "type": "native_radio",
+        "label": "On PrEP",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" },
+          { "key": "not_applicable", "text": "Not Applicable" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate if the client is on PrEP"
+        }
+      },
+      {
+        "key": "pnc_fp_counselling",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pnc_fp_counselling",
+        "type": "native_radio",
+        "label": "Family Planning Counselling",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate if FP counselling was provided"
+        }
+      },
+      {
+        "key": "pnc_cervical_cancer_screening",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pnc_cervical_cancer_screening",
+        "type": "native_radio",
+        "label": "Cervical Cancer Screening",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate if cervical cancer screening was done"
+        }
+      },
+      {
+        "key": "pnc_sti_screening",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pnc_sti_screening",
+        "type": "native_radio",
+        "label": "STI Screening",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate if STI screening was done"
+        }
+      },
+      {
+        "key": "pnc_comments",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pnc_comments",
+        "type": "edit_text",
+        "hint": "Comments",
+        "v_required": {
+          "value": false,
+          "err": "Please enter comments"
+        }
+      }
+    ]
+  }
+}

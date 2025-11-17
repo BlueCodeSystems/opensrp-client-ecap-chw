@@ -1,0 +1,543 @@
+{
+  "count": "1",
+  "encounter_type": "Longitudinal Follow Up Record",
+  "entity_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": ""
+  },
+  "step1": {
+    "title": "Longitudinal Follow Up Record",
+    "display_back_button": "true",
+    "fields": [
+      {
+        "key": "contact_count_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "contact_count_number",
+        "type": "native_radio",
+        "label": "Contact Count Number",
+        "options": [
+          { "key": "1", "text": "1" },
+          { "key": "2", "text": "2" },
+          { "key": "3", "text": "3" },
+          { "key": "4", "text": "4" },
+          { "key": "5", "text": "5" },
+          { "key": "6", "text": "6" },
+          { "key": "7", "text": "7" },
+          { "key": "8", "text": "8" }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Please select the contact count number"
+        }
+      },
+      {
+        "key": "lfu_date_of_visit",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_date_of_visit",
+        "type": "date_picker",
+        "hint": "Date of Visit",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "01-01-1900",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Please enter date of visit"
+        }
+      },
+      {
+        "key": "lfu_gestation_weeks",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_gestation_weeks",
+        "type": "edit_text",
+        "hint": "Gestation (Weeks)",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Please enter gestation in weeks"
+        }
+      },
+      {
+        "key": "lfu_weight_kg",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_weight_kg",
+        "type": "edit_text",
+        "hint": "Weight (KG)",
+        "edit_type": "decimal",
+        "v_required": {
+          "value": false,
+          "err": "Please enter weight in KG"
+        }
+      },
+      {
+        "key": "lfu_deworming",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_deworming",
+        "type": "native_radio",
+        "label": "Deworming",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate deworming"
+        }
+      },
+      {
+        "key": "lfu_current_tt_doses",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_current_tt_doses",
+        "type": "native_radio",
+        "label": "Current TT Doses",
+        "options": [
+          { "key": "1", "text": "1" },
+          { "key": "2", "text": "2" },
+          { "key": "3", "text": "3" },
+          { "key": "4", "text": "4" },
+          { "key": "5", "text": "5" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please select current TT doses"
+        }
+      },
+      {
+        "key": "lfu_folate",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_folate",
+        "type": "native_radio",
+        "label": "Folate (P/T)",
+        "options": [
+          { "key": "P", "text": "Prophylaxis (P)" },
+          { "key": "T", "text": "Treatment (T)" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please select folate status"
+        }
+      },
+      {
+        "key": "lfu_iron",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_iron",
+        "type": "native_radio",
+        "label": "Iron (P/T)",
+        "options": [
+          { "key": "P", "text": "Prophylaxis (P)" },
+          { "key": "T", "text": "Treatment (T)" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please select iron status"
+        }
+      },
+      {
+        "key": "lfu_hiv_subsequent_test_result",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_hiv_subsequent_test_result",
+        "type": "native_radio",
+        "label": "HIV subsequent Tests (P/N/I)",
+        "options": [
+          { "key": "P", "text": "Positive (P)" },
+          { "key": "N", "text": "Negative (N)" },
+          { "key": "I", "text": "Inconclusive (I)" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please select HIV subsequent test result"
+        }
+      },
+      {
+        "key": "lfu_enrolled_community_pmtct_if_positive",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_enrolled_community_pmtct_if_positive",
+        "type": "native_radio",
+        "label": "If HIV-positive, enrolled in community PMTCT",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate community PMTCT enrollment"
+        }
+      },
+      {
+        "key": "lfu_started_prep_if_negative",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_started_prep_if_negative",
+        "type": "native_radio",
+        "label": "If HIV-negative, started on PrEP",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate if started on PrEP"
+        }
+      },
+      {
+        "key": "lfu_syphilis_test_result",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_syphilis_test_result",
+        "type": "native_radio",
+        "label": "Syphilis Test (P/N/I)",
+        "options": [
+          { "key": "P", "text": "Positive (P)" },
+          { "key": "N", "text": "Negative (N)" },
+          { "key": "I", "text": "Inconclusive (I)" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please select syphilis test result"
+        }
+      },
+      {
+        "key": "lfu_syphilis_treatment_regimen",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_syphilis_treatment_regimen",
+        "type": "edit_text",
+        "hint": "If Syphilis is positive, indicate Treatment Regimen",
+        "v_required": {
+          "value": false,
+          "err": "Please indicate syphilis treatment regimen"
+        }
+      },
+      {
+        "key": "lfu_hepb_test_result",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_hepb_test_result",
+        "type": "native_radio",
+        "label": "Hepatitis B Test (P/N/I)",
+        "options": [
+          { "key": "P", "text": "Positive (P)" },
+          { "key": "N", "text": "Negative (N)" },
+          { "key": "I", "text": "Inconclusive (I)" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please select Hepatitis B test result"
+        }
+      },
+      {
+        "key": "lfu_hepb_on_treatment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_hepb_on_treatment",
+        "type": "native_radio",
+        "label": "If Hepatitis B is positive, on Treatment?",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate if on Hepatitis B treatment"
+        }
+      },
+      {
+        "key": "lfu_ipt_given_dose",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_ipt_given_dose",
+        "type": "edit_text",
+        "hint": "IPT Given (Dose)",
+        "v_required": {
+          "value": false,
+          "err": "Please enter IPT dose if given"
+        }
+      },
+      {
+        "key": "lfu_received_itn",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_received_itn",
+        "type": "native_radio",
+        "label": "Received ITN",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate if ITN received"
+        }
+      },
+      {
+        "key": "lfu_anc_as_couple",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_anc_as_couple",
+        "type": "native_radio",
+        "label": "Went to ANC as Couple?",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate if ANC was attended as couple"
+        }
+      },
+      {
+        "key": "lfu_partner_tested_hiv",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_partner_tested_hiv",
+        "type": "native_radio",
+        "label": "Partner Tested for HIV?",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" },
+          { "key": "declined", "text": "Declined" },
+          { "key": "not_applicable", "text": "Not Applicable" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please select partner HIV testing status"
+        }
+      },
+      {
+        "key": "lfu_partner_test_result",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_partner_test_result",
+        "type": "native_radio",
+        "label": "Partner’s Test Result",
+        "options": [
+          { "key": "positive", "text": "Positive" },
+          { "key": "negative", "text": "Negative" },
+          { "key": "known_positive", "text": "Known Positive" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please select partner HIV test result"
+        }
+      },
+      {
+        "key": "lfu_discordant",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_discordant",
+        "type": "native_radio",
+        "label": "Discordant",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" },
+          { "key": "not_applicable", "text": "Not Applicable" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate discordant status"
+        }
+      },
+      {
+        "key": "lfu_partner_on_art",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_partner_on_art",
+        "type": "native_radio",
+        "label": "Partner on ART",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" },
+          { "key": "not_applicable", "text": "Not Applicable" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate if partner is on ART"
+        }
+      },
+      {
+        "key": "lfu_partner_syphilis_test",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_partner_syphilis_test",
+        "type": "native_radio",
+        "label": "Partner Syphilis Test",
+        "options": [
+          { "key": "positive", "text": "Positive" },
+          { "key": "negative", "text": "Negative" },
+          { "key": "not_done", "text": "Not Done" },
+          { "key": "not_applicable", "text": "Not Applicable" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please select partner syphilis test result"
+        }
+      },
+      {
+        "key": "lfu_partner_hepb_screen",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_partner_hepb_screen",
+        "type": "native_radio",
+        "label": "Partner Hepatitis B Screen",
+        "options": [
+          { "key": "positive", "text": "Positive" },
+          { "key": "negative", "text": "Negative" },
+          { "key": "not_done", "text": "Not Done" },
+          { "key": "not_applicable", "text": "Not Applicable" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please select partner Hepatitis B screen result"
+        }
+      },
+      {
+        "key": "lfu_partner_started_prep",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_partner_started_prep",
+        "type": "native_radio",
+        "label": "Partner Started on PrEP",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" },
+          { "key": "not_applicable", "text": "Not Applicable" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate if partner started on PrEP"
+        }
+      },
+      {
+        "key": "lfu_breast_cancer_screening",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_breast_cancer_screening",
+        "type": "native_radio",
+        "label": "Breast Cancer Screening",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" },
+          { "key": "not_done", "text": "Not Done" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate breast cancer screening"
+        }
+      },
+      {
+        "key": "lfu_suspected_breast_cancer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_suspected_breast_cancer",
+        "type": "native_radio",
+        "label": "Suspected Breast Cancer",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate if breast cancer is suspected"
+        }
+      },
+      {
+        "key": "lfu_tb_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_tb_status",
+        "type": "native_radio",
+        "label": "TB Status",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" },
+          { "key": "on_treatment", "text": "On Treatment" },
+          { "key": "history_tb", "text": "History of TB" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please select TB status"
+        }
+      },
+      {
+        "key": "lfu_tpt_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_tpt_status",
+        "type": "native_radio",
+        "label": "Tuberculosis Preventive Therapy",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" },
+          { "key": "not_applicable", "text": "Not Applicable" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate TPT status"
+        }
+      },
+      {
+        "key": "lfu_special_conditions",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lfu_special_conditions",
+        "type": "edit_text",
+        "hint": "Previous/Present Conditions requiring special attention",
+        "v_required": {
+          "value": false,
+          "err": "Please enter conditions requiring special attention"
+        }
+      }
+    ]
+  }
+}

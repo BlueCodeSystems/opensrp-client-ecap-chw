@@ -84,6 +84,16 @@
         "read_only": "true"
       },
       {
+        "key": "household_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_id",
+        "type": "hidden",
+        "read_only": "true",
+        "hint": "Household ID",
+        "edit_type": "name"
+      },
+      {
         "key": "district",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -248,35 +258,17 @@
         }
       },
       {
-        "key": "first_name",
+        "key": "caregiver_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "first_name",
+        "openmrs_entity_id": "caregiver_name",
         "type": "edit_text",
-        "hint": "Mothers First Name",
+        "hint": "Mother's Full Name",
         "look_up": "true",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name can only contain letters"
-        },
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        }
-      },
-      {
-        "key": "last_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "last_name",
-        "type": "edit_text",
-        "hint": "Mothers Last Name",
-        "look_up": "true",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name can only contain letters"
+          "err": "Name of caregiver can only contain letters"
         },
         "v_required": {
           "value": true,

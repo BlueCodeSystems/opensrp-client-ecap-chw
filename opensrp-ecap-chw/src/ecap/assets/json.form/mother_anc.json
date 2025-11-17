@@ -1,0 +1,255 @@
+{
+  "count": "1",
+  "encounter_type": "ANC",
+  "entity_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": ""
+  },
+  "step1": {
+    "display_back_button": "true",
+    "fields": [
+      {
+        "key": "date_1st_visit",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_1st_visit",
+        "type": "date_picker",
+        "hint": "Date of 1st ANC visit",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "01-01-1900",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Please enter the date of 1st ANC visit"
+        }
+      },
+      {
+        "key": "gestation_age_in_weeks",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "gestation_age_in_weeks",
+        "type": "edit_text",
+        "hint": "Gestation age in weeks",
+        "edit_type": "number",
+        "look_up": "true",
+        "v_required": {
+          "value": true,
+          "err": "Please enter gestation age in weeks"
+        }
+      },
+      {
+        "key": "hiv_tested",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_tested",
+        "type": "native_radio",
+        "text_color": "#000000",
+        "label": "HIV Tested?",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "date_tested",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_tested",
+        "type": "date_picker",
+        "hint": "Date tested",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Please enter date tested"
+        },
+        "relevance": {
+          "step1:hiv_tested": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "result_of_hiv_test",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "result_of_hiv_test",
+        "type": "native_radio",
+        "label": "Result of HIV Test (R/NR)",
+        "options": [
+          { "key": "R", "text": "R" },
+          { "key": "NR", "text": "NR" }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:hiv_tested": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "male_hiv_tested",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "male_hiv_tested",
+        "type": "native_radio",
+        "text_color": "#000000",
+        "label": "Male partner tested?",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "male_result_of_hiv_test",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "male_result_of_hiv_test",
+        "type": "native_radio",
+        "label": "Male partner HIV result (R/NR)",
+        "options": [
+          { "key": "R", "text": "R" },
+          { "key": "NR", "text": "NR" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:male_hiv_tested": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "gravida",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "gravida",
+        "type": "edit_text",
+        "hint": "Gravida",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Please enter gravida"
+        }
+      },
+      {
+        "key": "parity",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "parity",
+        "type": "edit_text",
+        "hint": "Parity",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Please enter parity"
+        }
+      },
+      {
+        "key": "lmp_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "lmp_date",
+        "type": "date_picker",
+        "hint": "Date of LMP",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "today-1y",
+        "max_date": "today",
+        "v_required": {
+          "value": false,
+          "err": "Please enter date of LMP"
+        }
+      },
+      {
+        "key": "edd_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "edd_date",
+        "type": "date_picker",
+        "hint": "EDD",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "today-1y",
+        "max_date": "today+1y",
+        "v_required": {
+          "value": false,
+          "err": "Please enter EDD"
+        }
+      },
+      {
+        "key": "tt_previous_doses",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "tt_previous_doses",
+        "type": "edit_text",
+        "hint": "TT Previous Doses",
+        "edit_type": "number",
+        "v_required": {
+          "value": false,
+          "err": "Please enter TT previous doses"
+        }
+      }
+    ]
+  }
+}

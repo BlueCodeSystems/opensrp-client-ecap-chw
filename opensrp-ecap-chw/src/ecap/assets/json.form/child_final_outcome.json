@@ -1,0 +1,180 @@
+{
+  "count": "1",
+  "encounter_type": "Final Outcome of Infant",
+  "entity_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": ""
+  },
+  "step1": {
+    "title": "Final Outcome of Infant",
+    "display_back_button": "true",
+    "fields": [
+      {
+        "key": "infant_final_outcome_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "infant_final_outcome_date",
+        "type": "date_picker",
+        "hint": "Date of Final Outcome",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "01-01-1900",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Please enter Date of Final Outcome"
+        }
+      },
+      {
+        "key": "infant_final_hiv_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "infant_final_hiv_status",
+        "type": "native_radio",
+        "label": "Final HIV Status",
+        "options": [
+          { "key": "negative", "text": "Negative" },
+          { "key": "positive", "text": "Positive" },
+          { "key": "inconclusive", "text": "Inconclusive" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate final HIV status"
+        }
+      },
+      {
+        "key": "infant_discharged_hiv_negative",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "infant_discharged_hiv_negative",
+        "type": "native_radio",
+        "label": "Discharged HIV negative",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate if discharged HIV negative"
+        }
+      },
+      {
+        "key": "infant_hiv_positive_on_art",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "infant_hiv_positive_on_art",
+        "type": "native_radio",
+        "label": "HIV positive and on ART",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate if HIV positive infant is on ART"
+        }
+      },
+      {
+        "key": "infant_lost_to_follow_up",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "infant_lost_to_follow_up",
+        "type": "native_radio",
+        "label": "Lost to follow up",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate if infant is lost to follow up"
+        }
+      },
+      {
+        "key": "infant_dead",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "infant_dead",
+        "type": "native_radio",
+        "label": "Infant dead",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate if infant is dead"
+        }
+      },
+      {
+        "key": "infant_transferred_out",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "infant_transferred_out",
+        "type": "native_radio",
+        "label": "Transferred out to another facility/program",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate if infant was transferred out"
+        }
+      },
+      {
+        "key": "infant_final_outcome_comments",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "infant_final_outcome_comments",
+        "type": "edit_text",
+        "hint": "Comments / specify outcome details",
+        "v_required": {
+          "value": false,
+          "err": "Please enter comments"
+        }
+      }
+    ]
+  }
+}
