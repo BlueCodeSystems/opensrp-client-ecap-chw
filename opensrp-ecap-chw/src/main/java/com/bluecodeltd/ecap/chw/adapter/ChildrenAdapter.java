@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
+import com.bluecodeltd.ecap.chw.activity.ChildNonPmtctDetail;
 import com.bluecodeltd.ecap.chw.dao.GradDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.MuacDao;
@@ -303,6 +304,17 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             }
         } );
 
+        holder.openProfileBtn.setOnClickListener(v -> {
+            try {
+                String baseEntityId = child.getBase_entity_id();
+                String householdId = child.getHousehold_id();
+                String uniqueId = child.getUnique_id();
+                ChildNonPmtctDetail.start((Activity) context, baseEntityId, householdId, uniqueId);
+            } catch (Exception e) {
+                Toasty.error(context, "Unable to open child profile", Toast.LENGTH_LONG, true).show();
+            }
+        });
+
         holder.lview.setOnClickListener(v -> {
 
             switch (v.getId()) {
@@ -535,6 +547,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         RelativeLayout lview;
         Button muacButton;
         ImageButton gradBtn;
+        Button openProfileBtn;
 
         public ViewHolder(View itemView) {
 
@@ -547,6 +560,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             colorView = itemView.findViewById(R.id.mycolor);
             muacButton = itemView.findViewById(R.id.muac);
             gradBtn = itemView.findViewById(R.id.grad_id);
+            openProfileBtn = itemView.findViewById(R.id.btn_open_profile);
             is_index = itemView.findViewById(R.id.index_icon);
 
         }

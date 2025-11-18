@@ -1,6 +1,7 @@
 package com.bluecodeltd.ecap.chw.adapter;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -13,15 +14,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.ChildFinalOutcomeModel;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.util.FormUtils;
 
 import java.util.List;
+import java.util.Map;
 
 import timber.log.Timber;
 
@@ -31,6 +37,7 @@ public class ChildFinalOutcomeAdapter extends RecyclerView.Adapter<ChildFinalOut
     private final List<ChildFinalOutcomeModel> items;
     private final String householdId;
     private final String uniqueId;
+    private final ObjectMapper oMapper = new ObjectMapper();
 
     public ChildFinalOutcomeAdapter(Context context, List<ChildFinalOutcomeModel> items,
                                     String householdId, String uniqueId) {
@@ -55,7 +62,13 @@ public class ChildFinalOutcomeAdapter extends RecyclerView.Adapter<ChildFinalOut
         holder.txtDate.setText(visit.getInfant_final_outcome_date());
         holder.txtStatus.setText(visit.getInfant_final_hiv_status());
 
-        View.OnClickListener editListener = v -> openForm(visit);
+        View.OnClickListener editListener = v -> {
+            if (isInactive(visit)) {
+                showInactiveDialog(visit);
+                return;
+            }
+            openForm(visit);
+        };
         holder.container.setOnClickListener(editListener);
         holder.btnEdit.setOnClickListener(editListener);
     }
@@ -85,10 +98,6 @@ public class ChildFinalOutcomeAdapter extends RecyclerView.Adapter<ChildFinalOut
             FormUtils formUtils = new FormUtils(context);
             JSONObject form = formUtils.getFormJson("child_final_outcome");
 
-            if (visit.getBase_entity_id() != null) {
-                form.put("entity_id", visit.getBase_entity_id());
-            }
-
             try {
                 JSONArray flds = form.getJSONObject("step1").getJSONArray("fields");
                 for (int i = 0; i < flds.length(); i++) {
@@ -100,6 +109,15 @@ public class ChildFinalOutcomeAdapter extends RecyclerView.Adapter<ChildFinalOut
                         f.put("value", uniqueId);
                     }
                 }
+            } catch (Exception ignored) {
+            }
+
+            if (visit.getBase_entity_id() != null) {
+                form.put("entity_id", visit.getBase_entity_id());
+            }
+
+            try {
+                CoreJsonFormUtils.populateJsonForm(form, oMapper.convertValue(visit, Map.class));
             } catch (Exception ignored) {
             }
 
@@ -119,5 +137,30 @@ public class ChildFinalOutcomeAdapter extends RecyclerView.Adapter<ChildFinalOut
             Timber.e(e);
         }
     }
-}
 
+    private boolean isInactive(ChildFinalOutcomeModel visit) {
+        try {
+            CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(visit.getUnique_id());
+            String status = caseStatusModel != null ? caseStatusModel.getCase_status() : null;
+            return status != null && (status.equals("0") || status.equals("2"));
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private void showInactiveDialog(ChildFinalOutcomeModel visit) {
+        try {
+            Dialog dialog = new Dialog(context);
+            dialog.setContentView(R.layout.dialog_layout);
+            dialog.show();
+            TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+            CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(visit.getUnique_id());
+            String first = caseStatusModel != null && caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "This beneficiary";
+            String last = caseStatusModel != null && caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "";
+            dialogMessage.setText(first + (last.isEmpty() ? "" : (" " + last)) + " was either de-registered or inactive in the program");
+            android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
+            dialogButton.setOnClickListener(va -> dialog.dismiss());
+        } catch (Exception ignored) {
+        }
+    }
+}

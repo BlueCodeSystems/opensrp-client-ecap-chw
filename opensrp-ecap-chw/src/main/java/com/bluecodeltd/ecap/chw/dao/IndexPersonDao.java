@@ -47,14 +47,17 @@ public class IndexPersonDao  extends AbstractDao {
 
     public static String countChildren(String householdID){
 
-        String sql = "SELECT COUNT(*) AS childrenCount FROM ec_client_index WHERE  household_id = '" + householdID + "' AND deleted IS NULL OR deleted != '1'";
+        String sql = "SELECT COUNT(*) AS childrenCount FROM ec_client_index " +
+                "WHERE household_id = '" + householdID + "' " +
+                "AND unique_id IS NOT NULL AND TRIM(unique_id) <> '' " +
+                "AND (deleted IS NULL OR deleted != '1')";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "childrenCount");
 
         List<String> values = AbstractDao.readData(sql, dataMap);
 
         if (values == null || values.size() == 0)
-            return "1";
+            return "0";
 
         return values.get(0);
 
@@ -463,7 +466,10 @@ public class IndexPersonDao  extends AbstractDao {
 
     public static List<Child> getFamilyChildren(String householdID) {
 
-        String sql = "SELECT * FROM ec_client_index WHERE household_id = '"+ householdID +"' AND (deleted IS NULL OR deleted != '1') AND adolescent_birthdate IS NOT NULL";
+        String sql = "SELECT * FROM ec_client_index WHERE household_id = '"+ householdID +"' " +
+                "AND (deleted IS NULL OR deleted != '1') " +
+                "AND adolescent_birthdate IS NOT NULL " +
+                "AND unique_id IS NOT NULL AND TRIM(unique_id) <> ''";
 
         List<Child> values = AbstractDao.readData(sql, getChildDataMap());// Remember to edit getChildDataMap METHOD Below
         if (values == null || values.size() == 0)

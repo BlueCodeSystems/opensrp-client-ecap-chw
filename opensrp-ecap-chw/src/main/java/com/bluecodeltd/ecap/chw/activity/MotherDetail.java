@@ -33,8 +33,11 @@ import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.dao.MotherAncDao;
 import com.bluecodeltd.ecap.chw.dao.MotherDeliveryDao;
 import com.bluecodeltd.ecap.chw.dao.MotherOutcomeDao;
+import com.bluecodeltd.ecap.chw.dao.MotherLongitudinalFollowUpDao;
+import com.bluecodeltd.ecap.chw.dao.MotherPostnatalCareDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.MotherChildrenFragment;
 import com.bluecodeltd.ecap.chw.fragment.MotherAncFragment;
@@ -202,6 +205,10 @@ public class MotherDetail extends AppCompatActivity {
 
         setupViewPager();
         updateChildTabTitle();
+        updateAncTabTitle();
+        updateLongitudinalTabTitle();
+        updatePostnatalTabTitle();
+        setupFabVisibility();
 
         // Show PMTCT button only if pregnant OR breastfeeding OR mother_age_range == yes
         try {
@@ -250,6 +257,66 @@ public class MotherDetail extends AppCompatActivity {
         childTabCount.setText(children);
 
         mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
+    }
+
+    private void updateAncTabTitle() {
+        try {
+            ConstraintLayout layout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
+            TextView title = layout.findViewById(R.id.visits_title);
+            TextView countView = layout.findViewById(R.id.visits_count);
+            title.setText("ANC");
+
+            int count = 0;
+            try {
+                String baseId = commonPersonObjectClient.getColumnmaps().get("base_entity_id");
+                count = MotherAncDao.listByBaseEntityId(baseId).size();
+            } catch (Exception ignored) { }
+            countView.setText(String.valueOf(count));
+
+            if (mTabLayout.getTabCount() > 2 && mTabLayout.getTabAt(2) != null) {
+                mTabLayout.getTabAt(2).setCustomView(layout);
+            }
+        } catch (Exception ignored) { }
+    }
+
+    private void updateLongitudinalTabTitle() {
+        try {
+            ConstraintLayout layout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
+            TextView title = layout.findViewById(R.id.visits_title);
+            TextView countView = layout.findViewById(R.id.visits_count);
+            title.setText("LONGITUDINAL");
+
+            int count = 0;
+            try {
+                String baseId = commonPersonObjectClient.getColumnmaps().get("base_entity_id");
+                count = MotherLongitudinalFollowUpDao.listByBaseEntityId(baseId).size();
+            } catch (Exception ignored) { }
+            countView.setText(String.valueOf(count));
+
+            if (mTabLayout.getTabCount() > 3 && mTabLayout.getTabAt(3) != null) {
+                mTabLayout.getTabAt(3).setCustomView(layout);
+            }
+        } catch (Exception ignored) { }
+    }
+
+    private void updatePostnatalTabTitle() {
+        try {
+            ConstraintLayout layout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
+            TextView title = layout.findViewById(R.id.visits_title);
+            TextView countView = layout.findViewById(R.id.visits_count);
+            title.setText("POSTNATAL");
+
+            int count = 0;
+            try {
+                String baseId = commonPersonObjectClient.getColumnmaps().get("base_entity_id");
+                count = MotherPostnatalCareDao.listByBaseEntityId(baseId).size();
+            } catch (Exception ignored) { }
+            countView.setText(String.valueOf(count));
+
+            if (mTabLayout.getTabCount() > 4 && mTabLayout.getTabAt(4) != null) {
+                mTabLayout.getTabAt(4).setCustomView(layout);
+            }
+        } catch (Exception ignored) { }
     }
 
 
@@ -603,6 +670,9 @@ public class MotherDetail extends AppCompatActivity {
         getData();
         setupViewPager();
         updateChildTabTitle();
+        updateAncTabTitle();
+        updateLongitudinalTabTitle();
+        updatePostnatalTabTitle();
     }
 
     @NonNull
@@ -811,6 +881,24 @@ public class MotherDetail extends AppCompatActivity {
             if (childPostnatalLayout != null) childPostnatalLayout.setVisibility(View.VISIBLE);
 
         }
+    }
+
+    private void setupFabVisibility() {
+        // Show the floating menu only on the Overview tab, like IndexDetailsActivity
+        try {
+            fab.setVisibility(mViewPager.getCurrentItem() == 0 ? View.VISIBLE : View.GONE);
+        } catch (Exception ignored) { }
+
+        mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                // Hide the menu and close it when leaving Overview
+                if (position != 0 && isFabOpen) {
+                    closeFab();
+                }
+                fab.setVisibility(position == 0 ? View.VISIBLE : View.GONE);
+            }
+        });
     }
 
     public void closeFab(){
