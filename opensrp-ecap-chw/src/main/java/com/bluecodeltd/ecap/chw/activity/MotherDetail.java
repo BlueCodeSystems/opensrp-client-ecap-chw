@@ -33,10 +33,17 @@ import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.dao.MotherDeliveryDao;
+import com.bluecodeltd.ecap.chw.dao.MotherOutcomeDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.MotherChildrenFragment;
+import com.bluecodeltd.ecap.chw.fragment.MotherAncFragment;
 import com.bluecodeltd.ecap.chw.fragment.MotherOverviewFragment;
+import com.bluecodeltd.ecap.chw.fragment.MotherLongitudinalFragment;
+import com.bluecodeltd.ecap.chw.fragment.MotherPostnatalFragment;
 import com.bluecodeltd.ecap.chw.model.Household;
+import com.bluecodeltd.ecap.chw.model.MotherDeliveryModel;
+import com.bluecodeltd.ecap.chw.model.MotherOutcomeModel;
 import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -249,10 +256,13 @@ public class MotherDetail extends AppCompatActivity {
     private void setupViewPager(){
         // If adapter already exists, skip rebuilding
         if (mViewPager.getAdapter() != null) return;
-        
+
         java.util.List<androidx.fragment.app.Fragment> fragments = new java.util.ArrayList<>();
         fragments.add(new MotherOverviewFragment());
         fragments.add(new MotherChildrenFragment());
+        fragments.add(new MotherAncFragment());
+        fragments.add(new MotherLongitudinalFragment());
+        fragments.add(new MotherPostnatalFragment());
 
         com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter adapter = new com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter(this, fragments);
         mViewPager.setAdapter(adapter);
@@ -260,6 +270,9 @@ public class MotherDetail extends AppCompatActivity {
         tabMediator = new TabLayoutMediator(mTabLayout, mViewPager, (tab, position) -> {
             if (position == 0) tab.setText("Overview");
             else if (position == 1) tab.setText("Children");
+            else if (position == 2) tab.setText("ANC");
+            else if (position == 3) tab.setText("Longitudinal");
+            else if (position == 4) tab.setText("Postnatal");
         });
         tabMediator.attach();
 
@@ -354,36 +367,6 @@ public class MotherDetail extends AppCompatActivity {
 
                 try {
                     openFormUsingFormUtils(MotherDetail.this,"mother_postnatal_care");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                break;
-
-            case R.id.child_final_outcome:
-
-                try {
-                    openFormUsingFormUtils(MotherDetail.this,"child_final_outcome");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                break;
-
-            case R.id.child_longitudinal_follow_up:
-
-                try {
-                    openFormUsingFormUtils(MotherDetail.this,"child_longitudinal_follow_up");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                break;
-
-            case R.id.child_postnatal_care:
-
-                try {
-                    openFormUsingFormUtils(MotherDetail.this,"child_postnatal_care");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -498,6 +481,55 @@ public class MotherDetail extends AppCompatActivity {
 
 
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(commonPersonObjectClient.getColumnmaps(), Map.class));
+
+                break;
+
+            case "mother_anc":
+            case "mother_longitudinal_follow_up":
+            case "mother_postnatal_care":
+
+                // Tie ANC/longitudinal/postnatal form to the existing mother record
+                formToBeOpened.put("entity_id", this.commonPersonObjectClient.getColumnmaps().get("base_entity_id"));
+                // Populate with mother column maps so household_id and other prefilled fields appear
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(commonPersonObjectClient.getColumnmaps(), Map.class));
+
+                break;
+
+            case "mother_delivery":
+
+                try {
+                    String baseId = this.commonPersonObjectClient.getColumnmaps().get("base_entity_id");
+                    MotherDeliveryModel delivery = MotherDeliveryDao.getLatestByBaseEntityId(baseId);
+                    formToBeOpened.put("entity_id", baseId);
+                    if (delivery != null) {
+                        // Prefill using the latest delivery record (includes household_id)
+                        CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(delivery, Map.class));
+                    } else {
+                        // Fallback to mother details so household_id and basic info appear
+                        CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(commonPersonObjectClient.getColumnmaps(), Map.class));
+                    }
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+
+                break;
+
+            case "mother_outcome":
+
+                try {
+                    String baseId = this.commonPersonObjectClient.getColumnmaps().get("base_entity_id");
+                    MotherOutcomeModel outcome = MotherOutcomeDao.getLatestByBaseEntityId(baseId);
+                    formToBeOpened.put("entity_id", baseId);
+                    if (outcome != null) {
+                        // Prefill using the latest outcome record (includes household_id)
+                        CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(outcome, Map.class));
+                    } else {
+                        // Fallback to mother details so household_id and basic info appear
+                        CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(commonPersonObjectClient.getColumnmaps(), Map.class));
+                    }
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
 
                 break;
         }
@@ -618,6 +650,66 @@ public class MotherDetail extends AppCompatActivity {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
                                 encounterType, Constants.EcapClientTable.EC_CLIENT_INDEX);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
+                case "ANC":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_MOTHER_ANC);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
+                case "Longitudinal Follow Up Record":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_mother_longitudinal_follow_up");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
+                case "Post Natal Care-Mother":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_mother_postnatal_care");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
+                case "Labour and Delivery":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_mother_delivery");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
+                case "Final Outcome of Mother":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_mother_outcome");
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);

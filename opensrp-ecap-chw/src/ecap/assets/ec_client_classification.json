@@ -616,8 +616,6 @@
               "ec_pmtct_delivery_details"
             ]
           },
-
-
           {
             "field": "eventType",
             "field_value": "Ptmct Child Monitoring",
@@ -644,6 +642,62 @@
             "field_value": "Mother Pmtct ANC",
             "creates_case": [
               "ec_pmtct_mother_anc"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Post Natal Care-Mother",
+            "creates_case": [
+              "ec_mother_postnatal_care"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Final Outcome of Mother",
+            "creates_case": [
+              "ec_mother_outcome"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Longitudinal Follow Up Record",
+            "creates_case": [
+              "ec_mother_longitudinal_follow_up"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "ANC",
+            "creates_case": [
+              "ec_mother_anc"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Labour and Delivery",
+            "creates_case": [
+              "ec_mother_delivery"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Final Outcome of Infant",
+            "creates_case": [
+              "ec_child_final_outcome"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Infant Longitudinal Follow-up",
+            "creates_case": [
+              "ec_child_longitudinal_follow_up"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Post Natal Care-Infant",
+            "creates_case": [
+              "ec_child_postnatal_care"
             ]
           },
           {

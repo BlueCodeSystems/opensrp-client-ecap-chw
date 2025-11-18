@@ -51,6 +51,26 @@
     "display_back_button": "true",
     "fields": [
       {
+        "key": "household_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_id",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Household ID",
+        "edit_type": "name"
+      },
+      {
+        "key": "unique_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "unique_id",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Children/Adolescent (CA) ID",
+        "edit_type": "name"
+      },
+      {
         "key": "infant_visit_number",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",

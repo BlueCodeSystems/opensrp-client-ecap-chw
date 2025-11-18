@@ -39,11 +39,7 @@
             android:name=".activity.HeiDetailsActivity"
             android:exported="false"
             android:theme="@style/ChwTheme.NoActionBar"/>
-        <activity
-            android:name=".ShowOnlyHouseholdServicesActivity"
-            android:exported="false"
-            android:label="@string/title_activity_show_only_household_services"
-            android:theme="@style/ChwTheme.NoActionBar" />
+
         <activity
             android:name=".activity.FlagActivity"
             android:exported="false" />
@@ -65,6 +61,9 @@
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.ChildSafetyPlanActions"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
+            android:name=".activity.ChildNonPmtctDetail"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.HouseholdServiceActivity"

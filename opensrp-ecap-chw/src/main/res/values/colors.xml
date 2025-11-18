@@ -44,6 +44,23 @@
     <color name="me_page_line_separator">#E0E0E0</color>
     <color name="progress_orange">#FFA726</color>
 
+
+
+    <!-- Brand / primary (warm clinical green) -->
+    <color name="motherPrimary">#2E7D32</color>        <!-- App bar, header -->
+    <color name="motherPrimaryDark">#1B5E20</color>    <!-- Status bar / scrim -->
+    <color name="motherAccent">#FFB6A6</color>         <!-- Soft blush accent -->
+
+    <!-- Backgrounds -->
+    <color name="profileBackgroundTint">#F4FBF6</color>   <!-- Screen background tint -->
+    <color name="profileCardBackground">#FFFFFF</color>   <!-- Mother card -->
+    <color name="chipBackground">#FFF7F2</color>          <!-- Small action chips -->
+    <color name="chipBorder">#F3C7B9</color>              <!-- Chip border -->
+
+    <!-- Text -->
+    <color name="textPrimary">#263238</color>
+    <color name="textSecondary">#607D8B</color>
+
     
 </resources>
 

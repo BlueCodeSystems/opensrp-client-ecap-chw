@@ -339,6 +339,11 @@
     <string name="menu_labour_and_delivery">Labour and delivery</string>
     <string name="no_slice_label">No</string>
     <string name="not_counseled">Not counseled</string>
+
+    <!-- Non-PMTCT child profile labels -->
+    <string name="child_final_outcome">Child final outcome</string>
+    <string name="child_longitudinal_follow_up">Child longitudinal follow-up</string>
+    <string name="child_postnatal_care">Child postnatal care</string>
     <string name="not_provided">Not provided</string>
     <string name="notification">Notification</string>
     <string name="number">Number</string>

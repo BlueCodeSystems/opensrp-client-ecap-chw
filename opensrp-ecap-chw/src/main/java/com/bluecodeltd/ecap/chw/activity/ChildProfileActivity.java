@@ -66,15 +66,7 @@ public class ChildProfileActivity extends CoreChildProfileActivity implements On
         onClickFloatingMenu = flavor.getOnClickFloatingMenu(this, (ChildProfilePresenter) presenter);
         setupViews();
         setUpToolbar();
-        try {
-            if (android.os.Build.VERSION.SDK_INT >= 33) {
-                registerReceiver(mDateTimeChangedReceiver, sIntentFilter, RECEIVER_NOT_EXPORTED);
-            } else {
-                registerReceiver(mDateTimeChangedReceiver, sIntentFilter);
-            }
-        } catch (SecurityException se) {
-            // Ignore if platform requires explicit flags and we're not in foreground yet
-        }
+        registerReceiver(mDateTimeChangedReceiver, sIntentFilter);
         if (((ChwApplication) ChwApplication.getInstance()).hasReferrals()) {
             addChildReferralTypes();
         }
@@ -188,7 +180,7 @@ public class ChildProfileActivity extends CoreChildProfileActivity implements On
         }
         return super.onOptionsItemSelected(item);
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
