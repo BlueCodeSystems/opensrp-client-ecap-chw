@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -70,7 +69,68 @@ public class MotherAncAdapter extends RecyclerView.Adapter<MotherAncAdapter.View
         holder.setIsRecyclable(false);
 
         holder.txtDate.setText(visit.getDate_1st_visit());
-        holder.txtGestation.setText(visit.getGestation_age_in_weeks());
+
+        String gestationWeeks = visit.getGestation_age_in_weeks();
+        if (gestationWeeks != null && !gestationWeeks.isEmpty()) {
+            holder.txtGestation.setText("Gestation: " + gestationWeeks + " weeks");
+        } else {
+            holder.txtGestation.setText("");
+        }
+
+        String hivTested = visit.getHiv_tested();
+        String hivResult = visit.getResult_of_hiv_test();
+        if (hivTested != null && !hivTested.isEmpty()) {
+            if (hivResult != null && !hivResult.isEmpty()) {
+                holder.txtHivTestSummary.setText("Tested: " + hivTested + " (" + hivResult + ")");
+            } else {
+                holder.txtHivTestSummary.setText("Tested: " + hivTested);
+            }
+        } else if (hivResult != null && !hivResult.isEmpty()) {
+            holder.txtHivTestSummary.setText(hivResult);
+        } else {
+            holder.txtHivTestSummary.setText("");
+        }
+
+        String maleHivTested = visit.getMale_hiv_tested();
+        String maleHivResult = visit.getMale_result_of_hiv_test();
+        if (maleHivTested != null && !maleHivTested.isEmpty()) {
+            if (maleHivResult != null && !maleHivResult.isEmpty()) {
+                holder.txtMaleHivTestSummary.setText("Tested: " + maleHivTested + " (" + maleHivResult + ")");
+            } else {
+                holder.txtMaleHivTestSummary.setText("Tested: " + maleHivTested);
+            }
+        } else if (maleHivResult != null && !maleHivResult.isEmpty()) {
+            holder.txtMaleHivTestSummary.setText(maleHivResult);
+        } else {
+            holder.txtMaleHivTestSummary.setText("");
+        }
+
+        String gravida = visit.getGravida();
+        String parity = visit.getParity();
+        if ((gravida != null && !gravida.isEmpty()) || (parity != null && !parity.isEmpty())) {
+            StringBuilder gpBuilder = new StringBuilder();
+            if (gravida != null && !gravida.isEmpty()) {
+                gpBuilder.append("G").append(gravida);
+            }
+            if (parity != null && !parity.isEmpty()) {
+                if (gpBuilder.length() > 0) {
+                    gpBuilder.append(" ");
+                }
+                gpBuilder.append("P").append(parity);
+            }
+            holder.txtGravidaParity.setText(gpBuilder.toString());
+        } else {
+            holder.txtGravidaParity.setText("");
+        }
+
+        String ttPreviousDoses = visit.getTt_previous_doses();
+        holder.txtTtPreviousDoses.setText(ttPreviousDoses != null ? ttPreviousDoses : "");
+
+        String lmpDate = visit.getLmp_date();
+        holder.txtLmpDate.setText(lmpDate != null ? lmpDate : "");
+
+        String eddDate = visit.getEdd_date();
+        holder.txtEddDate.setText(eddDate != null ? eddDate : "");
 
         holder.container.setOnClickListener(v -> openAncForm(visit));
         holder.btnEdit.setOnClickListener(v -> openAncForm(visit));
@@ -84,14 +144,26 @@ public class MotherAncAdapter extends RecyclerView.Adapter<MotherAncAdapter.View
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtDate;
         TextView txtGestation;
-        LinearLayout container;
+        TextView txtHivTestSummary;
+        TextView txtMaleHivTestSummary;
+        TextView txtGravidaParity;
+        TextView txtTtPreviousDoses;
+        TextView txtLmpDate;
+        TextView txtEddDate;
+        View container;
         View btnEdit;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             container = itemView.findViewById(R.id.item_container);
-            txtDate = itemView.findViewById(R.id.txtDate);
-            txtGestation = itemView.findViewById(R.id.txtGestation);
+            txtDate = itemView.findViewById(R.id.txtDateFirstVisit);
+            txtGestation = itemView.findViewById(R.id.txtGestationWeeks);
+            txtHivTestSummary = itemView.findViewById(R.id.txtHivTestSummary);
+            txtMaleHivTestSummary = itemView.findViewById(R.id.txtMaleHivTestSummary);
+            txtGravidaParity = itemView.findViewById(R.id.txtGravidaParity);
+            txtTtPreviousDoses = itemView.findViewById(R.id.txtTtPreviousDoses);
+            txtLmpDate = itemView.findViewById(R.id.txtLmpDate);
+            txtEddDate = itemView.findViewById(R.id.txtEddDate);
             btnEdit = itemView.findViewById(R.id.btnEdit);
         }
     }

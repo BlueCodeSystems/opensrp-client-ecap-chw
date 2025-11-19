@@ -61,6 +61,8 @@
     <color name="textPrimary">#263238</color>
     <color name="textSecondary">#607D8B</color>
 
+    <color name="status_green">#2E7D32</color>        <!-- Material Green 700 -->
+    <color name="status_green_dark">#1B5E20</color>
     
 </resources>
 

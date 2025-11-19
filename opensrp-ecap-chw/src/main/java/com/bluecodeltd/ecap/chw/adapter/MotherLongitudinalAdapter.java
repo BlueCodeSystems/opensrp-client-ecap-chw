@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -42,7 +41,7 @@ public class MotherLongitudinalAdapter extends RecyclerView.Adapter<MotherLongit
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mother_anc_visit, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mother_longitudinal_follow_up_list, parent, false);
         return new ViewHolder(v);
     }
 
@@ -51,8 +50,50 @@ public class MotherLongitudinalAdapter extends RecyclerView.Adapter<MotherLongit
         MotherLongitudinalFollowUpModel visit = items.get(position);
         holder.setIsRecyclable(false);
 
-        holder.txtDate.setText(visit.getLfu_date_of_visit());
-        holder.txtGestation.setText(visit.getLfu_gestation_weeks());
+        String contactNumber = visit.getContact_count_number();
+        String dateOfVisit = visit.getLfu_date_of_visit();
+        String gaWeeks = visit.getLfu_gestation_weeks();
+        String weightKg = visit.getLfu_weight_kg();
+        String hivResult = visit.getLfu_hiv_subsequent_test_result();
+        String prepStarted = visit.getLfu_started_prep_if_negative();
+        String syphilisResult = visit.getLfu_syphilis_test_result();
+        String hepbResult = visit.getLfu_hepb_test_result();
+        String tbStatus = visit.getLfu_tb_status();
+        String specialConditions = visit.getLfu_special_conditions();
+
+        // Header: contact number and date
+        if (contactNumber != null && !contactNumber.isEmpty()) {
+            holder.txtContactNumber.setText("Contact #" + contactNumber);
+        } else {
+            holder.txtContactNumber.setText("");
+        }
+
+        if (dateOfVisit != null && !dateOfVisit.isEmpty()) {
+            holder.txtDateOfVisit.setText("Visit Date: " + dateOfVisit);
+        } else {
+            holder.txtDateOfVisit.setText("");
+        }
+
+        // GA + weight summary
+        StringBuilder gaWeightSummary = new StringBuilder();
+        if (gaWeeks != null && !gaWeeks.isEmpty()) {
+            gaWeightSummary.append("GA: ").append(gaWeeks).append(" weeks");
+        }
+        if (weightKg != null && !weightKg.isEmpty()) {
+            if (gaWeightSummary.length() > 0) gaWeightSummary.append(" • ");
+            gaWeightSummary.append("Wt: ").append(weightKg).append(" kg");
+        }
+        holder.txtGaWeightSummary.setText(gaWeightSummary.toString());
+
+        // HIV / PrEP / Syphilis / Hep B section
+        holder.txtHivSubsequentTestResult.setText(hivResult != null ? hivResult : "");
+        holder.txtStartedPrepIfNegative.setText(prepStarted != null ? prepStarted : "");
+        holder.txtSyphilisTestResult.setText(syphilisResult != null ? syphilisResult : "");
+        holder.txtHepbTestResult.setText(hepbResult != null ? hepbResult : "");
+
+        // TB and special conditions
+        holder.txtTbStatus.setText(tbStatus != null ? tbStatus : "");
+        holder.txtSpecialConditions.setText(specialConditions != null ? specialConditions : "");
 
         View.OnClickListener listener = v -> openForm(visit);
         holder.container.setOnClickListener(listener);
@@ -65,17 +106,31 @@ public class MotherLongitudinalAdapter extends RecyclerView.Adapter<MotherLongit
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtDate;
-        TextView txtGestation;
-        LinearLayout container;
+        TextView txtContactNumber;
+        TextView txtDateOfVisit;
+        TextView txtGaWeightSummary;
+        TextView txtHivSubsequentTestResult;
+        TextView txtStartedPrepIfNegative;
+        TextView txtSyphilisTestResult;
+        TextView txtHepbTestResult;
+        TextView txtTbStatus;
+        TextView txtSpecialConditions;
+        View container;
         View btnEdit;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
-            container = itemView.findViewById(R.id.item_container);
-            txtDate = itemView.findViewById(R.id.txtDate);
-            txtGestation = itemView.findViewById(R.id.txtGestation);
-            btnEdit = itemView.findViewById(R.id.btnEdit);
+            container = itemView.findViewById(R.id.lfu_item_container);
+            txtContactNumber = itemView.findViewById(R.id.contact_count_number);
+            txtDateOfVisit = itemView.findViewById(R.id.lfu_date_of_visit);
+            txtGaWeightSummary = itemView.findViewById(R.id.lfu_ga_weight_summary);
+            txtHivSubsequentTestResult = itemView.findViewById(R.id.lfu_hiv_subsequent_test_result);
+            txtStartedPrepIfNegative = itemView.findViewById(R.id.lfu_started_prep_if_negative);
+            txtSyphilisTestResult = itemView.findViewById(R.id.lfu_syphilis_test_result);
+            txtHepbTestResult = itemView.findViewById(R.id.lfu_hepb_test_result);
+            txtTbStatus = itemView.findViewById(R.id.lfu_tb_status);
+            txtSpecialConditions = itemView.findViewById(R.id.lfu_special_conditions);
+            btnEdit = itemView.findViewById(R.id.lfu_edit);
         }
     }
 

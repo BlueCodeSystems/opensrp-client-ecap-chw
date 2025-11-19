@@ -3,36 +3,275 @@
     android:id="@+id/item_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="16dp">
+    android:orientation="vertical"
+    android:padding="12dp">
 
+    <!-- HEADER: Date + Age + Edit -->
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/txtDate"
-            android:layout_width="wrap_content"
+        <!-- Date & Age -->
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Date"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txtAge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Age" />
+            <!-- Date of visit -->
+            <TextView
+                android:id="@+id/txtDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="22 Sep 2025"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black" />
+
+            <!-- Age (we’ll combine age + visit number text in code if you like) -->
+            <TextView
+                android:id="@+id/txtAge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Visit #2 • Age: 6 weeks"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <!-- Edit icon -->
+        <ImageView
+            android:id="@+id/btnEdit"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="@string/edit"
+            android:src="@drawable/ic_edit" />
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/btnEdit"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:contentDescription="@string/edit"
-        android:src="@drawable/ic_edit" />
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/darker_gray" />
+
+    <!-- ROW: Visit number (explicit) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="6dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Visit number"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/txtVisitNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="2"
+            android:textSize="13sp"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+
+    <!-- ROW: Vaccinations + Growth monitoring -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="4dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Vaccinations this visit"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/txtVaccinationsGiven"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Yes"
+            android:textSize="13sp"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="2dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Growth monitoring"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/txtGrowthMonitoring"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Yes"
+            android:textSize="13sp"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+
+    <!-- ROW: MUAC + Oedema -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="4dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="MUAC"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/txtMuac"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="13.0 cm"
+            android:textSize="13sp"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="2dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Oedema"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/txtOedema"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="No"
+            android:textSize="13sp"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+
+    <!-- ROW: Breastfeeding + Vitamin A -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="4dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Breastfeeding"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/txtBreastfeeding"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Yes"
+            android:textSize="13sp"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="2dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Vitamin A given"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/txtVitaminA"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Yes"
+            android:textSize="13sp"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+
+    <!-- ROW: Deworming -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="4dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Deworming given"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/txtDeworming"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="No"
+            android:textSize="13sp"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+
+    <!-- COMMENTS -->
+    <TextView
+        android:id="@+id/txtComments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="Comments / Notes: No concerns reported."
+        android:textSize="13sp"
+        android:textColor="@android:color/black"
+        android:maxLines="3"
+        android:ellipsize="end" />
 
 </LinearLayout>
-

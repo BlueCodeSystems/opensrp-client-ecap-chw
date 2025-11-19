@@ -59,8 +59,26 @@ public class ChildPostnatalAdapter extends RecyclerView.Adapter<ChildPostnatalAd
         ChildPostnatalCareModel visit = items.get(position);
         holder.setIsRecyclable(false);
 
-        holder.txtVisitType.setText(visit.getPnc_infant_visit_type());
-        holder.txtComments.setText(visit.getPnc_infant_comments());
+        String visitType = visit.getPnc_infant_visit_type();
+        String feedingType = visit.getPnc_infant_feeding_type();
+        String hivResult = visit.getPnc_infant_hiv_test_done();
+        String onArt = visit.getPnc_infant_on_art_if_positive();
+        String ctxGiven = visit.getPnc_infant_ctx_given();
+        String immunizationStatus = visit.getPnc_infant_immunization_up_to_date();
+        String growthMonitoring = visit.getPnc_infant_growth_monitoring_done();
+        String growthStatus = visit.getPnc_infant_growth_normal();
+        String referred = visit.getPnc_infant_referred_for_complications();
+        String comments = visit.getPnc_infant_comments();
+
+        holder.txtVisitType.setText(visitType != null ? visitType : "");
+        holder.txtFeedingType.setText(feedingType != null ? feedingType : "");
+        holder.txtHivResult.setText(hivResult != null ? hivResult : "");
+        holder.txtOnArt.setText(onArt != null ? onArt : "");
+        holder.txtCtxGiven.setText(ctxGiven != null ? ctxGiven : "");
+        holder.txtImmunizationStatus.setText(immunizationStatus != null ? immunizationStatus : "");
+        holder.txtGrowthStatus.setText(growthStatus != null ? growthStatus : "");
+        holder.txtReferred.setText(referred != null ? referred : "");
+        holder.txtComments.setText(comments != null ? comments : "");
 
         View.OnClickListener editListener = v -> {
             if (isInactive(visit)) {
@@ -80,6 +98,14 @@ public class ChildPostnatalAdapter extends RecyclerView.Adapter<ChildPostnatalAd
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtVisitType;
+        TextView txtChildId;
+        TextView txtFeedingType;
+        TextView txtHivResult;
+        TextView txtOnArt;
+        TextView txtCtxGiven;
+        TextView txtImmunizationStatus;
+        TextView txtGrowthStatus;
+        TextView txtReferred;
         TextView txtComments;
         LinearLayout container;
         View btnEdit;
@@ -88,6 +114,14 @@ public class ChildPostnatalAdapter extends RecyclerView.Adapter<ChildPostnatalAd
             super(itemView);
             container = itemView.findViewById(R.id.item_container);
             txtVisitType = itemView.findViewById(R.id.txtVisitType);
+            txtChildId = itemView.findViewById(R.id.txtChildId);
+            txtFeedingType = itemView.findViewById(R.id.txtFeedingType);
+            txtHivResult = itemView.findViewById(R.id.txtHivResult);
+            txtOnArt = itemView.findViewById(R.id.txtOnArt);
+            txtCtxGiven = itemView.findViewById(R.id.txtCtxGiven);
+            txtImmunizationStatus = itemView.findViewById(R.id.txtImmunizationStatus);
+            txtGrowthStatus = itemView.findViewById(R.id.txtGrowthStatus);
+            txtReferred = itemView.findViewById(R.id.txtReferred);
             txtComments = itemView.findViewById(R.id.txtComments);
             btnEdit = itemView.findViewById(R.id.btnEdit);
         }

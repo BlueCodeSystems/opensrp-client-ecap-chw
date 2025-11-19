@@ -51,8 +51,54 @@ public class MotherPostnatalAdapter extends RecyclerView.Adapter<MotherPostnatal
         MotherPostnatalCareModel visit = items.get(position);
         holder.setIsRecyclable(false);
 
-        holder.txtDate.setText(visit.getLast_interacted_with());
-        holder.txtVisit.setText(visit.getPnc_visit_type());
+        String date = visit.getLast_interacted_with();
+        String visitType = visit.getPnc_visit_type();
+        String feeding = visit.getPnc_type_of_feeding();
+        String hivTest = visit.getPnc_hiv_test_done();
+        String onPrep = visit.getPnc_on_prep();
+        String fpCounselling = visit.getPnc_fp_counselling();
+        String cervicalScreening = visit.getPnc_cervical_cancer_screening();
+        String stiScreening = visit.getPnc_sti_screening();
+        String comments = visit.getPnc_comments();
+
+        // Header fields
+        if (date != null && !date.isEmpty()) {
+            holder.txtDate.setText("Postnatal Date: " + date);
+        } else {
+            holder.txtDate.setText("");
+        }
+
+        if (visitType != null && !visitType.isEmpty()) {
+            holder.txtVisit.setText("PNC Visit: " + visitType);
+            holder.txtPncVisitType.setText(visitType);
+        } else {
+            holder.txtVisit.setText("PNC Visit");
+            holder.txtPncVisitType.setText("");
+        }
+
+        // Detail fields
+        holder.txtPncTypeOfFeeding.setText(feeding != null ? feeding : "");
+        holder.txtPncHivTestDone.setText(hivTest != null ? hivTest : "");
+        holder.txtPncOnPrep.setText(onPrep != null ? onPrep : "");
+        holder.txtPncFpCounselling.setText(fpCounselling != null ? fpCounselling : "");
+        holder.txtPncCervicalCancerScreening.setText(cervicalScreening != null ? cervicalScreening : "");
+        holder.txtPncStiScreening.setText(stiScreening != null ? stiScreening : "");
+        holder.txtPncComments.setText(comments != null ? comments : "");
+
+        // Summary line: quick overview
+        StringBuilder summaryBuilder = new StringBuilder();
+        if (feeding != null && !feeding.isEmpty()) {
+            summaryBuilder.append(feeding);
+        }
+        if (hivTest != null && !hivTest.isEmpty()) {
+            if (summaryBuilder.length() > 0) summaryBuilder.append(" • ");
+            summaryBuilder.append("HIV: ").append(hivTest);
+        }
+        if (fpCounselling != null && !fpCounselling.isEmpty()) {
+            if (summaryBuilder.length() > 0) summaryBuilder.append(" • ");
+            summaryBuilder.append("FP: ").append(fpCounselling);
+        }
+        holder.txtSummaryLine.setText(summaryBuilder.toString());
 
         View.OnClickListener listener = v -> openForm(visit);
         holder.container.setOnClickListener(listener);
@@ -67,6 +113,15 @@ public class MotherPostnatalAdapter extends RecyclerView.Adapter<MotherPostnatal
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtDate;
         TextView txtVisit;
+        TextView txtSummaryLine;
+        TextView txtPncVisitType;
+        TextView txtPncTypeOfFeeding;
+        TextView txtPncHivTestDone;
+        TextView txtPncOnPrep;
+        TextView txtPncFpCounselling;
+        TextView txtPncCervicalCancerScreening;
+        TextView txtPncStiScreening;
+        TextView txtPncComments;
         LinearLayout container;
         View btnEdit;
 
@@ -75,6 +130,15 @@ public class MotherPostnatalAdapter extends RecyclerView.Adapter<MotherPostnatal
             container = itemView.findViewById(R.id.itemm);
             txtDate = itemView.findViewById(R.id.date);
             txtVisit = itemView.findViewById(R.id.visit);
+             txtSummaryLine = itemView.findViewById(R.id.summary_line);
+             txtPncVisitType = itemView.findViewById(R.id.pnc_visit_type);
+             txtPncTypeOfFeeding = itemView.findViewById(R.id.pnc_type_of_feeding);
+             txtPncHivTestDone = itemView.findViewById(R.id.pnc_hiv_test_done);
+             txtPncOnPrep = itemView.findViewById(R.id.pnc_on_prep);
+             txtPncFpCounselling = itemView.findViewById(R.id.pnc_fp_counselling);
+             txtPncCervicalCancerScreening = itemView.findViewById(R.id.pnc_cervical_cancer_screening);
+             txtPncStiScreening = itemView.findViewById(R.id.pnc_sti_screening);
+             txtPncComments = itemView.findViewById(R.id.pnc_comments);
             btnEdit = itemView.findViewById(R.id.edit_me);
         }
     }

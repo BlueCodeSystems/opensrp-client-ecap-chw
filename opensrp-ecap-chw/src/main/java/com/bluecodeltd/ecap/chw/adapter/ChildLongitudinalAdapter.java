@@ -59,8 +59,50 @@ public class ChildLongitudinalAdapter extends RecyclerView.Adapter<ChildLongitud
         ChildLongitudinalFollowUpModel visit = items.get(position);
         holder.setIsRecyclable(false);
 
-        holder.txtDate.setText(visit.getInfant_date_of_visit());
-        holder.txtAge.setText(visit.getInfant_age());
+        String visitNumber = visit.getInfant_visit_number();
+        String dateOfVisit = visit.getInfant_date_of_visit();
+        String age = visit.getInfant_age();
+        String vaccines = visit.getInfant_vaccinations_given();
+        String growthMonitoring = visit.getInfant_growth_monitoring_done();
+        String muac = visit.getInfant_muac_reading();
+        String oedema = visit.getInfant_oedema_present();
+        String breastfeeding = visit.getInfant_breastfeeding_status();
+        String vitA = visit.getInfant_vitamin_a_given();
+        String deworming = visit.getInfant_deworming_given();
+        String comments = visit.getInfant_followup_comments();
+
+        // Date
+        holder.txtDate.setText(dateOfVisit != null ? dateOfVisit : "");
+
+        // Visit number + age line in header
+        StringBuilder ageLine = new StringBuilder();
+        if (visitNumber != null && !visitNumber.isEmpty()) {
+            ageLine.append("Visit #").append(visitNumber);
+        }
+        if (age != null && !age.isEmpty()) {
+            if (ageLine.length() > 0) ageLine.append(" \u2022 ");
+            ageLine.append("Age: ").append(age);
+        }
+        holder.txtAge.setText(ageLine.toString());
+
+        // Explicit visit number row
+        holder.txtVisitNumber.setText(visitNumber != null ? visitNumber : "");
+
+        // Vaccinations and growth monitoring rows
+        holder.txtVaccinationsGiven.setText(vaccines != null ? vaccines : "");
+        holder.txtGrowthMonitoring.setText(growthMonitoring != null ? growthMonitoring : "");
+
+        // MUAC and Oedema rows
+        holder.txtMuac.setText(muac != null ? muac : "");
+        holder.txtOedema.setText(oedema != null ? oedema : "");
+
+        // Breastfeeding, Vitamin A, Deworming rows
+        holder.txtBreastfeeding.setText(breastfeeding != null ? breastfeeding : "");
+        holder.txtVitaminA.setText(vitA != null ? vitA : "");
+        holder.txtDeworming.setText(deworming != null ? deworming : "");
+
+        // Comments
+        holder.txtComments.setText(comments != null ? comments : "");
 
         View.OnClickListener editListener = v -> {
             if (isInactive(visit)) {
@@ -81,6 +123,15 @@ public class ChildLongitudinalAdapter extends RecyclerView.Adapter<ChildLongitud
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtDate;
         TextView txtAge;
+        TextView txtVisitNumber;
+        TextView txtVaccinationsGiven;
+        TextView txtGrowthMonitoring;
+        TextView txtMuac;
+        TextView txtOedema;
+        TextView txtBreastfeeding;
+        TextView txtVitaminA;
+        TextView txtDeworming;
+        TextView txtComments;
         LinearLayout container;
         View btnEdit;
 
@@ -89,6 +140,15 @@ public class ChildLongitudinalAdapter extends RecyclerView.Adapter<ChildLongitud
             container = itemView.findViewById(R.id.item_container);
             txtDate = itemView.findViewById(R.id.txtDate);
             txtAge = itemView.findViewById(R.id.txtAge);
+            txtVisitNumber = itemView.findViewById(R.id.txtVisitNumber);
+            txtVaccinationsGiven = itemView.findViewById(R.id.txtVaccinationsGiven);
+            txtGrowthMonitoring = itemView.findViewById(R.id.txtGrowthMonitoring);
+            txtMuac = itemView.findViewById(R.id.txtMuac);
+            txtOedema = itemView.findViewById(R.id.txtOedema);
+            txtBreastfeeding = itemView.findViewById(R.id.txtBreastfeeding);
+            txtVitaminA = itemView.findViewById(R.id.txtVitaminA);
+            txtDeworming = itemView.findViewById(R.id.txtDeworming);
+            txtComments = itemView.findViewById(R.id.txtComments);
             btnEdit = itemView.findViewById(R.id.btnEdit);
         }
     }

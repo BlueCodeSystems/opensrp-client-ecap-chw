@@ -1,38 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp"
-    android:height="24dp"
-    android:viewportWidth="24"
-    android:viewportHeight="24">
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="128"
+    android:viewportHeight="128">
 
-    <!-- Head -->
+    <!-- Background circle (soft, child-friendly blue) -->
     <path
-        android:fillColor="@android:color/white"
-        android:pathData="M10,2h4v4h-4z" />
+        android:name="bg_circle"
+        android:fillColor="#E3F2FD"
+        android:pathData="M64,8
+                          A56,56 0 1,0 64,120
+                          A56,56 0 1,0 64,8" />
 
-    <!-- Body -->
+    <!-- Afro puff / hair (rounded, baby/toddler style) -->
     <path
-        android:fillColor="@android:color/white"
-        android:pathData="M9,6h6v8h-6z" />
+        android:name="hair_outer"
+        android:fillColor="#1B1B1B"
+        android:pathData="M32,45
+                          C32,30 44,18 64,18
+                          C84,18 96,30 96,45
+                          C96,58 88,64 64,64
+                          C40,64 32,58 32,45 Z" />
 
-    <!-- Left arm -->
+    <!-- Small hair puffs on sides (baby feel) -->
     <path
-        android:fillColor="@android:color/white"
-        android:pathData="M6,8h3v2h-3z" />
+        android:name="hair_puff_left"
+        android:fillColor="#1B1B1B"
+        android:pathData="M40,32
+                          A6,6 0 1,0 40,44
+                          A6,6 0 1,0 40,32" />
 
-    <!-- Right arm -->
     <path
-        android:fillColor="@android:color/white"
-        android:pathData="M15,8h3v2h-3z" />
+        android:name="hair_puff_right"
+        android:fillColor="#1B1B1B"
+        android:pathData="M88,32
+                          A6,6 0 1,0 88,44
+                          A6,6 0 1,0 88,32" />
 
-    <!-- Left leg -->
+    <!-- Face (African skin tone, slightly larger vs body) -->
     <path
-        android:fillColor="@android:color/white"
-        android:pathData="M10,14h2v6h-2z" />
+        android:name="face"
+        android:fillColor="#A06338"
+        android:pathData="M64,30
+                          A24,24 0 1,0 64,78
+                          A24,24 0 1,0 64,30" />
 
-    <!-- Right leg -->
+    <!-- Ears -->
     <path
-        android:fillColor="@android:color/white"
-        android:pathData="M12,14h2v6h-2z" />
+        android:name="ear_left"
+        android:fillColor="#A06338"
+        android:pathData="M42,44
+                          A4,6 0 1,0 42,56
+                          A4,6 0 1,0 42,44" />
+
+    <path
+        android:name="ear_right"
+        android:fillColor="#A06338"
+        android:pathData="M86,44
+                          A4,6 0 1,0 86,56
+                          A4,6 0 1,0 86,44" />
+
+    <!-- Shorter neck (more baby/toddler proportions) -->
+    <path
+        android:name="neck"
+        android:fillColor="#A06338"
+        android:pathData="M56,66
+                          L72,66
+                          L72,76
+                          L56,76 Z" />
+
+    <!-- Shirt (softer, playful color) -->
+    <path
+        android:name="body"
+        android:fillColor="#42A5F5"
+        android:pathData="M34,82
+                          C42,74 50,70 64,70
+                          C78,70 86,74 94,82
+                          L94,112
+                          L34,112
+                          Z" />
+
+    <!-- Small collar detail -->
+    <path
+        android:name="collar"
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,82
+                          L64,90
+                          L74,82
+                          Z" />
+
+    <!-- Front afro fringe -->
+    <path
+        android:name="hair_front"
+        android:fillColor="#1B1B1B"
+        android:pathData="M44,40
+                          C48,32 56,30 64,30
+                          C72,30 80,32 84,40
+                          C80,42 76,44 64,44
+                          C52,44 48,42 44,40 Z" />
+
+    <!-- Eyes slightly lower and round (younger look) -->
+    <path
+        android:name="eye_left"
+        android:fillColor="#202020"
+        android:pathData="M52,48
+                          A2,2 0 1,0 52,52
+                          A2,2 0 1,0 52,48" />
+
+    <path
+        android:name="eye_right"
+        android:fillColor="#202020"
+        android:pathData="M76,48
+                          A2,2 0 1,0 76,52
+                          A2,2 0 1,0 76,48" />
+
+    <!-- Very soft cheeks -->
+    <path
+        android:name="cheek_left"
+        android:fillColor="#D46A8A"
+        android:alpha="0.3"
+        android:pathData="M48,54
+                          A4,3 0 1,0 48,60
+                          A4,3 0 1,0 48,54" />
+
+    <path
+        android:name="cheek_right"
+        android:fillColor="#D46A8A"
+        android:alpha="0.3"
+        android:pathData="M80,54
+                          A4,3 0 1,0 80,60
+                          A4,3 0 1,0 80,54" />
+
+    <!-- Small, gentle smile -->
+    <path
+        android:name="mouth"
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#6C3A24"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:pathData="M56,60
+                          Q64,66 72,60" />
 
 </vector>

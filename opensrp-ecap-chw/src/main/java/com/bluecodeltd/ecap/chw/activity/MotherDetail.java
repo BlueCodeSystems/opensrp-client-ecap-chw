@@ -130,6 +130,11 @@ public class MotherDetail extends AppCompatActivity {
         mViewPager  = binding.viewpager;
         motherName = binding.motherName;
         txtAge = binding.motherAge;
+        // Pre-filled header fields
+        TextView householdIdView = binding.householdId;
+        TextView motherFacilityView = binding.motherFacility;
+        TextView motherLastVisitView = binding.motherLastVisit;
+        TextView motherNextAppointmentView = binding.motherNextAppointment;
         mLayout = binding.motherForm;
         cLayout = binding.childForm;
         motherAncLayout = findViewById(R.id.mother_anc);
@@ -194,6 +199,47 @@ public class MotherDetail extends AppCompatActivity {
         String birthdate = commonPersonObjectClient.getColumnmaps().get("caregiver_birth_date");
         String age = getAge(birthdate);
         txtAge.setText(age);
+
+        // Prefill household_id and mother_facility in the header
+        try {
+            if (householdIdView != null) {
+                String hhId = commonPersonObjectClient.getColumnmaps().get("household_id");
+                if (hhId != null && !hhId.isEmpty()) {
+                    householdIdView.setText("ID: " + hhId);
+                }
+            }
+        } catch (Exception ignored) { }
+
+        try {
+            if (motherFacilityView != null) {
+                // Try facility on mother first, then fall back to household facility
+                String facility = commonPersonObjectClient.getColumnmaps().get("mother_facility");
+                if ((facility == null || facility.isEmpty()) && family != null) {
+                    facility = family.getFacility();
+                }
+                if (facility != null && !facility.isEmpty()) {
+                    motherFacilityView.setText(facility);
+                }
+            }
+        } catch (Exception ignored) { }
+
+        // Prefill mother_last_visit and mother_next_appointment from the latest ANC record
+        try {
+            if (motherLastVisitView != null || motherNextAppointmentView != null) {
+                String baseId = commonPersonObjectClient.getColumnmaps().get("base_entity_id");
+                MotherAncModel latestAnc = baseId != null ? MotherAncDao.getLatestByBaseEntityId(baseId) : null;
+                if (latestAnc != null) {
+                    String ancVisitDate = latestAnc.getDate_1st_visit();
+                    if (motherLastVisitView != null && ancVisitDate != null && !ancVisitDate.isEmpty()) {
+                        motherLastVisitView.setText("Last ANC: " + ancVisitDate);
+                    }
+                    String edd = latestAnc.getEdd_date();
+                    if (motherNextAppointmentView != null && edd != null && !edd.isEmpty()) {
+                        motherNextAppointmentView.setText("EDD: " + edd);
+                    }
+                }
+            }
+        } catch (Exception ignored) { }
 
         oMapper = new ObjectMapper();
 

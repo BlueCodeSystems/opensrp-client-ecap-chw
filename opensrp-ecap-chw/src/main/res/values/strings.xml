@@ -379,6 +379,7 @@
     <string name="view_medical_history">View medical history</string>
     <string name="not_visiting_this_month">Not visiting this month</string>
     <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
     <string name="visit_not_done_btn_child_profile">Visit not done</string>
     <string name="medical_history">Medical history</string>
     <string name="add_date_separately">+ ADD A DATE FOR EACH VACCINE</string>

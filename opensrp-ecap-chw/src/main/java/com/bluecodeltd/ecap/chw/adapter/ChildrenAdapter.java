@@ -154,59 +154,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
 
 
-        isGraduationButtonToBeDisplayed(holder,isEligibleForEnrollment(child));
-
-        holder.gradBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.grad_bg));
-        holder.gradBtn.setColorFilter(ContextCompat.getColor(context, org.smartregister.R.color.dark_grey));
-        holder.gradBtn.setTag(childUniqueID);
-        Threading.io(() -> {
-            GradModel gm = null;
-            try { gm = GradDao.getGrad(child.getUnique_id()); } catch (Exception ignored) {}
-            GradModel finalGm = gm;
-            Threading.main(() -> {
-                if (!childUniqueID.equals(holder.gradBtn.getTag())) return;
-                if (finalGm != null) {
-                    holder.gradBtn.setColorFilter(ContextCompat.getColor(context, org.smartregister.chw.core.R.color.colorGreen));
-                }
-            });
-        });
-        if (!memberAge.equals("Invalid birthdate format")) {
-            int age = getAgeForGraduation(dob);
-            if (age < 10 || age > 17) {
-                holder.gradBtn.setVisibility(View.INVISIBLE);
-            } else {
-                holder.gradBtn.setVisibility(View.VISIBLE);
-            }
-        } else {
-            Log.e("TAG", "Invalid birthdate format");
-        }
-
-        holder.gradBtn.setOnClickListener(v->{
-
-            FormUtils formUtils = null;
-            try {
-                formUtils = new FormUtils(context);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            JSONObject formToBeOpened;
-
-            formToBeOpened = formUtils.getFormJson("grad");
-
-            try {
-                formToBeOpened.getJSONObject("step1").put("title", child.getFirst_name() + " " + child.getLast_name() + " : " + holder.age.getText().toString() + " - " + child.getGender());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            if (v.getId() == R.id.grad_id) {
-                try {
-                    openFormUsingFormUtils(context, "grad", child, holder.age.getText().toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        // Graduation button and form are no longer used
 
 //        newCaregiverModel caregiverModel = newCaregiverDao.getNewCaregiverById(child.getHousehold_id());
 
@@ -231,14 +179,26 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 //            holder.colorView.setBackgroundColor(Color.parseColor("#ff0000"));
 //        }
 
-        if(dob != null){
+        // Populate age and gender line
+        String ageText = (dob != null && !"Invalid birthdate format".equals(dob)) ? getAge(dob) : null;
+        String gender = child.getGender();
+        StringBuilder ageGenderLine = new StringBuilder();
+        if (ageText != null && !ageText.isEmpty()) {
+            ageGenderLine.append(ageText);
+        }
+        if (gender != null && !gender.isEmpty()) {
+            if (ageGenderLine.length() > 0) ageGenderLine.append(" \u2022 ");
+            ageGenderLine.append(gender.substring(0, 1).toUpperCase(Locale.ENGLISH))
+                    .append(gender.length() > 1 ? gender.substring(1).toLowerCase(Locale.ENGLISH) : "");
+        }
+        holder.ageGender.setText(ageGenderLine.toString());
 
-            holder.age.setText("Age : " + getAge(dob));
-
+        // Caregiver / mother name
+        String caregiver = child.getCaregiver_name();
+        if (caregiver != null && !caregiver.isEmpty()) {
+            holder.caregiverName.setText("Mother: " + caregiver);
         } else {
-
-            holder.age.setText("Not Set");
-
+            holder.caregiverName.setText("");
         }
 
         holder.muacButton.setVisibility(View.GONE);
@@ -279,7 +239,9 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
             formToBeOpened = formUtils.getFormJson("muac");
             try {
-                formToBeOpened.getJSONObject("step1").put("title", child.getFirst_name() + " " + child.getLast_name() + " : " + holder.age.getText().toString() + " - " + child.getGender());
+                String titleAge = holder.ageGender.getText() != null ? holder.ageGender.getText().toString() : "";
+                formToBeOpened.getJSONObject("step1").put("title",
+                        child.getFirst_name() + " " + child.getLast_name() + " : " + titleAge);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -290,15 +252,16 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             }
 
 
-            switch (v.getId()) {
+              switch (v.getId()) {
 
-                case (R.id.muac):
+                  case (R.id.muac):
 
-                    try {
-                        openFormUsingFormUtils(context,"muac", child, holder.age.getText().toString());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                      try {
+                          String titleAge = holder.ageGender.getText() != null ? holder.ageGender.getText().toString() : "";
+                          openFormUsingFormUtils(context,"muac", child, titleAge);
+                      } catch (JSONException e) {
+                          e.printStackTrace();
+                      }
 
                     break;
             }
@@ -327,7 +290,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
                         return;
                     }
 
-                    if((Integer.parseInt(memberAge) < 24) || isEligibleForEnrollment(child)){
+                    if((Integer.parseInt(memberAge) < 24) ){
 
                         Intent intent = new Intent(context, IndexDetailsActivity.class);
                         intent.putExtra("fromIndex", "321");
@@ -351,12 +314,9 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
     private void resetViewHolder(ViewHolder holder) {
         holder.fullName.setText("");
-        holder.age.setText("Not Set");
-        holder.gradBtn.setVisibility(View.GONE);
+        holder.ageGender.setText("Not Set");
         holder.muacButton.setVisibility(View.GONE);
         holder.muacButton.setTag(null);
-        holder.gradBtn.setTag(null);
-        holder.gradBtn.setColorFilter(ContextCompat.getColor(context, org.smartregister.R.color.dark_grey));
         holder.is_index.setVisibility(View.GONE);
         holder.colorView.setBackgroundColor(Color.parseColor("#696969"));
     }
@@ -542,24 +502,25 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView fullName, age, is_index;
+        TextView fullName;
+        TextView ageGender;
+        TextView caregiverName;
+        TextView is_index;
         View colorView;
         RelativeLayout lview;
         Button muacButton;
-        ImageButton gradBtn;
         Button openProfileBtn;
 
         public ViewHolder(View itemView) {
 
             super(itemView);
 
-
-            fullName = itemView.findViewById(R.id.familyNameTextView);
-            age = itemView.findViewById(R.id.child_age);
             lview = itemView.findViewById(R.id.register_columns);
             colorView = itemView.findViewById(R.id.mycolor);
+            fullName = itemView.findViewById(R.id.child_name);
+            ageGender = itemView.findViewById(R.id.child_age_gender);
+            caregiverName = itemView.findViewById(R.id.caregiver_name);
             muacButton = itemView.findViewById(R.id.muac);
-            gradBtn = itemView.findViewById(R.id.grad_id);
             openProfileBtn = itemView.findViewById(R.id.btn_open_profile);
             is_index = itemView.findViewById(R.id.index_icon);
 
@@ -575,49 +536,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
     }
 
-    public Boolean isEligibleForEnrollment(Child child ) {
-
-        return true;
-
-  /*      try{
-
-            if ((child.getIs_hiv_positive().equals("yes")) || (child.getSubpop1() != null && child.getSubpop1().equals("true")) || (child.getSubpop2() != null && child.getSubpop2().equals("true")) ||
-                    (child.getSubpop3() != null && child.getSubpop3().equals("true")) || (child.getSubpop4() != null && child.getSubpop4().equals("true")) ||
-                    (child.getSubpop5() != null && child.getSubpop5().equals("true")) || (child.getSubpop6() != null && child.getSubpop6().equals("true"))) {
-
-                return true;
-            }
-
-            return false;
-
-        } catch (NullPointerException exception) {
-
-            Log.e("childrenexeption", exception.getMessage());
-            return false;
-
-        }
-*/
-
-    }
-
-
-    public void isGraduationButtonToBeDisplayed(ViewHolder holder,Boolean check){
-        if(check !=null && check) {
-            holder.gradBtn.setVisibility(View.VISIBLE);
-        } else {
-            holder.gradBtn.setVisibility(View.GONE);
-        }
-    }
-
-    public Boolean checkAgeEligibility(String age)
-    {
-        if(Integer.parseInt(age) <= 2)
-        {
-            return false;
-        }
-
-        return true;
-    }
+    // Graduation-related helpers removed – feature no longer used
     private String checkAndConvertDateFormat(String date){
         if (date.matches("\\d{2}-\\d{2}-\\d{4}")) {
             return date;
