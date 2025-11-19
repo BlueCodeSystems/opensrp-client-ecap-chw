@@ -64,4 +64,3 @@ public class MotherLongitudinalFollowUpDao extends AbstractDao {
         };
     }
 }
-

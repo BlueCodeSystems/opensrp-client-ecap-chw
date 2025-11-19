@@ -22,6 +22,11 @@ public class ChildLongitudinalFollowUpDao extends AbstractDao {
         return AbstractDao.readData(sql, getMap());
     }
 
+    public static List<ChildLongitudinalFollowUpModel> listByUniqueId(String uniqueId) {
+        String sql = "SELECT * FROM ec_child_longitudinal_follow_up WHERE unique_id = '" + uniqueId + "' ORDER BY last_interacted_with DESC";
+        return AbstractDao.readData(sql, getMap());
+    }
+
     public static DataMap<ChildLongitudinalFollowUpModel> getMap() {
         return c -> {
             ChildLongitudinalFollowUpModel record = new ChildLongitudinalFollowUpModel();

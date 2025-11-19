@@ -59,8 +59,8 @@ public class ChildFinalOutcomeFragment extends Fragment {
         final String fUnique = uniqueId;
 
         Threading.io(() -> {
-            List<ChildFinalOutcomeModel> list = fBase != null
-                    ? ChildFinalOutcomeDao.listByBaseEntityId(fBase)
+            List<ChildFinalOutcomeModel> list = fUnique != null
+                    ? ChildFinalOutcomeDao.listByUniqueId(fUnique)
                     : new ArrayList<>();
             final List<ChildFinalOutcomeModel> items = list != null ? list : new ArrayList<>();
             Threading.main(() -> {

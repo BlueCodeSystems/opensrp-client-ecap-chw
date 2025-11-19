@@ -22,6 +22,11 @@ public class ChildPostnatalCareDao extends AbstractDao {
         return AbstractDao.readData(sql, getMap());
     }
 
+    public static List<ChildPostnatalCareModel> listByUniqueId(String uniqueId) {
+        String sql = "SELECT * FROM ec_child_postnatal_care WHERE unique_id = '" + uniqueId + "' ORDER BY last_interacted_with DESC";
+        return AbstractDao.readData(sql, getMap());
+    }
+
     public static DataMap<ChildPostnatalCareModel> getMap() {
         return c -> {
             ChildPostnatalCareModel record = new ChildPostnatalCareModel();

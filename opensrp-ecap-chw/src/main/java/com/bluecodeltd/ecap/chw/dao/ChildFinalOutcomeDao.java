@@ -22,6 +22,11 @@ public class ChildFinalOutcomeDao extends AbstractDao {
         return AbstractDao.readData(sql, getMap());
     }
 
+    public static List<ChildFinalOutcomeModel> listByUniqueId(String uniqueId) {
+        String sql = "SELECT * FROM ec_child_final_outcome WHERE unique_id = '" + uniqueId + "' ORDER BY last_interacted_with DESC";
+        return AbstractDao.readData(sql, getMap());
+    }
+
     public static DataMap<ChildFinalOutcomeModel> getMap() {
         return c -> {
             ChildFinalOutcomeModel record = new ChildFinalOutcomeModel();

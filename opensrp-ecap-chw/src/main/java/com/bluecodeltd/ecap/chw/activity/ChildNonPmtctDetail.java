@@ -3,18 +3,24 @@ package com.bluecodeltd.ecap.chw.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.dao.ChildLongitudinalFollowUpDao;
+import com.bluecodeltd.ecap.chw.dao.ChildPostnatalCareDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildFinalOutcomeFragment;
 import com.bluecodeltd.ecap.chw.fragment.ChildLongitudinalFragment;
@@ -41,6 +47,7 @@ import org.smartregister.util.FormUtils;
 import java.util.Collections;
 import java.util.Date;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -66,12 +73,14 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
     private String householdId;
     private String uniqueId;
 
-    private LinearLayout childFinalOutcomeLayout;
-    private LinearLayout childLongitudinalLayout;
-    private LinearLayout childPostnatalLayout;
+    private RelativeLayout childFinalOutcomeLayout;
+    private RelativeLayout childLongitudinalLayout;
+    private RelativeLayout childPostnatalLayout;
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
     private TabLayoutMediator tabMediator;
+    private FloatingActionButton fab;
+    private boolean isFabOpen = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,6 +110,8 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
 
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
+        fab = findViewById(R.id.fabx);
+
         setupViewPager();
     }
 
@@ -121,7 +132,83 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
             openChildForm("child_longitudinal_follow_up");
         } else if (id == R.id.child_postnatal_care) {
             openChildForm("child_postnatal_care");
+        } else if (id == R.id.fabx) {
+            toggleFabMenu();
         }
+    }
+
+    private void toggleFabMenu() {
+        if (isFabOpen) {
+            closeFabMenu();
+        } else {
+            isFabOpen = true;
+            if (childFinalOutcomeLayout != null) {
+                childFinalOutcomeLayout.setVisibility(View.VISIBLE);
+            }
+            if (childLongitudinalLayout != null) {
+                childLongitudinalLayout.setVisibility(View.VISIBLE);
+            }
+            if (childPostnatalLayout != null) {
+                childPostnatalLayout.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    private void closeFabMenu() {
+        isFabOpen = false;
+        if (childFinalOutcomeLayout != null) {
+            childFinalOutcomeLayout.setVisibility(View.GONE);
+        }
+        if (childLongitudinalLayout != null) {
+            childLongitudinalLayout.setVisibility(View.GONE);
+        }
+        if (childPostnatalLayout != null) {
+            childPostnatalLayout.setVisibility(View.GONE);
+        }
+    }
+
+    private void updateLongitudinalTabTitle() {
+        try {
+            ConstraintLayout layout = (ConstraintLayout) LayoutInflater.from(this)
+                    .inflate(R.layout.visits_tab_title, null);
+            TextView title = layout.findViewById(R.id.visits_title);
+            TextView countView = layout.findViewById(R.id.visits_count);
+            title.setText("LONGITUDINAL");
+
+            int count = 0;
+            try {
+                if (uniqueId != null) {
+                    count = ChildLongitudinalFollowUpDao.listByUniqueId(uniqueId).size();
+                }
+            } catch (Exception ignored) { }
+            countView.setText(String.valueOf(count));
+
+            if (tabLayout.getTabCount() > 0 && tabLayout.getTabAt(0) != null) {
+                tabLayout.getTabAt(0).setCustomView(layout);
+            }
+        } catch (Exception ignored) { }
+    }
+
+    private void updatePostnatalTabTitle() {
+        try {
+            ConstraintLayout layout = (ConstraintLayout) LayoutInflater.from(this)
+                    .inflate(R.layout.visits_tab_title, null);
+            TextView title = layout.findViewById(R.id.visits_title);
+            TextView countView = layout.findViewById(R.id.visits_count);
+            title.setText("POSTNATAL");
+
+            int count = 0;
+            try {
+                if (uniqueId != null) {
+                    count = ChildPostnatalCareDao.listByUniqueId(uniqueId).size();
+                }
+            } catch (Exception ignored) { }
+            countView.setText(String.valueOf(count));
+
+            if (tabLayout.getTabCount() > 1 && tabLayout.getTabAt(1) != null) {
+                tabLayout.getTabAt(1).setCustomView(layout);
+            }
+        } catch (Exception ignored) { }
     }
 
     private void setupViewPager() {
@@ -147,16 +234,15 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
             else if (position == 2) tab.setText("Outcome");
         });
         tabMediator.attach();
+
+        updateLongitudinalTabTitle();
+        updatePostnatalTabTitle();
     }
 
     private void openChildForm(String formName) {
         try {
             FormUtils formUtils = new FormUtils(this);
             JSONObject form = formUtils.getFormJson(formName);
-
-            if (baseEntityId != null) {
-                form.put("entity_id", baseEntityId);
-            }
 
             // Ensure IDs are visible in the form
             try {
@@ -172,16 +258,6 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
                 }
             } catch (Exception ignored) {
                 // Use empty catch to avoid crashing form launch for minor mapping issues
-            }
-
-            // Basic pre-population hook if needed later
-            try {
-                JSONArray flds = fields(form, JsonFormConstants.STEP1);
-                JSONObject baseEntityField = getFieldJSONObject(flds, "base_entity_id");
-                if (baseEntityField != null && baseEntityId != null) {
-                    baseEntityField.put(JsonFormConstants.VALUE, baseEntityId);
-                }
-            } catch (Exception ignored) {
             }
 
             startFormActivity(form);

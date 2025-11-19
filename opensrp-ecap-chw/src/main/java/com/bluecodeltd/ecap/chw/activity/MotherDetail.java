@@ -25,6 +25,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager2.widget.ViewPager2;
+
+import com.bluecodeltd.ecap.chw.model.MotherAncModel;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import com.bluecodeltd.ecap.chw.R;

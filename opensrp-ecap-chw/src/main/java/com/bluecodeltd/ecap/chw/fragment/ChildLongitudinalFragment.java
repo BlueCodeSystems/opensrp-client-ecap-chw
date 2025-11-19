@@ -59,8 +59,8 @@ public class ChildLongitudinalFragment extends Fragment {
         final String fUnique = uniqueId;
 
         Threading.io(() -> {
-            List<ChildLongitudinalFollowUpModel> list = fBase != null
-                    ? ChildLongitudinalFollowUpDao.listByBaseEntityId(fBase)
+            List<ChildLongitudinalFollowUpModel> list = fUnique != null
+                    ? ChildLongitudinalFollowUpDao.listByUniqueId(fUnique)
                     : new ArrayList<>();
             final List<ChildLongitudinalFollowUpModel> items = list != null ? list : new ArrayList<>();
             Threading.main(() -> {

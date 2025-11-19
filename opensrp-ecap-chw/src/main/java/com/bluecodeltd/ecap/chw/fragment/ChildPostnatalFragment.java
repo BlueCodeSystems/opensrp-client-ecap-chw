@@ -59,8 +59,8 @@ public class ChildPostnatalFragment extends Fragment {
         final String fUnique = uniqueId;
 
         Threading.io(() -> {
-            List<ChildPostnatalCareModel> list = fBase != null
-                    ? ChildPostnatalCareDao.listByBaseEntityId(fBase)
+            List<ChildPostnatalCareModel> list = fUnique != null
+                    ? ChildPostnatalCareDao.listByUniqueId(fUnique)
                     : new ArrayList<>();
             final List<ChildPostnatalCareModel> items = list != null ? list : new ArrayList<>();
             Threading.main(() -> {
