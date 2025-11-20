@@ -48,4 +48,17 @@
     <string name="hts">HTS Register</string>
     <string name="pmtct_register">PMTCT Register</string>
 
+
+
+    <string name="tb_followup_edit_icon_cd">Edit TB follow-up</string>
+    <string name="tb_followup_title">TB follow-up</string>
+    <string name="tb_followup_subtitle">Review and update follow-up details</string>
+    <string name="tb_followup_ca_id_label">CA ID</string>
+    <string name="tb_followup_date_label">Date of follow-up</string>
+    <string name="tb_followup_referral_label">Referral completed</string>
+    <string name="tb_followup_diagnosis_default">Diagnosis: Not recorded</string>
+    <string name="tb_followup_edit_button">Edit follow-up</string>
+    <string name="tb_followup_cancel_button">Cancel</string>
+
+
 </resources>

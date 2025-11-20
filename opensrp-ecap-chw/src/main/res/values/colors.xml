@@ -72,6 +72,14 @@
     <color name="mother_accent">#FFC107</color>
 
 
+    <color name="kpi_children">#2E7D32</color>     <!-- green -->
+    <color name="kpi_households">#1565C0</color>   <!-- blue -->
+    <color name="kpi_due">#C62828</color>          <!-- red (alert) -->
+
+    <color name="light_grey_text">#757575</color>
+    <color name="text_black">#212121</color>
+    <color name="divider_grey">#E0E0E0</color>
+
 
 
 </resources>

@@ -58,7 +58,7 @@
                     <androidx.cardview.widget.CardView
                         android:id="@+id/child_profile_card"
                         android:layout_width="match_parent"
-                        android:layout_height="240dp"
+                        android:layout_height="wrap_content"
                         android:clickable="true"
                         android:focusable="true"
                         android:foreground="?attr/selectableItemBackground"
@@ -80,7 +80,6 @@
                                 android:gravity="center_vertical"
                                 android:orientation="horizontal">
 
-                                <!-- "Child profile" label -->
                                 <TextView
                                     android:id="@+id/child_profile_label"
                                     android:layout_width="0dp"
@@ -93,12 +92,12 @@
                                     android:textColor="@color/text_black"
                                     android:textSize="11sp" />
 
-                                <!-- Optional status pill -->
+                                <!-- Case status pill (e.g. Active / Inactive / Closed) -->
                                 <TextView
                                     android:id="@+id/child_status"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:background="#739273"
+                                    android:background="@drawable/bg_case_status_pill"
                                     android:paddingStart="8dp"
                                     android:paddingTop="2dp"
                                     android:paddingEnd="8dp"
@@ -117,16 +116,16 @@
                                 android:gravity="center_vertical"
                                 android:orientation="horizontal">
 
-                                <!-- Circular avatar -->
+                                <!-- Circular avatar (can swap icon based on gender) -->
                                 <ImageView
                                     android:id="@+id/child_avatar"
                                     android:layout_width="56dp"
                                     android:layout_height="56dp"
                                     android:layout_marginEnd="16dp"
-                                    android:background="@drawable/circle_white_24"
+                                    android:background="@drawable/circle_light_grey"
                                     android:padding="10dp"
                                     android:scaleType="centerInside"
-                                    android:src="@drawable/ic_person" />
+                                    android:src="@drawable/ic_child" />
 
                                 <LinearLayout
                                     android:layout_width="0dp"
@@ -140,33 +139,29 @@
                                         style="@style/CustomFontTextViewStyle.ClientList.Medium"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:maxLines="1"
+                                        android:ellipsize="end"
                                         android:textColor="@color/text_black"
                                         android:textSize="@dimen/activity_title_size" />
 
-                                    <!-- Age + ID row -->
+                                    <!-- Age + gender + CA ID -->
                                     <LinearLayout
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="2dp"
                                         android:orientation="horizontal">
 
-                                        <org.smartregister.view.customcontrols.CustomFontTextView
-                                            style="@style/CustomFontTextViewStyle.ClientList.Light"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="Age: "
-                                            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                                            android:textColor="@color/text_black" />
-
+                                        <!-- Age -->
                                         <org.smartregister.view.customcontrols.CustomFontTextView
                                             android:id="@+id/child_age"
                                             style="@style/CustomFontTextViewStyle.ClientList.Light"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
+                                            android:text="8 yrs"
                                             android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                             android:textColor="@color/text_black" />
 
-                                        <!-- Small separator dot -->
+                                        <!-- Dot -->
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
@@ -176,18 +171,53 @@
                                             android:text="•"
                                             android:textColor="@color/text_black" />
 
-                                        <!-- Optional ID / folder number -->
+                                        <!-- Gender -->
+                                        <org.smartregister.view.customcontrols.CustomFontTextView
+                                            android:id="@+id/child_gender"
+                                            style="@style/CustomFontTextViewStyle.ClientList.Light"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Male"
+                                            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                                            android:textColor="@color/text_black" />
+
+                                        <!-- Dot -->
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="6dp"
+                                            android:layout_marginEnd="6dp"
+                                            android:alpha="0.5"
+                                            android:text="•"
+                                            android:textColor="@color/text_black" />
+
+                                        <!-- CA ID -->
                                         <org.smartregister.view.customcontrols.CustomFontTextView
                                             android:id="@+id/child_id"
                                             style="@style/CustomFontTextViewStyle.ClientList.Light"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:alpha="0.9"
+                                            android:text="CA ID: 123456"
                                             android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                             android:textColor="@color/text_black" />
                                     </LinearLayout>
 
-                                    <!-- Extra info line -->
+                                    <!-- Household + caregiver -->
+                                    <org.smartregister.view.customcontrols.CustomFontTextView
+                                        android:id="@+id/child_household"
+                                        style="@style/CustomFontTextViewStyle.ClientList.Light"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="2dp"
+                                        android:alpha="0.8"
+                                        android:maxLines="1"
+                                        android:ellipsize="end"
+                                        android:text="HH: HH-0001 • Caregiver: M. Banda"
+                                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                                        android:textColor="@color/text_black" />
+
+                                    <!-- Facility + ward/district -->
                                     <org.smartregister.view.customcontrols.CustomFontTextView
                                         android:id="@+id/child_facility"
                                         style="@style/CustomFontTextViewStyle.ClientList.Light"
@@ -195,6 +225,9 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="2dp"
                                         android:alpha="0.8"
+                                        android:maxLines="1"
+                                        android:ellipsize="end"
+                                        android:text="Kanyama Clinic • Ward 3 • Lusaka"
                                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                         android:textColor="@color/text_black" />
 
@@ -204,6 +237,7 @@
                         </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
+
 
                 </LinearLayout>
 
