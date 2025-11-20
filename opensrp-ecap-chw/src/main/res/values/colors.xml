@@ -63,6 +63,16 @@
 
     <color name="status_green">#2E7D32</color>        <!-- Material Green 700 -->
     <color name="status_green_dark">#1B5E20</color>
-    
+
+
+    <color name="mother_avatar_bg">#EAF3F1</color>
+    <color name="mother_hair">#1B1B1B</color>
+    <color name="mother_skin_tone">#9A5A32</color>
+    <color name="mother_top">@color/btn_blue</color>   <!-- or any primary color -->
+    <color name="mother_accent">#FFC107</color>
+
+
+
+
 </resources>
 

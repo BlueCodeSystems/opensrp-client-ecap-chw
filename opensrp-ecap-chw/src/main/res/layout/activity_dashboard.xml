@@ -165,7 +165,7 @@
                             android:layout_height="24dp"
                             android:layout_marginBottom="4dp"
                             android:src="@drawable/ic_children"
-                            app:tint="@android:color/white" />
+                            />
 
                         <TextView
                             android:id="@+id/allVcasNumber"

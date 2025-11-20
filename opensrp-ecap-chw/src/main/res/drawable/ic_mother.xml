@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="128"
+    android:viewportHeight="128">
+
+    <!-- Background circle -->
+    <path
+        android:name="bg_circle"
+        android:fillColor="@color/mother_avatar_bg"
+        android:pathData="M64,8
+                          A56,56 0 1,0 64,120
+                          A56,56 0 1,0 64,8" />
+
+    <!-- Hair (fuller afro / bun style) -->
+    <path
+        android:name="hair_outer"
+        android:fillColor="@color/mother_hair"
+        android:pathData="M32,44
+                          C32,26 44,14 64,14
+                          C84,14 96,26 96,44
+                          C96,64 86,72 64,72
+                          C42,72 32,64 32,44 Z" />
+
+    <!-- Face (African skin tone) -->
+    <path
+        android:name="face"
+        android:fillColor="@color/mother_skin_tone"
+        android:pathData="M64,28
+                          A22,22 0 1,0 64,72
+                          A22,22 0 1,0 64,28" />
+
+    <!-- Ears -->
+    <path
+        android:name="ear_left"
+        android:fillColor="@color/mother_skin_tone"
+        android:pathData="M42,42
+                          A4,6 0 1,0 42,54
+                          A4,6 0 1,0 42,42" />
+
+    <path
+        android:name="ear_right"
+        android:fillColor="@color/mother_skin_tone"
+        android:pathData="M86,42
+                          A4,6 0 1,0 86,54
+                          A4,6 0 1,0 86,42" />
+
+    <!-- Simple earrings (subtle) -->
+    <path
+        android:name="earring_left"
+        android:fillColor="@color/mother_accent"
+        android:pathData="M42,56
+                          A2,2 0 1,0 42,60
+                          A2,2 0 1,0 42,56" />
+
+    <path
+        android:name="earring_right"
+        android:fillColor="@color/mother_accent"
+        android:pathData="M86,56
+                          A2,2 0 1,0 86,60
+                          A2,2 0 1,0 86,56" />
+
+    <!-- Neck -->
+    <path
+        android:name="neck"
+        android:fillColor="@color/mother_skin_tone"
+        android:pathData="M54,66
+                          L74,66
+                          L74,78
+                          L54,78 Z" />
+
+    <!-- Body / blouse -->
+    <path
+        android:name="body"
+        android:fillColor="@color/mother_top"
+        android:pathData="M32,80
+                          C40,72 48,68 64,68
+                          C80,68 88,72 96,80
+                          L96,112
+                          L32,112
+                          Z" />
+
+    <!-- Simple neckline detail -->
+    <path
+        android:name="neckline"
+        android:fillColor="@android:color/white"
+        android:pathData="M52,80
+                          Q64,90 76,80
+                          L76,84
+                          Q64,94 52,84
+                          Z" />
+
+    <!-- Front hair / fringe / hairline -->
+    <path
+        android:name="hair_front"
+        android:fillColor="@color/mother_hair"
+        android:pathData="M44,38
+                          C48,30 56,28 64,28
+                          C72,28 80,30 84,38
+                          C80,40 76,42 64,42
+                          C52,42 48,40 44,38 Z" />
+
+    <!-- Left eye -->
+    <path
+        android:name="eye_left"
+        android:fillColor="#202020"
+        android:pathData="M52,44
+                          A2,2 0 1,0 52,48
+                          A2,2 0 1,0 52,44" />
+
+    <!-- Right eye -->
+    <path
+        android:name="eye_right"
+        android:fillColor="#202020"
+        android:pathData="M76,44
+                          A2,2 0 1,0 76,48
+                          A2,2 0 1,0 76,44" />
+
+    <!-- Brows (subtle) -->
+    <path
+        android:name="brow_left"
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#191919"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round"
+        android:pathData="M48,40
+                          Q52,38 56,40" />
+
+    <path
+        android:name="brow_right"
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#191919"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round"
+        android:pathData="M72,40
+                          Q76,38 80,40" />
+
+    <!-- Smile -->
+    <path
+        android:name="mouth"
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#6C3A24"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:pathData="M56,56
+                          Q64,62 72,56" />
+
+</vector>

@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.view_holder.IndexRegisterViewHolder;
+import com.bluecodeltd.ecap.chw.dao.IndexMotherDao;
+import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.model.IndexMotherModel;
 import com.bluecodeltd.ecap.chw.view_holder.MotherRegisterViewHolder;
 
 import org.smartregister.chw.core.holders.FooterViewHolder;
@@ -23,6 +25,10 @@ import org.smartregister.view.dialog.SortOption;
 import org.smartregister.view.viewholder.OnClickFormLauncher;
 
 import java.text.MessageFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,10 +51,72 @@ public class MotherRegisterProvider implements RecyclerViewProvider<MotherRegist
         CommonPersonObjectClient personObjectClient = (CommonPersonObjectClient) smartRegisterClient;
         String fullName = Utils.getValue(personObjectClient.getColumnmaps(), "caregiver_name", true);
         String household_id = Utils.getValue(personObjectClient.getColumnmaps(), "household_id", true);
+        String caregiverBirthDate = Utils.getValue(personObjectClient.getColumnmaps(), "caregiver_birth_date", true);
+        String lastInteractedWith = Utils.getValue(personObjectClient.getColumnmaps(), "last_interacted_with", true);
 
-        motherRegisterViewHolder.setupViews(fullName, household_id);
+        String age = getMotherAge(caregiverBirthDate);
+        String childrenCount = IndexPersonDao.countChildren(household_id);
+
+        IndexMotherModel indexMother = IndexMotherDao.getIndexMotherByHouseholdId(household_id);
+        String ageBand = indexMother != null ? indexMother.getMother_children_age_band() : null;
+        String childrenSummary = buildChildrenSummary(childrenCount, ageBand);
+
+        String enrollmentLabel = buildEnrollmentLabel(lastInteractedWith);
+
+        motherRegisterViewHolder.setupViews(fullName, household_id, age, childrenSummary, enrollmentLabel);
         motherRegisterViewHolder.itemView.setOnClickListener(onClickListener);
         motherRegisterViewHolder.itemView.setTag(smartRegisterClient);
+    }
+
+    private String getMotherAge(String birthDateRaw) {
+        if (birthDateRaw == null || birthDateRaw.trim().isEmpty()) {
+            return "";
+        }
+        // Try common formats; fall back gracefully on failure
+        String[] patterns = new String[]{
+                "dd-MM-yyyy",
+                "dd-MM-uuuu",
+                "dd MMM yyyy"
+        };
+        Date birthDate = null;
+        for (String pattern : patterns) {
+            try {
+                birthDate = new SimpleDateFormat(pattern, Locale.ENGLISH).parse(birthDateRaw);
+                if (birthDate != null) break;
+            } catch (ParseException ignored) { }
+        }
+        if (birthDate == null) {
+            return "";
+        }
+        long diffMillis = System.currentTimeMillis() - birthDate.getTime();
+        if (diffMillis <= 0) {
+            return "";
+        }
+        long years = diffMillis / (365L * 24 * 60 * 60 * 1000);
+        return years > 0 ? years + " yrs" : "";
+    }
+
+    private String buildChildrenSummary(String childrenCount, String ageBand) {
+        String count = (childrenCount == null || childrenCount.trim().isEmpty()) ? "0" : childrenCount.trim();
+        if ("1".equals(count)) {
+            return "1 child";
+        }
+        return count + " children";
+    }
+
+    private String buildEnrollmentLabel(String lastInteractedWithRaw) {
+        if (lastInteractedWithRaw == null || lastInteractedWithRaw.trim().isEmpty()) {
+            return "";
+        }
+        // last_interacted_with is stored as a long timestamp (event.version)
+        try {
+            long timestamp = Long.parseLong(lastInteractedWithRaw);
+            Date date = new Date(timestamp);
+            String formatted = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH).format(date);
+            return "Enrolled: " + formatted;
+        } catch (Exception e) {
+            return "";
+        }
     }
 
 

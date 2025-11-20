@@ -237,7 +237,7 @@
           "label": "Age"
         },
         "min_date": "today-100y",
-        "max_date": "today",
+        "max_date": "today-10y",
         "v_required": {
           "value": true,
           "err": "This field is required"
