@@ -316,8 +316,8 @@ public class MotherDetail extends AppCompatActivity {
 
             int count = 0;
             try {
-                String baseId = commonPersonObjectClient.getColumnmaps().get("base_entity_id");
-                count = MotherAncDao.listByBaseEntityId(baseId).size();
+                String householdId = commonPersonObjectClient.getColumnmaps().get("household_id");
+                count = MotherAncDao.listByHouseholdId(householdId).size();
             } catch (Exception ignored) { }
             countView.setText(String.valueOf(count));
 
@@ -336,8 +336,8 @@ public class MotherDetail extends AppCompatActivity {
 
             int count = 0;
             try {
-                String baseId = commonPersonObjectClient.getColumnmaps().get("base_entity_id");
-                count = MotherLongitudinalFollowUpDao.listByBaseEntityId(baseId).size();
+                String householdId = commonPersonObjectClient.getColumnmaps().get("household_id");
+                count = MotherLongitudinalFollowUpDao.listByHouseholdId(householdId).size();
             } catch (Exception ignored) { }
             countView.setText(String.valueOf(count));
 
@@ -356,8 +356,8 @@ public class MotherDetail extends AppCompatActivity {
 
             int count = 0;
             try {
-                String baseId = commonPersonObjectClient.getColumnmaps().get("base_entity_id");
-                count = MotherPostnatalCareDao.listByBaseEntityId(baseId).size();
+                String householdId = commonPersonObjectClient.getColumnmaps().get("household_id");
+                count = MotherPostnatalCareDao.listByHouseholdId(householdId).size();
             } catch (Exception ignored) { }
             countView.setText(String.valueOf(count));
 
@@ -600,13 +600,74 @@ public class MotherDetail extends AppCompatActivity {
                 break;
 
             case "mother_anc":
+
+                // From the mother profile, open a fresh ANC form (do not edit latest record).
+                // Only link using household_id (no base_entity_id / entity_id).
+                try {
+                    String householdId = this.commonPersonObjectClient.getColumnmaps().get("household_id");
+                    try {
+                        JSONArray flds = formToBeOpened.getJSONObject("step1").getJSONArray("fields");
+                        for (int i = 0; i < flds.length(); i++) {
+                            JSONObject f = flds.getJSONObject(i);
+                            String key = f.optString("key");
+                            if ("household_id".equals(key) && householdId != null) {
+                                f.put("value", householdId);
+                            }
+                        }
+                    } catch (Exception e) {
+                        Timber.e(e);
+                    }
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+
+                break;
+
             case "mother_longitudinal_follow_up":
+
+                // From the mother profile, open a fresh longitudinal form.
+                // Only link using household_id (no base_entity_id / entity_id).
+                try {
+                    String householdId = this.commonPersonObjectClient.getColumnmaps().get("household_id");
+                    try {
+                        JSONArray flds = formToBeOpened.getJSONObject("step1").getJSONArray("fields");
+                        for (int i = 0; i < flds.length(); i++) {
+                            JSONObject f = flds.getJSONObject(i);
+                            String key = f.optString("key");
+                            if ("household_id".equals(key) && householdId != null) {
+                                f.put("value", householdId);
+                            }
+                        }
+                    } catch (Exception e) {
+                        Timber.e(e);
+                    }
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+
+                break;
+
             case "mother_postnatal_care":
 
-                // Tie ANC/longitudinal/postnatal form to the existing mother record
-                formToBeOpened.put("entity_id", this.commonPersonObjectClient.getColumnmaps().get("base_entity_id"));
-                // Populate with mother column maps so household_id and other prefilled fields appear
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(commonPersonObjectClient.getColumnmaps(), Map.class));
+                // When adding from the mother profile, open a fresh Postnatal form.
+                // Only link using household_id (no base_entity_id / entity_id).
+                try {
+                    String householdId = this.commonPersonObjectClient.getColumnmaps().get("household_id");
+                    try {
+                        JSONArray flds = formToBeOpened.getJSONObject("step1").getJSONArray("fields");
+                        for (int i = 0; i < flds.length(); i++) {
+                            JSONObject f = flds.getJSONObject(i);
+                            String key = f.optString("key");
+                            if ("household_id".equals(key) && householdId != null) {
+                                f.put("value", householdId);
+                            }
+                        }
+                    } catch (Exception e) {
+                        Timber.e(e);
+                    }
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
 
                 break;
 

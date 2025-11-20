@@ -30,6 +30,8 @@ public class MotherLongitudinalFragment extends Fragment {
     private FragmentMotherLongitudinalBinding binding;
     private RecyclerView recyclerView;
     private View emptyView;
+    private MotherLongitudinalAdapter adapter;
+    private String householdId;
 
     public static MotherLongitudinalFragment newInstance() {
         return new MotherLongitudinalFragment();
@@ -45,37 +47,55 @@ public class MotherLongitudinalFragment extends Fragment {
         final View progress = binding.progressLoading;
         if (progress != null) progress.setVisibility(View.VISIBLE);
 
-        String baseEntityId = null;
+        householdId = null;
         try {
             HashMap<String, CommonPersonObjectClient> map = ((MotherDetail) requireActivity()).getData();
             CommonPersonObjectClient mother = map != null ? map.get("mother") : null;
             if (mother != null) {
-                baseEntityId = mother.getCaseId();
+                householdId = mother.getColumnmaps().get("household_id");
             }
         } catch (Exception ignored) {
         }
 
-        final String finalBaseEntityId = baseEntityId;
+        loadVisits(progress);
+
+        return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        final View progress = binding != null ? binding.progressLoading : null;
+        if (progress != null) progress.setVisibility(View.VISIBLE);
+        loadVisits(progress);
+    }
+
+    private void loadVisits(View progress) {
+        final String finalHouseholdId = householdId;
         Threading.io(() -> {
-            List<MotherLongitudinalFollowUpModel> list = finalBaseEntityId != null
-                    ? MotherLongitudinalFollowUpDao.listByBaseEntityId(finalBaseEntityId)
+            List<MotherLongitudinalFollowUpModel> list = finalHouseholdId != null
+                    ? MotherLongitudinalFollowUpDao.listByHouseholdId(finalHouseholdId)
                     : new ArrayList<>();
             final List<MotherLongitudinalFollowUpModel> items = list != null ? list : new ArrayList<>();
             Threading.main(() -> {
                 if (!isAdded()) return;
-                setupList(items);
+                if (adapter == null) {
+                    setupList(items);
+                } else {
+                    adapter.setItems(items);
+                    emptyView.setVisibility(items.size() > 0 ? View.GONE : View.VISIBLE);
+                }
                 if (progress != null) progress.setVisibility(View.GONE);
             });
         });
-
-        return root;
     }
 
     private void setupList(List<MotherLongitudinalFollowUpModel> items) {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(new MotherLongitudinalAdapter(requireContext(), items));
+        adapter = new MotherLongitudinalAdapter(requireContext(), items);
+        recyclerView.setAdapter(adapter);
         emptyView.setVisibility(items != null && items.size() > 0 ? View.GONE : View.VISIBLE);
     }
 
@@ -85,4 +105,3 @@ public class MotherLongitudinalFragment extends Fragment {
         binding = null;
     }
 }
-

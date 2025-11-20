@@ -22,6 +22,11 @@ public class MotherPostnatalCareDao extends AbstractDao {
         return AbstractDao.readData(sql, getMap());
     }
 
+    public static List<MotherPostnatalCareModel> listByHouseholdId(String householdId) {
+        String sql = "SELECT * FROM ec_mother_postnatal_care WHERE household_id = '" + householdId + "' ORDER BY last_interacted_with DESC";
+        return AbstractDao.readData(sql, getMap());
+    }
+
     public static DataMap<MotherPostnatalCareModel> getMap() {
         return c -> {
             MotherPostnatalCareModel record = new MotherPostnatalCareModel();

@@ -23,7 +23,11 @@ import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.util.FormUtils;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import timber.log.Timber;
@@ -36,7 +40,15 @@ public class MotherPostnatalAdapter extends RecyclerView.Adapter<MotherPostnatal
 
     public MotherPostnatalAdapter(Context context, List<MotherPostnatalCareModel> items) {
         this.context = context;
-        this.items = items;
+        this.items = items != null ? new ArrayList<>(items) : new ArrayList<>();
+    }
+
+    public void setItems(List<MotherPostnatalCareModel> data) {
+        this.items.clear();
+        if (data != null) {
+            this.items.addAll(data);
+        }
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -63,7 +75,7 @@ public class MotherPostnatalAdapter extends RecyclerView.Adapter<MotherPostnatal
 
         // Header fields
         if (date != null && !date.isEmpty()) {
-            holder.txtDate.setText("Postnatal Date: " + date);
+            holder.txtDate.setText("Postnatal Date: " + fmt(date));
         } else {
             holder.txtDate.setText("");
         }
@@ -107,7 +119,7 @@ public class MotherPostnatalAdapter extends RecyclerView.Adapter<MotherPostnatal
 
     @Override
     public int getItemCount() {
-        return items != null ? items.size() : 0;
+        return items.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -140,6 +152,15 @@ public class MotherPostnatalAdapter extends RecyclerView.Adapter<MotherPostnatal
              txtPncStiScreening = itemView.findViewById(R.id.pnc_sti_screening);
              txtPncComments = itemView.findViewById(R.id.pnc_comments);
             btnEdit = itemView.findViewById(R.id.edit_me);
+        }
+    }
+
+    private String fmt(String millisStr) {
+        try {
+            long v = Long.parseLong(millisStr);
+            return new SimpleDateFormat("dd MMM yyyy, HH:mm", Locale.getDefault()).format(new Date(v));
+        } catch (Exception e) {
+            return millisStr != null ? millisStr : "";
         }
     }
 

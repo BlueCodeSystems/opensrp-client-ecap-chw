@@ -22,6 +22,11 @@ public class MotherAncDao extends AbstractDao {
         return AbstractDao.readData(sql, getMap());
     }
 
+    public static List<MotherAncModel> listByHouseholdId(String householdId) {
+        String sql = "SELECT * FROM ec_mother_anc WHERE household_id = '" + householdId + "' ORDER BY last_interacted_with DESC";
+        return AbstractDao.readData(sql, getMap());
+    }
+
     public static DataMap<MotherAncModel> getMap() {
         return c -> {
             MotherAncModel record = new MotherAncModel();

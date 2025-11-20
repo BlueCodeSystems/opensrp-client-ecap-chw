@@ -30,6 +30,8 @@ public class MotherPostnatalFragment extends Fragment {
     private FragmentMotherPostnatalBinding binding;
     private RecyclerView recyclerView;
     private View emptyView;
+    private MotherPostnatalAdapter adapter;
+    private String householdId;
 
     public static MotherPostnatalFragment newInstance() {
         return new MotherPostnatalFragment();
@@ -45,37 +47,55 @@ public class MotherPostnatalFragment extends Fragment {
         final View progress = binding.progressLoading;
         if (progress != null) progress.setVisibility(View.VISIBLE);
 
-        String baseEntityId = null;
+        householdId = null;
         try {
             HashMap<String, CommonPersonObjectClient> map = ((MotherDetail) requireActivity()).getData();
             CommonPersonObjectClient mother = map != null ? map.get("mother") : null;
             if (mother != null) {
-                baseEntityId = mother.getCaseId();
+                householdId = mother.getColumnmaps().get("household_id");
             }
         } catch (Exception ignored) {
         }
 
-        final String finalBaseEntityId = baseEntityId;
+        loadVisits(progress);
+
+        return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        final View progress = binding != null ? binding.progressLoading : null;
+        if (progress != null) progress.setVisibility(View.VISIBLE);
+        loadVisits(progress);
+    }
+
+    private void loadVisits(View progress) {
+        final String finalHouseholdId = householdId;
         Threading.io(() -> {
-            List<MotherPostnatalCareModel> list = finalBaseEntityId != null
-                    ? MotherPostnatalCareDao.listByBaseEntityId(finalBaseEntityId)
+            List<MotherPostnatalCareModel> list = finalHouseholdId != null
+                    ? MotherPostnatalCareDao.listByHouseholdId(finalHouseholdId)
                     : new ArrayList<>();
             final List<MotherPostnatalCareModel> items = list != null ? list : new ArrayList<>();
             Threading.main(() -> {
                 if (!isAdded()) return;
-                setupList(items);
+                 if (adapter == null) {
+                     setupList(items);
+                 } else {
+                     adapter.setItems(items);
+                     emptyView.setVisibility(items.size() > 0 ? View.GONE : View.VISIBLE);
+                 }
                 if (progress != null) progress.setVisibility(View.GONE);
             });
         });
-
-        return root;
     }
 
     private void setupList(List<MotherPostnatalCareModel> items) {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(new MotherPostnatalAdapter(requireContext(), items));
+        adapter = new MotherPostnatalAdapter(requireContext(), items);
+        recyclerView.setAdapter(adapter);
         emptyView.setVisibility(items != null && items.size() > 0 ? View.GONE : View.VISIBLE);
     }
 
@@ -85,4 +105,3 @@ public class MotherPostnatalFragment extends Fragment {
         binding = null;
     }
 }
-

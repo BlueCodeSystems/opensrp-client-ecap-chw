@@ -22,6 +22,7 @@ import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.util.FormUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +36,15 @@ public class MotherLongitudinalAdapter extends RecyclerView.Adapter<MotherLongit
 
     public MotherLongitudinalAdapter(Context context, List<MotherLongitudinalFollowUpModel> items) {
         this.context = context;
-        this.items = items;
+        this.items = items != null ? new ArrayList<>(items) : new ArrayList<>();
+    }
+
+    public void setItems(List<MotherLongitudinalFollowUpModel> data) {
+        this.items.clear();
+        if (data != null) {
+            this.items.addAll(data);
+        }
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -102,7 +111,7 @@ public class MotherLongitudinalAdapter extends RecyclerView.Adapter<MotherLongit
 
     @Override
     public int getItemCount() {
-        return items != null ? items.size() : 0;
+        return items.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

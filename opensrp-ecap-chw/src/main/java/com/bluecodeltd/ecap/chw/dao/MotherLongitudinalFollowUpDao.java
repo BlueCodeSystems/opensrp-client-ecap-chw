@@ -22,6 +22,11 @@ public class MotherLongitudinalFollowUpDao extends AbstractDao {
         return AbstractDao.readData(sql, getMap());
     }
 
+    public static List<MotherLongitudinalFollowUpModel> listByHouseholdId(String householdId) {
+        String sql = "SELECT * FROM ec_mother_longitudinal_follow_up WHERE household_id = '" + householdId + "' ORDER BY last_interacted_with DESC";
+        return AbstractDao.readData(sql, getMap());
+    }
+
     public static DataMap<MotherLongitudinalFollowUpModel> getMap() {
         return c -> {
             MotherLongitudinalFollowUpModel record = new MotherLongitudinalFollowUpModel();
