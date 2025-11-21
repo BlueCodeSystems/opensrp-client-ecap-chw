@@ -440,7 +440,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "mother_index_relevance.yml"
+              "rules-file": "test.yml"
             }
           }
         }
@@ -458,7 +458,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "mother_index_relevance.yml"
+              "rules-file": "test.yml"
             }
           }
         }
@@ -479,7 +479,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "mother_index_relevance.yml"
+              "rules-file": "test.yml"
             }
           }
         }
@@ -500,7 +500,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "mother_index_relevance.yml"
+              "rules-file": "test.yml"
             }
           }
         },
@@ -524,7 +524,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "mother_index_relevance.yml"
+              "rules-file": "test.yml"
             }
           }
         },
@@ -557,7 +557,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "mother_index_relevance.yml"
+              "rules-file": "test.yml"
             }
           }
         }
@@ -590,7 +590,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "mother_index_relevance.yml"
+              "rules-file": "test.yml"
             }
           }
         }
@@ -623,7 +623,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "mother_index_relevance.yml"
+              "rules-file": "test.yml"
             }
           }
         }
@@ -648,7 +648,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "mother_index_relevance.yml"
+              "rules-file": "test.yml"
             }
           }
         }
@@ -691,7 +691,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "mother_index_relevance.yml"
+              "rules-file": "test.yml"
             }
           }
         }
@@ -722,7 +722,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "mother_index_relevance.yml"
+              "rules-file": "test.yml"
             }
           }
         }

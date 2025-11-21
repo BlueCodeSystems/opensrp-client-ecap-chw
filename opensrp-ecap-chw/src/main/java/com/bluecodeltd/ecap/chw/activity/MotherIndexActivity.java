@@ -182,11 +182,24 @@ public class MotherIndexActivity extends BaseRegisterActivity implements MotherI
                     if (Constants.EcapEncounterType.MOTHER_INDEX.equalsIgnoreCase(
                             jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
 
-                        // Block enrollment if mother_age_range == "no"
+                        // Block enrollment based on mother age and status
                         try {
                             org.json.JSONObject ageRangeField = getFieldJSONObject(fields(jsonFormObject, STEP1), "mother_age_range");
                             String ageRange = ageRangeField != null ? ageRangeField.optString("value", "") : "";
-                            if ("no".equalsIgnoreCase(ageRange)) {
+                            org.json.JSONObject caregiverHivStatusField = getFieldJSONObject(fields(jsonFormObject, STEP1), "caregiver_hiv_status");
+                            org.json.JSONObject pregnantMotherField = getFieldJSONObject(fields(jsonFormObject, STEP1), "pregnant_mother");
+                            org.json.JSONObject motherBreastfeedingField = getFieldJSONObject(fields(jsonFormObject, STEP1), "mother_breastfeeding");
+
+                            String caregiverHivStatus = caregiverHivStatusField != null ? caregiverHivStatusField.optString("value", "") : "";
+                            String pregnantMother = pregnantMotherField != null ? pregnantMotherField.optString("value", "") : "";
+                            String motherBreastfeeding = motherBreastfeedingField != null ? motherBreastfeedingField.optString("value", "") : "";
+
+                            boolean ageRangeBlocks = "no".equalsIgnoreCase(ageRange);
+                            boolean hivNegativeNoPregNoBreast = "negative".equalsIgnoreCase(caregiverHivStatus)
+                                    && "no".equalsIgnoreCase(pregnantMother)
+                                    && "no".equalsIgnoreCase(motherBreastfeeding);
+
+                            if (ageRangeBlocks || hivNegativeNoPregNoBreast) {
                                 Toasty.warning(this, "You can't enroll this household", Toast.LENGTH_LONG, true).show();
                                 return;
                             }

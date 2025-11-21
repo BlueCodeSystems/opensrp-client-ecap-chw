@@ -9,7 +9,7 @@ actions:
 name: step1_unique_id
 description: unique_id
 priority: 1
-condition: "!(step1_mother_age_range.contains('no') || step1_mother_children_age_band.contains('n_a'))"
+condition: "(!(step1_mother_age_range.contains('no') || step1_mother_children_age_band.contains('n_a')) || !(step1_pregnant_mother.contains('no') && step1_mother_breastfeeding.contains('no'))) && !(step1_caregiver_hiv_status.contains('negative') && step1_pregnant_mother.contains('no') && step1_mother_breastfeeding.contains('no'))"
 actions:
   - "isRelevant = true"
 ---
@@ -86,7 +86,7 @@ actions:
 name: step1_toasterHh
 description: toasterHh
 priority: 1
-condition: "step1_mother_age_range.contains('no')"
+condition: "step1_mother_age_range.contains('no') || (step1_caregiver_hiv_status.contains('negative') && step1_pregnant_mother.contains('no') && step1_mother_breastfeeding.contains('no'))"
 actions:
   - "isRelevant = true"
 ---
@@ -103,4 +103,3 @@ priority: 1
 condition: "step1_pregnant_mother.contains('yes') || step1_mother_breastfeeding.contains('yes')"
 actions:
   - "isRelevant = true"
-

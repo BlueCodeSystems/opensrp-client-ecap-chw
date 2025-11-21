@@ -258,23 +258,22 @@ public class MotherDetail extends AppCompatActivity {
         updatePostnatalTabTitle();
         setupFabVisibility();
 
-        // Show PMTCT button only if pregnant OR breastfeeding OR mother_age_range == yes
+        // Show PMTCT button only if caregiver is HIV positive
         try {
             View pmtctBtn = binding.pmtctProf;
             if (pmtctBtn != null) {
-                String pregnant = commonPersonObjectClient.getColumnmaps().get("pregnant_mother");
-                String breastfeeding = commonPersonObjectClient.getColumnmaps().get("mother_breastfeeding");
-                String motherAgeRange = commonPersonObjectClient.getColumnmaps().get("mother_age_range");
-
-                boolean pregnantYes = pregnant != null && pregnant.equalsIgnoreCase("yes");
-                boolean breastfeedingYes = breastfeeding != null && breastfeeding.equalsIgnoreCase("yes");
-                boolean ageYes = motherAgeRange != null && motherAgeRange.equalsIgnoreCase("yes");
-
-                if (pregnantYes || breastfeedingYes || ageYes) {
-                    pmtctBtn.setVisibility(View.VISIBLE);
-                } else {
-                    pmtctBtn.setVisibility(View.GONE);
+                String caregiverStatus = null;
+                if (commonPersonObjectClient != null && commonPersonObjectClient.getColumnmaps() != null) {
+                    caregiverStatus = commonPersonObjectClient.getColumnmaps().get("caregiver_hiv_status");
                 }
+                if ((caregiverStatus == null || caregiverStatus.isEmpty()) && family != null) {
+                    caregiverStatus = family.getCaregiver_hiv_status();
+                }
+
+                boolean isPositive = caregiverStatus != null &&
+                        (caregiverStatus.equalsIgnoreCase("positive") || caregiverStatus.equalsIgnoreCase("HIV+"));
+
+                pmtctBtn.setVisibility(isPositive ? View.VISIBLE : View.GONE);
             }
         } catch (Exception ignored) { }
 
@@ -822,6 +821,8 @@ public class MotherDetail extends AppCompatActivity {
                         return new ChildIndexEventClient(event, client);
                     }
                     break;
+
+
 
                 case "Child":
 
