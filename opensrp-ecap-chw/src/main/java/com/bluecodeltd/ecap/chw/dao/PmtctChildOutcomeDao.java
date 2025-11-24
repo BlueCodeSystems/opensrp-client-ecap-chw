@@ -27,6 +27,8 @@ public class PmtctChildOutcomeDao extends AbstractDao {
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setPmtct_id(getCursorValue(c, "pmtct_id"));
             record.setUnique_id(getCursorValue(c, "unique_id"));
+            record.setHousehold_id(getCursorValue(c, "household_id"));
+            record.setCaregiver_name(getCursorValue(c, "caregiver_name"));
             record.setChild_outcome(getCursorValue(c, "child_outcome"));
 
 

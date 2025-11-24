@@ -87,7 +87,11 @@ public class PMTCTRegisterProvider implements RecyclerViewProvider<PMTCTRegister
         String BaseEntityId = Utils.getValue(personObjectClient.getColumnmaps(), "base_entity_id", false);
         String firstName = Utils.getValue(personObjectClient.getColumnmaps(), "first_name", true);
         String lastName = Utils.getValue(personObjectClient.getColumnmaps(), "last_name", true);
+        String caregiverName = Utils.getValue(personObjectClient.getColumnmaps(), "caregiver_name", true);
+
         String clientId = Utils.getValue(personObjectClient.getColumnmaps(), "pmtct_id", false);
+        String householdId = Utils.getValue(personObjectClient.getColumnmaps(), "household_id", true);
+//
 //        String gender = Utils.getValue(personObjectClient.getColumnmaps(), "caregiver_sex", true);
         String gender = "";
         String household_id = Utils.getValue(personObjectClient.getColumnmaps(), "mothers_smh_no", true);
@@ -100,7 +104,16 @@ public class PMTCTRegisterProvider implements RecyclerViewProvider<PMTCTRegister
             age = getAge(birthdate);
         }
 
-        pmtctRegisterViewHolder.setupViews(firstName+" "+lastName,"ID : " + clientId, gender, age,client_type);
+        String displayName = (isNullOrEmpty(firstName) && isNullOrEmpty(lastName) && !isNullOrEmpty(caregiverName))
+                ? caregiverName
+                : String.format("%s %s", valueOrEmpty(firstName), valueOrEmpty(lastName)).trim();
+        if (isNullOrEmpty(displayName)) {
+            displayName = caregiverName;
+        }
+
+        String displayId = isNullOrEmpty(clientId) ? householdId : clientId;
+
+        pmtctRegisterViewHolder.setupViews(displayName,"ID : " + displayId, gender, age,client_type);
 
         // Determine unsuppressed VL flag using PMTCTMotherDao (Agyw_unsuppressed_vl_1st or Unsuppressed_vl_1st)
         boolean unsuppressed = false;
@@ -188,6 +201,8 @@ public class PMTCTRegisterProvider implements RecyclerViewProvider<PMTCTRegister
     }
 
     private static String safe(String s) { return s == null ? "" : s.trim(); }
+    private static boolean isNullOrEmpty(String s) { return s == null || s.trim().isEmpty(); }
+    private static String valueOrEmpty(String s) { return s == null ? "" : s.trim(); }
     private static boolean containsWord(String s, String needle) {
         if (s == null) return false;
         return s.toLowerCase(java.util.Locale.ENGLISH).contains(needle.toLowerCase(java.util.Locale.ENGLISH));

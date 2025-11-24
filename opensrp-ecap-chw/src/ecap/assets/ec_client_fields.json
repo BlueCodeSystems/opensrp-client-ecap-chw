@@ -8608,6 +8608,13 @@
           }
         },
         {
+          "column_name": "caregiver_birth_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_birth_date"
+          }
+        },
+        {
           "column_name": "district",
           "type": "Client",
           "json_mapping": {
@@ -9131,6 +9138,13 @@
           }
         },
         {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id"
+          }
+        },
+        {
           "column_name": "district",
           "type": "Client",
           "json_mapping": {
@@ -9550,6 +9564,13 @@
           }
         },
         {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id"
+          }
+        },
+        {
           "column_name": "pmtct_id",
           "type": "Client",
           "json_mapping": {
@@ -9747,6 +9768,13 @@
           }
         },
         {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id"
+          }
+        },
+        {
           "column_name": "pmtct_id",
           "type": "Client",
           "json_mapping": {
@@ -9885,6 +9913,13 @@
           }
         },
         {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id"
+          }
+        },
+        {
           "column_name": "pmtct_id",
           "type": "Client",
           "json_mapping": {
@@ -9932,6 +9967,13 @@
           }
         },
         {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id"
+          }
+        },
+        {
           "column_name": "pmtct_id",
           "type": "Client",
           "json_mapping": {
@@ -9969,6 +10011,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id"
           }
         },
         {
@@ -10089,6 +10138,13 @@
             "field": "relationships.family"
           }
         },
+        {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id"
+          }
+        },
 
         {
           "column_name": "result_r_nr",
@@ -10186,6 +10242,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id"
           }
         },
         {

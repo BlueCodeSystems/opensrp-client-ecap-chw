@@ -10,7 +10,7 @@ import java.util.List;
 public class PtmctMotherMonitoringDao extends AbstractDao {
     public static PtmctMotherMonitoringModel getPMCTMother(String pmtctID) {
 
-        String sql = "SELECT * FROM ec_pmtct_mother_monitoring WHERE pmtct_id = '" + pmtctID + "' ";
+        String sql = "SELECT * FROM ec_pmtct_mother_monitoring WHERE (pmtct_id = '" + pmtctID + "' OR household_id = '" + pmtctID + "')";
 
         List<PtmctMotherMonitoringModel> values = AbstractDao.readData(sql, getPtmctMotherMonitoringModelMap());
 
@@ -23,7 +23,7 @@ public class PtmctMotherMonitoringDao extends AbstractDao {
     }
     public static List<PtmctMotherMonitoringModel> getPmctMotherHei(String pmtctID) {
 
-        String sql = "SELECT * FROM ec_pmtct_mother_child WHERE pmtct_id = '" + pmtctID + "' ";
+        String sql = "SELECT * FROM ec_pmtct_mother_child WHERE (pmtct_id = '" + pmtctID + "' OR household_id = '" + pmtctID + "')";
 
         List<PtmctMotherMonitoringModel> values = AbstractDao.readData(sql, getPtmctMotherMonitoringModelMap());
         if (values == null || values.size() == 0)
@@ -34,7 +34,7 @@ public class PtmctMotherMonitoringDao extends AbstractDao {
     }
     public static String countMotherHei (String pmtctID){
 
-        String sql = "SELECT COUNT(*) v FROM ec_pmtct_mother_child WHERE pmtct_id = '" + pmtctID + "' ";
+        String sql = "SELECT COUNT(*) v FROM ec_pmtct_mother_child WHERE (pmtct_id = '" + pmtctID + "' OR household_id = '" + pmtctID + "')";
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
 
         List<String> values = AbstractDao.readData(sql, dataMap);
@@ -106,6 +106,8 @@ public class PtmctMotherMonitoringDao extends AbstractDao {
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setPmtct_id(getCursorValue(c, "pmtct_id"));
             record.setUnique_id(getCursorValue(c,"unique_id"));
+            record.setHousehold_id(getCursorValue(c, "household_id"));
+            record.setCaregiver_name(getCursorValue(c, "caregiver_name"));
             record.setChild_monitoring_visit(getCursorValue(c,"child_monitoring_visit"));
             record.setInfant_first_name(getCursorValue(c, "infant_first_name"));
             record.setInfant_middle_name(getCursorValue(c, "infant_middle_name"));

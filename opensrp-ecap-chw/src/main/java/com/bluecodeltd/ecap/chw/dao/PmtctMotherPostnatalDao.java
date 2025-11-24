@@ -10,7 +10,8 @@ import java.util.List;
 public class PmtctMotherPostnatalDao extends AbstractDao {
     public static List<PmtctMotherPostnatalModel> getPostnatalMother(String pmtctID) {
 
-        String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_of_st_post_natal_care,7,4) || '-' || substr(date_of_st_post_natal_care,4,2) || '-' || substr(date_of_st_post_natal_care,1,2)) as sortable_date  FROM ec_pmtct_mother_postnatal WHERE pmtct_id = '" + pmtctID + "'  ORDER BY sortable_date DESC";
+        String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_of_st_post_natal_care,7,4) || '-' || substr(date_of_st_post_natal_care,4,2) || '-' || substr(date_of_st_post_natal_care,1,2)) as sortable_date  " +
+                "FROM ec_pmtct_mother_postnatal WHERE (pmtct_id = '" + pmtctID + "' OR household_id = '" + pmtctID + "')  ORDER BY sortable_date DESC";
 
         List<PmtctMotherPostnatalModel> values = AbstractDao.readData(sql, getPmtctMotherPostnatalModelMap());
         if (values == null || values.size() == 0)
@@ -26,6 +27,8 @@ public class PmtctMotherPostnatalDao extends AbstractDao {
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setRelational_id(getCursorValue(c, "relational_id"));
             record.setPmtct_id(getCursorValue(c, "pmtct_id"));
+            record.setHousehold_id(getCursorValue(c, "household_id"));
+            record.setCaregiver_name(getCursorValue(c, "caregiver_name"));
             record.setDate_of_st_post_natal_care(getCursorValue(c, "date_of_st_post_natal_care"));
             record.setMother_tested_for_hiv(getCursorValue(c, "mother_tested_for_hiv"));
             record.setPostnatal_care_visit(getCursorValue(c, "postnatal_care_visit"));

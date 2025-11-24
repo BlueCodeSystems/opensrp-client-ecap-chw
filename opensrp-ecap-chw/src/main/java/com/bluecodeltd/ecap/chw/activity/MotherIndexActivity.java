@@ -179,20 +179,26 @@ public class MotherIndexActivity extends BaseRegisterActivity implements MotherI
             try {
                 if (json != null) {
                     JSONObject jsonFormObject = new JSONObject(json);
-                    if (Constants.EcapEncounterType.MOTHER_INDEX.equalsIgnoreCase(
-                            jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
+                    String rawEncounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
+                    if (Constants.EcapEncounterType.MOTHER_INDEX.equalsIgnoreCase(rawEncounterType)) {
+
+                        String caregiverHivStatus = "";
+                        String pregnantMother = "";
+                        String motherBreastfeeding = "";
 
                         // Block enrollment based on mother age and status
                         try {
-                            org.json.JSONObject ageRangeField = getFieldJSONObject(fields(jsonFormObject, STEP1), "mother_age_range");
-                            String ageRange = ageRangeField != null ? ageRangeField.optString("value", "") : "";
-                            org.json.JSONObject caregiverHivStatusField = getFieldJSONObject(fields(jsonFormObject, STEP1), "caregiver_hiv_status");
-                            org.json.JSONObject pregnantMotherField = getFieldJSONObject(fields(jsonFormObject, STEP1), "pregnant_mother");
-                            org.json.JSONObject motherBreastfeedingField = getFieldJSONObject(fields(jsonFormObject, STEP1), "mother_breastfeeding");
+                            org.json.JSONArray stepOneFields = fields(jsonFormObject, STEP1);
+                            org.json.JSONObject ageRangeField = getFieldJSONObject(stepOneFields, "mother_age_range");
+                            org.json.JSONObject caregiverHivStatusField = getFieldJSONObject(stepOneFields, "caregiver_hiv_status");
+                            org.json.JSONObject pregnantMotherField = getFieldJSONObject(stepOneFields, "pregnant_mother");
+                            org.json.JSONObject motherBreastfeedingField = getFieldJSONObject(stepOneFields, "mother_breastfeeding");
 
-                            String caregiverHivStatus = caregiverHivStatusField != null ? caregiverHivStatusField.optString("value", "") : "";
-                            String pregnantMother = pregnantMotherField != null ? pregnantMotherField.optString("value", "") : "";
-                            String motherBreastfeeding = motherBreastfeedingField != null ? motherBreastfeedingField.optString("value", "") : "";
+                            caregiverHivStatus = caregiverHivStatusField != null ? caregiverHivStatusField.optString("value", "") : "";
+                            pregnantMother = pregnantMotherField != null ? pregnantMotherField.optString("value", "") : "";
+                            motherBreastfeeding = motherBreastfeedingField != null ? motherBreastfeedingField.optString("value", "") : "";
+
+                            String ageRange = ageRangeField != null ? ageRangeField.optString("value", "") : "";
 
                             boolean ageRangeBlocks = "no".equalsIgnoreCase(ageRange);
                             boolean hivNegativeNoPregNoBreast = "negative".equalsIgnoreCase(caregiverHivStatus)
@@ -205,11 +211,17 @@ public class MotherIndexActivity extends BaseRegisterActivity implements MotherI
                             }
                         } catch (Exception ignored) { }
 
+                        boolean shouldUseMotherRegister = "positive".equalsIgnoreCase(caregiverHivStatus)
+                                || "yes".equalsIgnoreCase(pregnantMother)
+                                || "yes".equalsIgnoreCase(motherBreastfeeding);
+                        String encounterType = shouldUseMotherRegister ? "Mother Register" : "Mother Register Negative";
+                        jsonFormObject.put(JsonFormConstants.ENCOUNTER_TYPE, encounterType);
+
                         RegisterParams registerParam = new RegisterParams();
                         registerParam.setEditMode(false);
                         registerParam.setFormTag(OpdJsonFormUtils.formTag(OpdUtils.context().allSharedPreferences()));
 
-                        motherIndexPresenter().saveForm(json, false);
+                        motherIndexPresenter().saveForm(jsonFormObject.toString(), false);
 
                         Toasty.success(this, "Mother Saved", Toast.LENGTH_LONG, true).show();
                         finish();

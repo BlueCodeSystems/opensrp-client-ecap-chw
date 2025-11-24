@@ -22,7 +22,7 @@ public class PmctMotherAncDao extends AbstractDao {
         // filtering by the mother's pmtct_id instead of relying on anc.pmtct_id.
         String sql = "SELECT a.* FROM ec_pmtct_mother_anc a " +
                 "INNER JOIN ec_pmtct_mother m ON (a.base_entity_id = m.base_entity_id OR a.relational_id = m.relational_id) " +
-                "WHERE m.pmtct_id = '" + pmtctID + "' ";
+                "WHERE m.household_id = '" + pmtctID + "' ";
 
         List<PmctMotherAncModel> values = AbstractDao.readData(sql, getPmctMotherAncModelMap());
 
@@ -37,7 +37,7 @@ public class PmctMotherAncDao extends AbstractDao {
 
         String sql = "SELECT a.* FROM ec_pmtct_mother_anc a " +
                 "INNER JOIN ec_pmtct_mother m ON (a.base_entity_id = m.base_entity_id OR a.relational_id = m.relational_id) " +
-                "WHERE m.pmtct_id = '" + pmtctID + "' ";
+                "WHERE m.household_id = '" + pmtctID + "' ";
 
         List<PmctMotherAncModel> values = AbstractDao.readData(sql, getPmctMotherAncModelMap());
         if (values == null || values.size() == 0)
@@ -51,7 +51,7 @@ public class PmctMotherAncDao extends AbstractDao {
 
         String sql = "SELECT COUNT(*) v FROM ec_pmtct_mother_anc a " +
                 "INNER JOIN ec_pmtct_mother m ON (a.base_entity_id = m.base_entity_id OR a.relational_id = m.relational_id) " +
-                "WHERE m.pmtct_id = '" + pmtctID + "' ";
+                "WHERE m.household_id = '" + pmtctID + "' ";
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
 
         List<String> values = AbstractDao.readData(sql, dataMap);
@@ -70,6 +70,8 @@ public class PmctMotherAncDao extends AbstractDao {
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setRelational_id(getCursorValue(c, "relational_id"));
             record.setPmtct_id(getCursorValue(c, "pmtct_id"));
+            record.setHousehold_id(getCursorValue(c, "household_id"));
+            record.setCaregiver_name(getCursorValue(c, "caregiver_name"));
             record.setDate_of_st_contact(getCursorValue(c, "date_of_st_contact"));
             record.setGestation_age_in_weeks(getCursorValue(c, "gestation_age_in_weeks"));
             record.setHiv_tested(getCursorValue(c, "hiv_tested"));

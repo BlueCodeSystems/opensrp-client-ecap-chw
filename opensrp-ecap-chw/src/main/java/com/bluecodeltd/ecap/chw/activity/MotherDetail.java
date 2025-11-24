@@ -40,6 +40,7 @@ import com.bluecodeltd.ecap.chw.dao.MotherDeliveryDao;
 import com.bluecodeltd.ecap.chw.dao.MotherOutcomeDao;
 import com.bluecodeltd.ecap.chw.dao.MotherLongitudinalFollowUpDao;
 import com.bluecodeltd.ecap.chw.dao.MotherPostnatalCareDao;
+import com.bluecodeltd.ecap.chw.dao.EcMotherIndexDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.MotherChildrenFragment;
 import com.bluecodeltd.ecap.chw.fragment.MotherAncFragment;
@@ -50,6 +51,7 @@ import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.MotherDeliveryModel;
 import com.bluecodeltd.ecap.chw.model.MotherOutcomeModel;
 import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
+import com.bluecodeltd.ecap.chw.model.EcMotherIndexModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -114,6 +116,7 @@ public class MotherDetail extends AppCompatActivity {
     private UniqueIdRepository uniqueIdRepository;
     public String vca_id;
     public Household family;
+    private EcMotherIndexModel motherIndex;
     Random Number;
     int Rnumber;
     ObjectMapper householdMapper;
@@ -181,6 +184,20 @@ public class MotherDetail extends AppCompatActivity {
                 finish();
                 return;
             }
+        }
+
+        try {
+            String motherBaseId = commonPersonObjectClient.getColumnmaps().get("base_entity_id");
+            String hhId = commonPersonObjectClient.getColumnmaps().get("household_id");
+            motherIndex = EcMotherIndexDao.getMotherByBaseEntityId(motherBaseId);
+            if (motherIndex == null && hhId != null) {
+                List<EcMotherIndexModel> mothersByHh = EcMotherIndexDao.getMothers(hhId);
+                if (!mothersByHh.isEmpty()) {
+                    motherIndex = mothersByHh.get(0);
+                }
+            }
+        } catch (Exception e) {
+            Timber.w(e, "Unable to load mother index record via EcMotherIndexDao");
         }
 
         // Refresh flag (optional extra)
@@ -420,7 +437,7 @@ public class MotherDetail extends AppCompatActivity {
             case R.id.mother_form:
 
                 try {
-                    openFormUsingFormUtils(MotherDetail.this,"mother_index");
+                    openFormUsingFormUtils(MotherDetail.this,"mother_index_edit");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -519,7 +536,7 @@ public class MotherDetail extends AppCompatActivity {
                         Toasty.warning(MotherDetail.this, "Mother not enrolled in PMTCT", Toast.LENGTH_LONG, true).show();
                     } else {
                         Intent intent = new Intent(this, MotherPmtctProfileActivity.class);
-                        intent.putExtra("client_id", pmtctMother.getPmtct_id());
+                        intent.putExtra("client_id", pmtctMother.getHousehold_id());
                         startActivity(intent);
                     }
                 } catch (Exception e) {
@@ -556,17 +573,16 @@ public class MotherDetail extends AppCompatActivity {
 
         switch (formName) {
 
-            case "mother_index":
+            case "mother_index_edit":
 
                 householdMapper = new ObjectMapper();
 
                 formToBeOpened.put("entity_id", this.commonPersonObjectClient.getColumnmaps().get("base_entity_id"));
-                formToBeOpened.getJSONObject("step1").put("title", this.commonPersonObjectClient.getColumnmaps().get("caregiver_name") + " "  + txtAge.getText().toString());
-                if (family != null) {
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(family, Map.class));
-                } else {
-                    Timber.w("Skipping household population for mother_index form; household data missing");
-                }
+                String titleName = motherIndex != null ? motherIndex.getCaregiver_name() : this.commonPersonObjectClient.getColumnmaps().get("caregiver_name");
+                formToBeOpened.getJSONObject("step1").put("title", (titleName != null ? titleName : "") + " "  + txtAge.getText().toString());
+
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, householdMapper.convertValue(motherIndex, Map.class));
+
 
                 break;
 

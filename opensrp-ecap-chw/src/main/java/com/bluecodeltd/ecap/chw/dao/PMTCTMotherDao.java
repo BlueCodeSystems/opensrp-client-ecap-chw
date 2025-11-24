@@ -50,7 +50,13 @@ public class PMTCTMotherDao extends AbstractDao {
 
     public static PtctMotherModel getPMCTMother(String pmtctID) {
 
-        String sql = "SELECT * FROM ec_pmtct_mother WHERE pmtct_id = '" + pmtctID + "' AND (delete_status IS NULL OR delete_status <> '1')";
+        if (isNullOrEmpty(pmtctID)) {
+            return null;
+        }
+
+        String sql = "SELECT * FROM ec_pmtct_mother " +
+                "WHERE (pmtct_id = '" + pmtctID + "' OR household_id = '" + pmtctID + "') " +
+                "AND (delete_status IS NULL OR delete_status <> '1')";
 
         List<PtctMotherModel> values = AbstractDao.readData(sql, getPtctMotherModelMap());
 
@@ -87,7 +93,7 @@ public class PMTCTMotherDao extends AbstractDao {
     }
     public static String countMotherPostnatal (String pmtctID){
 
-        String sql = "SELECT COUNT(*) v FROM ec_pmtct_mother_postnatal WHERE pmtct_id = '" + pmtctID + "' ";
+        String sql = "SELECT COUNT(*) v FROM ec_pmtct_mother_postnatal WHERE household_id = '" + pmtctID + "' ";
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
 
         List<String> values = AbstractDao.readData(sql, dataMap);
@@ -109,7 +115,9 @@ public class PMTCTMotherDao extends AbstractDao {
             record.setSm_number(getCursorValue(c, "sm_number"));
             record.setDistrict(getCursorValue(c, "district"));
             record.setWard(getCursorValue(c, "ward"));
+            record.setCaregiver_birth_date(getCursorValue(c,"caregiver_birth_date"));
             record.setFacility(getCursorValue(c, "facility"));
+            record.setCaregiver_name(getCursorValue(c,"caregiver_name"));
             record.setPartner(getCursorValue(c, "partner"));
             record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
             record.setPmtct_id(getCursorValue(c, "pmtct_id"));
@@ -121,6 +129,7 @@ public class PMTCTMotherDao extends AbstractDao {
             record.setLast_name(getCursorValue(c, "last_name"));
             record.setMothers_age(getCursorValue(c, "mothers_age"));
             record.setHome_address(getCursorValue(c, "home_address"));
+            record.setHousehold_id(getCursorValue(c, "household_id"));
             record.setNearest_landmark(getCursorValue(c, "nearest_landmark"));
             record.setMothers_phone(getCursorValue(c, "mothers_phone"));
             record.setAgyw_date_1st_visit(getCursorValue(c, "agyw_date_1st_visit"));
@@ -182,6 +191,10 @@ public class PMTCTMotherDao extends AbstractDao {
             record.setDelete_status(getCursorValue(c, "delete_status"));
             return record;
         };
+    }
+
+    private static boolean isNullOrEmpty(String s) {
+        return s == null || s.trim().isEmpty();
     }
 
 }

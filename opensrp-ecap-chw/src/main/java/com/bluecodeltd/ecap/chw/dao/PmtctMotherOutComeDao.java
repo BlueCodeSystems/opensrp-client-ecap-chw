@@ -9,7 +9,7 @@ import java.util.List;
 public class PmtctMotherOutComeDao extends AbstractDao {
     public static PmctMotherOutcomeModel getPMCTmothersOutcome(String pmtctID) {
 
-        String sql = "SELECT * FROM ec_pmtct_mother_outcome WHERE pmtct_id = '" + pmtctID + "' ";
+        String sql = "SELECT * FROM ec_pmtct_mother_outcome WHERE household_id = '" + pmtctID + "' ";
 
         List<PmctMotherOutcomeModel> values = AbstractDao.readData(sql, getPmctMotherOutcomeModelMap());
 
@@ -26,6 +26,8 @@ public class PmtctMotherOutComeDao extends AbstractDao {
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setPmtct_id(getCursorValue(c, "pmtct_id"));
             record.setUnique_id(getCursorValue(c, "unique_id"));
+            record.setHousehold_id(getCursorValue(c, "household_id"));
+            record.setCaregiver_name(getCursorValue(c, "caregiver_name"));
             record.setMothers_outcome(getCursorValue(c, "mothers_outcome"));
 
 

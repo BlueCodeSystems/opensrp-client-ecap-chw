@@ -10,7 +10,7 @@ public class PmtctDeliveryDao extends AbstractDao {
 
     public static PmtctDeliveryDetailsModel getPmtctDeliveryDetails(String pmtctID) {
 
-        String sql = "SELECT * FROM ec_pmtct_delivery_details WHERE pmtct_id = '" + pmtctID + "' ";
+        String sql = "SELECT * FROM ec_pmtct_delivery_details WHERE household_id = '" + pmtctID + "' ";
 
         List<PmtctDeliveryDetailsModel> values = AbstractDao.readData(sql, getPmtctDeliveryDetailsModelMap());
 
@@ -27,6 +27,8 @@ public class PmtctDeliveryDao extends AbstractDao {
             PmtctDeliveryDetailsModel record = new PmtctDeliveryDetailsModel();
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setPmtct_id(getCursorValue(c, "pmtct_id"));
+            record.setHousehold_id(getCursorValue(c, "household_id"));
+            record.setCaregiver_name(getCursorValue(c, "caregiver_name"));
             record.setDate_of_delivery(getCursorValue(c, "date_of_delivery"));
             record.setPlace_of_delivery(getCursorValue(c, "place_of_delivery"));
             record.setOn_art_at_time_of_delivery(getCursorValue(c, "on_art_at_time_of_delivery"));

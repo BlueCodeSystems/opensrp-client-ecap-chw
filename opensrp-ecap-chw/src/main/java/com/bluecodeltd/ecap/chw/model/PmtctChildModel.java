@@ -9,6 +9,8 @@ public class PmtctChildModel {
     private String infant_lastname;
     private String infants_date_of_birth;
     private String infants_sex;
+    private String caregiver_name;
+    private String household_id;
     private String weight_at_birth;
     private String infant_feeding_options;
     private String under_five_clinic_card;
@@ -84,6 +86,22 @@ public class PmtctChildModel {
 
     public void setInfants_sex(String infants_sex) {
         this.infants_sex = infants_sex;
+    }
+
+    public String getCaregiver_name() {
+        return caregiver_name;
+    }
+
+    public void setCaregiver_name(String caregiver_name) {
+        this.caregiver_name = caregiver_name;
+    }
+
+    public String getHousehold_id() {
+        return household_id;
+    }
+
+    public void setHousehold_id(String household_id) {
+        this.household_id = household_id;
     }
 
     public String getWeight_at_birth() {

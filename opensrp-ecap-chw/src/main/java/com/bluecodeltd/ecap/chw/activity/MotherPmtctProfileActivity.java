@@ -147,6 +147,25 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             clientId= extras.getString("client_id");
+            String householdId = extras.getString("household_id");
+            if (isNullOrEmpty(householdId)) {
+                householdId = extras.getString("householdId");
+            }
+            if (isNullOrEmpty(clientId)) {
+                Object baseObj = extras.get("baseId");
+                if (baseObj instanceof CommonPersonObjectClient) {
+                    CommonPersonObjectClient baseClient = (CommonPersonObjectClient) baseObj;
+                    if (isNullOrEmpty(householdId)) {
+                        householdId = baseClient.getColumnmaps().get("household_id");
+                    }
+                    if (isNullOrEmpty(clientId)) {
+                        clientId = baseClient.getColumnmaps().get("pmtct_id");
+                    }
+                }
+            }
+            if (isNullOrEmpty(clientId) && !isNullOrEmpty(householdId)) {
+                clientId = householdId;
+            }
 
         }
 
@@ -160,14 +179,12 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
 
         if (ptctMotherModel != null) {
-            String mothersFullName = ptctMotherModel.getFirst_name()+" "+ptctMotherModel.getLast_name();
-            if (mothersFullName != null) {
-                motherName.setText(mothersFullName);
-            } else {
-                motherName.setText("");
-            }
+            String mothersFullName = isNullOrEmpty(ptctMotherModel.getCaregiver_name())
+                    ? String.format("%s %s", valueOrEmpty(ptctMotherModel.getFirst_name()), valueOrEmpty(ptctMotherModel.getLast_name())).trim()
+                    : ptctMotherModel.getCaregiver_name();
+            motherName.setText(isNullOrEmpty(mothersFullName) ? "" : mothersFullName);
 
-            String mothersAge = ptctMotherModel.getMothers_age();
+            String mothersAge = ptctMotherModel.getCaregiver_birth_date();
             if (mothersAge != null) {
                 txtAge.setText(getClientAge(mothersAge));
             } else {
@@ -925,6 +942,12 @@ break;
 
         }
         return super.onOptionsItemSelected(item);
+    }
+    private boolean isNullOrEmpty(String s) {
+        return s == null || s.trim().isEmpty();
+    }
+    private String valueOrEmpty(String s) {
+        return s == null ? "" : s.trim();
     }
     public static String getTodaysDateFormatted() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");

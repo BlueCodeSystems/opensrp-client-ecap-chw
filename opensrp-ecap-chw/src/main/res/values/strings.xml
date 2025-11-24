@@ -6,6 +6,8 @@
     <string name="unit">Unit</string>
     <string name="title_activity_show_only_household_services">Household Services</string>
     <string name="issue_referral">Issue Referral</string>
+    <!-- Force CoordinatorLayout to use the correct AppBarLayout behavior -->
+    <string name="appbar_scrolling_view_behavior" translatable="false">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
     <string name="due_today">Due today</string>
     <string name="referral_reason">Referral reason</string>
     <string name="tutorials">Tutorials</string>

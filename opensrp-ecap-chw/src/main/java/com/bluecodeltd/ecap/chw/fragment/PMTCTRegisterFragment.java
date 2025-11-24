@@ -347,7 +347,10 @@ public class PMTCTRegisterFragment extends BaseSafeRegisterFragment implements I
     @Override
     protected String getMainCondition() {
         //return "case_status > 0 AND is_closed = 0 ";
-        return "(delete_status IS NULL OR delete_status != '1') AND (first_name IS NOT NULL OR last_name IS NOT NULL OR caregiver_name IS NOT NULL)";
+        return "COALESCE(delete_status, '0') <> '1'" +
+                "AND (first_name IS NOT NULL " +
+                "     OR last_name IS NOT NULL " +
+                "     OR caregiver_name IS NOT NULL)";
     }
     @Override
     protected String getDefaultSortQuery() {
@@ -383,8 +386,9 @@ public class PMTCTRegisterFragment extends BaseSafeRegisterFragment implements I
             CommonPersonObjectClient client =(CommonPersonObjectClient) view.getTag();
             String childId = client.getColumnmaps().get("base_entity_id");
             String clientId = client.getColumnmaps().get("pmtct_id");
-//         Toasty.success(getActivity(),"Clicked the person",Toasty.LENGTH_LONG).show();
-           goToMotherDetailActivity(clientId,client);
+            String householdId = client.getColumnmaps().get("household_id");
+            String targetId = isNullOrEmpty(clientId) ? householdId : clientId;
+            goToMotherDetailActivity(targetId,client);
         }
     }
 
@@ -471,5 +475,9 @@ public class PMTCTRegisterFragment extends BaseSafeRegisterFragment implements I
         } else {
             super.onSyncComplete(fetchStatus);
         }
+    }
+
+    private boolean isNullOrEmpty(String s) {
+        return s == null || s.trim().isEmpty();
     }
 }

@@ -8,6 +8,7 @@ public class PtctMotherModel {
     private String sm_number;
     private String district;
     private String ward;
+    private String caregiver_birth_date;
     private String facility;
     private String partner;
     private String caseworker_name;
@@ -20,6 +21,8 @@ public class PtctMotherModel {
     private String last_name;
     private String mothers_age;
     private String home_address;
+    private String caregiver_name;
+    private String household_id;
     private String nearest_landmark;
     private String mothers_phone;
     private String agyw_date_1st_visit;
@@ -694,5 +697,29 @@ public class PtctMotherModel {
 
     public void setDelete_status(String delete_status) {
         this.delete_status = delete_status;
+    }
+
+    public String getCaregiver_name() {
+        return caregiver_name;
+    }
+
+    public void setCaregiver_name(String caregiver_name) {
+        this.caregiver_name = caregiver_name;
+    }
+
+    public String getHousehold_id() {
+        return household_id;
+    }
+
+    public void setHousehold_id(String household_id) {
+        this.household_id = household_id;
+    }
+
+    public String getCaregiver_birth_date() {
+        return caregiver_birth_date;
+    }
+
+    public void setCaregiver_birth_date(String caregiver_birth_date) {
+        this.caregiver_birth_date = caregiver_birth_date;
     }
 }

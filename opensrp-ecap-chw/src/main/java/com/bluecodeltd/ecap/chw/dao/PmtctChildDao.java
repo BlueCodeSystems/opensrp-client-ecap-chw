@@ -10,7 +10,8 @@ import java.util.List;
 public class PmtctChildDao extends AbstractDao {
     public static List<PmtctChildModel> getPmctChildHei(String pmtctID) {
 
-        String sql = "SELECT * FROM ec_pmtct_child WHERE pmtct_id = '" + pmtctID + "' AND delete_status IS NULL OR delete_status <> '1'";
+        String sql = "SELECT * FROM ec_pmtct_child WHERE (pmtct_id = '" + pmtctID + "' OR household_id = '" + pmtctID + "') " +
+                "AND (delete_status IS NULL OR delete_status <> '1')";
 
         List<PmtctChildModel> values = AbstractDao.readData(sql, getPmtctChildModelMap());
         if (values == null || values.size() == 0)
@@ -21,7 +22,8 @@ public class PmtctChildDao extends AbstractDao {
     }
     public static PmtctChildModel getPMCTChild(String pmtctID) {
 
-        String sql = "SELECT * FROM ec_pmtct_child WHERE unique_id = '" + pmtctID + "' AND delete_status IS NULL OR delete_status <> '1'";
+        String sql = "SELECT * FROM ec_pmtct_child WHERE unique_id = '" + pmtctID + "' " +
+                "AND (delete_status IS NULL OR delete_status <> '1')";
 
         List<PmtctChildModel> values = AbstractDao.readData(sql, getPmtctChildModelMap());
 
@@ -35,7 +37,8 @@ public class PmtctChildDao extends AbstractDao {
 
     public static boolean hasDeletedHei(String pmtctID) {
 
-        String sql = "SELECT * FROM ec_pmtct_child WHERE pmtct_id = '" + pmtctID + "' AND delete_status IS NULL OR delete_status <> '1'";
+        String sql = "SELECT * FROM ec_pmtct_child WHERE (pmtct_id = '" + pmtctID + "' OR household_id = '" + pmtctID + "') " +
+                "AND (delete_status IS NULL OR delete_status <> '1')";
 
         List<PmtctChildModel> values = AbstractDao.readData(sql, getPmtctChildModelMap());
 
@@ -44,7 +47,8 @@ public class PmtctChildDao extends AbstractDao {
 
     public static String countMotherHei (String pmtctID){
 
-        String sql = "SELECT COUNT(*) v FROM ec_pmtct_child WHERE pmtct_id = '" + pmtctID + "' AND delete_status IS NULL OR delete_status <> '1'";
+        String sql = "SELECT COUNT(*) v FROM ec_pmtct_child WHERE (pmtct_id = '" + pmtctID + "' OR household_id = '" + pmtctID + "') " +
+                "AND (delete_status IS NULL OR delete_status <> '1')";
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
 
         List<String> values = AbstractDao.readData(sql, dataMap);
@@ -67,6 +71,8 @@ public class PmtctChildDao extends AbstractDao {
             record.setInfant_lastname(getCursorValue(c, "infant_lastname"));
             record.setInfants_date_of_birth(getCursorValue(c, "infants_date_of_birth"));
             record.setInfants_sex(getCursorValue(c, "infants_sex"));
+            record.setCaregiver_name(getCursorValue(c, "caregiver_name"));
+            record.setHousehold_id(getCursorValue(c, "household_id"));
             record.setWeight_at_birth(getCursorValue(c, "weight_at_birth"));
             record.setInfant_feeding_options(getCursorValue(c, "infant_feeding_options"));
             record.setUnder_five_clinic_card(getCursorValue(c, "under_five_clinic_card"));

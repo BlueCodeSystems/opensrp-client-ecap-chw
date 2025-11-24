@@ -4,6 +4,8 @@ public class PtmctMotherMonitoringModel {
     private String base_entity_id;
     private String pmtct_id;
     private String unique_id;
+    private String caregiver_name;
+    private String household_id;
     private String child_monitoring_visit;
     private String infant_first_name;
     private String infant_middle_name;
@@ -170,6 +172,22 @@ public class PtmctMotherMonitoringModel {
 
     public void setPmtct_id(String pmtct_id) {
         this.pmtct_id = pmtct_id;
+    }
+
+    public String getCaregiver_name() {
+        return caregiver_name;
+    }
+
+    public void setCaregiver_name(String caregiver_name) {
+        this.caregiver_name = caregiver_name;
+    }
+
+    public String getHousehold_id() {
+        return household_id;
+    }
+
+    public void setHousehold_id(String household_id) {
+        this.household_id = household_id;
     }
 
     public String getInfant_first_name() {
