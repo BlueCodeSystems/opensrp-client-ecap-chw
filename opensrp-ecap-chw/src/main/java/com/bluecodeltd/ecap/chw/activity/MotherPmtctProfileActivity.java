@@ -209,6 +209,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         updatePostnatalTitle();
         updateHeiTitle();
         updateOverviewTitle();
+        setupFabVisibility();
 
     }
 
@@ -807,6 +808,22 @@ break;
         return ChwApplication.getInstance().getClientProcessorForJava();
     }
 
+
+    private void setupFabVisibility() {
+        try {
+            fab.setVisibility(mViewPager.getCurrentItem() == 0 ? View.VISIBLE : View.GONE);
+        } catch (Exception ignored) { }
+
+        mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                if (position != 0 && isFabOpen) {
+                    closeFab();
+                }
+                fab.setVisibility(position == 0 ? View.VISIBLE : View.GONE);
+            }
+        });
+    }
 
     public void animateFAB(){
 

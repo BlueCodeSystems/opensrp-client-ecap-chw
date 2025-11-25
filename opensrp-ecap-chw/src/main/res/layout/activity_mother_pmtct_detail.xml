@@ -8,354 +8,368 @@
     tools:context=".activity.HouseholdDetails"
     android:background="@android:color/white">
 
-    <!-- AppBar with collapsing header + tabs -->
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/collapsing_toolbar_appbarlayout"
+    <RelativeLayout
+        android:id="@+id/activity_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="220dp"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:expandedTitleMarginStart="72dp"
-            app:expandedTitleMarginEnd="72dp">
-
-            <!-- Toolbar -->
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbarx"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@android:color/transparent"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
-            <!-- Collapsing profile header -->
-            <LinearLayout
-                android:id="@+id/profile_name_layout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingTop="?attr/actionBarSize"
-                android:paddingBottom="16dp"
-                android:background="@drawable/bg_profile_header_gradient"
-                app:layout_collapseMode="parallax"
-                app:layout_collapseParallaxMultiplier="0.7">
-
-                <org.smartregister.view.customcontrols.CustomFontTextView
-                    android:id="@+id/mother_name"
-                    style="@style/CustomFontTextViewStyle.ClientList.Medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Hope Chanda"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/activity_title_size"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    tools:text="Hope Chanda" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="4dp">
-
-                    <org.smartregister.view.customcontrols.CustomFontTextView
-                        style="@style/CustomFontTextViewStyle.ClientList.Light"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Age: "
-                        android:textColor="@android:color/white"
-                        android:textSize="14sp" />
-
-                    <org.smartregister.view.customcontrols.CustomFontTextView
-                        android:id="@+id/mother_age"
-                        style="@style/CustomFontTextViewStyle.ClientList.Light"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="25"
-                        android:textColor="@android:color/white"
-                        android:textSize="14sp"
-                        tools:text="28" />
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/hh_prof"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@drawable/transparent_white_button"
-                    android:gravity="center"
-                    android:onClick="onClick"
-                    android:paddingStart="@dimen/profile_btn_registration_info_padding"
-                    android:paddingEnd="@dimen/profile_btn_registration_info_padding"
-                    android:text="Household Profile"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp"
-                    android:visibility="gone" />
-            </LinearLayout>
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-        <!-- Tabs -->
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
+        <!-- AppBar with collapsing header + tabs -->
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/collapsing_toolbar_appbarlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
-            app:tabGravity="fill"
-            app:tabMode="fixed"
-            app:tabContentStart="0dp"
-            app:tabIndicatorHeight="3dp"
-            app:tabIndicatorColor="@color/colorAccent"
-            app:tabSelectedTextColor="@android:color/white"
-            app:tabTextAppearance="@style/CustomFontTextViewStyle.tabIndicator.sub.white" />
-    </com.google.android.material.appbar.AppBarLayout>
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-    <!-- Pager content -->
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                app:contentScrim="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:expandedTitleMarginStart="72dp"
+                app:expandedTitleMarginEnd="72dp">
 
-    <!-- Right-side vertical quick-actions menu -->
-    <LinearLayout
-        android:id="@+id/menu_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingEnd="16dp"
-        android:paddingBottom="88dp"
-        android:gravity="end|bottom"
-        android:layout_gravity="end|bottom"
-        android:visibility="visible">
+                <!-- Toolbar -->
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbarx"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@android:color/transparent"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-        <!-- Edit mother -->
-        <RelativeLayout
-            android:id="@+id/mother_form"
+                <!-- Collapsing profile header -->
+                <LinearLayout
+                    android:id="@+id/profile_name_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="?attr/actionBarSize"
+                    android:paddingBottom="16dp"
+                    android:background="@drawable/bg_profile_header_gradient"
+                    app:layout_collapseMode="parallax"
+                    app:layout_collapseParallaxMultiplier="0.7">
+
+                    <org.smartregister.view.customcontrols.CustomFontTextView
+                        android:id="@+id/mother_name"
+                        style="@style/CustomFontTextViewStyle.ClientList.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="Hope Chanda"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/activity_title_size"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        tools:text="Hope Chanda" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="4dp">
+
+                        <org.smartregister.view.customcontrols.CustomFontTextView
+                            style="@style/CustomFontTextViewStyle.ClientList.Light"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Age: "
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp" />
+
+                        <org.smartregister.view.customcontrols.CustomFontTextView
+                            android:id="@+id/mother_age"
+                            style="@style/CustomFontTextViewStyle.ClientList.Light"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="25"
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp"
+                            tools:text="28" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/hh_prof"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/transparent_white_button"
+                        android:gravity="center"
+                        android:onClick="onClick"
+                        android:paddingStart="@dimen/profile_btn_registration_info_padding"
+                        android:paddingEnd="@dimen/profile_btn_registration_info_padding"
+                        android:text="Household Profile"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+            <!-- Tabs -->
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary"
+                app:tabGravity="fill"
+                app:tabMode="fixed"
+                app:tabContentStart="0dp"
+                app:tabIndicatorHeight="3dp"
+                app:tabIndicatorColor="@color/colorAccent"
+                app:tabSelectedTextColor="@android:color/white"
+                app:tabTextAppearance="@style/CustomFontTextViewStyle.tabIndicator.sub.white" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <!-- Pager content -->
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/collapsing_toolbar_appbarlayout"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <!-- Right-side vertical quick-actions menu -->
+        <LinearLayout
+            android:id="@+id/menu_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:onClick="onClick"
-            android:gravity="center_vertical"
-            android:visibility="gone">
+            android:layout_above="@id/fabx"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:gravity="end"
+            android:orientation="vertical"
+            android:visibility="visible">
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
+            <!-- Edit mother -->
+            <RelativeLayout
+                android:id="@+id/mother_form"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                app:cardElevation="4dp"
-                app:cardCornerRadius="16dp"
-                app:cardBackgroundColor="@color/text_black">
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:visibility="gone">
 
-                <TextView
-                    android:id="@+id/add_mother"
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="8dp"
-                android:text="Edit Mother"
-                android:textColor="@android:color/white"
-                android:textStyle="italic"
-                android:textSize="13sp"
-                android:gravity="center" />
-            </androidx.cardview.widget.CardView>
+                    android:layout_marginEnd="8dp"
+                    android:layout_toStartOf="@+id/callFab3"
+                    android:background="@drawable/bg_mother_chip"
+                    android:elevation="2dp"
+                    android:gravity="center_vertical"
+                    android:minWidth="80dp"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/callFab3"
-                android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/add_mother"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Edit Mother"
+                        android:textColor="@android:color/white"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/callFab3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    app:backgroundTint="@color/white"
+                    app:fabSize="mini"
+                    app:srcCompat="@drawable/baseline_mode_edit_24" />
+
+            </RelativeLayout>
+
+            <!-- ANC details -->
+            <RelativeLayout
+                android:id="@+id/anc_details"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                app:backgroundTint="@android:color/white"
-                app:fabSize="mini"
-                app:srcCompat="@drawable/baseline_mode_edit_24" />
-        </RelativeLayout>
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:visibility="gone">
 
-        <!-- ANC details -->
-        <RelativeLayout
-            android:id="@+id/anc_details"
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_toStartOf="@+id/callFabAnc"
+                    android:background="@drawable/bg_mother_chip"
+                    android:elevation="2dp"
+                    android:gravity="center_vertical"
+                    android:minWidth="80dp"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp">
+
+                    <TextView
+                        android:id="@+id/add_anc_detalis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ANC Details"
+                        android:textColor="@android:color/white"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/callFabAnc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    app:backgroundTint="@color/white"
+                    app:fabSize="mini"
+                    app:srcCompat="@android:drawable/ic_input_add" />
+
+            </RelativeLayout>
+
+            <!-- Labour & delivery -->
+            <RelativeLayout
+                android:id="@+id/labour_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_toStartOf="@+id/callFabLabour"
+                    android:background="@drawable/bg_mother_chip"
+                    android:elevation="2dp"
+                    android:gravity="center_vertical"
+                    android:minWidth="80dp"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp">
+
+                    <TextView
+                        android:id="@+id/add_labour_detalis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Labour and Delivery"
+                        android:textColor="@android:color/white"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/callFabLabour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    app:backgroundTint="@color/white"
+                    app:fabSize="mini"
+                    app:srcCompat="@android:drawable/ic_input_add" />
+
+            </RelativeLayout>
+
+            <!-- Postnatal care -->
+            <RelativeLayout
+                android:id="@+id/postnatal_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_toStartOf="@+id/callFabPostnatal"
+                    android:background="@drawable/bg_mother_chip"
+                    android:elevation="2dp"
+                    android:gravity="center_vertical"
+                    android:minWidth="80dp"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp">
+
+                    <TextView
+                        android:id="@+id/add_postnatal_detalis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Postnatal Care"
+                        android:textColor="@android:color/white"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/callFabPostnatal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    app:backgroundTint="@color/white"
+                    app:fabSize="mini"
+                    app:srcCompat="@android:drawable/ic_input_add" />
+
+            </RelativeLayout>
+
+            <!-- Add child -->
+            <RelativeLayout
+                android:id="@+id/child_form"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_toStartOf="@+id/callFab2"
+                    android:background="@drawable/bg_mother_chip"
+                    android:elevation="2dp"
+                    android:gravity="center_vertical"
+                    android:minWidth="80dp"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp">
+
+                    <TextView
+                        android:id="@+id/add_child"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add Child"
+                        android:textColor="@android:color/white"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/callFab2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    app:backgroundTint="@color/white"
+                    app:fabSize="mini"
+                    app:srcCompat="@android:drawable/ic_input_add" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <!-- Main FAB -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabx"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
             android:onClick="onClick"
-            android:gravity="center_vertical"
-            android:visibility="gone">
+            android:tint="@android:color/white"
+            app:backgroundTint="@color/text_black"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/baseline_mode_edit_24" />
+    </RelativeLayout>
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                app:cardElevation="4dp"
-                app:cardCornerRadius="16dp"
-                app:cardBackgroundColor="@color/text_black">
-
-                <TextView
-                    android:id="@+id/add_anc_detalis"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="8dp"
-                android:text="ANC Details"
-                android:textColor="@android:color/white"
-                android:textStyle="italic"
-                android:textSize="13sp"
-                android:gravity="center" />
-            </androidx.cardview.widget.CardView>
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/callFabAnc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                app:backgroundTint="@android:color/white"
-                app:fabSize="mini"
-                android:visibility="gone"
-                app:srcCompat="@android:drawable/ic_input_add" />
-        </RelativeLayout>
-
-        <!-- Labour & delivery -->
-        <RelativeLayout
-            android:id="@+id/labour_details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:onClick="onClick"
-            android:gravity="center_vertical"
-            android:visibility="gone">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                app:cardElevation="4dp"
-                app:cardCornerRadius="16dp"
-                app:cardBackgroundColor="@color/text_black">
-
-                <TextView
-                    android:id="@+id/add_labour_detalis"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="8dp"
-                android:text="Labour and Delivery"
-                android:textColor="@android:color/white"
-                android:textStyle="italic"
-                android:textSize="13sp"
-                android:gravity="center" />
-            </androidx.cardview.widget.CardView>
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/callFabLabour"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                app:backgroundTint="@android:color/white"
-                app:fabSize="mini"
-                app:srcCompat="@android:drawable/ic_input_add" />
-        </RelativeLayout>
-
-        <!-- Postnatal care -->
-        <RelativeLayout
-            android:id="@+id/postnatal_details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:onClick="onClick"
-            android:gravity="center_vertical"
-            android:visibility="gone">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                app:cardElevation="4dp"
-                app:cardCornerRadius="16dp"
-                app:cardBackgroundColor="@color/text_black">
-
-                <TextView
-                    android:id="@+id/add_postnatal_detalis"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="8dp"
-                android:text="Postnatal Care"
-                android:textColor="@android:color/white"
-                android:textStyle="italic"
-                android:textSize="13sp"
-                android:gravity="center" />
-            </androidx.cardview.widget.CardView>
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/callFabPostnatal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                app:backgroundTint="@android:color/white"
-                app:fabSize="mini"
-                app:srcCompat="@android:drawable/ic_input_add" />
-        </RelativeLayout>
-
-        <!-- Add child -->
-        <RelativeLayout
-            android:id="@+id/child_form"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:onClick="onClick"
-            android:gravity="center_vertical"
-            android:visibility="gone">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                app:cardElevation="4dp"
-                app:cardCornerRadius="16dp"
-                app:cardBackgroundColor="@color/text_black">
-
-                <TextView
-                    android:id="@+id/add_child"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="8dp"
-                android:text="Add Child"
-                android:textColor="@android:color/white"
-                android:textStyle="italic"
-                android:textSize="13sp"
-                android:gravity="center" />
-            </androidx.cardview.widget.CardView>
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/callFab2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                app:backgroundTint="@android:color/white"
-                app:fabSize="mini"
-                app:srcCompat="@android:drawable/ic_input_add" />
-        </RelativeLayout>
-    </LinearLayout>
-
-    <!-- Main FAB -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabx"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:clickable="true"
-        android:onClick="onClick"
-        android:tint="@android:color/white"
-        app:backgroundTint="@color/text_black"
-        app:fabSize="normal"
-        app:srcCompat="@drawable/baseline_mode_edit_24" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
