@@ -1,276 +1,527 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/register_columns"
-    android:layout_width="wrap_content"
+    android:id="@+id/card_child_monitoring"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:elevation="20dp"
-    >
-    <TextView
-        android:id="@+id/visit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="200dp"
-        android:text="Visit at: 6 weeks"
-        />
-    <ImageView
-        android:id="@+id/expand_more"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="110dp"
-        android:src="@drawable/baseline_expand_more_24"
-        android:visibility="gone" />
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginBottom="6dp"
+    app:cardCornerRadius="12dp"
+    app:cardUseCompatPadding="true"
+    app:cardElevation="3dp">
 
-    <ImageView
-        android:id="@+id/expand_less"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="110dp"
-        android:src="@drawable/baseline_expand_less_24" />
-    <ImageView
-        android:layout_alignParentEnd="true"
-        android:id="@+id/edit_me"
-        android:tint="#696969"
-        android:layout_marginRight="70dp"
-        android:layout_centerInParent="true"
-        android:src="@drawable/ic_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <ImageView
-        android:id="@+id/delete_record"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="20dp"
-        android:tint="#696969"
-        android:layout_centerInParent="true"
-        android:src="@drawable/delete_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        />
     <LinearLayout
-        android:id="@+id/itemm"
-        android:background="@color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="70dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
 
+        <!-- HEADER -->
+        <LinearLayout
+            android:id="@+id/header_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <!-- Left bar -->
+            <View
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/darker_gray" />
+
+            <!-- Header text -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <!-- Visit label -->
+                <TextView
+                    android:id="@+id/tv_visit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Routine Infant Follow-up"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="@color/chw_accent" />
+
+                <!-- Visit type (e.g. 6 weeks, 9 months) -->
+                <TextView
+                    android:id="@+id/tv_visit_type_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Visit: 6 weeks"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/black"
+                    android:singleLine="true"
+                    android:ellipsize="end" />
+
+                <!-- Date -->
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Date: 22-09-2022"
+                    android:textSize="13sp"
+                    android:textColor="@android:color/darker_gray"
+                    android:singleLine="true"
+                    android:ellipsize="end" />
+            </LinearLayout>
+
+            <!-- Edit -->
+            <ImageView
+                android:id="@+id/edit_me"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="12dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/edit"
+                android:src="@drawable/ic_edit"
+                app:tint="#696969" />
+
+            <!-- Delete (optional) -->
+            <ImageView
+                android:id="@+id/delete_record"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="4dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/delete"
+                android:src="@drawable/delete_icon"
+                android:visibility="gone"
+                app:tint="#696969" />
+        </LinearLayout>
+
+        <!-- Divider -->
         <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
             android:background="@android:color/darker_gray" />
 
-
+        <!-- Visit type -->
         <LinearLayout
-            android:id="@+id/qlayout"
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-            <org.smartregister.view.customcontrols.CustomFontTextView
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="10dp"
-                style="@style/CustomFontTextViewStyle.ClientList"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:singleLine="true"
-                android:text="DBS at Birth :"
-                android:textColor="@color/text_black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Visit Type"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
 
-
-            <org.smartregister.view.customcontrols.CustomFontTextView
-                android:id="@+id/date"
-                android:layout_marginRight="10dp"
-                style="@style/CustomFontTextViewStyle.ClientList"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:singleLine="true"
-                android:text="22-09-2022"
-                android:textColor="@color/text_black"
-                android:textSize="18sp" />
-
-
-
-
-
+            <TextView
+                android:id="@+id/tv_visit_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
         </LinearLayout>
 
+        <!-- HIV test -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="HIV test"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
 
+            <TextView
+                android:id="@+id/tv_hiv_test"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <!-- AZT/3TC/NVP -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="AZT/3TC/NVP"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_nvp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <!-- CTX -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="CTX"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_ctx"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <!-- Date tested -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Date tested"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_date_tested"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <!-- IYCF counselling -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="IYCF counselling"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_iycf_counselling"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <!-- Infant feeding option -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Infant feeding"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_feeding_option"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <!-- High risk HEI -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="High risk HEI"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_high_risk_hei"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <!-- MUAC / nutrition status -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="MUAC (cm)"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_nutrition_status"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <!-- Medical complications -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Medical complications"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_medical_complications"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <!-- Oedema -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Oedema"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_child_oedema"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <!-- Oedema stage -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Oedema stage"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_oedema_stage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <!-- TB screening symptoms -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TB symptoms"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_tb_symptoms"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <!-- Other TB symptom -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Other TB symptom"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_tb_other"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <!-- TB referral -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TB referral"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tb_referral"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <!-- TB comments -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TB comments"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_tb_comments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:maxLines="3"
+                android:ellipsize="end" />
+        </LinearLayout>
 
     </LinearLayout>
 
-
-
-    <View
-        android:layout_below="@+id/itemm"
-        android:background="@android:color/darker_gray"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"/>
-    <LinearLayout
-        android:id="@+id/expandable"
-        android:visibility="gone"
-        android:orientation="vertical"
-        android:layout_below="@+id/itemm"
-        android:layout_margin="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:text="Initial HIV status"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/initial_hiv_status"
-                android:layout_weight="1"
-                android:text="dnbvbdshbuhsjhsgdujhgolghuygghfgsduhfbsdjhnbshdvbuhygfgsbs"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:text="Date of initial Hiv status"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/initial_hiv_status_date"
-                android:layout_weight="1"
-                android:text="yhs"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:text="Updated HIV status"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/updated_hiv_status"
-                android:layout_weight="1"
-                android:text="DGHHDSGBVU JHB jyhgshgfuis fsjhisujhf sfiuhsiouho0sigK"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:text="Date of updated HIV status"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/updated_hiv_status_date"
-                android:layout_weight="1"
-                android:text="yhs dgbdfbhdh"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <!--        <LinearLayout-->
-        <!--            android:layout_marginTop="5dp"-->
-        <!--            android:weightSum="2"-->
-        <!--            android:orientation="horizontal"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content">-->
-
-        <!--            <TextView-->
-        <!--                android:layout_weight="1"-->
-        <!--                android:textStyle="bold"-->
-        <!--                android:text="Institution of Service referral"-->
-        <!--                android:layout_width="0dip"-->
-        <!--                android:layout_height="wrap_content"/>-->
-
-        <!--            <TextView-->
-        <!--                android:id="@+id/institution"-->
-        <!--                android:layout_weight="1"-->
-        <!--                android:text="yhs"-->
-        <!--                android:layout_width="0dip"-->
-        <!--                android:layout_height="wrap_content"/>-->
-
-        <!--        </LinearLayout>-->
-
-        <!--        <LinearLayout-->
-        <!--            android:layout_marginTop="5dp"-->
-        <!--            android:weightSum="2"-->
-        <!--            android:orientation="horizontal"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content">-->
-
-        <!--            <TextView-->
-        <!--                android:layout_weight="1"-->
-        <!--                android:textStyle="bold"-->
-        <!--                android:text="Comments"-->
-        <!--                android:layout_width="0dip"-->
-        <!--                android:layout_height="wrap_content"/>-->
-
-        <!--            <TextView-->
-        <!--                android:id="@+id/comment"-->
-        <!--                android:layout_weight="1"-->
-        <!--                android:text="yhsjhsiujhg ujhiujhoip mb"-->
-        <!--                android:layout_width="0dip"-->
-        <!--                android:layout_height="wrap_content"/>-->
-
-        <!--        </LinearLayout>-->
-
-
-    </LinearLayout>
-
-
-</RelativeLayout>
+</androidx.cardview.widget.CardView>

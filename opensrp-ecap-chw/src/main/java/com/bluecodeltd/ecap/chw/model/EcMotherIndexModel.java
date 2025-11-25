@@ -1,24 +1,15 @@
 package com.bluecodeltd.ecap.chw.model;
 
-public class EcMotherIndexModel {
+public class EcMotherIndexModel extends PtctMotherModel {
 
     private String deleted;
-    private String last_interacted_with;
-    private String base_entity_id;
-    private String household_id;
     private String user_select_hiv;
-    private String partner;
     private String homeaddress;
     private String province;
-    private String district;
-    private String ward;
     private String landmark;
-    private String facility;
     private String mother_screening_date;
     private String screening_location_home;
-    private String caregiver_name;
     private String caregiver_sex;
-    private String caregiver_birth_date;
     private String caregiver_hiv_status;
     private String active_on_treatment;
     private String caregiver_art_number;
@@ -37,44 +28,12 @@ public class EcMotherIndexModel {
         this.deleted = deleted;
     }
 
-    public String getLast_interacted_with() {
-        return last_interacted_with;
-    }
-
-    public void setLast_interacted_with(String last_interacted_with) {
-        this.last_interacted_with = last_interacted_with;
-    }
-
-    public String getBase_entity_id() {
-        return base_entity_id;
-    }
-
-    public void setBase_entity_id(String base_entity_id) {
-        this.base_entity_id = base_entity_id;
-    }
-
-    public String getHousehold_id() {
-        return household_id;
-    }
-
-    public void setHousehold_id(String household_id) {
-        this.household_id = household_id;
-    }
-
     public String getUser_select_hiv() {
         return user_select_hiv;
     }
 
     public void setUser_select_hiv(String user_select_hiv) {
         this.user_select_hiv = user_select_hiv;
-    }
-
-    public String getPartner() {
-        return partner;
-    }
-
-    public void setPartner(String partner) {
-        this.partner = partner;
     }
 
     public String getHomeaddress() {
@@ -93,36 +52,12 @@ public class EcMotherIndexModel {
         this.province = province;
     }
 
-    public String getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(String district) {
-        this.district = district;
-    }
-
-    public String getWard() {
-        return ward;
-    }
-
-    public void setWard(String ward) {
-        this.ward = ward;
-    }
-
     public String getLandmark() {
         return landmark;
     }
 
     public void setLandmark(String landmark) {
         this.landmark = landmark;
-    }
-
-    public String getFacility() {
-        return facility;
-    }
-
-    public void setFacility(String facility) {
-        this.facility = facility;
     }
 
     public String getMother_screening_date() {
@@ -141,28 +76,12 @@ public class EcMotherIndexModel {
         this.screening_location_home = screening_location_home;
     }
 
-    public String getCaregiver_name() {
-        return caregiver_name;
-    }
-
-    public void setCaregiver_name(String caregiver_name) {
-        this.caregiver_name = caregiver_name;
-    }
-
     public String getCaregiver_sex() {
         return caregiver_sex;
     }
 
     public void setCaregiver_sex(String caregiver_sex) {
         this.caregiver_sex = caregiver_sex;
-    }
-
-    public String getCaregiver_birth_date() {
-        return caregiver_birth_date;
-    }
-
-    public void setCaregiver_birth_date(String caregiver_birth_date) {
-        this.caregiver_birth_date = caregiver_birth_date;
     }
 
     public String getCaregiver_hiv_status() {

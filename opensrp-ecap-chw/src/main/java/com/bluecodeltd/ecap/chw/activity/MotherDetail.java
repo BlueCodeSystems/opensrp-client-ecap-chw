@@ -511,19 +511,19 @@ public class MotherDetail extends AppCompatActivity {
                 break;
 
             case R.id.hh_prof:
+//
+//                if(childTabCount == null || childTabCount.getText().toString().equals("0")){
+//
+//                    Toasty.warning(MotherDetail.this, "Household should have at least 1 Child", Toast.LENGTH_LONG, true).show();
 
-                if(childTabCount == null || childTabCount.getText().toString().equals("0")){
+//                } else {
 
-                    Toasty.warning(MotherDetail.this, "Household should have at least 1 Child", Toast.LENGTH_LONG, true).show();
-
-                } else {
-
-                    Intent intent = new Intent(this, HouseholdDetails.class);
-                    intent.putExtra("householdId",  commonPersonObjectClient.getColumnmaps().get("household_id"));
-                    startActivity(intent);
+                    Intent householdIntent = new Intent(this, HouseholdDetails.class);
+                    householdIntent.putExtra("householdId",  commonPersonObjectClient.getColumnmaps().get("household_id"));
+                    startActivity(householdIntent);
 
 
-                }
+//                }
 
                 break;
 

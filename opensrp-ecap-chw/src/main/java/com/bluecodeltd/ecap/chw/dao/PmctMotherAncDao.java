@@ -17,12 +17,8 @@ public class PmctMotherAncDao extends AbstractDao {
         }
 
 
-        // Some app versions created ec_pmtct_mother_anc without the pmtct_id column.
-        // To be resilient, fetch ANC rows by joining to the mother table on base/relational IDs,
-        // filtering by the mother's pmtct_id instead of relying on anc.pmtct_id.
-        String sql = "SELECT a.* FROM ec_pmtct_mother_anc a " +
-                "INNER JOIN ec_pmtct_mother m ON (a.base_entity_id = m.base_entity_id OR a.relational_id = m.relational_id) " +
-                "WHERE m.household_id = '" + pmtctID + "' ";
+        // We now key strictly on household_id to fetch ANC rows.
+        String sql = "SELECT * FROM ec_pmtct_mother_anc WHERE household_id = '" + pmtctID + "' ";
 
         List<PmctMotherAncModel> values = AbstractDao.readData(sql, getPmctMotherAncModelMap());
 
@@ -35,9 +31,7 @@ public class PmctMotherAncDao extends AbstractDao {
 
     public static List<PmctMotherAncModel> getPostnatalAncMother(String pmtctID) {
 
-        String sql = "SELECT a.* FROM ec_pmtct_mother_anc a " +
-                "INNER JOIN ec_pmtct_mother m ON (a.base_entity_id = m.base_entity_id OR a.relational_id = m.relational_id) " +
-                "WHERE m.household_id = '" + pmtctID + "' ";
+        String sql = "SELECT * FROM ec_pmtct_mother_anc WHERE household_id = '" + pmtctID + "' ";
 
         List<PmctMotherAncModel> values = AbstractDao.readData(sql, getPmctMotherAncModelMap());
         if (values == null || values.size() == 0)
@@ -49,9 +43,7 @@ public class PmctMotherAncDao extends AbstractDao {
 
     public static String countMotherAnc (String pmtctID){
 
-        String sql = "SELECT COUNT(*) v FROM ec_pmtct_mother_anc a " +
-                "INNER JOIN ec_pmtct_mother m ON (a.base_entity_id = m.base_entity_id OR a.relational_id = m.relational_id) " +
-                "WHERE m.household_id = '" + pmtctID + "' ";
+        String sql = "SELECT COUNT(*) v FROM ec_pmtct_mother_anc WHERE household_id = '" + pmtctID + "' ";
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
 
         List<String> values = AbstractDao.readData(sql, dataMap);

@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PmtctChildDao extends AbstractDao {
-    public static List<PmtctChildModel> getPmctChildHei(String pmtctID) {
+    public static List<PmtctChildModel> getPmctChildHei(String householdIdOrPmtctId) {
 
-        String sql = "SELECT * FROM ec_pmtct_child WHERE (pmtct_id = '" + pmtctID + "' OR household_id = '" + pmtctID + "') " +
+        String sql = "SELECT * FROM ec_pmtct_child WHERE (household_id = '" + householdIdOrPmtctId + "' OR pmtct_id = '" + householdIdOrPmtctId + "') " +
                 "AND (delete_status IS NULL OR delete_status <> '1')";
 
         List<PmtctChildModel> values = AbstractDao.readData(sql, getPmtctChildModelMap());
@@ -35,9 +35,9 @@ public class PmtctChildDao extends AbstractDao {
         return values.get(0);
     }
 
-    public static boolean hasDeletedHei(String pmtctID) {
+    public static boolean hasDeletedHei(String householdIdOrPmtctId) {
 
-        String sql = "SELECT * FROM ec_pmtct_child WHERE (pmtct_id = '" + pmtctID + "' OR household_id = '" + pmtctID + "') " +
+        String sql = "SELECT * FROM ec_pmtct_child WHERE (household_id = '" + householdIdOrPmtctId + "' OR pmtct_id = '" + householdIdOrPmtctId + "') " +
                 "AND (delete_status IS NULL OR delete_status <> '1')";
 
         List<PmtctChildModel> values = AbstractDao.readData(sql, getPmtctChildModelMap());
@@ -45,9 +45,9 @@ public class PmtctChildDao extends AbstractDao {
         return !values.isEmpty();
     }
 
-    public static String countMotherHei (String pmtctID){
+    public static String countMotherHei (String householdIdOrPmtctId){
 
-        String sql = "SELECT COUNT(*) v FROM ec_pmtct_child WHERE (pmtct_id = '" + pmtctID + "' OR household_id = '" + pmtctID + "') " +
+        String sql = "SELECT COUNT(*) v FROM ec_pmtct_child WHERE (household_id = '" + householdIdOrPmtctId + "' OR pmtct_id = '" + householdIdOrPmtctId + "') " +
                 "AND (delete_status IS NULL OR delete_status <> '1')";
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
 

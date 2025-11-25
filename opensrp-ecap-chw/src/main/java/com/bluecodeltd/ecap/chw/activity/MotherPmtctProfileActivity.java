@@ -501,7 +501,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
                 ptctmodel.setPmtct_id(ptctMotherModel.getPmtct_id());
 //                    formToBeOpened.put("entity_id",  this.ptctMotherModel.getBase_entity_id());?\
 
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptctmodel, Map.class));
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptctMotherModel, Map.class));
 
 //                }
 //                else {
@@ -530,7 +530,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
                 model.setPmtct_id(ptctMotherModel.getPmtct_id());
 //                if(ptmctMotherMonitoringModel == null){
 //                    formToBeOpened.put("entity_id",  this.ptctMotherModel.getBase_entity_id());
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(model, Map.class));
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptctMotherModel, Map.class));
 
 //                }
 //                else {
@@ -953,5 +953,12 @@ break;
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return LocalDate.now().format(dtf);
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, PMTCTRegisterActivity.class);
+        startActivity(intent);
+        this.finish();
 
+    }
 }

@@ -8615,10 +8615,17 @@
           }
         },
         {
+          "column_name": "province",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.stateProvince"
+          }
+        },
+        {
           "column_name": "district",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.district"
+            "field": "attributes.countyDistrict"
           }
         },
         {

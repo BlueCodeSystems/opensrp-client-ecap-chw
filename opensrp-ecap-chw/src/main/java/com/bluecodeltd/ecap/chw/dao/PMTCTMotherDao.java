@@ -80,9 +80,9 @@ public class PMTCTMotherDao extends AbstractDao {
 
 
 
-    public static List<PtctMotherModel> getPostnatalMother(String pmtctID) {
+    public static List<PtctMotherModel> getPostnatalMother(String householdIdOrPmtctId) {
 
-        String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_of_st_post_natal_care,7,4) || '-' || substr(date_of_st_post_natal_care,4,2) || '-' || substr(date_of_st_post_natal_care,1,2)) as sortable_date  FROM ec_pmtct_mother_postnatal WHERE pmtct_id = '" + pmtctID + "'  ORDER BY sortable_date DESC";
+        String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_of_st_post_natal_care,7,4) || '-' || substr(date_of_st_post_natal_care,4,2) || '-' || substr(date_of_st_post_natal_care,1,2)) as sortable_date  FROM ec_pmtct_mother_postnatal WHERE (pmtct_id = '" + householdIdOrPmtctId + "' OR household_id = '" + householdIdOrPmtctId + "')  ORDER BY sortable_date DESC";
 
         List<PtctMotherModel> values = AbstractDao.readData(sql, getPtctMotherModelMap());
         if (values == null || values.size() == 0)
@@ -91,9 +91,9 @@ public class PMTCTMotherDao extends AbstractDao {
         return values;
 
     }
-    public static String countMotherPostnatal (String pmtctID){
+    public static String countMotherPostnatal (String householdIdOrPmtctId){
 
-        String sql = "SELECT COUNT(*) v FROM ec_pmtct_mother_postnatal WHERE household_id = '" + pmtctID + "' ";
+        String sql = "SELECT COUNT(*) v FROM ec_pmtct_mother_postnatal WHERE (household_id = '" + householdIdOrPmtctId + "' OR pmtct_id = '" + householdIdOrPmtctId + "') ";
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
 
         List<String> values = AbstractDao.readData(sql, dataMap);

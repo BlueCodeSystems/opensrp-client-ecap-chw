@@ -281,11 +281,11 @@ public class HeiDetailsActivity extends AppCompatActivity {
 
 
         motherProfile.setOnClickListener(v -> {
-            if (pmtctChild == null || TextUtils.isEmpty(pmtctChild.getPmtct_id())) {
+            if (pmtctChild == null || TextUtils.isEmpty(pmtctChild.getHousehold_id())) {
                 Toasty.warning(HeiDetailsActivity.this, "Mother record not available", Toast.LENGTH_LONG, true).show();
                 return;
             }
-            goToMotherDetailActivity(pmtctChild.getPmtct_id());
+            goToMotherDetailActivity(pmtctChild.getHousehold_id());
         });
     }
 

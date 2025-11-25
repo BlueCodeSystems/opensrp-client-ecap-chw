@@ -85,6 +85,7 @@ public class PmctMotherHeiFragment extends Fragment {
 // Initialize motherDetails as null.
         PtctMotherModel motherDetails = null;
 
+        String householdId = null;
         String pmtctId = null;
 
 
@@ -92,9 +93,11 @@ public class PmctMotherHeiFragment extends Fragment {
             motherDetails = mymap.get("client");
 
             if (motherDetails != null) {
+                householdId = motherDetails.getHousehold_id();
                 pmtctId = motherDetails.getPmtct_id();
 
                 if (pmtctId == null || pmtctId.isEmpty()) {
+                    pmtctId = householdId;
                 }
             } else {
 
@@ -109,7 +112,11 @@ public class PmctMotherHeiFragment extends Fragment {
 
         pmtctChild.clear();
 
-        pmtctChild.addAll(PmtctChildDao.getPmctChildHei(pmtctId));
+        String idForHei = householdId;
+        if (idForHei == null || idForHei.isEmpty()) {
+            idForHei = pmtctId;
+        }
+        pmtctChild.addAll(PmtctChildDao.getPmctChildHei(idForHei));
 
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);
