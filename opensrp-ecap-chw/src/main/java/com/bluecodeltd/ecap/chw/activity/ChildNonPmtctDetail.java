@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -24,6 +25,7 @@ import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.ChildLongitudinalFollowUpDao;
 import com.bluecodeltd.ecap.chw.dao.ChildPostnatalCareDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.dao.EcMotherIndexDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildFinalOutcomeFragment;
 import com.bluecodeltd.ecap.chw.fragment.ChildLongitudinalFragment;
@@ -35,6 +37,7 @@ import com.vijay.jsonwizard.constants.JsonFormConstants;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
@@ -81,6 +84,7 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
     private String baseEntityId;
     private String householdId;
     private String uniqueId;
+    private Child currentChild;
 
     private TextView childNameView;
     private TextView childAgeView;
@@ -161,6 +165,8 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
             openChildForm("child_longitudinal_follow_up");
         } else if (id == R.id.child_postnatal_care) {
             openChildForm("child_postnatal_care");
+        } else if (id == R.id.btn_open_mother_profile) {
+            openMotherProfile();
         } else if (id == R.id.fabx) {
             toggleFabMenu();
         }
@@ -180,6 +186,27 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
             if (childPostnatalLayout != null) {
                 childPostnatalLayout.setVisibility(View.VISIBLE);
             }
+        }
+    }
+
+    private void openMotherProfile() {
+        try {
+            if (householdId == null) {
+                Toasty.warning(this, "Household ID not found", Toast.LENGTH_LONG, true).show();
+                return;
+            }
+            // Attempt to resolve mother by household (first match) and open MotherDetail
+            CommonPersonObjectClient motherClient = EcMotherIndexDao.getFirstMotherByHousehold(householdId);
+            if (motherClient == null) {
+                Toasty.warning(this, "Mother record not found for household", Toast.LENGTH_LONG, true).show();
+                return;
+            }
+            Intent intent = new Intent(this, MotherDetail.class);
+            intent.putExtra("mother", motherClient);
+            startActivity(intent);
+        } catch (Exception e) {
+            Timber.e(e, "Unable to open mother profile");
+            Toasty.error(this, "Unable to open mother profile", Toast.LENGTH_LONG, true).show();
         }
     }
 
@@ -278,9 +305,14 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
             if (uniqueId != null && !uniqueId.trim().isEmpty()) {
                 child = IndexPersonDao.getChildByBaseId(uniqueId);
             }
+            if (child != null && child.getHousehold_id() != null) {
+                householdId = child.getHousehold_id();
+            }
         } catch (Exception e) {
             Timber.e(e);
         }
+
+        currentChild = child;
 
         if (child == null) {
             // Fallback: at least show IDs we have

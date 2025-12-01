@@ -9,9 +9,8 @@ public class ChildFinalOutcomeModel {
     private String infant_final_hiv_status;
     private String infant_discharged_hiv_negative;
     private String infant_hiv_positive_on_art;
-    private String infant_lost_to_follow_up;
-    private String infant_dead;
-    private String infant_transferred_out;
+    private String infant_final_outcome;
+    private String infant_exited_ovc_reason;
     private String infant_final_outcome_comments;
     private String delete_status;
     private String entity_type;
@@ -73,28 +72,20 @@ public class ChildFinalOutcomeModel {
         this.infant_hiv_positive_on_art = infant_hiv_positive_on_art;
     }
 
-    public String getInfant_lost_to_follow_up() {
-        return infant_lost_to_follow_up;
+    public String getInfant_final_outcome() {
+        return infant_final_outcome;
     }
 
-    public void setInfant_lost_to_follow_up(String infant_lost_to_follow_up) {
-        this.infant_lost_to_follow_up = infant_lost_to_follow_up;
+    public void setInfant_final_outcome(String infant_final_outcome) {
+        this.infant_final_outcome = infant_final_outcome;
     }
 
-    public String getInfant_dead() {
-        return infant_dead;
+    public String getInfant_exited_ovc_reason() {
+        return infant_exited_ovc_reason;
     }
 
-    public void setInfant_dead(String infant_dead) {
-        this.infant_dead = infant_dead;
-    }
-
-    public String getInfant_transferred_out() {
-        return infant_transferred_out;
-    }
-
-    public void setInfant_transferred_out(String infant_transferred_out) {
-        this.infant_transferred_out = infant_transferred_out;
+    public void setInfant_exited_ovc_reason(String infant_exited_ovc_reason) {
+        this.infant_exited_ovc_reason = infant_exited_ovc_reason;
     }
 
     public String getInfant_final_outcome_comments() {

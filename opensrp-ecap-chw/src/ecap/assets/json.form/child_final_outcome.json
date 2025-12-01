@@ -117,6 +117,12 @@
         "v_required": {
           "value": false,
           "err": "Please indicate if discharged HIV negative"
+        },
+        "relevance": {
+          "step1:infant_final_hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"negative\")"
+          }
         }
       },
       {
@@ -133,54 +139,49 @@
         "v_required": {
           "value": false,
           "err": "Please indicate if HIV positive infant is on ART"
+        },
+        "relevance": {
+          "step1:infant_final_hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"positive\")"
+          }
         }
       },
       {
-        "key": "infant_lost_to_follow_up",
+        "key": "infant_final_outcome",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "infant_lost_to_follow_up",
+        "openmrs_entity_id": "infant_final_outcome",
         "type": "native_radio",
-        "label": "Lost to follow up",
+        "label": "Final Outcome",
         "options": [
-          { "key": "yes", "text": "Yes" },
-          { "key": "no", "text": "No" }
+          { "key": "lost_to_follow_up", "text": "Lost to follow up" },
+          { "key": "dead", "text": "Dead" },
+          { "key": "transited_out", "text": "Transited out" },
+          { "key": "transferred_community_pmtct", "text": "Transferred to community PMTCT" },
+          { "key": "exited_ovc_program", "text": "Exited From the OVC Comprehensive Program" }
         ],
         "v_required": {
-          "value": false,
-          "err": "Please indicate if infant is lost to follow up"
+          "value": true,
+          "err": "Please select the final outcome"
         }
       },
       {
-        "key": "infant_dead",
+        "key": "infant_exited_ovc_reason",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "infant_dead",
-        "type": "native_radio",
-        "label": "Infant dead",
-        "options": [
-          { "key": "yes", "text": "Yes" },
-          { "key": "no", "text": "No" }
-        ],
+        "openmrs_entity_id": "infant_exited_ovc_reason",
+        "type": "edit_text",
+        "hint": "If Exited, state reason for exit",
+        "relevance": {
+          "step1:infant_final_outcome": {
+            "type": "string",
+            "ex": "equalTo(., \"exited_ovc_program\")"
+          }
+        },
         "v_required": {
-          "value": false,
-          "err": "Please indicate if infant is dead"
-        }
-      },
-      {
-        "key": "infant_transferred_out",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "infant_transferred_out",
-        "type": "native_radio",
-        "label": "Transferred out to another facility/program",
-        "options": [
-          { "key": "yes", "text": "Yes" },
-          { "key": "no", "text": "No" }
-        ],
-        "v_required": {
-          "value": false,
-          "err": "Please indicate if infant was transferred out"
+          "value": true,
+          "err": "Please state reason for exit"
         }
       },
       {

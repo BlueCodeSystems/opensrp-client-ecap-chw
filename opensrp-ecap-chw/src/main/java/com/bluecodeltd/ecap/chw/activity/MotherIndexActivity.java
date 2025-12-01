@@ -191,7 +191,7 @@ public class MotherIndexActivity extends BaseRegisterActivity implements MotherI
                             org.json.JSONArray stepOneFields = fields(jsonFormObject, STEP1);
                             org.json.JSONObject ageRangeField = getFieldJSONObject(stepOneFields, "mother_age_range");
                             org.json.JSONObject caregiverHivStatusField = getFieldJSONObject(stepOneFields, "caregiver_hiv_status");
-                            org.json.JSONObject pregnantMotherField = getFieldJSONObject(stepOneFields, "pregnant_mother");
+                            org.json.JSONObject pregnantMotherField = getFieldJSONObject(stepOneFields, "mother_pregnant");
                             org.json.JSONObject motherBreastfeedingField = getFieldJSONObject(stepOneFields, "mother_breastfeeding");
 
                             caregiverHivStatus = caregiverHivStatusField != null ? caregiverHivStatusField.optString("value", "") : "";

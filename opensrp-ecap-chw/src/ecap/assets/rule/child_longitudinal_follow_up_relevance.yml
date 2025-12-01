@@ -1,0 +1,28 @@
+---
+name: step1_infant_vaccinations_given
+description: infant_vaccinations_given
+priority: 1
+condition: "step1_infant_age.contains('6 Days') || step1_infant_age.contains('6 Weeks') || step1_infant_age.contains('2 Months') || step1_infant_age.contains('3 Months') || step1_infant_age.contains('9 Months')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_infant_muac_reading
+description: infant_muac_reading
+priority: 1
+condition: "step1_infant_age.contains('6 Months') || step1_infant_age.contains('9 Months') || step1_infant_age.contains('12 Months') || step1_infant_age.contains('18 Months') || step1_infant_age.contains('24 Months')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_infant_vitamin_a_given
+description: infant_vitamin_a_given
+priority: 1
+condition: "step1_infant_age.contains('6 Months') || step1_infant_age.contains('9 Months') || step1_infant_age.contains('12 Months') || step1_infant_age.contains('18 Months') || step1_infant_age.contains('24 Months')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_infant_deworming_given
+description: infant_deworming_given
+priority: 1
+condition: "step1_infant_age.contains('12 Months') || step1_infant_age.contains('18 Months') || step1_infant_age.contains('24 Months')"
+actions:
+  - "isRelevant = true"

@@ -88,6 +88,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
@@ -248,14 +250,32 @@ public class MotherDetail extends AppCompatActivity {
                 String baseId = commonPersonObjectClient.getColumnmaps().get("base_entity_id");
                 MotherAncModel latestAnc = baseId != null ? MotherAncDao.getLatestByBaseEntityId(baseId) : null;
                 if (latestAnc != null) {
-                    String ancVisitDate = latestAnc.getDate_1st_visit();
+                    String ancVisitDate = latestAnc.getLast_interacted_with();
+                    if ((ancVisitDate == null || ancVisitDate.isEmpty())) {
+                        ancVisitDate = latestAnc.getDate_1st_visit();
+                    }
                     if (motherLastVisitView != null && ancVisitDate != null && !ancVisitDate.isEmpty()) {
-                        motherLastVisitView.setText("Last ANC: " + ancVisitDate);
+                        String formattedDate = ancVisitDate;
+                        try {
+                            long ts = Long.parseLong(ancVisitDate);
+                            formattedDate = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(new Date(ts));
+                        } catch (Exception ignored) { }
+                        motherLastVisitView.setText("Last ANC: " + formattedDate);
+                        motherLastVisitView.setVisibility(View.VISIBLE);
+                    } else if (motherLastVisitView != null) {
+                        motherLastVisitView.setVisibility(View.GONE);
                     }
                     String edd = latestAnc.getEdd_date();
                     if (motherNextAppointmentView != null && edd != null && !edd.isEmpty()) {
                         motherNextAppointmentView.setText("EDD: " + edd);
+                        motherNextAppointmentView.setVisibility(View.VISIBLE);
+                    } else if (motherNextAppointmentView != null) {
+                        motherNextAppointmentView.setVisibility(View.GONE);
                     }
+                }
+                if (latestAnc == null) {
+                    if (motherLastVisitView != null) motherLastVisitView.setVisibility(View.GONE);
+                    if (motherNextAppointmentView != null) motherNextAppointmentView.setVisibility(View.GONE);
                 }
             }
         } catch (Exception ignored) { }
@@ -415,6 +435,9 @@ public class MotherDetail extends AppCompatActivity {
         LocalDate today = LocalDate.now();
 
         try {
+            if (birthdate == null || birthdate.trim().isEmpty()) {
+                return "";
+            }
             LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
             Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
 
@@ -530,9 +553,9 @@ public class MotherDetail extends AppCompatActivity {
             case R.id.pmtct_prof:
 
                 try {
-                    String baseId = commonPersonObjectClient.getColumnmaps().get("base_entity_id");
+                    String baseId = commonPersonObjectClient.getColumnmaps().get("household_id");
                     PtctMotherModel pmtctMother = getPmtctMotherByBaseEntity(baseId);
-                    if (pmtctMother == null || pmtctMother.getPmtct_id() == null || pmtctMother.getPmtct_id().isEmpty()) {
+                    if (pmtctMother == null || pmtctMother.getHousehold_id() == null || pmtctMother.getHousehold_id().isEmpty()) {
                         Toasty.warning(MotherDetail.this, "Mother not enrolled in PMTCT", Toast.LENGTH_LONG, true).show();
                     } else {
                         Intent intent = new Intent(this, MotherPmtctProfileActivity.class);
@@ -581,7 +604,30 @@ public class MotherDetail extends AppCompatActivity {
                 String titleName = motherIndex != null ? motherIndex.getCaregiver_name() : this.commonPersonObjectClient.getColumnmaps().get("caregiver_name");
                 formToBeOpened.getJSONObject("step1").put("title", (titleName != null ? titleName : "") + " "  + txtAge.getText().toString());
 
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, householdMapper.convertValue(motherIndex, Map.class));
+                // Populate using the loaded mother record; fall back to the client column map to avoid NPE
+                Map<String, String> motherMap = new HashMap<>();
+                try {
+                    Map<String, Object> mappedMother = motherIndex != null ? householdMapper.convertValue(motherIndex, Map.class) : null;
+                    if (mappedMother != null) {
+                        for (Map.Entry<String, Object> entry : mappedMother.entrySet()) {
+                            if (entry.getKey() != null && entry.getValue() != null) {
+                                motherMap.put(entry.getKey(), String.valueOf(entry.getValue()));
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    Timber.w(e, "Unable to map motherIndex for form population");
+                }
+                try {
+                    Map<String, String> columns = this.commonPersonObjectClient != null ? this.commonPersonObjectClient.getColumnmaps() : null;
+                    if (columns != null) {
+                        motherMap.putAll(columns);
+                    }
+                } catch (Exception e) {
+                    Timber.w(e, "Unable to merge columnmaps for form population");
+                }
+
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, motherMap);
 
 
                 break;

@@ -10416,38 +10416,10 @@
           }
         },
         {
-          "column_name": "mother_lost_to_follow_up",
+          "column_name": "mother_final_outcome",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.mother_lost_to_follow_up"
-          }
-        },
-        {
-          "column_name": "mother_dead",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.mother_dead"
-          }
-        },
-        {
-          "column_name": "mother_transited_out",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.mother_transited_out"
-          }
-        },
-        {
-          "column_name": "mother_transferred_community_pmtct",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.mother_transferred_community_pmtct"
-          }
-        },
-        {
-          "column_name": "mother_exited_ovc_program",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.mother_exited_ovc_program"
+            "field": "attributes.mother_final_outcome"
           }
         },
         {
@@ -10968,24 +10940,17 @@
           }
         },
         {
-          "column_name": "infant_lost_to_follow_up",
+          "column_name": "infant_final_outcome",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.infant_lost_to_follow_up"
+            "field": "attributes.infant_final_outcome"
           }
         },
         {
-          "column_name": "infant_dead",
+          "column_name": "infant_exited_ovc_reason",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.infant_dead"
-          }
-        },
-        {
-          "column_name": "infant_transferred_out",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.infant_transferred_out"
+            "field": "attributes.infant_exited_ovc_reason"
           }
         },
         {

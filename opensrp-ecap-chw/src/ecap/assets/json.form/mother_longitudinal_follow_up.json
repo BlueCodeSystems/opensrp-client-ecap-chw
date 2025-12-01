@@ -219,6 +219,12 @@
           { "key": "yes", "text": "Yes" },
           { "key": "no", "text": "No" }
         ],
+        "relevance": {
+          "step1:lfu_hiv_subsequent_test_result": {
+            "type": "string",
+            "ex": "equalTo(., \"P\")"
+          }
+        },
         "v_required": {
           "value": false,
           "err": "Please indicate community PMTCT enrollment"
@@ -238,6 +244,12 @@
         "v_required": {
           "value": false,
           "err": "Please indicate if started on PrEP"
+        },
+        "relevance": {
+          "step1:lfu_hiv_subsequent_test_result": {
+            "type": "string",
+            "ex": "equalTo(., \"N\")"
+          }
         }
       },
       {
@@ -267,6 +279,12 @@
         "v_required": {
           "value": false,
           "err": "Please indicate syphilis treatment regimen"
+        },
+        "relevance": {
+          "step1:lfu_syphilis_test_result": {
+            "type": "string",
+            "ex": "equalTo(., \"P\")"
+          }
         }
       },
       {
@@ -362,6 +380,12 @@
         "v_required": {
           "value": false,
           "err": "Please select partner HIV testing status"
+        },
+        "relevance": {
+          "step1:lfu_anc_as_couple": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
         }
       },
       {
@@ -379,6 +403,12 @@
         "v_required": {
           "value": false,
           "err": "Please select partner HIV test result"
+        },
+        "relevance": {
+          "step1:lfu_anc_as_couple": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
         }
       },
       {
@@ -413,6 +443,12 @@
         "v_required": {
           "value": false,
           "err": "Please indicate if partner is on ART"
+        },
+        "relevance": {
+          "step1:lfu_partner_test_result": {
+            "type": "string",
+            "ex": "equalTo(., \"positive\")"
+          }
         }
       },
       {
@@ -466,6 +502,12 @@
         "v_required": {
           "value": false,
           "err": "Please indicate if partner started on PrEP"
+        },
+        "relevance": {
+          "step1:lfu_partner_test_result": {
+            "type": "string",
+            "ex": "equalTo(., \"negative\")"
+          }
         }
       },
       {
@@ -499,6 +541,12 @@
         "v_required": {
           "value": false,
           "err": "Please indicate if breast cancer is suspected"
+        },
+        "relevance": {
+          "step1:lfu_breast_cancer_screening": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
         }
       },
       {
@@ -534,6 +582,12 @@
         "v_required": {
           "value": false,
           "err": "Please indicate TPT status"
+        },
+        "relevance": {
+          "step1:lfu_tb_status": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
         }
       },
       {

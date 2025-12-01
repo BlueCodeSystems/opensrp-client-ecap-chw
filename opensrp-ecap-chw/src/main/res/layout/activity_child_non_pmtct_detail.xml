@@ -87,7 +87,7 @@
                                     android:layout_weight="1"
                                     android:alpha="0.7"
                                     android:letterSpacing="0.08"
-                                    android:text="@string/child_details"
+                                    android:text="child_details"
                                     android:textAllCaps="true"
                                     android:textColor="@color/text_black"
                                     android:textSize="11sp" />
@@ -99,6 +99,7 @@
                                     android:layout_height="wrap_content"
                                     android:background="@drawable/bg_case_status_pill"
                                     android:paddingStart="8dp"
+                                    android:visibility="gone"
                                     android:paddingTop="2dp"
                                     android:paddingEnd="8dp"
                                     android:paddingBottom="2dp"
@@ -266,6 +267,24 @@
             android:layout_height="match_parent"
             android:layout_below="@id/collapsing_toolbar_appbarlayout"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <!-- Quick link to mother profile -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_open_mother_profile"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:onClick="onClick"
+            android:text="Open Mother Profile"
+            android:textAllCaps="false"
+            android:textColor="@color/text_black"
+            android:background="@drawable/round_button"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp" />
 
         <!-- MENU BAR: child actions -->
         <LinearLayout

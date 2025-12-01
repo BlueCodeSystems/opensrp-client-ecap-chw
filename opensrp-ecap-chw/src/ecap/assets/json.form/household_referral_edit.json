@@ -160,7 +160,7 @@
         "duration": {
           "label": ""
         },
-        "min_date": "today-100y",
+        "min_date": "01-01-2021",
         "max_date": "today",
         "v_required": {
           "value": true,

@@ -191,7 +191,7 @@
         "hint": "Date referred to OVC program for tracing",
         "look_up": "true",
         "expanded": false,
-        "min_date": "01-01-1900",
+        "min_date": "01-01-2021",
         "max_date": "today",
         "v_required": {
           "value": true,
@@ -406,10 +406,10 @@
         }
       },
       {
-        "key": "toasterHh",
+        "key": "mother_toaster_1",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "toasterHh",
+        "openmrs_entity_id": "mother_toaster_1",
         "type": "toaster_notes",
         "text_color": "#000000",
         "text": "Do not enroll this household",
@@ -420,7 +420,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "mother_index_relevance.yml"
+              "rules-file": "mother_index_toast.yml"
             }
           }
         }

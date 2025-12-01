@@ -72,6 +72,6 @@ actions:
 name: step1_index_check_box
 description: index_check_box
 priority: 1
-condition: "(!(step1_mother_age_range.contains('no') || step1_mother_children_age_band.contains('n_a')) || !(step1_pregnant_mother.contains('no') && step1_mother_breastfeeding.contains('no'))) && !(step1_caregiver_hiv_status.contains('negative') && step1_pregnant_mother.contains('no') && step1_mother_breastfeeding.contains('no'))"
+condition: "(!(step1_mother_age_range.contains('no') || step1_mother_children_age_band.contains('n_a')) || !(step1_mother_pregnant.contains('no') && step1_mother_breastfeeding.contains('no'))) && !(step1_caregiver_hiv_status.contains('negative') && step1_pregnant_mother.contains('no') && step1_mother_breastfeeding.contains('no'))"
 actions:
   - "isRelevant = true"

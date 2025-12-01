@@ -60,7 +60,7 @@ public class ChildFinalOutcomeAdapter extends RecyclerView.Adapter<ChildFinalOut
         holder.setIsRecyclable(false);
 
         holder.txtDate.setText(visit.getInfant_final_outcome_date());
-        holder.txtStatus.setText(visit.getInfant_final_hiv_status());
+        holder.txtStatus.setText(visit.getInfant_final_outcome() != null ? visit.getInfant_final_outcome() : "");
 
         View.OnClickListener editListener = v -> {
             if (isInactive(visit)) {

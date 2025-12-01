@@ -71,19 +71,6 @@
         "edit_type": "name"
       },
       {
-        "key": "infant_visit_number",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "infant_visit_number",
-        "type": "edit_text",
-        "hint": "Visit number (e.g. 1, 2, 3...)",
-        "edit_type": "number",
-        "v_required": {
-          "value": false,
-          "err": "Please enter visit number"
-        }
-      },
-      {
         "key": "infant_date_of_visit",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -104,8 +91,20 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "infant_age",
-        "type": "edit_text",
-        "hint": "Infant Age (e.g. Birth, 6 days, 6 weeks, 2 months)",
+        "type": "spinner",
+        "hint": "Infant Age",
+        "values": [
+          "Birth",
+          "6 Days",
+          "6 Weeks",
+          "2 Months",
+          "3 Months",
+          "6 Months",
+          "9 Months",
+          "12 Months",
+          "18 Months",
+          "24 Months"
+        ],
         "v_required": {
           "value": true,
           "err": "Please enter infant age"
@@ -122,6 +121,13 @@
           { "key": "yes", "text": "Yes" },
           { "key": "no", "text": "No" }
         ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "child_longitudinal_follow_up_relevance.yml"
+            }
+          }
+        },
         "v_required": {
           "value": false,
           "err": "Please indicate if vaccinations were given"
@@ -133,8 +139,15 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "infant_muac_reading",
         "type": "edit_text",
-        "hint": "MUAC Reading (From 6 months)",
+        "hint": "MUAC Reading",
         "edit_type": "decimal",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "child_longitudinal_follow_up_relevance.yml"
+            }
+          }
+        },
         "v_required": {
           "value": false,
           "err": "Please enter MUAC reading if applicable"
@@ -146,11 +159,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "infant_oedema_present",
         "type": "native_radio",
-        "label": "Oedema present (*see note)",
+        "label": "Oedema present",
         "options": [
-          { "key": "yes", "text": "Yes" },
-          { "key": "no", "text": "No" },
-          { "key": "not_applicable", "text": "Not Applicable" }
+          { "key": "no_oedema", "text": "1.No Oedema" },
+          { "key": "mild_oedema", "text": " 2.Mild Oedema (both feet and ankles)" },
+          { "key": "moderate_oedema", "text": "3.Moderate Oedema (both feet + lower legs and hands)" },
+          { "key": "severe_oedema", "text": "4.Severe Oedema (including face/abdomen)" },
+          { "key": "not_assessed", "text": "5.No assessment was done" }
         ],
         "v_required": {
           "value": false,
@@ -165,8 +180,9 @@
         "type": "native_radio",
         "label": "Infant Breastfeeding (see note**)",
         "options": [
-          { "key": "yes", "text": "Yes" },
-          { "key": "no", "text": "No" }
+          { "key": "exclusive_breastfeeding", "text": "1. Exclusive Breast Feeding" },
+          { "key": "mixed_feeding", "text": "2. Mixed Feeding" },
+          { "key": "non_breastfeeding", "text": "3. Non-breastfeeding" }
         ],
         "v_required": {
           "value": false,
@@ -184,6 +200,13 @@
           { "key": "yes", "text": "Yes" },
           { "key": "no", "text": "No" }
         ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "child_longitudinal_follow_up_relevance.yml"
+            }
+          }
+        },
         "v_required": {
           "value": false,
           "err": "Please indicate if Vitamin A was given"
@@ -216,6 +239,13 @@
           { "key": "yes", "text": "Yes" },
           { "key": "no", "text": "No" }
         ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "child_longitudinal_follow_up_relevance.yml"
+            }
+          }
+        },
         "v_required": {
           "value": false,
           "err": "Please indicate if de-worming was given"

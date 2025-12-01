@@ -37,9 +37,8 @@ public class ChildFinalOutcomeDao extends AbstractDao {
             record.setInfant_final_hiv_status(getCursorValue(c, "infant_final_hiv_status"));
             record.setInfant_discharged_hiv_negative(getCursorValue(c, "infant_discharged_hiv_negative"));
             record.setInfant_hiv_positive_on_art(getCursorValue(c, "infant_hiv_positive_on_art"));
-            record.setInfant_lost_to_follow_up(getCursorValue(c, "infant_lost_to_follow_up"));
-            record.setInfant_dead(getCursorValue(c, "infant_dead"));
-            record.setInfant_transferred_out(getCursorValue(c, "infant_transferred_out"));
+            record.setInfant_final_outcome(getCursorValue(c, "infant_final_outcome"));
+            record.setInfant_exited_ovc_reason(getCursorValue(c, "infant_exited_ovc_reason"));
             record.setInfant_final_outcome_comments(getCursorValue(c, "infant_final_outcome_comments"));
             record.setDelete_status(getCursorValue(c, "delete_status"));
             record.setEntity_type(getCursorValue(c, "entity_type"));

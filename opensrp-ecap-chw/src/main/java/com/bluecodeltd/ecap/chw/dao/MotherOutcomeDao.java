@@ -28,11 +28,7 @@ public class MotherOutcomeDao extends AbstractDao {
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setHousehold_id(getCursorValue(c, "household_id"));
             record.setMother_final_outcome_date(getCursorValue(c, "mother_final_outcome_date"));
-            record.setMother_lost_to_follow_up(getCursorValue(c, "mother_lost_to_follow_up"));
-            record.setMother_dead(getCursorValue(c, "mother_dead"));
-            record.setMother_transited_out(getCursorValue(c, "mother_transited_out"));
-            record.setMother_transferred_community_pmtct(getCursorValue(c, "mother_transferred_community_pmtct"));
-            record.setMother_exited_ovc_program(getCursorValue(c, "mother_exited_ovc_program"));
+            record.setMother_final_outcome(getCursorValue(c, "mother_final_outcome"));
             record.setMother_exited_ovc_reason(getCursorValue(c, "mother_exited_ovc_reason"));
             record.setDelete_status(getCursorValue(c, "delete_status"));
             record.setEntity_type(getCursorValue(c, "entity_type"));

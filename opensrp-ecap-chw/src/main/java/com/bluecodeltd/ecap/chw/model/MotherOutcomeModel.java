@@ -5,11 +5,7 @@ public class MotherOutcomeModel {
     private String base_entity_id;
     private String household_id;
     private String mother_final_outcome_date;
-    private String mother_lost_to_follow_up;
-    private String mother_dead;
-    private String mother_transited_out;
-    private String mother_transferred_community_pmtct;
-    private String mother_exited_ovc_program;
+    private String mother_final_outcome;
     private String mother_exited_ovc_reason;
     private String delete_status;
     private String entity_type;
@@ -39,44 +35,12 @@ public class MotherOutcomeModel {
         this.mother_final_outcome_date = mother_final_outcome_date;
     }
 
-    public String getMother_lost_to_follow_up() {
-        return mother_lost_to_follow_up;
+    public String getMother_final_outcome() {
+        return mother_final_outcome;
     }
 
-    public void setMother_lost_to_follow_up(String mother_lost_to_follow_up) {
-        this.mother_lost_to_follow_up = mother_lost_to_follow_up;
-    }
-
-    public String getMother_dead() {
-        return mother_dead;
-    }
-
-    public void setMother_dead(String mother_dead) {
-        this.mother_dead = mother_dead;
-    }
-
-    public String getMother_transited_out() {
-        return mother_transited_out;
-    }
-
-    public void setMother_transited_out(String mother_transited_out) {
-        this.mother_transited_out = mother_transited_out;
-    }
-
-    public String getMother_transferred_community_pmtct() {
-        return mother_transferred_community_pmtct;
-    }
-
-    public void setMother_transferred_community_pmtct(String mother_transferred_community_pmtct) {
-        this.mother_transferred_community_pmtct = mother_transferred_community_pmtct;
-    }
-
-    public String getMother_exited_ovc_program() {
-        return mother_exited_ovc_program;
-    }
-
-    public void setMother_exited_ovc_program(String mother_exited_ovc_program) {
-        this.mother_exited_ovc_program = mother_exited_ovc_program;
+    public void setMother_final_outcome(String mother_final_outcome) {
+        this.mother_final_outcome = mother_final_outcome;
     }
 
     public String getMother_exited_ovc_reason() {

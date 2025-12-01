@@ -1,10 +1,10 @@
 package com.bluecodeltd.ecap.chw.dao;
 
 import com.bluecodeltd.ecap.chw.model.EcMotherIndexModel;
-
+import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.dao.AbstractDao;
-
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class EcMotherIndexDao extends AbstractDao {
@@ -29,6 +29,25 @@ public class EcMotherIndexDao extends AbstractDao {
             return null;
         }
         return values.get(0);
+    }
+
+    public static CommonPersonObjectClient getFirstMotherByHousehold(String householdId) {
+        try {
+            List<EcMotherIndexModel> mothers = getMothers(householdId);
+            if (mothers.isEmpty()) {
+                return null;
+            }
+            EcMotherIndexModel first = mothers.get(0);
+            HashMap<String, String> columnMaps = new HashMap<>();
+            columnMaps.put("base_entity_id", first.getBase_entity_id());
+            columnMaps.put("household_id", first.getHousehold_id());
+            columnMaps.put("caregiver_name", first.getCaregiver_name());
+            CommonPersonObjectClient client = new CommonPersonObjectClient(first.getBase_entity_id(), columnMaps, null);
+            client.setColumnmaps(columnMaps);
+            return client;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public static String countMothers(String householdId) {
