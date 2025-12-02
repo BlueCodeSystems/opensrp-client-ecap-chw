@@ -822,14 +822,16 @@ public class MotherDetail extends AppCompatActivity {
                     return;
                 }
 
-                saveRegistration(childIndexEventClient, is_edit_mode);
+                boolean refreshScheduled = saveRegistration(childIndexEventClient, is_edit_mode, this::refreshActivity);
 
                 getUniqueIdRepository().close(vca_id);
 
                 Toasty.success(MotherDetail.this, "Form Saved", Toast.LENGTH_LONG, true).show();
 
-                finish();
-                startActivity(getIntent());
+                if (!refreshScheduled) {
+                    refreshActivity();
+                }
+                return;
 
             } catch (Exception e) {
                 Timber.e(e);
@@ -965,43 +967,49 @@ public class MotherDetail extends AppCompatActivity {
         return null;
     }
 
-    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode, Runnable onComplete) {
 
         Runnable runnable = () -> {
 
             Event event = childIndexEventClient.getEvent();
             Client client = childIndexEventClient.getClient();
 
-            if (event != null && client != null) {
-                try {
-                    ECSyncHelper ecSyncHelper = getECSyncHelper();
+            try {
+                if (event != null && client != null) {
+                    try {
+                        ECSyncHelper ecSyncHelper = getECSyncHelper();
 
-                    JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
+                        JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
 
-                    JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
+                        JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
 
-                    if (isEditMode) {
-                        JSONObject mergedClientJsonObject =
-                                org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
-                        ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
-                    } else {
-                        ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                        if (isEditMode) {
+                            JSONObject mergedClientJsonObject =
+                                    org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
+                            ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
+                        } else {
+                            ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                        }
+
+                        JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
+                        ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
+
+                        Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
+                        Date currentSyncDate = new Date(lastUpdatedAtDate);
+
+                        //Get saved event for processing
+                        List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
+                        getClientProcessorForJava().processClient(savedEvents);
+                        getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
+
+
+                    } catch (Exception e) {
+                        Timber.e(e);
                     }
-
-                    JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
-                    ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
-
-                    Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
-                    Date currentSyncDate = new Date(lastUpdatedAtDate);
-
-                    //Get saved event for processing
-                    List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
-                    getClientProcessorForJava().processClient(savedEvents);
-                    getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
-
-
-                } catch (Exception e) {
-                    Timber.e(e);
+                }
+            } finally {
+                if (onComplete != null) {
+                    runOnUiThread(onComplete);
                 }
             }
 
@@ -1013,6 +1021,9 @@ public class MotherDetail extends AppCompatActivity {
             return true;
         } catch (Exception exception) {
             Timber.e(exception);
+            if (onComplete != null) {
+                runOnUiThread(onComplete);
+            }
             return false;
         }
     }
@@ -1028,6 +1039,18 @@ public class MotherDetail extends AppCompatActivity {
 
     private ClientProcessorForJava getClientProcessorForJava() {
         return ChwApplication.getInstance().getClientProcessorForJava();
+    }
+
+    private void refreshActivity() {
+        if (isFinishing() || isDestroyed()) {
+            return;
+        }
+        Intent intent = new Intent(getIntent());
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 
 

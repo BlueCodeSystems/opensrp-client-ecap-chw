@@ -212,10 +212,15 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
                 if (childIndexEventClient == null) {
                     return;
                 }
-                saveRegistration(childIndexEventClient,true);
-
-                if (onDataUpdateListener != null) {
-                    onDataUpdateListener.onDataUpdate();
+                Runnable onComplete = () -> {
+                    if (onDataUpdateListener != null) {
+                        onDataUpdateListener.onDataUpdate();
+                    }
+                    refreshIndexProfile(casePlan.getUnique_id());
+                };
+                boolean scheduled = saveRegistration(childIndexEventClient, true, onComplete);
+                if (!scheduled) {
+                    onComplete.run();
                 }
 
 
@@ -258,6 +263,25 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
 //            activity.recreate();
 //        }
 //    };
+    private void runOnUiThread(Runnable runnable) {
+        if (context instanceof Activity && runnable != null) {
+            ((Activity) context).runOnUiThread(runnable);
+        }
+    }
+
+    private void refreshIndexProfile(String uniqueId) {
+        if (!(context instanceof Activity)) {
+            return;
+        }
+        Activity activity = (Activity) context;
+        Intent intent = new Intent(context, IndexDetailsActivity.class);
+        intent.putExtra("Child", uniqueId);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        activity.finish();
+        activity.overridePendingTransition(0, 0);
+        context.startActivity(intent);
+        activity.overridePendingTransition(0, 0);
+    }
     public void callActivity(CasePlanModel casePlan) {
         Intent openActivity = new Intent(context, CasePlan.class);
         openActivity.putExtra("childId",  casePlan.getUnique_id());
@@ -363,47 +387,49 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
 
         return null;
     }
-    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode, Runnable onComplete) {
 
         Runnable runnable = () -> {
 
             Event event = childIndexEventClient.getEvent();
             Client client = childIndexEventClient.getClient();
 
-            if (event != null && client != null) {
-                try {
-                    ECSyncHelper ecSyncHelper = getECSyncHelper();
+            try {
+                if (event != null && client != null) {
+                    try {
+                        ECSyncHelper ecSyncHelper = getECSyncHelper();
 
-                    JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
+                        JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
 
-                    JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
+                        JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
 
-                    if (isEditMode) {
-                        JSONObject mergedClientJsonObject =
-                                org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
-                        ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
+                        if (isEditMode) {
+                            JSONObject mergedClientJsonObject =
+                                    org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
+                            ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
 
-                    } else {
-                        ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                        } else {
+                            ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                        }
+
+                        JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
+                        ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
+
+                        Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
+                        Date currentSyncDate = new Date(lastUpdatedAtDate);
+
+                        //Get saved event for processing
+                        List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
+                        getClientProcessorForJava().processClient(savedEvents);
+                        getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
+
+                    } catch (Exception e) {
+                        Timber.e(e);
                     }
-
-                    JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
-                    ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
-
-                    Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
-                    Date currentSyncDate = new Date(lastUpdatedAtDate);
-
-                    //Get saved event for processing
-                    List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
-                    getClientProcessorForJava().processClient(savedEvents);
-                    getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
-
-                    if (onDataUpdateListener != null) {
-                        onDataUpdateListener.onDataUpdate();
-                    }
-
-                } catch (Exception e) {
-                    Timber.e(e);
+                }
+            } finally {
+                if (onComplete != null) {
+                    runOnUiThread(onComplete);
                 }
             }
 
@@ -415,6 +441,9 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
             return true;
         } catch (Exception exception) {
             Timber.e(exception);
+            if (onComplete != null) {
+                runOnUiThread(onComplete);
+            }
             return false;
         }
     }

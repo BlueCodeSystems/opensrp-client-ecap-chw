@@ -152,13 +152,16 @@ public class HTSlinksFragment extends Fragment {
                     return;
                 }
 
-                saveRegistration(childIndexEventClient, is_edit_mode,EncounterType);
+                boolean refreshScheduled = saveRegistration(childIndexEventClient, is_edit_mode, EncounterType, this::refreshActivity);
 
 
                 switch (EncounterType) {
 
                     case "HIV Testing Links":
                         Toasty.success(getContext(), "Form Saved", Toast.LENGTH_LONG, true).show();
+                        if (!refreshScheduled) {
+                            refreshActivity();
+                        }
                         break;
 
                 }
@@ -201,7 +204,7 @@ public class HTSlinksFragment extends Fragment {
         return null;
     }
 
-    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode,String encounterType) {
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode, String encounterType, Runnable onComplete) {
 
         Runnable runnable = () -> {
 
@@ -234,10 +237,12 @@ public class HTSlinksFragment extends Fragment {
                     getClientProcessorForJava().processClient(savedEvents);
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
 
-                    getActivity().runOnUiThread(this::refreshData);
-
                 } catch (Exception e) {
                     Timber.e(e);
+                } finally {
+                    if (onComplete != null && isAdded()) {
+                        requireActivity().runOnUiThread(onComplete);
+                    }
                 }
             }
         };
@@ -248,6 +253,9 @@ public class HTSlinksFragment extends Fragment {
             return true;
         } catch (Exception exception) {
             Timber.e(exception);
+            if (onComplete != null && isAdded()) {
+                requireActivity().runOnUiThread(onComplete);
+            }
             return false;
         }
     }
@@ -272,12 +280,24 @@ public class HTSlinksFragment extends Fragment {
     private ClientProcessorForJava getClientProcessorForJava() {
         return ChwApplication.getInstance().getClientProcessorForJava();
     }
-    private void refreshData() {
-        htsLinksModel.clear();
-        List<HTSlinksModel> updatedList = HTSLinksDao.getHTSLinks(id);
-        htsLinksModel.addAll(updatedList);
-        try { if (recyclerViewAdapter != null) recyclerViewAdapter.notifyDataSetChanged(); } catch (Exception ignored) {}
-        Toasty.success(getContext(), "Form Updated", Toast.LENGTH_LONG, true).show();
+
+    private void refreshActivity() {
+        if (!isAdded()) {
+            return;
+        }
+        try {
+            if (getActivity() == null || getActivity().isFinishing()) {
+                return;
+            }
+            Intent intent = new Intent(getActivity().getIntent());
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            getActivity().finish();
+            getActivity().overridePendingTransition(0, 0);
+            startActivity(intent);
+            getActivity().overridePendingTransition(0, 0);
+        } catch (Exception e) {
+            Timber.e(e);
+        }
     }
 
 

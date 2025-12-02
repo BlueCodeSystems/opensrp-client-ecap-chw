@@ -1003,11 +1003,12 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
             String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
 
-            JSONObject jsonFormObject = null;
+            final JSONObject jsonFormObject;
             try {
                 jsonFormObject = new JSONObject(jsonString);
             } catch (JSONException e) {
                 e.printStackTrace();
+                return;
             }
             String encounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
 
@@ -1034,47 +1035,48 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                         return;
                     }
 
-                    saveRegistration(childIndexEventClient, is_edit_mode);
+                    Runnable postSaveAction = () -> {
+                        switch (encounterType) {
+                            case "VCA Case Plan":
+                                try {
+                                    JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
+                                    String dateId = cpdate != null ? cpdate.optString("value") : "";
 
+                                    JSONObject cpId = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_id");
+                                    String cp_Id = cpId != null ? cpId.optString("value") : "";
 
-                    switch (encounterType) {
-                        case "VCA Case Plan":
+                                    refreshActivity();
+                                    openVcaCasplanToAddVulnarabilities(dateId, cp_Id);
+                                } catch (Exception e) {
+                                    Timber.e(e);
+                                    refreshActivity();
+                                }
+                                break;
 
-                            JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
-                            String dateId = cpdate.optString("value");
+                            case "Household Visitation Form 0-20 years":
+                            case "Member Sub Population":
+                            case "Sub Population":
+                            case "VCA Assessment":
+                            case "HIV Risk Assessment Above 15":
+                            case "HIV Risk Assessment Below 15":
+                                refreshActivity();
+                                break;
+                            case "Case Record Status":
+                                refreshActivity();
+                                Intent i = new Intent(getApplicationContext(), IndexRegisterActivity.class);
+                                startActivity(i);
+                                break;
+                            default:
+                                refreshActivity();
+                                break;
+                        }
+                        Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
+                    };
 
-                            JSONObject cpId = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_id");
-                            String cp_Id = cpId.optString("value");
-
-                            finish();
-                            startActivity(getIntent());
-                            openVcaCasplanToAddVulnarabilities(dateId, cp_Id);
-
-                            break;
-
-                        case "Household Visitation Form 0-20 years":
-                        case "Member Sub Population":
-                        case "Sub Population":
-                        case "VCA Assessment":
-                        case "HIV Risk Assessment Above 15":
-                        case "HIV Risk Assessment Below 15":
-
-                            finish();
-                            startActivity(getIntent());
-
-                            break;
-                        case "Case Record Status":
-
-                            finish();
-                            startActivity(getIntent());
-                            Intent i = new Intent(getApplicationContext(), IndexRegisterActivity.class);
-                            startActivity(i);
-
-                            break;
-
+                    boolean refreshScheduled = saveRegistration(childIndexEventClient, is_edit_mode, postSaveAction);
+                    if (!refreshScheduled) {
+                        postSaveAction.run();
                     }
-
-                    Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
 
                 } catch (Exception e) {
                     Timber.e(e);
@@ -1344,44 +1346,50 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         return null;
     }
 
-    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode, Runnable onComplete) {
 
         Runnable runnable = () -> {
 
             Event event = childIndexEventClient.getEvent();
             Client client = childIndexEventClient.getClient();
 
-            if (event != null && client != null) {
-                try {
-                    ECSyncHelper ecSyncHelper = getECSyncHelper();
+            try {
+                if (event != null && client != null) {
+                    try {
+                        ECSyncHelper ecSyncHelper = getECSyncHelper();
 
-                    JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
+                        JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
 
-                    JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
+                        JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
 
-                    if (isEditMode) {
-                        JSONObject mergedClientJsonObject =
-                                org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
-                        ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
+                        if (isEditMode) {
+                            JSONObject mergedClientJsonObject =
+                                    org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
+                            ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
 
-                    } else {
-                        ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                        } else {
+                            ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                        }
+
+                        JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
+                        ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
+
+                        Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
+                        Date currentSyncDate = new Date(lastUpdatedAtDate);
+
+                        //Get saved event for processing
+                        List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
+                        getClientProcessorForJava().processClient(savedEvents);
+                        getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
+
+
+                    } catch (Exception e) {
+                        Timber.e(e);
                     }
-
-                    JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
-                    ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
-
-                    Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
-                    Date currentSyncDate = new Date(lastUpdatedAtDate);
-
-                    //Get saved event for processing
-                    List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
-                    getClientProcessorForJava().processClient(savedEvents);
-                    getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
-
-
-                } catch (Exception e) {
-                    Timber.e(e);
+                }
+            } finally {
+                if (onComplete != null) {
+                    runOnUiThread(onComplete);
                 }
             }
 
@@ -1393,6 +1401,9 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             return true;
         } catch (Exception exception) {
             Timber.e(exception);
+            if (onComplete != null) {
+                runOnUiThread(onComplete);
+            }
             return false;
         }
     }
@@ -1479,6 +1490,18 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
     private ClientProcessorForJava getClientProcessorForJava() {
         return ChwApplication.getInstance().getClientProcessorForJava();
+    }
+
+    private void refreshActivity() {
+        if (isFinishing() || isDestroyed()) {
+            return;
+        }
+        Intent intent = new Intent(getIntent());
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 
     public void animateFAB(){
@@ -1943,17 +1966,19 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                                 if (childIndexEventClient == null) {
                                     return;
                                 }
-                                saveRegistration(childIndexEventClient,true);
+                                Runnable onComplete = () -> {
+                                    Toasty.success(IndexDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
+                                    IndexDetailsActivity.super.onBackPressed();
+                                };
+                                boolean scheduled = saveRegistration(childIndexEventClient, true, onComplete);
+                                if (!scheduled) {
+                                    onComplete.run();
+                                }
 
 
                             } catch (Exception e) {
                                 Timber.e(e);
                             }
-
-
-
-                        Toasty.success(IndexDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
-                        super.onBackPressed();
                     }));
 
                     //Creating dialog box

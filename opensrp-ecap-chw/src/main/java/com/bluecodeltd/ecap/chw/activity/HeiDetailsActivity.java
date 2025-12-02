@@ -504,11 +504,12 @@ public class HeiDetailsActivity extends AppCompatActivity {
 
             String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
 
-            JSONObject jsonFormObject = null;
+            final JSONObject jsonFormObject;
             try {
                 jsonFormObject = new JSONObject(jsonString);
             } catch (JSONException e) {
                 e.printStackTrace();
+                return;
             }
             String encounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
 
@@ -524,48 +525,55 @@ public class HeiDetailsActivity extends AppCompatActivity {
                     return;
                 }
 
-                saveRegistration(childIndexEventClient, is_edit_mode);
+                Runnable postSave = () -> {
+                    switch (encounterType) {
+                        case "VCA Case Plan":
 
-                switch (encounterType) {
-                    case "VCA Case Plan":
+                            try {
+                                JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
+                                String dateId = cpdate != null ? cpdate.optString("value") : "";
+                                refreshActivity();
+                                openVcaCasplanToAddVulnarabilities(dateId);
+                            } catch (Exception e) {
+                                Timber.e(e);
+                                refreshActivity();
+                            }
 
-                        JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
-                        String dateId = cpdate.optString("value");
-                        finish();
-                        startActivity(getIntent());
-                        openVcaCasplanToAddVulnarabilities(dateId);
+                            break;
 
-                        break;
+                        case "Household Visitation Form 0-20 years":
+                        case "Member Sub Population":
+                        case "Sub Population":
+                        case "VCA Assessment":
+                        case "HIV Risk Assessment Above 15":
+                        case "HIV Risk Assessment Below 15":
+                        case "Ptmct Child Monitoring":
+                        case "Mother Pmtct Child":
 
-                    case "Household Visitation Form 0-20 years":
-                    case "Member Sub Population":
-                    case "Sub Population":
-                    case "VCA Assessment":
-                    case "HIV Risk Assessment Above 15":
-                    case "HIV Risk Assessment Below 15":
-                    case "Ptmct Child Monitoring":
-                    case "Mother Pmtct Child":
+                            refreshActivity();
 
-                        finish();
-                        startActivity(getIntent());
+                            break;
+                        case "Case Record Status":
 
-                        break;
-                    case "Case Record Status":
+                            refreshActivity();
+                            Intent i = new Intent(getApplicationContext(), IndexRegisterActivity.class);
+                            startActivity(i);
 
-                        finish();
-                        startActivity(getIntent());
-                        Intent i = new Intent(getApplicationContext(), IndexRegisterActivity.class);
-                        startActivity(i);
+                            break;
 
-                        break;
+                        default:
+                            refreshActivity();
+                            break;
 
-                    default:
-                        finish();
-                        startActivity(getIntent());
+                    }
 
+                    Toasty.success(HeiDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
+                };
+
+                boolean scheduled = saveRegistration(childIndexEventClient, is_edit_mode, postSave);
+                if (!scheduled) {
+                    postSave.run();
                 }
-
-                Toasty.success(HeiDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
 
             } catch (Exception e) {
                 Timber.e(e);
@@ -676,44 +684,50 @@ public class HeiDetailsActivity extends AppCompatActivity {
         return null;
     }
 
-    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode, Runnable onComplete) {
 
         Runnable runnable = () -> {
 
             Event event = childIndexEventClient.getEvent();
             Client client = childIndexEventClient.getClient();
 
-            if (event != null && client != null) {
-                try {
-                    ECSyncHelper ecSyncHelper = getECSyncHelper();
+            try {
+                if (event != null && client != null) {
+                    try {
+                        ECSyncHelper ecSyncHelper = getECSyncHelper();
 
-                    JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
+                        JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
 
-                    JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
+                        JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
 
-                    if (isEditMode) {
-                        JSONObject mergedClientJsonObject =
-                                org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
-                        ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
+                        if (isEditMode) {
+                            JSONObject mergedClientJsonObject =
+                                    org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
+                            ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
 
-                    } else {
-                        ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                        } else {
+                            ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                        }
+
+                        JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
+                        ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
+
+                        Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
+                        Date currentSyncDate = new Date(lastUpdatedAtDate);
+
+                        //Get saved event for processing
+                        List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
+                        getClientProcessorForJava().processClient(savedEvents);
+                        getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
+
+
+                    } catch (Exception e) {
+                        Timber.e(e);
                     }
-
-                    JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
-                    ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
-
-                    Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
-                    Date currentSyncDate = new Date(lastUpdatedAtDate);
-
-                    //Get saved event for processing
-                    List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
-                    getClientProcessorForJava().processClient(savedEvents);
-                    getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
-
-
-                } catch (Exception e) {
-                    Timber.e(e);
+                }
+            } finally {
+                if (onComplete != null) {
+                    runOnUiThread(onComplete);
                 }
             }
 
@@ -725,6 +739,9 @@ public class HeiDetailsActivity extends AppCompatActivity {
             return true;
         } catch (Exception exception) {
             Timber.e(exception);
+            if (onComplete != null) {
+                runOnUiThread(onComplete);
+            }
             return false;
         }
     }
@@ -810,6 +827,18 @@ public class HeiDetailsActivity extends AppCompatActivity {
 
     private ClientProcessorForJava getClientProcessorForJava() {
         return ChwApplication.getInstance().getClientProcessorForJava();
+    }
+
+    private void refreshActivity() {
+        if (isFinishing() || isDestroyed()) {
+            return;
+        }
+        Intent intent = new Intent(getIntent());
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 
 
@@ -1043,7 +1072,17 @@ public class HeiDetailsActivity extends AppCompatActivity {
                             if (childIndexEventClient == null) {
                                 return;
                             }
-                            saveRegistration(childIndexEventClient, true);
+                            Runnable onComplete = () -> {
+                                Toasty.success(HeiDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
+                                Intent intent = new Intent(this, MotherPmtctProfileActivity.class);
+                                intent.putExtra("client_id",  pmtctChild.getPmtct_id());
+                                startActivity(intent);
+                                this.finish();
+                            };
+                            boolean scheduled = saveRegistration(childIndexEventClient, true, onComplete);
+                            if (!scheduled) {
+                                onComplete.run();
+                            }
 
 
                         } catch (Exception e) {
@@ -1051,12 +1090,6 @@ public class HeiDetailsActivity extends AppCompatActivity {
                         }
 
 
-                        Toasty.success(HeiDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
-
-                        Intent intent = new Intent(this, MotherPmtctProfileActivity.class);
-                        intent.putExtra("client_id",  pmtctChild.getPmtct_id());
-                        startActivity(intent);
-                        this.finish();
                     }));
 
                     //Creating dialog box
@@ -1253,3 +1286,5 @@ public class HeiDetailsActivity extends AppCompatActivity {
 
     }
 }
+
+

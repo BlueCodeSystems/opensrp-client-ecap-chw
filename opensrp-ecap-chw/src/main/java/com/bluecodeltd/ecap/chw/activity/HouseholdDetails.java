@@ -1278,11 +1278,12 @@ public class HouseholdDetails extends AppCompatActivity {
 
             String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
 
-            JSONObject jsonFormObject = null;
+            final JSONObject jsonFormObject;
             try {
                 jsonFormObject = new JSONObject(jsonString);
             } catch (JSONException e) {
                 e.printStackTrace();
+                return;
             }
 
             String EncounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
@@ -1308,74 +1309,92 @@ public class HouseholdDetails extends AppCompatActivity {
                     return;
                 }
 
-                saveRegistration(childIndexEventClient, is_edit_mode, EncounterType);
+                Runnable postSave = () -> {
+                    switch (EncounterType) {
 
+                        case "Caregiver Assessment":
 
-                switch (EncounterType) {
+                            closeFab();
+                            Toasty.success(HouseholdDetails.this, "Vulnerabilities Saved", Toast.LENGTH_LONG, true).show();
+                            refreshActivity();
+                            break;
 
-                    case "Caregiver Assessment":
+                        case "Household Screening":
 
-                        closeFab();
-                        Toasty.success(HouseholdDetails.this, "Vulnerabilities Saved", Toast.LENGTH_LONG, true).show();
-                        finish();
-                        startActivity(getIntent());
-                        break;
+                            closeFab();
+                            Toasty.success(HouseholdDetails.this, "Household Updated", Toast.LENGTH_LONG, true).show();
+                            refreshActivity();
+                            break;
+                        case "WE Services Caregiver":
 
-                    case "Household Screening":
+                            closeFab();
+                            Toasty.success(HouseholdDetails.this, "WE form Updated", Toast.LENGTH_LONG, true).show();
+                            refreshActivity();
+                            break;
 
-                        closeFab();
-                        Toasty.success(HouseholdDetails.this, "Household Updated", Toast.LENGTH_LONG, true).show();
-//                        finish();
-//                        startActivity(getIntent());
-                        Intent intent = getIntent();
-                        finish();
-                        startActivity(intent);
-                        break;
-                    case "WE Services Caregiver":
+                        case "Family Member":
+                            closeFab();
+                            Toasty.success(HouseholdDetails.this, "Family Member Saved", Toast.LENGTH_LONG, true).show();
+                            refreshActivity();
+                            break;
 
-                        closeFab();
-                        Toasty.success(HouseholdDetails.this, "WE form Updated", Toast.LENGTH_LONG, true).show();
-                        finish();
-                        startActivity(getIntent());
-                        break;
+                        case "MUAC Score":
 
-                    case "Family Member":
-                        closeFab();
-                        Toasty.success(HouseholdDetails.this, "Family Member Saved", Toast.LENGTH_LONG, true).show();
-                        finish();
-                        startActivity(getIntent());
-                        break;
+                            closeFab();
+                            Toasty.success(HouseholdDetails.this, "MUAC Updated", Toast.LENGTH_LONG, true).show();
+                            refreshActivity();
+                            break;
 
-                    case "MUAC Score":
+                        case "Grad":
+                        case "Graduation":
+                        case "Household Case Status":
+                        case "Household Visitation For Caregiver Edit":
 
-                        closeFab();
-                        Toasty.success(HouseholdDetails.this, "MUAC Updated", Toast.LENGTH_LONG, true).show();
-                        finish();
-                        startActivity(getIntent());
-                        break;
+                            closeFab();
+                            Toasty.success(HouseholdDetails.this, "Form Updated and Saved", Toast.LENGTH_LONG, true).show();
+                            refreshActivity();
+                            break;
 
-                    case "Grad":
-                    case "Graduation":
-                    case "Household Case Status":
-                    case "Household Visitation For Caregiver Edit":
+                        case "Caregiver Case Plan":
 
-                        closeFab();
-                        Toasty.success(HouseholdDetails.this, "Form Updated and Saved", Toast.LENGTH_LONG, true).show();
-                        finish();
-                        startActivity(getIntent());
-                        break;
+                            try {
+                                JSONObject date = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
+                                String dateId = date != null ? date.optString("value") : "";
 
-                    case "Caregiver Case Plan":
+                                JSONObject cpId = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_id");
+                                String cp_Id = cpId != null ? cpId.optString("value") : "";
 
-                        JSONObject date = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
-                        String dateId = date.optString("value");
+                                AddVulnarabilitiesToCasePlan(dateId,cp_Id);
+                            } catch (Exception e) {
+                                Timber.e(e);
+                                refreshActivity();
+                            }
+                            break;
 
-                        JSONObject cpId = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_id");
-                        String cp_Id = cpId.optString("value");
+                        case "Household Case Plan":
+                            try {
+                                JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
+                                String dateIdh = cpdate != null ? cpdate.optString("value") : "";
+                                refreshActivity();
+                                openHouseholdCasplanToAddVulnarabilities(dateIdh);
+                            } catch (Exception e) {
+                                Timber.e(e);
+                                refreshActivity();
+                            }
+                            break;
 
-                        AddVulnarabilitiesToCasePlan(dateId,cp_Id);
-                        break;
+                        default:
 
+                            refreshActivity();
+
+                            break;
+
+                    }
+                };
+
+                boolean scheduled = saveRegistration(childIndexEventClient, is_edit_mode, EncounterType, postSave);
+                if (!scheduled) {
+                    postSave.run();
                 }
             } catch (Exception e) {
                 Timber.e(e);
@@ -1399,6 +1418,15 @@ public class HouseholdDetails extends AppCompatActivity {
         i.putExtra("status",house.getCaregiver_hiv_status());
         i.putExtra("dateId",  dateId);
         i.putExtra("case_plan_id",cpId);
+        startActivity(i);
+    }
+
+    private void openHouseholdCasplanToAddVulnarabilities(String dateIdh) {
+        Intent i = new Intent(HouseholdDetails.this, HouseholdCasePlanActivity.class);
+        i.putExtra("unique_id", house.getUnique_id());
+        i.putExtra("householdId", house.getHousehold_id());
+        i.putExtra("status", house.getCaregiver_hiv_status());
+        i.putExtra("dateId", dateIdh);
         startActivity(i);
     }
 
@@ -1642,43 +1670,49 @@ public class HouseholdDetails extends AppCompatActivity {
         return null;
     }
 
-    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode, String encounterType) {
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode, String encounterType, Runnable onComplete) {
 
         Runnable runnable = () -> {
 
             Event event = childIndexEventClient.getEvent();
             Client client = childIndexEventClient.getClient();
 
-            if (event != null && client != null) {
-                try {
-                    ECSyncHelper ecSyncHelper = getECSyncHelper();
+            try {
+                if (event != null && client != null) {
+                    try {
+                        ECSyncHelper ecSyncHelper = getECSyncHelper();
 
-                    JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
-                    JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
+                        JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
+                        JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
 
-                    if (isEditMode) {
-                        JSONObject mergedClientJsonObject =
-                                org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
-                        ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
+                        if (isEditMode) {
+                            JSONObject mergedClientJsonObject =
+                                    org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
+                            ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
 
-                    } else {
-                        ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                        } else {
+                            ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                        }
+
+                        JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
+                        ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
+
+                        Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
+                        Date currentSyncDate = new Date(lastUpdatedAtDate);
+
+                        //Get saved event for processing
+                        List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
+                        getClientProcessorForJava().processClient(savedEvents);
+                        getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
+
+
+                    } catch (Exception e) {
+                        Timber.e(e.getMessage());
                     }
-
-                    JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
-                    ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
-
-                    Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
-                    Date currentSyncDate = new Date(lastUpdatedAtDate);
-
-                    //Get saved event for processing
-                    List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
-                    getClientProcessorForJava().processClient(savedEvents);
-                    getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
-
-
-                } catch (Exception e) {
-                    Timber.e(e.getMessage());
+                }
+            } finally {
+                if (onComplete != null) {
+                    runOnUiThread(onComplete);
                 }
             }
 
@@ -1691,6 +1725,9 @@ public class HouseholdDetails extends AppCompatActivity {
             return true;
         } catch (Exception exception) {
             Timber.e(exception);
+            if (onComplete != null) {
+                runOnUiThread(onComplete);
+            }
             return false;
         }
 
@@ -2103,7 +2140,7 @@ public class HouseholdDetails extends AppCompatActivity {
             if (childIndexEventClient == null) {
                 return;
             }
-            saveRegistration(childIndexEventClient,true,"Household Screening Edit");
+            saveRegistration(childIndexEventClient,true,"Household Screening Edit", null);
            // saveRegistrationForHouseholdEditing(childIndexEventClient, true, "Household Screening",oldIndexEventClient);
 
 
@@ -2135,7 +2172,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     if (childIndexEventClient == null) {
                         return;
                     }
-                    saveRegistration(childIndexEventClient,true,"Mother Edit");
+                    saveRegistration(childIndexEventClient,true,"Mother Edit", null);
 
 
                 } catch (Exception e) {
@@ -2170,7 +2207,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     if (childIndexEventClient == null) {
                         return;
                     }
-                    saveRegistration(childIndexEventClient,true,"Family Member");
+                    saveRegistration(childIndexEventClient,true,"Family Member", null);
 
 
                 } catch (Exception e) {
@@ -2317,11 +2354,16 @@ public class HouseholdDetails extends AppCompatActivity {
         startActivity(returnToHouseholdIndexActivity);
         finish();
     }
-    public void refreshActivity(Household house){
-        if(house == null){
-            finish();
-            startActivity(getIntent());
+    public void refreshActivity() {
+        if (isFinishing() || isDestroyed()) {
+            return;
         }
-
+        Intent intent = new Intent(getIntent());
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 }
+

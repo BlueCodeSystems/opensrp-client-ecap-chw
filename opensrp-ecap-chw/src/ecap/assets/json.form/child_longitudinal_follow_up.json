@@ -94,7 +94,6 @@
         "type": "spinner",
         "hint": "Infant Age",
         "values": [
-          "Birth",
           "6 Days",
           "6 Weeks",
           "2 Months",
