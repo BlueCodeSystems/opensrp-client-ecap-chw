@@ -53,7 +53,7 @@
     }
   },
   "step1": {
-    "title": "Quarterly Assessment Form For VCA ",
+    "title": "Quarterly Assessment Form For CA ",
     "fields": [
       {
         "key": "unique_id",
@@ -72,7 +72,7 @@
         "openmrs_entity_id": "age",
         "type": "edit_text",
         "read_only": "true",
-        "hint": "VCA Age",
+        "hint": "CA Age",
         "calculation": {
           "rules-engine": {
             "ex-rules": {
@@ -789,7 +789,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd1",
         "type": "label",
-        "text": "HIV Exposed Infant (VCA aged 24 months and below) Section"
+        "text": "HIV Exposed Infant (CA aged 24 months and below) Section"
       },
       {
         "key": "eid_test",

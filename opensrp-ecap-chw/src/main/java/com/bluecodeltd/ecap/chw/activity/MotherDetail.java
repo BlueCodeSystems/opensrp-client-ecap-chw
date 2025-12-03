@@ -154,9 +154,14 @@ public class MotherDetail extends AppCompatActivity {
         childPostnatalLayout = findViewById(R.id.child_postnatal_care);
 
         commonMother = (CommonPersonObjectClient) getIntent().getSerializableExtra("mother");
+        // Refresh flag (optional extra)
+        try {
+            refresh = getIntent() != null && getIntent().getExtras() != null ? getIntent().getExtras().getString("refresh") : null;
+        } catch (Exception ignored) {}
 
         // Prefer the serialized mother passed via intent to avoid schema mismatches
-        if (commonMother != null) {
+        boolean forceRefreshFromRepo = refresh != null && refresh.equalsIgnoreCase("true");
+        if (commonMother != null && !forceRefreshFromRepo) {
             commonPersonObjectClient = commonMother;
         } else {
             // Fallback: try resolve using extras but guard for failures
@@ -167,6 +172,13 @@ public class MotherDetail extends AppCompatActivity {
                     if (baseId == null) baseId = getIntent().getExtras().getString("baseId", null);
                 }
             } catch (Exception ignored) {}
+
+            // If we are refreshing, prefer pulling the baseId from the existing cached mother payload
+            if ((baseId == null || baseId.isEmpty()) && commonMother != null) {
+                try {
+                    baseId = commonMother.getColumnmaps().get("base_entity_id");
+                } catch (Exception ignored) { }
+            }
 
             if (baseId != null) {
                 try {
@@ -201,11 +213,6 @@ public class MotherDetail extends AppCompatActivity {
         } catch (Exception e) {
             Timber.w(e, "Unable to load mother index record via EcMotherIndexDao");
         }
-
-        // Refresh flag (optional extra)
-        try {
-            refresh = getIntent() != null && getIntent().getExtras() != null ? getIntent().getExtras().getString("refresh") : null;
-        } catch (Exception ignored) {}
 
         try {
             family = HouseholdDao.getHousehold(commonPersonObjectClient.getColumnmaps().get("household_id"));
@@ -288,7 +295,7 @@ public class MotherDetail extends AppCompatActivity {
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
         rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
 
-        setupViewPager();
+        setupViewPager(false);
         updateChildTabTitle();
         updateAncTabTitle();
         updateLongitudinalTabTitle();
@@ -404,9 +411,12 @@ public class MotherDetail extends AppCompatActivity {
     }
 
 
-    private void setupViewPager(){
-        // If adapter already exists, skip rebuilding
-        if (mViewPager.getAdapter() != null) return;
+    private void setupViewPager(boolean forceRefresh){
+        // Rebuild adapter when forced or when not yet initialized
+        if (!forceRefresh && mViewPager.getAdapter() != null) return;
+
+        if (tabMediator != null) { try { tabMediator.detach(); } catch (Exception ignored) {} tabMediator = null; }
+        mViewPager.setAdapter(null);
 
         java.util.List<androidx.fragment.app.Fragment> fragments = new java.util.ArrayList<>();
         fragments.add(new MotherOverviewFragment());
@@ -417,7 +427,6 @@ public class MotherDetail extends AppCompatActivity {
 
         com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter adapter = new com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter(this, fragments);
         mViewPager.setAdapter(adapter);
-        if (tabMediator != null) { try { tabMediator.detach(); } catch (Exception ignored) {} }
         tabMediator = new TabLayoutMediator(mTabLayout, mViewPager, (tab, position) -> {
             if (position == 0) tab.setText("Overview");
             else if (position == 1) tab.setText("Children");
@@ -822,14 +831,18 @@ public class MotherDetail extends AppCompatActivity {
                     return;
                 }
 
-                boolean refreshScheduled = saveRegistration(childIndexEventClient, is_edit_mode, this::refreshActivity);
+                Runnable postSaveAction = () -> {
+                    Toasty.success(MotherDetail.this, "Form Saved", Toast.LENGTH_LONG, true).show();
+                    refreshActivity();
+
+                };
+
+                boolean refreshScheduled = saveRegistration(childIndexEventClient, is_edit_mode, postSaveAction);
 
                 getUniqueIdRepository().close(vca_id);
 
-                Toasty.success(MotherDetail.this, "Form Saved", Toast.LENGTH_LONG, true).show();
-
                 if (!refreshScheduled) {
-                    refreshActivity();
+                    postSaveAction.run();
                 }
                 return;
 
@@ -840,7 +853,7 @@ public class MotherDetail extends AppCompatActivity {
         }
 
         getData();
-        setupViewPager();
+        setupViewPager(true);
         updateChildTabTitle();
         updateAncTabTitle();
         updateLongitudinalTabTitle();
@@ -1046,6 +1059,20 @@ public class MotherDetail extends AppCompatActivity {
             return;
         }
         Intent intent = new Intent(getIntent());
+        // Force re-query from repository instead of reusing stale serialized mother payload
+        intent.putExtra("refresh", "true");
+        String baseId = null;
+        if (commonPersonObjectClient != null && commonPersonObjectClient.getColumnmaps() != null) {
+            try {
+                baseId = commonPersonObjectClient.getColumnmaps().get("base_entity_id");
+                if (baseId != null) {
+                    intent.putExtra("base_entity_id", baseId);
+                }
+            } catch (Exception ignored) { }
+        }
+        if (baseId != null) {
+            intent.removeExtra("mother");
+        }
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         finish();
         overridePendingTransition(0, 0);

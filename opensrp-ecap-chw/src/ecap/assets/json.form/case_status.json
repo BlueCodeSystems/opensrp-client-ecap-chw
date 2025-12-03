@@ -73,7 +73,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "case_status",
         "type": "native_radio",
-        "label": "VCA Case record status",
+        "label": "CA Case record status",
         "options": [
           {
             "key": "1",
@@ -229,7 +229,7 @@
         "relevance": {
           "step1:exited_graduation_reason": {
             "type": "string",
-            "ex": "equalTo(., \"HH does not have VCA who falls under priority sub-population\")"
+            "ex": "equalTo(., \"HH does not have CA who falls under priority sub-population\")"
           }
         }
       },

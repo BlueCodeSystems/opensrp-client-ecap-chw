@@ -143,6 +143,7 @@ public class HouseholdDetails extends AppCompatActivity {
     private Boolean isFabOpen = false;
     private RelativeLayout refferal, rcase_plan, rassessment, rscreen, child_form, household_visitation_caregiver, grad_form, chivAssessment,we_service_caregiver;
     public String countFemales, countMales, virally_suppressed, childrenCount, householdId, positiveChildren;
+    private String refresh;
     private UniqueIdRepository uniqueIdRepository;
     public Household house;
     public ArrayList houseHoldsContainingSameId;
@@ -185,7 +186,21 @@ public class HouseholdDetails extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         NavigationMenu.getInstance(this, null, toolbar);
 
-        householdId = getIntent().getExtras().getString("householdId");
+        Bundle extras = getIntent() != null ? getIntent().getExtras() : null;
+        try {
+            refresh = extras != null ? extras.getString("refresh") : null;
+        } catch (Exception ignored) { }
+        try {
+            householdId = extras != null ? extras.getString("householdId") : null;
+            if (householdId == null && extras != null) {
+                householdId = extras.getString("base_entity_id");
+            }
+        } catch (Exception ignored) { }
+        if (householdId == null) {
+            Toasty.error(this, "Household ID missing", Toast.LENGTH_LONG, true).show();
+            finish();
+            return;
+        }
 
         builder = new AlertDialog.Builder(HouseholdDetails.this);
 
@@ -2287,7 +2302,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     JSONObject info = getFieldJSONObject(fields(formToBeOpened, "step1"), "info");
                     info.put("type", "toaster_notes");
-                    info.put("text","If you need to close the case for this household, please deregister the following VCA(s) in the household: \n\n"+IndexPersonDao.returnVcaNames(householdId));
+                    info.put("text","If you need to close the case for this household, please deregister the following CA(s) in the household: \n\n"+IndexPersonDao.returnVcaNames(householdId));
 
                 } else {
                     JSONObject info = getFieldJSONObject(fields(formToBeOpened, "step1"), "info");
@@ -2342,7 +2357,7 @@ public class HouseholdDetails extends AppCompatActivity {
         //Creating dialog box
         AlertDialog alert = builder.create();
         //Setting the title manually
-        alert.setTitle("VCA Screening");
+        alert.setTitle("CA Screening");
         alert.show();
     }
 
@@ -2359,6 +2374,11 @@ public class HouseholdDetails extends AppCompatActivity {
             return;
         }
         Intent intent = new Intent(getIntent());
+        intent.putExtra("refresh", "true");
+        if (householdId != null && !householdId.isEmpty()) {
+            intent.putExtra("householdId", householdId);
+            intent.putExtra("base_entity_id", householdId);
+        }
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         finish();
         overridePendingTransition(0, 0);

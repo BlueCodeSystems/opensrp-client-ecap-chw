@@ -1424,7 +1424,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "vca_uniforms_books",
-        "label": "Support VCAs with Uniforms and/or Book Materials",
+        "label": "Support CAs with Uniforms and/or Book Materials",
         "type": "check_box",
         "options": [
           {

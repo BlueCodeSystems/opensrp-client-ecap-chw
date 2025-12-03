@@ -84,6 +84,7 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
     private String baseEntityId;
     private String householdId;
     private String uniqueId;
+    private String refresh;
     private Child currentChild;
 
     private TextView childNameView;
@@ -117,8 +118,11 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
 
         Intent intent = getIntent();
         if (intent != null) {
+            try { refresh = intent.getStringExtra("refresh"); } catch (Exception ignored) {}
             baseEntityId = intent.getStringExtra(EXTRA_BASE_ENTITY_ID);
+            if (baseEntityId == null) baseEntityId = intent.getStringExtra("base_entity_id");
             householdId = intent.getStringExtra(EXTRA_HOUSEHOLD_ID);
+            if (householdId == null) householdId = intent.getStringExtra("household_id");
             uniqueId = intent.getStringExtra(EXTRA_UNIQUE_ID);
         }
 
@@ -559,13 +563,15 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
                     return;
                 }
 
-                saveRegistration(childIndexEventClient, isEditMode);
+                Runnable postSaveAction = () -> {
+                    refreshActivity();
+                    Toasty.success(this, "Form Saved", android.widget.Toast.LENGTH_LONG, true).show();
+                };
 
-                Toasty.success(this, "Form Saved", android.widget.Toast.LENGTH_LONG, true).show();
-
-                // Refresh lists / fragments by recreating activity
-                finish();
-                startActivity(getIntent());
+                boolean scheduled = saveRegistration(childIndexEventClient, isEditMode, postSaveAction);
+                if (!scheduled) {
+                    postSaveAction.run();
+                }
 
             } catch (Exception e) {
                 Timber.e(e);
@@ -639,6 +645,10 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
     }
 
     public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
+        return saveRegistration(childIndexEventClient, isEditMode, null);
+    }
+
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode, Runnable onComplete) {
 
         Runnable runnable = () -> {
 
@@ -675,6 +685,10 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
                     Timber.e(e);
                 }
             }
+
+            if (onComplete != null) {
+                runOnUiThread(onComplete);
+            }
         };
 
         try {
@@ -683,6 +697,9 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
             return true;
         } catch (Exception exception) {
             Timber.e(exception);
+            if (onComplete != null) {
+                runOnUiThread(onComplete);
+            }
             return false;
         }
     }
@@ -697,6 +714,30 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
 
     private ClientProcessorForJava getClientProcessorForJava() {
         return ChwApplication.getInstance().getClientProcessorForJava();
+    }
+
+    private void refreshActivity() {
+        if (isFinishing() || isDestroyed()) {
+            return;
+        }
+        Intent intent = new Intent(getIntent());
+        intent.putExtra("refresh", "true");
+        if (baseEntityId != null && !baseEntityId.isEmpty()) {
+            intent.putExtra(EXTRA_BASE_ENTITY_ID, baseEntityId);
+            intent.putExtra("base_entity_id", baseEntityId);
+        }
+        if (householdId != null && !householdId.isEmpty()) {
+            intent.putExtra(EXTRA_HOUSEHOLD_ID, householdId);
+            intent.putExtra("household_id", householdId);
+        }
+        if (uniqueId != null && !uniqueId.isEmpty()) {
+            intent.putExtra(EXTRA_UNIQUE_ID, uniqueId);
+        }
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 
     @NonNull

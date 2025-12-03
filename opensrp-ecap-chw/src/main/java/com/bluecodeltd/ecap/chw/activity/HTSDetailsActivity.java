@@ -123,6 +123,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
     private RelativeLayout txtScreening, addIndexClients, rcase_plan, referral,  household_visitation_for_vca, hiv_assessment,hiv_assessment2,childPlan,weServicesVca;
     public VcaScreeningModel indexVCA;
     private  VcaAssessmentModel assessmentModel;
+    private String refresh;
 
 
     private TextView txtName, txtGender, txtAge, txtChildid;
@@ -192,8 +193,21 @@ public class HTSDetailsActivity extends AppCompatActivity {
         builder = new AlertDialog.Builder(HTSDetailsActivity.this);
 //        screeningBuilder = new AlertDialog.Builder(HTSDetailsActivity.this);
 
+        Bundle extras = getIntent() != null ? getIntent().getExtras() : null;
+        try {
+            refresh = extras != null ? extras.getString("refresh") : null;
+        } catch (Exception ignored) { }
 
-        clientId = getIntent().getExtras().getString("client_id");
+        try {
+            clientId = extras != null ? extras.getString("client_id") : null;
+            if (clientId == null && extras != null) {
+                clientId = extras.getString("Child");
+            }
+            if (clientId == null && extras != null) {
+                clientId = extras.getString("base_entity_id");
+            }
+        } catch (Exception ignored) { }
+
         hivTestingServiceModel = HivTestingServiceDao.getHivServiceClient(clientId);
         htslinksModel = HTSLinksDao.getLinks(clientId);
 
@@ -473,9 +487,10 @@ public class HTSDetailsActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            String encounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
+            final JSONObject finalJsonFormObject = jsonFormObject;
+            final String encounterType = finalJsonFormObject != null ? finalJsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "") : "";
 
-            if(!jsonFormObject.optString("entity_id").isEmpty()){
+            if(finalJsonFormObject != null && !finalJsonFormObject.optString("entity_id").isEmpty()){
                 is_edit_mode = true;
             }
 
@@ -487,44 +502,47 @@ public class HTSDetailsActivity extends AppCompatActivity {
                     return;
                 }
 
-                saveRegistration(childIndexEventClient, is_edit_mode);
+                Runnable postSaveAction = () -> {
+                    switch (encounterType) {
+                        case "VCA Case Plan":
+                            try {
+                                JSONObject cpdate = getFieldJSONObject(fields(finalJsonFormObject, "step1"), "case_plan_date");
+                                String dateId = cpdate != null ? cpdate.optString("value") : "";
+                                refreshActivity();
+                                openVcaCasplanToAddVulnarabilities(dateId);
+                            } catch (Exception e) {
+                                Timber.e(e);
+                                refreshActivity();
+                            }
+                            break;
 
-                switch (encounterType) {
-                    case "VCA Case Plan":
+                        case "Household Visitation Form 0-20 years":
+                        case "Member Sub Population":
+                        case "Sub Population":
+                        case "VCA Assessment":
+                        case "HIV Risk Assessment Above 15":
+                        case "HIV Risk Assessment Below 15":
+                        case "HIV Testing Links":
+                        case "HIV Testing Service":
+                            refreshActivity();
+                            break;
+                        case "Case Record Status":
+                            refreshActivity();
+                            Intent i = new Intent(getApplicationContext(), IndexRegisterActivity.class);
+                            startActivity(i);
+                            break;
+                        default:
+                            refreshActivity();
+                            break;
+                    }
 
-                        JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
-                        String dateId = cpdate.optString("value");
-                        finish();
-                        startActivity(getIntent());
-                        openVcaCasplanToAddVulnarabilities(dateId);
+                    Toasty.success(HTSDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
+                };
 
-                        break;
-
-                    case "Household Visitation Form 0-20 years":
-                    case "Member Sub Population":
-                    case "Sub Population":
-                    case "VCA Assessment":
-                    case "HIV Risk Assessment Above 15":
-                    case "HIV Risk Assessment Below 15":
-                    case "HIV Testing Links":
-                    case "HIV Testing Service":
-
-                        finish();
-                        startActivity(getIntent());
-
-                        break;
-                    case "Case Record Status":
-
-                        finish();
-                        startActivity(getIntent());
-                        Intent i = new Intent(getApplicationContext(), IndexRegisterActivity.class);
-                        startActivity(i);
-
-                        break;
-
+                boolean scheduled = saveRegistration(childIndexEventClient, is_edit_mode, postSaveAction);
+                if (!scheduled) {
+                    postSaveAction.run();
                 }
-
-                Toasty.success(HTSDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
 
             } catch (Exception e) {
                 Timber.e(e);
@@ -625,6 +643,10 @@ public class HTSDetailsActivity extends AppCompatActivity {
     }
 
     public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
+        return saveRegistration(childIndexEventClient, isEditMode, null);
+    }
+
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode, Runnable onComplete) {
 
         Runnable runnable = () -> {
 
@@ -664,6 +686,9 @@ public class HTSDetailsActivity extends AppCompatActivity {
                     Timber.e(e);
                 }
             }
+            if (onComplete != null) {
+                runOnUiThread(onComplete);
+            }
 
         };
 
@@ -673,6 +698,9 @@ public class HTSDetailsActivity extends AppCompatActivity {
             return true;
         } catch (Exception exception) {
             Timber.e(exception);
+            if (onComplete != null) {
+                runOnUiThread(onComplete);
+            }
             return false;
         }
     }
@@ -1199,5 +1227,23 @@ public class HTSDetailsActivity extends AppCompatActivity {
         //Setting the title manually
         alert.setTitle("VCA Screening");
         alert.show();
+    }
+
+    private void refreshActivity() {
+        if (isFinishing() || isDestroyed()) {
+            return;
+        }
+        Intent intent = new Intent(getIntent());
+        intent.putExtra("refresh", "true");
+        if (clientId != null && !clientId.isEmpty()) {
+            intent.putExtra("client_id", clientId);
+            intent.putExtra("base_entity_id", clientId);
+            intent.putExtra("Child", clientId);
+        }
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 }

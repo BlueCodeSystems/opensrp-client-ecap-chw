@@ -142,6 +142,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     public String childId, uniqueId, vcaAge,is_screened, is_hiv_positive, caseworkerphone;
+    private String refresh;
     private RelativeLayout txtScreening, rassessment, rcase_plan, referral,  household_visitation_for_vca, hiv_assessment,hiv_assessment2,childPlan,weServicesVca, nutrition_assessment_intervention, tb_screening;
 
     public VcaScreeningModel indexVCA;
@@ -195,10 +196,25 @@ public class IndexDetailsActivity extends AppCompatActivity {
         builder = new AlertDialog.Builder(IndexDetailsActivity.this);
         screeningBuilder = new AlertDialog.Builder(IndexDetailsActivity.this);
 
-        childId = getIntent().getExtras().getString("Child");
-        String hhIntent = getIntent().getExtras().getString("fromHousehold");
-        if(hhIntent == null){
-            hhIntent = getIntent().getExtras().getString("fromIndex");
+        // Refresh flag (optional extra)
+        try {
+            refresh = getIntent() != null && getIntent().getExtras() != null ? getIntent().getExtras().getString("refresh") : null;
+        } catch (Exception ignored) {}
+
+        try {
+            childId = getIntent() != null && getIntent().getExtras() != null ? getIntent().getExtras().getString("Child") : null;
+            if (childId == null && getIntent() != null && getIntent().getExtras() != null) {
+                childId = getIntent().getExtras().getString("childId");
+            }
+            if (childId == null && getIntent() != null && getIntent().getExtras() != null) {
+                childId = getIntent().getExtras().getString("base_entity_id");
+            }
+        } catch (Exception ignored) {}
+
+        Bundle extras = getIntent() != null ? getIntent().getExtras() : null;
+        String hhIntent = extras != null ? extras.getString("fromHousehold") : null;
+        if(hhIntent == null && extras != null){
+            hhIntent = extras.getString("fromIndex");
         }
 
         indexVCA = VCAScreeningDao.getVcaScreening(childId);
@@ -1497,6 +1513,11 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             return;
         }
         Intent intent = new Intent(getIntent());
+        intent.putExtra("refresh", "true");
+        if (childId != null && !childId.isEmpty()) {
+            intent.putExtra("Child", childId);
+            intent.putExtra("base_entity_id", childId);
+        }
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         finish();
         overridePendingTransition(0, 0);
@@ -1938,7 +1959,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                         gender = "her";
                     }
 
-                    builder.setMessage("You are about to delete this VCA and all " + gender + " forms.");
+                    builder.setMessage("You are about to delete this CA and all " + gender + " forms.");
                     builder.setNegativeButton("NO", (dialog, id) -> {
                         //  Action for 'NO' Button
                         dialog.cancel();
