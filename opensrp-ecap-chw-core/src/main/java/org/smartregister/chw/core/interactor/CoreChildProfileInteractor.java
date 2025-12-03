@@ -60,7 +60,7 @@ import org.smartregister.repository.TaskRepository;
 import org.smartregister.repository.UniqueIdRepository;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
-import org.smartregister.thinkmd.ThinkMDLibrary;
+import org.bluecodesystems.pulsebridge.PulseBridgeLibrary;
 import org.smartregister.util.FormUtils;
 import org.smartregister.util.ImageUtils;
 import org.smartregister.view.LocationPickerView;
@@ -82,8 +82,8 @@ import static org.smartregister.chw.core.utils.CoreConstants.DB_CONSTANTS.THINKM
 import static org.smartregister.chw.core.utils.CoreConstants.INTENT_KEY.CONTENT_TO_DISPLAY;
 import static org.smartregister.chw.core.utils.Utils.getDuration;
 import static org.smartregister.chw.core.utils.Utils.getFormTag;
-import static org.smartregister.thinkmd.utils.Constants.THINKMD_FHIR_BUNDLE;
-import static org.smartregister.thinkmd.utils.Utils.decodeBase64;
+import static org.bluecodesystems.pulsebridge.utils.Constants.THINKMD_FHIR_BUNDLE;
+import static org.bluecodesystems.pulsebridge.utils.Utils.decodeBase64;
 
 public class CoreChildProfileInteractor implements CoreChildProfileContract.Interactor {
     public static final String TAG = CoreChildProfileInteractor.class.getName();
@@ -485,12 +485,12 @@ public class CoreChildProfileInteractor implements CoreChildProfileContract.Inte
         Runnable runnable = () -> {
             try {
                 // getting thinkMD id from encoded fhir bundle
-                String thinkMdId = ThinkMDLibrary.getInstance().getThinkMDPatientId(encodedBundle);
+                String thinkMdId = PulseBridgeLibrary.getInstance().getPulseBridgePatientId(encodedBundle);
                 // getting the baseEntityId mapped to thinkMD
                 String childBaseEntityId = queryColumnWithIdentifier(THINKMD_ID, thinkMdId, BASE_ENTITY_ID);
                 // creating the event to sync with server
                 if (childBaseEntityId != null) {
-                    Event carePlanEvent = ThinkMDLibrary.getInstance().createCarePlanEvent(encodedBundle,
+                    Event carePlanEvent = PulseBridgeLibrary.getInstance().createCarePlanEvent(encodedBundle,
                             getFormTag(getAllSharedPreferences()),
                             childBaseEntityId);
                     updateLocalStorage(childBaseEntityId, THINKMD_FHIR_BUNDLE, encodedBundle);

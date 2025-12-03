@@ -27,7 +27,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.google.android.gms.common.internal.Preconditions;
+import com.google.common.base.Preconditions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.domain.Form;
@@ -107,7 +107,7 @@ public abstract class Utils extends org.smartregister.family.util.Utils {
      */
     @Deprecated
     public static int getAnCWomanImageResourceIdentifier() {
-        return org.smartregister.chw.pnc.R.drawable.anc_woman;
+        return org.smartregister.pnc.R.drawable.anc_woman;
     }
 
     /**
@@ -116,7 +116,7 @@ public abstract class Utils extends org.smartregister.family.util.Utils {
      */
     @Deprecated
     public static int getPnCWomanImageResourceIdentifier() {
-        return org.smartregister.chw.pnc.R.drawable.pnc_woman;
+        return org.smartregister.pnc.R.drawable.pnc_woman;
     }
 
     /**
@@ -143,9 +143,9 @@ public abstract class Utils extends org.smartregister.family.util.Utils {
     public static String getYesNoAsLanguageSpecific(Context context, String value) {
         if (TextUtils.isEmpty(value)) return "";
         if (value.equalsIgnoreCase("yes")) {
-            return context.getString(org.smartregister.R.string.yes);
+            return context.getString(R.string.yes);
         } else if (value.equalsIgnoreCase("no")) {
-            return context.getString(org.smartregister.R.string.no);
+            return context.getString(R.string.no);
         }
         return value;
     }
@@ -202,7 +202,7 @@ public abstract class Utils extends org.smartregister.family.util.Utils {
                 ClipData clip = ClipData.newPlainText(activity.getText(R.string.copied_phone_number), phoneNumber);
                 clipboard.setPrimaryClip(clip);
 
-                CopyToClipboardDialog copyToClipboardDialog = new CopyToClipboardDialog(activity, org.smartregister.chw.pnc.R.style.copy_clipboard_dialog);
+                CopyToClipboardDialog copyToClipboardDialog = new CopyToClipboardDialog(activity, org.smartregister.pnc.R.style.copy_clipboard_dialog);
                 copyToClipboardDialog.setContent(phoneNumber);
                 copyToClipboardDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 copyToClipboardDialog.show();
@@ -250,7 +250,7 @@ public abstract class Utils extends org.smartregister.family.util.Utils {
      */
     @Deprecated
     public static int getOverDueProfileImageResourceIDentifier() {
-        return org.smartregister.chw.pnc.R.color.visit_status_over_due;
+        return org.smartregister.pnc.R.color.visit_status_over_due;
     }
 
     /**
@@ -259,7 +259,7 @@ public abstract class Utils extends org.smartregister.family.util.Utils {
      */
     @Deprecated
     public static int getDueProfileImageResourceIDentifier() {
-        return org.smartregister.chw.pnc.R.color.due_profile_blue;
+        return org.smartregister.pnc.R.color.due_profile_blue;
     }
 
     public static String actualDaysBetweenDateAndNow(Context context, String date) {
@@ -520,7 +520,7 @@ public abstract class Utils extends org.smartregister.family.util.Utils {
         } else {
             callTextViewHint.setVisibility(VISIBLE);
             callTextView.setTypeface(null, Typeface.ITALIC);
-            callTextView.setTextColor(menu.getResources().getColor(org.smartregister.chw.pnc.R.color.grey));
+            callTextView.setTextColor(menu.getResources().getColor(org.smartregister.pnc.R.color.grey));
             ((FloatingActionButton) menu.findViewById(R.id.callFab)).getDrawable().setAlpha(122);
         }
 
@@ -714,7 +714,7 @@ public abstract class Utils extends org.smartregister.family.util.Utils {
         return null;
     }
 
-    public static MemberObject referralToAncMember(org.smartregister.chw.referral.domain.MemberObject memberObject) {
+    public static MemberObject referralToAncMember(Object memberObject) {
         try {
             JSONObject referralJson = new JSONObject(org.smartregister.family.util.JsonFormUtils.gson.toJson(memberObject));
             return convert(referralJson.toString(), MemberObject.class);

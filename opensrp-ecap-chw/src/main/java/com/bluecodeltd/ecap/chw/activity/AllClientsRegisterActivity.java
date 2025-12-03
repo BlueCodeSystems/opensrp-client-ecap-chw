@@ -69,7 +69,7 @@ public class AllClientsRegisterActivity extends CoreAllClientsRegisterActivity
 
         } catch (Exception e) {
             Timber.e(e);
-            displayToast(org.smartregister.family.R.string.error_unable_to_start_form);
+            displayToast(R.string.error_unable_to_start_form);
         }
     }
 
@@ -82,8 +82,8 @@ public class AllClientsRegisterActivity extends CoreAllClientsRegisterActivity
         form.setName(getString(R.string.client_registration));
         form.setActionBarBackground(R.color.family_actionbar);
         form.setNavigationBackground(R.color.family_navigation);
-        form.setHomeAsUpIndicator(org.smartregister.family.R.mipmap.ic_cross_white);
-        form.setPreviousLabel(getResources().getString(org.smartregister.family.R.string.back));
+        form.setHomeAsUpIndicator(R.drawable.ic_cross_white);
+        form.setPreviousLabel(getResources().getString(R.string.back));
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
 
         startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
@@ -102,7 +102,7 @@ public class AllClientsRegisterActivity extends CoreAllClientsRegisterActivity
                     RegisterParams registerParam = new RegisterParams();
                     registerParam.setEditMode(false);
                     registerParam.setFormTag(OpdJsonFormUtils.formTag(OpdUtils.context().allSharedPreferences()));
-                    showProgressDialog(org.smartregister.family.R.string.saving_dialog_title);
+                    showProgressDialog(R.string.saving_dialog_title);
                     presenter().saveForm(jsonString, registerParam);
                 }
             } catch (JSONException e) {
@@ -138,7 +138,7 @@ public class AllClientsRegisterActivity extends CoreAllClientsRegisterActivity
             case org.smartregister.chw.opensrp_chw_anc.R.id.action_scan_qr:
                 startQrCodeScanner();
                 return true;
-            case org.smartregister.family.R.id.action_family:
+            case R.id.action_family:
                 switchToBaseFragment();
                 break;
             case R.id.action_register:

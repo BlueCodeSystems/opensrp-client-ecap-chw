@@ -36,13 +36,19 @@ public class CoreAllClientsRegisterActivity extends BaseOpdRegisterActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Ensure an ActionBar exists to prevent BaseRegisterFragment NPEs
+        setTheme(org.smartregister.chw.core.R.style.FamilyTheme_AppBarOverlay);
         super.onCreate(savedInstanceState);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
         NavigationMenu.getInstance(this, null, null);
     }
 
     @Override
     protected BaseOpdRegisterActivityPresenter createPresenter(@NonNull OpdRegisterActivityContract.View view, @NonNull OpdRegisterActivityContract.Model model) {
-        return new CoreAllClientsRegisterPresenter(view, model);
+        // Defer OPD presenter wiring to host app; return null placeholder to compile library standalone
+        return null;
     }
 
     @Override

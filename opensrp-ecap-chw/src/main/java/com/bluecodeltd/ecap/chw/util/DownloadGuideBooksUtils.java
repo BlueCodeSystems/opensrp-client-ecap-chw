@@ -1,7 +1,6 @@
 package com.bluecodeltd.ecap.chw.util;
 
 import android.content.Context;
-import android.os.Environment;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.contract.GuideBooksFragmentContract;
@@ -14,9 +13,15 @@ public class DownloadGuideBooksUtils extends DownloadUtil {
 
     public DownloadGuideBooksUtils(GuideBooksFragmentContract.DownloadListener downloadListener, String fileName, String directory, Context context) {
         this.fileName = fileName;
-        folder = Environment.getExternalStorageDirectory() + File.separator +
-                directory + File.separator +
-                context.getResources().getConfiguration().locale + "/";
+        File baseDirectory = context.getExternalFilesDir(directory);
+        if (baseDirectory == null) {
+            throw new IllegalStateException("Unable to resolve external files directory for guidebooks");
+        }
+        File localeDirectory = new File(baseDirectory, context.getResources().getConfiguration().locale.getLanguage());
+        if (!localeDirectory.exists() && !localeDirectory.mkdirs()) {
+            Timber.v("Directory was not created successfully %s", localeDirectory.getAbsolutePath());
+        }
+        folder = localeDirectory.getAbsolutePath() + File.separator;
         this.downloadListener = downloadListener;
         this.serverUrl = getDownloadUrl(fileName, context);
     }

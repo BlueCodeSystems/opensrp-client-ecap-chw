@@ -796,13 +796,13 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "eid_test",
-        "type": "edit_text",
+        "type": "date_picker",
         "hint": "Check child’s under-five clinic card When was the last EID test done?",
-        "edit_type": "number",
-        "read_only": "false",
+        "min_date": "today-100y",
+        "max_date": "today",
         "v_required": {
-          "value": false,
-          "err": "Indicate the number of months "
+          "value": true,
+          "err": "Please enter date"
         },
         "relevance": {
           "rules-engine": {
@@ -1209,22 +1209,6 @@
           "step1:appropriate_vaccinations": {
             "type": "string",
             "ex": "equalTo(., \"no\")"
-          }
-        }
-      },
-      {
-        "key": "muac_measure",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "muac_measure",
-        "type": "edit_text",
-        "hint": "What is the child’s MUAC measurement?",
-        "edit_type": "number",
-        "read_only": false,
-        "relevance": {
-          "step1:appropriate_vaccinations": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
           }
         }
       },

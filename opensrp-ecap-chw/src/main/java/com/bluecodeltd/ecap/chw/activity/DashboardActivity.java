@@ -39,6 +39,7 @@ import com.bluecodeltd.ecap.chw.model.CaregiverVisitationModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.presenter.GenerateCSVPresenter;
 import com.github.javiersantos.appupdater.AppUpdater;
+import com.bluecodeltd.ecap.chw.util.UpdateManager;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LegendEntry;
@@ -52,6 +53,8 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.gson.Gson;
+import androidx.lifecycle.ViewModelProvider;
+import com.bluecodeltd.ecap.chw.viewmodel.DashboardViewModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -67,8 +70,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 public class DashboardActivity extends AppCompatActivity  implements GenerateCSVContract.View {
+    private com.bluecodeltd.ecap.chw.databinding.ActivityDashboardBinding binding;
     private GenerateCSVContract.Presenter presenter;
 
     private AppBarLayout myAppbar;
@@ -97,43 +102,37 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
     Runnable runnable;
     ArrayList<Integer> colors;
     AppUpdater appUpdater;
+    private DashboardViewModel dashboardViewModel;
+    // Background execution centralized via Threading
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard);
-        toolbar = findViewById(R.id.toolbarx);
+        binding = com.bluecodeltd.ecap.chw.databinding.ActivityDashboardBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        toolbar = binding.toolbarx;
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbar.getOverflowIcon().setColorFilter(Color.WHITE , PorterDuff.Mode.SRC_ATOP);
-        myAppbar = findViewById(R.id.collapsing_toolbar_appbarlayout);
+        myAppbar = binding.collapsingToolbarAppbarlayout;
         NavigationMenu.getInstance(this, null, toolbar);
-        chart = findViewById(R.id.fragment_verticalbarchart_chart);
-        allHouseHoldsCount = findViewById(R.id.allHouseholdsNumber);
+        chart = binding.fragmentVerticalbarchartChart;
+        allHouseHoldsCount = binding.allHouseholdsNumber;
         presenter = new GenerateCSVPresenter(this);
 
         csvGenerator = new CSVGeneratorHelper();
 
-        try {
-            String householdCount = HouseholdDao.countNumberoFHouseholds();
-            if (householdCount != null) {
-                allHouseHoldsCount.setText(householdCount);
-            } else {
-                allHouseHoldsCount.setText("0");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            allHouseHoldsCount.setText("0");
-        }
+        // Defer DB work to background; set placeholder until loaded
+        allHouseHoldsCount.setText("-");
 
-        allVcasCount = findViewById(R.id.allVcasNumber);
-        allDueVisits = findViewById(R.id.due_visits);
-        dueCardview = findViewById(R.id.due_card_view);
-        lastUpdated = findViewById(R.id.last_updated);
-        facilityName = findViewById(R.id.dash_facility_name);
-        loadingDataProgressBar = findViewById(R.id.dash_progressbar);
-        facilityInformationSwitch = findViewById(R.id.information_switch);
-        allHouseHoldsCount = findViewById(R.id.allHouseholdsNumber);
+        allVcasCount = binding.allVcasNumber;
+        allDueVisits = binding.dueVisits;
+        dueCardview = binding.dueCardView;
+        lastUpdated = binding.lastUpdated;
+        facilityName = binding.dashFacilityName;
+        loadingDataProgressBar = binding.dashProgressbar;
+        facilityInformationSwitch = binding.informationSwitch;
+        allHouseHoldsCount = binding.allHouseholdsNumber;
         Bundle extras = getIntent().getExtras();
         String username = extras.getString("username");
         String password = extras.getString("password");
@@ -141,7 +140,25 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
         colors = new ArrayList<Integer>();
 
         appUpdater = new AppUpdater(DashboardActivity.this);
-        appUpdater.start();
+        UpdateManager.startOnce(this);
+
+        // ViewModel: observe dashboard state
+        dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
+        dashboardViewModel.getState().observe(this, state -> {
+            if (state == null) return;
+            try {
+                allDueVisits.setText(String.valueOf(state.getVisitsDue()));
+                if (state.getVisitsDue() > 0) allDueVisits.setTextColor(Color.RED);
+                BarData data = dataForBarchart(state.getSubpops());
+                configureChartAppearance();
+                prepareChartData(data);
+                allHouseHoldsCount = binding.allHouseholdsNumber;
+                allHouseHoldsCount.setText(state.getHouseholdsCount() != null ? state.getHouseholdsCount() : "0");
+                allVcasCount.setText(state.getVcasCount());
+                if (state.getLastUpdated() != null) lastUpdated.setText(String.valueOf(dtf.format(state.getLastUpdated())));
+                loadingDataProgressBar.setVisibility(View.INVISIBLE);
+            } catch (Exception ignored) {}
+        });
 
         colors.add(Color.parseColor("#9B51E0"));
         colors.add(Color.parseColor("#E84AE0"));
@@ -168,8 +185,8 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
 
 
         loadingDataProgressBar.setVisibility(View.VISIBLE);
-        allHouseHoldsCount.setText(HouseholdDao.countNumberoFHouseholds());
-        // loadData();
+        // Kick off initial async load and schedule periodic refreshes
+        loadData();
         refreshData();
         facilityName.setText(facility);
         facilityInformationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -321,6 +338,28 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
 
     }
 
+    // Overload using lightweight date strings
+    private int getDueVisitsFromDates(List<String> visitDates) {
+        int dueVisits = 0;
+        DateTimeFormatter formatter = formatDateByPattern("dd-MM-u");
+        if (visitDates != null) {
+            for (int i = 0; i < visitDates.size(); i++) {
+                String d = visitDates.get(i);
+                if (d != null && !d.isEmpty()) {
+                    try {
+                        LocalDate localDate = LocalDate.parse(d, formatter);
+                        LocalDate today = LocalDate.now();
+                        Period p = getPeriodBetweenDateOfVisitAndNow(localDate, today);
+                        if (p.getDays() < 1) dueVisits++;
+                    } catch (Exception ignore) {
+                        // Skip badly formatted dates
+                    }
+                }
+            }
+        }
+        return dueVisits;
+    }
+
 
     public DateTimeFormatter formatDateByPattern(String pattern)
     {
@@ -389,33 +428,11 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
 
 
 
-    public void loadData()
-    {
-        localTime = LocalTime.now();
-        // allChildren = IndexPersonDao.getAllChildrenSubpops();
-        int visitsDue = getDueVisits(CaregiverVisitationDao.countAllVisits());
-
-        // int subPop = Collections.max(countSubpop(IndexPersonDao.getAllChildrenSubpops()));
-        allDueVisits.setText(String.valueOf(visitsDue));
-
-
-        if(visitsDue > 0 )
-        {
-            allDueVisits.setTextColor(Color.RED);
-
-        }
-        //BarData data = createChartData();
-        BarData data = dataForBarchart(countSubpop(IndexPersonDao.getAllChildrenSubpops()));
-        configureChartAppearance();
-        prepareChartData(data);
-        allHouseHoldsCount = findViewById(R.id.allHouseholdsNumber);
-        loadingDataProgressBar.setVisibility(View.INVISIBLE);
-        allHouseHoldsCount.setText(HouseholdDao.countNumberoFHouseholds());
-        allVcasCount.setText(IndexPersonDao.countAllChildren());
-        lastUpdated.setText(String.valueOf(dtf.format(localTime)));
-
-        appUpdater.start();
-
+    public void loadData() {
+        loadingDataProgressBar.setVisibility(View.VISIBLE);
+        // Delegate to ViewModel (all-CHW view)
+        dashboardViewModel.refresh(null);
+        // AppUpdater is started in onCreate
     }
 
     private void getCreds(String token){
@@ -560,27 +577,9 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
     }
 
     public void loadCaseworkerData(){
-        localTime = LocalTime.now();
-        // allChildren = IndexPersonDao.getAllChildrenSubpops();
-        int visitsDue = getDueVisits(CaregiverVisitationDao.countAllVisits());
-
-        // int subPop = Collections.max(countSubpop(IndexPersonDao.getAllChildrenSubpops()));
-        allDueVisits.setText(String.valueOf(visitsDue));
-
-
-        if(visitsDue > 0 )
-        {
-            allDueVisits.setTextColor(Color.RED);
-
-        }
-        //BarData data = createChartData();
-        BarData data = dataForBarchart(countSubpop(IndexPersonDao.getAllChildrenSubpopsByCaseworkerPhoneNumber(phone)));
-        configureChartAppearance();
-        prepareChartData(data);
-        allHouseHoldsCount.setText(HouseholdDao.countNumberOfHouseholdsByCaseworkerPhone(phone));
-        allVcasCount.setText(IndexPersonDao.countAllChildrenByCaseworkerPhoneNumber(phone));
-        loadingDataProgressBar.setVisibility(View.INVISIBLE);
-        lastUpdated.setText(String.valueOf(dtf.format(localTime)));
+        loadingDataProgressBar.setVisibility(View.VISIBLE);
+        // Delegate to ViewModel (filtered by caseworker phone)
+        dashboardViewModel.refresh(phone);
     }
 
     @Override
@@ -601,7 +600,7 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
 
                 csvGenerator.generateCSVWithProgress(this, presenter, () ->
                         showCustomDialog(DashboardActivity.this,
-                                "CSV files have been generated. You can find them in the device's file folder."));
+                                getString(R.string.csv_generated_location, getString(R.string.app_name))));
                 break;
         }
         return super.onOptionsItemSelected(item);

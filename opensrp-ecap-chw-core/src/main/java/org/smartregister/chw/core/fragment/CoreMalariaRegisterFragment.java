@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
@@ -45,6 +47,45 @@ public abstract class CoreMalariaRegisterFragment extends BaseMalariaRegisterFra
         clientAdapter = new RecyclerViewPaginatedAdapter(null, malariaRegisterProvider, context().commonrepository(this.tablename));
         clientAdapter.setCurrentlimit(20);
         clientsView.setAdapter(clientAdapter);
+    }
+
+    // Defensive ActionBar setup to avoid NPE in base
+    protected void setUpActionBar() {
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        if (activity == null) return;
+        ActionBar actionBar = activity.getSupportActionBar();
+        if (actionBar == null) {
+            View root = getView();
+            if (root != null) {
+                Toolbar toolbar = root.findViewById(org.smartregister.R.id.register_toolbar);
+                if (toolbar != null) {
+                    activity.setSupportActionBar(toolbar);
+                    actionBar = activity.getSupportActionBar();
+                }
+            }
+        }
+        if (actionBar != null) {
+            actionBar.setTitle("");
+            actionBar.setDisplayHomeAsUpEnabled(false);
+        }
+    }
+
+    // Variant with root view passed in
+    protected void setUpActionBar(View view) {
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        if (activity == null) return;
+        ActionBar actionBar = activity.getSupportActionBar();
+        if (actionBar == null && view != null) {
+            Toolbar toolbar = view.findViewById(org.smartregister.R.id.register_toolbar);
+            if (toolbar != null) {
+                activity.setSupportActionBar(toolbar);
+                actionBar = activity.getSupportActionBar();
+            }
+        }
+        if (actionBar != null) {
+            actionBar.setTitle("");
+            actionBar.setDisplayHomeAsUpEnabled(false);
+        }
     }
 
     @Override
@@ -90,7 +131,7 @@ public abstract class CoreMalariaRegisterFragment extends BaseMalariaRegisterFra
         dueOnlyLayout.setOnClickListener(registerActionHandler);
 
         if (getSearchView() != null) {
-            getSearchView().setBackgroundResource(org.smartregister.family.R.color.white);
+            getSearchView().setBackgroundResource(org.smartregister.chw.core.R.color.white);
             getSearchView().setCompoundDrawablesWithIntrinsicBounds(org.smartregister.family.R.drawable.ic_action_search, 0, 0, 0);
             getSearchView().setTextColor(getResources().getColor(R.color.text_black));
         }
@@ -278,5 +319,3 @@ public abstract class CoreMalariaRegisterFragment extends BaseMalariaRegisterFra
     }
 
 }
-
-

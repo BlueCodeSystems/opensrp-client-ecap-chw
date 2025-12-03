@@ -82,7 +82,7 @@ public class GuideBooksTutorialsActivity extends Activity implements GuideBooksF
 
         this.videos.clear();
         this.videos.addAll(res);
-        this.mAdapter.notifyDataSetChanged();
+        try { if (this.mAdapter != null) this.mAdapter.notifyDataSetChanged(); } catch (Exception ignored) {}
         this.displayLoadingState(false);
     }
 

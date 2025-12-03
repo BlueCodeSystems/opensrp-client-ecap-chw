@@ -17,8 +17,9 @@ public class DatabaseMigrationUtils extends AbstractDao {
     public static void fillFamilyMemberLocationTableWithProviderIds(SQLiteDatabase db) {
         ArrayList<String> submissionsIds = getFormSubmissionsIds(db);
         ArrayList<String> jsonLists = getJSONLists(db, submissionsIds);
-        if (db != null && db.isOpen())
+        if (db != null && db.isOpen() && !jsonLists.isEmpty()) {
             db.rawExecSQL(buildUpdateQuery(jsonLists));
+        }
     }
 
     public static String buildUpdateQuery(ArrayList<String> jsonLists) {

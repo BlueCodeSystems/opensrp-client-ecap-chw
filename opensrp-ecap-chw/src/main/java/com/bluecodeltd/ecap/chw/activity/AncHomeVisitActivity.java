@@ -51,7 +51,7 @@ public class AncHomeVisitActivity extends BaseAncHomeVisitActivity {
     public void startFormActivity(JSONObject jsonForm) {
 
         Form form = new Form();
-        form.setActionBarBackground(org.smartregister.family.R.color.family_actionbar);
+        form.setActionBarBackground(com.bluecodeltd.ecap.chw.R.color.family_actionbar);
         form.setWizard(false);
 
         Intent intent = new Intent(this, Utils.metadata().familyMemberFormActivity);

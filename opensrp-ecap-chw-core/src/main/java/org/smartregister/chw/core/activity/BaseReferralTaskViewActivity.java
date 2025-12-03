@@ -221,7 +221,7 @@ public abstract class BaseReferralTaskViewActivity extends SecuredActivity {
     }
 
     protected void inflateToolbar() {
-        Toolbar toolbar = findViewById(org.smartregister.chw.referral.R.id.back_referrals_toolbar);
+        Toolbar toolbar = findViewById(R.id.back_referrals_toolbar);
         CustomFontTextView toolBarTextView = toolbar.findViewById(R.id.toolbar_title);
         setSupportActionBar(toolbar);
 
@@ -229,7 +229,7 @@ public abstract class BaseReferralTaskViewActivity extends SecuredActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             final Drawable upArrow = getResources().getDrawable(R.drawable.ic_arrow_white_24);
-            upArrow.setColorFilter(getResources().getColor(org.smartregister.R.color.text_blue), PorterDuff.Mode.SRC_ATOP);
+            upArrow.setColorFilter(getResources().getColor(R.color.text_blue), PorterDuff.Mode.SRC_ATOP);
             actionBar.setHomeAsUpIndicator(upArrow);
             actionBar.setElevation(0);
         }
@@ -237,10 +237,10 @@ public abstract class BaseReferralTaskViewActivity extends SecuredActivity {
         toolbar.setNavigationOnClickListener(v -> finish());
 
         if (getStartingActivity().equals(CoreConstants.REGISTERED_ACTIVITIES.REFERRALS_REGISTER_ACTIVITY)) {
-            toolBarTextView.setText(org.smartregister.chw.referral.R.string.back_to_referrals);
+            toolBarTextView.setText(R.string.back_to_referrals);
         } else {
             if (TextUtils.isEmpty(name)) {
-                toolBarTextView.setText(org.smartregister.chw.referral.R.string.back_to_referrals);
+                toolBarTextView.setText(R.string.back_to_referrals);
             } else {
                 toolBarTextView.setText(getString(R.string.return_to, name));
             }

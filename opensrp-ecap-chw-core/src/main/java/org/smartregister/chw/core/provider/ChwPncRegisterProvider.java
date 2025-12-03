@@ -27,7 +27,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Set;
 
-import provider.PncRegisterProvider;
+import org.smartregister.pnc.holder.PncRegisterViewHolder;
+import org.smartregister.pnc.provider.PncRegisterProvider;
 import timber.log.Timber;
 
 public class ChwPncRegisterProvider extends PncRegisterProvider {
@@ -36,13 +37,13 @@ public class ChwPncRegisterProvider extends PncRegisterProvider {
     private View.OnClickListener onClickListener;
 
     public ChwPncRegisterProvider(Context context, CommonRepository commonRepository, Set visibleColumns, View.OnClickListener onClickListener, View.OnClickListener paginationClickListener) {
-        super(context, commonRepository, visibleColumns, onClickListener, paginationClickListener);
+        super(context, onClickListener, paginationClickListener);
         this.context = context;
         this.onClickListener = onClickListener;
     }
 
     @Override
-    public void getView(Cursor cursor, SmartRegisterClient client, RegisterViewHolder viewHolder) {
+    public void getView(Cursor cursor, SmartRegisterClient client, PncRegisterViewHolder viewHolder) {
         super.getView(cursor, client, viewHolder);
 
         viewHolder.dueButton.setVisibility(View.GONE);
@@ -51,7 +52,7 @@ public class ChwPncRegisterProvider extends PncRegisterProvider {
         Utils.startAsyncTask(new UpdateAsyncTask(context, viewHolder, pc), null);
     }
 
-    private void updateDueColumn(Context context, RegisterViewHolder viewHolder, PncVisitAlertRule pncVisitAlertRule) {
+    private void updateDueColumn(Context context, PncRegisterViewHolder viewHolder, PncVisitAlertRule pncVisitAlertRule) {
         viewHolder.dueButton.setVisibility(View.VISIBLE);
         if (pncVisitAlertRule.getButtonStatus().equalsIgnoreCase(CoreConstants.VISIT_STATE.DUE)) {
             setVisitButtonDueStatus(context, pncVisitAlertRule.getVisitID(), viewHolder.dueButton);
@@ -63,35 +64,35 @@ public class ChwPncRegisterProvider extends PncRegisterProvider {
     }
 
     private void setVisitButtonDueStatus(Context context, String visitDue, Button dueButton) {
-        dueButton.setTextColor(context.getResources().getColor(org.smartregister.R.color.alert_in_progress_blue));
+        dueButton.setTextColor(context.getResources().getColor(R.color.alert_in_progress_blue));
         dueButton.setText(context.getString(R.string.pnc_visit_day_due, visitDue));
         dueButton.setBackgroundResource(R.drawable.blue_btn_selector);
         dueButton.setOnClickListener(onClickListener);
     }
 
     private void setVisitButtonOverdueStatus(Context context, String visitDue, Button dueButton) {
-        dueButton.setTextColor(context.getResources().getColor(org.smartregister.R.color.white));
+        dueButton.setTextColor(context.getResources().getColor(R.color.white));
         dueButton.setText(context.getString(R.string.pnc_visit_day_overdue, visitDue));
         dueButton.setBackgroundResource(R.drawable.overdue_red_btn_selector);
         dueButton.setOnClickListener(onClickListener);
     }
 
     private void setVisitDone(Context context, Button dueButton) {
-        dueButton.setTextColor(context.getResources().getColor(org.smartregister.R.color.alert_complete_green));
+        dueButton.setTextColor(context.getResources().getColor(R.color.alert_complete_green));
         dueButton.setText(context.getString(R.string.visit_done));
-        dueButton.setBackgroundColor(context.getResources().getColor(org.smartregister.R.color.transparent));
+        dueButton.setBackgroundColor(context.getResources().getColor(R.color.transparent));
         dueButton.setOnClickListener(null);
     }
 
     private class UpdateAsyncTask extends AsyncTask<Void, Void, Void> {
-        private final RegisterViewHolder viewHolder;
+        private final PncRegisterViewHolder viewHolder;
         private final CommonPersonObjectClient pc;
         private final Context context;
 
         private final Rules rules;
         private PncVisitAlertRule pncVisitAlertRule;
 
-        private UpdateAsyncTask(Context context, RegisterViewHolder viewHolder, CommonPersonObjectClient pc) {
+        private UpdateAsyncTask(Context context, PncRegisterViewHolder viewHolder, CommonPersonObjectClient pc) {
             this.context = context;
             this.viewHolder = viewHolder;
             this.pc = pc;

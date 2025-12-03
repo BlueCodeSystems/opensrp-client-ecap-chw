@@ -2,6 +2,8 @@ package com.bluecodeltd.ecap.chw.fragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,57 +19,77 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HouseholdDetails;
 import com.bluecodeltd.ecap.chw.adapter.CaregiverVisitAdapter;
 import com.bluecodeltd.ecap.chw.dao.CaregiverVisitationDao;
+import androidx.lifecycle.ViewModelProvider;
+import com.bluecodeltd.ecap.chw.viewmodel.HouseholdVisitsViewModel;
 import com.bluecodeltd.ecap.chw.model.CaregiverVisitationModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 public class HouseholdVisitsFragment extends Fragment {
 
+    private com.bluecodeltd.ecap.chw.databinding.FragmentChildvisitsBinding binding;
+
     private RecyclerView recyclerView;
     RecyclerView.Adapter recyclerViewadapter;
-    private ArrayList<CaregiverVisitationModel> visitList = new ArrayList<>();
+    private final ArrayList<CaregiverVisitationModel> visitList = new ArrayList<>();
     private LinearLayout linearLayout;
-    View vieww;
-
+    // Use centralized Threading
 
     @SuppressLint("MissingInflatedId")
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View vieww = inflater.inflate(R.layout.fragment_housevisits, container, false);
+        // Actual layout used is fragment_childvisits (second inflation took effect previously)
+        binding = com.bluecodeltd.ecap.chw.databinding.FragmentChildvisitsBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 
-        vieww = inflater.inflate(R.layout.fragment_childvisits, container, false);
-
-        HashMap<String, Household> mymap = ( (HouseholdDetails) requireActivity()).getData();
+        HashMap<String, Household> mymap = ((HouseholdDetails) requireActivity()).getData();
         Household house = mymap.get("house");
-        String houseId = house.getHousehold_id();
+        String houseId = house != null ? house.getHousehold_id() : null;
 
-        recyclerView = vieww.findViewById(R.id.visitrecyclerView);
-        linearLayout = vieww.findViewById(R.id.visit_container);
+        recyclerView = binding.visitrecyclerView;
+        linearLayout = binding.visitContainer;
 
         visitList.clear();
 
-        visitList.addAll(CaregiverVisitationDao.getVisitsByID(houseId));
+        // subtle loading indicator
+        View progress = binding.progressLoading;
+        if (progress != null) progress.setVisibility(View.VISIBLE);
+        linearLayout.setVisibility(View.GONE);
 
-        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(eLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new CaregiverVisitAdapter(visitList, getContext());
-        recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
+        HouseholdVisitsViewModel vm = new ViewModelProvider(this).get(HouseholdVisitsViewModel.class);
+        vm.getVisits().observe(getViewLifecycleOwner(), list -> {
+            if (!isAdded() || list == null) return;
+            RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(eLayoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            visitList.clear();
+            visitList.addAll(list);
+            recyclerViewadapter = new CaregiverVisitAdapter(visitList, getContext());
+            recyclerView.setAdapter(recyclerViewadapter);
+            recyclerViewadapter.notifyDataSetChanged();
 
-        if (recyclerViewadapter.getItemCount() > 0){
-
-            linearLayout.setVisibility(View.GONE);
+            if (recyclerViewadapter.getItemCount() > 0) {
+                linearLayout.setVisibility(View.GONE);
+            } else {
+                linearLayout.setVisibility(View.VISIBLE);
+            }
+            if (progress != null) progress.setVisibility(View.GONE);
+        });
+        if (houseId != null) {
+            vm.refresh(houseId);
         }
 
-
-        return vieww;
-
-
+        return view;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 }

@@ -54,17 +54,22 @@ public class HouseholdDao extends AbstractDao {
 
     }
     public static boolean hasNonNullSubPopulationByVCA(String uniqueID) {
-
-        String sql = "SELECT hh.other_subpopulation " +
+        // Check the household sub_population column exists and has a non-null value for the index client
+        String sql = "SELECT hh.sub_population AS sub_population " +
                 "FROM ec_client_index AS ci " +
                 "INNER JOIN ec_household AS hh " +
                 "ON ci.household_id = hh.household_id " +
-                "WHERE ci.index_check_box = '1' AND  ci.unique_id = '" + uniqueID + "' AND hh.other_subpopulation IS NOT NULL " +
+                "WHERE ci.index_check_box = '1' AND ci.unique_id = '" + uniqueID + "' AND hh.sub_population IS NOT NULL " +
                 "LIMIT 1";
 
-        List<Household> values = AbstractDao.readData(sql, getHouseholdMap());
-
-        return (values != null && !values.isEmpty());
+        try {
+            AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "sub_population");
+            List<String> values = AbstractDao.readData(sql, dataMap);
+            return values != null && !values.isEmpty();
+        } catch (Exception e) {
+            // Column may be missing on older schemas; be resilient and report false
+            return false;
+        }
     }
 
     public static void deleteRecordfromSearch (String hhId, String id, List<Child> children) {

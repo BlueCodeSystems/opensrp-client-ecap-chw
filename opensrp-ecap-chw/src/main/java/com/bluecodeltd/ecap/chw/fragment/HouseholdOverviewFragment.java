@@ -34,6 +34,8 @@ import java.util.regex.Pattern;
 
 public class HouseholdOverviewFragment extends Fragment {
 
+    private com.bluecodeltd.ecap.chw.databinding.FragmentHouseholdOverviewBinding binding;
+
 
     TextView housetitle, txtIncome, txtIncomeSource, txtBeds, txtGpsLocation,txtMalaria, txtMalesLessThanFive, txtFemales, txtNumber, txtName,txtPhone, txtDate,txtEdited_by,txtMalesBetweenTenAndSeventeen,txtDateStartedArt, txtVlLastDate, txtVlResult, txtRecentVLResult, txtIsSuppressed, txtNextVl, txtIsMMD,txtRecentMMD, txtOnART, txtArtNumber, txtLevelMMD;
     LinearLayout linearLayout, muacView;
@@ -54,54 +56,57 @@ public class HouseholdOverviewFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_household_overview, container, false);
+        binding = com.bluecodeltd.ecap.chw.databinding.FragmentHouseholdOverviewBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 
-        housetitle = view.findViewById(R.id.overview_section_header);
-        txtIncome = view.findViewById(R.id.income);
-        txtIncomeSource = view.findViewById(R.id.income_source);
-        txtBeds = view.findViewById(R.id.beds);
-        //txtMalaria = view.findViewById(R.id.malaria);
-        txtMalesLessThanFive = view.findViewById(R.id.males);
-        txtFemalesLessThanFive = view.findViewById(R.id.females);
-        //txtFemales = view.findViewById(R.id.females);
-        txtName = view.findViewById(R.id.emergency_name);
-        txtNumber = view.findViewById(R.id.emergency_number);
-        txtPhone = view.findViewById(R.id.h_phone);
-        txtDate  = view.findViewById(R.id.h_date);
-        signatureIV = view.findViewById(R.id.signature_view);
-        txtEdited_by = view.findViewById(R.id.h_edited_by);
-        txtMalesBetweenTenAndSeventeen = view.findViewById(R.id.malesBetweenTenAndSeventeen);
-        txtFemalesBetweenTenAndSeventeen = view.findViewById(R.id.femalesBetweenTenAndSeventeen);
-        linearLayout = view.findViewById(R.id.llayout);
-        muacView = view.findViewById(R.id.muac_warning);
-        screenBtn = view.findViewById(R.id.screenBtn);
+        housetitle = binding.overviewSectionHeader;
+        txtIncome = binding.income;
+        txtIncomeSource = binding.incomeSource;
+        txtBeds = binding.beds;
+        // txtMalaria not used currently
+        txtMalesLessThanFive = binding.males;
+        txtFemalesLessThanFive = binding.females;
+        txtName = binding.emergencyName;
+        txtNumber = binding.emergencyNumber;
+        txtPhone = binding.hPhone;
+        txtDate  = binding.hDate;
+        signatureIV = binding.signatureView;
+        txtEdited_by = binding.hEditedBy;
+        txtMalesBetweenTenAndSeventeen = binding.malesBetweenTenAndSeventeen;
+        txtFemalesBetweenTenAndSeventeen = binding.femalesBetweenTenAndSeventeen;
+        linearLayout = binding.llayout;
+        muacView = binding.muacWarning;
+        screenBtn = binding.screenBtn;
 
-        txtOnART = view.findViewById(R.id.is_art);
-        txtArtNumber = view.findViewById(R.id.art_number);
-        txtDateStartedArt = view.findViewById(R.id.art_date);
-        txtVlLastDate = view.findViewById(R.id.date_last_vl);
-        txtVlResult = view.findViewById(R.id.last_vl_result);
-        txtRecentVLResult = view.findViewById(R.id.recent_vl_result);
-        txtIsSuppressed = view.findViewById(R.id.vl_suppressed);
-        txtNextVl = view.findViewById(R.id.next_vl_test);
-        txtIsMMD = view.findViewById(R.id.on_mmd);
-        txtLevelMMD = view.findViewById(R.id.mmd_level);
-        txtRecentMMD = view.findViewById(R.id.recent_mmd_level);
+        txtOnART = binding.isArt;
+        txtArtNumber = binding.artNumber;
+        txtDateStartedArt = binding.artDate;
+        txtVlLastDate = binding.dateLastVl;
+        txtVlResult = binding.lastVlResult;
+        txtRecentVLResult = binding.recentVlResult;
+        txtIsSuppressed = binding.vlSuppressed;
+        txtNextVl = binding.nextVlTest;
+        txtIsMMD = binding.onMmd;
+        txtLevelMMD = binding.mmdLevel;
+        txtRecentMMD = binding.recentMmdLevel;
 
-        relativeLayout = view.findViewById(R.id.myview);
-        layout = view.findViewById(R.id.mylayout);
-        arrowButton = view.findViewById(R.id.arrow_button);
-
-
+        relativeLayout = binding.myview;
+        layout = binding.mylayout;
+        arrowButton = binding.arrowButton;
 
         fab = getActivity().findViewById(R.id.fabx);
-        txtGpsLocation = view.findViewById(R.id.gps_location);
-
+        txtGpsLocation = binding.gpsLocation;
 
         setViews();
 
         return view;
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     private void setImageViewFromBase64(String base64Str, ImageView imageView) {
@@ -326,6 +331,16 @@ public class HouseholdOverviewFragment extends Fragment {
             linearLayout.setVisibility(View.GONE);
 
         }
+    }
+
+    // Public method to refresh the UI from Activity without re-adding the fragment
+    public void refreshData() {
+        if (!isAdded()) return;
+        // Ensure view/binding is available
+        if (binding == null) return;
+        try {
+            setViews();
+        } catch (Exception ignored) { }
     }
 
     public static String formatGpsCoordinates(String location) {

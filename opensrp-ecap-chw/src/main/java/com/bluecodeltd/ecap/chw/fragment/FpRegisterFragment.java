@@ -9,6 +9,7 @@ import com.bluecodeltd.ecap.chw.presenter.FpRegisterFragmentPresenter;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 
 public class FpRegisterFragment extends CoreFpRegisterFragment {
+    private com.bluecodeltd.ecap.chw.databinding.FragmentBaseRegisterBinding binding;
 
     @Override
     protected void initializePresenter() {
@@ -29,6 +30,25 @@ public class FpRegisterFragment extends CoreFpRegisterFragment {
     }
 
 
-}
+    @Override
+    public void setupViews(android.view.View view) {
+        try { binding = com.bluecodeltd.ecap.chw.databinding.FragmentBaseRegisterBinding.bind(view); } catch (Throwable ignored) {}
+        super.setupViews(view);
+        try {
+            if (clientsView == null && binding != null && binding.recyclerView != null) {
+                clientsView = binding.recyclerView;
+                if (clientsView.getLayoutManager() == null && getContext() != null) {
+                    clientsView.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(getContext()));
+                }
+                clientsView.setHasFixedSize(true);
+            }
+        } catch (Exception ignored) { }
+    }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+}
 

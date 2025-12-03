@@ -38,7 +38,7 @@ public class PinLoginActivity extends AppCompatActivity implements PinViewContra
 
     private void switchToFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.content, fragment)
+                .replace(R.id.content, fragment)
                 .commit();
     }
 

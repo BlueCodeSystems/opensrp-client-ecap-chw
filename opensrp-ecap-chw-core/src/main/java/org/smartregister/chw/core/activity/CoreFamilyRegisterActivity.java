@@ -27,7 +27,12 @@ public abstract class CoreFamilyRegisterActivity extends BaseFamilyRegisterActiv
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Ensure an ActionBar exists to prevent BaseRegisterFragment NPEs
+        setTheme(org.smartregister.chw.core.R.style.FamilyTheme_AppBarOverlay);
         super.onCreate(savedInstanceState);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
         NavigationMenu.getInstance(this, null, null);
     }
 
@@ -62,13 +67,4 @@ public abstract class CoreFamilyRegisterActivity extends BaseFamilyRegisterActiv
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == CoreConstants.RQ_CODE.STORAGE_PERMISIONS && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            NavigationMenu navigationMenu = NavigationMenu.getInstance(this, null, null);
-            if (navigationMenu != null) {
-                navigationMenu.startP2PActivity(this);
-            }
-        }
-    }
 }

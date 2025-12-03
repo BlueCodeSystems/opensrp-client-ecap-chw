@@ -21,6 +21,7 @@ import com.bluecodeltd.ecap.chw.model.Household;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,11 +30,14 @@ import java.util.HashMap;
  */
 public class GraduationAssessmentFragment extends Fragment {
 
+    private com.bluecodeltd.ecap.chw.databinding.FragmentGraduationAssessmentBinding binding;
+
     private RecyclerView recyclerView;
     RecyclerView.Adapter recyclerViewadapter;
     private ArrayList<GraduationModel> assessmentList = new ArrayList<>();
     private LinearLayout linearLayout;
     View vieww;
+    // Use centralized Threading
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -77,35 +81,51 @@ public class GraduationAssessmentFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        vieww = inflater.inflate(R.layout.fragment_graduation_assessment, container, false);
+        binding = com.bluecodeltd.ecap.chw.databinding.FragmentGraduationAssessmentBinding.inflate(inflater, container, false);
+        vieww = binding.getRoot();
 
         HashMap<String, Household> mymap = ( (HouseholdDetails) requireActivity()).getData();
         Household house = mymap.get("house");
         String houseId = house.getHousehold_id();
 
-        recyclerView = vieww.findViewById(R.id.visitrecyclerView);
-        linearLayout = vieww.findViewById(R.id.visit_container);
+        recyclerView = binding.visitrecyclerView;
+        linearLayout = binding.visitContainer;
 
         assessmentList.clear();
-
-        assessmentList.addAll(GraduationDao.getAssessment(houseId));
-
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerViewadapter = new GraduationAssessmentAdapter( getContext(), assessmentList);
         recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
 
-        if (recyclerViewadapter.getItemCount() > 0){
+        View progress = binding.progressLoading;
+        if (progress != null) progress.setVisibility(View.VISIBLE);
 
-            linearLayout.setVisibility(View.GONE);
-        }
+        Threading.io(() -> {
+            ArrayList<GraduationModel> results = new ArrayList<>(GraduationDao.getAssessment(houseId));
+            Threading.main(() -> {
+                if (!isAdded()) return;
+                assessmentList.clear();
+                assessmentList.addAll(results);
+                try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
+                if (recyclerViewadapter.getItemCount() > 0){
+                    linearLayout.setVisibility(View.GONE);
+                } else {
+                    linearLayout.setVisibility(View.VISIBLE);
+                }
+                if (progress != null) progress.setVisibility(View.GONE);
+            });
+        });
 
 
         return vieww;
 
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 }

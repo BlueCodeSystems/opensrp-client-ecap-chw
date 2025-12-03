@@ -31,13 +31,13 @@
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbarx"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="?attr/actionBarSize"
                     android:background="#696969"
                     app:theme="@style/ThemeOverlay.AppCompat.Light"
                     app:layout_collapseMode="pin" />
 
                 <LinearLayout
-                    android:layout_marginTop="56dp"
+                    android:layout_marginTop="?attr/actionBarSize"
                     android:id="@+id/profile_name_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -128,6 +128,14 @@
                 android:id="@+id/hhrecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
+            <ProgressBar
+                android:id="@+id/progress_loading"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:id="@+id/service_container"

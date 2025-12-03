@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_register"
+        android:enabled="true"
+        android:icon="@mipmap/ic_add_family"
+        android:title="@string/add_family"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_register_index"
+        android:enabled="true"
+        android:icon="@mipmap/ic_add_family"
+        android:title="@string/add_index"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_reports"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_event_note_24"
+        android:title="@string/reports"
+        app:showAsAction="ifRoom" />
+</menu>
+

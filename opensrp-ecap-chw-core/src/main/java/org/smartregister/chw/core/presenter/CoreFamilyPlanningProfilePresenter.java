@@ -19,7 +19,7 @@ import java.lang.ref.WeakReference;
 
 import timber.log.Timber;
 
-public class CoreFamilyPlanningProfilePresenter extends BaseFpProfilePresenter implements CoreFamilyPlanningMemberProfileContract.Presenter, FamilyProfileContract.InteractorCallBack {
+public class CoreFamilyPlanningProfilePresenter extends BaseFpProfilePresenter implements FamilyProfileContract.InteractorCallBack {
     private BaseFpProfileContract.Interactor interactor;
     private WeakReference<BaseFpProfileContract.View> view;
     private FormUtils formUtils;
@@ -32,25 +32,29 @@ public class CoreFamilyPlanningProfilePresenter extends BaseFpProfilePresenter i
         this.fpMemberObject = fpMemberObject;
     }
 
-    @Override
     public void createReferralEvent(AllSharedPreferences allSharedPreferences, String jsonString) throws Exception {
         ((CoreFamilyPlanningMemberProfileContract.Interactor) interactor).createReferralEvent(allSharedPreferences, jsonString, fpMemberObject.getBaseEntityId());
     }
 
-    @Override
     @Nullable
-    public CoreFamilyPlanningMemberProfileContract.View getView() {
+    private CoreFamilyPlanningMemberProfileContract.View getCoreView() {
         if (view != null) {
-            return (CoreFamilyPlanningMemberProfileContract.View) view.get();
-        } else {
-            return null;
+            try {
+                return (CoreFamilyPlanningMemberProfileContract.View) view.get();
+            } catch (ClassCastException e) {
+                Timber.e(e);
+                return null;
+            }
         }
+        return null;
     }
 
-    @Override
     public void startFamilyPlanningReferral() {
         try {
-            getView().startFormActivity(getFormUtils().getFormJson(CoreConstants.JSON_FORM.getFamilyPlanningReferralForm(fpMemberObject.getGender())), fpMemberObject);
+            CoreFamilyPlanningMemberProfileContract.View v = getCoreView();
+            if (v != null) {
+                v.startFormActivity(getFormUtils().getFormJson(CoreConstants.JSON_FORM.getFamilyPlanningReferralForm(fpMemberObject.getGender())), fpMemberObject);
+            }
         } catch (Exception e) {
             Timber.e(e);
         }

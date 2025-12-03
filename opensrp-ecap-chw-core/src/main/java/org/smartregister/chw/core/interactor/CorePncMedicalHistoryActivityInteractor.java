@@ -9,6 +9,9 @@ import org.smartregister.chw.anc.util.VisitUtils;
 import org.smartregister.chw.core.dao.PNCDao;
 import org.smartregister.chw.core.dao.VisitDao;
 import org.smartregister.chw.core.model.ChildModel;
+import androidx.annotation.VisibleForTesting;
+
+import org.smartregister.chw.anc.util.AppExecutors;
 import org.smartregister.chw.pnc.contract.BasePncMedicalHistoryContract;
 import org.smartregister.chw.pnc.interactor.BasePncMedicalHistoryInteractor;
 
@@ -18,6 +21,17 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class CorePncMedicalHistoryActivityInteractor extends BasePncMedicalHistoryInteractor {
+
+    protected final AppExecutors appExecutors;
+
+    public CorePncMedicalHistoryActivityInteractor() {
+        this(new AppExecutors());
+    }
+
+    @VisibleForTesting
+    CorePncMedicalHistoryActivityInteractor(AppExecutors executors) {
+        this.appExecutors = executors;
+    }
 
     @Override
     public void getMemberHistory(final String memberID, final Context context, final BasePncMedicalHistoryContract.InteractorCallBack callBack) {

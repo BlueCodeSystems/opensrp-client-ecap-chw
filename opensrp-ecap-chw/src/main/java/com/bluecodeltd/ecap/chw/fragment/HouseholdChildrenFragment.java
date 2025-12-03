@@ -17,6 +17,9 @@ import com.bluecodeltd.ecap.chw.activity.HouseholdIndexActivity;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.adapter.ChildrenAdapter;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import androidx.lifecycle.ViewModelProvider;
+import com.bluecodeltd.ecap.chw.viewmodel.HouseholdChildrenViewModel;
+import com.bluecodeltd.ecap.chw.viewmodel.HouseholdChildrenState;
 import com.bluecodeltd.ecap.chw.model.CaregiverAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.Household;
@@ -24,20 +27,26 @@ import com.bluecodeltd.ecap.chw.model.Household;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 public class HouseholdChildrenFragment extends Fragment {
+
+    private com.bluecodeltd.ecap.chw.databinding.FragmentChildrenBinding binding;
 
     private RecyclerView recyclerView;
     RecyclerView.Adapter recyclerViewadapter;
     private ArrayList<Child> childList = new ArrayList<>();
     String nutritionWarning, muacScore;
+    private HouseholdChildrenViewModel viewModel;
     CaregiverAssessmentModel caregiverAssessmentModel;
     String houseId;
+    // Use centralized Threading
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_children, container, false);
+        binding = com.bluecodeltd.ecap.chw.databinding.FragmentChildrenBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 
         HashMap<String, Household> mymap = ( (HouseholdDetails) requireActivity()).getData();
         HashMap<String, CaregiverAssessmentModel> vmap = ( (HouseholdDetails) requireActivity()).getVulnerabilities();
@@ -61,11 +70,10 @@ public class HouseholdChildrenFragment extends Fragment {
 
         }
 
-        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView = binding.recyclerView;
+        View progress = binding.progressLoading;
 
         childList.clear();
-
-        childList.addAll(IndexPersonDao.getFamilyChildren(houseId));
 
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);
@@ -73,7 +81,12 @@ public class HouseholdChildrenFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerViewadapter = new ChildrenAdapter(childList, getContext(), muacScore);
         recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
+
+        // ViewModel: observe and refresh
+        viewModel = new ViewModelProvider(this).get(HouseholdChildrenViewModel.class);
+        viewModel.getState().observe(getViewLifecycleOwner(), state -> applyChildrenState(state));
+        if (progress != null) progress.setVisibility(View.VISIBLE);
+        viewModel.refresh(houseId);
 
 
         return view;
@@ -88,14 +101,25 @@ public class HouseholdChildrenFragment extends Fragment {
 
 
     public void reloadChildrenList(String houseId) {
+        View progress2 = (binding != null) ? binding.progressLoading : null;
+        if (progress2 != null) progress2.setVisibility(View.VISIBLE);
+        viewModel.refresh(houseId);
+    }
+
+    private void applyChildrenState(HouseholdChildrenState state) {
+        if (!isAdded() || state == null) return;
         childList.clear();
+        if (state.getChildren() != null) childList.addAll(state.getChildren());
+        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
+        ((HouseholdDetails) requireActivity()).childrenCount = state.getCount();
+        ((HouseholdDetails) requireActivity()).childTabCount.setText(state.getCount());
+        View progress = (binding != null) ? binding.progressLoading : null;
+        if (progress != null) progress.setVisibility(View.GONE);
+    }
 
-        childList.addAll(IndexPersonDao.getFamilyChildren(houseId));
-        recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
-
-       String childrenCount = ((HouseholdDetails) requireActivity()).childrenCount = IndexPersonDao.countChildren(houseId);
-
-        ((HouseholdDetails) requireActivity()).childTabCount.setText(childrenCount);
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

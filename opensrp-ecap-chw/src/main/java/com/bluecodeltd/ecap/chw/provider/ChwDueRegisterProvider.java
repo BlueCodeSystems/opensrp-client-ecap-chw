@@ -116,13 +116,13 @@ public class ChwDueRegisterProvider extends FamilyDueRegisterProvider {
     private void attachPatientOnclickListener(View view, SmartRegisterClient client) {
         view.setOnClickListener(onClickListener);
         view.setTag(client);
-        view.setTag(org.smartregister.family.R.id.VIEW_ID, BaseFamilyProfileMemberFragment.CLICK_VIEW_NORMAL);
+        view.setTag(org.smartregister.chw.core.R.id.VIEW_ID, BaseFamilyProfileMemberFragment.CLICK_VIEW_NORMAL);
     }
 
     private void attachNextArrowOnclickListener(View view, SmartRegisterClient client) {
         view.setOnClickListener(onClickListener);
         view.setTag(client);
-        view.setTag(org.smartregister.family.R.id.VIEW_ID, BaseFamilyProfileMemberFragment.CLICK_VIEW_NEXT_ARROW);
+        view.setTag(org.smartregister.chw.core.R.id.VIEW_ID, BaseFamilyProfileMemberFragment.CLICK_VIEW_NEXT_ARROW);
     }
 
     private void updateDueColumn(RegisterViewHolder viewHolder, String dueDate, String overDueDate) {

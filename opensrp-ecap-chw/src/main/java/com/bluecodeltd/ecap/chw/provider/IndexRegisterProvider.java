@@ -33,12 +33,14 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegisterViewHolder> {
 
     private final Context context;
     private View.OnClickListener onClickListener;
     private View.OnClickListener paginationViewHandler;
+    // Use centralized Threading
 
 
     public IndexRegisterProvider(Context context, View.OnClickListener onClickListener, View.OnClickListener paginationViewHandler) {
@@ -61,21 +63,35 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
         String age = getAge(birthdate);
         String vcaAge = getVcaAge(birthdate);
 
-        int plans = CasePlanDao.checkCasePlan(childId);
+        // Load per-row details asynchronously to avoid UI jank
+        final String rowTag = childId;
+        indexRegisterViewHolder.itemView.setTag(rowTag);
+        Threading.io(() -> {
+            int plans = 0;
+            int visits = 0;
+            String is_index = null;
+            String status = null;
+            String is_screened = null;
+            try { plans = CasePlanDao.checkCasePlan(childId); } catch (Exception ignored) {}
+            try { visits = VcaVisitationDao.countVisits(childId); } catch (Exception ignored) {}
+            try { is_index = IndexPersonDao.checkIndexPerson(BaseEntityId); } catch (Exception ignored) {}
+            try { status = IndexPersonDao.getIndexStatus(BaseEntityId); } catch (Exception ignored) {}
+            try { is_screened = HouseholdDao.checkIfScreened(household_id); } catch (Exception ignored) {}
 
-        int visits = VcaVisitationDao.countVisits(childId);
-
-        String is_index = IndexPersonDao.checkIndexPerson(BaseEntityId);
-
-        String status = IndexPersonDao.getIndexStatus(BaseEntityId);
-
-        String is_screened = HouseholdDao.checkIfScreened(household_id);
-
-
-        indexRegisterViewHolder.setupViews(firstName +" "+lastName, childId, plans, visits, is_index, status, gender, age, is_screened,vcaAge);
-        indexRegisterViewHolder.itemView.setOnClickListener(onClickListener);
-        indexRegisterViewHolder.itemView.findViewById(R.id.index_warning).setOnClickListener(onClickListener);
-        indexRegisterViewHolder.itemView.setTag(smartRegisterClient);
+            final int fPlans = plans;
+            final int fVisits = visits;
+            final String fIsIndex = is_index;
+            final String fStatus = status;
+            final String fIsScreened = is_screened;
+            Threading.main(() -> {
+                Object tag = indexRegisterViewHolder.itemView.getTag();
+                if (!(tag instanceof String) || !rowTag.equals(tag)) return;
+                indexRegisterViewHolder.setupViews(firstName +" "+lastName, childId, fPlans, fVisits, fIsIndex, fStatus, gender, age, fIsScreened, vcaAge);
+                indexRegisterViewHolder.itemView.setOnClickListener(onClickListener);
+                indexRegisterViewHolder.itemView.findViewById(R.id.index_warning).setOnClickListener(onClickListener);
+                indexRegisterViewHolder.itemView.setTag(smartRegisterClient);
+            });
+        });
 
     }
 

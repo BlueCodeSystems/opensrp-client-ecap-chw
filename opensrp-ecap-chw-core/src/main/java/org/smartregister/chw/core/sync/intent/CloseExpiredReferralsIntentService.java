@@ -11,7 +11,6 @@ import org.smartregister.chw.core.utils.ChwDBConstants;
 import org.smartregister.chw.core.utils.CoreConstants;
 import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.chw.core.utils.Utils;
-import org.smartregister.chw.referral.util.DBConstants;
 import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.clientandeventmodel.Obs;
 import org.smartregister.domain.Period;
@@ -62,8 +61,9 @@ public class CloseExpiredReferralsIntentService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         List<Map<String, String>> referredTasks = taskRepository.getReferredTaskEvents();
 
+        final String REFERRAL_APPOINTMENT_DATE_COL = "appointment_date";
         for (Map<String, String> task : referredTasks) {
-            String appointmentDate = task.get(DBConstants.Key.REFERRAL_APPOINTMENT_DATE);
+            String appointmentDate = task.get(REFERRAL_APPOINTMENT_DATE_COL);
             String startDate = task.get(TaskTable.START);
 
             String focus = task.get(ChwDBConstants.TaskTable.FOCUS);
