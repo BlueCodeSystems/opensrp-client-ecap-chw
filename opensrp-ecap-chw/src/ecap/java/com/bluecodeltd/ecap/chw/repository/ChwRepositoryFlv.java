@@ -60,6 +60,51 @@ public class ChwRepositoryFlv {
                 case 8:
                     upgradeToVersion8(db);
                     break;
+                case 9:
+                    upgradeToVersion9(db);
+                    break;
+                case 10:
+                    upgradeToVersion10(db);
+                    break;
+                case 12:
+                    upgradeToVersion12(db);
+                    break;
+                case 13:
+                    upgradeToVersion13(db);
+                    break;
+                case 14:
+                    upgradeToVersion14(db);
+                    break;
+                case 15:
+                    upgradeToVersion15(db);
+                    break;
+                case 16:
+                    upgradeToVersion16(db);
+                    break;
+                case 17:
+                    upgradeToVersion17(db);
+                    break;
+                case 18:
+                    upgradeToVersion18(db);
+                    break;
+                case 19:
+                    upgradeToVersion19(db);
+                    break;
+                case 20:
+                    upgradeToVersion20(db);
+                    break;
+                case 21:
+                    upgradeToVersion21(db);
+                    break;
+                case 22:
+                    upgradeToVersion22(db);
+                    break;
+                case 23:
+                    upgradeToVersion23(context, db);
+                    break;
+                case 24:
+                    upgradeToVersion24(db);
+                    break;
                 default:
                     break;
             }
@@ -751,6 +796,15 @@ public class ChwRepositoryFlv {
             IMDatabaseUtils.accessAssetsAndFillDataBaseForVaccineTypes(context, db);
         } catch (Exception e) {
             Timber.e(e);
+        }
+    }
+
+    private static void upgradeToVersion24(SQLiteDatabase db) {
+        try {
+            com.bluecodeltd.ecap.chw.util.DatabaseMigrationUtils.fillFamilyMemberLocationTableWithProviderIds(db);
+            db.execSQL(RepositoryUtils.EC_FAMILY_MEMBER_LOCATION_PROVIDER_ID_INDEX);
+        } catch (Exception e) {
+            Timber.e(e, "upgradeToVersion24");
         }
     }
 

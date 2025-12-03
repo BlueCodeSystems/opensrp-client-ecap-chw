@@ -7,7 +7,7 @@ import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.chw.fp.util.FpUtil.getClientProcessorForJava;
 import static org.smartregister.family.util.JsonFormUtils.STEP2;
 import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_EXTRA.STEP3;
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.content.Intent;
@@ -20,6 +20,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
@@ -73,6 +75,9 @@ import timber.log.Timber;
 
 public class IndexRegisterActivity extends BaseRegisterActivity implements IndexRegisterContract.View {
 
+    // Local extra key to request compact wizard layout in native form
+    private static final String EXTRA_USE_COMPACT_WIZARD_LAYOUT = "use_compact_wizard_layout";
+
     public String action = null;
     ObjectMapper oMapper;
     ObjectMapper oMapper_hh_screen;
@@ -88,7 +93,35 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        NavigationMenu.getInstance(this, null, null);
+        // Bind toolbar as ActionBar so BaseRegisterFragment can access a non-null ActionBar
+        Toolbar toolbar = findViewById(org.smartregister.R.id.register_toolbar);
+        if (toolbar != null) {
+            if (getSupportActionBar() == null) {
+                try { setSupportActionBar(toolbar); } catch (IllegalStateException ignored) {}
+            }
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
+            }
+            toolbar.setTitle("");
+            TextView titleLabel = toolbar.findViewById(org.smartregister.R.id.txt_title_label);
+            if (titleLabel != null) {
+                titleLabel.setVisibility(View.GONE);
+            }
+            org.smartregister.chw.core.custom_views.NavigationMenu menu = NavigationMenu.getInstance(this, null, toolbar);
+            try {
+                if (menu != null) {
+                    androidx.drawerlayout.widget.DrawerLayout drawer = menu.getDrawer();
+                    androidx.appcompat.graphics.drawable.DrawerArrowDrawable arrow = new androidx.appcompat.graphics.drawable.DrawerArrowDrawable(this);
+                    arrow.setColor(android.graphics.Color.WHITE);
+                    toolbar.setNavigationIcon(arrow);
+                    toolbar.setNavigationOnClickListener(v -> {
+                        if (drawer != null) drawer.openDrawer(androidx.core.view.GravityCompat.START);
+                    });
+                }
+            } catch (Throwable ignored) {}
+        } else {
+            NavigationMenu.getInstance(this, null, null);
+        }
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(IndexRegisterActivity.this);
         String phone = sp.getString("phone", "anonymous");
@@ -131,7 +164,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
 
         } catch (Exception e) {
             Timber.e(e);
-            displayToast(org.smartregister.family.R.string.error_unable_to_start_form);
+            displayToast(R.string.error_unable_to_start_form);
         }
     }
 
@@ -203,8 +236,25 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         }
             Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
             Form form = new Form();
+            // Keep wizard mode, but hide in-form nav and icons to free space
+            form.setWizard(true);
+            try {
+                form.setShowNextInToolbarWhenWizard(true);
+                // Hide bottom navigation buttons and wizard icons to free space
+                form.setHideNextButton(true);
+                form.setHidePreviousButton(true);
+                form.setHideNextIcon(true);
+                form.setHidePreviousIcon(true);
+            } catch (Throwable ignored) { /* compatible with older Form APIs */ }
+            form.setHideSaveLabel(true);
+            form.setNextLabel(getString(R.string.next));
+            form.setPreviousLabel(getString(R.string.previous));
+            form.setSaveLabel(getString(R.string.submit));
+            form.setNavigationBackground(R.color.primary);
             intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
             intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
+            // Ask native form to use compact wizard layout to maximize space (works when using local native-form)
+            intent.putExtra(EXTRA_USE_COMPACT_WIZARD_LAYOUT, true);
             startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
 
     }
@@ -276,8 +326,25 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         }
         Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
         Form form = new Form();
+        // Keep wizard mode, but hide in-form nav and icons to free space
+        form.setWizard(true);
+        try {
+            form.setShowNextInToolbarWhenWizard(true);
+            // Hide bottom navigation buttons and wizard icons to free space
+            form.setHideNextButton(true);
+            form.setHidePreviousButton(true);
+            form.setHideNextIcon(true);
+            form.setHidePreviousIcon(true);
+        } catch (Throwable ignored) { /* compatible with older Form APIs */ }
+        form.setHideSaveLabel(true);
+        form.setNextLabel(getString(R.string.next));
+        form.setPreviousLabel(getString(R.string.previous));
+        form.setSaveLabel(getString(R.string.submit));
+        form.setNavigationBackground(R.color.primary);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
+        // Ask native form to use compact wizard layout to maximize space (works when using local native-form)
+        intent.putExtra(EXTRA_USE_COMPACT_WIZARD_LAYOUT, true);
         startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
 
     }
@@ -318,7 +385,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
                     RegisterParams registerParam = new RegisterParams();
                     registerParam.setEditMode(false);
                     registerParam.setFormTag(OpdJsonFormUtils.formTag(OpdUtils.context().allSharedPreferences()));
-                    showProgressDialog(org.smartregister.family.R.string.saving_dialog_title);
+                    showProgressDialog(R.string.saving_dialog_title);
                     indexRegisterPresenter().saveForm(jsonString, registerParam);
 
                     hid = getFieldJSONObject(fields(jsonFormObject, STEP2), "household_id").optString("value");

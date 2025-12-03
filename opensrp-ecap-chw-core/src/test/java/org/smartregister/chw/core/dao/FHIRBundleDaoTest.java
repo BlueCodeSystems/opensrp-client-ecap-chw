@@ -15,7 +15,7 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.smartregister.chw.core.utils.Utils;
-import org.smartregister.thinkmd.model.FHIRBundleModel;
+import org.bluecodesystems.pulsebridge.model.FHIRBundleModel;
 
 import static org.smartregister.chw.core.dao.ChildDao.getChildProfileData;
 import static org.smartregister.chw.core.dao.VisitDao.getMUACValue;
@@ -60,5 +60,4 @@ public class FHIRBundleDaoTest {
         Assert.assertEquals("Green", MUACValues.getValue());
     }
 }
-
 

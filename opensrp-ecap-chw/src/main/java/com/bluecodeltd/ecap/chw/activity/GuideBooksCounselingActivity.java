@@ -86,7 +86,7 @@ public class GuideBooksCounselingActivity extends Activity implements GuideBooks
 
         this.videos.clear();
         this.videos.addAll(res);
-        this.mAdapter.notifyDataSetChanged();
+        try { if (this.mAdapter != null) this.mAdapter.notifyDataSetChanged(); } catch (Exception ignored) {}
         this.displayLoadingState(false);
     }
 

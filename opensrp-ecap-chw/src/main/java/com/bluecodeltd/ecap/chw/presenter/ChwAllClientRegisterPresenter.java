@@ -9,7 +9,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Triple;
 import org.json.JSONObject;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
-import org.smartregister.chw.core.presenter.CoreAllClientsRegisterPresenter;
+import com.bluecodeltd.ecap.chw.R;
+import org.smartregister.opd.presenter.BaseOpdRegisterActivityPresenter;
 import com.bluecodeltd.ecap.chw.interactor.ChwAllClientsRegisterInteractor;
 import org.smartregister.domain.FetchStatus;
 import org.smartregister.opd.contract.OpdRegisterActivityContract;
@@ -20,7 +21,7 @@ import java.util.List;
 
 import timber.log.Timber;
 
-public class ChwAllClientRegisterPresenter extends CoreAllClientsRegisterPresenter {
+public class ChwAllClientRegisterPresenter extends BaseOpdRegisterActivityPresenter {
 
     public ChwAllClientRegisterPresenter(OpdRegisterActivityContract.View view, OpdRegisterActivityContract.Model model) {
         super(view, model);
@@ -70,7 +71,7 @@ public class ChwAllClientRegisterPresenter extends CoreAllClientsRegisterPresent
     @Override
     public void onNoUniqueId() {
         if (getView() != null)
-            getView().displayShortToast(org.smartregister.family.R.string.no_unique_id);
+            getView().displayShortToast(R.string.no_unique_id);
     }
 
     @Override
@@ -80,7 +81,7 @@ public class ChwAllClientRegisterPresenter extends CoreAllClientsRegisterPresent
                 startForm(triple.getLeft(), entityId, triple.getMiddle(), triple.getRight());
             } catch (Exception e) {
                 Timber.e(e);
-                getView().displayToast(org.smartregister.family.R.string.error_unable_to_start_form);
+                getView().displayToast(R.string.error_unable_to_start_form);
             }
         }
     }

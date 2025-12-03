@@ -97,7 +97,7 @@ public class FragmentBaseActivity extends SecuredActivity {
 
     private void switchToFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.content, fragment)
+                .replace(R.id.content, fragment)
                 .commit();
     }
 

@@ -2,13 +2,14 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -61,6 +62,7 @@ import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
 
 public class HouseholdServicesOnlyActivity extends AppCompatActivity {
+    private com.bluecodeltd.ecap.chw.databinding.ActivityHouseholdServicesOnlyBinding binding;
     private RecyclerView recyclerView;
     RecyclerView.Adapter recyclerViewadapter;
     private ArrayList<HouseholdServiceReportModel> familyServiceList = new ArrayList<>();
@@ -75,34 +77,48 @@ public class HouseholdServicesOnlyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_household_services_only);
-        toolbar = findViewById(R.id.toolbarx);
+        binding = com.bluecodeltd.ecap.chw.databinding.ActivityHouseholdServicesOnlyBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        toolbar = binding.toolbarx;
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         NavigationMenu.getInstance(this, null, toolbar);
 
-        recyclerView = findViewById(R.id.hhrecyclerView);
-        linearLayout = findViewById(R.id.service_container);
-        cname = findViewById(R.id.caregiver_name);
-        hh_id = findViewById(R.id.hhid);
-        updatedCaregiverName = findViewById(R.id.updated_caregiver_name);
+        recyclerView = binding.hhrecyclerView;
+        linearLayout = binding.serviceContainer;
+        cname = binding.caregiverName;
+        hh_id = binding.hhid;
+        updatedCaregiverName = binding.updatedCaregiverName;
 
-        intent_householdId = getIntent().getExtras().getString("householdId");
-        String intent_cname = getIntent().getExtras().getString("cname");
+        Bundle extras = getIntent().getExtras();
+        String intent_cname = null;
+        if (extras != null) {
+            intent_householdId = extras.getString("householdId");
+            intent_cname = extras.getString("cname");
+        }
 
-        updatedCaregiver = newCaregiverDao.getNewCaregiverById(intent_householdId);
+        if (!TextUtils.isEmpty(intent_householdId)) {
+            updatedCaregiver = newCaregiverDao.getNewCaregiverById(intent_householdId);
+        }
 
+        if (!TextUtils.isEmpty(intent_householdId)) {
+            hh_id.setText(intent_householdId);
+        }
+        if (!TextUtils.isEmpty(intent_cname)) {
+            cname.setText(intent_cname);
+        }
 
-        hh_id.setText(intent_householdId);
-        cname.setText(intent_cname);
-
-        if(updatedCaregiver != null && updatedCaregiver.getNew_caregiver_name() != null && !updatedCaregiver.getNew_caregiver_name().isEmpty()) {
+        if(updatedCaregiver != null && !TextUtils.isEmpty(updatedCaregiver.getNew_caregiver_name())) {
             updatedCaregiverName.setVisibility(View.VISIBLE);
             updatedCaregiverName.setText("Current: "+ updatedCaregiver.getNew_caregiver_name()+" Household");
+        } else {
+            updatedCaregiverName.setVisibility(View.GONE);
         }
 
 
-        familyServiceList.addAll(HouseholdServiceReportDao.getServicesForHouseholdOnly(intent_householdId));
+        if (!TextUtils.isEmpty(intent_householdId)) {
+            familyServiceList.addAll(HouseholdServiceReportDao.getServicesForHouseholdOnly(intent_householdId));
+        }
 
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(HouseholdServicesOnlyActivity.this);
         recyclerView.setHasFixedSize(true);
@@ -110,7 +126,7 @@ public class HouseholdServicesOnlyActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerViewadapter = new HouseholdServicesOnlyAdapter(familyServiceList, HouseholdServicesOnlyActivity.this);
         recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
+        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
 
         if (recyclerViewadapter.getItemCount() > 0){
 
@@ -122,7 +138,7 @@ public class HouseholdServicesOnlyActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
+        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -262,7 +278,7 @@ public class HouseholdServicesOnlyActivity extends AppCompatActivity {
         familyServiceList.clear();
         List<HouseholdServiceReportModel> updatedList = HouseholdServiceReportDao.getServicesByHousehold(intent_householdId);
         familyServiceList.addAll(updatedList);
-        recyclerViewadapter.notifyDataSetChanged();
+        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
     }
     public ChildIndexEventClient processRegistration(String jsonString){
 

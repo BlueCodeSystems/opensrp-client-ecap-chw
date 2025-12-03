@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.bluecodeltd.ecap.chw.view_holder.HouseholdRegisterViewHolder;
 
 import org.smartregister.chw.core.holders.FooterViewHolder;
@@ -52,22 +53,30 @@ public class HouseholdRegisterProvider implements RecyclerViewProvider<Household
 
         String is_closed = Utils.getValue(personObjectClient.getColumnmaps(), "is_closed", true);
         String baseId = Utils.getValue(personObjectClient.getColumnmaps(), "base_entity_id", true);
-        List<String> genderList = IndexPersonDao.getGenders(householdId);
-        List<String> ageList = IndexPersonDao.getAges(householdId);
-        String is_screened = HouseholdDao.checkIfScreened(householdId);
-        //String is_closed = HouseholdDao.getHouseholdByBaseId(baseId).getStatus();
+        // Tag to avoid stale updates on recycled rows
+        final String rowTag = householdId;
+        householdRegisterViewHolder.itemView.setTag(rowTag);
+        Threading.io(() -> {
+            List<String> genderList = IndexPersonDao.getGenders(householdId);
+            List<String> ageList = IndexPersonDao.getAges(householdId);
+            String is_screened = HouseholdDao.checkIfScreened(householdId);
 
-        String caregiverName;
-        if(updated_caregiver_name.isEmpty()){
-            caregiverName =  Utils.getValue(personObjectClient.getColumnmaps(), "caregiver_name", true);
-        } else {
-            caregiverName =  Utils.getValue(personObjectClient.getColumnmaps(), "new_caregiver_name", true);
-        }
+            String caregiverName;
+            if(updated_caregiver_name.isEmpty()){
+                caregiverName =  Utils.getValue(personObjectClient.getColumnmaps(), "caregiver_name", true);
+            } else {
+                caregiverName =  Utils.getValue(personObjectClient.getColumnmaps(), "new_caregiver_name", true);
+            }
 
-        householdRegisterViewHolder.setupViews(caregiverName + " " + "Household", householdId, baseId, householdId, genderList, is_screened, ageList, context);
-        householdRegisterViewHolder.itemView.setOnClickListener(onClickListener);
-        householdRegisterViewHolder.itemView.findViewById(R.id.register_columns).setOnClickListener(onClickListener);
-        householdRegisterViewHolder.itemView.setTag(smartRegisterClient);
+            Threading.main(() -> {
+                Object tag = householdRegisterViewHolder.itemView.getTag();
+                if (!(tag instanceof String) || !rowTag.equals(tag)) return;
+                householdRegisterViewHolder.setupViews(caregiverName + " " + "Household", householdId, baseId, householdId, genderList, is_screened, ageList, context);
+                householdRegisterViewHolder.itemView.setOnClickListener(onClickListener);
+                householdRegisterViewHolder.itemView.findViewById(R.id.register_columns).setOnClickListener(onClickListener);
+                householdRegisterViewHolder.itemView.setTag(smartRegisterClient);
+            });
+        });
 
     }
 

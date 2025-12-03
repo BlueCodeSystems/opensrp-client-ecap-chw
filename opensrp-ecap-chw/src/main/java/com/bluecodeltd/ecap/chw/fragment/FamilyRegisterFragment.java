@@ -18,6 +18,7 @@ import java.util.Set;
 import timber.log.Timber;
 
 public class FamilyRegisterFragment extends CoreFamilyRegisterFragment {
+    private com.bluecodeltd.ecap.chw.databinding.FragmentBaseRegisterBinding binding;
 
     @Override
     public void initializeAdapter(Set<org.smartregister.configurableviews.model.View> visibleColumns) {
@@ -83,8 +84,24 @@ public class FamilyRegisterFragment extends CoreFamilyRegisterFragment {
 
     @Override
     public void setupViews(View view) {
+        try { binding = com.bluecodeltd.ecap.chw.databinding.FragmentBaseRegisterBinding.bind(view); } catch (Throwable ignored) {}
         super.setupViews(view);
+        try {
+            if (clientsView == null && binding != null && binding.recyclerView != null) {
+                clientsView = binding.recyclerView;
+                if (clientsView.getLayoutManager() == null && getContext() != null) {
+                    clientsView.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(getContext()));
+                }
+                clientsView.setHasFixedSize(true);
+            }
+        } catch (Exception ignored) { }
         dueOnlyLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
     
 }

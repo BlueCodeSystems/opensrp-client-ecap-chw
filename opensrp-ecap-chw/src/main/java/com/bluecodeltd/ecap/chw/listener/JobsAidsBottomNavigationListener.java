@@ -28,10 +28,10 @@ public class JobsAidsBottomNavigationListener extends BottomNavigationListener {
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 //        super.onNavigationItemSelected(item);
 
-        if (item.getItemId() == org.smartregister.family.R.id.action_family) {
+        if (item.getItemId() == com.bluecodeltd.ecap.chw.R.id.action_family) {
 
 
-        } else if (item.getItemId() == org.smartregister.family.R.id.action_scan_qr) {
+        } else if (item.getItemId() == com.bluecodeltd.ecap.chw.R.id.action_scan_qr) {
 
             if (PermissionUtils.isPermissionGranted(context, Manifest.permission.CAMERA, PermissionUtils.CAMERA_PERMISSION_REQUEST_CODE)) {
                 try {
@@ -42,7 +42,7 @@ public class JobsAidsBottomNavigationListener extends BottomNavigationListener {
                 }
             }
 
-        } else if (item.getItemId() == org.smartregister.family.R.id.action_register) {
+        } else if (item.getItemId() == com.bluecodeltd.ecap.chw.R.id.action_register) {
 
             try {
                 ((FamilyRegisterActivity) context).startRegistration();

@@ -1,36 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="@dimen/contact_small_padding">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/planrecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/contact_drawable_padding"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <LinearLayout
-        android:visibility="visible"
-        android:layout_centerInParent="true"
         android:id="@+id/visit_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:padding="@dimen/contact_drawable_padding"
+        android:visibility="visible"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/empty_calendar"
-            android:layout_width="100dp"
-            android:layout_height="100dp"/>
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/empty_calendar" />
 
         <TextView
-            android:textSize="20dp"
-            android:gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
             android:text="No Case Plans"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:textColor="@color/text_black"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

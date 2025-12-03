@@ -282,11 +282,20 @@ public abstract class CoreFamilyPlanningMemberProfileActivity extends BaseFpProf
         }
     }
 
-    @Override
     public void startFormActivity(JSONObject formJson, FpMemberObject fpMemberObject) {
         Intent intent = org.smartregister.chw.core.utils.Utils.formActivityIntent(this, formJson.toString());
         intent.putExtra(FamilyPlanningConstants.FamilyPlanningMemberObject.MEMBER_OBJECT, fpMemberObject);
         startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
+    }
+
+    @Override
+    public void startFormActivity(JSONObject formJson, Object clientDetail) {
+        if (clientDetail instanceof FpMemberObject) {
+            startFormActivity(formJson, (FpMemberObject) clientDetail);
+        } else {
+            Intent intent = org.smartregister.chw.core.utils.Utils.formActivityIntent(this, formJson.toString());
+            startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
+        }
     }
 
     private void updateFollowUpVisitButton(String buttonStatus) {

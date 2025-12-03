@@ -79,7 +79,7 @@ public class FamilyRegisterProvider extends CoreRegisterProvider {
     }
 
     private void setTaskNotDone(Context context, Button dueButton) {
-        dueButton.setTextColor(context.getResources().getColor(org.smartregister.family.R.color.progress_orange));
+        dueButton.setTextColor(context.getResources().getColor(R.color.progress_orange));
         dueButton.setText(context.getString(org.smartregister.chw.core.R.string.tasks_not_done));
         dueButton.setBackgroundColor(context.getResources().getColor(org.smartregister.R.color.transparent));
         dueButton.setOnClickListener(onClickListener);

@@ -5,7 +5,7 @@ import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getFormTag;
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 import static org.smartregister.chw.fp.util.FpUtil.getClientProcessorForJava;
-import static org.smartregister.opd.utils.OpdJsonFormUtils.tagSyncMetadata;
+import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -206,12 +206,22 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
             alert.show();
         });
 
-        Child childModel = IndexPersonDao.getChildByBaseId(visit.getUnique_id());
+        Child childModel = null;
+        try {
+            childModel = IndexPersonDao.getChildByBaseId(visit.getUnique_id());
+        } catch (Exception e) {
+            Timber.e(e);
+        }
 
-        if (childModel != null && childModel.getIs_hiv_positive() != null && "yes".equalsIgnoreCase(childModel.getIs_hiv_positive())) {
-            holder.exPandableView.setVisibility(View.GONE);
-            holder.expMore.setVisibility(View.GONE);
-            holder.expLess.setVisibility(View.GONE);
+        if (childModel == null) {
+            holder.intialHivStatus.setText("Unknown");
+            holder.initialHivStatusDate.setText("Date not set");
+        } else {
+            if (childModel.getIs_hiv_positive() != null && "yes".equalsIgnoreCase(childModel.getIs_hiv_positive())) {
+                holder.exPandableView.setVisibility(View.GONE);
+                holder.expMore.setVisibility(View.GONE);
+                holder.expLess.setVisibility(View.GONE);
+            }
         }
         holder.linearLayout.setOnClickListener(v -> {
 
@@ -274,10 +284,17 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
             holder.updatedHivStatusDate.setText(visit.getVisit_date() != null ? visit.getVisit_date() : "Date not set");
         }
 
-        Household household = HouseholdDao.getHousehold(childModel.getHousehold_id());
+        Household household = null;
+        if (childModel != null && childModel.getHousehold_id() != null) {
+            try {
+                household = HouseholdDao.getHousehold(childModel.getHousehold_id());
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+        }
 
         String encodedSignature = visit.getSignature();
-        String encodeSignatureHousehold = household.getSignature();
+        String encodeSignatureHousehold = household != null ? household.getSignature() : null;
 
 
         if(encodedSignature != null && encodedSignature != "") {
@@ -327,10 +344,28 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
         formToBeOpened = formUtils.getFormJson(formName);
 
         formToBeOpened.put("entity_id", visit.getBase_entity_id());
-        VcaScreeningModel vcaScreeningModel = VCAScreeningDao.getVcaScreening(visit.getUnique_id());
+        VcaScreeningModel vcaScreeningModel = null;
+        try {
+            vcaScreeningModel = VCAScreeningDao.getVcaScreening(visit.getUnique_id());
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+
+        if (vcaScreeningModel == null) {
+            Toast.makeText(context, "Member data incomplete", Toast.LENGTH_LONG).show();
+            return;
+        }
 
 
-        Double vAge = getAndCalculateAge(vcaScreeningModel.getAdolescent_birthdate());
+        Double vAge = null;
+        try {
+            vAge = getAndCalculateAge(vcaScreeningModel.getAdolescent_birthdate());
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+        if (vAge == null) {
+            vAge = -1.0;
+        }
 
         JSONObject hiv_infection = getFieldJSONObject(fields(formToBeOpened, "step1"), "hiv_infection");
 
@@ -346,13 +381,8 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
 
         JSONObject under_five = getFieldJSONObject(fields(formToBeOpened, "step1"), "under_five");
         JSONObject nutrition_status = getFieldJSONObject(fields(formToBeOpened, "step1"), "nutrition_status");
-        if (vAge == 0.5 || vAge == 0.4 || vAge == 0.3 || vAge == 0.1 || vAge == 0.0) {
-            under_five.put("type", "native_radio");
-            nutrition_status.put("type", "native_radio");
-        } else if (vAge <= 5.0) {
-            under_five.put("type", "native_radio");
-            nutrition_status.put("type", "native_radio");
-        } else {
+
+        if (vAge > 5) {
             under_five.put("type", "hidden");
             nutrition_status.put("type", "hidden");
         }
@@ -361,14 +391,11 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
         JSONObject age_appropriate = getFieldJSONObject(fields(formToBeOpened, "step1"), "age_appropriate");
 
 
-        if (vAge == 0.5 || vAge == 0.4 || vAge == 0.3 || vAge == 0.1 || vAge == 0.0) {
+        if (vAge <= 5) {
             eid_test.put("type", "edit_text");
             age_appropriate.put("type", "native_radio");
 
-        } else if (vAge <= 2.0) {
-            eid_test.put("type", "edit_text");
-            age_appropriate.put("type", "native_radio");
-        } else {
+        }  else {
             eid_test.put("type", "hidden");
             age_appropriate.put("type", "hidden");
 

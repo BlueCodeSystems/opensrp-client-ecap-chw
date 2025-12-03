@@ -81,7 +81,7 @@ public abstract class CoreAncFloatingMenu extends BaseAncFloatingMenu {
         }
 
         if (isFabMenuOpen) {
-            activityMain.setBackgroundResource(org.smartregister.R.color.transparent);
+            activityMain.setBackgroundResource(R.color.transparent);
             fab.startAnimation(rotateBack);
             fab.setImageResource(com.vijay.jsonwizard.R.drawable.ic_edit_white);
 

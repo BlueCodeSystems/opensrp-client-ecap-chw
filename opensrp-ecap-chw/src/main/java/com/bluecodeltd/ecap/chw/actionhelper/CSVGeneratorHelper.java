@@ -2,17 +2,12 @@ package com.bluecodeltd.ecap.chw.actionhelper;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 import com.bluecodeltd.ecap.chw.contract.GenerateCSVContract;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 public class CSVGeneratorHelper {
-    private final ExecutorService executor = Executors.newSingleThreadExecutor();
-    private final Handler mainHandler = new Handler(Looper.getMainLooper());
+    // Use centralized Threading for background CSV generation
 
     public interface CSVGenerationCallback {
         void onCompletion();
@@ -24,9 +19,9 @@ public class CSVGeneratorHelper {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        executor.execute(() -> {
+        Threading.io(() -> {
             presenter.generateCSV();
-            mainHandler.post(() -> {
+            Threading.main(() -> {
                 progressDialog.dismiss();
                 callback.onCompletion();
             });

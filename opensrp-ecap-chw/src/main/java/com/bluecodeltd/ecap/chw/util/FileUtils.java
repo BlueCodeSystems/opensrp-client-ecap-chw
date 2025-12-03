@@ -2,6 +2,8 @@ package com.bluecodeltd.ecap.chw.util;
 
 import android.os.Environment;
 
+import org.smartregister.chw.core.application.CoreChwApplication;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,36 +15,40 @@ import timber.log.Timber;
 
 public class FileUtils {
 
+    private FileUtils() {
+        // utility
+    }
+
     public static boolean hasExternalDisk() {
         return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
     }
 
     public static boolean canWriteToExternalDisk() {
-        if (!hasExternalDisk())
-            return false;
-
-        return !Environment.MEDIA_MOUNTED_READ_ONLY.equals(Environment.getExternalStorageState());
+        return hasExternalDisk() && !Environment.MEDIA_MOUNTED_READ_ONLY.equals(Environment.getExternalStorageState());
     }
 
     public static File createDirectory(String directoryPath, boolean onSdCard) {
-        File location = onSdCard ? Environment.getExternalStorageDirectory() : Environment.getDataDirectory();
-        File dir = new File(location + File.separator + directoryPath);
-        if (dir.exists())
+        File dir = resolveDirectory(directoryPath);
+        if (dir.exists()) {
             return dir;
+        }
 
-        if (!dir.mkdirs())
+        if (!dir.mkdirs()) {
             Timber.v("Directory was not created successfully %s", dir.getAbsolutePath());
+        }
 
         return dir;
     }
 
     public static String getStringFromFile(String folder, String name) throws Exception {
-        File fl = new File(folder, name);
-        if (!fl.exists()) return null;
+        File base = resolveDirectory(folder);
+        File fl = new File(base, name);
+        if (!fl.exists()) {
+            return null;
+        }
 
         FileInputStream fin = new FileInputStream(fl);
         String ret = convertStreamToString(fin);
-        //Make sure you close all streams.
         fin.close();
         return ret;
     }
@@ -50,7 +56,7 @@ public class FileUtils {
     public static String convertStreamToString(InputStream is) throws Exception {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();
-        String line = null;
+        String line;
         while ((line = reader.readLine()) != null) {
             sb.append(line).append("\n");
         }
@@ -70,8 +76,22 @@ public class FileUtils {
     }
 
     public static File[] getFiles(String folder) {
-        File directory = new File(Environment.getExternalStorageDirectory() + File.separator + folder);
+        File directory = resolveDirectory(folder);
         return directory.listFiles();
     }
 
+    private static File resolveDirectory(String directoryPath) {
+        File potential = new File(directoryPath);
+        if (potential.isAbsolute()) {
+            return potential;
+        }
+
+        CoreChwApplication application = CoreChwApplication.getInstance();
+        if (application == null || application.getApplicationContext().getExternalFilesDir(null) == null) {
+            return potential;
+        }
+
+        File base = application.getApplicationContext().getExternalFilesDir(null);
+        return new File(base, directoryPath);
+    }
 }

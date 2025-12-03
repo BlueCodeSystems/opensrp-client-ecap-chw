@@ -70,12 +70,11 @@ public class GuideBooksFragmentInteractor implements GuideBooksFragmentContract.
         if (context == null) return;
 
         // attempt to refresh the list if the internet is on
-        File externalFile = context.getExternalFilesDir(null);
+        File externalFile = context.getExternalFilesDir(directory);
         if (externalFile == null) {
             throw new IllegalStateException("Root directory not found");
         }
-        String folder = externalFile.getAbsolutePath() + File.separator +
-                directory + File.separator;
+        String folder = externalFile.getAbsolutePath() + File.separator;
 
         GuideBooksFragmentContract.DownloadListener downloadListener = new GuideBooksFragmentContract.DownloadListener() {
             @Override

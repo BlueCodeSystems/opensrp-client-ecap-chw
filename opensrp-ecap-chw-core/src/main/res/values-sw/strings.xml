@@ -196,7 +196,7 @@
     <string name="confirm_remove_text">Una uhakika unataka kuondoa  tarifa za %s? Hii itaondoa taarifa zote   toka kwenye simu yako. Hii haiwezekani kurekebishika.</string>
     <string name="remove">ONDOA</string>
     <string name="remove_entire_family">Kuondoa kaya yote</string>
-    <string name="remove_warning_family">Una uhakika unataka kuondoa  tarifa zote za kaya %s? Hii itaondoa taarifa zote za kaya husika NA  tarifa za afya ya kila mwanafamilia wa %s toka kwenye simu yako. Hii haiwezekani kurekebishika.</string>
+    <string name="remove_warning_family">Una uhakika unataka kuondoa  tarifa zote za kaya %1$s? Hii itaondoa taarifa zote za kaya husika NA  tarifa za afya ya kila mwanafamilia wa %2$s toka kwenye simu yako. Hii haiwezekani kurekebishika.</string>
     <string name="family">Kaya ya %s</string>
 
     <!--Change care giver-->
@@ -206,7 +206,7 @@
     <string name="remove_familyhead_warning_message">Kabla hujamuondoa mwanafamilia huyu, chagua mkuu mpya wa kaya.</string>
     <string name="profile_change_dialog_message">Kabla hujamuondoa mwanafamilia huyu, chagua mkuu wa kaya mpya.</string>
     <string name="select_a_new_family_head">Chagua mkuu wa kaya mpya</string>
-    <string name="remove_family_count">%s watu wazima na %s watoto chini ya miaka 5</string>
+    <string name="remove_family_count">%1$s watu wazima na %2$s watoto chini ya miaka 5</string>
 
     <string name="yellow_fever">Homa ya manjano</string>
 
@@ -388,7 +388,7 @@
 
     <string name="phone_not_provided">Hakuna namba iliyotolewa</string>
     <string name="anc_danger_sign_prefix">Dalili za hatari za ujauzito; Dalili: %s</string>
-    <string name="client_name_age_suffix">%s, %s</string>
+    <string name="client_name_age_suffix">%1$s, %2$s</string>
 
     <!--PNC -->
     <string name="pnc_visit_day_due">Siku %s tembeleo limefikiwa muda wake</string>
@@ -451,8 +451,8 @@
     <string name="pnc_medical_history_child_immunization_bcg">Chanjo ya kifua kikuu: {0}</string>
 
     <!--Wcaro Upcoming Services -->
-    <string name="upcoming_immunizations">Chanjo (%s) (%s) \n%s \n%s</string>
-    <string name="up_immunizations">Chanjo (%s) (%s) \n%s</string>
+    <string name="upcoming_immunizations">Chanjo (%1$s) (%2$s) \n%3$s \n%4$s</string>
+    <string name="up_immunizations">Chanjo (%1$s) (%2$s) \n%3$s</string>
 
     <!-- dates -->
     <string name="date_days">Siku</string>

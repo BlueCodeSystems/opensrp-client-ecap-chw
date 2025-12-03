@@ -78,7 +78,7 @@ public class FamilyActivityRegisterProvider extends org.smartregister.family.pro
             dobString = getDuration(dod, dob);
             dobString = dobString.contains("y") ? dobString.substring(0, dobString.indexOf("y")) : dobString;
 
-            patientName = patientName + ", " + dobString + " " + eventType + context.getString(org.smartregister.family.R.string.deceased_brackets);
+            patientName = patientName + ", " + dobString + " " + eventType + context.getString(R.string.deceased_brackets);
             viewHolder.patientNameAge.setFontVariant(FontVariant.REGULAR);
             viewHolder.patientNameAge.setTextColor(Color.GRAY);
             viewHolder.patientNameAge.setTypeface(viewHolder.patientNameAge.getTypeface(), Typeface.ITALIC);
@@ -157,7 +157,7 @@ public class FamilyActivityRegisterProvider extends org.smartregister.family.pro
     private void attachPatientOnclickListener(View view, SmartRegisterClient client) {
         view.setOnClickListener(onClickListener);
         view.setTag(client);
-        view.setTag(org.smartregister.family.R.id.VIEW_ID, BaseFamilyProfileMemberFragment.CLICK_VIEW_NORMAL);
+        view.setTag(org.smartregister.chw.core.R.id.VIEW_ID, BaseFamilyProfileMemberFragment.CLICK_VIEW_NORMAL);
     }
 
 }
