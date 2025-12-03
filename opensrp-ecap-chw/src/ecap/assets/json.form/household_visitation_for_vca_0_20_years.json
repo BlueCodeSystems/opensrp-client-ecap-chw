@@ -1212,7 +1212,6 @@
           }
         }
       },
-
       {
         "key": "nutrition_counselling_a",
         "openmrs_entity_parent": "",
@@ -1339,9 +1338,6 @@
           }
         }
       },
-
-
-
       {
         "key": "spacer",
         "openmrs_entity_parent": "",

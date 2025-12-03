@@ -222,7 +222,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "instructions_a",
         "type": "toaster_notes",
-        "text": "Select only if household does not have C/ALHIV, HEIs, Children of WLHIV, Survivors of Sexual Violence, Pregnant and Breastfeeding AGYW",
+        "text": "Select only if VCA does not have C/ALHIV, HEIs, Children of WLHIV, Survivors of Sexual Violence, Pregnant and Breastfeeding AGYW",
         "text_color": "#000000",
         "label_text_style": "bold",
         "toaster_type": "info",
