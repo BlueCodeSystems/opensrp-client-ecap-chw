@@ -54,9 +54,7 @@ public class PMTCTMotherDao extends AbstractDao {
             return null;
         }
 
-        String sql = "SELECT * FROM ec_pmtct_mother " +
-                "WHERE (pmtct_id = '" + pmtctID + "' OR household_id = '" + pmtctID + "') " +
-                "AND (delete_status IS NULL OR delete_status <> '1')";
+        String sql = "SELECT * FROM ec_pmtct_mother WHERE  household_id = '" + pmtctID + "' AND (delete_status IS NULL OR delete_status <> '1')";
 
         List<PtctMotherModel> values = AbstractDao.readData(sql, getPtctMotherModelMap());
 

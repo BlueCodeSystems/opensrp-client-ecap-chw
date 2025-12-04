@@ -115,6 +115,7 @@ public class MotherDetail extends AppCompatActivity {
             motherAncLayout, motherDeliveryLayout, motherLongitudinalLayout,
             motherOutcomeLayout, motherPostnatalLayout,
             childFinalOutcomeLayout, childLongitudinalLayout, childPostnatalLayout;
+    private boolean caregiverHivPositive;
     private UniqueIdRepository uniqueIdRepository;
     public String vca_id;
     public Household family;
@@ -301,25 +302,7 @@ public class MotherDetail extends AppCompatActivity {
         updateLongitudinalTabTitle();
         updatePostnatalTabTitle();
         setupFabVisibility();
-
-        // Show PMTCT button only if caregiver is HIV positive
-        try {
-            View pmtctBtn = binding.pmtctProf;
-            if (pmtctBtn != null) {
-                String caregiverStatus = null;
-                if (commonPersonObjectClient != null && commonPersonObjectClient.getColumnmaps() != null) {
-                    caregiverStatus = commonPersonObjectClient.getColumnmaps().get("caregiver_hiv_status");
-                }
-                if ((caregiverStatus == null || caregiverStatus.isEmpty()) && family != null) {
-                    caregiverStatus = family.getCaregiver_hiv_status();
-                }
-
-                boolean isPositive = caregiverStatus != null &&
-                        (caregiverStatus.equalsIgnoreCase("positive") || caregiverStatus.equalsIgnoreCase("HIV+"));
-
-                pmtctBtn.setVisibility(isPositive ? View.VISIBLE : View.GONE);
-            }
-        } catch (Exception ignored) { }
+        updateCaregiverHivStatusAndVisibility();
 
     }
 
@@ -334,6 +317,32 @@ public class MotherDetail extends AppCompatActivity {
         motherHashMap.put("mother", commonPersonObjectClient);
 
         return motherHashMap;
+    }
+
+    private void updateCaregiverHivStatusAndVisibility() {
+        try {
+            String caregiverStatus = null;
+
+            if (motherIndex != null && motherIndex.getCaregiver_hiv_status() != null) {
+                caregiverStatus = motherIndex.getCaregiver_hiv_status();
+            }
+            if ((caregiverStatus == null || caregiverStatus.isEmpty()) && commonPersonObjectClient != null && commonPersonObjectClient.getColumnmaps() != null) {
+                caregiverStatus = commonPersonObjectClient.getColumnmaps().get("caregiver_hiv_status");
+            }
+            if ((caregiverStatus == null || caregiverStatus.isEmpty()) && family != null) {
+                caregiverStatus = family.getCaregiver_hiv_status();
+            }
+
+            caregiverHivPositive = caregiverStatus != null &&
+                    (caregiverStatus.equalsIgnoreCase("positive") || caregiverStatus.equalsIgnoreCase("HIV+"));
+
+            View pmtctBtn = binding != null ? binding.pmtctProf : null;
+            if (pmtctBtn != null) {
+                pmtctBtn.setVisibility(caregiverHivPositive ? View.VISIBLE : View.GONE);
+            }
+        } catch (Exception ignored) {
+            caregiverHivPositive = false;
+        }
     }
 
     private void updateChildTabTitle() {
@@ -1093,14 +1102,26 @@ public class MotherDetail extends AppCompatActivity {
             fab.startAnimation(rotate_forward);
             mLayout.setVisibility(View.VISIBLE);
             cLayout.setVisibility(View.VISIBLE);
-            if (motherAncLayout != null) motherAncLayout.setVisibility(View.VISIBLE);
-            if (motherDeliveryLayout != null) motherDeliveryLayout.setVisibility(View.VISIBLE);
-            if (motherLongitudinalLayout != null) motherLongitudinalLayout.setVisibility(View.VISIBLE);
-            if (motherOutcomeLayout != null) motherOutcomeLayout.setVisibility(View.VISIBLE);
-            if (motherPostnatalLayout != null) motherPostnatalLayout.setVisibility(View.VISIBLE);
-            if (childFinalOutcomeLayout != null) childFinalOutcomeLayout.setVisibility(View.VISIBLE);
-            if (childLongitudinalLayout != null) childLongitudinalLayout.setVisibility(View.VISIBLE);
-            if (childPostnatalLayout != null) childPostnatalLayout.setVisibility(View.VISIBLE);
+
+            if (!caregiverHivPositive) {
+                if (motherAncLayout != null) motherAncLayout.setVisibility(View.VISIBLE);
+                if (motherDeliveryLayout != null) motherDeliveryLayout.setVisibility(View.VISIBLE);
+                if (motherLongitudinalLayout != null) motherLongitudinalLayout.setVisibility(View.VISIBLE);
+                if (motherOutcomeLayout != null) motherOutcomeLayout.setVisibility(View.VISIBLE);
+                if (motherPostnatalLayout != null) motherPostnatalLayout.setVisibility(View.VISIBLE);
+                if (childFinalOutcomeLayout != null) childFinalOutcomeLayout.setVisibility(View.VISIBLE);
+                if (childLongitudinalLayout != null) childLongitudinalLayout.setVisibility(View.VISIBLE);
+                if (childPostnatalLayout != null) childPostnatalLayout.setVisibility(View.VISIBLE);
+            } else {
+                if (motherAncLayout != null) motherAncLayout.setVisibility(View.GONE);
+                if (motherDeliveryLayout != null) motherDeliveryLayout.setVisibility(View.GONE);
+                if (motherLongitudinalLayout != null) motherLongitudinalLayout.setVisibility(View.GONE);
+                if (motherOutcomeLayout != null) motherOutcomeLayout.setVisibility(View.GONE);
+                if (motherPostnatalLayout != null) motherPostnatalLayout.setVisibility(View.GONE);
+                if (childFinalOutcomeLayout != null) childFinalOutcomeLayout.setVisibility(View.GONE);
+                if (childLongitudinalLayout != null) childLongitudinalLayout.setVisibility(View.GONE);
+                if (childPostnatalLayout != null) childPostnatalLayout.setVisibility(View.GONE);
+            }
 
         }
     }

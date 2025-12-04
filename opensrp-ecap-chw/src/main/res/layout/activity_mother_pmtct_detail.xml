@@ -90,22 +90,46 @@
                             tools:text="28" />
                     </LinearLayout>
 
-                    <Button
-                        android:id="@+id/hh_prof"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/profile_buttons_row"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="8dp"
-                        android:background="@drawable/transparent_white_button"
                         android:gravity="center"
-                        android:onClick="onClick"
-                        android:paddingStart="@dimen/profile_btn_registration_info_padding"
-                        android:paddingEnd="@dimen/profile_btn_registration_info_padding"
-                        android:text="Household Profile"
-                        android:textAllCaps="false"
-                        android:textColor="@android:color/white"
-                        android:textSize="14sp"
-                        android:visibility="gone" />
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/mother_prof"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/transparent_white_button"
+                            android:gravity="center"
+                            android:onClick="onClick"
+                            android:paddingStart="@dimen/profile_btn_registration_info_padding"
+                            android:paddingEnd="@dimen/profile_btn_registration_info_padding"
+                            android:text="Mother Profile"
+                            android:textAllCaps="false"
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp" />
+
+                        <Button
+                            android:id="@+id/hh_prof"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/transparent_white_button"
+                            android:gravity="center"
+                            android:onClick="onClick"
+                            android:paddingStart="@dimen/profile_btn_registration_info_padding"
+                            android:paddingEnd="@dimen/profile_btn_registration_info_padding"
+                            android:text="Household Profile"
+                            android:textAllCaps="false"
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp" />
+                    </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -270,48 +294,6 @@
 
             </RelativeLayout>
 
-            <!-- Postnatal care -->
-            <RelativeLayout
-                android:id="@+id/postnatal_details"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:gravity="center_vertical"
-                android:onClick="onClick"
-                android:visibility="gone">
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_toStartOf="@+id/callFabPostnatal"
-                    android:background="@drawable/bg_mother_chip"
-                    android:elevation="2dp"
-                    android:gravity="center_vertical"
-                    android:minWidth="80dp"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp">
-
-                    <TextView
-                        android:id="@+id/add_postnatal_detalis"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Postnatal Care"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp" />
-                </RelativeLayout>
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/callFabPostnatal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
-                    app:srcCompat="@android:drawable/ic_input_add" />
-
-            </RelativeLayout>
-
             <!-- Add child -->
             <RelativeLayout
                 android:id="@+id/child_form"
@@ -345,6 +327,48 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/callFab2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    app:backgroundTint="@color/white"
+                    app:fabSize="mini"
+                    app:srcCompat="@android:drawable/ic_input_add" />
+
+            </RelativeLayout>
+
+            <!-- Postnatal care -->
+            <RelativeLayout
+                android:id="@+id/postnatal_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_toStartOf="@+id/callFabPostnatal"
+                    android:background="@drawable/bg_mother_chip"
+                    android:elevation="2dp"
+                    android:gravity="center_vertical"
+                    android:minWidth="80dp"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp">
+
+                    <TextView
+                        android:id="@+id/add_postnatal_detalis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Postnatal Care"
+                        android:textColor="@android:color/white"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/callFabPostnatal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"

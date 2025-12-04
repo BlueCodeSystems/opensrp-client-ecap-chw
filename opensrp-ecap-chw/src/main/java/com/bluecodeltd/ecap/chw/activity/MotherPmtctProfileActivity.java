@@ -32,6 +32,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.dao.EcMotherIndexDao;
 import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
 import com.bluecodeltd.ecap.chw.dao.PmctMotherAncDao;
 import com.bluecodeltd.ecap.chw.dao.PmtctChildDao;
@@ -155,6 +156,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
                 Object baseObj = extras.get("baseId");
                 if (baseObj instanceof CommonPersonObjectClient) {
                     CommonPersonObjectClient baseClient = (CommonPersonObjectClient) baseObj;
+                    commonPersonObjectClient = baseClient;
                     if (isNullOrEmpty(householdId)) {
                         householdId = baseClient.getColumnmaps().get("household_id");
                     }
@@ -428,20 +430,15 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
                 break;
 
+            case R.id.mother_prof:
+
+                openMotherProfile();
+
+                break;
+
             case R.id.hh_prof:
 
-                if(childTabCount == null || childTabCount.getText().toString().equals("0")){
-
-                    Toasty.warning(MotherPmtctProfileActivity.this, "Household should have at least 1 Child", Toast.LENGTH_LONG, true).show();
-
-                } else {
-
-                    Intent intent = new Intent(this, HouseholdDetails.class);
-                    intent.putExtra("householdId",  commonPersonObjectClient.getColumnmaps().get("household_id"));
-                    startActivity(intent);
-
-
-                }
+                openHouseholdProfile();
 
                 break;
 
@@ -960,6 +957,52 @@ break;
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void openMotherProfile() {
+        String householdId = resolveHouseholdId();
+        if (isNullOrEmpty(householdId)) {
+            Toasty.warning(MotherPmtctProfileActivity.this, "Household record not found", Toast.LENGTH_LONG, true).show();
+            return;
+        }
+
+        CommonPersonObjectClient motherClient = EcMotherIndexDao.getFirstMotherByHousehold(householdId);
+        if (motherClient == null) {
+            Toasty.warning(MotherPmtctProfileActivity.this, "Mother record not found", Toast.LENGTH_LONG, true).show();
+            return;
+        }
+
+        Intent intent = new Intent(this, MotherDetail.class);
+        intent.putExtra("mother", motherClient);
+        startActivity(intent);
+    }
+
+    private void openHouseholdProfile() {
+        String householdId = resolveHouseholdId();
+        if (isNullOrEmpty(householdId)) {
+            Toasty.warning(MotherPmtctProfileActivity.this, "Household record not found", Toast.LENGTH_LONG, true).show();
+            return;
+        }
+
+        Intent intent = new Intent(this, HouseholdDetails.class);
+        intent.putExtra("householdId", householdId);
+        startActivity(intent);
+    }
+
+    private String resolveHouseholdId() {
+        if (ptctMotherModel != null && !isNullOrEmpty(ptctMotherModel.getHousehold_id())) {
+            return ptctMotherModel.getHousehold_id();
+        }
+        if (commonPersonObjectClient != null) {
+            try {
+                String householdId = commonPersonObjectClient.getColumnmaps().get("household_id");
+                if (!isNullOrEmpty(householdId)) {
+                    return householdId;
+                }
+            } catch (Exception ignored) { }
+        }
+        return null;
+    }
+
     private boolean isNullOrEmpty(String s) {
         return s == null || s.trim().isEmpty();
     }

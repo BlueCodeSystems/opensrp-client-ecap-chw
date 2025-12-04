@@ -74,25 +74,16 @@
         "type": "hidden"
       },
       {
-        "key": "sm_number",
+        "key": "household_id",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "sm_number",
+        "openmrs_entity_id": "household_id",
         "type": "edit_text",
         "hint": "SM Number",
         "edit_type": "number",
         "read_only": "true"
       },
-      {
-        "key": "household_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "household_id",
-        "type": "hidden",
-        "read_only": "true",
-        "hint": "Household ID",
-        "edit_type": "name"
-      },
+
       {
         "key": "district",
         "openmrs_entity_parent": "",

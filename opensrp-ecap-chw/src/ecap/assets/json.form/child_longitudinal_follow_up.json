@@ -94,6 +94,7 @@
         "type": "spinner",
         "hint": "Infant Age",
         "values": [
+          "Birth",
           "6 Days",
           "6 Weeks",
           "2 Months",
@@ -193,7 +194,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "infant_breastfeeding_status",
         "type": "native_radio",
-        "label": "Infant Breastfeeding (see note**)",
+        "label": "Infant Breastfeeding",
         "options": [
           { "key": "exclusive_breastfeeding", "text": "1. Exclusive Breast Feeding" },
           { "key": "mixed_feeding", "text": "2. Mixed Feeding" },

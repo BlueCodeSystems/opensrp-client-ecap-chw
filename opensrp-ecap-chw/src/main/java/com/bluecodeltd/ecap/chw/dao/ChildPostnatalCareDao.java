@@ -42,6 +42,8 @@ public class ChildPostnatalCareDao extends AbstractDao {
             record.setPnc_infant_growth_monitoring_done(getCursorValue(c, "pnc_infant_growth_monitoring_done"));
             record.setPnc_infant_growth_normal(getCursorValue(c, "pnc_infant_growth_normal"));
             record.setPnc_infant_referred_for_complications(getCursorValue(c, "pnc_infant_referred_for_complications"));
+            record.setWeight_at_birth(getCursorValue(c, "weight_at_birth"));
+            record.setUnder_five_card_number(getCursorValue(c, "under_five_card_number"));
             record.setPnc_infant_comments(getCursorValue(c, "pnc_infant_comments"));
             record.setDelete_status(getCursorValue(c, "delete_status"));
             record.setEntity_type(getCursorValue(c, "entity_type"));

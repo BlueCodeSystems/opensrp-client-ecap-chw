@@ -14,6 +14,8 @@ public class ChildPostnatalCareModel {
     private String pnc_infant_growth_monitoring_done;
     private String pnc_infant_growth_normal;
     private String pnc_infant_referred_for_complications;
+    private String weight_at_birth;
+    private String under_five_card_number;
     private String pnc_infant_comments;
     private String delete_status;
     private String entity_type;
@@ -113,6 +115,22 @@ public class ChildPostnatalCareModel {
 
     public void setPnc_infant_referred_for_complications(String pnc_infant_referred_for_complications) {
         this.pnc_infant_referred_for_complications = pnc_infant_referred_for_complications;
+    }
+
+    public String getWeight_at_birth() {
+        return weight_at_birth;
+    }
+
+    public void setWeight_at_birth(String weight_at_birth) {
+        this.weight_at_birth = weight_at_birth;
+    }
+
+    public String getUnder_five_card_number() {
+        return under_five_card_number;
+    }
+
+    public void setUnder_five_card_number(String under_five_card_number) {
+        this.under_five_card_number = under_five_card_number;
     }
 
     public String getPnc_infant_comments() {

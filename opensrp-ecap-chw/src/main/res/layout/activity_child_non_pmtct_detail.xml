@@ -299,7 +299,7 @@
             android:visibility="visible">
 
             <RelativeLayout
-                android:id="@+id/child_final_outcome"
+                android:id="@+id/child_postnatal_care"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
@@ -311,7 +311,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:layout_toStartOf="@+id/child_final_outcome_fab"
+                    android:layout_toStartOf="@+id/child_postnatal_care_fab"
                     android:background="@drawable/bg_child_action_chip"
                     android:elevation="2dp"
                     android:gravity="center_vertical"
@@ -320,16 +320,16 @@
                     android:paddingVertical="8dp">
 
                     <TextView
-                        android:id="@+id/child_final_outcome_text"
+                        android:id="@+id/child_postnatal_care_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/child_final_outcome"
+                        android:text="@string/child_postnatal_care"
                         android:textColor="@android:color/white"
                         android:textSize="12sp" />
                 </RelativeLayout>
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/child_final_outcome_fab"
+                    android:id="@+id/child_postnatal_care_fab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -381,7 +381,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/child_postnatal_care"
+                android:id="@+id/child_final_outcome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
@@ -393,7 +393,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:layout_toStartOf="@+id/child_postnatal_care_fab"
+                    android:layout_toStartOf="@+id/child_final_outcome_fab"
                     android:background="@drawable/bg_child_action_chip"
                     android:elevation="2dp"
                     android:gravity="center_vertical"
@@ -402,16 +402,16 @@
                     android:paddingVertical="8dp">
 
                     <TextView
-                        android:id="@+id/child_postnatal_care_text"
+                        android:id="@+id/child_final_outcome_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/child_postnatal_care"
+                        android:text="@string/child_final_outcome"
                         android:textColor="@android:color/white"
                         android:textSize="12sp" />
                 </RelativeLayout>
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/child_postnatal_care_fab"
+                    android:id="@+id/child_final_outcome_fab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"

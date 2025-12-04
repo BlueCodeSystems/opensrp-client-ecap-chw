@@ -277,6 +277,11 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
                 Toasty.error(context, "Unable to open child profile", Toast.LENGTH_LONG, true).show();
             }
         });
+        // Show child profile button only when caregiver HIV status is negative/unknown
+        String caregiverStatus = child.getCaregiver_hiv_status();
+        boolean caregiverPositive = caregiverStatus != null &&
+                (caregiverStatus.equalsIgnoreCase("positive") || caregiverStatus.equalsIgnoreCase("HIV+"));
+        holder.openProfileBtn.setVisibility(caregiverPositive ? View.GONE : View.VISIBLE);
 
         holder.lview.setOnClickListener(v -> {
 
