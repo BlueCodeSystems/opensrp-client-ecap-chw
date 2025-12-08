@@ -633,7 +633,10 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
-                // Floating menu should only appear on the Overview fragment
+                // Floating menu should only appear on the Overview fragment; close it when leaving
+                if (position != 0 && isFabOpen) {
+                    closeFab();
+                }
                 fab.setVisibility(position == 0 ? View.VISIBLE : View.GONE);
             }
 
