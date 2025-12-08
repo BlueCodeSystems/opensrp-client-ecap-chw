@@ -478,7 +478,9 @@ public class PMTCTRegisterActivity extends BaseRegisterActivity implements Index
             bottomNavigationView.getMenu().removeItem(R.id.action_register_index);
             bottomNavigationView.getMenu().removeItem(R.id.action_fsw);
             bottomNavigationView.getMenu().removeItem(R.id.action_hts);
-            bottomNavigationView.getMenu().findItem(R.id.action_identifcation).setTitle( "Add Mother");
+            bottomNavigationView.getMenu().removeItem(R.id.action_identifcation);
+
+//            bottomNavigationView.getMenu().findItem(R.id.action_identifcation).setTitle( "Add Mother");
 
         }
     }

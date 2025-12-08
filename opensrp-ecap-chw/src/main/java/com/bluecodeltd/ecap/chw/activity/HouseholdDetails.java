@@ -38,8 +38,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.bluecodeltd.ecap.chw.dao.IndexMotherDao;
-import com.bluecodeltd.ecap.chw.model.IndexMotherModel;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
@@ -117,10 +115,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import com.bluecodeltd.ecap.chw.util.Threading;
 
 import es.dmoral.toasty.Toasty;
@@ -168,8 +168,6 @@ public class HouseholdDetails extends AppCompatActivity {
     GraduationModel graduationModel;
     WeServiceCaregiverModel weServiceCaregiverModel;
     newCaregiverModel updatedCaregiver;
-
-    IndexMotherModel indexMotherModel;
     private ArrayList<Child> childList = new ArrayList<>();
     private HouseholdDetailsViewModel viewModel;
     // Background execution centralized via Threading
@@ -920,6 +918,7 @@ public class HouseholdDetails extends AppCompatActivity {
                     String caseworkerProvince= prefs.getString("province", "Anonymous");
 
                     householdMapper = new ObjectMapper();
+                    String childrenCount = IndexPersonDao.countChildren(householdId);
 
                     indexRegisterForm = formUtils.getFormJson("hh_screening_entry");
                     indexRegisterForm.put("entity_id", this.house.getBid());
@@ -986,6 +985,10 @@ public class HouseholdDetails extends AppCompatActivity {
                         subPopulation.getJSONObject(3).put("value", house.getSubpop4());
                         subPopulation.getJSONObject(5).put("value", house.getSubpop());
                         subPopulation.getJSONObject(4).put("value", house.getSubpop5());
+                    }
+                    if (shouldRemoveIndexChildFields(childrenCount)) {
+                        removeFieldsFromStep(indexRegisterForm, "step2",
+                                "unique_id", "first_name", "last_name", "adolescent_birthdate", "gender","sub_population");
                     }
                     indexRegisterForm.getJSONObject("step3").getJSONArray("fields").getJSONObject(3).put("value", "true");
 
@@ -2021,6 +2024,49 @@ public class HouseholdDetails extends AppCompatActivity {
     public WeServiceCaregiverModel getWeServiceCaregiverModel(String householdId)
     {
         return WeServiceCaregiverDoa.getWeServiceCaregiver(householdId);
+    }
+
+    private boolean shouldRemoveIndexChildFields(String childrenCountRaw) {
+        if (TextUtils.isEmpty(childrenCountRaw)) {
+            return true;
+        }
+        int childrenCount = parseChildrenCount(childrenCountRaw);
+        return childrenCount <= 0;
+    }
+
+    private int parseChildrenCount(String countRaw) {
+        if (TextUtils.isEmpty(countRaw)) {
+            return 0;
+        }
+        try {
+            return Integer.parseInt(countRaw.trim());
+        } catch (NumberFormatException e) {
+            Timber.e(e);
+            return 0;
+        }
+    }
+
+    private void removeFieldsFromStep(JSONObject form, String stepName, String... fieldKeys) {
+        if (form == null || TextUtils.isEmpty(stepName) || fieldKeys == null || fieldKeys.length == 0) {
+            return;
+        }
+        try {
+            JSONArray stepFields = fields(form, stepName);
+            if (stepFields == null) return;
+            Set<String> removableKeys = new HashSet<>();
+            Collections.addAll(removableKeys, fieldKeys);
+            for (int i = 0; i < stepFields.length(); i++) {
+                JSONObject field = stepFields.optJSONObject(i);
+                if (field == null) continue;
+                String key = field.optString("key");
+                if (removableKeys.contains(key)) {
+                    stepFields.remove(i);
+                    i--;
+                }
+            }
+        } catch (Exception e) {
+            Timber.e(e);
+        }
     }
 
     @Override
