@@ -1,14 +1,15 @@
 ---
+name: step1_infant_vaccinations_given_default
+description: default to hide infant_vaccinations_given
+priority: 0
+condition: "true"
+actions:
+  - "isRelevant = false"
+---
 name: step1_infant_vaccinations_given
 description: infant_vaccinations_given
 priority: 1
-condition: "step1_infant_age.contains('Birth') || 
-            step1_infant_age.contains('6 Days')  ||
-            step1_infant_age.contains('6 Weeks')  ||
-            step1_infant_age.contains('2 Months')  ||
-            step1_infant_age.contains('3 Months')  ||
-            step1_infant_age.contains('9 Months')
-  "
+condition: "['Birth','6 Days','6 Weeks','2 Months','3 Months','9 Months'].contains(step1_infant_age)"
 actions:
   - "isRelevant = true"
 ---

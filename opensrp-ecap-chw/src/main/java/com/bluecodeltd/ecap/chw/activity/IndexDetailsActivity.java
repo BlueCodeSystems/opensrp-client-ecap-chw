@@ -626,8 +626,12 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
     private void setupFabVisibility() {
         // Ensure initial state: show only on Overview (position 0)
+        updateFabVisibilityForPosition( safeViewPagerPosition() );
         try {
-            fab.setVisibility(mViewPager.getCurrentItem() == 0 ? View.VISIBLE : View.GONE);
+            TabLayout.Tab selectedTab = mTabLayout.getTabAt(mTabLayout.getSelectedTabPosition());
+            if (selectedTab != null) {
+                updateFabVisibilityForPosition(selectedTab.getPosition());
+            }
         } catch (Exception ignored) {}
 
         mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -637,10 +641,48 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 if (position != 0 && isFabOpen) {
                     closeFab();
                 }
-                fab.setVisibility(position == 0 ? View.VISIBLE : View.GONE);
+                updateFabVisibilityForPosition(position);
             }
 
         });
+
+        // Defensive: also react to tab selections in case page callbacks are skipped
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab == null) return;
+                if (tab.getPosition() != 0 && isFabOpen) {
+                    closeFab();
+                }
+                updateFabVisibilityForPosition(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) { }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) { }
+        });
+    }
+
+    private void updateFabVisibilityForPosition(int position) {
+        try {
+            if (position == 0) {
+                fab.show();
+                fab.setVisibility(View.VISIBLE);
+            } else {
+                fab.hide();
+                fab.setVisibility(View.GONE);
+            }
+        } catch (Exception ignored) { }
+    }
+
+    private int safeViewPagerPosition() {
+        try {
+            return mViewPager.getCurrentItem();
+        } catch (Exception e) {
+            return 0;
+        }
     }
     private void updateOverviewTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);

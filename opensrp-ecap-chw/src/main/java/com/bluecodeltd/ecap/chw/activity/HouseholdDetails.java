@@ -135,6 +135,7 @@ public class HouseholdDetails extends AppCompatActivity {
     public ViewPager2 mViewPager;
     private TabLayoutMediator tabMediator;
     private boolean viewPagerInitialized = false;
+    private boolean fabVisibilityInitialized = false;
     private Toolbar toolbar;
     private TextView visitTabCount, cname,updatedCaregiverName, txtDistrict, txtVillage,casePlanTabCount;
     public TextView childTabCount;
@@ -283,6 +284,7 @@ public class HouseholdDetails extends AppCompatActivity {
             updateCaseplanTitle();
             updateOverviewTabTitle();
             updateGradTabTitle();
+            setupFabVisibility();
             txtDistrict.setText(householdId);
 
             if(house.getCaregiver_name() != null && !house.getCaregiver_name().equals("null")){
@@ -510,16 +512,64 @@ public class HouseholdDetails extends AppCompatActivity {
         } catch (Throwable ignored) { }
     }
     private void setupFabVisibility() {
+        if (fabVisibilityInitialized) return;
+        fabVisibilityInitialized = true;
+        // Show the floating menu only on the Overview tab; close and hide it elsewhere
+        updateFabVisibilityForPosition(safeViewPagerPosition());
+        try {
+            TabLayout.Tab selectedTab = mTabLayout.getTabAt(mTabLayout.getSelectedTabPosition());
+            if (selectedTab != null) {
+                updateFabVisibilityForPosition(selectedTab.getPosition());
+            }
+        } catch (Exception ignored) { }
+
         mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
-                if (position == 1 || position == 2 || position == 3) {
-                    fab.setVisibility(View.GONE);
-                } else {
-                    fab.setVisibility(View.VISIBLE);
+                if (position != 0 && isFabOpen) {
+                    closeFab();
                 }
+                updateFabVisibilityForPosition(position);
             }
         });
+
+        // Defensive: also react to tab selections
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab == null) return;
+                if (tab.getPosition() != 0 && isFabOpen) {
+                    closeFab();
+                }
+                updateFabVisibilityForPosition(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) { }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) { }
+        });
+    }
+
+    private void updateFabVisibilityForPosition(int position) {
+        try {
+            if (position == 0) {
+                fab.show();
+                fab.setVisibility(View.VISIBLE);
+            } else {
+                fab.hide();
+                fab.setVisibility(View.GONE);
+            }
+        } catch (Exception ignored) { }
+    }
+
+    private int safeViewPagerPosition() {
+        try {
+            return mViewPager.getCurrentItem();
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     // Safe getter for an existing page fragment managed by ViewPager2

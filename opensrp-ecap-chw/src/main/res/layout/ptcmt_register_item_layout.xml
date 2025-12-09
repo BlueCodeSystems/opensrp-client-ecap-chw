@@ -168,7 +168,7 @@
                 android:textSize="12sp"
                 android:fontFamily="sans-serif-medium"
                 android:background="@drawable/ripple_button_success"
-                android:visibility="gone" />
+                />
 
             <!-- Index pill -->
             <TextView

@@ -1127,9 +1127,13 @@ public class MotherDetail extends AppCompatActivity {
     }
 
     private void setupFabVisibility() {
-        // Show the floating menu only on the Overview tab, like IndexDetailsActivity
+        // Show the floating menu only on the Overview tab, and force-hide it elsewhere
+        updateFabVisibilityForPosition(safeViewPagerPosition());
         try {
-            fab.setVisibility(mViewPager.getCurrentItem() == 0 ? View.VISIBLE : View.GONE);
+            TabLayout.Tab selectedTab = mTabLayout.getTabAt(mTabLayout.getSelectedTabPosition());
+            if (selectedTab != null) {
+                updateFabVisibilityForPosition(selectedTab.getPosition());
+            }
         } catch (Exception ignored) { }
 
         mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -1139,9 +1143,47 @@ public class MotherDetail extends AppCompatActivity {
                 if (position != 0 && isFabOpen) {
                     closeFab();
                 }
-                fab.setVisibility(position == 0 ? View.VISIBLE : View.GONE);
+                updateFabVisibilityForPosition(position);
             }
         });
+
+        // Also react to tab selections as a defensive guard
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab == null) return;
+                if (tab.getPosition() != 0 && isFabOpen) {
+                    closeFab();
+                }
+                updateFabVisibilityForPosition(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) { }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) { }
+        });
+    }
+
+    private void updateFabVisibilityForPosition(int position) {
+        try {
+            if (position == 0) {
+                fab.show();
+                fab.setVisibility(View.VISIBLE);
+            } else {
+                fab.hide();
+                fab.setVisibility(View.GONE);
+            }
+        } catch (Exception ignored) { }
+    }
+
+    private int safeViewPagerPosition() {
+        try {
+            return mViewPager.getCurrentItem();
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     public void closeFab(){

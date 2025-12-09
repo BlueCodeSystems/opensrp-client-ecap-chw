@@ -95,7 +95,7 @@ public class PMTCTRegisterProvider implements RecyclerViewProvider<PMTCTRegister
 //        String gender = Utils.getValue(personObjectClient.getColumnmaps(), "caregiver_sex", true);
         String gender = "";
         String household_id = Utils.getValue(personObjectClient.getColumnmaps(), "mothers_smh_no", true);
-        String birthdate = Utils.getValue(personObjectClient.getColumnmaps(), "mothers_age", true);
+        String birthdate = Utils.getValue(personObjectClient.getColumnmaps(), "caregiver_birth_date", true);
 //        String client_type = Utils.getValue(personObjectClient.getColumnmaps(), "testing_modality", true);
         String client_type = "";
 
