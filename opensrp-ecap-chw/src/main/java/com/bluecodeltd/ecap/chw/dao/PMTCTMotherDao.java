@@ -54,11 +54,14 @@ public class PMTCTMotherDao extends AbstractDao {
             return null;
         }
 
-        String sql = "SELECT * FROM ec_pmtct_mother WHERE  household_id = '" + pmtctID + "' AND (delete_status IS NULL OR delete_status <> '1')";
+        // Some records key the PMTCT mother by pmtct_id, others by household_id.
+        // Search both so downstream flags (suppressed/unsuppressed VL) render correctly.
+        String sql = "SELECT * FROM ec_pmtct_mother WHERE   household_id = '" + pmtctID + "' " +
+                "AND (delete_status IS NULL OR delete_status <> '1')";
 
         List<PtctMotherModel> values = AbstractDao.readData(sql, getPtctMotherModelMap());
 
-        if (values.size() == 0) {
+        if (values == null || values.size() == 0) {
             return null;
         }
 

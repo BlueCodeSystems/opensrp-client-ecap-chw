@@ -119,22 +119,27 @@ public class PMTCTRegisterProvider implements RecyclerViewProvider<PMTCTRegister
         boolean unsuppressed = false;
         boolean suppressed = false;
         try {
+            PtctMotherModel mother = null;
             if (clientId != null && !clientId.trim().isEmpty()) {
-                PtctMotherModel mother = PMTCTMotherDao.getPMCTMother(clientId);
-                if (mother != null) {
-                    String agywUnsupp = safe(mother.getAgyw_unsuppressed_vl_1st());
-                    String unsupp = safe(mother.getUnsuppressed_vl_1st());
-                    unsuppressed = "yes".equalsIgnoreCase(agywUnsupp) || "yes".equalsIgnoreCase(unsupp);
-                    if (!unsuppressed) {
-                        // Consider suppressed when explicit 'no' present or VL result fields contain 'suppressed'
-                        suppressed = "no".equalsIgnoreCase(agywUnsupp) || "no".equalsIgnoreCase(unsupp)
-                                || containsWord(mother.getAgyw_vl_result_1st_trimester(), "suppressed")
-                                || containsWord(mother.getVl_result_1st_trimester(), "suppressed")
-                                || containsWord(mother.getAgyw_vl_result_2nd_trimester(), "suppressed")
-                                || containsWord(mother.getVl_result_2nd_trimester(), "suppressed")
-                                || containsWord(mother.getAgyw_vl_result_3rd_trimester(), "suppressed")
-                                || containsWord(mother.getVl_result_3rd_trimester(), "suppressed");
-                    }
+                mother = PMTCTMotherDao.getPMCTMother(clientId);
+            }
+            // Fallback: some rows key PMTCT records by household_id instead of pmtct_id
+            if (mother == null && householdId != null && !householdId.trim().isEmpty()) {
+                mother = PMTCTMotherDao.getPMCTMother(householdId);
+            }
+            if (mother != null) {
+                String agywUnsupp = safe(mother.getAgyw_unsuppressed_vl_1st());
+                String unsupp = safe(mother.getUnsuppressed_vl_1st());
+                unsuppressed = "yes".equalsIgnoreCase(agywUnsupp) || "yes".equalsIgnoreCase(unsupp);
+                if (!unsuppressed) {
+                    // Consider suppressed when explicit 'no' present or VL result fields contain 'suppressed'
+                    suppressed = "no".equalsIgnoreCase(agywUnsupp) || "no".equalsIgnoreCase(unsupp)
+                            || containsWord(mother.getAgyw_vl_result_1st_trimester(), "suppressed")
+                            || containsWord(mother.getVl_result_1st_trimester(), "suppressed")
+                            || containsWord(mother.getAgyw_vl_result_2nd_trimester(), "suppressed")
+                            || containsWord(mother.getVl_result_2nd_trimester(), "suppressed")
+                            || containsWord(mother.getAgyw_vl_result_3rd_trimester(), "suppressed")
+                            || containsWord(mother.getVl_result_3rd_trimester(), "suppressed");
                 }
             }
         } catch (Exception ignored) { }
