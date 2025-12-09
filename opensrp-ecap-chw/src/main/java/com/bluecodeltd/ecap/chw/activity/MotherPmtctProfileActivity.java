@@ -131,6 +131,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         NavigationMenu.getInstance(this, null, toolbar);
+        // Rely on NavigationMenu to set up navigation icon/drawer like other profile screens
         mTabLayout =  binding.tabs;
         mViewPager  = binding.viewpager;
         motherName = binding.motherName;
