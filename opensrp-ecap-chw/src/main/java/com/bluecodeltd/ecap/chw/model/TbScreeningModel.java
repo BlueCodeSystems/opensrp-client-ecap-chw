@@ -4,6 +4,9 @@ public class TbScreeningModel {
     private String base_entity_id;
     private String unique_id;
     private String unique_tb_id;
+    private String previous_tb_treatment;
+    private String treatment_year;
+    private String treatment_duration_months;
     private String history_close_tb_contact;
     private String history_close_tb_contact_year;
     private String tb_symptoms_child_lt10;
@@ -35,6 +38,15 @@ public class TbScreeningModel {
 
     public String getUnique_tb_id() { return unique_tb_id; }
     public void setUnique_tb_id(String unique_tb_id) { this.unique_tb_id = unique_tb_id; }
+
+    public String getPrevious_tb_treatment() { return previous_tb_treatment; }
+    public void setPrevious_tb_treatment(String previous_tb_treatment) { this.previous_tb_treatment = previous_tb_treatment; }
+
+    public String getTreatment_year() { return treatment_year; }
+    public void setTreatment_year(String treatment_year) { this.treatment_year = treatment_year; }
+
+    public String getTreatment_duration_months() { return treatment_duration_months; }
+    public void setTreatment_duration_months(String treatment_duration_months) { this.treatment_duration_months = treatment_duration_months; }
 
     public String getHistory_close_tb_contact() { return history_close_tb_contact; }
     public void setHistory_close_tb_contact(String history_close_tb_contact) { this.history_close_tb_contact = history_close_tb_contact; }

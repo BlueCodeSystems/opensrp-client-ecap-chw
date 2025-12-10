@@ -345,6 +345,27 @@
           }
         },
         {
+          "column_name": "previous_tb_treatment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.previous_tb_treatment"
+          }
+        },
+        {
+          "column_name": "treatment_year",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.treatment_year"
+          }
+        },
+        {
+          "column_name": "treatment_duration_months",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.treatment_duration_months"
+          }
+        },
+        {
           "column_name": "entity_type",
           "type": "Event",
           "json_mapping": {
@@ -11341,6 +11362,27 @@
           }
         },
         {
+          "column_name": "previous_tb_treatment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.previous_tb_treatment"
+          }
+        },
+        {
+          "column_name": "treatment_year",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.treatment_year"
+          }
+        },
+        {
+          "column_name": "treatment_duration_months",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.treatment_duration_months"
+          }
+        },
+        {
           "column_name": "entity_type",
           "type": "Event",
           "json_mapping": {
@@ -11511,6 +11553,27 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.tb_treatment_outcome_other_comment"
+          }
+        },
+        {
+          "column_name": "previous_tb_treatment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.previous_tb_treatment"
+          }
+        },
+        {
+          "column_name": "treatment_year",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.treatment_year"
+          }
+        },
+        {
+          "column_name": "treatment_duration_months",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.treatment_duration_months"
           }
         },
         {

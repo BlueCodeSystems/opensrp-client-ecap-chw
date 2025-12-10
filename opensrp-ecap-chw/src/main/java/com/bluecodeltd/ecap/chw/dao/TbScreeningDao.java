@@ -20,6 +20,9 @@ public class TbScreeningDao extends AbstractDao {
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setUnique_id(getCursorValue(c, "unique_id"));
             record.setUnique_tb_id(getCursorValue(c, "unique_tb_id"));
+            record.setPrevious_tb_treatment(getCursorValue(c, "previous_tb_treatment"));
+            record.setTreatment_year(getCursorValue(c, "treatment_year"));
+            record.setTreatment_duration_months(getCursorValue(c, "treatment_duration_months"));
             record.setHistory_close_tb_contact(getCursorValue(c, "history_close_tb_contact"));
             record.setHistory_close_tb_contact_year(getCursorValue(c, "history_close_tb_contact_year"));
             record.setTb_symptoms_child_lt10(getCursorValue(c, "tb_symptoms_child_lt10"));

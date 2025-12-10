@@ -77,10 +77,33 @@
         "read_only": "true"
       },
       {
+        "key": "previous_tb_treatment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "previous_tb_treatment",
+        "type": "native_radio",
+        "label": "Previous TB treatment?",
+        "text_color": "#000000",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Please select if there was previous TB treatment"
+        }
+      },
+      {
         "key": "treatment_year",
-        "openmrs_entity_parent": "1111AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "159526AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "treatment_year",
         "type": "edit_text",
         "hint": "If yes, year:",
         "edit_type": "number",
@@ -101,11 +124,11 @@
       },
       {
         "key": "treatment_duration_months",
-        "openmrs_entity_parent": "1111AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "159380AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "treatment_duration_months",
         "type": "edit_text",
-        "hint": "Duration:",
+        "hint": "Duration (Months)",
         "edit_type": "number",
         "suffix": "Months",
         "v_required": {
@@ -162,7 +185,7 @@
         "type": "edit_text",
         "label": "If yes, year",
         "hint": "Enter year of close TB contact (e.g., 2024)",
-        "edit_type": "name",
+        "edit_type": "number",
         "relevance": {
           "step1:history_close_tb_contact": {
             "type": "string",
