@@ -5,3 +5,10 @@ priority: 1
 condition: "(helper.formatDate(step1_adolescent_birthdate,'y') < 0.6)"
 actions:
   - "isRelevant = true"
+---
+name: step1_initiated_tb_treatment
+description: initiated_tb_treatment
+priority: 1
+condition: "step1_tb_diagnosis_at_facility.contains('clinically_diagnosed') || step1_tb_diagnosis_at_facility.contains('bacteriologically_confirmed')"
+actions:
+  - "isRelevant = true"

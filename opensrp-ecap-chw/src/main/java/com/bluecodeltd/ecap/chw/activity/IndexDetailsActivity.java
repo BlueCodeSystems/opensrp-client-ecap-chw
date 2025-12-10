@@ -948,6 +948,10 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 if (!ensureIndexVcaAvailable()) {
                     break;
                 }
+                if (!isTbScreeningCompliantForVisitation()) {
+                    Toasty.warning(IndexDetailsActivity.this, "TB screening for this quarter is required before household visitation for VCAs above 10 years.", Toast.LENGTH_LONG, true).show();
+                    break;
+                }
                 if(indexVCA.getDate_screened() != null) {
                     try {
 
@@ -2318,6 +2322,140 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         screeningModel.setName_ovc(indexVCA.getName_ovc());
         return screeningModel;
     }
+
+    private boolean isTbScreeningCompliantForVisitation() {
+        Integer ageYears = getCurrentAgeYears();
+        if (ageYears != null && ageYears > 10) {
+            String vcaId = indexVCA != null ? indexVCA.getUnique_id() : null;
+            return hasTbScreeningInCurrentQuarter(vcaId);
+        }
+        return true;
+    }
+
+    private Integer getCurrentAgeYears() {
+        String birthdate = getVcaBirthdate();
+        if (TextUtils.isEmpty(birthdate)) {
+            return null;
+        }
+        String normalized = normalizeBirthdate(birthdate);
+        if (normalized == null) {
+            return null;
+        }
+        try {
+            LocalDate dob = LocalDate.parse(normalized, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            return Period.between(dob, LocalDate.now()).getYears();
+        } catch (Exception e) {
+            Timber.e(e);
+            return null;
+        }
+    }
+
+    private String getVcaBirthdate() {
+        if (indexVCA != null && !TextUtils.isEmpty(indexVCA.getAdolescent_birthdate())) {
+            return indexVCA.getAdolescent_birthdate();
+        }
+        if (indexVCA != null && !TextUtils.isEmpty(indexVCA.getBirthdate())) {
+            return indexVCA.getBirthdate();
+        }
+        if (child != null && !TextUtils.isEmpty(child.getAdolescent_birthdate())) {
+            return child.getAdolescent_birthdate();
+        }
+        return null;
+    }
+
+    private String normalizeBirthdate(String birthdate) {
+        String trimmed = birthdate != null ? birthdate.trim() : null;
+        if (TextUtils.isEmpty(trimmed)) {
+            return null;
+        }
+        if (trimmed.matches("\\d{2}-\\d{2}-\\d{4}")) {
+            return trimmed;
+        }
+        String[] patterns = new String[]{"dd MMM yyyy", "yyyy-MM-dd", "dd/MM/yyyy"};
+        for (String pattern : patterns) {
+            try {
+                LocalDate parsed = LocalDate.parse(trimmed, DateTimeFormatter.ofPattern(pattern, Locale.ENGLISH));
+                return parsed.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            } catch (DateTimeParseException ignored) { }
+        }
+        return null;
+    }
+
+    private boolean hasTbScreeningInCurrentQuarter(String vcaId) {
+        if (TextUtils.isEmpty(vcaId)) {
+            return true;
+        }
+
+        List<TbScreeningModel> screenings = TbScreeningDao.listByVcaId(vcaId);
+        if (screenings == null || screenings.isEmpty()) {
+            return false;
+        }
+
+        Calendar quarterStart = Calendar.getInstance();
+        int currentMonth = quarterStart.get(Calendar.MONTH);
+        int startMonth = currentMonth - (currentMonth % 3);
+        quarterStart.set(Calendar.MONTH, startMonth);
+        quarterStart.set(Calendar.DAY_OF_MONTH, 1);
+        quarterStart.set(Calendar.HOUR_OF_DAY, 0);
+        quarterStart.set(Calendar.MINUTE, 0);
+        quarterStart.set(Calendar.SECOND, 0);
+        quarterStart.set(Calendar.MILLISECOND, 0);
+
+        for (TbScreeningModel screening : screenings) {
+            Date screeningDate = resolveScreeningDate(screening);
+            if (screeningDate != null && !screeningDate.before(quarterStart.getTime())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private Date resolveScreeningDate(TbScreeningModel screening) {
+        if (screening == null) return null;
+
+        Date fromTimestamp = parseTimestamp(screening.getLast_interacted_with());
+        if (fromTimestamp != null) return fromTimestamp;
+
+        Date fromStringTs = parseDayMonthYear(screening.getLast_interacted_with());
+        if (fromStringTs != null) return fromStringTs;
+
+        Date followUp = parseDayMonthYear(screening.getFollowup_date());
+        if (followUp != null) return followUp;
+
+        Date facilityDate = parseDayMonthYear(screening.getDate_screened_at_facility());
+        if (facilityDate != null) return facilityDate;
+
+        Date treatmentFollowUp = parseDayMonthYear(screening.getTreatment_followup_date());
+        if (treatmentFollowUp != null) return treatmentFollowUp;
+
+        return null;
+    }
+
+    private Date parseTimestamp(String timestamp) {
+        if (TextUtils.isEmpty(timestamp)) return null;
+        try {
+            long value = Long.parseLong(timestamp);
+            if (timestamp.length() <= 10) {
+                value *= 1000;
+            }
+            return new Date(value);
+        } catch (NumberFormatException e) {
+            Timber.e(e);
+            return null;
+        }
+    }
+
+    private Date parseDayMonthYear(String dateString) {
+        if (TextUtils.isEmpty(dateString)) return null;
+        String[] patterns = new String[]{"dd-MM-yyyy", "dd/MM/yyyy", "yyyy-MM-dd"};
+        for (String pattern : patterns) {
+            try {
+                return new SimpleDateFormat(pattern, Locale.ENGLISH).parse(dateString);
+            } catch (ParseException ignored) { }
+        }
+        return null;
+    }
+
     private double getAndCalculateAge(String birthdate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);

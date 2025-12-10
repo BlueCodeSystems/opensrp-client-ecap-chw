@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,9 +27,11 @@ import com.bluecodeltd.ecap.chw.adapter.VCAServiceAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.dao.TbScreeningDao;
 import com.bluecodeltd.ecap.chw.dao.VCAServiceReportDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
+import com.bluecodeltd.ecap.chw.model.TbScreeningModel;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.rey.material.widget.Button;
@@ -50,10 +53,18 @@ import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
@@ -69,10 +80,12 @@ public class VcaServiceActivity extends AppCompatActivity {
     private TextView vcaname,hh_id;
 
     private Button hh_services_link;
+    private Button addServiceReportButton;
     VCAServiceModel vcaServiceModel;
 
     private Toolbar toolbar;
     public String hivstatus, household_id,c_name,intent_vcaid,signature;
+    private boolean canAddServiceReport = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +103,7 @@ public class VcaServiceActivity extends AppCompatActivity {
         vcaname = binding.caregiverName;
         hh_id = binding.hhid;
         hh_services_link = binding.hhServiceLink;
+        addServiceReportButton = binding.services1;
         HouseholdLinkFromVca();
 
         intent_vcaid = getIntent().getExtras().getString("vcaid");
@@ -99,6 +113,7 @@ public class VcaServiceActivity extends AppCompatActivity {
         c_name = getIntent().getExtras().getString("vcaname");
         signature = getIntent().getExtras().getString("signature");
 
+        evaluateAddServiceButtonState();
 
 
         hh_id.setText(intent_vcaid);
@@ -133,6 +148,7 @@ public class VcaServiceActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+        evaluateAddServiceButtonState();
         recyclerView.setAdapter(recyclerViewadapter);
         try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
     }
@@ -144,6 +160,10 @@ public class VcaServiceActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.services1:
+                if (!canAddServiceReport) {
+                    Toasty.warning(this, "TB screening for this month is required before adding a service report for a VCA under 10 years.", Toast.LENGTH_LONG, true).show();
+                    return;
+                }
                 CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(intent_vcaid);
 
                 if (caseStatusModel == null) {
@@ -396,6 +416,156 @@ public class VcaServiceActivity extends AppCompatActivity {
         try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
     }
 
+    private void evaluateAddServiceButtonState() {
+        canAddServiceReport = shouldAllowServiceReport(intent_vcaid);
+        if (addServiceReportButton != null) {
+            // Keep button visually dimmed but clickable so we can surface the toast guard in onClick.
+            addServiceReportButton.setAlpha(canAddServiceReport ? 1f : 0.5f);
+            addServiceReportButton.setEnabled(true);
+            addServiceReportButton.setClickable(true);
+        }
+    }
+
+    private boolean shouldAllowServiceReport(String vcaId) {
+        if (TextUtils.isEmpty(vcaId)) {
+            return true;
+        }
+        Integer age = getVcaAgeInYears(vcaId);
+        if (age != null && age < 10) {
+            return hasTbScreeningInCurrentMonth(vcaId);
+        }
+        return true;
+    }
+
+    private Integer getVcaAgeInYears(String vcaId) {
+        String birthdate = getBirthdateSafe(vcaId);
+        String normalizedDate = normalizeBirthdate(birthdate);
+        if (normalizedDate == null) {
+            return null;
+        }
+        try {
+            LocalDate dob = LocalDate.parse(normalizedDate, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            return Period.between(dob, LocalDate.now()).getYears();
+        } catch (DateTimeParseException e) {
+            Timber.e(e);
+            return null;
+        }
+    }
+
+    private String normalizeBirthdate(String birthdate) {
+        if (TextUtils.isEmpty(birthdate)) {
+            return null;
+        }
+        String trimmed = birthdate.trim();
+        if (trimmed.matches("\\d{2}-\\d{2}-\\d{4}")) {
+            return trimmed;
+        }
+        String[] patterns = new String[]{"dd MMM yyyy", "yyyy-MM-dd", "dd/MM/yyyy"};
+        for (String pattern : patterns) {
+            try {
+                LocalDate parsedDate = LocalDate.parse(trimmed, DateTimeFormatter.ofPattern(pattern, Locale.ENGLISH));
+                return parsedDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            } catch (DateTimeParseException ignored) {
+            }
+        }
+        return null;
+    }
+
+    private String getBirthdateSafe(String vcaId) {
+        try {
+            return IndexPersonDao.getBirthdate(vcaId);
+        } catch (Exception e) {
+            Timber.e(e);
+            return null;
+        }
+    }
+
+    private boolean hasTbScreeningInCurrentMonth(String vcaId) {
+        try {
+            List<TbScreeningModel> screenings = TbScreeningDao.listByVcaId(vcaId);
+            if (screenings == null || screenings.isEmpty()) {
+                return false;
+            }
+
+            Calendar now = Calendar.getInstance();
+            int currentMonth = now.get(Calendar.MONTH);
+            int currentYear = now.get(Calendar.YEAR);
+
+            for (TbScreeningModel screening : screenings) {
+                Date screeningDate = resolveScreeningDate(screening);
+                if (screeningDate == null) {
+                    continue;
+                }
+
+                Calendar screeningCal = Calendar.getInstance();
+                screeningCal.setTime(screeningDate);
+                if (screeningCal.get(Calendar.MONTH) == currentMonth && screeningCal.get(Calendar.YEAR) == currentYear) {
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+        return false;
+    }
+
+    private Date resolveScreeningDate(TbScreeningModel screening) {
+        if (screening == null) {
+            return null;
+        }
+
+        Date fromTimestamp = parseTimestamp(screening.getLast_interacted_with());
+        if (fromTimestamp != null) {
+            return fromTimestamp;
+        }
+        Date fromLastInteracted = parseDayMonthYear(screening.getLast_interacted_with());
+        if (fromLastInteracted != null) {
+            return fromLastInteracted;
+        }
+
+        Date fromFollowUp = parseDayMonthYear(screening.getFollowup_date());
+        if (fromFollowUp != null) {
+            return fromFollowUp;
+        }
+
+        Date fromFacility = parseDayMonthYear(screening.getDate_screened_at_facility());
+        if (fromFacility != null) {
+            return fromFacility;
+        }
+
+        return parseDayMonthYear(screening.getTreatment_followup_date());
+    }
+
+    private Date parseTimestamp(String timestamp) {
+        if (TextUtils.isEmpty(timestamp)) {
+            return null;
+        }
+        try {
+            long value = Long.parseLong(timestamp);
+            if (timestamp.length() <= 10) {
+                value *= 1000;
+            }
+            return new Date(value);
+        } catch (NumberFormatException e) {
+            Timber.e(e);
+            return null;
+        }
+    }
+
+    private Date parseDayMonthYear(String dateString) {
+        if (TextUtils.isEmpty(dateString)) {
+            return null;
+        }
+        String[] patterns = new String[]{"dd-MM-yyyy", "dd/MM/yyyy", "yyyy-MM-dd"};
+        for (String pattern : patterns) {
+            try {
+                return new SimpleDateFormat(pattern, Locale.ENGLISH).parse(dateString);
+            } catch (ParseException ignored) {
+            }
+        }
+        return null;
+    }
+
     public void HouseholdLinkFromVca(){
 
         hh_services_link.setOnClickListener(v->{
@@ -413,6 +583,7 @@ public class VcaServiceActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         Intent intent = new Intent(VcaServiceActivity.this, IndexDetailsActivity.class);
         intent.putExtra("Child", intent_vcaid);
         startActivity(intent);
