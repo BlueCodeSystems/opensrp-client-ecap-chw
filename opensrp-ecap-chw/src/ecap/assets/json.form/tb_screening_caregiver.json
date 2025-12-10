@@ -55,17 +55,17 @@
     "title": "TB Screening",
     "fields": [
       {
-        "key": "unique_id",
+        "key": "household_id",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "unique_id",
+        "openmrs_entity_id": "household_id",
         "type": "edit_text",
-        "hint": "Children/Adolescent (CA) ID",
+        "hint": "Household ID",
         "edit_type": "name",
         "read_only": "true",
         "v_required": {
           "value": true,
-          "err": "Unique ID is Required"
+          "err": "Household ID is Required"
         }
       },
       {
@@ -75,6 +75,61 @@
         "openmrs_entity_id": "unique_tb_id",
         "type": "hidden",
         "read_only": "true"
+      },
+      {
+        "key": "treatment_year",
+        "openmrs_entity_parent": "1111AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "159526AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "type": "edit_text",
+        "hint": "If yes, year:",
+        "edit_type": "number",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter the treatment year"
+        },
+        "v_regex": {
+          "value": "^(19|20)\\d{2}$",
+          "err": "Please enter a valid year (YYYY)"
+        },
+        "relevance": {
+          "step1:previous_tb_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "treatment_duration_months",
+        "openmrs_entity_parent": "1111AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "159380AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "type": "edit_text",
+        "hint": "Duration:",
+        "edit_type": "number",
+        "suffix": "Months",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter the treatment duration"
+        },
+        "v_numeric": {
+          "value": "true",
+          "err": "Please enter a valid number"
+        },
+        "relevance": {
+          "step1:previous_tb_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "spacer1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "spacer",
+        "type": "spacer",
+        "spacer_height": "20dp"
       },
       {
         "key": "history_close_tb_contact",
@@ -115,76 +170,6 @@
           }
         }
       },
-
-      {
-        "key": "tb_symptoms_child_lt10",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "tb_symptoms_child_lt10",
-        "type": "check_box",
-        "label": "Symptoms/Signs for Children below 10 years old (Tick applicable)",
-        "label_info_text": "Tick all symptoms/signs that apply for children <10 years",
-        "options": [
-          {
-            "key": "History of close TB contact",
-            "text": "History of close TB contact"
-          },
-          {
-            "key": "current_cough",
-            "text": "Current cough"
-          },
-          {
-            "key": "underweight_poor_weight_gain_weight_loss",
-            "text": "Underweight / Poor weight gain / Weight loss"
-          },
-          {
-            "key": "swelling_in_neck",
-            "text": "Swelling in the neck"
-          },
-          {
-            "key": "Fever",
-            "text": "Fever"
-          },
-          {
-            "key": "anorexia_poor_appetite",
-            "text": "Anorexia (poor appetite)"
-          },
-          {
-            "key": "reduced_playfulness",
-            "text": "Reduced playfulness"
-          },
-
-          {
-            "key": "other",
-            "text": "Other, specify"
-          }
-        ]
-      },
-      {
-        "key": "tb_symptoms_child_lt10_other",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "tb_symptoms_child_lt10_other",
-        "type": "edit_text",
-        "hint": "Specify other symptom/sign for child <10 years",
-        "edit_type": "name",
-        "v_required": {
-          "value": true,
-          "err": "This field is required when 'Other, specify' is selected."
-        },
-        "relevance": {
-          "step1:tb_symptoms_child_lt10": {
-            "ex-checkbox": [
-              {
-                "or": [
-                  "other"
-                ]
-              }
-            ]
-          }
-        }
-      },
-
       {
         "key": "tb_symptoms_10plus",
         "openmrs_entity_parent": "",
@@ -244,7 +229,6 @@
           }
         }
       },
-
       {
         "key": "referred_for_tb_evaluation",
         "openmrs_entity_parent": "",

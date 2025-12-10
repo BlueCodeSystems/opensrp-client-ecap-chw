@@ -77,6 +77,90 @@
         "read_only": "true"
       },
       {
+        "key": "previous_tb_treatment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "1111AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "type": "native_radio",
+        "label": "Previous TB treatment?",
+        "text_color": "#000000",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "openmrs_entity_parent": "1111AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "openmrs_entity_parent": "1111AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Please select if there was previous TB treatment"
+        }
+      },
+      {
+        "key": "treatment_year",
+        "openmrs_entity_parent": "1111AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "159526AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "type": "edit_text",
+        "hint": "If yes, year:",
+        "edit_type": "number",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter the treatment year"
+        },
+        "v_regex": {
+          "value": "^(19|20)\\d{2}$",
+          "err": "Please enter a valid year (YYYY)"
+        },
+        "relevance": {
+          "step1:previous_tb_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "treatment_duration_months",
+        "openmrs_entity_parent": "1111AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "159380AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "type": "edit_text",
+        "hint": "Duration:",
+        "edit_type": "number",
+        "suffix": "Months",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter the treatment duration"
+        },
+        "v_numeric": {
+          "value": "true",
+          "err": "Please enter a valid number"
+        },
+        "relevance": {
+          "step1:previous_tb_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "spacer1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "spacer",
+        "type": "spacer",
+        "spacer_height": "20dp"
+      },
+      {
         "key": "history_close_tb_contact",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",

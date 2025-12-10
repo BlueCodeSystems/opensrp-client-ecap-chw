@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/tb_followup_dialog_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="20dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="16dp">
+
+        <!-- HEADER: pencil icon + title + subtitle + close button -->
+        <LinearLayout
+            android:id="@+id/tb_followup_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp">
+
+            <!-- Circular pencil icon -->
+            <ImageView
+                android:id="@+id/tb_followup_edit_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_tb_edit_icon_circle"
+                android:contentDescription="@string/tb_followup_edit_icon_cd"
+                android:padding="8dp"
+                android:src="@drawable/baseline_mode_edit_24"
+                app:tint="@android:color/white" />
+
+            <!-- Title + subtitle -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tb_followup_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:text="@string/tb_followup_title"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:textColor="@color/text_black" />
+
+                <TextView
+                    android:id="@+id/tb_followup_subtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:text="@string/tb_followup_subtitle"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:textColor="@color/light_grey_text" />
+            </LinearLayout>
+
+            <!-- Close button -->
+            <ImageButton
+                android:id="@+id/tb_followup_close"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Close TB follow-up"
+                android:padding="8dp"
+                android:src="@drawable/ic_close_24"
+                app:tint="@color/light_grey_text" />
+        </LinearLayout>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="12dp"
+            android:background="@color/divider_grey" />
+
+        <!-- CONTENT AREA: summary of TB follow-up (from your JSON) -->
+
+        <!-- CA ID -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Household ID"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            android:textColor="@color/light_grey_text" />
+
+            <TextView
+                android:id="@+id/tb_followup_ca_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="—"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:textColor="@color/text_black"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Date of follow-up -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/tb_followup_date_label"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            android:textColor="@color/light_grey_text" />
+
+            <TextView
+                android:id="@+id/tb_followup_last_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="—"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:textColor="@color/text_black" />
+        </LinearLayout>
+
+        <!-- Referral completed -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/tb_followup_referral_label"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            android:textColor="@color/light_grey_text" />
+
+            <TextView
+                android:id="@+id/tb_followup_referral_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="—"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:textColor="@color/text_black" />
+        </LinearLayout>
+
+        <!-- Diagnosis + treatment / TPT summary -->
+        <TextView
+            android:id="@+id/tb_followup_diagnosis_summary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/tb_followup_diagnosis_default"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:textColor="@color/light_grey_text" />
+
+        <!-- Comments preview -->
+        <TextView
+            android:id="@+id/tb_followup_comments_preview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:text=""
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:textColor="@color/light_grey_text" />
+
+    </LinearLayout>
+</ScrollView>

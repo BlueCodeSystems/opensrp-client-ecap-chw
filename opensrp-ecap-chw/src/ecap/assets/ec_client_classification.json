@@ -259,6 +259,14 @@
           },
           {
             "field": "eventType",
+            "field_value": "TB Screening Caregiver",
+            "creates_case": [
+              "ec_tb_screening_caregiver",
+              "ec_tb_screening_outcome_caregiver"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "Referral Registration",
             "creates_case": [
               "ec_referral"

@@ -360,8 +360,6 @@
         }
       ]
     },
-
-
     {
       "name": "ec_nutrition_assessment_intervention",
       "columns": [
@@ -479,7 +477,6 @@
         }
       ]
     },
-
     {
       "name": "ec_family_member",
       "columns": [
@@ -1146,7 +1143,6 @@
             "field": "attributes.unique_id"
           }
         },
-
         {
           "column_name": "last_interacted_with",
           "type": "Event",
@@ -1840,7 +1836,6 @@
             "field": "attributes.household_receiving_caseworker"
           }
         },
-
         {
           "column_name": "district_moved_to",
           "type": "Client",
@@ -1869,7 +1864,6 @@
             "field": "attributes.name_ovc"
           }
         }
-
       ]
     },
     {
@@ -2111,7 +2105,6 @@
             "field": "attributes.other_school"
           }
         },
-
         {
           "column_name": "is_hiv_positive",
           "type": "Client",
@@ -3024,7 +3017,6 @@
           "column_name": "age",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.age",
             "field": "attributes.age"
           }
         },
@@ -3663,7 +3655,6 @@
             "field": "attributes.suppressed_caregiver"
           }
         },
-
         {
           "column_name": "prevention",
           "type": "Client",
@@ -6325,7 +6316,6 @@
             "field": "attributes.medical_complications"
           }
         },
-
         {
           "column_name": "child_oedema",
           "type": "Client",
@@ -6340,8 +6330,6 @@
             "field": "attributes.oedema_stage"
           }
         },
-
-
         {
           "column_name": "delete_status",
           "type": "Client",
@@ -6791,7 +6779,6 @@
             "field": "attributes.date_edited"
           }
         },
-
         {
           "column_name": "caseworker_name",
           "type": "Client",
@@ -6939,7 +6926,6 @@
             "field": "attributes.date_of_hiv_test"
           }
         }
-
       ]
     },
     {
@@ -7305,7 +7291,6 @@
             "field": "relationships.family"
           }
         },
-
         {
           "column_name": "household_type",
           "type": "Client",
@@ -7719,13 +7704,11 @@
             "field": "attributes.caregiver_question"
           }
         }
-
       ]
     },
     {
       "name": "ec_household_service_report",
       "columns": [
-
         {
           "column_name": "hh_service_location",
           "type": "Client",
@@ -7817,7 +7800,6 @@
             "field": "attributes.other_stable_services"
           }
         },
-
         {
           "column_name": "hh_level_services",
           "type": "Client",
@@ -7928,7 +7910,6 @@
     {
       "name": "ec_child_safety_plan",
       "columns": [
-
         {
           "column_name": "household_id",
           "type": "Client",
@@ -7971,7 +7952,6 @@
             "field": "attributes.date_edited"
           }
         },
-
         {
           "column_name": "initial_date",
           "type": "Client",
@@ -8026,8 +8006,6 @@
     {
       "name": "ec_child_safety_actions",
       "columns": [
-
-
         {
           "column_name": "unique_id",
           "type": "Client",
@@ -8334,7 +8312,6 @@
             "field": "attributes.checked_by"
           }
         },
-
         {
           "column_name": "delete_status",
           "type": "Client",
@@ -8439,7 +8416,6 @@
           }
         },
         {
-
           "column_name": "relationship",
           "type": "Client",
           "json_mapping": {
@@ -8447,7 +8423,6 @@
           }
         },
         {
-
           "column_name": "other_relationship",
           "type": "Client",
           "json_mapping": {
@@ -8482,7 +8457,6 @@
             "field": "attributes.contact_accepts_HTS_offer"
           }
         },
-
         {
           "column_name": "hiv_status",
           "type": "Client",
@@ -9215,7 +9189,6 @@
           }
         },
         {
-
           "column_name": "date_enrolled_pmtct",
           "type": "Client",
           "json_mapping": {
@@ -9223,7 +9196,6 @@
           }
         },
         {
-
           "column_name": "first_name",
           "type": "Client",
           "json_mapping": {
@@ -9231,7 +9203,6 @@
           }
         },
         {
-
           "column_name": "last_name",
           "type": "Client",
           "json_mapping": {
@@ -9239,7 +9210,6 @@
           }
         },
         {
-
           "column_name": "mothers_age",
           "type": "Client",
           "json_mapping": {
@@ -9247,7 +9217,6 @@
           }
         },
         {
-
           "column_name": "home_address",
           "type": "Client",
           "json_mapping": {
@@ -9255,7 +9224,6 @@
           }
         },
         {
-
           "column_name": "nearest_landmark",
           "type": "Client",
           "json_mapping": {
@@ -9263,7 +9231,6 @@
           }
         },
         {
-
           "column_name": "mothers_phone",
           "type": "Client",
           "json_mapping": {
@@ -9271,7 +9238,6 @@
           }
         },
         {
-
           "column_name": "agyw_sm_number",
           "type": "Client",
           "json_mapping": {
@@ -9647,7 +9613,6 @@
             "field": "attributes.high_risk_hei"
           }
         },
-
         {
           "column_name": "hiv_test_outcome",
           "type": "Client",
@@ -9746,7 +9711,6 @@
             "field": "attributes.comments_tb"
           }
         },
-
         {
           "column_name": "deleted_status",
           "type": "Client",
@@ -9756,7 +9720,6 @@
         }
       ]
     },
-
     {
       "name": "ec_pmtct_child",
       "columns": [
@@ -10125,7 +10088,6 @@
             "field": "attributes.delete_status"
           }
         }
-
       ]
     },
     {
@@ -10152,7 +10114,6 @@
             "field": "attributes.household_id"
           }
         },
-
         {
           "column_name": "result_r_nr",
           "type": "Client",
@@ -10188,7 +10149,6 @@
             "field": "attributes.tb_screening"
           }
         },
-
         {
           "column_name": "syphilis_testing",
           "type": "Client",
@@ -10224,7 +10184,6 @@
             "field": "attributes.syphilis_result"
           }
         },
-
         {
           "column_name": "delete_status",
           "type": "Client",
@@ -11206,6 +11165,352 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.delete_status"
+          }
+        },
+        {
+          "column_name": "entity_type",
+          "type": "Event",
+          "json_mapping": {
+            "field": "attributes.entityType"
+          }
+        },
+        {
+          "column_name": "last_interacted_with",
+          "type": "Event",
+          "json_mapping": {
+            "field": "version"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ec_tb_screening_caregiver",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id"
+          }
+        },
+        {
+          "column_name": "unique_tb_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_tb_id"
+          }
+        },
+        {
+          "column_name": "history_close_tb_contact",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.history_close_tb_contact"
+          }
+        },
+        {
+          "column_name": "history_close_tb_contact_year",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.history_close_tb_contact_year"
+          }
+        },
+        {
+          "column_name": "tb_symptoms_child_lt10",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_symptoms_child_lt10"
+          }
+        },
+        {
+          "column_name": "tb_symptoms_child_lt10_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_symptoms_child_lt10_other"
+          }
+        },
+        {
+          "column_name": "tb_symptoms_10plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_symptoms_10plus"
+          }
+        },
+        {
+          "column_name": "tb_symptoms_10plus_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_symptoms_10plus_other"
+          }
+        },
+        {
+          "column_name": "referred_for_tb_evaluation",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.referred_for_tb_evaluation"
+          }
+        },
+        {
+          "column_name": "tb_referral_comment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_referral_comment"
+          }
+        },
+        {
+          "column_name": "followup_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.followup_date"
+          }
+        },
+        {
+          "column_name": "facility_referral_completed",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.facility_referral_completed"
+          }
+        },
+        {
+          "column_name": "date_screened_at_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_screened_at_facility"
+          }
+        },
+        {
+          "column_name": "tb_diagnosis_at_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_diagnosis_at_facility"
+          }
+        },
+        {
+          "column_name": "initiated_tb_treatment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.initiated_tb_treatment"
+          }
+        },
+        {
+          "column_name": "initiated_tpt",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.initiated_tpt"
+          }
+        },
+        {
+          "column_name": "section_c_comments",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.section_c_comments"
+          }
+        },
+        {
+          "column_name": "treatment_followup_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.treatment_followup_date"
+          }
+        },
+        {
+          "column_name": "tb_treatment_outcome",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_treatment_outcome"
+          }
+        },
+        {
+          "column_name": "tb_treatment_outcome_comment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_treatment_outcome_comment"
+          }
+        },
+        {
+          "column_name": "tb_treatment_outcome_other_comment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_treatment_outcome_other_comment"
+          }
+        },
+        {
+          "column_name": "entity_type",
+          "type": "Event",
+          "json_mapping": {
+            "field": "attributes.entityType"
+          }
+        },
+        {
+          "column_name": "last_interacted_with",
+          "type": "Event",
+          "json_mapping": {
+            "field": "version"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ec_tb_screening_outcome_caregiver",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "household_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.household_id"
+          }
+        },
+        {
+          "column_name": "unique_tb_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.unique_tb_id"
+          }
+        },
+        {
+          "column_name": "history_close_tb_contact",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.history_close_tb_contact"
+          }
+        },
+        {
+          "column_name": "history_close_tb_contact_year",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.history_close_tb_contact_year"
+          }
+        },
+        {
+          "column_name": "tb_symptoms_child_lt10",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_symptoms_child_lt10"
+          }
+        },
+        {
+          "column_name": "tb_symptoms_child_lt10_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_symptoms_child_lt10_other"
+          }
+        },
+        {
+          "column_name": "tb_symptoms_10plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_symptoms_10plus"
+          }
+        },
+        {
+          "column_name": "tb_symptoms_10plus_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_symptoms_10plus_other"
+          }
+        },
+        {
+          "column_name": "referred_for_tb_evaluation",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.referred_for_tb_evaluation"
+          }
+        },
+        {
+          "column_name": "tb_referral_comment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_referral_comment"
+          }
+        },
+        {
+          "column_name": "followup_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.followup_date"
+          }
+        },
+        {
+          "column_name": "facility_referral_completed",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.facility_referral_completed"
+          }
+        },
+        {
+          "column_name": "date_screened_at_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_screened_at_facility"
+          }
+        },
+        {
+          "column_name": "tb_diagnosis_at_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_diagnosis_at_facility"
+          }
+        },
+        {
+          "column_name": "initiated_tb_treatment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.initiated_tb_treatment"
+          }
+        },
+        {
+          "column_name": "initiated_tpt",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.initiated_tpt"
+          }
+        },
+        {
+          "column_name": "section_c_comments",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.section_c_comments"
+          }
+        },
+        {
+          "column_name": "treatment_followup_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.treatment_followup_date"
+          }
+        },
+        {
+          "column_name": "tb_treatment_outcome",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_treatment_outcome"
+          }
+        },
+        {
+          "column_name": "tb_treatment_outcome_comment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_treatment_outcome_comment"
+          }
+        },
+        {
+          "column_name": "tb_treatment_outcome_other_comment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tb_treatment_outcome_other_comment"
           }
         },
         {

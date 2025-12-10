@@ -61,9 +61,11 @@ import com.bluecodeltd.ecap.chw.dao.VcaAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.dao.WeServiceCaregiverDoa;
 import com.bluecodeltd.ecap.chw.dao.newCaregiverDao;
+import com.bluecodeltd.ecap.chw.dao.TbScreeningCaregiverDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.domain.Mother;
 import com.bluecodeltd.ecap.chw.fragment.CaregiverHivAssessmentFragment;
+import com.bluecodeltd.ecap.chw.fragment.CaregiverTbScreeningFragment;
 import com.bluecodeltd.ecap.chw.fragment.GraduationAssessmentFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.HouseholdChildrenFragment;
@@ -142,7 +144,7 @@ public class HouseholdDetails extends AppCompatActivity {
     private FloatingActionButton fab,callFab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
-    private RelativeLayout refferal, rcase_plan, rassessment, rscreen, child_form, household_visitation_caregiver, grad_form, chivAssessment,we_service_caregiver;
+    private RelativeLayout refferal, rcase_plan, rassessment, rscreen, child_form, household_visitation_caregiver, grad_form, chivAssessment,we_service_caregiver, tb_screening_caregiver;
     public String countFemales, countMales, virally_suppressed, childrenCount, householdId, positiveChildren;
     private String refresh;
     private UniqueIdRepository uniqueIdRepository;
@@ -228,6 +230,7 @@ public class HouseholdDetails extends AppCompatActivity {
         refferal = binding.hReferral;
         child_form = binding.childForm;
         household_visitation_caregiver = binding.householdVisitationCaregiver;
+        tb_screening_caregiver = binding.tbScreeningCaregiver;
         mTabLayout =  binding.tabs;
         mViewPager  = binding.viewpager;
         try {
@@ -283,6 +286,7 @@ public class HouseholdDetails extends AppCompatActivity {
             updateChildTabTitle();
             updateCaseplanTitle();
             updateOverviewTabTitle();
+            updateTbTabTitle();
             updateGradTabTitle();
             setupFabVisibility();
             txtDistrict.setText(householdId);
@@ -436,6 +440,7 @@ public class HouseholdDetails extends AppCompatActivity {
         fragments.add(new HouseholdChildrenFragment());
         fragments.add(new HouseholdCasePlanFragment());
         fragments.add(new HouseholdVisitsFragment());
+        fragments.add(new CaregiverTbScreeningFragment());
         fragments.add(new GraduationAssessmentFragment());
 
         String hivStatus = house.getCaregiver_hiv_status();
@@ -455,17 +460,19 @@ public class HouseholdDetails extends AppCompatActivity {
                 case 1: tab.setText(getString(R.string.fragment_members)); break;
                 case 2: tab.setText("CP"); break;
                 case 3: tab.setText(getString(R.string.fragment_housevisits)); break;
-                case 4: tab.setText("Grad"); break;
-                case 5: tab.setText("HIV ASSESSMENT"); break;
+                case 4: tab.setText("TB SCREENING"); break;
+                case 5: tab.setText("Grad"); break;
+                case 6: tab.setText("HIV ASSESSMENT"); break;
                 default: break;
             }
         });
         tabMediator.attach();
 
         // Apply custom tab titles/counts
-        if (fragments.size() > 5) {
+        if (fragments.size() > 6) {
             updateHivRiskTabTitle();
         }
+        updateTbTabTitle();
 
         // Debug: log fragments after adapter
         logFragments("after_setAdapter");
@@ -636,7 +643,7 @@ public class HouseholdDetails extends AppCompatActivity {
         visitTabCount.setText(String.valueOf(visits));
         visitTabCount.setVisibility(View.GONE);
 
-        mTabLayout.getTabAt(5).setCustomView(taskTabTitleLayout);
+        mTabLayout.getTabAt(6).setCustomView(taskTabTitleLayout);
     }
     private void updateGradTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
@@ -649,7 +656,23 @@ public class HouseholdDetails extends AppCompatActivity {
         visitTabCount.setText(String.valueOf(visits));
 //        visitTabCount.setVisibility(View.GONE);
 
-        mTabLayout.getTabAt(4).setCustomView(taskTabTitleLayout);
+        mTabLayout.getTabAt(5).setCustomView(taskTabTitleLayout);
+    }
+    private void updateTbTabTitle() {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
+        visitTabTitle.setText("TB SCREENING");
+        visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
+
+        String caregiverId = house != null && house.getHousehold_id() != null ? house.getHousehold_id() : householdId;
+        int visits = TbScreeningCaregiverDao.countByCaregiverId(caregiverId);
+
+        visitTabCount.setText(String.valueOf(visits));
+        visitTabCount.setVisibility(View.VISIBLE);
+
+        if (mTabLayout.getTabCount() > 4 && mTabLayout.getTabAt(4) != null) {
+            mTabLayout.getTabAt(4).setCustomView(taskTabTitleLayout);
+        }
     }
     private void updateOverviewTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
@@ -1214,6 +1237,27 @@ public class HouseholdDetails extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 break;
+            case R.id.tb_screening_caregiver:
+                try {
+                    long todayMillis = java.util.Calendar.getInstance().getTimeInMillis();
+                    boolean alreadyToday = TbScreeningCaregiverDao.existsOnSameDateByUniqueId(house.getHousehold_id(), todayMillis);
+                    if (alreadyToday) {
+                        Toasty.warning(HouseholdDetails.this, "TB Screening already done today", Toast.LENGTH_LONG, true).show();
+                        break;
+                    }
+                    JSONObject tbForm = formUtils.getFormJson("tb_screening_caregiver");
+                    JSONObject householdIdField = getFieldJSONObject(fields(tbForm, "step1"), "household_id");
+                    if (householdIdField != null) householdIdField.put("value", house.getHousehold_id());
+                    JSONObject uniqueTb = getFieldJSONObject(fields(tbForm, "step1"), "unique_tb_id");
+                    if (uniqueTb != null) uniqueTb.put("value", org.smartregister.util.JsonFormUtils.generateRandomUUIDString());
+                    if (house.getBase_entity_id() != null) {
+                        tbForm.put("entity_id", house.getBase_entity_id());
+                    }
+                    startFormActivity(tbForm);
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+                break;
 
             case R.id.hiv_assessment_caregiver:
                 try {
@@ -1417,6 +1461,7 @@ public class HouseholdDetails extends AppCompatActivity {
                         case "Graduation":
                         case "Household Case Status":
                         case "Household Visitation For Caregiver Edit":
+                        case "TB Screening Caregiver":
 
                             closeFab();
                             Toasty.success(HouseholdDetails.this, "Form Updated and Saved", Toast.LENGTH_LONG, true).show();
@@ -1613,6 +1658,18 @@ public class HouseholdDetails extends AppCompatActivity {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
                                 encounterType, Constants.EcapClientTable.EC_HOUSEHOLD);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+
+                    break;
+                case "TB Screening Caregiver":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_TB_SCREENING_CAREGIVER);
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);
@@ -1907,6 +1964,7 @@ public class HouseholdDetails extends AppCompatActivity {
             child_form.setVisibility(View.VISIBLE);
             household_visitation_caregiver.setVisibility(View.VISIBLE);
             we_service_caregiver.setVisibility(View.VISIBLE);
+            tb_screening_caregiver.setVisibility(View.VISIBLE);
 
         }
     }
@@ -1923,6 +1981,7 @@ public class HouseholdDetails extends AppCompatActivity {
         child_form.setVisibility(View.GONE);
         household_visitation_caregiver.setVisibility(View.GONE);
         we_service_caregiver.setVisibility(View.GONE);
+        tb_screening_caregiver.setVisibility(View.GONE);
     }
 
     public void countNumberOfMales(List<String> allBirthDates) {
