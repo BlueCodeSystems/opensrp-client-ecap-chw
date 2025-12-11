@@ -149,7 +149,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             clientId= extras.getString("client_id");
-            String householdId = extras.getString("household_id");
+            String householdId = extras.getString("25BBPMXINACTIVE");
             if (isNullOrEmpty(householdId)) {
                 householdId = extras.getString("householdId");
             }

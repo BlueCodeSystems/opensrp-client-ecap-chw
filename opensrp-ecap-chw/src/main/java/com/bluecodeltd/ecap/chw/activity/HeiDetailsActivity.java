@@ -1280,7 +1280,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         Intent intent = new Intent(this, MotherPmtctProfileActivity.class);
-        intent.putExtra("client_id",  pmtctChild.getPmtct_id());
+        intent.putExtra("client_id",  pmtctChild.getHousehold_id());
         startActivity(intent);
         this.finish();
 

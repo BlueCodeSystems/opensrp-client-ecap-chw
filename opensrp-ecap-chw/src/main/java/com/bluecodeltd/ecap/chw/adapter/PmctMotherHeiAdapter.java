@@ -50,20 +50,25 @@ Context context;
 
 
 
-                holder.genderIcon.setImageResource((monitoringModel.getInfants_sex() != null && monitoringModel.getInfants_sex().equals("male")) ? org.smartregister.R.drawable.child_boy_infant : org.smartregister.R.drawable.child_girl_infant);
+        holder.genderIcon.setImageResource((monitoringModel.getInfants_sex() != null && monitoringModel.getInfants_sex().equals("male")) ? org.smartregister.R.drawable.child_boy_infant : org.smartregister.R.drawable.child_girl_infant);
 
         // Flag conditions
         boolean heiHighRisk = false; // Mother unsuppressed VL
         boolean heiHivPositive = false; // HEI tests HIV-positive at birth
         try {
-            String pmtctId = monitoringModel.getPmtct_id();
-            if (pmtctId != null && !pmtctId.trim().isEmpty()) {
-                com.bluecodeltd.ecap.chw.model.PtctMotherModel mother = com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao.getPMCTMother(pmtctId);
-                if (mother != null) {
-                    String agywUnsupp = safe(mother.getAgyw_unsuppressed_vl_1st());
-                    String unsupp = safe(mother.getUnsuppressed_vl_1st());
-                    heiHighRisk = "yes".equalsIgnoreCase(agywUnsupp) || "yes".equalsIgnoreCase(unsupp);
-                }
+            String householdId = safe(monitoringModel.getHousehold_id());
+            String pmtctId = safe(monitoringModel.getHousehold_id());
+            com.bluecodeltd.ecap.chw.model.PtctMotherModel mother = null;
+            if (!householdId.isEmpty()) {
+                mother = com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao.getPMCTMother(householdId);
+            }
+            if (mother == null && !pmtctId.isEmpty()) {
+                mother = com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao.getPMCTMother(pmtctId);
+            }
+            if (mother != null) {
+                String agywUnsupp = safe(mother.getAgyw_unsuppressed_vl_1st());
+                String unsupp = safe(mother.getUnsuppressed_vl_1st());
+                heiHighRisk = "yes".equalsIgnoreCase(agywUnsupp) || "yes".equalsIgnoreCase(unsupp);
             }
             // HIV positive at birth flag (D = Detected)
             String trBirth = safe(monitoringModel.getTest_result_at_birth());
