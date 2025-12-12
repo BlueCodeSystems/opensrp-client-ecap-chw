@@ -105,6 +105,9 @@ public class ChwRepositoryFlv {
                 case 24:
                     upgradeToVersion24(db);
                     break;
+                case 25:
+                    upgradeToVersion25(db);
+                    break;
                 default:
                     break;
             }
@@ -805,6 +808,283 @@ public class ChwRepositoryFlv {
             db.execSQL(RepositoryUtils.EC_FAMILY_MEMBER_LOCATION_PROVIDER_ID_INDEX);
         } catch (Exception e) {
             Timber.e(e, "upgradeToVersion24");
+        }
+    }
+
+    private static void upgradeToVersion25(SQLiteDatabase db) {
+        try {
+            db.execSQL("CREATE TABLE IF NOT EXISTS ec_mother_anc (" +
+                    "base_entity_id TEXT, " +
+                    "household_id TEXT, " +
+                    "date_1st_visit TEXT, " +
+                    "gestation_age_in_weeks TEXT, " +
+                    "hiv_tested TEXT, " +
+                    "date_tested TEXT, " +
+                    "result_of_hiv_test TEXT, " +
+                    "male_hiv_tested TEXT, " +
+                    "male_result_of_hiv_test TEXT, " +
+                    "gravida TEXT, " +
+                    "parity TEXT, " +
+                    "lmp_date TEXT, " +
+                    "edd_date TEXT, " +
+                    "tt_previous_doses TEXT, " +
+                    "delete_status TEXT, " +
+                    "entity_type TEXT, " +
+                    "last_interacted_with TEXT" +
+                    ")");
+
+            db.execSQL("CREATE TABLE IF NOT EXISTS ec_child_final_outcome (" +
+                    "base_entity_id TEXT, " +
+                    "household_id TEXT, " +
+                    "unique_id TEXT, " +
+                    "infant_final_outcome_date TEXT, " +
+                    "infant_final_hiv_status TEXT, " +
+                    "infant_discharged_hiv_negative TEXT, " +
+                    "infant_hiv_positive_on_art TEXT, " +
+                    "infant_final_outcome TEXT, " +
+                    "infant_exited_ovc_reason TEXT, " +
+                    "infant_final_outcome_comments TEXT, " +
+                    "delete_status TEXT, " +
+                    "entity_type TEXT, " +
+                    "last_interacted_with TEXT" +
+                    ")");
+
+            db.execSQL("CREATE TABLE IF NOT EXISTS ec_child_longitudinal_follow_up (" +
+                    "base_entity_id TEXT, " +
+                    "household_id TEXT, " +
+                    "unique_id TEXT, " +
+                    "infant_visit_number TEXT, " +
+                    "infant_date_of_visit TEXT, " +
+                    "infant_age TEXT, " +
+                    "infant_vaccinations_given TEXT, " +
+                    "infant_muac_reading TEXT, " +
+                    "infant_oedema_present TEXT, " +
+                    "infant_breastfeeding_status TEXT, " +
+                    "infant_vitamin_a_given TEXT, " +
+                    "infant_growth_monitoring_done TEXT, " +
+                    "infant_deworming_given TEXT, " +
+                    "infant_followup_comments TEXT, " +
+                    "delete_status TEXT, " +
+                    "entity_type TEXT, " +
+                    "last_interacted_with TEXT" +
+                    ")");
+
+            db.execSQL("CREATE TABLE IF NOT EXISTS ec_child_postnatal_care (" +
+                    "base_entity_id TEXT, " +
+                    "household_id TEXT, " +
+                    "unique_id TEXT, " +
+                    "pnc_infant_visit_type TEXT, " +
+                    "pnc_infant_feeding_type TEXT, " +
+                    "pnc_infant_hiv_test_done TEXT, " +
+                    "pnc_infant_on_art_if_positive TEXT, " +
+                    "pnc_infant_ctx_given TEXT, " +
+                    "pnc_infant_immunization_up_to_date TEXT, " +
+                    "pnc_infant_growth_monitoring_done TEXT, " +
+                    "pnc_infant_growth_normal TEXT, " +
+                    "pnc_infant_referred_for_complications TEXT, " +
+                    "weight_at_birth TEXT, " +
+                    "under_five_card_number TEXT, " +
+                    "pnc_infant_comments TEXT, " +
+                    "delete_status TEXT, " +
+                    "entity_type TEXT, " +
+                    "last_interacted_with TEXT" +
+                    ")");
+
+            db.execSQL("CREATE TABLE IF NOT EXISTS ec_nutrition_assessment_intervention (" +
+                    "base_entity_id TEXT, " +
+                    "unique_id TEXT, " +
+                    "date_of_assessment TEXT, " +
+                    "muac_category TEXT, " +
+                    "oedema_stage TEXT, " +
+                    "wfa_category TEXT, " +
+                    "intervention_status TEXT, " +
+                    "referral_services TEXT, " +
+                    "other_referral_services TEXT, " +
+                    "why_not_referred TEXT, " +
+                    "referral_completed TEXT, " +
+                    "nutrition_counselling_services TEXT, " +
+                    "other_nutrition_counselling_services TEXT, " +
+                    "good_practices_services TEXT, " +
+                    "other_good_practices_services TEXT, " +
+                    "last_interacted_with TEXT" +
+                    ")");
+
+            db.execSQL("CREATE TABLE IF NOT EXISTS ec_mother_longitudinal_follow_up (" +
+                    "base_entity_id TEXT, " +
+                    "household_id TEXT, " +
+                    "contact_count_number TEXT, " +
+                    "lfu_date_of_visit TEXT, " +
+                    "lfu_gestation_weeks TEXT, " +
+                    "lfu_weight_kg TEXT, " +
+                    "lfu_deworming TEXT, " +
+                    "lfu_current_tt_doses TEXT, " +
+                    "lfu_folate TEXT, " +
+                    "lfu_iron TEXT, " +
+                    "lfu_hiv_subsequent_test_result TEXT, " +
+                    "lfu_enrolled_community_pmtct_if_positive TEXT, " +
+                    "lfu_started_prep_if_negative TEXT, " +
+                    "lfu_syphilis_test_result TEXT, " +
+                    "lfu_syphilis_treatment_regimen TEXT, " +
+                    "lfu_hepb_test_result TEXT, " +
+                    "lfu_hepb_on_treatment TEXT, " +
+                    "lfu_ipt_given_dose TEXT, " +
+                    "lfu_received_itn TEXT, " +
+                    "lfu_anc_as_couple TEXT, " +
+                    "lfu_partner_tested_hiv TEXT, " +
+                    "lfu_partner_test_result TEXT, " +
+                    "lfu_discordant TEXT, " +
+                    "lfu_partner_on_art TEXT, " +
+                    "lfu_partner_syphilis_test TEXT, " +
+                    "lfu_partner_hepb_screen TEXT, " +
+                    "lfu_partner_started_prep TEXT, " +
+                    "lfu_breast_cancer_screening TEXT, " +
+                    "lfu_suspected_breast_cancer TEXT, " +
+                    "lfu_tb_status TEXT, " +
+                    "lfu_tpt_status TEXT, " +
+                    "lfu_special_conditions TEXT, " +
+                    "delete_status TEXT, " +
+                    "entity_type TEXT, " +
+                    "last_interacted_with TEXT" +
+                    ")");
+
+            db.execSQL("CREATE TABLE IF NOT EXISTS ec_mother_postnatal_care (" +
+                    "base_entity_id TEXT, " +
+                    "household_id TEXT, " +
+                    "pnc_visit_type TEXT, " +
+                    "pnc_type_of_feeding TEXT, " +
+                    "pnc_hiv_test_done TEXT, " +
+                    "pnc_on_prep TEXT, " +
+                    "pnc_fp_counselling TEXT, " +
+                    "pnc_cervical_cancer_screening TEXT, " +
+                    "pnc_sti_screening TEXT, " +
+                    "pnc_comments TEXT, " +
+                    "delete_status TEXT, " +
+                    "entity_type TEXT, " +
+                    "last_interacted_with TEXT" +
+                    ")");
+
+            db.execSQL("CREATE TABLE IF NOT EXISTS ec_mother_outcome (" +
+                    "base_entity_id TEXT, " +
+                    "household_id TEXT, " +
+                    "mother_final_outcome_date TEXT, " +
+                    "mother_final_outcome TEXT, " +
+                    "mother_exited_ovc_reason TEXT, " +
+                    "delete_status TEXT, " +
+                    "entity_type TEXT, " +
+                    "last_interacted_with TEXT" +
+                    ")");
+
+            db.execSQL("CREATE TABLE IF NOT EXISTS ec_tb_screening (" +
+                    "base_entity_id TEXT, " +
+                    "unique_id TEXT, " +
+                    "unique_tb_id TEXT, " +
+                    "history_close_tb_contact TEXT, " +
+                    "history_close_tb_contact_year TEXT, " +
+                    "tb_symptoms_child_lt10 TEXT, " +
+                    "tb_symptoms_child_lt10_other TEXT, " +
+                    "tb_symptoms_10plus TEXT, " +
+                    "tb_symptoms_10plus_other TEXT, " +
+                    "referred_for_tb_evaluation TEXT, " +
+                    "tb_referral_comment TEXT, " +
+                    "followup_date TEXT, " +
+                    "facility_referral_completed TEXT, " +
+                    "date_screened_at_facility TEXT, " +
+                    "tb_diagnosis_at_facility TEXT, " +
+                    "initiated_tb_treatment TEXT, " +
+                    "initiated_tpt TEXT, " +
+                    "section_c_comments TEXT, " +
+                    "treatment_followup_date TEXT, " +
+                    "tb_treatment_outcome TEXT, " +
+                    "tb_treatment_outcome_comment TEXT, " +
+                    "tb_treatment_outcome_other_comment TEXT, " +
+                    "previous_tb_treatment TEXT, " +
+                    "treatment_year TEXT, " +
+                    "treatment_duration_months TEXT, " +
+                    "entity_type TEXT, " +
+                    "last_interacted_with TEXT" +
+                    ")");
+
+            db.execSQL("CREATE TABLE IF NOT EXISTS ec_tb_screening_caregiver (" +
+                    "base_entity_id TEXT, " +
+                    "unique_id TEXT, " +
+                    "household_id TEXT, " +
+                    "unique_tb_id TEXT, " +
+                    "history_close_tb_contact TEXT, " +
+                    "history_close_tb_contact_year TEXT, " +
+                    "tb_symptoms_child_lt10 TEXT, " +
+                    "tb_symptoms_child_lt10_other TEXT, " +
+                    "tb_symptoms_10plus TEXT, " +
+                    "tb_symptoms_10plus_other TEXT, " +
+                    "referred_for_tb_evaluation TEXT, " +
+                    "tb_referral_comment TEXT, " +
+                    "followup_date TEXT, " +
+                    "facility_referral_completed TEXT, " +
+                    "date_screened_at_facility TEXT, " +
+                    "tb_diagnosis_at_facility TEXT, " +
+                    "initiated_tb_treatment TEXT, " +
+                    "initiated_tpt TEXT, " +
+                    "section_c_comments TEXT, " +
+                    "treatment_followup_date TEXT, " +
+                    "tb_treatment_outcome TEXT, " +
+                    "tb_treatment_outcome_comment TEXT, " +
+                    "tb_treatment_outcome_other_comment TEXT, " +
+                    "previous_tb_treatment TEXT, " +
+                    "treatment_year TEXT, " +
+                    "treatment_duration_months TEXT, " +
+                    "entity_type TEXT, " +
+                    "last_interacted_with TEXT" +
+                    ")");
+
+            db.execSQL("CREATE TABLE IF NOT EXISTS ec_tb_screening_outcome (" +
+                    "base_entity_id TEXT, " +
+                    "unique_tb_id TEXT, " +
+                    "followup_date TEXT, " +
+                    "facility_referral_completed TEXT, " +
+                    "date_screened_at_facility TEXT, " +
+                    "tb_diagnosis_at_facility TEXT, " +
+                    "initiated_tb_treatment TEXT, " +
+                    "initiated_tpt TEXT, " +
+                    "section_c_comments TEXT, " +
+                    "treatment_followup_date TEXT, " +
+                    "tb_treatment_outcome TEXT, " +
+                    "tb_treatment_outcome_comment TEXT, " +
+                    "entity_type TEXT, " +
+                    "last_interacted_with TEXT" +
+                    ")");
+
+            db.execSQL("CREATE TABLE IF NOT EXISTS ec_tb_screening_outcome_caregiver (" +
+                    "base_entity_id TEXT, " +
+                    "unique_id TEXT, " +
+                    "household_id TEXT, " +
+                    "unique_tb_id TEXT, " +
+                    "history_close_tb_contact TEXT, " +
+                    "history_close_tb_contact_year TEXT, " +
+                    "tb_symptoms_child_lt10 TEXT, " +
+                    "tb_symptoms_child_lt10_other TEXT, " +
+                    "tb_symptoms_10plus TEXT, " +
+                    "tb_symptoms_10plus_other TEXT, " +
+                    "referred_for_tb_evaluation TEXT, " +
+                    "tb_referral_comment TEXT, " +
+                    "followup_date TEXT, " +
+                    "facility_referral_completed TEXT, " +
+                    "date_screened_at_facility TEXT, " +
+                    "tb_diagnosis_at_facility TEXT, " +
+                    "initiated_tb_treatment TEXT, " +
+                    "initiated_tpt TEXT, " +
+                    "section_c_comments TEXT, " +
+                    "treatment_followup_date TEXT, " +
+                    "tb_treatment_outcome TEXT, " +
+                    "tb_treatment_outcome_comment TEXT, " +
+                    "tb_treatment_outcome_other_comment TEXT, " +
+                    "previous_tb_treatment TEXT, " +
+                    "treatment_year TEXT, " +
+                    "treatment_duration_months TEXT, " +
+                    "entity_type TEXT, " +
+                    "last_interacted_with TEXT" +
+                    ")");
+
+        } catch (Exception e) {
+            Timber.e(e, "upgradeToVersion25");
         }
     }
 
