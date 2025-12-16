@@ -41,6 +41,7 @@ import com.bluecodeltd.ecap.chw.model.FamilyProfileModel;
 import com.bluecodeltd.ecap.chw.model.ReferralTypeModel;
 import com.bluecodeltd.ecap.chw.presenter.AncMemberProfilePresenter;
 import com.bluecodeltd.ecap.chw.schedulers.ChwScheduleTaskExecutor;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.commonregistry.AllCommonsRepository;
 import org.smartregister.commonregistry.CommonPersonObject;
@@ -220,9 +221,25 @@ public class AncMemberProfileActivity extends CoreAncMemberProfileActivity imple
                     String phoneNumber = phoneNumberObject.getString(CoreJsonFormUtils.VALUE);
                     String baseEntityId = baseEvent.getBaseEntityId();
                     if (commonsRepository != null) {
-                        ContentValues values = new ContentValues();
-                        values.put(DBConstants.KEY.PHONE_NUMBER, phoneNumber);
-                        CoreChwApplication.getInstance().getRepository().getWritableDatabase().update(CoreConstants.TABLE_NAME.ANC_MEMBER, values, DBConstants.KEY.BASE_ENTITY_ID + " = ?  ", new String[]{baseEntityId});
+                        final String baseEntityIdFinal = baseEntityId;
+                        final String phoneNumberFinal = phoneNumber;
+                        Threading.io(() -> {
+                            try {
+                                ContentValues values = new ContentValues();
+                                values.put(DBConstants.KEY.PHONE_NUMBER, phoneNumberFinal);
+                                CoreChwApplication.getInstance()
+                                        .getRepository()
+                                        .getWritableDatabase()
+                                        .update(
+                                                CoreConstants.TABLE_NAME.ANC_MEMBER,
+                                                values,
+                                                DBConstants.KEY.BASE_ENTITY_ID + " = ?  ",
+                                                new String[]{baseEntityIdFinal}
+                                        );
+                            } catch (Exception e) {
+                                Timber.e(e, "Failed to update ANC member phone number");
+                            }
+                        });
                     }
 
                 } else if (form.getString(JsonFormUtils.ENCOUNTER_TYPE).equals(CoreConstants.EventType.ANC_REFERRAL)) {

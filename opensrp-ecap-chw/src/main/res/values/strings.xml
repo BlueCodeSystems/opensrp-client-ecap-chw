@@ -20,7 +20,7 @@
     <string name="routine_household_visit">Routine household visit</string>
     <string name="update">Update</string>
     <string name="vaccination_done_earlier">Vaccination done earlier</string>
-    <string name="enter_pin_for_user">Enter PIN for user</string>
+    <string name="enter_pin_for_user">Enter PIN for %s</string>
     <string name="forgot_pin">Forgot PIN?</string>
     <string name="use_your_password">Use your password</string>
     <string name="sick_visits">Sick visits</string>
@@ -43,8 +43,8 @@
     <string name="pnc_observation_and_illness_mother">Observation and illness - mother</string>
     <string name="pnc_umblicord_care">Umbilical cord care</string>
     <string name="pnc_umblicord_care_child">Umbilical cord care (child)</string>
-    <string name="profile_activity_completed">Completed</string>
-    <string name="profile_activity_not_visited">Not visited</string>
+    <string name="profile_activity_completed">Completed on %s</string>
+    <string name="profile_activity_not_visited">Not visited on %s</string>
     <string name="received_llin">Received LLIN</string>
     <string name="refer_to_facilty">Refer to facility</string>
     <string name="refresh_indicators">Refresh indicators</string>
@@ -244,11 +244,11 @@
     <string name="children_6_23_months_upto_date_mnp">Children (6–23 months) up to date with MNP supplementation</string>
     <string name="children_6_59_months_received_vitamin_A">Children (6–59 months) received vitamin A (last 6 months)</string>
     <string name="client_malaria_follow_up">Client malaria follow-up</string>
-    <string name="created">Created</string>
+    <string name="created">Created: %s</string>
     <string name="danger_signs_counselling">Danger signs counselling</string>
-    <string name="deworming_number_dose">Deworming dose number</string>
+    <string name="deworming_number_dose">Deworming %s dose</string>
     <string name="error_opening_profile">Error opening profile</string>
-    <string name="exclusive_breastfeeding_months">Exclusive breastfeeding (months)</string>
+    <string name="exclusive_breastfeeding_months">Exclusive breastfeeding %s months</string>
     <string name="facility_ovc_register">Children/Adolescent</string>
     <string name="family_has_nothing_else_due">Family has nothing else due</string>
     <string name="family_planning_not_done">Family planning not done</string>
@@ -271,7 +271,7 @@
     <string name="menu_all_families">All families</string>
     <string name="menu_anc">ANC</string>
     <string name="menu_pnc">PNC</string>
-    <string name="mnp_number_pack">MNP pack number</string>
+    <string name="mnp_number_pack">MNP %s pack</string>
     <string name="moderate">Moderate</string>
     <string name="mother_index_register">Mother index register</string>
     <string name="normal">Normal</string>
@@ -292,7 +292,7 @@
     <string name="tb_referral">TB referral</string>
     <string name="unique_id_text">Unique ID</string>
     <string name="updating">Updating…</string>
-    <string name="vitamin_a_number_dose">Vitamin A dose number</string>
+    <string name="vitamin_a_number_dose">Vitamin A %s dose</string>
     <string name="open_referral_form">Open %s referral</string>
     
     <!-- Placeholders for locales missing default values (to satisfy aapt2) -->

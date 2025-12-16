@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import com.bluecodeltd.ecap.chw.fragment.PinLoginFragment;
 import com.bluecodeltd.ecap.chw.pinlogin.PinLogger;
 import com.bluecodeltd.ecap.chw.pinlogin.PinLoginUtil;
 import com.bluecodeltd.ecap.chw.presenter.LoginPresenter;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.bluecodeltd.ecap.chw.util.Utils;
 
 import org.smartregister.family.util.Constants;
@@ -49,6 +51,9 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
     boolean connected;
     private ActivityResultLauncher<String> exportDatabaseLauncher;
     private String pendingDatabaseName;
+    private volatile Boolean cachedAppVersionAllowed = null;
+    private volatile boolean appVersionCheckInFlight = false;
+    private volatile long appVersionCheckToken = 0L;
 
 
     @Override
@@ -77,6 +82,9 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
         super.onResume();
 
         try {
+            // Avoid stale values across sessions.
+            cachedAppVersionAllowed = null;
+            appVersionCheckInFlight = false;
 
             if (mLoginPresenter != null) {
                 mLoginPresenter.processViewCustomizations();
@@ -99,6 +107,61 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
             Log.e("onResume", "An unexpected error occurred: " + e.getMessage());
 
         }
+    }
+
+    @Override
+    public boolean isAppVersionAllowed() {
+        Boolean cached = cachedAppVersionAllowed;
+        if (cached != null) return cached;
+        return super.isAppVersionAllowed();
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view != null && view.getId() == R.id.login_login_btn) {
+            // Avoid blocking the main thread on SQLCipher locks (SettingsRepository query).
+            if (cachedAppVersionAllowed != null) {
+                super.onClick(view);
+                return;
+            }
+            if (appVersionCheckInFlight) return;
+            appVersionCheckInFlight = true;
+            final long token = ++appVersionCheckToken;
+            view.setEnabled(false);
+            Toast.makeText(this, "Checking app version…", Toast.LENGTH_SHORT).show();
+
+            // Safety: avoid leaving the button disabled forever if the DB lock never clears.
+            Threading.main(() -> Threading.mainHandler().postDelayed(() -> {
+                if (!appVersionCheckInFlight) return;
+                if (appVersionCheckToken != token) return;
+                appVersionCheckInFlight = false;
+                if (!isFinishing() && !isDestroyed()) {
+                    view.setEnabled(true);
+                    Toast.makeText(this, "Version check timed out. Please try again.", Toast.LENGTH_SHORT).show();
+                }
+            }, 6000L));
+
+            Threading.io(() -> {
+                boolean allowed = false; // fail-closed
+                try {
+                    allowed = LoginActivity.super.isAppVersionAllowed();
+                } catch (Throwable t) {
+                    Timber.e(t, "isAppVersionAllowed check failed");
+                }
+                cachedAppVersionAllowed = allowed;
+
+                Threading.main(() -> {
+                    if (appVersionCheckToken != token) return;
+                    appVersionCheckInFlight = false;
+                    if (isFinishing() || isDestroyed()) return;
+                    view.setEnabled(true);
+                    LoginActivity.super.onClick(view);
+                });
+            });
+            return;
+        }
+
+        super.onClick(view);
     }
 
 

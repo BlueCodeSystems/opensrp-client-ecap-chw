@@ -30,6 +30,7 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -147,42 +148,51 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
             }
         });
 
-        CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(casePlan.getUnique_id());
+        final String rowTag = casePlan.getBase_entity_id() != null ? casePlan.getBase_entity_id()
+                : (casePlan.getUnique_id() != null ? casePlan.getUnique_id() : String.valueOf(position));
+        holder.itemView.setTag(R.id.tag_row_id, rowTag);
 
-    holder.editme.setOnClickListener(v -> {
-                String status = null;
-                try { status = caseStatusModel != null ? caseStatusModel.getCase_status() : null; } catch (Exception ignored) {}
-                if (status != null && (status.equals("0") || status.equals("2"))) {
-                    Dialog dialog = new Dialog(context);
-                    dialog.setContentView(R.layout.dialog_layout);
-                    dialog.show();
+        holder.editme.setOnClickListener(v ->
+                android.widget.Toast.makeText(context, "Loading case status…", android.widget.Toast.LENGTH_SHORT).show());
 
-                    TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                    String first = caseStatusModel != null && caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "This beneficiary";
-                    String last = caseStatusModel != null && caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "";
-                    dialogMessage.setText(first + (last.isEmpty()? "":(" "+last)) + " was either de-registered or inactive in the program");
+        final String uniqueId = casePlan.getUnique_id();
+        Threading.ioBestEffort(() -> {
+            CaseStatusModel caseStatusModel = null;
+            try { caseStatusModel = IndexPersonDao.getCaseStatus(uniqueId); } catch (Exception ignored) {}
+            final CaseStatusModel finalCaseStatusModel = caseStatusModel;
+            Threading.main(() -> {
+                Object tag = holder.itemView.getTag(R.id.tag_row_id);
+                if (!(tag instanceof String) || !rowTag.equals(tag)) return;
 
-                    Button dialogButton = dialog.findViewById(R.id.dialog_button);
-                    dialogButton.setOnClickListener(va -> dialog.dismiss());
+                holder.editme.setOnClickListener(v -> {
+                    String status = null;
+                    try { status = finalCaseStatusModel != null ? finalCaseStatusModel.getCase_status() : null; } catch (Exception ignored) {}
+                    if (status != null && ("0".equals(status) || "2".equals(status))) {
+                        Dialog dialog = new Dialog(context);
+                        dialog.setContentView(R.layout.dialog_layout);
+                        dialog.show();
 
-                } else {
-                    if (v.getId() == R.id.edit_me) {
+                        TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                        String first = finalCaseStatusModel != null && finalCaseStatusModel.getFirst_name() != null ? finalCaseStatusModel.getFirst_name() : "This beneficiary";
+                        String last = finalCaseStatusModel != null && finalCaseStatusModel.getLast_name() != null ? finalCaseStatusModel.getLast_name() : "";
+                        dialogMessage.setText(first + (last.isEmpty()? "":(" "+last)) + " was either de-registered or inactive in the program");
 
+                        Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                        dialogButton.setOnClickListener(va -> dialog.dismiss());
+                    } else {
                         try {
                             if (context instanceof CasePlan) {
                                 openFormUsingFormUtils(context, "domain", casePlan);
                             } else {
                                 openFormUsingFormUtils(context, "caregiver_domain", casePlan);
                             }
-
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
-                }
-
-    });
+                });
+            });
+        });
     holder.delete.setOnClickListener(v -> {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage("You are about to delete this vulnerability");

@@ -101,20 +101,17 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             return;
         }
 
-        Child fetchedChild = IndexPersonDao.getChildByBaseId(childUniqueID);
-        final Child child = fetchedChild != null ? fetchedChild : listChild;
-        if (child == null) {
-            Log.w("ChildrenAdapter", "Unable to load child record for unique_id: " + childUniqueID);
-            resetViewHolder(holder);
-            return;
-        }
+        final Child initialChild = listChild;
+        final String rowTag = childUniqueID;
+        holder.itemView.setTag(R.id.tag_row_id, rowTag);
+        holder.itemView.setTag(initialChild);
 
         try{
 
-            if(child.getFirst_name() == null || child.getLast_name() == null){
+            if(initialChild.getFirst_name() == null || initialChild.getLast_name() == null){
                 holder.fullName.setText("");
             } else {
-                holder.fullName.setText(child.getFirst_name() + " " + child.getLast_name());
+                holder.fullName.setText(initialChild.getFirst_name() + " " + initialChild.getLast_name());
             }
         } catch (NullPointerException e) {
             holder.fullName.setText("");
@@ -123,7 +120,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
         try{
 
-            dob = checkAndConvertDateFormat(child.getAdolescent_birthdate());
+            dob = checkAndConvertDateFormat(initialChild.getAdolescent_birthdate());
 
         } catch (NullPointerException e) {
 
@@ -133,16 +130,11 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
 
         String memberAge = getAgeWithoutText(dob);
+        final String dobLocal = dob;
 
 
         try{
-            caseStatus = IndexPersonDao.getIndexStatus(child.getBaseEntity_id());
-        } catch(NullPointerException e) {
-            caseStatus = "1";
-        }
-
-        try{
-            if(child.getIndex_check_box() != null && (child.getIndex_check_box().equals("1") || child.getIndex_check_box().equals("yes"))){
+            if(initialChild.getIndex_check_box() != null && (initialChild.getIndex_check_box().equals("1") || initialChild.getIndex_check_box().equals("yes"))){
                 holder.is_index.setVisibility(View.VISIBLE);
             } else {
                 holder.is_index.setVisibility(View.GONE);
@@ -158,21 +150,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
 //        newCaregiverModel caregiverModel = newCaregiverDao.getNewCaregiverById(child.getHousehold_id());
 
-        if(caseStatus != null && caseStatus.equals("1")){
-
-            holder.colorView.setBackgroundColor(Color.parseColor("#05b714"));
-
-        } else if (caseStatus != null && caseStatus.equals("0")) {
-
-            holder.colorView.setBackgroundColor(Color.parseColor("#ff0000"));
-
-        } else if(caseStatus != null && caseStatus.equals("2")){
-
-            holder.colorView.setBackgroundColor(Color.parseColor("#ffa500"));
-        }
-        else{
-            holder.colorView.setBackgroundColor(Color.parseColor("#696969"));
-        }
+        holder.colorView.setBackgroundColor(Color.parseColor("#696969"));
 
 //        if(caregiverModel.getHousehold_case_status() != null && caregiverModel.getHousehold_case_status().equals("0")){
 //
@@ -181,7 +159,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
         // Populate age and gender line
         String ageText = (dob != null && !"Invalid birthdate format".equals(dob)) ? getAge(dob) : null;
-        String gender = child.getGender();
+        String gender = initialChild.getGender();
         StringBuilder ageGenderLine = new StringBuilder();
         if (ageText != null && !ageText.isEmpty()) {
             ageGenderLine.append(ageText);
@@ -194,7 +172,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         holder.ageGender.setText(ageGenderLine.toString());
 
         // Caregiver / mother name
-        String caregiver = child.getCaregiver_name();
+        String caregiver = initialChild.getCaregiver_name();
         if (caregiver != null && !caregiver.isEmpty()) {
             holder.caregiverName.setText("Mother: " + caregiver);
         } else {
@@ -202,33 +180,115 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         }
 
         holder.muacButton.setVisibility(View.GONE);
-        // Enable MUAC Button
-        if(caseStatus != null && (caseStatus.equals("0") || caseStatus.equals("1")) && isAgeBetween6MonthsAnd5Years(dob)){
+        holder.muacButton.setTag(null);
 
-//            holder.muacButton.setVisibility(View.VISIBLE);
+        Threading.ioBestEffort(() -> {
+            Child fetchedChild = null;
+            try { fetchedChild = IndexPersonDao.getChildByBaseId(childUniqueID); } catch (Exception ignored) {}
+            Child effectiveChild = fetchedChild != null ? fetchedChild : initialChild;
 
-            holder.muacButton.setTag(childUniqueID);
-            Threading.io(() -> {
-                MuacModel localMuac = null;
-                try { localMuac = MuacDao.getMuac(child.getUnique_id()); } catch (Exception ignored) {}
-                MuacModel finalMuac = localMuac;
-                Threading.main(() -> {
-                    if (!childUniqueID.equals(holder.muacButton.getTag())) return;
-                    if(finalMuac != null){
-                        holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_outline_blue, 0, 0, 0);
-                    } else {
-                        holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_warning_orange, 0, 0, 0);
+            String resolvedCaseStatus = null;
+            try {
+                String baseEntityId = effectiveChild != null ? effectiveChild.getBaseEntity_id() : null;
+                if (!TextUtils.isEmpty(baseEntityId)) {
+                    resolvedCaseStatus = IndexPersonDao.getIndexStatus(baseEntityId);
+                }
+            } catch (Exception ignored) {}
+
+            boolean eligibleForMuac = resolvedCaseStatus != null &&
+                    (resolvedCaseStatus.equals("0") || resolvedCaseStatus.equals("1")) &&
+                    isAgeBetween6MonthsAnd5Years(dobLocal);
+
+            MuacModel muac = null;
+            if (eligibleForMuac) {
+                try { muac = MuacDao.getMuac(childUniqueID); } catch (Exception ignored) {}
+            }
+
+            Child finalChild = effectiveChild;
+            String finalCaseStatus = resolvedCaseStatus;
+            boolean finalEligibleForMuac = eligibleForMuac;
+            boolean hasMuac = muac != null;
+
+            Threading.main(() -> {
+                Object currentTag = holder.itemView.getTag(R.id.tag_row_id);
+                if (!(currentTag instanceof String) || !rowTag.equals(currentTag)) return;
+
+                if (finalChild != null) {
+                    holder.itemView.setTag(finalChild);
+
+                    try{
+                        if(finalChild.getFirst_name() == null || finalChild.getLast_name() == null){
+                            holder.fullName.setText("");
+                        } else {
+                            holder.fullName.setText(finalChild.getFirst_name() + " " + finalChild.getLast_name());
+                        }
+                    } catch (Exception ignored) {}
+
+                    try{
+                        String resolvedDob = checkAndConvertDateFormat(finalChild.getAdolescent_birthdate());
+                        String resolvedAgeText = (resolvedDob != null && !"Invalid birthdate format".equals(resolvedDob)) ? getAge(resolvedDob) : null;
+                        String resolvedGender = finalChild.getGender();
+                        StringBuilder resolvedAgeGender = new StringBuilder();
+                        if (resolvedAgeText != null && !resolvedAgeText.isEmpty()) resolvedAgeGender.append(resolvedAgeText);
+                        if (resolvedGender != null && !resolvedGender.isEmpty()) {
+                            if (resolvedAgeGender.length() > 0) resolvedAgeGender.append(" \u2022 ");
+                            resolvedAgeGender.append(resolvedGender.substring(0, 1).toUpperCase(Locale.ENGLISH))
+                                    .append(resolvedGender.length() > 1 ? resolvedGender.substring(1).toLowerCase(Locale.ENGLISH) : "");
+                        }
+                        holder.ageGender.setText(resolvedAgeGender.toString());
+                    } catch (Exception ignored) {}
+
+                    try{
+                        String cg = finalChild.getCaregiver_name();
+                        holder.caregiverName.setText(!TextUtils.isEmpty(cg) ? ("Mother: " + cg) : "");
+                    } catch (Exception ignored) {}
+
+                    try{
+                        if(finalChild.getIndex_check_box() != null && (finalChild.getIndex_check_box().equals("1") || finalChild.getIndex_check_box().equals("yes"))){
+                            holder.is_index.setVisibility(View.VISIBLE);
+                        } else {
+                            holder.is_index.setVisibility(View.GONE);
+                        }
+                    } catch (Exception ignored) {
+                        holder.is_index.setVisibility(View.GONE);
                     }
-                });
-            });
+                }
 
-        } else {
-            holder.muacButton.setVisibility(View.GONE);
-        }
+                if(finalCaseStatus != null && finalCaseStatus.equals("1")){
+                    holder.colorView.setBackgroundColor(Color.parseColor("#05b714"));
+                } else if (finalCaseStatus != null && finalCaseStatus.equals("0")) {
+                    holder.colorView.setBackgroundColor(Color.parseColor("#ff0000"));
+                } else if(finalCaseStatus != null && finalCaseStatus.equals("2")){
+                    holder.colorView.setBackgroundColor(Color.parseColor("#ffa500"));
+                } else{
+                    holder.colorView.setBackgroundColor(Color.parseColor("#696969"));
+                }
+
+                if (finalEligibleForMuac) {
+                    holder.muacButton.setTag(childUniqueID);
+                    holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(
+                            hasMuac ? R.drawable.ic_info_outline_blue : R.drawable.ic_warning_orange,
+                            0, 0, 0
+                    );
+                } else {
+                    holder.muacButton.setVisibility(View.GONE);
+                    holder.muacButton.setTag(null);
+                }
+
+                try {
+                    Child current = holder.itemView.getTag() instanceof Child ? (Child) holder.itemView.getTag() : null;
+                    String caregiverStatusLocal = current != null ? current.getCaregiver_hiv_status() : null;
+                    boolean caregiverPositive = caregiverStatusLocal != null &&
+                            (caregiverStatusLocal.equalsIgnoreCase("positive") || caregiverStatusLocal.equalsIgnoreCase("HIV+"));
+                    holder.openProfileBtn.setVisibility(caregiverPositive ? View.GONE : View.VISIBLE);
+                } catch (Exception ignored) {}
+            });
+        });
 
 
         holder.muacButton.setOnClickListener(v -> {
 
+            Child child = holder.itemView.getTag() instanceof Child ? (Child) holder.itemView.getTag() : initialChild;
             FormUtils formUtils = null;
             try {
                 formUtils = new FormUtils(context);
@@ -269,16 +329,17 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
         holder.openProfileBtn.setOnClickListener(v -> {
             try {
-                String baseEntityId = child.getBase_entity_id();
-                String householdId = child.getHousehold_id();
-                String uniqueId = child.getUnique_id();
+                Child child = holder.itemView.getTag() instanceof Child ? (Child) holder.itemView.getTag() : initialChild;
+                String baseEntityId = child != null ? child.getBase_entity_id() : null;
+                String householdId = child != null ? child.getHousehold_id() : null;
+                String uniqueId = child != null ? child.getUnique_id() : null;
                 ChildNonPmtctDetail.start((Activity) context, baseEntityId, householdId, uniqueId);
             } catch (Exception e) {
                 Toasty.error(context, "Unable to open child profile", Toast.LENGTH_LONG, true).show();
             }
         });
         // Show child profile button only when caregiver HIV status is negative/unknown
-        String caregiverStatus = child.getCaregiver_hiv_status();
+        String caregiverStatus = initialChild.getCaregiver_hiv_status();
         boolean caregiverPositive = caregiverStatus != null &&
                 (caregiverStatus.equalsIgnoreCase("positive") || caregiverStatus.equalsIgnoreCase("HIV+"));
         holder.openProfileBtn.setVisibility(caregiverPositive ? View.GONE : View.VISIBLE);
@@ -289,7 +350,8 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
                 case (R.id.register_columns):
 
-                    String subpop3 = child.getSubpop3();
+                    Child child = holder.itemView.getTag() instanceof Child ? (Child) holder.itemView.getTag() : initialChild;
+                    String subpop3 = child != null ? child.getSubpop3() : null;
                     if (subpop3 == null) {
                         Toasty.warning(context, "Member data incomplete", Toast.LENGTH_LONG, true).show();
                         return;
@@ -299,7 +361,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
                         Intent intent = new Intent(context, IndexDetailsActivity.class);
                         intent.putExtra("fromIndex", "321");
-                        intent.putExtra("Child",  child.getUnique_id());
+                        intent.putExtra("Child",  child != null ? child.getUnique_id() : childUniqueID);
                         context.startActivity(intent);
 
                     } /*else if (!isEligibleForEnrollment(child)){

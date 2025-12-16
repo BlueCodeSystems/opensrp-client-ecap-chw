@@ -30,6 +30,7 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -86,6 +87,10 @@ public class ShowHouseholdReferralsAdapter extends RecyclerView.Adapter<ShowHous
         final ReferralModel showReferrals = referrals.get(position);
 
         holder.setIsRecyclable(false);
+        String rowTag = (showReferrals.getBase_entity_id() != null && !showReferrals.getBase_entity_id().isEmpty())
+                ? showReferrals.getBase_entity_id()
+                : (showReferrals.getHousehold_id() + ":" + position);
+        holder.itemView.setTag(R.id.tag_row_id, rowTag);
 
         holder.txtDate.setText(showReferrals.getReferred_date());
 
@@ -104,24 +109,25 @@ public class ShowHouseholdReferralsAdapter extends RecyclerView.Adapter<ShowHous
             }
         });
         holder.editme.setOnClickListener(v -> {
-
-            Household household = HouseholdDao.getHousehold(showReferrals.getHousehold_id());
-           if (household.getHousehold_case_status() != null && (household.getHousehold_case_status().equals("0") || household.getHousehold_case_status().equals("2"))) {
-                showDialogBox(showReferrals.getHousehold_id(), "`s has been inactive or de-registered");
-            } else{
-                if (v.getId() == R.id.edit_me) {
-
-                    try {
-
-                        openFormUsingFormUtils(context, "household_referral_edit", showReferrals);
-
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+            Threading.io(() -> {
+                Household household = null;
+                try { household = HouseholdDao.getHousehold(showReferrals.getHousehold_id()); } catch (Exception ignored) {}
+                Household finalHousehold = household;
+                Threading.main(() -> {
+                    if (finalHousehold != null && finalHousehold.getHousehold_case_status() != null &&
+                            ("0".equals(finalHousehold.getHousehold_case_status()) || "2".equals(finalHousehold.getHousehold_case_status()))) {
+                        showDialogBox(finalHousehold.getCaregiver_name(), "`s has been inactive or de-registered");
+                    } else{
+                        if (v.getId() == R.id.edit_me) {
+                            try {
+                                openFormUsingFormUtils(context, "household_referral_edit", showReferrals);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
-
-                }
-            }
+                });
+            });
 
         });
         holder.delete.setOnClickListener(v -> {
@@ -177,20 +183,27 @@ public class ShowHouseholdReferralsAdapter extends RecyclerView.Adapter<ShowHous
             }
         });
 
-        Household household = HouseholdDao.getHousehold(showReferrals.getHousehold_id());
-
         String encodedSignature = showReferrals.getSignature();
-        String encodeSignatureHousehold = household.getSignature();
-
-
-        if(encodedSignature != null && encodedSignature != "") {
+        holder.signatureView.setVisibility(View.GONE);
+        if(encodedSignature != null && !encodedSignature.isEmpty()) {
             setImageViewFromBase64(encodedSignature, holder.signatureView);
+            holder.signatureView.setVisibility(View.VISIBLE);
         } else {
-            if(encodeSignatureHousehold != null && encodeSignatureHousehold != "") {
-                setImageViewFromBase64(encodeSignatureHousehold, holder.signatureView);
-            } else {
-                holder.signatureView.setVisibility(View.GONE);
-            }
+            Threading.ioBestEffort(() -> {
+                Household household = null;
+                try { household = HouseholdDao.getHousehold(showReferrals.getHousehold_id()); } catch (Exception ignored) {}
+                String encodeSignatureHousehold = household != null ? household.getSignature() : null;
+                Threading.main(() -> {
+                    Object currentTag = holder.itemView.getTag(R.id.tag_row_id);
+                    if (!(currentTag instanceof String) || !rowTag.equals(currentTag)) return;
+                    if(encodeSignatureHousehold != null && !encodeSignatureHousehold.isEmpty()) {
+                        setImageViewFromBase64(encodeSignatureHousehold, holder.signatureView);
+                        holder.signatureView.setVisibility(View.VISIBLE);
+                    } else {
+                        holder.signatureView.setVisibility(View.GONE);
+                    }
+                });
+            });
         }
 
     }
@@ -217,14 +230,13 @@ public class ShowHouseholdReferralsAdapter extends RecyclerView.Adapter<ShowHous
         }
     }
 
-    public void showDialogBox(String householdId,String message){
+    public void showDialogBox(String caregiverName,String message){
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_layout);
         dialog.show();
 
         TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-        Household house = HouseholdDao.getHousehold(householdId);
-        dialogMessage.setText(house.getCaregiver_name() + message);
+        dialogMessage.setText((caregiverName != null ? caregiverName : "") + message);
 
         android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
         dialogButton.setOnClickListener(v -> dialog.dismiss());

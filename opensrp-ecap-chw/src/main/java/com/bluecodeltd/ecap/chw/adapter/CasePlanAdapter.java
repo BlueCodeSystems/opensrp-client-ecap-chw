@@ -28,6 +28,7 @@ import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -91,9 +92,24 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
         holder.txtCaseDate.setText(casePlan.getCase_plan_date());
         holder.txtCasePlanStatus.setText(casePlan.getCase_plan_status());
 
-        String vulnerabilities = CasePlanDao.countVulnerabilities(casePlan.getUnique_id(), casePlan.getCase_plan_date());
+        final String rowTag = casePlan.getBase_entity_id() != null ? casePlan.getBase_entity_id()
+                : (casePlan.getUnique_id() != null ? casePlan.getUnique_id() : String.valueOf(position));
+        holder.itemView.setTag(R.id.tag_row_id, rowTag);
 
-        holder.txtVulnerabilities.setText(vulnerabilities + " Vulnerabilities");
+        holder.txtVulnerabilities.setText("Loading…");
+        holder.delete.setVisibility(View.INVISIBLE);
+        Threading.ioBestEffort(() -> {
+            String vulnerabilities = null;
+            try { vulnerabilities = CasePlanDao.countVulnerabilities(casePlan.getUnique_id(), casePlan.getCase_plan_date()); } catch (Exception ignored) {}
+            final String finalVulnerabilities = vulnerabilities;
+            Threading.main(() -> {
+                Object tag = holder.itemView.getTag(R.id.tag_row_id);
+                if (!(tag instanceof String) || !rowTag.equals(tag)) return;
+                String vCount = (finalVulnerabilities == null || finalVulnerabilities.trim().isEmpty()) ? "0" : finalVulnerabilities.trim();
+                holder.txtVulnerabilities.setText(vCount + " Vulnerabilities");
+                holder.delete.setVisibility("0".equals(vCount) ? View.VISIBLE : View.INVISIBLE);
+            });
+        });
 
         try {
             Date thedate = new SimpleDateFormat("dd-MM-yyyy").parse(casePlan.getCase_plan_date());
@@ -137,11 +153,6 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
 
             }
         });
-        if(vulnerabilities.equals("0")){
-            holder.delete.setVisibility(View.VISIBLE);
-        } else {
-            holder.delete.setVisibility(View.INVISIBLE);
-        }
         holder.delete.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setMessage("You are about to delete this VCA case plan");

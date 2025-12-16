@@ -35,6 +35,7 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.rey.material.widget.Button;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -131,28 +132,40 @@ public class CasePlan extends AppCompatActivity {
     }
 
     public void fetchData() {
-        domainList.clear();
-        domainList.addAll(IndexPersonDao.getDomainsById(childId, caseDate));
+        final String fChildId = childId;
+        final String fCaseDate = caseDate;
+        Threading.io(() -> {
+            List<CasePlanModel> domains = new ArrayList<>();
+            try { domains = IndexPersonDao.getDomainsById(fChildId, fCaseDate); } catch (Exception ignored) {}
+            List<CasePlanModel> finalDomains = domains == null ? new ArrayList<>() : domains;
+            Threading.main(() -> {
+                domainList.clear();
+                domainList.addAll(finalDomains);
 
-        if (recyclerViewadapter == null) {
-            RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getApplicationContext());
-            recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(eLayoutManager);
-            recyclerView.setItemAnimator(new DefaultItemAnimator());
-            recyclerViewadapter = new DomainPlanAdapter(domainList, CasePlan.this, "domain");
-            recyclerView.setAdapter(recyclerViewadapter);
+                if (recyclerViewadapter == null) {
+                    RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getApplicationContext());
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setLayoutManager(eLayoutManager);
+                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+                    recyclerViewadapter = new DomainPlanAdapter(domainList, CasePlan.this, "domain");
+                    recyclerView.setAdapter(recyclerViewadapter);
 
-            recyclerViewadapter.setOnDataUpdateListener(() -> runOnUiThread(() -> {
-                recreate();
-            }));
-        } else {
-            try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
-        }
+                    recyclerViewadapter.setOnDataUpdateListener(() -> runOnUiThread(() -> {
+                        recreate();
+                    }));
+                } else {
+                    try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
+                }
 
-        if (recyclerViewadapter.getItemCount() > 0) {
-            domainBtn.setVisibility(View.GONE);
-            domainBtn2.setVisibility(View.VISIBLE);
-        }
+                if (recyclerViewadapter != null && recyclerViewadapter.getItemCount() > 0) {
+                    domainBtn.setVisibility(View.GONE);
+                    domainBtn2.setVisibility(View.VISIBLE);
+                } else {
+                    domainBtn.setVisibility(View.VISIBLE);
+                    domainBtn2.setVisibility(View.GONE);
+                }
+            });
+        });
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -163,46 +176,52 @@ public class CasePlan extends AppCompatActivity {
         switch (id) {
             case R.id.domainBtn:
             case R.id.domainBtn2:
-                CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(childId);
-                if(caseStatusModel != null && caseStatusModel.getCase_status() != null) {
-                    if(caseStatusModel.getCase_status().equals("0") || caseStatusModel.getCase_status().equals("2")) {
-                        Dialog dialog = new Dialog(this);
-                        dialog.setContentView(R.layout.dialog_layout);
-                        dialog.show();
+                Threading.io(() -> {
+                    CaseStatusModel caseStatusModel = null;
+                    try { caseStatusModel = IndexPersonDao.getCaseStatus(childId); } catch (Exception ignored) {}
+                    CaseStatusModel finalCaseStatusModel = caseStatusModel;
+                    Threading.main(() -> {
+                        if(finalCaseStatusModel != null && finalCaseStatusModel.getCase_status() != null) {
+                            if(finalCaseStatusModel.getCase_status().equals("0") || finalCaseStatusModel.getCase_status().equals("2")) {
+                                Dialog dialog = new Dialog(this);
+                                dialog.setContentView(R.layout.dialog_layout);
+                                dialog.show();
 
-                        TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                        dialogMessage.setText(caseStatusModel.getFirst_name() + " " + caseStatusModel.getLast_name() + " was either de-registered or inactive in the program");
+                                TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                                dialogMessage.setText(finalCaseStatusModel.getFirst_name() + " " + finalCaseStatusModel.getLast_name() + " was either de-registered or inactive in the program");
 
-                        android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
-                        dialogButton.setOnClickListener(va -> dialog.dismiss());
-                    } else {
-                        try {
-                            FormUtils formUtils = new FormUtils(CasePlan.this);
-                            JSONObject indexRegisterForm = formUtils.getFormJson("domain");
+                                android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                                dialogButton.setOnClickListener(va -> dialog.dismiss());
+                            } else {
+                                try {
+                                    FormUtils formUtils = new FormUtils(CasePlan.this);
+                                    JSONObject indexRegisterForm = formUtils.getFormJson("domain");
 
-                            JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
-                            cId.put("value",childId);
+                                    JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
+                                    cId.put("value",childId);
 
-                            JSONObject cDate = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_date");
-                            cDate.put("value", caseDate);
+                                    JSONObject cDate = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_date");
+                                    cDate.put("value", caseDate);
 
-                            JSONObject casePlanId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_id");
-                            casePlanId.put("value", case_plan_id);
+                                    JSONObject casePlanId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "case_plan_id");
+                                    casePlanId.put("value", case_plan_id);
 
-                            if(hivStatus == null || !hivStatus.equals("yes")){
-                                JSONArray domainType = getFieldJSONObject(fields(indexRegisterForm, STEP1), "type").getJSONArray("options");
-                                domainType.remove(0);
+                                    if(hivStatus == null || !hivStatus.equals("yes")){
+                                        JSONArray domainType = getFieldJSONObject(fields(indexRegisterForm, STEP1), "type").getJSONArray("options");
+                                        domainType.remove(0);
+                                    }
+
+                                    startFormActivity(indexRegisterForm);
+
+                                } catch (Exception e) {
+                                    Timber.e(e);
+                                }
                             }
-
-                            startFormActivity(indexRegisterForm);
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        } else {
+                            Log.e("CasePlan", "caseStatusModel or caseStatusModel.getCase_status() is null");
                         }
-                    }
-                } else {
-                    Log.e("CasePlan", "caseStatusModel or caseStatusModel.getCase_status() is null");
-                }
+                    });
+                });
 
                 break;
         }
@@ -388,8 +407,7 @@ public class CasePlan extends AppCompatActivity {
         return ChwApplication.getInstance().getClientProcessorForJava();
     }
     public void refresh(){
-        finish();
-        startActivity(getIntent());
+        recreate();
     }
 
 

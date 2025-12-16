@@ -527,8 +527,7 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
                         edit.putString("nrc", nrc);
 
                         edit.commit();
-                        finish();
-                        startActivity(getIntent());
+                        recreate();
 
                     } catch (JSONException e){
                         e.printStackTrace();

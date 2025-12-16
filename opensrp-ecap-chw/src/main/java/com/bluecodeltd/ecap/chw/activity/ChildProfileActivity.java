@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import com.bluecodeltd.ecap.chw.BuildConfig;
@@ -66,7 +68,12 @@ public class ChildProfileActivity extends CoreChildProfileActivity implements On
         onClickFloatingMenu = flavor.getOnClickFloatingMenu(this, (ChildProfilePresenter) presenter);
         setupViews();
         setUpToolbar();
-        registerReceiver(mDateTimeChangedReceiver, sIntentFilter);
+        try {
+            ContextCompat.registerReceiver(this, mDateTimeChangedReceiver, sIntentFilter, ContextCompat.RECEIVER_NOT_EXPORTED);
+        } catch (Exception ignored) {
+            // Fallback (should rarely happen) to keep older devices functioning.
+            registerReceiver(mDateTimeChangedReceiver, sIntentFilter);
+        }
         if (((ChwApplication) ChwApplication.getInstance()).hasReferrals()) {
             addChildReferralTypes();
         }

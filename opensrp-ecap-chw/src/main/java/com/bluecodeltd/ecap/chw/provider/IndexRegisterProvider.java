@@ -14,6 +14,7 @@ import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.bluecodeltd.ecap.chw.view_holder.IndexRegisterViewHolder;
 
 import org.smartregister.chw.core.holders.FooterViewHolder;
@@ -33,7 +34,6 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
-import com.bluecodeltd.ecap.chw.util.Threading;
 
 public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegisterViewHolder> {
 
@@ -65,8 +65,8 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
 
         // Load per-row details asynchronously to avoid UI jank
         final String rowTag = childId;
-        indexRegisterViewHolder.itemView.setTag(rowTag);
-        Threading.io(() -> {
+        indexRegisterViewHolder.itemView.setTag(R.id.tag_row_id, rowTag);
+        Threading.ioBestEffort(() -> {
             int plans = 0;
             int visits = 0;
             String is_index = null;
@@ -84,12 +84,15 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
             final String fStatus = status;
             final String fIsScreened = is_screened;
             Threading.main(() -> {
-                Object tag = indexRegisterViewHolder.itemView.getTag();
+                Object tag = indexRegisterViewHolder.itemView.getTag(R.id.tag_row_id);
                 if (!(tag instanceof String) || !rowTag.equals(tag)) return;
                 indexRegisterViewHolder.setupViews(firstName +" "+lastName, childId, fPlans, fVisits, fIsIndex, fStatus, gender, age, fIsScreened, vcaAge);
                 indexRegisterViewHolder.itemView.setOnClickListener(onClickListener);
-                indexRegisterViewHolder.itemView.findViewById(R.id.index_warning).setOnClickListener(onClickListener);
+                View warning = indexRegisterViewHolder.itemView.findViewById(R.id.index_warning);
+                warning.setOnClickListener(onClickListener);
+                // Click handlers expect the client on the clicked view's default tag.
                 indexRegisterViewHolder.itemView.setTag(smartRegisterClient);
+                warning.setTag(smartRegisterClient);
             });
         });
 

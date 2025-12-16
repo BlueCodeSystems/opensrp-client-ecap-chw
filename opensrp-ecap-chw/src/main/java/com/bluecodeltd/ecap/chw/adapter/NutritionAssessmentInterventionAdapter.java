@@ -30,6 +30,7 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.NutritionAssessmentInterventionModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -90,25 +91,41 @@ public class NutritionAssessmentInterventionAdapter extends RecyclerView.Adapter
 
         h.item.setOnClickListener(v -> openForm(m));
 
-        CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(m.getUnique_id());
-        h.edit.setOnClickListener(v -> {
-            String status = null;
-            try { status = caseStatusModel != null ? caseStatusModel.getCase_status() : null; } catch (Exception ignored) {}
-            if (status != null && (status.equals("0") || status.equals("2"))) {
-                Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.dialog_layout);
-                dialog.show();
+        final String rowTag = m.getBase_entity_id() != null ? m.getBase_entity_id()
+                : (m.getUnique_id() != null ? m.getUnique_id() : String.valueOf(position));
+        h.itemView.setTag(R.id.tag_row_id, rowTag);
 
-                TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                String first = caseStatusModel != null && caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "This beneficiary";
-                String last = caseStatusModel != null && caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "";
-                dialogMessage.setText(first + (last.isEmpty()? "":(" "+last)) + " was either de-registered or inactive in the program");
+        h.edit.setOnClickListener(v ->
+                android.widget.Toast.makeText(context, "Loading case status…", android.widget.Toast.LENGTH_SHORT).show());
 
-                Button dialogButton = dialog.findViewById(R.id.dialog_button);
-                dialogButton.setOnClickListener(va -> dialog.dismiss());
-            } else {
-                openForm(m);
-            }
+        final String uniqueId = m.getUnique_id();
+        Threading.ioBestEffort(() -> {
+            CaseStatusModel caseStatusModel = null;
+            try { caseStatusModel = IndexPersonDao.getCaseStatus(uniqueId); } catch (Exception ignored) {}
+            final CaseStatusModel finalCaseStatusModel = caseStatusModel;
+            Threading.main(() -> {
+                Object tag = h.itemView.getTag(R.id.tag_row_id);
+                if (!(tag instanceof String) || !rowTag.equals(tag)) return;
+                h.edit.setOnClickListener(v -> {
+                    String status = null;
+                    try { status = finalCaseStatusModel != null ? finalCaseStatusModel.getCase_status() : null; } catch (Exception ignored) {}
+                    if (status != null && ("0".equals(status) || "2".equals(status))) {
+                        Dialog dialog = new Dialog(context);
+                        dialog.setContentView(R.layout.dialog_layout);
+                        dialog.show();
+
+                        TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                        String first = finalCaseStatusModel != null && finalCaseStatusModel.getFirst_name() != null ? finalCaseStatusModel.getFirst_name() : "This beneficiary";
+                        String last = finalCaseStatusModel != null && finalCaseStatusModel.getLast_name() != null ? finalCaseStatusModel.getLast_name() : "";
+                        dialogMessage.setText(first + (last.isEmpty()? "":(" "+last)) + " was either de-registered or inactive in the program");
+
+                        Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                        dialogButton.setOnClickListener(va -> dialog.dismiss());
+                    } else {
+                        openForm(m);
+                    }
+                });
+            });
         });
     }
 

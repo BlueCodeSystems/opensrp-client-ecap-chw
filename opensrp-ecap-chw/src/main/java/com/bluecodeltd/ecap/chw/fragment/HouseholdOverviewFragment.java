@@ -25,6 +25,7 @@ import com.bluecodeltd.ecap.chw.model.CaregiverAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.IndexMotherModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.HouseholdServiceReportModel;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rey.material.widget.Button;
 
@@ -112,10 +113,20 @@ public class HouseholdOverviewFragment extends Fragment {
             householdId = parent != null ? parent.householdId : null;
         } catch (Throwable ignored) {}
 
+        indexMotherModel = null;
         if (householdId != null) {
-            indexMotherModel = IndexMotherDao.getIndexMotherByHouseholdId(householdId);
-        } else {
-            indexMotherModel = null;
+            final String id = householdId;
+            Threading.io(() -> {
+                IndexMotherModel model = null;
+                try { model = IndexMotherDao.getIndexMotherByHouseholdId(id); } catch (Exception ignored) {}
+                final IndexMotherModel finalModel = model;
+                Threading.main(() -> {
+                    if (!isAdded() || binding == null) return;
+                    if (householdId == null || !id.equals(householdId)) return;
+                    indexMotherModel = finalModel;
+                    setViews();
+                });
+            });
         }
 
         setViews();
@@ -131,18 +142,27 @@ public class HouseholdOverviewFragment extends Fragment {
     }
 
     private void setImageViewFromBase64(String base64Str, ImageView imageView) {
-        // Decode Base64 encoded string to byte array
-        byte[] decodedBytes = Base64.decode(base64Str, Base64.DEFAULT);
+        if (imageView == null || base64Str == null || base64Str.trim().isEmpty()) return;
 
-        // Convert byte array to Bitmap
-        Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+        try {
+            // Decode Base64 encoded string to byte array
+            byte[] decodedBytes = Base64.decode(base64Str, Base64.DEFAULT);
+            if (decodedBytes == null || decodedBytes.length == 0) return;
 
-        // Set the Bitmap to ImageView
-        imageView.setImageBitmap(decodedBitmap);
+            // Convert byte array to Bitmap
+            Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+            if (decodedBitmap == null) return;
+
+            // Set the Bitmap to ImageView
+            imageView.setImageBitmap(decodedBitmap);
+        } catch (Throwable ignored) {
+            // Invalid Base64 or decode issue; ignore to avoid crashing the UI.
+        }
     }
 
     @SuppressLint("RestrictedApi")
     public void setViews(){
+        if (!isAdded() || binding == null) return;
 
         HashMap<String, Household> mymap = ( (HouseholdDetails) requireActivity()).getData();
         HashMap<String, CaregiverAssessmentModel> vmap = ( (HouseholdDetails) requireActivity()).getVulnerabilities();
@@ -153,8 +173,10 @@ public class HouseholdOverviewFragment extends Fragment {
         String lessThanFiveFemales = ( (HouseholdDetails) requireActivity()).lessThanFiveFemales;
         String femalesBetweenTenAndSevenTeen= ( (HouseholdDetails) requireActivity()).FemalesBetweenTenAndSevenTeen;
 
+        if (mymap == null) return;
         house = mymap.get("house");
-        caregiverAssessmentModel = vmap.get("vulnerabilities");
+        if (house == null) return;
+        caregiverAssessmentModel = vmap != null ? vmap.get("vulnerabilities") : null;
 
        if (caregiverAssessmentModel != null){
 
@@ -192,7 +214,7 @@ public class HouseholdOverviewFragment extends Fragment {
         String edited_by = house.getCaseworker_name();
         String encodedSignature = house.getSignature();
 
-        if(encodedSignature!= null && encodedSignature != "") {
+        if (encodedSignature != null && !encodedSignature.trim().isEmpty()) {
             setImageViewFromBase64(encodedSignature, signatureIV);
         }
 
@@ -299,85 +321,43 @@ public class HouseholdOverviewFragment extends Fragment {
 
         txtVlResult.setText(house.getViral_load_results() != null ? house.getViral_load_results() : "Not Set");
 
-
-        List<HouseholdServiceReportModel> sModel = HouseholdServiceReportDao.getRecentVLServicesByHousehold(house.getHousehold_id());
-
-        String viralLoadResult = null;
-
-        if (!sModel.isEmpty()) {
-            HouseholdServiceReportModel serviceM= sModel.get(0);
-            viralLoadResult = serviceM.getVl_last_result();
-        } else {
-            viralLoadResult = house.getViral_load_results();
-        }
-
-        try {
-            if (viralLoadResult != null) {
-                int intValue = Integer.parseInt(viralLoadResult);
-                txtIsSuppressed.setText(intValue <= 1000 ? "Yes" : "No");
-            } else {
-                txtIsSuppressed.setText("Not set");
-            }
-        } catch (NumberFormatException e) {
-            txtIsSuppressed.setText("Update VL Results");
-        }
-
-
-//        txtIsSuppressed.setText(house.getVl_suppressed() != null ? house.getVl_suppressed() : "Not Set");
-
         txtIsMMD.setText(house.getCaregiver_mmd() != null ? house.getCaregiver_mmd() : "Not Set");
         txtLevelMMD.setText(house.getLevel_mmd() != null ? house.getLevel_mmd() : "Not Set");
 
+        // Set fallbacks immediately; refine from latest service report asynchronously (avoids SQLCipher work on UI thread).
+        String fallbackVl = house.getViral_load_results();
+        txtRecentVLResult.setText(fallbackVl != null ? fallbackVl : "N/A");
+        String fallbackMmd = house.getLevel_mmd();
+        txtRecentMMD.setText(fallbackMmd != null ? fallbackMmd : "N/A");
+        txtNextVl.setText(house.getDate_next_vl() != null ? house.getDate_next_vl() : "Not Set");
+        applySuppressionFromVl(fallbackVl);
 
+        final String hid = house.getHousehold_id();
+        Threading.io(() -> {
+            HouseholdServiceReportModel latest = null;
+            try {
+                latest = HouseholdServiceReportDao.getLatestVLSummaryByHousehold(hid);
+            } catch (Exception ignored) {}
 
+            final HouseholdServiceReportModel finalLatest = latest;
+            Threading.main(() -> {
+                if (!isAdded() || binding == null || house == null) return;
+                if (house.getHousehold_id() == null || !hid.equals(house.getHousehold_id())) return;
 
-
-        List<HouseholdServiceReportModel> serviceModels = HouseholdServiceReportDao.getRecentVLServicesByHousehold(house.getHousehold_id());
-        if (!serviceModels.isEmpty()) {
-            HouseholdServiceReportModel serviceModel = serviceModels.get(0);
-            if (serviceModel.getLevel_mmd() != null) {
-                txtRecentMMD.setText(serviceModel.getLevel_mmd());
-            } else {
-                if (house.getLevel_mmd() != null) {
-                    txtRecentMMD.setText(house.getLevel_mmd());
-                } else {
-                    txtRecentMMD.setText("N/A");
+                if (finalLatest != null) {
+                    if (finalLatest.getLevel_mmd() != null) {
+                        txtRecentMMD.setText(finalLatest.getLevel_mmd());
+                    }
+                    if (finalLatest.getVl_last_result() != null) {
+                        txtRecentVLResult.setText(finalLatest.getVl_last_result());
+                        applySuppressionFromVl(finalLatest.getVl_last_result());
+                    }
+                    if (finalLatest.getDate_next_vl() != null) {
+                        txtNextVl.setText(finalLatest.getDate_next_vl());
+                    }
                 }
-            }
-
-            if (serviceModel.getVl_last_result() != null) {
-                txtRecentVLResult.setText(serviceModel.getVl_last_result());
-            } else {
-                if (house.getViral_load_results() != null) {
-                    txtRecentVLResult.setText(house.getViral_load_results());
-                } else {
-                    txtRecentVLResult.setText("N/A");
-                }
-            }
-            if (serviceModel.getDate_next_vl() != null) {
-                txtNextVl.setText(serviceModel.getDate_next_vl());
-            } else {
-                txtNextVl.setText(house.getDate_next_vl() != null ? house.getDate_next_vl() : "Not Set");
-            }
-
-        }
-        else {
-            if (house.getLevel_mmd() != null) {
-                txtRecentMMD.setText(house.getLevel_mmd());
-            } else {
-                txtRecentMMD.setText("N/A");
-            }
-
-
-            if (house.getViral_load_results() != null) {
-                txtRecentVLResult.setText(house.getViral_load_results());
-            } else {
-                txtRecentVLResult.setText("N/A");
-            }
-            txtNextVl.setText(house.getDate_next_vl() != null ? house.getDate_next_vl() : "Not Set");
-
-
-        }
+            });
+        });
 
         txtGpsLocation.setText(house.getHousehold_location() != null ? formatGpsCoordinates(house.getHousehold_location()) : "Not Set");
         if(is_screened != null && is_screened.equals("true")){
@@ -394,6 +374,19 @@ public class HouseholdOverviewFragment extends Fragment {
             housetitle.setVisibility(View.GONE);
             linearLayout.setVisibility(View.GONE);
 
+        }
+    }
+
+    private void applySuppressionFromVl(String viralLoadResult) {
+        try {
+            if (viralLoadResult != null) {
+                int intValue = Integer.parseInt(viralLoadResult);
+                txtIsSuppressed.setText(intValue <= 1000 ? "Yes" : "No");
+            } else {
+                txtIsSuppressed.setText("Not set");
+            }
+        } catch (NumberFormatException e) {
+            txtIsSuppressed.setText("Update VL Results");
         }
     }
 

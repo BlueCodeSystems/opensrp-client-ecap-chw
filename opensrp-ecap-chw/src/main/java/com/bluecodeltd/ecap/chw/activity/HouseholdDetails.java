@@ -82,6 +82,7 @@ import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.WeServiceCaregiverModel;
 import com.bluecodeltd.ecap.chw.model.newCaregiverModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import androidx.lifecycle.ViewModelProvider;
 import com.bluecodeltd.ecap.chw.viewmodel.HouseholdDetailsViewModel;
@@ -275,7 +276,7 @@ public class HouseholdDetails extends AppCompatActivity {
             // Wait until house is loaded to bind UI that requires it
             if (house == null) return;
 
-            caregiver = CaregiverDao.getCaregiver(householdId);
+            caregiver = state.getCaregiver();
             oMapper = new ObjectMapper();
             caregiverMapper = new ObjectMapper();
             weServiceMapper = new ObjectMapper();
@@ -597,10 +598,19 @@ public class HouseholdDetails extends AppCompatActivity {
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
         visitTabTitle.setText(this.getString(org.smartregister.opd.R.string.visits));
         visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
+        TextView countView = visitTabCount;
+        countView.setText("…");
 
-        int visits = CaregiverVisitationDao.countVisits(householdId);
-
-        visitTabCount.setText(String.valueOf(visits));
+        final String hid = householdId;
+        Threading.ioBestEffort(() -> {
+            int visits = 0;
+            try { visits = CaregiverVisitationDao.countVisits(hid); } catch (Exception ignored) {}
+            int finalVisits = visits;
+            Threading.main(() -> {
+                if (isFinishing()) return;
+                countView.setText(String.valueOf(finalVisits));
+            });
+        });
 
         try { if (mTabLayout.getTabAt(3) != null) mTabLayout.getTabAt(3).setCustomView(taskTabTitleLayout); } catch (Exception ignored) {}
     }
@@ -610,13 +620,18 @@ public class HouseholdDetails extends AppCompatActivity {
         TextView casePlanTabTitle = taskTabTitleLayout.findViewById(R.id.household_plans_title);
         casePlanTabTitle.setText("CASE PLAN");
         casePlanTabCount = taskTabTitleLayout.findViewById(R.id.household_plans_count);
-        int plans = CasePlanDao.getByIDNumberOfCaregiverCasepalns(house.getHousehold_id());
-
-        if (plans > 0) {
-            casePlanTabCount.setText(String.valueOf(plans));
-        } else {
-            casePlanTabCount.setText("0");
-        }
+        TextView countView = casePlanTabCount;
+        countView.setText("…");
+        final String hid = house != null ? house.getHousehold_id() : householdId;
+        Threading.ioBestEffort(() -> {
+            int plans = 0;
+            try { plans = CasePlanDao.getByIDNumberOfCaregiverCasepalns(hid); } catch (Exception ignored) {}
+            int finalPlans = plans;
+            Threading.main(() -> {
+                if (isFinishing()) return;
+                countView.setText(String.valueOf(Math.max(0, finalPlans)));
+            });
+        });
         try { if (mTabLayout.getTabAt(2) != null) mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout); } catch (Exception ignored) {}
     }
 
@@ -625,10 +640,20 @@ public class HouseholdDetails extends AppCompatActivity {
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
         visitTabTitle.setText("MEMBERS");
         childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
+        TextView countView = childTabCount;
+        countView.setText("…");
 
-        childrenCount = IndexPersonDao.countChildren(householdId);
-
-        childTabCount.setText(childrenCount);
+        final String hid = householdId;
+        Threading.ioBestEffort(() -> {
+            String count = "0";
+            try { count = IndexPersonDao.countChildren(hid); } catch (Exception ignored) {}
+            String finalCount = (count == null || count.trim().isEmpty()) ? "0" : count.trim();
+            Threading.main(() -> {
+                if (isFinishing()) return;
+                childrenCount = finalCount;
+                countView.setText(finalCount);
+            });
+        });
 
         try { if (mTabLayout.getTabAt(1) != null) mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout); } catch (Exception ignored) {}
     }
@@ -637,11 +662,20 @@ public class HouseholdDetails extends AppCompatActivity {
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
         visitTabTitle.setText("HIV RISK ASSESSMENT");
         visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
+        TextView countView = visitTabCount;
+        countView.setText("…");
+        countView.setVisibility(View.GONE);
 
-        int visits = CaregiverVisitationDao.countVisits(householdId);
-
-        visitTabCount.setText(String.valueOf(visits));
-        visitTabCount.setVisibility(View.GONE);
+        final String hid = householdId;
+        Threading.ioBestEffort(() -> {
+            int visits = 0;
+            try { visits = CaregiverVisitationDao.countVisits(hid); } catch (Exception ignored) {}
+            int finalVisits = visits;
+            Threading.main(() -> {
+                if (isFinishing()) return;
+                countView.setText(String.valueOf(finalVisits));
+            });
+        });
 
         mTabLayout.getTabAt(6).setCustomView(taskTabTitleLayout);
     }
@@ -650,10 +684,19 @@ public class HouseholdDetails extends AppCompatActivity {
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
         visitTabTitle.setText("GRADUATION ASSESSMENT");
         visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
+        TextView countView = visitTabCount;
+        countView.setText("…");
 
-        int visits = GraduationDao.countVisits(householdId);
-
-        visitTabCount.setText(String.valueOf(visits));
+        final String hid = householdId;
+        Threading.ioBestEffort(() -> {
+            int visits = 0;
+            try { visits = GraduationDao.countVisits(hid); } catch (Exception ignored) {}
+            int finalVisits = visits;
+            Threading.main(() -> {
+                if (isFinishing()) return;
+                countView.setText(String.valueOf(finalVisits));
+            });
+        });
 //        visitTabCount.setVisibility(View.GONE);
 
         mTabLayout.getTabAt(5).setCustomView(taskTabTitleLayout);
@@ -663,12 +706,20 @@ public class HouseholdDetails extends AppCompatActivity {
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
         visitTabTitle.setText("TB SCREENING");
         visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
+        TextView countView = visitTabCount;
+        countView.setText("…");
+        countView.setVisibility(View.VISIBLE);
 
-        String caregiverId = house != null && house.getHousehold_id() != null ? house.getHousehold_id() : householdId;
-        int visits = TbScreeningCaregiverDao.countByCaregiverId(caregiverId);
-
-        visitTabCount.setText(String.valueOf(visits));
-        visitTabCount.setVisibility(View.VISIBLE);
+        final String caregiverId = house != null && house.getHousehold_id() != null ? house.getHousehold_id() : householdId;
+        Threading.ioBestEffort(() -> {
+            int visits = 0;
+            try { visits = TbScreeningCaregiverDao.countByCaregiverId(caregiverId); } catch (Exception ignored) {}
+            int finalVisits = visits;
+            Threading.main(() -> {
+                if (isFinishing()) return;
+                countView.setText(String.valueOf(finalVisits));
+            });
+        });
 
         if (mTabLayout.getTabCount() > 4 && mTabLayout.getTabAt(4) != null) {
             mTabLayout.getTabAt(4).setCustomView(taskTabTitleLayout);
@@ -679,38 +730,58 @@ public class HouseholdDetails extends AppCompatActivity {
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
         visitTabTitle.setText("OVERVIEW");
         visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
+        TextView countView = visitTabCount;
+        countView.setText("…");
+        countView.setVisibility(View.GONE);
 
-        int visits = CaregiverVisitationDao.countVisits(householdId);
-
-        visitTabCount.setText(String.valueOf(visits));
-        visitTabCount.setVisibility(View.GONE);
+        final String hid = householdId;
+        Threading.ioBestEffort(() -> {
+            int visits = 0;
+            try { visits = CaregiverVisitationDao.countVisits(hid); } catch (Exception ignored) {}
+            int finalVisits = visits;
+            Threading.main(() -> {
+                if (isFinishing()) return;
+                countView.setText(String.valueOf(finalVisits));
+            });
+        });
 
         mTabLayout.getTabAt(0).setCustomView(taskTabTitleLayout);
     }
 
 
     public void onClick(View v) {
-        int id = v.getId();
-
-        FormUtils formUtils = null;
         try {
-            formUtils = new FormUtils(HouseholdDetails.this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        JSONObject indexRegisterForm;
+            if (v == null) return;
+            int id = v.getId();
 
-        switch (id) {
+            FormUtils formUtils = null;
+            try {
+                formUtils = new FormUtils(HouseholdDetails.this);
+            } catch (Exception e) {
+                Timber.e(e, "Failed to init FormUtils");
+            }
+            JSONObject indexRegisterForm;
+            final String householdLabel = (cname != null && cname.getText() != null && !TextUtils.isEmpty(cname.getText().toString()))
+                    ? cname.getText().toString()
+                    : "Household";
 
-            case R.id.graduation:
-                boolean areAllVcasVisited = VcaVisitationDao.areAllVcasVisited(householdId);
-                boolean areAllVcasAssessed = VcaAssessmentDao.areAllVcasAssessed(householdId);
-                boolean hasVisitsByID = CaregiverVisitationDao.hasVisitsByID(householdId);
-                boolean hasCaregiverAssessment = CaregiverAssessmentDao.hasCaregiverAssessment(householdId);
-                boolean hasHouseholdServices = HouseholdServiceReportDao.hasHouseholdServices(householdId);
-                boolean areAllVcasServiced = VCAServiceReportDao.areAllVcasServiced(householdId);
+            switch (id) {
 
-                if(areAllVcasVisited && areAllVcasAssessed && hasVisitsByID && hasCaregiverAssessment && hasHouseholdServices && areAllVcasServiced) {
+                case R.id.graduation:
+                    if (formUtils == null) {
+                        Toasty.error(HouseholdDetails.this, "Unable to open form. Please try again.", Toast.LENGTH_LONG, true).show();
+                        break;
+                    }
+                    final FormUtils formUtilsFinal = formUtils;
+                    Threading.io(() -> {
+                        boolean areAllVcasVisited = VcaVisitationDao.areAllVcasVisited(householdId);
+                        boolean areAllVcasAssessed = VcaAssessmentDao.areAllVcasAssessed(householdId);
+                        boolean hasVisitsByID = CaregiverVisitationDao.hasVisitsByID(householdId);
+                        boolean hasCaregiverAssessment = CaregiverAssessmentDao.hasCaregiverAssessment(householdId);
+                        boolean hasHouseholdServices = HouseholdServiceReportDao.hasHouseholdServices(householdId);
+                        boolean areAllVcasServiced = VCAServiceReportDao.areAllVcasServiced(householdId);
+
+                        if(areAllVcasVisited && areAllVcasAssessed && hasVisitsByID && hasCaregiverAssessment && hasHouseholdServices && areAllVcasServiced) {
 
 
                     testedChildren = IndexPersonDao.countTestedChildren(householdId);
@@ -726,14 +797,14 @@ public class HouseholdDetails extends AppCompatActivity {
                         oMapper = new ObjectMapper();
                         graduationMapper = new ObjectMapper();
 
-                        indexRegisterForm = formUtils.getFormJson("graduation");
+                        JSONObject graduationForm = formUtilsFinal.getFormJson("graduation");
 
                         //Populate form details
-                        JSONObject ftime = getFieldJSONObject(fields(indexRegisterForm, "step1"), "asmt");
+                        JSONObject ftime = getFieldJSONObject(fields(graduationForm, "step1"), "asmt");
                         ftime.put(JsonFormUtils.VALUE, "no");
 
                         //Populate Caregiver Details
-                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, oMapper.convertValue(house, Map.class));
+                        CoreJsonFormUtils.populateJsonForm(graduationForm, oMapper.convertValue(house, Map.class));
 
 //                    if(graduationModel != null) {
 //
@@ -746,9 +817,9 @@ public class HouseholdDetails extends AppCompatActivity {
                         String bench3 = GradDao.bench3Answers(householdId);
                         int answered = Integer.parseInt(bench3);
                         Integer childrenabove10to17 = countNumberofChildren10to17(allChildrenBirthDates);
-                        indexRegisterForm.getJSONObject("step4").getJSONArray("fields").getJSONObject(3).put("value", "1");
+                        graduationForm.getJSONObject("step4").getJSONArray("fields").getJSONObject(3).put("value", "1");
 
-                        JSONObject toast_reminder_benchmark_3 = getFieldJSONObject(fields(indexRegisterForm, "step4"), "toast_reminder_benchmark_3");
+                        JSONObject toast_reminder_benchmark_3 = getFieldJSONObject(fields(graduationForm, "step4"), "toast_reminder_benchmark_3");
 //                        toast_reminder_benchmark_3.put("type", "toaster_notes");
 
 
@@ -764,7 +835,7 @@ public class HouseholdDetails extends AppCompatActivity {
                             allTested = "no";
                         }
 
-                        JSONObject hiv_status_enrolled = getFieldJSONObject(fields(indexRegisterForm, "step2"), "hiv_status_enrolled");
+                        JSONObject hiv_status_enrolled = getFieldJSONObject(fields(graduationForm, "step2"), "hiv_status_enrolled");
                         hiv_status_enrolled.put(JsonFormUtils.VALUE, allTested);
 
                         Boolean checkForHivStatus = HouseholdDao.checkCaregiverHivStatusInHousehold(householdId);
@@ -777,21 +848,21 @@ public class HouseholdDetails extends AppCompatActivity {
                         }
 
 
-                        JSONObject tested = getFieldJSONObject(fields(indexRegisterForm, "step2"), "caregiver_hiv_status_enrolled");
+                        JSONObject tested = getFieldJSONObject(fields(graduationForm, "step2"), "caregiver_hiv_status_enrolled");
                         tested.put(JsonFormUtils.VALUE, caregiverTested);
 
 
 
                         //Benchmark **** 2 **** logic updated
 
-                        JSONObject suppressed = getFieldJSONObject(fields(indexRegisterForm, "step3"), "virally_suppressed");
+                        JSONObject suppressed = getFieldJSONObject(fields(graduationForm, "step3"), "virally_suppressed");
 //                    suppressed.put(JsonFormUtils.VALUE, virally_suppressed);
 
-                        JSONObject suppressed_caregiver = getFieldJSONObject(fields(indexRegisterForm, "step3"), "suppressed_caregiver");
+                        JSONObject suppressed_caregiver = getFieldJSONObject(fields(graduationForm, "step3"), "suppressed_caregiver");
 
 
-                        JSONObject toast_applicable = getFieldJSONObject(fields(indexRegisterForm, "step3"), "toast_applicable");
-                        JSONObject toast_na = getFieldJSONObject(fields(indexRegisterForm, "step3"), "toast_na");
+                        JSONObject toast_applicable = getFieldJSONObject(fields(graduationForm, "step3"), "toast_applicable");
+                        JSONObject toast_na = getFieldJSONObject(fields(graduationForm, "step3"), "toast_na");
 
                         Boolean hasPositiveVCA = IndexPersonDao.checkForAtLeastOnePositiveVca(householdId);
                         Boolean isCaregiverPositive = HouseholdDao.isCaregiverPositive(householdId);
@@ -825,7 +896,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
                         if(hasPositiveVCA.equals(false) && isCaregiverPositive.equals(false)){
                             toast_na.put("type", "toaster_notes");
-                            toast_na.put("text",cname.getText().toString() + " has no HIV-positive beneficiaries in the household");
+                            toast_na.put("text", householdLabel + " has no HIV-positive beneficiaries in the household");
                         }
 
 
@@ -834,7 +905,7 @@ public class HouseholdDetails extends AppCompatActivity {
                         Boolean isEveryVCAKnowledgeableAboutHIVPrevention = GradDao.doTheVCAsMeetBenchMarkThree(householdId);
                         Boolean hasBeneficiary10to17InHousehold = IndexPersonDao.hasBeneficiary10to17InHousehold(householdId);
                         Boolean hasVCAInAgeRange = GradDao.hasVCAInAgeRange(householdId);
-                        JSONObject prevention = getFieldJSONObject(fields(indexRegisterForm, "step4"), "prevention");
+                        JSONObject prevention = getFieldJSONObject(fields(graduationForm, "step4"), "prevention");
 
                         if (hasBeneficiary10to17InHousehold) {
                             if (isEveryVCAKnowledgeableAboutHIVPrevention.equals(false)) {
@@ -844,7 +915,7 @@ public class HouseholdDetails extends AppCompatActivity {
                             }
                         } else {
                             toast_reminder_benchmark_3.put("type", "toaster_notes");
-                            toast_reminder_benchmark_3.put("text", cname.getText().toString() + " doesn’t have adolescents aged 10 to 17 to be assessed on their knowledge about HIV prevention");
+                            toast_reminder_benchmark_3.put("text", householdLabel + " doesn’t have adolescents aged 10 to 17 to be assessed on their knowledge about HIV prevention");
                             prevention.put(JsonFormUtils.VALUE, "N/A");
 
                         }
@@ -858,8 +929,8 @@ public class HouseholdDetails extends AppCompatActivity {
                         Boolean checkForMuac = MuacDao.areAllMuacGreen(householdId);
                         Boolean nutritionStatus = VcaVisitationDao.getNutritionStatusForAgeFiveAndBelowByHousehold(householdId);
 
-                        JSONObject malnutrition = getFieldJSONObject(fields(indexRegisterForm, "step5"), "undernourished");
-                        JSONObject underFiveToast = getFieldJSONObject(fields(indexRegisterForm, "step5"), "toaster_underFive");
+                        JSONObject malnutrition = getFieldJSONObject(fields(graduationForm, "step5"), "undernourished");
+                        JSONObject underFiveToast = getFieldJSONObject(fields(graduationForm, "step5"), "toaster_underFive");
 
                         // Check for children between 6 months and 5 years
                         if (hasAtLeastOneVCABetweenSixMonthsAndFiveYearsOld) {
@@ -902,11 +973,14 @@ public class HouseholdDetails extends AppCompatActivity {
                             malnutrition.put(JsonFormUtils.READ_ONLY, true);
                             malnutrition.put(JsonFormUtils.VALUE, "N/A");
                             underFiveToast.put("type", "toaster_notes");
-                            underFiveToast.put("text", cname.getText().toString() +
+                            underFiveToast.put("text", householdLabel +
                                     " does not have any adolescents aged 5 and below who need to be assessed for undernourishment");
                         }
 
-                        startFormActivity(indexRegisterForm);
+                        Threading.main(() -> {
+                            if (isFinishing()) return;
+                            startFormActivity(graduationForm);
+                        });
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -939,33 +1013,36 @@ public class HouseholdDetails extends AppCompatActivity {
                     Log.e("GraduationCheck", "Failed conditions: " + String.join(", ", errorMessages));
 
                     // Display each error message as a separate toast
-                    if (!errorMessages.isEmpty()) {
-                        for (String message : errorMessages) {
-                            Toasty.error(HouseholdDetails.this, message, Toast.LENGTH_LONG, true).show();
-                            // Add a slight delay to prevent overlapping toasts
-                            try {
-                                Thread.sleep(1000); // 1-second delay between toasts
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
+                    Threading.main(() -> {
+                        if (isFinishing()) return;
+                        if (!errorMessages.isEmpty()) {
+                            for (String message : errorMessages) {
+                                Toasty.error(HouseholdDetails.this, message, Toast.LENGTH_LONG, true).show();
                             }
+                        } else {
+                            // Fallback message if no specific conditions are identified (unlikely)
+                            Toasty.error(HouseholdDetails.this, "Cannot proceed with graduation. Please check household requirements.", Toast.LENGTH_LONG, true).show();
                         }
-                    } else {
-                        // Fallback message if no specific conditions are identified (unlikely)
-                        Toasty.error(HouseholdDetails.this, "Cannot proceed with graduation. Please check household requirements.", Toast.LENGTH_LONG, true).show();
-                    }
+                    });
                 }
+                    });
                 break;
 
             case R.id.myservice:
 
                 Intent intent = new Intent(this, HouseholdServiceActivity.class);
-                intent.putExtra("householdId",  txtDistrict.getText().toString());
-                intent.putExtra("cname",  cname.getText().toString());
+                String hid = txtDistrict != null && txtDistrict.getText() != null ? txtDistrict.getText().toString() : householdId;
+                intent.putExtra("householdId", hid);
+                intent.putExtra("cname", householdLabel);
                 startActivity(intent);
 
                 break;
             case R.id.householdReferrals:
 
+                if (house == null || house.getHousehold_id() == null) {
+                    Toasty.error(HouseholdDetails.this, "Household not loaded yet. Please try again.", Toast.LENGTH_SHORT, true).show();
+                    break;
+                }
                 Intent showReferrals = new Intent(HouseholdDetails.this, ShowHouseholdReferralsActivity.class);
                 Bundle referral = new Bundle();
                 referral.putString("householdId",house.getHousehold_id());
@@ -983,89 +1060,86 @@ public class HouseholdDetails extends AppCompatActivity {
             case R.id.hh_screening:
 
                 try {
-
-
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                    String caseworkerphone = prefs.getString("phone", "Anonymous");
-                    String caseworkername = prefs.getString("caseworker_name", "Anonymous");
-                    String caseworkerProvince= prefs.getString("province", "Anonymous");
-
-                    householdMapper = new ObjectMapper();
-                    String childrenCount = IndexPersonDao.countChildren(householdId);
-
-                    indexRegisterForm = formUtils.getFormJson("hh_screening_entry");
-                    indexRegisterForm.put("entity_id", this.house.getBid());
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,householdMapper.convertValue(house, Map.class));
-
-                    JSONObject recentLocation = getFieldJSONObject(fields(indexRegisterForm, "step2"), "recent_location");
-
-
-//                    recentLocation.put("text",formatGpsCoordinates(house.getHousehold_location() != null ? house.getHousehold_location() : ""));
-//                    recentLocation.put("text","Latitude: -15.378761 \nLongitude: 28.320772 1249.0 \nAccuracy: 7.504");
-
-
-
-                    JSONObject cphone = getFieldJSONObject(fields(indexRegisterForm, "step2"), "phone");
-                    if (cphone != null) {
-                        cphone.remove(JsonFormUtils.VALUE);
-                        try {
-                            cphone.put(JsonFormUtils.VALUE, caseworkerphone);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                    if (formUtils == null) {
+                        Toasty.error(HouseholdDetails.this, "Unable to open form. Please try again.", Toast.LENGTH_LONG, true).show();
+                        break;
                     }
 
-                    JSONObject caseworker_name_object = getFieldJSONObject(fields(indexRegisterForm, "step4"), "caseworker_name");
-                    if (caseworker_name_object != null) {
-                        caseworker_name_object.remove(JsonFormUtils.VALUE);
+                    final FormUtils hhFormUtils = formUtils;
+                    Threading.io(() -> {
                         try {
-                            caseworker_name_object.put(JsonFormUtils.VALUE, caseworkername);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    JSONObject caseworker_province = getFieldJSONObject(fields(indexRegisterForm, "step2"), "province");
-                    if (caseworker_province != null) {
-                        caseworker_province.remove(JsonFormUtils.VALUE);
-                        try {
-                            caseworker_province.put(JsonFormUtils.VALUE, caseworkerProvince);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    JSONObject subPop = getFieldJSONObject(fields(indexRegisterForm, "step2"), "sub_population");
-                    if (house.getSub_population() != null) {
-                        String subPopulationString = house.getSub_population();
-                        JSONArray subPopulations = new JSONArray(subPopulationString);
-                        JSONArray options = subPop.getJSONArray("options");
+                            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(HouseholdDetails.this);
+                            String caseworkerphone = prefs.getString("phone", "Anonymous");
+                            String caseworkername = prefs.getString("caseworker_name", "Anonymous");
+                            String caseworkerProvince= prefs.getString("province", "Anonymous");
 
-                        for (int i = 0; i < options.length(); i++) {
-                            JSONObject option = options.getJSONObject(i);
-                            String key = option.getString("key");
-                            if (subPopulations.toString().contains("\"" + key + "\"")) {
-                                option.put("value", "true");
-                            } else {
-                                option.put("value", "false");
+                            ObjectMapper localHouseholdMapper = new ObjectMapper();
+                            String childrenCount = IndexPersonDao.countChildren(householdId);
+
+                            JSONObject hhScreeningForm = hhFormUtils.getFormJson("hh_screening_entry");
+                            hhScreeningForm.put("entity_id", HouseholdDetails.this.house.getBid());
+                            CoreJsonFormUtils.populateJsonForm(hhScreeningForm, localHouseholdMapper.convertValue(house, Map.class));
+
+                            JSONObject recentLocation = getFieldJSONObject(fields(hhScreeningForm, "step2"), "recent_location");
+                            // left intentionally blank (historical placeholder)
+
+                            JSONObject cphone = getFieldJSONObject(fields(hhScreeningForm, "step2"), "phone");
+                            if (cphone != null) {
+                                cphone.remove(JsonFormUtils.VALUE);
+                                cphone.put(JsonFormUtils.VALUE, caseworkerphone);
                             }
+
+                            JSONObject caseworker_name_object = getFieldJSONObject(fields(hhScreeningForm, "step4"), "caseworker_name");
+                            if (caseworker_name_object != null) {
+                                caseworker_name_object.remove(JsonFormUtils.VALUE);
+                                caseworker_name_object.put(JsonFormUtils.VALUE, caseworkername);
+                            }
+                            JSONObject caseworker_province = getFieldJSONObject(fields(hhScreeningForm, "step2"), "province");
+                            if (caseworker_province != null) {
+                                caseworker_province.remove(JsonFormUtils.VALUE);
+                                caseworker_province.put(JsonFormUtils.VALUE, caseworkerProvince);
+                            }
+                            JSONObject subPop = getFieldJSONObject(fields(hhScreeningForm, "step2"), "sub_population");
+                            if (house.getSub_population() != null) {
+                                String subPopulationString = house.getSub_population();
+                                JSONArray subPopulations = new JSONArray(subPopulationString);
+                                JSONArray options = subPop.getJSONArray("options");
+
+                                for (int i = 0; i < options.length(); i++) {
+                                    JSONObject option = options.getJSONObject(i);
+                                    String key = option.getString("key");
+                                    if (subPopulations.toString().contains("\"" + key + "\"")) {
+                                        option.put("value", "true");
+                                    } else {
+                                        option.put("value", "false");
+                                    }
+                                }
+                            }
+                            else {
+                                JSONArray subPopulation = getFieldJSONObject(fields(hhScreeningForm, STEP2), "sub_population").getJSONArray("options");
+
+                                subPopulation.getJSONObject(0).put("value", house.getSubpop1());
+                                subPopulation.getJSONObject(1).put("value", house.getSubpop2());
+                                subPopulation.getJSONObject(2).put("value", house.getSubpop3());
+                                subPopulation.getJSONObject(3).put("value", house.getSubpop4());
+                                subPopulation.getJSONObject(5).put("value", house.getSubpop());
+                                subPopulation.getJSONObject(4).put("value", house.getSubpop5());
+                            }
+                            if (shouldRemoveIndexChildFields(childrenCount)) {
+                                removeFieldsFromStep(hhScreeningForm, "step2",
+                                        "unique_id", "first_name", "last_name", "adolescent_birthdate", "gender","sub_population");
+                            }
+                            hhScreeningForm.getJSONObject("step3").getJSONArray("fields").getJSONObject(3).put("value", "true");
+
+                            Threading.main(() -> {
+                                if (isFinishing()) return;
+                                startFormActivity(hhScreeningForm);
+                            });
+                        } catch (Exception e) {
+                            Timber.e(e);
+                            Threading.main(() -> Toasty.error(HouseholdDetails.this, "Unable to open form. Please try again.", Toast.LENGTH_LONG, true).show());
                         }
-                    }
-                    else {
-                        JSONArray subPopulation = getFieldJSONObject(fields(indexRegisterForm, STEP2), "sub_population").getJSONArray("options");
-
-                        subPopulation.getJSONObject(0).put("value", house.getSubpop1());
-                        subPopulation.getJSONObject(1).put("value", house.getSubpop2());
-                        subPopulation.getJSONObject(2).put("value", house.getSubpop3());
-                        subPopulation.getJSONObject(3).put("value", house.getSubpop4());
-                        subPopulation.getJSONObject(5).put("value", house.getSubpop());
-                        subPopulation.getJSONObject(4).put("value", house.getSubpop5());
-                    }
-                    if (shouldRemoveIndexChildFields(childrenCount)) {
-                        removeFieldsFromStep(indexRegisterForm, "step2",
-                                "unique_id", "first_name", "last_name", "adolescent_birthdate", "gender","sub_population");
-                    }
-                    indexRegisterForm.getJSONObject("step3").getJSONArray("fields").getJSONObject(3).put("value", "true");
-
-                    startFormActivity(indexRegisterForm);
+                    });
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -1239,21 +1313,36 @@ public class HouseholdDetails extends AppCompatActivity {
                 break;
             case R.id.tb_screening_caregiver:
                 try {
-                    long todayMillis = java.util.Calendar.getInstance().getTimeInMillis();
-                    boolean alreadyToday = TbScreeningCaregiverDao.existsOnSameDateByUniqueId(house.getHousehold_id(), todayMillis);
-                    if (alreadyToday) {
-                        Toasty.warning(HouseholdDetails.this, "TB Screening already done today", Toast.LENGTH_LONG, true).show();
+                    if (formUtils == null) {
+                        Toasty.error(HouseholdDetails.this, "Unable to open form. Please try again.", Toast.LENGTH_LONG, true).show();
                         break;
                     }
-                    JSONObject tbForm = formUtils.getFormJson("tb_screening_caregiver");
-                    JSONObject householdIdField = getFieldJSONObject(fields(tbForm, "step1"), "household_id");
-                    if (householdIdField != null) householdIdField.put("value", house.getHousehold_id());
-                    JSONObject uniqueTb = getFieldJSONObject(fields(tbForm, "step1"), "unique_tb_id");
-                    if (uniqueTb != null) uniqueTb.put("value", org.smartregister.util.JsonFormUtils.generateRandomUUIDString());
-                    if (house.getBase_entity_id() != null) {
-                        tbForm.put("entity_id", house.getBase_entity_id());
-                    }
-                    startFormActivity(tbForm);
+                    final FormUtils tbFormUtils = formUtils;
+                    Threading.io(() -> {
+                        try {
+                            long todayMillis = java.util.Calendar.getInstance().getTimeInMillis();
+                            boolean alreadyToday = TbScreeningCaregiverDao.existsOnSameDateByUniqueId(house.getHousehold_id(), todayMillis);
+                            if (alreadyToday) {
+                                Threading.main(() -> Toasty.warning(HouseholdDetails.this, "TB Screening already done today", Toast.LENGTH_LONG, true).show());
+                                return;
+                            }
+                            JSONObject tbForm = tbFormUtils.getFormJson("tb_screening_caregiver");
+                            JSONObject householdIdField = getFieldJSONObject(fields(tbForm, "step1"), "household_id");
+                            if (householdIdField != null) householdIdField.put("value", house.getHousehold_id());
+                            JSONObject uniqueTb = getFieldJSONObject(fields(tbForm, "step1"), "unique_tb_id");
+                            if (uniqueTb != null) uniqueTb.put("value", org.smartregister.util.JsonFormUtils.generateRandomUUIDString());
+                            if (house.getBase_entity_id() != null) {
+                                tbForm.put("entity_id", house.getBase_entity_id());
+                            }
+                            Threading.main(() -> {
+                                if (isFinishing()) return;
+                                startFormActivity(tbForm);
+                            });
+                        } catch (Exception e) {
+                            Timber.e(e);
+                            Threading.main(() -> Toasty.error(HouseholdDetails.this, "Unable to open form. Please try again.", Toast.LENGTH_LONG, true).show());
+                        }
+                    });
                 } catch (Exception e) {
                     Timber.e(e);
                 }
@@ -1349,6 +1438,10 @@ public class HouseholdDetails extends AppCompatActivity {
 
                 break;
 
+        }
+        } catch (Throwable t) {
+            Timber.e(t, "HouseholdDetails.onClick crashed");
+            Toasty.error(HouseholdDetails.this, "Action failed. Please try again.", Toast.LENGTH_SHORT, true).show();
         }
     }
 
@@ -2541,4 +2634,3 @@ public class HouseholdDetails extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 }
-

@@ -58,7 +58,7 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
         homeIcon.clearColorFilter();
         homeIcon.setTag(householdId);
 
-        Threading.io(() -> {
+        Threading.ioBestEffort(() -> {
             try {
                 GraduationModel graduationModel = GraduationDao.getGraduationStatus(householdId);
                 Household householdByBase = HouseholdDao.getHouseholdByBaseId(isClosed);

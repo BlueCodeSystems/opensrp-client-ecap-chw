@@ -50,7 +50,7 @@ public class DatabaseMigrationUtils extends AbstractDao {
             Cursor cursor = db.rawQuery(query, null);
             if (cursor != null) {
                 while (cursor.moveToNext()) {
-                    JSONLists.add(cursor.getString(cursor.getColumnIndex("json")));
+                    JSONLists.add(cursor.getString(cursor.getColumnIndexOrThrow("json")));
                 }
             }
             return JSONLists;
@@ -67,7 +67,7 @@ public class DatabaseMigrationUtils extends AbstractDao {
             Cursor cursor = db.rawQuery(query, null);
             if (cursor != null) {
                 while (cursor.moveToNext()) {
-                    formSubmissionIds.add(cursor.getString(cursor.getColumnIndex("form_submission_id")));
+                    formSubmissionIds.add(cursor.getString(cursor.getColumnIndexOrThrow("form_submission_id")));
                 }
             }
             return formSubmissionIds;

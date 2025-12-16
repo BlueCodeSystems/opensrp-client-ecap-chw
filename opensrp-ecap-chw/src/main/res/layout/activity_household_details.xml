@@ -521,7 +521,6 @@
                     app:srcCompat="@android:drawable/ic_input_add" />
 
             </RelativeLayout>
-            z
             <RelativeLayout
                 android:id="@+id/graduation"
                 android:onClick="onClick"

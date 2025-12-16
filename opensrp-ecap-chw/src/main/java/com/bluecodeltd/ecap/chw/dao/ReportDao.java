@@ -63,13 +63,13 @@ public class ReportDao extends AbstractDao {
 
         String sql = "select * from vaccines";
         DataMap<Void> dataMap = cursor -> {
-            String vaccineName = cursor.getString(cursor.getColumnIndex(VaccineRepository.NAME));
+            String vaccineName = getCursorValue(cursor, VaccineRepository.NAME);
             if (vaccineName != null) {
                 vaccineName = VaccineRepository.removeHyphen(vaccineName);
             }
 
             Date createdAt = null;
-            String dateCreatedString = cursor.getString(cursor.getColumnIndex(VaccineRepository.CREATED_AT));
+            String dateCreatedString = getCursorValue(cursor, VaccineRepository.CREATED_AT);
             if (StringUtils.isNotBlank(dateCreatedString)) {
                 try {
                     createdAt = EventClientRepository.dateFormat.parse(dateCreatedString);
@@ -77,27 +77,34 @@ public class ReportDao extends AbstractDao {
                     Timber.e(e);
                 }
             }
-            Vaccine vaccine = new Vaccine(cursor.getLong(cursor.getColumnIndex(VaccineRepository.ID_COLUMN)),
-                    cursor.getString(cursor.getColumnIndex(VaccineRepository.BASE_ENTITY_ID)),
-                    cursor.getString(cursor.getColumnIndex(VaccineRepository.PROGRAM_CLIENT_ID)),
+            Long id = getCursorLongValue(cursor, VaccineRepository.ID_COLUMN);
+            Long date = getCursorLongValue(cursor, VaccineRepository.DATE);
+            Long updatedAt = getCursorLongValue(cursor, VaccineRepository.UPDATED_AT_COLUMN);
+            Integer calculation = getCursorIntValue(cursor, VaccineRepository.CALCULATION);
+            Integer outOfArea = getCursorIntValue(cursor, VaccineRepository.OUT_OF_AREA);
+            Integer isVoided = getCursorIntValue(cursor, VaccineRepository.IS_VOIDED);
+
+            Vaccine vaccine = new Vaccine(id != null ? id : 0L,
+                    getCursorValue(cursor, VaccineRepository.BASE_ENTITY_ID),
+                    getCursorValue(cursor, VaccineRepository.PROGRAM_CLIENT_ID),
                     vaccineName,
-                    cursor.getInt(cursor.getColumnIndex(VaccineRepository.CALCULATION)),
-                    new Date(cursor.getLong(cursor.getColumnIndex(VaccineRepository.DATE))),
-                    cursor.getString(cursor.getColumnIndex(VaccineRepository.ANMID)),
-                    cursor.getString(cursor.getColumnIndex(VaccineRepository.LOCATION_ID)),
-                    cursor.getString(cursor.getColumnIndex(VaccineRepository.SYNC_STATUS)),
-                    cursor.getString(cursor.getColumnIndex(VaccineRepository.HIA2_STATUS)),
-                    cursor.getLong(cursor.getColumnIndex(VaccineRepository.UPDATED_AT_COLUMN)),
-                    cursor.getString(cursor.getColumnIndex(VaccineRepository.EVENT_ID)),
-                    cursor.getString(cursor.getColumnIndex(VaccineRepository.FORMSUBMISSION_ID)),
-                    cursor.getInt(cursor.getColumnIndex(VaccineRepository.OUT_OF_AREA)),
+                    calculation != null ? calculation : 0,
+                    new Date(date != null ? date : 0L),
+                    getCursorValue(cursor, VaccineRepository.ANMID),
+                    getCursorValue(cursor, VaccineRepository.LOCATION_ID),
+                    getCursorValue(cursor, VaccineRepository.SYNC_STATUS),
+                    getCursorValue(cursor, VaccineRepository.HIA2_STATUS),
+                    updatedAt != null ? updatedAt : 0L,
+                    getCursorValue(cursor, VaccineRepository.EVENT_ID),
+                    getCursorValue(cursor, VaccineRepository.FORMSUBMISSION_ID),
+                    outOfArea != null ? outOfArea : 0,
                     createdAt,
-                    cursor.getInt(cursor.getColumnIndex(VaccineRepository.IS_VOIDED))
+                    isVoided != null ? isVoided : 0
             );
 
-            vaccine.setTeam(cursor.getString(cursor.getColumnIndex(VaccineRepository.TEAM)));
-            vaccine.setTeamId(cursor.getString(cursor.getColumnIndex(VaccineRepository.TEAM_ID)));
-            vaccine.setChildLocationId(cursor.getString(cursor.getColumnIndex(VaccineRepository.CHILD_LOCATION_ID)));
+            vaccine.setTeam(getCursorValue(cursor, VaccineRepository.TEAM));
+            vaccine.setTeamId(getCursorValue(cursor, VaccineRepository.TEAM_ID));
+            vaccine.setChildLocationId(getCursorValue(cursor, VaccineRepository.CHILD_LOCATION_ID));
 
             List<Vaccine> vaccines = result.get(vaccine.getBaseEntityId());
             if (vaccines == null) vaccines = new ArrayList<>();
