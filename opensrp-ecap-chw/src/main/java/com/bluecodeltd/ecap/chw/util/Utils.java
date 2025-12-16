@@ -11,7 +11,7 @@ import com.bluecodeltd.ecap.chw.activity.ClientReferralActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.model.ReferralTypeModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.bottomnavigation.LabelVisibilityMode;
+import com.google.android.material.navigation.NavigationBarView;
 
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
@@ -79,7 +79,7 @@ public class Utils extends org.smartregister.chw.core.utils.Utils {
                                              BottomNavigationView bottomNavigationView,
                                              BottomNavigationView.OnNavigationItemSelectedListener listener) {
         if (bottomNavigationView != null) {
-            bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
+            bottomNavigationView.setLabelVisibilityMode(NavigationBarView.LABEL_VISIBILITY_LABELED);
 
             bottomNavigationView.getMenu().clear();
 
@@ -151,4 +151,3 @@ public class Utils extends org.smartregister.chw.core.utils.Utils {
     public static void startAsyncTask(SaveTeamLocationsTask saveTeamLocationsTask, Object params) {
     }
 }
-
