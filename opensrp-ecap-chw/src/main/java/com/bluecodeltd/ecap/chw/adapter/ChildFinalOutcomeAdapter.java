@@ -17,6 +17,7 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.ChildFinalOutcomeModel;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -63,11 +64,7 @@ public class ChildFinalOutcomeAdapter extends RecyclerView.Adapter<ChildFinalOut
         holder.txtStatus.setText(visit.getInfant_final_outcome() != null ? visit.getInfant_final_outcome() : "");
 
         View.OnClickListener editListener = v -> {
-            if (isInactive(visit)) {
-                showInactiveDialog(visit);
-                return;
-            }
-            openForm(visit);
+            runIfActive(visit, () -> openForm(visit));
         };
         holder.container.setOnClickListener(editListener);
         holder.btnEdit.setOnClickListener(editListener);
@@ -138,23 +135,30 @@ public class ChildFinalOutcomeAdapter extends RecyclerView.Adapter<ChildFinalOut
         }
     }
 
-    private boolean isInactive(ChildFinalOutcomeModel visit) {
-        try {
-            CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(visit.getUnique_id());
+    private void runIfActive(ChildFinalOutcomeModel visit, Runnable onActive) {
+        final String uniqueId = visit != null ? visit.getUnique_id() : null;
+        Threading.io(() -> {
+            CaseStatusModel caseStatusModel = null;
+            try { caseStatusModel = IndexPersonDao.getCaseStatus(uniqueId); } catch (Exception ignored) {}
             String status = caseStatusModel != null ? caseStatusModel.getCase_status() : null;
-            return status != null && (status.equals("0") || status.equals("2"));
-        } catch (Exception e) {
-            return false;
-        }
+            boolean inactive = status != null && (status.equals("0") || status.equals("2"));
+            CaseStatusModel finalCaseStatusModel = caseStatusModel;
+            Threading.main(() -> {
+                if (inactive) {
+                    showInactiveDialog(finalCaseStatusModel);
+                    return;
+                }
+                if (onActive != null) onActive.run();
+            });
+        });
     }
 
-    private void showInactiveDialog(ChildFinalOutcomeModel visit) {
+    private void showInactiveDialog(CaseStatusModel caseStatusModel) {
         try {
             Dialog dialog = new Dialog(context);
             dialog.setContentView(R.layout.dialog_layout);
             dialog.show();
             TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-            CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(visit.getUnique_id());
             String first = caseStatusModel != null && caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "This beneficiary";
             String last = caseStatusModel != null && caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "";
             dialogMessage.setText(first + (last.isEmpty() ? "" : (" " + last)) + " was either de-registered or inactive in the program");

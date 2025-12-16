@@ -17,6 +17,7 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.TbScreeningModel;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.smartregister.chw.core.utils.CoreJsonFormUtils;
@@ -81,23 +82,26 @@ public class TbScreeningAdapter extends RecyclerView.Adapter<TbScreeningAdapter.
         }
 
         h.btnAddOutcome.setOnClickListener(v -> {
-            if (isInactive(m)) { showInactiveDialog(m); return; }
-            // If there is an existing follow-up, show read-only outcome dialog; otherwise start outcome form
-            if (followForClick != null && !followForClick.trim().isEmpty()) {
-                showOutcomeDialog(m);
-            } else {
-                // Open outcome form using the TB screening entity_id (unique_tb_id) with encounter type "TB Screening"
-                openForm("tb_screening_outcome", m);
-            }
+            runIfActive(m.getUnique_id(), () -> {
+                // If there is an existing follow-up, show read-only outcome dialog; otherwise start outcome form
+                if (followForClick != null && !followForClick.trim().isEmpty()) {
+                    showOutcomeDialog(m);
+                } else {
+                    // Open outcome form using the TB screening entity_id (unique_tb_id) with encounter type "TB Screening"
+                    openForm("tb_screening_outcome", m);
+                }
+            });
         });
         h.btnEdit.setOnClickListener(v -> {
-            if (isInactive(m)) { showInactiveDialog(m); return; }
-            if (listener != null) listener.onEdit(m);
+            runIfActive(m.getUnique_id(), () -> {
+                if (listener != null) listener.onEdit(m);
+            });
         });
         h.itemView.setOnClickListener(v -> {
-            if (isInactive(m)) { showInactiveDialog(m); return; }
-            // Align with Nutrition adapter behavior: clicking row opens edit
-            if (listener != null) listener.onEdit(m);
+            runIfActive(m.getUnique_id(), () -> {
+                // Align with Nutrition adapter behavior: clicking row opens edit
+                if (listener != null) listener.onEdit(m);
+            });
         });
     }
 
@@ -115,23 +119,29 @@ public class TbScreeningAdapter extends RecyclerView.Adapter<TbScreeningAdapter.
         }
     }
 
-    private boolean isInactive(TbScreeningModel m) {
-        try {
-            CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(m.getUnique_id());
+    private void runIfActive(String uniqueId, Runnable onActive) {
+        Threading.io(() -> {
+            CaseStatusModel caseStatusModel = null;
+            try { caseStatusModel = IndexPersonDao.getCaseStatus(uniqueId); } catch (Exception ignored) {}
             String status = caseStatusModel != null ? caseStatusModel.getCase_status() : null;
-            return status != null && (status.equals("0") || status.equals("2"));
-        } catch (Exception e) {
-            return false;
-        }
+            boolean inactive = status != null && (status.equals("0") || status.equals("2"));
+            CaseStatusModel finalCaseStatusModel = caseStatusModel;
+            Threading.main(() -> {
+                if (inactive) {
+                    showInactiveDialog(finalCaseStatusModel);
+                    return;
+                }
+                if (onActive != null) onActive.run();
+            });
+        });
     }
 
-    private void showInactiveDialog(TbScreeningModel m) {
+    private void showInactiveDialog(CaseStatusModel caseStatusModel) {
         try {
             Dialog dialog = new Dialog(context);
             dialog.setContentView(R.layout.dialog_layout);
             dialog.show();
             TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-            CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(m.getUnique_id());
             String first = caseStatusModel != null && caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "This beneficiary";
             String last = caseStatusModel != null && caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "";
             dialogMessage.setText(first + (last.isEmpty() ? "" : (" " + last)) + " was either de-registered or inactive in the program");
@@ -351,5 +361,4 @@ public class TbScreeningAdapter extends RecyclerView.Adapter<TbScreeningAdapter.
         } catch (Exception e) { }
     }
 }
-
 

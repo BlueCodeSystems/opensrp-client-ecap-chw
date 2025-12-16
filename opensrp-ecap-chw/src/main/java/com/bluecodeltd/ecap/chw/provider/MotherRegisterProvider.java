@@ -12,6 +12,7 @@ import com.bluecodeltd.ecap.chw.dao.IndexMotherDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.model.IndexMotherModel;
 import com.bluecodeltd.ecap.chw.view_holder.MotherRegisterViewHolder;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 import org.smartregister.chw.core.holders.FooterViewHolder;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
@@ -54,16 +55,30 @@ public class MotherRegisterProvider implements RecyclerViewProvider<MotherRegist
         String caregiverBirthDate = Utils.getValue(personObjectClient.getColumnmaps(), "caregiver_birth_date", true);
         String lastInteractedWith = Utils.getValue(personObjectClient.getColumnmaps(), "last_interacted_with", true);
 
-        String age = getMotherAge(caregiverBirthDate);
-        String childrenCount = IndexPersonDao.countChildren(household_id);
+        final String age = getMotherAge(caregiverBirthDate);
+        final String enrollmentLabel = buildEnrollmentLabel(lastInteractedWith);
 
-        IndexMotherModel indexMother = IndexMotherDao.getIndexMotherByHouseholdId(household_id);
-        String ageBand = indexMother != null ? indexMother.getMother_children_age_band() : null;
-        String childrenSummary = buildChildrenSummary(childrenCount, ageBand);
+        // Tag to avoid stale updates on recycled rows.
+        final String rowTag = household_id != null ? household_id : "";
+        motherRegisterViewHolder.itemView.setTag(R.id.tag_row_id, rowTag);
 
-        String enrollmentLabel = buildEnrollmentLabel(lastInteractedWith);
+        // Set fallbacks immediately; refine asynchronously.
+        motherRegisterViewHolder.setupViews(fullName, household_id, age, buildChildrenSummary("0", null), enrollmentLabel);
 
-        motherRegisterViewHolder.setupViews(fullName, household_id, age, childrenSummary, enrollmentLabel);
+        final String fHouseholdId = household_id;
+        Threading.ioBestEffort(() -> {
+            String childrenCount = null;
+            IndexMotherModel indexMother = null;
+            try { childrenCount = IndexPersonDao.countChildren(fHouseholdId); } catch (Exception ignored) { }
+            try { indexMother = IndexMotherDao.getIndexMotherByHouseholdId(fHouseholdId); } catch (Exception ignored) { }
+            final String ageBand = indexMother != null ? indexMother.getMother_children_age_band() : null;
+            final String childrenSummary = buildChildrenSummary(childrenCount, ageBand);
+            Threading.main(() -> {
+                Object tag = motherRegisterViewHolder.itemView.getTag(R.id.tag_row_id);
+                if (!(tag instanceof String) || !rowTag.equals(tag)) return;
+                motherRegisterViewHolder.setupViews(fullName, fHouseholdId, age, childrenSummary, enrollmentLabel);
+            });
+        });
         motherRegisterViewHolder.itemView.setOnClickListener(onClickListener);
         motherRegisterViewHolder.itemView.setTag(smartRegisterClient);
     }

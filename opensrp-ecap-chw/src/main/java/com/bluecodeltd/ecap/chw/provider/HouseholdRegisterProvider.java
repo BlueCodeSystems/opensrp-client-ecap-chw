@@ -55,8 +55,8 @@ public class HouseholdRegisterProvider implements RecyclerViewProvider<Household
         String baseId = Utils.getValue(personObjectClient.getColumnmaps(), "base_entity_id", true);
         // Tag to avoid stale updates on recycled rows
         final String rowTag = householdId;
-        householdRegisterViewHolder.itemView.setTag(rowTag);
-        Threading.io(() -> {
+        householdRegisterViewHolder.itemView.setTag(R.id.tag_row_id, rowTag);
+        Threading.ioBestEffort(() -> {
             List<String> genderList = IndexPersonDao.getGenders(householdId);
             List<String> ageList = IndexPersonDao.getAges(householdId);
             String is_screened = HouseholdDao.checkIfScreened(householdId);
@@ -69,12 +69,15 @@ public class HouseholdRegisterProvider implements RecyclerViewProvider<Household
             }
 
             Threading.main(() -> {
-                Object tag = householdRegisterViewHolder.itemView.getTag();
+                Object tag = householdRegisterViewHolder.itemView.getTag(R.id.tag_row_id);
                 if (!(tag instanceof String) || !rowTag.equals(tag)) return;
                 householdRegisterViewHolder.setupViews(caregiverName + " " + "Household", householdId, baseId, householdId, genderList, is_screened, ageList, context);
                 householdRegisterViewHolder.itemView.setOnClickListener(onClickListener);
-                householdRegisterViewHolder.itemView.findViewById(R.id.register_columns).setOnClickListener(onClickListener);
+                View columns = householdRegisterViewHolder.itemView.findViewById(R.id.register_columns);
+                columns.setOnClickListener(onClickListener);
+                // Click handlers expect the client on the clicked view's default tag.
                 householdRegisterViewHolder.itemView.setTag(smartRegisterClient);
+                columns.setTag(smartRegisterClient);
             });
         });
 

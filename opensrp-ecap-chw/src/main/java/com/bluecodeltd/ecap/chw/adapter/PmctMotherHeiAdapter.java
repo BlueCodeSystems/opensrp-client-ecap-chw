@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HeiDetailsActivity;
 import com.bluecodeltd.ecap.chw.model.PmtctChildModel;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -52,54 +53,27 @@ Context context;
 
         holder.genderIcon.setImageResource((monitoringModel.getInfants_sex() != null && monitoringModel.getInfants_sex().equals("male")) ? org.smartregister.R.drawable.child_boy_infant : org.smartregister.R.drawable.child_girl_infant);
 
-        // Flag conditions
-        boolean heiHighRisk = false; // Mother unsuppressed VL
+        final String rowTag = monitoringModel.getBase_entity_id() != null ? monitoringModel.getBase_entity_id()
+                : (monitoringModel.getUnique_id() != null ? monitoringModel.getUnique_id() : String.valueOf(position));
+        holder.itemView.setTag(R.id.tag_row_id, rowTag);
+
+        // Flag conditions (compute mother VL in background)
         boolean heiHivPositive = false; // HEI tests HIV-positive at birth
         try {
-            String householdId = safe(monitoringModel.getHousehold_id());
-            String pmtctId = safe(monitoringModel.getHousehold_id());
-            com.bluecodeltd.ecap.chw.model.PtctMotherModel mother = null;
-            if (!householdId.isEmpty()) {
-                mother = com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao.getPMCTMother(householdId);
-            }
-            if (mother == null && !pmtctId.isEmpty()) {
-                mother = com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao.getPMCTMother(pmtctId);
-            }
-            if (mother != null) {
-                String agywUnsupp = safe(mother.getAgyw_unsuppressed_vl_1st());
-                String unsupp = safe(mother.getUnsuppressed_vl_1st());
-                heiHighRisk = "yes".equalsIgnoreCase(agywUnsupp) || "yes".equalsIgnoreCase(unsupp);
-            }
-            // HIV positive at birth flag (D = Detected)
             String trBirth = safe(monitoringModel.getTest_result_at_birth());
             heiHivPositive = "d".equalsIgnoreCase(trBirth);
         } catch (Throwable ignored) {}
 
-        // Show separate flag buttons and alerts
-        holder.heiHighRiskButton.setVisibility(heiHighRisk ? View.VISIBLE : View.GONE);
-        if (!heiHighRisk && holder.heiUnsuppressedAlert != null) holder.heiUnsuppressedAlert.setVisibility(View.GONE);
+        holder.heiHighRiskButton.setVisibility(View.GONE);
+        if (holder.heiUnsuppressedAlert != null) holder.heiUnsuppressedAlert.setVisibility(View.GONE);
 
         if (holder.heiHivPositiveButton != null)
             holder.heiHivPositiveButton.setVisibility(heiHivPositive ? View.VISIBLE : View.GONE);
         if (!heiHivPositive && holder.heiHivPositiveAlert != null) holder.heiHivPositiveAlert.setVisibility(View.GONE);
 
-        // Final copies for lambda capture
         final boolean finalHeiHivPositive = heiHivPositive;
-        final boolean finalHeiHighRisk = heiHighRisk;
-
-        holder.heiHighRiskButton.setOnClickListener(v -> {
-            // Toggle unsuppressed alert and ensure HIV alert is closed
-            if (holder.heiUnsuppressedAlert != null) toggleAlert(holder.heiUnsuppressedAlert);
-            if (holder.heiHivPositiveAlert != null) hideAlert(holder.heiHivPositiveAlert);
-            try {
-                timber.log.Timber.i("HEI_ALERT_UNSUPPRESSED_VIEWED pmtct_id=%s mother_unsuppressed=%s",
-                        monitoringModel.getPmtct_id(), String.valueOf(finalHeiHighRisk));
-            } catch (Throwable ignored) {}
-        });
-
         if (holder.heiHivPositiveButton != null) {
             holder.heiHivPositiveButton.setOnClickListener(v -> {
-                // Toggle HIV positive alert and ensure other alert is closed
                 if (holder.heiHivPositiveAlert != null) toggleAlert(holder.heiHivPositiveAlert);
                 if (holder.heiUnsuppressedAlert != null) hideAlert(holder.heiUnsuppressedAlert);
                 try {
@@ -122,12 +96,59 @@ Context context;
         // Visual stripe: red when any flagged, default otherwise
         View stripe = holder.itemView.findViewById(R.id.hei_status_stripe);
         if (stripe != null) {
-            if (heiHighRisk || heiHivPositive) {
+            if (heiHivPositive) {
                 stripe.setBackgroundColor(0xFFE53935);
             } else {
                 stripe.setBackgroundResource(R.drawable.bg_status_stripe);
             }
         }
+
+        final String householdId = monitoringModel.getHousehold_id();
+        Threading.ioBestEffort(() -> {
+            boolean heiHighRisk = false;
+            try {
+                String hid = safe(householdId);
+                String pmtctId = safe(monitoringModel.getHousehold_id());
+                com.bluecodeltd.ecap.chw.model.PtctMotherModel mother = null;
+                if (!hid.isEmpty()) {
+                    mother = com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao.getPMCTMother(hid);
+                }
+                if (mother == null && !pmtctId.isEmpty()) {
+                    mother = com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao.getPMCTMother(pmtctId);
+                }
+                if (mother != null) {
+                    String agywUnsupp = safe(mother.getAgyw_unsuppressed_vl_1st());
+                    String unsupp = safe(mother.getUnsuppressed_vl_1st());
+                    heiHighRisk = "yes".equalsIgnoreCase(agywUnsupp) || "yes".equalsIgnoreCase(unsupp);
+                }
+            } catch (Throwable ignored) {}
+
+            final boolean finalHeiHighRisk = heiHighRisk;
+            Threading.main(() -> {
+                Object tag = holder.itemView.getTag(R.id.tag_row_id);
+                if (!(tag instanceof String) || !rowTag.equals(tag)) return;
+
+                holder.heiHighRiskButton.setVisibility(finalHeiHighRisk ? View.VISIBLE : View.GONE);
+                if (!finalHeiHighRisk && holder.heiUnsuppressedAlert != null) holder.heiUnsuppressedAlert.setVisibility(View.GONE);
+
+                holder.heiHighRiskButton.setOnClickListener(v -> {
+                    if (holder.heiUnsuppressedAlert != null) toggleAlert(holder.heiUnsuppressedAlert);
+                    if (holder.heiHivPositiveAlert != null) hideAlert(holder.heiHivPositiveAlert);
+                    try {
+                        timber.log.Timber.i("HEI_ALERT_UNSUPPRESSED_VIEWED pmtct_id=%s mother_unsuppressed=%s",
+                                monitoringModel.getPmtct_id(), String.valueOf(finalHeiHighRisk));
+                    } catch (Throwable ignored) {}
+                });
+
+                if (stripe != null) {
+                    if (finalHeiHighRisk || finalHeiHivPositive) {
+                        stripe.setBackgroundColor(0xFFE53935);
+                    } else {
+                        stripe.setBackgroundResource(R.drawable.bg_status_stripe);
+                    }
+                }
+            });
+        });
 
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
                     @Override

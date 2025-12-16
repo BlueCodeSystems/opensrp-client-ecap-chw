@@ -34,6 +34,7 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -152,27 +153,29 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
 //        CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(casePlan.getUnique_id());
 
         holder.editme.setOnClickListener(v -> {
-            Household household = HouseholdDao.getHousehold(casePlan.getHousehold_id());
-
-          if (household.getHousehold_case_status() != null && (household.getHousehold_case_status().equals("0") || household.getHousehold_case_status().equals("2"))) {
-                showDialogBox(casePlan.getHousehold_id(), "`s has been inactive or de-registered");
-            } else {
-                if (v.getId() == R.id.edit_me) {
-
-                    try {
-                        if (context instanceof CasePlan) {
-                            openFormUsingFormUtils(context, "domain", casePlan);
-                        } else {
-                            openFormUsingFormUtils(context, "caregiver_domain", casePlan);
+            Threading.io(() -> {
+                Household household = null;
+                try { household = HouseholdDao.getHousehold(casePlan.getHousehold_id()); } catch (Exception ignored) {}
+                Household finalHousehold = household;
+                Threading.main(() -> {
+                    if (finalHousehold != null && finalHousehold.getHousehold_case_status() != null &&
+                            ("0".equals(finalHousehold.getHousehold_case_status()) || "2".equals(finalHousehold.getHousehold_case_status()))) {
+                        showDialogBox(finalHousehold.getCaregiver_name(), "`s has been inactive or de-registered");
+                    } else {
+                        if (v.getId() == R.id.edit_me) {
+                            try {
+                                if (context instanceof CasePlan) {
+                                    openFormUsingFormUtils(context, "domain", casePlan, finalHousehold);
+                                } else {
+                                    openFormUsingFormUtils(context, "caregiver_domain", casePlan, finalHousehold);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
-
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
                     }
-                }
-            }
-
+                });
+            });
         });
         holder.delete.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -245,20 +248,19 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
             activity.recreate();
         }
     };
-    public void showDialogBox(String householdId,String message){
+    public void showDialogBox(String caregiverName,String message){
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_layout);
         dialog.show();
 
         TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-        Household house = HouseholdDao.getHousehold(householdId);
-        dialogMessage.setText(house.getCaregiver_name() + message);
+        dialogMessage.setText((caregiverName != null ? caregiverName : "") + message);
 
         android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
         dialogButton.setOnClickListener(v -> dialog.dismiss());
 
     }
-    public void openFormUsingFormUtils(Context context, String formName, CasePlanModel caseplan) throws JSONException {
+    public void openFormUsingFormUtils(Context context, String formName, CasePlanModel caseplan, Household household) throws JSONException {
 
         oMapper = new ObjectMapper();
 
@@ -280,8 +282,13 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
         try {
             JSONArray subPopulation = getFieldJSONObject(fields(formToBeOpened, STEP1), "type").getJSONArray("options");
             JSONArray filteredSubPopulation = new JSONArray();
-            Household household = HouseholdDao.getHousehold(caseplan.getHousehold_id());
-            int age = calculateAge(household.getCaregiver_birth_date());
+            int age = -1;
+            try {
+                String birthDate = household != null ? household.getCaregiver_birth_date() : null;
+                if (birthDate != null) {
+                    age = calculateAge(birthDate);
+                }
+            } catch (Exception ignored) {}
 
             for (int i = 0; i < subPopulation.length(); i++) {
                 JSONObject option = subPopulation.getJSONObject(i);

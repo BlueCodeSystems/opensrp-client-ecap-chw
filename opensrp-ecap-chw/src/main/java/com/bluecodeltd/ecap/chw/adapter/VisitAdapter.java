@@ -40,6 +40,7 @@ import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.VcaScreeningModel;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -117,44 +118,12 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
             }
         });
 
-        CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(visit.getUnique_id());
+        final String rowTag = visit.getBase_entity_id() != null ? visit.getBase_entity_id()
+                : (visit.getUnique_id() != null ? visit.getUnique_id() : String.valueOf(position));
+        holder.itemView.setTag(R.id.tag_row_id, rowTag);
 
-        holder.editme.setOnClickListener(v -> {
-            try {
-                if (caseStatusModel != null && caseStatusModel.getCase_status() != null) {
-                    // Check case status
-                    if (caseStatusModel.getCase_status().equals("0") || caseStatusModel.getCase_status().equals("2")) {
-                        Dialog dialog = new Dialog(context);
-                        dialog.setContentView(R.layout.dialog_layout);
-                        dialog.show();
-
-                        TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                        String firstName = caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "Unknown";
-                        String lastName = caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "User";
-
-                        dialogMessage.setText(firstName + " " + lastName +
-                                " was either de-registered or inactive in the program");
-
-                        Button dialogButton = dialog.findViewById(R.id.dialog_button);
-                        dialogButton.setOnClickListener(va -> dialog.dismiss());
-                    } else {
-                        if (v.getId() == R.id.edit_me) {
-                            try {
-                                openFormUsingFormUtils(context, "household_visitation_for_vca_0_20_years_edit", visit);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                Toast.makeText(context, "Error opening the form. Please try again.", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-                } else {
-                    Toast.makeText(context, "Unable to retrieve case status. Please try again.", Toast.LENGTH_SHORT).show();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Toast.makeText(context, "An unexpected error occurred. Please try again.", Toast.LENGTH_SHORT).show();
-            }
-        });
+        holder.editme.setOnClickListener(v ->
+                Toast.makeText(context, "Loading case status…", Toast.LENGTH_SHORT).show());
 
         holder.delete.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -206,23 +175,8 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
             alert.show();
         });
 
-        Child childModel = null;
-        try {
-            childModel = IndexPersonDao.getChildByBaseId(visit.getUnique_id());
-        } catch (Exception e) {
-            Timber.e(e);
-        }
-
-        if (childModel == null) {
-            holder.intialHivStatus.setText("Unknown");
-            holder.initialHivStatusDate.setText("Date not set");
-        } else {
-            if (childModel.getIs_hiv_positive() != null && "yes".equalsIgnoreCase(childModel.getIs_hiv_positive())) {
-                holder.exPandableView.setVisibility(View.GONE);
-                holder.expMore.setVisibility(View.GONE);
-                holder.expLess.setVisibility(View.GONE);
-            }
-        }
+        holder.intialHivStatus.setText("Loading…");
+        holder.initialHivStatusDate.setText("");
         holder.linearLayout.setOnClickListener(v -> {
 
             if (v.getId() == R.id.itemm) {
@@ -258,19 +212,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
         });
 
 
-        if (childModel != null) {
-            String hivStatus = childModel.getIs_hiv_positive();
-            if ("yes".equalsIgnoreCase(hivStatus)) {
-                holder.intialHivStatus.setText("Positive");
-            } else if ("unknown".equalsIgnoreCase(hivStatus)) {
-                holder.intialHivStatus.setText("Unknown");
-            } else {
-                holder.intialHivStatus.setText("Negative");
-            }
-
-            holder.initialHivStatusDate.setText(childModel.getDate_screened() != null ? childModel.getDate_screened() : "Date not set");
-        }
-
+        // Update HIV status from visit immediately
         if (visit != null) {
             String visitHivStatus = visit.getIs_hiv_positive();
             if ("yes".equalsIgnoreCase(visitHivStatus)) {
@@ -280,32 +222,91 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
             } else {
                 holder.updateHivStatus.setText("Negative");
             }
-
             holder.updatedHivStatusDate.setText(visit.getVisit_date() != null ? visit.getVisit_date() : "Date not set");
         }
 
-        Household household = null;
-        if (childModel != null && childModel.getHousehold_id() != null) {
-            try {
-                household = HouseholdDao.getHousehold(childModel.getHousehold_id());
-            } catch (Exception e) {
-                Timber.e(e);
-            }
-        }
-
         String encodedSignature = visit.getSignature();
-        String encodeSignatureHousehold = household != null ? household.getSignature() : null;
-
-
-        if(encodedSignature != null && encodedSignature != "") {
+        if (encodedSignature != null && !encodedSignature.isEmpty()) {
             setImageViewFromBase64(encodedSignature, holder.signatureView);
         } else {
-            if(encodeSignatureHousehold != null && encodeSignatureHousehold != "") {
-                setImageViewFromBase64(encodeSignatureHousehold, holder.signatureView);
-            } else {
-                holder.signatureView.setVisibility(View.GONE);
-            }
+            holder.signatureView.setVisibility(View.GONE);
         }
+
+        final String uniqueId = visit.getUnique_id();
+        Threading.ioBestEffort(() -> {
+            CaseStatusModel caseStatusModel = null;
+            Child childModel = null;
+            Household household = null;
+            try { caseStatusModel = IndexPersonDao.getCaseStatus(uniqueId); } catch (Exception ignored) {}
+            try { childModel = IndexPersonDao.getChildByBaseId(uniqueId); } catch (Exception ignored) {}
+            if (childModel != null && childModel.getHousehold_id() != null) {
+                try { household = HouseholdDao.getHousehold(childModel.getHousehold_id()); } catch (Exception ignored) {}
+            }
+
+            final CaseStatusModel finalCaseStatusModel = caseStatusModel;
+            final Child finalChildModel = childModel;
+            final Household finalHousehold = household;
+
+            Threading.main(() -> {
+                Object tag = holder.itemView.getTag(R.id.tag_row_id);
+                if (!(tag instanceof String) || !rowTag.equals(tag)) return;
+
+                holder.editme.setOnClickListener(v -> {
+                    try {
+                        String status = finalCaseStatusModel != null ? finalCaseStatusModel.getCase_status() : null;
+                        if (status != null && ("0".equals(status) || "2".equals(status))) {
+                            Dialog dialog = new Dialog(context);
+                            dialog.setContentView(R.layout.dialog_layout);
+                            dialog.show();
+
+                            TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                            String firstName = finalCaseStatusModel != null && finalCaseStatusModel.getFirst_name() != null ? finalCaseStatusModel.getFirst_name() : "Unknown";
+                            String lastName = finalCaseStatusModel != null && finalCaseStatusModel.getLast_name() != null ? finalCaseStatusModel.getLast_name() : "User";
+                            dialogMessage.setText(firstName + " " + lastName + " was either de-registered or inactive in the program");
+
+                            Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                            dialogButton.setOnClickListener(va -> dialog.dismiss());
+                        } else {
+                            try {
+                                openFormUsingFormUtils(context, "household_visitation_for_vca_0_20_years_edit", visit);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Toast.makeText(context, "Error opening the form. Please try again.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(context, "An unexpected error occurred. Please try again.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                if (finalChildModel == null) {
+                    holder.intialHivStatus.setText("Unknown");
+                    holder.initialHivStatusDate.setText("Date not set");
+                } else {
+                    String hivStatus = finalChildModel.getIs_hiv_positive();
+                    if ("yes".equalsIgnoreCase(hivStatus)) {
+                        holder.intialHivStatus.setText("Positive");
+                        holder.exPandableView.setVisibility(View.GONE);
+                        holder.expMore.setVisibility(View.GONE);
+                        holder.expLess.setVisibility(View.GONE);
+                    } else if ("unknown".equalsIgnoreCase(hivStatus)) {
+                        holder.intialHivStatus.setText("Unknown");
+                    } else {
+                        holder.intialHivStatus.setText("Negative");
+                    }
+                    holder.initialHivStatusDate.setText(finalChildModel.getDate_screened() != null ? finalChildModel.getDate_screened() : "Date not set");
+                }
+
+                if ((encodedSignature == null || encodedSignature.isEmpty()) && finalHousehold != null) {
+                    String hSig = finalHousehold.getSignature();
+                    if (hSig != null && !hSig.isEmpty()) {
+                        holder.signatureView.setVisibility(View.VISIBLE);
+                        setImageViewFromBase64(hSig, holder.signatureView);
+                    }
+                }
+            });
+        });
     }
     private void setImageViewFromBase64(String base64Str, ImageView imageView) {
         try {
