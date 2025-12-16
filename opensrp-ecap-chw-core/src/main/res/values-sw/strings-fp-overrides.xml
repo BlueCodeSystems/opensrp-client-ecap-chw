@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- TODO: review Swahili translations -->
+    <string name="fp_refill">Jaza upya {0}</string>
+    <string name="fp_follow_up_one">Ufuatiliaji 1 {0}</string>
+    <string name="fp_follow_up_two">Ufuatiliaji 2 {0}</string>
+    <string name="fp_follow_up_three">Ufuatiliaji 3 {0}</string>
+
+    <string name="coc">COC</string>
+    <string name="pop">POP</string>
+    <string name="emergency_contraceptive">Uzazi wa mpango wa dharura</string>
+    <string name="fp_visit_day_next_due">Itakayofuata %s</string>
+    <string name="fp_visit_day_due_today">Inastahili leo</string>
+    <string name="fp_visit_day_due">Inastahili %s</string>
+    <string name="fp_visit_day_overdue_today">Imechelewa leo</string>
+    <string name="fp_visit_day_overdue">Imechelewa tangu %s</string>
+</resources>
