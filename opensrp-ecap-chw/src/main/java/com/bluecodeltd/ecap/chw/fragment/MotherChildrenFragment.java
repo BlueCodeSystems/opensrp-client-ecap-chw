@@ -46,7 +46,7 @@ public class MotherChildrenFragment extends Fragment {
         HashMap<String, CommonPersonObjectClient> mymap = ( (MotherDetail) requireActivity()).getData();
 
         CommonPersonObjectClient mother = mymap.get("mother");
-        String houseId = mother.getColumnmaps().get("household_id");
+        String houseId = (mother != null && mother.getColumnmaps() != null) ? mother.getColumnmaps().get("household_id") : null;
 
         recyclerView = binding.recyclerView;
 

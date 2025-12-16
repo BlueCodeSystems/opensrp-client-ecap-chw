@@ -18,6 +18,7 @@ import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,47 +33,63 @@ public class VcaVisitsActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.vca_visits_list);
         TextView empty = findViewById(R.id.empty_state);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        empty.setText("Loading…");
+        empty.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
 
-        List<Child> children = IndexPersonDao.getAllChildrenSubpops();
-        ArrayList<Row> rows = new ArrayList<>();
-        if (children != null) {
-            for (Child c : children) {
-                try {
-                    String uniqueId = c.getUnique_id();
-                    String displayName = (c.getAdolescent_first_name() != null ? c.getAdolescent_first_name() : c.getFirst_name()) + " " +
-                            (c.getAdolescent_last_name() != null ? c.getAdolescent_last_name() : c.getLast_name());
-                    String caseStatus = null;
-                    try { caseStatus = VCAScreeningDao.getVcaScreening(uniqueId).getCase_status(); } catch (Exception ignored) {}
-                    if (caseStatus != null && ("0".equals(caseStatus) || "2".equals(caseStatus))) continue;
+        Threading.io(() -> {
+            List<Child> children = null;
+            try { children = IndexPersonDao.getAllChildrenSubpops(); } catch (Exception ignored) { }
+            ArrayList<Row> rows = new ArrayList<>();
+            if (children != null) {
+                for (Child c : children) {
+                    try {
+                        String uniqueId = c.getUnique_id();
+                        String displayName = (c.getAdolescent_first_name() != null ? c.getAdolescent_first_name() : c.getFirst_name()) + " " +
+                                (c.getAdolescent_last_name() != null ? c.getAdolescent_last_name() : c.getLast_name());
+                        String caseStatus = null;
+                        try {
+                            com.bluecodeltd.ecap.chw.model.VcaScreeningModel scr = VCAScreeningDao.getVcaScreening(uniqueId);
+                            caseStatus = scr != null ? scr.getCase_status() : null;
+                        } catch (Exception ignored) {}
+                        if (caseStatus != null && ("0".equals(caseStatus) || "2".equals(caseStatus))) continue;
 
-                    VcaVisitationModel visit = VcaVisitationDao.getVcaVisitationNotification(uniqueId);
-                    String color = null;
-                    String date = null;
-                    if (visit != null) {
-                        color = visit.getStatus_color();
-                        date = visit.getVisit_date();
-                    } else {
-                        VcaAssessmentModel assess = VcaAssessmentDao.getVcaVisitationNotificationFromAssessment(uniqueId);
-                        if (assess != null) {
-                            color = assess.getStatus_color();
-                            date = assess.getDate_edited();
+                        VcaVisitationModel visit = null;
+                        try { visit = VcaVisitationDao.getVcaVisitationNotification(uniqueId); } catch (Exception ignored) {}
+                        String color = null;
+                        String date = null;
+                        if (visit != null) {
+                            color = visit.getStatus_color();
+                            date = visit.getVisit_date();
+                        } else {
+                            VcaAssessmentModel assess = null;
+                            try { assess = VcaAssessmentDao.getVcaVisitationNotificationFromAssessment(uniqueId); } catch (Exception ignored) {}
+                            if (assess != null) {
+                                color = assess.getStatus_color();
+                                date = assess.getDate_edited();
+                            }
                         }
-                    }
-                    if (color != null && date != null) {
-                        rows.add(new Row(displayName, uniqueId, color, date));
-                    }
-                } catch (Exception ignored) {}
+                        if (color != null && date != null) {
+                            rows.add(new Row(displayName, uniqueId, color, date));
+                        }
+                    } catch (Exception ignored) {}
+                }
             }
-        }
 
-        if (rows.isEmpty()) {
-            empty.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
-        } else {
-            empty.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
-            recyclerView.setAdapter(new Adapter(rows));
-        }
+            final ArrayList<Row> finalRows = rows;
+            Threading.main(() -> {
+                if (isFinishing() || isDestroyed()) return;
+                if (finalRows.isEmpty()) {
+                    empty.setText("No visits due.");
+                    empty.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                } else {
+                    empty.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                    recyclerView.setAdapter(new Adapter(finalRows));
+                }
+            });
+        });
     }
 
     static class Row {
@@ -117,4 +134,3 @@ public class VcaVisitsActivity extends AppCompatActivity {
         @Override public int getItemCount() { return items.size(); }
     }
 }
-

@@ -51,8 +51,8 @@ public class HouseholdChildrenFragment extends Fragment {
         HashMap<String, Household> mymap = ( (HouseholdDetails) requireActivity()).getData();
         HashMap<String, CaregiverAssessmentModel> vmap = ( (HouseholdDetails) requireActivity()).getVulnerabilities();
 
-        Household house = mymap.get("house");
-       houseId = house.getHousehold_id();
+        Household house = mymap != null ? mymap.get("house") : null;
+        houseId = house != null ? house.getHousehold_id() : null;
 
         caregiverAssessmentModel = vmap.get("vulnerabilities");
 
@@ -103,7 +103,7 @@ public class HouseholdChildrenFragment extends Fragment {
     public void reloadChildrenList(String houseId) {
         View progress2 = (binding != null) ? binding.progressLoading : null;
         if (progress2 != null) progress2.setVisibility(View.VISIBLE);
-        viewModel.refresh(houseId);
+        if (viewModel != null) viewModel.refresh(houseId);
     }
 
     private void applyChildrenState(HouseholdChildrenState state) {

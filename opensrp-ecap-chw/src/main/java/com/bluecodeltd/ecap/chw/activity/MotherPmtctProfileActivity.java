@@ -49,6 +49,7 @@ import com.bluecodeltd.ecap.chw.model.PmtctDeliveryDetailsModel;
 import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
 import com.bluecodeltd.ecap.chw.model.PtmctMotherMonitoringModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -172,32 +173,53 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
         }
 
+        ptctMotherModel = null;
+        pmtctDeliveryDetailsModel = null;
+        pmctMotherAncModel = null;
+        pmctMotherOutcomeModel = null;
+        motherName.setText("Loading…");
+        txtAge.setText("");
 
+        final String cid = clientId;
+        Threading.io(() -> {
+            PtctMotherModel mother = null;
+            PmtctDeliveryDetailsModel delivery = null;
+            PmctMotherAncModel anc = null;
+            PmctMotherOutcomeModel outcome = null;
+            try { mother = PMTCTMotherDao.getPMCTMother(cid); } catch (Exception ignored) {}
+            try { delivery = PmtctDeliveryDao.getPmtctDeliveryDetails(cid); } catch (Exception ignored) {}
+            try { anc = PmctMotherAncDao.getPMCTMotherAnc(cid); } catch (Exception ignored) {}
+            try { outcome = PmtctMotherOutComeDao.getPMCTmothersOutcome(cid); } catch (Exception ignored) {}
 
-        ptctMotherModel = PMTCTMotherDao.getPMCTMother(clientId);
+            final PtctMotherModel finalMother = mother;
+            final PmtctDeliveryDetailsModel finalDelivery = delivery;
+            final PmctMotherAncModel finalAnc = anc;
+            final PmctMotherOutcomeModel finalOutcome = outcome;
+            Threading.main(() -> {
+                if (isFinishing() || isDestroyed()) return;
+                ptctMotherModel = finalMother;
+                pmtctDeliveryDetailsModel = finalDelivery;
+                pmctMotherAncModel = finalAnc;
+                pmctMotherOutcomeModel = finalOutcome;
 
-        pmtctDeliveryDetailsModel = PmtctDeliveryDao.getPmtctDeliveryDetails(clientId);
-        pmctMotherAncModel = PmctMotherAncDao.getPMCTMotherAnc(clientId);
-        pmctMotherOutcomeModel = PmtctMotherOutComeDao.getPMCTmothersOutcome(clientId);
+                if (ptctMotherModel != null) {
+                    String mothersFullName = isNullOrEmpty(ptctMotherModel.getCaregiver_name())
+                            ? String.format("%s %s", valueOrEmpty(ptctMotherModel.getFirst_name()), valueOrEmpty(ptctMotherModel.getLast_name())).trim()
+                            : ptctMotherModel.getCaregiver_name();
+                    motherName.setText(isNullOrEmpty(mothersFullName) ? "" : mothersFullName);
 
-
-        if (ptctMotherModel != null) {
-            String mothersFullName = isNullOrEmpty(ptctMotherModel.getCaregiver_name())
-                    ? String.format("%s %s", valueOrEmpty(ptctMotherModel.getFirst_name()), valueOrEmpty(ptctMotherModel.getLast_name())).trim()
-                    : ptctMotherModel.getCaregiver_name();
-            motherName.setText(isNullOrEmpty(mothersFullName) ? "" : mothersFullName);
-
-            String mothersAge = ptctMotherModel.getCaregiver_birth_date();
-            if (mothersAge != null) {
-                txtAge.setText(getClientAge(mothersAge));
-            } else {
-                txtAge.setText("N/A");
-            }
-        } else {
-            // Handle the case where ptctMotherModel is null, if necessary
-            motherName.setText("Name not available");
-            txtAge.setText("Age not available");
-        }
+                    String mothersAge = ptctMotherModel.getCaregiver_birth_date();
+                    if (mothersAge != null) {
+                        txtAge.setText(getClientAge(mothersAge));
+                    } else {
+                        txtAge.setText("N/A");
+                    }
+                } else {
+                    motherName.setText("Name not available");
+                    txtAge.setText("Age not available");
+                }
+            });
+        });
 
        oMapper = new ObjectMapper();
 //
@@ -268,27 +290,51 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.pmct_titles, null);
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
         visitTabTitle.setText("POSTNATAL");
-        childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
+        final TextView countView = taskTabTitleLayout.findViewById(R.id.children_count);
+        countView.setText("…");
+        if (mTabLayout.getTabAt(1) != null) {
+            mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
+        }
 
-
-        String countMotherPostnatal = PMTCTMotherDao.countMotherPostnatal(clientId);
-
-        childTabCount.setText(countMotherPostnatal);
-
-        mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
+        final String cid = clientId;
+        Threading.ioBestEffort(() -> {
+            String count = "0";
+            try {
+                if (!isNullOrEmpty(cid)) {
+                    count = PMTCTMotherDao.countMotherPostnatal(cid);
+                }
+            } catch (Exception ignored) {}
+            final String finalCount = count;
+            Threading.main(() -> {
+                if (isFinishing() || isDestroyed()) return;
+                countView.setText(finalCount != null ? finalCount : "0");
+            });
+        });
     }
     private void updateHeiTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.pmct_titles, null);
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
         visitTabTitle.setText("HEI");
-        childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
+        final TextView countView = taskTabTitleLayout.findViewById(R.id.children_count);
+        countView.setText("…");
+        if (mTabLayout.getTabAt(2) != null) {
+            mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
+        }
 
-
-        String countHie = PmtctChildDao.countMotherHei(clientId);
-
-        childTabCount.setText(countHie);
-
-        mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
+        final String cid = clientId;
+        Threading.ioBestEffort(() -> {
+            String count = "0";
+            try {
+                if (!isNullOrEmpty(cid)) {
+                    count = PmtctChildDao.countMotherHei(cid);
+                }
+            } catch (Exception ignored) {}
+            final String finalCount = count;
+            Threading.main(() -> {
+                if (isFinishing() || isDestroyed()) return;
+                countView.setText(finalCount != null ? finalCount : "0");
+            });
+        });
     }
     private void updateOverviewTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.pmct_titles, null);

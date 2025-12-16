@@ -367,7 +367,9 @@ public class HouseholdIndexFragment extends BaseSafeRegisterFragment implements 
     @Override
     protected void onViewClicked(View view) {
 
-        CommonPersonObjectClient client =(CommonPersonObjectClient) view.getTag();
+        Object tag = view.getTag();
+        if (!(tag instanceof CommonPersonObjectClient)) return;
+        CommonPersonObjectClient client = (CommonPersonObjectClient) tag;
 
         Threading.io(() -> {
             String isClosed = null;

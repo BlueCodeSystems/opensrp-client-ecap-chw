@@ -83,6 +83,7 @@ import com.bluecodeltd.ecap.chw.model.WeServiceVcaModel;
 import com.bluecodeltd.ecap.chw.model.newCaregiverModel;
 import com.bluecodeltd.ecap.chw.model.TbScreeningModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -216,64 +217,67 @@ public class IndexDetailsActivity extends AppCompatActivity {
         if(hhIntent == null && extras != null){
             hhIntent = extras.getString("fromIndex");
         }
+        // Avoid ANRs: do SQLCipher/DAO work off the main thread.
+        loadIndexDataAsync(hhIntent);
 
-        indexVCA = VCAScreeningDao.getVcaScreening(childId);
-        child = IndexPersonDao.getChildByBaseId(childId);
-        gender = null;
+    }
 
+    private void loadIndexDataAsync(String hhIntent) {
+        final String finalChildId = childId;
+        final String finalHhIntent = hhIntent;
+        Threading.io(() -> {
+            if (TextUtils.isEmpty(finalChildId)) {
+                Threading.main(this::finish);
+                return;
+            }
 
-        if (indexVCA != null) {
-            if (indexVCA.getGender() != null) {
-                gender = indexVCA.getGender();
+            try { indexVCA = VCAScreeningDao.getVcaScreening(finalChildId); } catch (Exception ignored) { indexVCA = null; }
+            try { child = IndexPersonDao.getChildByBaseId(finalChildId); } catch (Exception ignored) { child = null; }
+
+            gender = indexVCA != null ? indexVCA.getGender() : null;
+            uniqueId = indexVCA != null ? indexVCA.getUnique_id() : null;
+
+            is_screened = null;
+            if (indexVCA != null) {
+                String householdId = indexVCA.getHousehold_id();
+                if (!TextUtils.isEmpty(householdId)) {
+                    try { is_screened = HouseholdDao.checkIfScreened(householdId); } catch (Exception ignored) {}
+                }
+            }
+
+            is_hiv_positive = null;
+            if (!TextUtils.isEmpty(uniqueId)) {
+                try { is_hiv_positive = VCAScreeningDao.checkStatus(uniqueId); } catch (Exception ignored) {}
+            }
+
+            try { vcaAssessmentModel = VcaAssessmentDao.getVcaAssessment(finalChildId); } catch (Exception ignored) { vcaAssessmentModel = null; }
+            try { referralModel = ReferralDao.getReferral(finalChildId); } catch (Exception ignored) { referralModel = null; }
+            try { hivRiskAssessmentAbove15Model = HivAssessmentAbove15Dao.getHivAssessmentAbove15(finalChildId); } catch (Exception ignored) { hivRiskAssessmentAbove15Model = null; }
+            try { hivRiskAssessmentUnder15Model = HivAssessmentUnder15Dao.getHivAssessmentUnder15(finalChildId); } catch (Exception ignored) { hivRiskAssessmentUnder15Model = null; }
+            try { vcaVisitationModel = VcaVisitationDao.getVcaVisitation(finalChildId); } catch (Exception ignored) { vcaVisitationModel = null; }
+            try { vcaCasePlanModel = VcaCasePlanDao.getVcaCasePlan(finalChildId); } catch (Exception ignored) { vcaCasePlanModel = null; }
+            try { weServiceVcaModel = WeServiceVcaDao.getWeServiceVca(finalChildId); } catch (Exception ignored) { weServiceVcaModel = null; }
+
+            if (indexVCA != null && !TextUtils.isEmpty(indexVCA.getHousehold_id())) {
+                try { updatedCaregiver = newCaregiverDao.getNewCaregiverById(indexVCA.getHousehold_id()); } catch (Exception ignored) { updatedCaregiver = null; }
             } else {
+                updatedCaregiver = null;
             }
-            uniqueId = null;
-            if (indexVCA.getUnique_id() != null) {
-                uniqueId = indexVCA.getUnique_id();
-            } else {
-            }
-        } else {
 
-        }
+            Threading.main(() -> {
+                if (isFinishing() || isDestroyed()) return;
+                initAfterLoad(finalHhIntent);
+            });
+        });
+    }
 
-//        is_screened = HouseholdDao.checkIfScreened(indexVCA.getHousehold_id());
-        if (indexVCA != null) {
-            String householdId = indexVCA.getHousehold_id();
-            if (householdId != null) {
-                is_screened = HouseholdDao.checkIfScreened(householdId);
-            }
-        }
-
-        is_hiv_positive = null;
-
-        if (indexVCA != null && indexVCA.getUnique_id() != null ) {
-            String uniqueId = indexVCA.getUnique_id();
-            if (uniqueId != null) {
-                is_hiv_positive = VCAScreeningDao.checkStatus(uniqueId);
-            }
-        }
-
+    private void initAfterLoad(String hhIntent) {
         fabHiv = binding.hivRisk;
         fabHiv2 = binding.hivRisk2;
         fabVisitation = binding.householdVisitationForVcaFab;
         fabReferal = binding.referToFacilityFab;
         fabCasePlan =  binding.casePlanFab;
         fabAssessment = binding.fabAssessment;
-
-        vcaAssessmentModel = VcaAssessmentDao.getVcaAssessment(childId);
-        referralModel = ReferralDao.getReferral(childId);
-        hivRiskAssessmentAbove15Model = HivAssessmentAbove15Dao.getHivAssessmentAbove15(childId);
-        hivRiskAssessmentUnder15Model = HivAssessmentUnder15Dao.getHivAssessmentUnder15(childId);
-        vcaVisitationModel = VcaVisitationDao.getVcaVisitation(childId);
-        vcaCasePlanModel = VcaCasePlanDao.getVcaCasePlan(childId);
-        weServiceVcaModel = WeServiceVcaDao.getWeServiceVca(childId);
-        if (indexVCA != null && !TextUtils.isEmpty(indexVCA.getHousehold_id())) {
-            updatedCaregiver = newCaregiverDao.getNewCaregiverById(indexVCA.getHousehold_id());
-        } else {
-            updatedCaregiver = null;
-        }
-
-
 
         oMapper = new ObjectMapper();
         clientMapper = new ObjectMapper();
@@ -310,27 +314,12 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         }
 
-
         fab = binding.fab;
         if (indexVCA != null && indexVCA.getCase_status() != null &&
                 ("0".equals(indexVCA.getCase_status()) || "2".equals(indexVCA.getCase_status()))) {
             fab.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
         }
 
-//        String subpop1 = child.getSubpop1();
-//        String subpop2 = child.getSubpop2();
-//        String subpop3 = child.getSubpop3();
-//        String subpop4 = child.getSubpop4();
-//        String subpop5 = child.getSubpop5();
-//        String subpop6 = child.getSubpop6();
-//
-//        if (subpop1 != null || subpop2 != null || subpop3 != null ||
-//                subpop4 != null || subpop5 != null || subpop6 != null) {
-//            fab.setVisibility(View.VISIBLE);
-//        }
-//        else {
-//            fab.setVisibility(View.INVISIBLE);
-//        }
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
@@ -342,8 +331,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
         referral = binding.referral;
         referral = binding.referral;
         household_visitation_for_vca = binding.householdVisitationForVca;
-
-
 
         hiv_assessment = binding.hivAssessment;
         hiv_assessment2 = binding.hivAssessment2;
@@ -369,9 +356,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         int page = getIntent().getIntExtra("tab",0);
         mViewPager.setCurrentItem(page, false);
 
-createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE);
-
-
+        createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE);
     }
 
 
@@ -700,14 +685,24 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         visitTabTitle.setText("HIV ASSESSMENT");
         visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
 
-        int count = 0;
-        try {
-            int u15 = HivAssessmentUnder15Dao.getHivAssessment(uniqueId).size();
-            int a15 = HivAssessmentAbove15Dao.getHivAssessment(uniqueId).size();
-            count = u15 + a15;
-        } catch (Exception ignored) { }
-        visitTabCount.setText(String.valueOf(count));
+        TextView countView = visitTabCount;
+        countView.setText("…");
         visitTabCount.setVisibility(View.VISIBLE);
+
+        final String uid = uniqueId;
+        Threading.ioBestEffort(() -> {
+            int count = 0;
+            try {
+                int u15 = HivAssessmentUnder15Dao.getHivAssessment(uid).size();
+                int a15 = HivAssessmentAbove15Dao.getHivAssessment(uid).size();
+                count = u15 + a15;
+            } catch (Exception ignored) { }
+            int finalCount = count;
+            Threading.main(() -> {
+                if (isFinishing()) return;
+                countView.setText(String.valueOf(finalCount));
+            });
+        });
 
         mTabLayout.getTabAt(3).setCustomView(taskTabTitleLayout);
     }
@@ -719,14 +714,24 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         visitTabTitle.setText("HIV ASSESSMENT");
         visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
 
-        int count = 0;
-        try {
-            int u15 = HivAssessmentUnder15Dao.getHivAssessment(uniqueId).size();
-            int a15 = HivAssessmentAbove15Dao.getHivAssessment(uniqueId).size();
-            count = u15 + a15;
-        } catch (Exception ignored) { }
-        visitTabCount.setText(String.valueOf(count));
+        TextView countView = visitTabCount;
+        countView.setText("…");
         visitTabCount.setVisibility(View.VISIBLE);
+
+        final String uid = uniqueId;
+        Threading.ioBestEffort(() -> {
+            int count = 0;
+            try {
+                int u15 = HivAssessmentUnder15Dao.getHivAssessment(uid).size();
+                int a15 = HivAssessmentAbove15Dao.getHivAssessment(uid).size();
+                count = u15 + a15;
+            } catch (Exception ignored) { }
+            int finalCount = count;
+            Threading.main(() -> {
+                if (isFinishing()) return;
+                countView.setText(String.valueOf(finalCount));
+            });
+        });
 
         if (mTabLayout.getTabCount() > index && mTabLayout.getTabAt(index) != null) {
             mTabLayout.getTabAt(index).setCustomView(taskTabTitleLayout);
@@ -738,9 +743,19 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         visitTabTitle.setText(this.getString(org.smartregister.opd.R.string.visits));
         visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
 
-        int visits = VcaVisitationDao.countVisits(uniqueId);
+        TextView countView = visitTabCount;
+        countView.setText("…");
 
-        visitTabCount.setText(String.valueOf(visits));
+        final String uid = uniqueId;
+        Threading.ioBestEffort(() -> {
+            int visits = 0;
+            try { visits = VcaVisitationDao.countVisits(uid); } catch (Exception ignored) { }
+            int finalVisits = visits;
+            Threading.main(() -> {
+                if (isFinishing()) return;
+                countView.setText(String.valueOf(finalVisits));
+            });
+        });
 
         mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
     }
@@ -751,9 +766,19 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         visitTabTitle.setText("CASE PLANS");
         plansTabCount = plansTabTitleLayout.findViewById(R.id.plans_count);
 
-        int plans = CasePlanDao.checkCasePlan(uniqueId);
+        TextView countView = plansTabCount;
+        countView.setText("…");
 
-        plansTabCount.setText(String.valueOf(plans));
+        final String uid = uniqueId;
+        Threading.ioBestEffort(() -> {
+            int plans = 0;
+            try { plans = CasePlanDao.checkCasePlan(uid); } catch (Exception ignored) { }
+            int finalPlans = plans;
+            Threading.main(() -> {
+                if (isFinishing()) return;
+                countView.setText(String.valueOf(finalPlans));
+            });
+        });
 
         mTabLayout.getTabAt(1).setCustomView(plansTabTitleLayout);
     }
@@ -765,13 +790,23 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         visitTabTitle.setText("NUTRITION");
         visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
 
-        int count = 0;
-        try {
-            // Count nutrition assessments for this beneficiary
-            count = NutritionAssessmentInterventionDao.countByVcaId(uniqueId);
-        } catch (Exception ignored) { }
-        visitTabCount.setText(String.valueOf(count));
+        TextView countView = visitTabCount;
+        countView.setText("…");
         visitTabCount.setVisibility(View.VISIBLE);
+
+        final String uid = uniqueId;
+        Threading.ioBestEffort(() -> {
+            int count = 0;
+            try {
+                // Count nutrition assessments for this beneficiary
+                count = NutritionAssessmentInterventionDao.countByVcaId(uid);
+            } catch (Exception ignored) { }
+            int finalCount = count;
+            Threading.main(() -> {
+                if (isFinishing()) return;
+                countView.setText(String.valueOf(finalCount));
+            });
+        });
 
         if (mTabLayout.getTabCount() > index && mTabLayout.getTabAt(index) != null) {
             mTabLayout.getTabAt(index).setCustomView(taskTabTitleLayout);

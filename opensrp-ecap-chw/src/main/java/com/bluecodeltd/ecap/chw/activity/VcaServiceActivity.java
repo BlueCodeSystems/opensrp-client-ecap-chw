@@ -34,6 +34,7 @@ import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.TbScreeningModel;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.rey.material.widget.Button;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -115,14 +116,8 @@ public class VcaServiceActivity extends AppCompatActivity {
 
         evaluateAddServiceButtonState();
 
-
         hh_id.setText(intent_vcaid);
         vcaname.setText(intent_cname);
-
-
-        familyServiceList.addAll(VCAServiceReportDao.getServicesByVCAID(intent_vcaid));
-        vcaServiceModel = VCAServiceReportDao.getVcaService(intent_vcaid);
-
 
         if (recyclerViewadapter == null) {
             RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(VcaServiceActivity.this);
@@ -140,10 +135,8 @@ public class VcaServiceActivity extends AppCompatActivity {
             try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
         }
 
-        if (recyclerViewadapter.getItemCount() > 0){
-
-            linearLayout.setVisibility(View.GONE);
-        }
+        linearLayout.setVisibility(View.VISIBLE);
+        refreshData();
     }
     @Override
     public void onResume() {
@@ -164,54 +157,68 @@ public class VcaServiceActivity extends AppCompatActivity {
                     Toasty.warning(this, "TB screening for this month is required before adding a service report for a VCA under 10 years.", Toast.LENGTH_LONG, true).show();
                     return;
                 }
-                CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(intent_vcaid);
+                Threading.io(() -> {
+                    CaseStatusModel caseStatusModel = null;
+                    int casePlanCount = 0;
+                    try { caseStatusModel = IndexPersonDao.getCaseStatus(intent_vcaid); } catch (Exception ignored) {}
+                    try { casePlanCount = CasePlanDao.checkCasePlan(intent_vcaid); } catch (Exception ignored) {}
 
-                if (caseStatusModel == null) {
-                    break;
-                }
+                    CaseStatusModel finalCaseStatusModel = caseStatusModel;
+                    int finalCasePlanCount = casePlanCount;
 
-                if (CasePlanDao.checkCasePlan(intent_vcaid) == 0) {
-                    Dialog dialog = new Dialog(this);
-                    dialog.setContentView(R.layout.dialog_layout);
-                    dialog.show();
+                    Threading.main(() -> {
+                        if (finalCaseStatusModel == null) {
+                            return;
+                        }
 
-                    TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                    dialogMessage.setText(
-                            "Unable to add service(s) for " + caseStatusModel.getFirst_name() + " " +
-                                    caseStatusModel.getLast_name() + " because no Case Plan(s) have been added"
-                    );
+                        if (finalCasePlanCount == 0) {
+                            Dialog dialog = new Dialog(this);
+                            dialog.setContentView(R.layout.dialog_layout);
+                            dialog.show();
 
-                    android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
-                    dialogButton.setOnClickListener(view -> dialog.dismiss());
-                } else if (caseStatusModel.getCase_status() != null &&
-                        ("0".equals(caseStatusModel.getCase_status()) || "2".equals(caseStatusModel.getCase_status()))) {
-                    Dialog dialog = new Dialog(this);
-                    dialog.setContentView(R.layout.dialog_layout);
-                    dialog.show();
+                            TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                            dialogMessage.setText(
+                                    "Unable to add service(s) for " + finalCaseStatusModel.getFirst_name() + " " +
+                                            finalCaseStatusModel.getLast_name() + " because no Case Plan(s) have been added"
+                            );
 
-                    TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                    String firstName = caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "";
-                    String lastName = caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "";
-                    dialogMessage.setText(firstName + " " + lastName + " was either de-registered or inactive in the program");
+                            android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                            dialogButton.setOnClickListener(view -> dialog.dismiss());
+                            return;
+                        }
 
-                    android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
-                    dialogButton.setOnClickListener(view -> dialog.dismiss());
-                } else {
-                    try {
-                        FormUtils formUtils = new FormUtils(this);
-                        JSONObject indexRegisterForm = formUtils.getFormJson("service_report_vca");
+                        if (finalCaseStatusModel.getCase_status() != null &&
+                                ("0".equals(finalCaseStatusModel.getCase_status()) || "2".equals(finalCaseStatusModel.getCase_status()))) {
+                            Dialog dialog = new Dialog(this);
+                            dialog.setContentView(R.layout.dialog_layout);
+                            dialog.show();
 
-                        JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
-                        cId.put("value", hh_id.getText().toString());
+                            TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                            String firstName = finalCaseStatusModel.getFirst_name() != null ? finalCaseStatusModel.getFirst_name() : "";
+                            String lastName = finalCaseStatusModel.getLast_name() != null ? finalCaseStatusModel.getLast_name() : "";
+                            dialogMessage.setText(firstName + " " + lastName + " was either de-registered or inactive in the program");
 
-                        JSONObject hiv = getFieldJSONObject(fields(indexRegisterForm, STEP1), "is_hiv_positive");
-                        hiv.put("value", hivstatus);
+                            android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                            dialogButton.setOnClickListener(view -> dialog.dismiss());
+                            return;
+                        }
 
-                        startFormActivity(indexRegisterForm);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
+                        try {
+                            FormUtils formUtils = new FormUtils(this);
+                            JSONObject indexRegisterForm = formUtils.getFormJson("service_report_vca");
+
+                            JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
+                            cId.put("value", hh_id.getText().toString());
+
+                            JSONObject hiv = getFieldJSONObject(fields(indexRegisterForm, STEP1), "is_hiv_positive");
+                            hiv.put("value", hivstatus);
+
+                            startFormActivity(indexRegisterForm);
+                        } catch (Exception e) {
+                            Timber.e(e);
+                        }
+                    });
+                });
 
                 break;
         }
@@ -282,9 +289,7 @@ public class VcaServiceActivity extends AppCompatActivity {
 
                 case "VCA Service Report Edit":
                     Toasty.success(VcaServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
-                    familyServiceList.clear();
-                    familyServiceList.addAll(VCAServiceReportDao.getServicesByVCAID(intent_vcaid));
-                    try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
+                    refreshData();
                     break;
 
             }
@@ -410,20 +415,44 @@ public class VcaServiceActivity extends AppCompatActivity {
         return ChwApplication.getInstance().getClientProcessorForJava();
     }
     private void refreshData() {
-        familyServiceList.clear();
-        List<VCAServiceModel> updatedList = VCAServiceReportDao.getServicesByVCAID(intent_vcaid);
-        familyServiceList.addAll(updatedList);
-        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
+        final String vcaId = intent_vcaid;
+        Threading.io(() -> {
+            List<VCAServiceModel> updatedList = Collections.emptyList();
+            VCAServiceModel model = null;
+            try { updatedList = VCAServiceReportDao.getServicesByVCAID(vcaId); } catch (Exception ignored) {}
+            try { model = VCAServiceReportDao.getVcaService(vcaId); } catch (Exception ignored) {}
+
+            List<VCAServiceModel> finalUpdatedList = updatedList == null ? Collections.emptyList() : updatedList;
+            VCAServiceModel finalModel = model;
+
+            Threading.main(() -> {
+                vcaServiceModel = finalModel;
+                familyServiceList.clear();
+                familyServiceList.addAll(finalUpdatedList);
+                try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
+                if (linearLayout != null) {
+                    linearLayout.setVisibility(finalUpdatedList.isEmpty() ? View.VISIBLE : View.GONE);
+                }
+            });
+        });
     }
 
     private void evaluateAddServiceButtonState() {
-        canAddServiceReport = shouldAllowServiceReport(intent_vcaid);
-        if (addServiceReportButton != null) {
-            // Keep button visually dimmed but clickable so we can surface the toast guard in onClick.
-            addServiceReportButton.setAlpha(canAddServiceReport ? 1f : 0.5f);
-            addServiceReportButton.setEnabled(true);
-            addServiceReportButton.setClickable(true);
-        }
+        final String vcaId = intent_vcaid;
+        Threading.ioBestEffort(() -> {
+            boolean allowed = true;
+            try { allowed = shouldAllowServiceReport(vcaId); } catch (Exception ignored) {}
+            boolean finalAllowed = allowed;
+            Threading.main(() -> {
+                canAddServiceReport = finalAllowed;
+                if (addServiceReportButton != null) {
+                    // Keep button visually dimmed but clickable so we can surface the toast guard in onClick.
+                    addServiceReportButton.setAlpha(canAddServiceReport ? 1f : 0.5f);
+                    addServiceReportButton.setEnabled(true);
+                    addServiceReportButton.setClickable(true);
+                }
+            });
+        });
     }
 
     private boolean shouldAllowServiceReport(String vcaId) {
