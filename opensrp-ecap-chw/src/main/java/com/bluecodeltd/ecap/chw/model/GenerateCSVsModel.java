@@ -8,6 +8,8 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 
+import androidx.annotation.RequiresApi;
+
 import org.smartregister.chw.core.application.CoreChwApplication;
 
 import com.bluecodeltd.ecap.chw.R;
@@ -64,6 +66,7 @@ public class GenerateCSVsModel {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     private String copyToDownloads(CoreChwApplication application, File file) throws IOException {
         ContentResolver resolver = application.getContentResolver();
         String relativePath = Environment.DIRECTORY_DOWNLOADS + "/" + application.getString(R.string.app_name);
