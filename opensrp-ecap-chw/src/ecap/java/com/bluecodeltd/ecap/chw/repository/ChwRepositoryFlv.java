@@ -1083,6 +1083,51 @@ public class ChwRepositoryFlv {
                     "last_interacted_with TEXT" +
                     ")");
 
+            List<String> alterStatements = Arrays.asList(
+                    "ALTER TABLE ec_mother_index ADD COLUMN mother_pregnant TEXT",
+                    "ALTER TABLE ec_mother_index ADD COLUMN mother_breastfeeding TEXT",
+                    "ALTER TABLE ec_mother_index ADD COLUMN mother_age_range TEXT",
+                    "ALTER TABLE ec_mother_index ADD COLUMN mother_children_age_band TEXT",
+                    "ALTER TABLE ec_pmtct_mother ADD COLUMN household_id TEXT",
+                    "ALTER TABLE ec_pmtct_mother ADD COLUMN caregiver_name TEXT",
+                    "ALTER TABLE ec_pmtct_mother ADD COLUMN caregiver_birth_date TEXT",
+                    "ALTER TABLE ec_pmtct_mother ADD COLUMN province TEXT",
+                    "ALTER TABLE ec_pmtct_mother_child ADD COLUMN household_id TEXT",
+                    "ALTER TABLE ec_pmtct_child_monitoring ADD COLUMN household_id TEXT",
+                    "ALTER TABLE ec_pmtct_child_monitoring ADD COLUMN nutrition_status TEXT",
+                    "ALTER TABLE ec_pmtct_child_monitoring ADD COLUMN medical_complications TEXT",
+                    "ALTER TABLE ec_pmtct_child_monitoring ADD COLUMN child_oedema TEXT",
+                    "ALTER TABLE ec_pmtct_child_monitoring ADD COLUMN oedema_stage TEXT",
+                    "ALTER TABLE ec_pmtct_child_monitoring ADD COLUMN tb_screening_symptoms TEXT",
+                    "ALTER TABLE ec_pmtct_child_monitoring ADD COLUMN other_tb_symptom TEXT",
+                    "ALTER TABLE ec_pmtct_child_monitoring ADD COLUMN tb_referral TEXT",
+                    "ALTER TABLE ec_pmtct_child_monitoring ADD COLUMN comments_tb TEXT",
+                    "ALTER TABLE ec_pmtct_child ADD COLUMN household_id TEXT",
+                    "ALTER TABLE ec_pmtct_child_outcome ADD COLUMN household_id TEXT",
+                    "ALTER TABLE ec_pmtct_mother_outcome ADD COLUMN household_id TEXT",
+                    "ALTER TABLE ec_pmtct_mother_postnatal ADD COLUMN household_id TEXT",
+                    "ALTER TABLE ec_pmtct_mother_postnatal ADD COLUMN tb_screening_symptoms_10plus TEXT",
+                    "ALTER TABLE ec_pmtct_mother_postnatal ADD COLUMN other_tb_symptom_10plus TEXT",
+                    "ALTER TABLE ec_pmtct_mother_postnatal ADD COLUMN comments_tb_10plus TEXT",
+                    "ALTER TABLE ec_pmtct_mother_anc ADD COLUMN household_id TEXT",
+                    "ALTER TABLE ec_pmtct_delivery_details ADD COLUMN household_id TEXT"
+            );
+
+            for (String statement : alterStatements) {
+                db.execSQL(statement);
+            }
+
+            db.execSQL("CREATE TABLE IF NOT EXISTS ec_mother_delivery (" +
+                    "base_entity_id TEXT, " +
+                    "household_id TEXT, " +
+                    "date_of_delivery TEXT, " +
+                    "place_of_delivery TEXT, " +
+                    "hiv_status_at_delivery TEXT, " +
+                    "delete_status TEXT, " +
+                    "entity_type TEXT, " +
+                    "last_interacted_with TEXT" +
+                    ")");
+
         } catch (Exception e) {
             Timber.e(e, "upgradeToVersion25");
         }
