@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import androidx.core.content.ContextCompat;
 import org.smartregister.chw.core.activity.CoreAboveFiveChildProfileActivity;
 import org.smartregister.chw.core.contract.CoreChildProfileContract;
 import org.smartregister.chw.core.model.CoreChildProfileModel;
@@ -49,11 +50,7 @@ public class AboveFiveChildProfileActivity extends CoreAboveFiveChildProfileActi
         setupViews();
         setUpToolbar();
         try {
-            if (android.os.Build.VERSION.SDK_INT >= 33) {
-                registerReceiver(mDateTimeChangedReceiver, sIntentFilter, RECEIVER_NOT_EXPORTED);
-            } else {
-                registerReceiver(mDateTimeChangedReceiver, sIntentFilter);
-            }
+            ContextCompat.registerReceiver(this, mDateTimeChangedReceiver, sIntentFilter, ContextCompat.RECEIVER_NOT_EXPORTED);
         } catch (SecurityException se) {
             // Ignore if platform requires explicit flags and we're not in foreground yet
         }
