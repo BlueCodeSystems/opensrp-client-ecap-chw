@@ -880,7 +880,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 } else {
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                    Toasty.warning(IndexDetailsActivity.this, "CA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
 
 
@@ -895,7 +895,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 } else {
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                    Toasty.warning(IndexDetailsActivity.this, "CA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
 
                 break;
@@ -912,7 +912,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     }
 
                 } else {
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                    Toasty.warning(IndexDetailsActivity.this, "CA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
 
 
@@ -933,7 +933,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     startActivity(intent2);
                 }
                 else{
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                    Toasty.warning(IndexDetailsActivity.this, "CA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
                 break;
             case R.id.show_referrals:
@@ -996,7 +996,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 } else{
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                    Toasty.warning(IndexDetailsActivity.this, "CA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
 
 
@@ -1010,7 +1010,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 if(indexVCA.getDate_screened() != null) {
                     openFormUsingFormUtils(IndexDetailsActivity.this, "hiv_risk_assessment_under_15_years");
                 } else {
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                    Toasty.warning(IndexDetailsActivity.this, "CA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
                 break;
 
@@ -1021,7 +1021,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 if(indexVCA.getDate_screened() != null) {
                     openFormUsingFormUtils(IndexDetailsActivity.this, "hiv_risk_assessment_above_15_years");
                 }else{
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                    Toasty.warning(IndexDetailsActivity.this, "CA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
                 break;
 
@@ -1032,7 +1032,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 if(indexVCA.getDate_screened() != null) {
                     openFormUsingFormUtils(IndexDetailsActivity.this, "we_services_vca");
                 }else{
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                    Toasty.warning(IndexDetailsActivity.this, "CA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
                 break;
             case R.id.tb_screening:
@@ -1048,7 +1048,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                         openFormUsingFormUtils(IndexDetailsActivity.this, "tb_screening");
                     } catch (org.json.JSONException e) { e.printStackTrace(); }
                 } else {
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                    Toasty.warning(IndexDetailsActivity.this, "CA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
                 break;
             case R.id.nutrition_assessment_intervention:
@@ -1061,10 +1061,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     if (years <= 5) {
                         openFormUsingFormUtils(IndexDetailsActivity.this, "nutrition_assessment_intervention");
                     } else {
-                        Toasty.warning(IndexDetailsActivity.this, "Only for VCA aged 5 years and below", Toast.LENGTH_LONG, true).show();
+                        Toasty.warning(IndexDetailsActivity.this, "Only for CA aged 5 years and below", Toast.LENGTH_LONG, true).show();
                     }
                 } else{
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                    Toasty.warning(IndexDetailsActivity.this, "CA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
                 break;
             case R.id.childPlan:
@@ -1086,7 +1086,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             return true;
         }
         Toast.makeText(IndexDetailsActivity.this, "Member data incomplete", Toast.LENGTH_LONG).show();
-        Timber.w("IndexDetailsActivity action skipped: indexVCA missing for childId=%s", childId);
+        Timber.w("IndexDetailsActivity action skipped: indexCA missing for childId=%s", childId);
         return false;
     }
 
@@ -1666,7 +1666,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             }
             else{
 
-                Toasty.warning(IndexDetailsActivity.this, "VCA Household Hasn't Been Screened", Toast.LENGTH_LONG, true).show();
+                Toasty.warning(IndexDetailsActivity.this, "CA Household Hasn't Been Screened", Toast.LENGTH_LONG, true).show();
 
             }
         }
@@ -2205,7 +2205,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         //Creating dialog box
         AlertDialog alert = builder.create();
         //Setting the title manually
-        alert.setTitle("VCA Screening");
+        alert.setTitle("CA Screening");
         alert.show();
     }
     public Object indexVCA() {
