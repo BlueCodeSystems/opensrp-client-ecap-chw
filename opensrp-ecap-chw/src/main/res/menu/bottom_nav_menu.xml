@@ -27,7 +27,7 @@
         android:enabled="true"
         android:icon="@drawable/ic_baseline_person_add_24"
         app:showAsAction="ifRoom"
-        android:title="VCA Screening" />
+        android:title="CA Screening" />
 
     <item
         android:id="@+id/action_fsw"

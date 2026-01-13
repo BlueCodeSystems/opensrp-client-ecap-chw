@@ -454,16 +454,20 @@
         "label": "Current HIV Status",
         "options": [
           {
-            "key": "Known Negative",
-            "text": "Known Negative"
-          },
-          {
             "key": "Known Positive",
             "text": "Known Positive"
           },
           {
+            "key": "Known Negative",
+            "text": "Known Negative"
+          },
+          {
             "key": "Test Not Required (evidenced by an HIV risk assessment)",
             "text": "Test Not Required (evidenced by an HIV risk assessment)"
+          },
+          {
+            "key": "HIV Status Unknown",
+            "text": "HIV Status Unknown"
           }
         ],
         "v_required": {
@@ -491,7 +495,7 @@
         "relevance": {
           "step1:hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"Known Negative\")"
+            "ex": "equalTo(., \"HIV Status Unknown\")"
           }
         }
       },
@@ -520,7 +524,7 @@
         "relevance": {
           "step1:hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"Known Negative\")"
+            "ex": "equalTo(., \"HIV Status Unknown\")"
           }
         }
       },

@@ -16,6 +16,7 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.dao.CaregiverHivAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.CaregiverVisitationDao;
 import com.bluecodeltd.ecap.chw.dao.HivAssessmentUnder15Dao;
+import com.bluecodeltd.ecap.chw.dao.HivTestingServiceDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdServiceReportDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
@@ -398,6 +399,68 @@ public class GenerateCSVsModel {
             callback.onError(e.getMessage());
         }
     }
+
+    public void createHtsCSVFile(CSVCallback callback) {
+        // Get the directory to save the file
+        String fileName = "hts.csv";
+        File file = null;
+
+        FileWriter fileWriter = null;
+        try {
+            file = resolveCsvFile(fileName);
+            fileWriter = new FileWriter(file);
+            fileWriter.append("base_entity_id, relational_id, caseworker_name, phone, implementing_partner, health_facility, district, province, client_number, testing_modality, first_name, middle_name, last_name, art_number, gender, birthdate, entry_point, ecap_id, sub_population, address, landmark, contact_phone, hiv_status, date_tested, hiv_result, test_done_hf, hiv_recent_test, art_date, art_date_initiated, comment, checked_by, delete_status, date_client_created, date_edited\n");
+
+            List<HivTestingServiceModel> htsServices = HivTestingServiceDao.getAllHivTestingServices();
+
+            if (htsServices != null && !htsServices.isEmpty()) {
+                for (HivTestingServiceModel htsService : htsServices) {
+                    fileWriter.append(escapeCsvValue(htsService.getBase_entity_id())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getRelational_id())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getCaseworker_name())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getPhone())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getImplementing_partner())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getHealth_facility())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getDistrict())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getProvince())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getClient_number())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getTesting_modality())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getFirst_name())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getMiddle_name())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getLast_name())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getArt_number())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getGender())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getBirthdate())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getEntry_point())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getEcap_id())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getSub_population())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getAddress())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getLandmark())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getContact_phone())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getHiv_status())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getDate_tested())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getHiv_result())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getTest_done_hf())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getHiv_recent_test())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getArt_date())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getArt_date_initiated())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getComment())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getChecked_by())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getDelete_status())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getDate_client_created())).append(",");
+                    fileWriter.append(escapeCsvValue(htsService.getDate_edited())).append("\n");
+                }
+            }
+
+            fileWriter.flush();
+            fileWriter.close();
+
+            callback.onSuccess(publishCsv(file));
+        } catch (IOException e) {
+            callback.onError(e.getMessage());
+        }
+    }
+
     public void createVcaServicesCSVFile(CSVCallback callback) {
         // Get the directory to save the file
         String fileName = "services_for_VCAs.csv";

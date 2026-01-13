@@ -4,6 +4,7 @@ import com.bluecodeltd.ecap.chw.model.HivTestingServiceModel;
 
 import org.smartregister.dao.AbstractDao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HivTestingServiceDao extends AbstractDao {
@@ -20,6 +21,18 @@ public class HivTestingServiceDao extends AbstractDao {
 
 
         return values.get(0);
+    }
+
+    public static List<HivTestingServiceModel> getAllHivTestingServices() {
+        String sql = "SELECT * FROM ec_hiv_testing_service";
+
+        List<HivTestingServiceModel> values = AbstractDao.readData(sql, getHIVTestingServiceModelMap());
+
+        if (values == null || values.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        return values;
     }
 
     public static DataMap<HivTestingServiceModel> getHIVTestingServiceModelMap() {
@@ -43,6 +56,8 @@ public class HivTestingServiceDao extends AbstractDao {
             record.setGender(getCursorValue(c, "gender"));
             record.setBirthdate(getCursorValue(c, "birthdate"));
             record.setEntry_point(getCursorValue(c, "entry_point"));
+            record.setEcap_id(getCursorValue(c, "ecap_id"));
+            record.setSub_population(getCursorValue(c, "sub_population"));
             record.setAddress(getCursorValue(c, "address"));
             record.setLandmark(getCursorValue(c, "landmark"));
             record.setContact_phone(getCursorValue(c, "contact_phone"));

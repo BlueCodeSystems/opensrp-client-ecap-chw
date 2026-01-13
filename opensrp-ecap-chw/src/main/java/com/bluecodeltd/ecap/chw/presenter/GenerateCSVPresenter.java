@@ -36,6 +36,17 @@ public class GenerateCSVPresenter implements GenerateCSVContract.Presenter {
                 view.showError(error);
             }
         });
+        generateCSVs.createHtsCSVFile(new GenerateCSVsModel.CSVCallback() {
+            @Override
+            public void onSuccess(String filePath) {
+                view.showCSVGeneratedMessage(filePath);
+            }
+
+            @Override
+            public void onError(String error) {
+                view.showError(error);
+            }
+        });
         generateCSVs.createVcaServicesCSVFile(new GenerateCSVsModel.CSVCallback() {
             @Override
             public void onSuccess(String filePath) {
