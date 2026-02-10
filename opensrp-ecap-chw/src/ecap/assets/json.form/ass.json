@@ -59,7 +59,7 @@
         "key": "index_vca_sub_pop_part1",
         "type": "label",
         "label_text_style": "bold",
-        "text": "Part A: Index CA Sub Population",
+        "text": "Part A: Index VCA Sub Population",
         "text_color": "#000000",
         "v_required": {
           "value": false
@@ -73,7 +73,7 @@
         "read_only": "true",
         "font": "bald",
         "type": "edit_text",
-        "hint": "CA First Name",
+        "hint": "VCA First Name",
         "edit_type": "name",
         "value": "",
         "v_regex": {
@@ -89,7 +89,7 @@
         "read_only": "true",
         "font": "bald",
         "type": "edit_text",
-        "hint": "CA Last Name",
+        "hint": "VCA Last Name",
         "edit_type": "name",
         "value": "",
         "v_regex": {
@@ -104,7 +104,7 @@
         "openmrs_entity_id": "subpop_dob",
         "read_only": "true",
         "type": "date_picker",
-        "hint": "CA Date Of Birth",
+        "hint": "VCA Date Of Birth",
         "look_up": "true",
         "expanded": false,
         "duration": {
@@ -121,7 +121,7 @@
         "read_only": "true",
         "font": "bald",
         "type": "edit_text",
-        "hint": "Age of CA",
+        "hint": "Age of VCA",
         "calculation": {
           "rules-engine": {
             "ex-rules": {
@@ -138,7 +138,7 @@
         "read_only": "true",
         "font": "bald",
         "type": "edit_text",
-        "hint": "Gender of CA",
+        "hint": "Gender of VCA",
         "value": "",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -1270,7 +1270,7 @@
         "key": "for_adolescent_girls_and_young_women_10_17years",
         "type": "repeating_group",
         "reference_edit_text_hint": "Number of AGYW 10-17years",
-        "repeating_group_label": " For questions in this section, ask EACH OF THE AGYW 10–17 years old in the household who is not an AGYW Index VCA, in privacy. Probe where needed.",
+        "repeating_group_label": " For questions in this section, ask EACH OF THE AGYW 10â€“17 years old in the household who is not an AGYW Index VCA, in privacy. Probe where needed.",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "for_adolescent_girls_and_young_women_10_17years",
@@ -2905,7 +2905,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_education",
         "type": "native_radio",
-        "label": "Caregiver’s education level",
+        "label": "Caregiverâ€™s education level",
         "label_text_style": "bold",
         "text_color": "#000000",
         "exclusive": [
@@ -2984,13 +2984,13 @@
             "value": false
           },
           {
-            "key": "K1,000 –K1,999",
-            "text": "K1,000 –K1,999",
+            "key": "K1,000 â€“K1,999",
+            "text": "K1,000 â€“K1,999",
             "value": false
           },
           {
-            "key": "K2,000 –K4,999",
-            "text": "K2,000 –K4,999",
+            "key": "K2,000 â€“K4,999",
+            "text": "K2,000 â€“K4,999",
             "value": false
           },
           {

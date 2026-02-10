@@ -192,7 +192,7 @@
     <string name="pmtct_register_title">Prevention of Mother-to-Child Transmission</string>
     <string name="all_households">Household Register</string>
     <string name="all_households_title">Household Register</string>
-    <string name="all_index_title">Children/Adolescent</string>
+    <string name="all_index_title">VCA Register</string>
     <string name="all_mother_title">Mother Index Register</string>
     <string name="anc_danger_signs">Danger signs</string>
     <string name="anc_home_visit_counselling_task">Counselling</string>
@@ -249,7 +249,7 @@
     <string name="deworming_number_dose">Deworming %s dose</string>
     <string name="error_opening_profile">Error opening profile</string>
     <string name="exclusive_breastfeeding_months">Exclusive breastfeeding %s months</string>
-    <string name="facility_ovc_register">Children/Adolescent</string>
+    <string name="facility_ovc_register">VCA Register</string>
     <string name="family_has_nothing_else_due">Family has nothing else due</string>
     <string name="family_planning_not_done">Family planning not done</string>
     <string name="family_planning_done">Family planning counseling at the health facility was done</string>
@@ -368,6 +368,7 @@
 
     <!-- Default strings for translated resources -->
     <string name="login_title">ECAP App</string>
+    <string name="offline_login_token_expired">Offline login token expired. Please connect to the internet and log in again.</string>
     <string name="title_family_detail">Household details</string>
     <string name="go_to_family_s_profile">Go to household profile</string>
     <string name="family_has_nothing_due">Household has no services due</string>
@@ -404,6 +405,7 @@
     <string name="delivery_kit">Delivery kit</string>
     <string name="anc_home_visit_delivery_kit_received">Delivery kit received</string>
     <string name="menu_child">Child</string>
+    <string name="menu_child_clients">VCA Register</string>
     <string name="menu_malaria">Malaria</string>
     <string name="january">January</string>
     <string name="february">February</string>

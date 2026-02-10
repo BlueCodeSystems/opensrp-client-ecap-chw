@@ -53,7 +53,7 @@
     }
   },
   "step1": {
-    "title": "CA Case Plan",
+    "title": "VCA Case Plan",
     "fields": [
       {
         "key": "base_entity_id",
@@ -206,7 +206,7 @@
         "openmrs_entity_id": "first_name",
         "read_only": "true",
         "type": "edit_text",
-        "hint": "CA First Name"
+        "hint": "VCA First Name"
       },
       {
         "key": "last_name",
@@ -215,7 +215,7 @@
         "openmrs_entity_id": "last_name",
         "read_only": "true",
         "type": "edit_text",
-        "hint": "CA Last Name"
+        "hint": "VCA Last Name"
       },
       {
         "key": "dob",
@@ -232,7 +232,7 @@
         "openmrs_entity_id": "age",
         "read_only": "true",
         "type": "edit_text",
-        "hint": "CA`s Age",
+        "hint": "VCA`s Age",
         "calculation": {
           "rules-engine": {
             "ex-rules": {
@@ -248,7 +248,7 @@
         "openmrs_entity_id": "gender",
         "read_only": "true",
         "type": "edit_text",
-        "hint": "CA`s Gender"
+        "hint": "VCA`s Gender"
       },
       {
         "key": "calhiv",
@@ -570,7 +570,7 @@
         "type": "repeating_group",
         "reference_edit_text": "",
         "reference_edit_text_hint": "SAFE :",
-        "repeating_group_label": "SAFE : Caregiver’s ability to reduce risk of physical/emotional violence or neglect. Positive parenting training, emergency shelter, referral for post-violence care, etc.",
+        "repeating_group_label": "SAFE : Caregiverâ€™s ability to reduce risk of physical/emotional violence or neglect. Positive parenting training, emergency shelter, referral for post-violence care, etc.",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "safe",
@@ -858,7 +858,7 @@
         "type": "repeating_group",
         "reference_edit_text": "",
         "reference_edit_text_hint": "STABLE :",
-        "repeating_group_label": "STABLE: ability to meet important family needs. Adolescent’s participation in market-linked economic strengthening activity.",
+        "repeating_group_label": "STABLE: ability to meet important family needs. Adolescentâ€™s participation in market-linked economic strengthening activity.",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "stable",

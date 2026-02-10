@@ -481,6 +481,10 @@
           {
             "key": "Caregiver-General",
             "text": "Caregiver-General"
+          },
+          {
+            "key": "HIV-Negative PBFW",
+            "text": "HIV-Negative PBFW"
           }
         ],
         "v_required": {
@@ -525,6 +529,25 @@
         }
       },
       {
+        "key": "instructions",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions",
+        "type": "toaster_notes",
+        "text": "Conduct HTS",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_text": "",
+        "toaster_info_title": "Introduction",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"HIV Status Unknown\")"
+          }
+        }
+      },
+      {
         "key": "date_tested",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -535,6 +558,18 @@
         "expanded": false,
         "min_date": "01-01-1900",
         "max_date": "today",
+        "relevance": {
+          "step1:hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"HIV Status Unknown\")"
+          }
+        }
+      },
+      {
+        "key": "label 1",
+        "type": "label",
+        "text": "New HIV Status",
+        "label_text_style": "bold",
         "relevance": {
           "step1:hiv_status": {
             "type": "string",

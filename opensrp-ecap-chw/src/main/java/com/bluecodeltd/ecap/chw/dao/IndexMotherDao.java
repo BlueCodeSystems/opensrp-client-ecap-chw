@@ -16,6 +16,18 @@ public class IndexMotherDao extends AbstractDao {
         return values.get(0);
     }
 
+    public static boolean hasIndexMother(String householdId) {
+        if (householdId == null || householdId.trim().isEmpty()) {
+            return false;
+        }
+        String sql = "SELECT COUNT(*) v FROM ec_mother_index WHERE household_id = '" + householdId + "' " +
+                "AND (deleted IS NULL OR deleted <> '1')";
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
+        List<String> values = AbstractDao.readData(sql, dataMap);
+        if (values == null || values.isEmpty()) return false;
+        return !"0".equals(values.get(0));
+    }
+
     public static List<IndexMotherModel> getIndexMothersByHouseholdId(String householdId) {
         String sql = "SELECT * FROM ec_mother_index WHERE household_id = '" + householdId + "' AND (deleted IS NULL OR deleted <> '1')";
         List<IndexMotherModel> values = AbstractDao.readData(sql, getIndexMotherModelMap());

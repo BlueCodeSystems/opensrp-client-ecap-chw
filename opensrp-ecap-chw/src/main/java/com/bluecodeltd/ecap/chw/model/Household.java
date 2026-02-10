@@ -4,6 +4,9 @@ public class Household {
 
 
     private String unique_id;
+    private String graduation_benchmark;
+    private String exited_graduation_reason;
+    private String other_reason;
     private String user_select_hiv;
     private String new_caregiver_death_date;
     private String caseworker_name;
@@ -119,7 +122,7 @@ public class Household {
 
     private String household_receiving_facility;
 
-    private String ovc_name;
+    private String name_ovc;
 
     public String getHousehold_receiving_caseworker() {
         return household_receiving_caseworker;
@@ -988,12 +991,12 @@ public class Household {
         this.household_receiving_facility = household_receiving_facility;
     }
 
-    public String getOvc_name() {
-        return ovc_name;
+    public String getName_ovc() {
+        return name_ovc;
     }
 
-    public void setOvc_name(String ovc_name) {
-        this.ovc_name = ovc_name;
+    public void setName_ovc(String name_ovc) {
+        this.name_ovc = name_ovc;
     }
 
     public String getUser_select_hiv() {
@@ -1002,5 +1005,28 @@ public class Household {
 
     public void setUser_select_hiv(String user_select_hiv) {
         this.user_select_hiv = user_select_hiv;
+    }
+    public String getGraduation_benchmark() {
+        return graduation_benchmark;
+    }
+
+    public void setGraduation_benchmark(String graduation_benchmark) {
+        this.graduation_benchmark = graduation_benchmark;
+    }
+
+    public String getExited_graduation_reason() {
+        return exited_graduation_reason;
+    }
+
+    public void setExited_graduation_reason(String exited_graduation_reason) {
+        this.exited_graduation_reason = exited_graduation_reason;
+    }
+
+    public String getOther_reason() {
+        return other_reason;
+    }
+
+    public void setOther_reason(String other_reason) {
+        this.other_reason = other_reason;
     }
 }

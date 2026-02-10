@@ -71,7 +71,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unique_id",
         "type": "edit_text",
-        "hint": "Children/Adolescent (CA) ID",
+        "hint": "Children/Adolescent (VCA) ID",
         "edit_type": "name",
         "read_only": "true"
       },
@@ -1699,7 +1699,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "is_the_child_caregiver_an_fsw",
         "type": "native_radio",
-        "label": "Is the child/adolescent’s caregiver an FSW?",
+        "label": "Is the child/adolescentâ€™s caregiver an FSW?",
         "options": [
           {
             "key": "yes",
@@ -1819,7 +1819,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "toaster_notes",
         "type": "toaster_notes",
-        "text": "“The goal of the USAID ECAP II OVC Comprehensive Program is to mitigate the impact of HIV and improve the health and well-being of VCA through delivery of high-impact, evidence-informed, and age-appropriate interventions customized for each vulnerable child and adolescent sub-population. \n For the children and adolescents living with HIV, the program aims to support households and children living with HIV to ensure that they access appropriate care services to improve treatment outcome and sustain viral load suppression. \n\n If you consent to participate in the program, it entails that you will officially be:\n\n• Enrolled in the USAID ECAP II Program\n•  Assigned a Case Worker who will visit your household frequently to support you and your family to achieve your health and socioeconomic goals\n•  Exited from the program when deemed to have achieved graduation status. \n\nIf you have questions about this program or have any questions on what your rights are as a participant in this program, you can contact the PCZ Executive Director/Chief of Party: \n\nPCZ Executive Director/Chief of Party\nProject Concern Zambia\nP.O Box 32320 Lusaka-Zambia\nPhone #: +2609777771385/95\n ",
+        "text": "â€œThe goal of the USAID ECAP II OVC Comprehensive Program is to mitigate the impact of HIV and improve the health and well-being of VCA through delivery of high-impact, evidence-informed, and age-appropriate interventions customized for each vulnerable child and adolescent sub-population. \n For the children and adolescents living with HIV, the program aims to support households and children living with HIV to ensure that they access appropriate care services to improve treatment outcome and sustain viral load suppression. \n\n If you consent to participate in the program, it entails that you will officially be:\n\nâ€¢ Enrolled in the USAID ECAP II Program\nâ€¢  Assigned a Case Worker who will visit your household frequently to support you and your family to achieve your health and socioeconomic goals\nâ€¢  Exited from the program when deemed to have achieved graduation status. \n\nIf you have questions about this program or have any questions on what your rights are as a participant in this program, you can contact the PCZ Executive Director/Chief of Party: \n\nPCZ Executive Director/Chief of Party\nProject Concern Zambia\nP.O Box 32320 Lusaka-Zambia\nPhone #: +2609777771385/95\n ",
         "toaster_type": "info",
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title"
@@ -1830,7 +1830,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "purpose",
         "type": "toaster_notes",
-        "text": "This informed consent form is targeted at vulnerable Children and Adolescents (VCA) and their primary caregivers who are identified as eligible clients for enrollment in the USAID ECAP II OVC Comprehensive Program. \n\n The purpose of the consent form is to explain the USAID ECAP II program to the potential client before the client agrees to it. This will enable the client to ask questions and accept or deny participation in the program. \n\n\nThe process of the informed consent includes : \n\n• The client’s ability to decide. \n• Explanation of information needed to make the decision. \n• The client’s understanding of services provided under the USAID ECAP II Program \n• The client’s voluntary decision to be enrolled in the USAID ECAP II OVC Comprehensive Program \n\n This shared decision-making process between the client and service providers attached to the USAID ECAP II Program will empower the client to make educated and informed decisions about their care.",
+        "text": "This informed consent form is targeted at vulnerable Children and Adolescents (VCA) and their primary caregivers who are identified as eligible clients for enrollment in the USAID ECAP II OVC Comprehensive Program. \n\n The purpose of the consent form is to explain the USAID ECAP II program to the potential client before the client agrees to it. This will enable the client to ask questions and accept or deny participation in the program. \n\n\nThe process of the informed consent includes : \n\nâ€¢ The clientâ€™s ability to decide. \nâ€¢ Explanation of information needed to make the decision. \nâ€¢ The clientâ€™s understanding of services provided under the USAID ECAP II Program \nâ€¢ The clientâ€™s voluntary decision to be enrolled in the USAID ECAP II OVC Comprehensive Program \n\n This shared decision-making process between the client and service providers attached to the USAID ECAP II Program will empower the client to make educated and informed decisions about their care.",
         "toaster_type": "info",
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title"

@@ -28,6 +28,8 @@ import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdServiceReportDao;
+import com.bluecodeltd.ecap.chw.dao.IndexMotherDao;
+import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
 import com.bluecodeltd.ecap.chw.dao.newCaregiverDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.GraduationBenchmarkModel;
@@ -35,6 +37,8 @@ import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.HouseholdServiceReportModel;
 import com.bluecodeltd.ecap.chw.model.newCaregiverModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.MotherIndexEnrollmentUtils;
+import com.bluecodeltd.ecap.chw.util.PmtctEnrollmentUtils;
 import com.bluecodeltd.ecap.chw.util.Threading;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -187,6 +191,7 @@ public class HouseholdServicesOnlyActivity extends AppCompatActivity {
                             try {
                                 FormUtils formUtils = new FormUtils(this);
                                 JSONObject indexRegisterForm = formUtils.getFormJson("service_report_household");
+                                applyPregnantBreastfeedingVisibility(indexRegisterForm, finalHouse.getCaregiver_sex());
 
                                 JSONObject status = getFieldJSONObject(fields(indexRegisterForm, "step1"), "services");
                                 JSONArray options = status.getJSONArray("options");
@@ -246,6 +251,31 @@ public class HouseholdServicesOnlyActivity extends AppCompatActivity {
 
     }
 
+    private static boolean isFemaleCaregiver(String caregiverSex) {
+        return caregiverSex != null && caregiverSex.trim().equalsIgnoreCase("female");
+    }
+
+    private static void applyPregnantBreastfeedingVisibility(JSONObject form, String caregiverSex) {
+        if (isFemaleCaregiver(caregiverSex)) {
+            return;
+        }
+        try {
+            JSONArray formFields = fields(form, STEP1);
+            if (formFields == null) {
+                return;
+            }
+            for (int i = 0; i < formFields.length(); i++) {
+                JSONObject field = formFields.getJSONObject(i);
+                if ("pregnant_breastfeeding".equals(field.optString("key"))) {
+                    formFields.remove(i);
+                    break;
+                }
+            }
+        } catch (JSONException e) {
+            Timber.e(e);
+        }
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -285,6 +315,10 @@ public class HouseholdServicesOnlyActivity extends AppCompatActivity {
 
                     case "Household Service Report":
 
+                        if (!is_edit_mode) {
+                            maybeEnrollPmtctMother(jsonFormObject);
+                            maybeEnrollMotherIndex(jsonFormObject);
+                        }
                         Toasty.success(HouseholdServicesOnlyActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
                         refreshData();
 
@@ -322,7 +356,16 @@ public class HouseholdServicesOnlyActivity extends AppCompatActivity {
             JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
             FormTag formTag = getFormTag();
-            Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,encounterType, "ec_household_service_report");
+            String tableName;
+            if ("Mother Pmtct".equalsIgnoreCase(encounterType)) {
+                tableName = Constants.EcapClientTable.EC_MOTHER_PMTCT;
+                PmtctEnrollmentUtils.alignPmtctIdWithHouseholdId(fields);
+            } else if ("Mother Register".equalsIgnoreCase(encounterType)) {
+                tableName = Constants.EcapClientTable.EC_MOTHER_INDEX;
+            } else {
+                tableName = "ec_household_service_report";
+            }
+            Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId, encounterType, tableName);
             tagSyncMetadata(event);
             Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId );
             return new ChildIndexEventClient(event, client);
@@ -334,6 +377,80 @@ public class HouseholdServicesOnlyActivity extends AppCompatActivity {
         }
 
         return null;
+    }
+
+    private void maybeEnrollPmtctMother(JSONObject serviceForm) {
+        if (serviceForm == null || !PmtctEnrollmentUtils.isEligible(serviceForm)) {
+            return;
+        }
+        if (intent_householdId == null || intent_householdId.trim().isEmpty()) {
+            return;
+        }
+
+        Threading.io(() -> {
+            try {
+                if (PMTCTMotherDao.hasMotherRecord(intent_householdId)) {
+                    return;
+                }
+                Household household = HouseholdDao.getHousehold(intent_householdId);
+                if (household == null) {
+                    return;
+                }
+                if (household.getHousehold_id() == null || household.getHousehold_id().trim().isEmpty()) {
+                    household.setHousehold_id(intent_householdId);
+                }
+                if (household.getHousehold_id() == null || household.getHousehold_id().trim().isEmpty()) {
+                    return;
+                }
+                String serviceDate = PmtctEnrollmentUtils.resolveServiceDate(serviceForm);
+                JSONObject pmtctForm = PmtctEnrollmentUtils.buildMotherPmtctForm(this, household, serviceDate);
+                if (pmtctForm == null) {
+                    return;
+                }
+                ChildIndexEventClient childIndexEventClient = processRegistration(pmtctForm.toString());
+                if (childIndexEventClient == null) {
+                    return;
+                }
+                saveRegistration(childIndexEventClient, false, "Mother Pmtct");
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+        });
+    }
+
+    private void maybeEnrollMotherIndex(JSONObject serviceForm) {
+        if (serviceForm == null || intent_householdId == null || intent_householdId.trim().isEmpty()) {
+            return;
+        }
+        Threading.io(() -> {
+            try {
+                if (IndexMotherDao.hasIndexMother(intent_householdId)) {
+                    return;
+                }
+                Household household = HouseholdDao.getHousehold(intent_householdId);
+                if (household == null) {
+                    return;
+                }
+                if (household.getHousehold_id() == null || household.getHousehold_id().trim().isEmpty()) {
+                    household.setHousehold_id(intent_householdId);
+                }
+                String serviceDate = PmtctEnrollmentUtils.resolveServiceDate(serviceForm);
+                if (!MotherIndexEnrollmentUtils.isEligible(serviceForm, household, serviceDate)) {
+                    return;
+                }
+                JSONObject motherIndexForm = MotherIndexEnrollmentUtils.buildMotherIndexForm(this, household, serviceDate);
+                if (motherIndexForm == null) {
+                    return;
+                }
+                ChildIndexEventClient childIndexEventClient = processRegistration(motherIndexForm.toString());
+                if (childIndexEventClient == null) {
+                    return;
+                }
+                saveRegistration(childIndexEventClient, false, "Mother Register");
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+        });
     }
 
     public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode,String encounterType) {

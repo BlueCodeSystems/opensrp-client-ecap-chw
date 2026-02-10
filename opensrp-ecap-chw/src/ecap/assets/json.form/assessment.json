@@ -126,7 +126,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "date_art",
         "type": "date_picker",
-        "hint": "When was the CA initiated on ART?",
+        "hint": "When was the VCA initiated on ART?",
         "expanded": false,
         "duration": {
           "label": ""
@@ -358,7 +358,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "art_health_facility",
         "type": "edit_text",
-        "hint": "Name of Facility where CA receives ART",
+        "hint": "Name of Facility where VCA receives ART",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\u00C0-\\u017F\\s\\u00C0-\\u017F\\.\\-]*",

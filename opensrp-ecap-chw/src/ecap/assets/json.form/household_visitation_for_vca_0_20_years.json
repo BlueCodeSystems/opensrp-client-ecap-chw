@@ -53,7 +53,7 @@
     }
   },
   "step1": {
-    "title": "Quarterly Assessment Form For CA ",
+    "title": "Quarterly Assessment Form For VCA ",
     "fields": [
       {
         "key": "unique_id",
@@ -61,7 +61,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unique_id",
         "type": "edit_text",
-        "hint": "Children/Adolescent (CA) ID",
+        "hint": "Children/Adolescent (VCA) ID",
         "edit_type": "name",
         "read_only": "true"
       },
@@ -72,7 +72,7 @@
         "openmrs_entity_id": "age",
         "type": "edit_text",
         "read_only": "true",
-        "hint": "CA Age",
+        "hint": "VCA Age",
         "calculation": {
           "rules-engine": {
             "ex-rules": {
@@ -652,7 +652,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_risk",
         "type": "native_radio",
-        "label": "Has there been a change in the child’s HIV risky behavior since the last visit?",
+        "label": "Has there been a change in the childâ€™s HIV risky behavior since the last visit?",
         "exclusive": [
           "none"
         ],
@@ -712,7 +712,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_assessment",
         "type": "native_radio",
-        "label": "If there has been a change in the child’s HIV risk behavior since the last visit has an HIV risk reduction counselling \nand HIV risk assessment been conducted?",
+        "label": "If there has been a change in the childâ€™s HIV risk behavior since the last visit has an HIV risk reduction counselling \nand HIV risk assessment been conducted?",
         "options": [
           {
             "key": "yes",
@@ -789,7 +789,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd1",
         "type": "label",
-        "text": "HIV Exposed Infant (CA aged 24 months and below) Section"
+        "text": "HIV Exposed Infant (VCA aged 24 months and below) Section"
       },
       {
         "key": "eid_test",
@@ -797,7 +797,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "eid_test",
         "type": "date_picker",
-        "hint": "Check child’s under-five clinic card When was the last EID test done?",
+        "hint": "Check childâ€™s under-five clinic card When was the last EID test done?",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -1140,7 +1140,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "attending_under_five_clinic",
         "type": "native_radio",
-        "label": "If child has not been attending under-five clinic, has counselling \nbeen provided to the child’s caregiver?",
+        "label": "If child has not been attending under-five clinic, has counselling \nbeen provided to the childâ€™s caregiver?",
         "options": [
           {
             "key": "yes",
@@ -1274,7 +1274,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "If child’s MUAC measurement is less than 14.5cm for children 5-9 years old or less than 18.5 cm for children 10-14 years or less than 22cm for children 15+ years",
+        "text": "If childâ€™s MUAC measurement is less than 14.5cm for children 5-9 years old or less than 18.5 cm for children 10-14 years or less than 22cm for children 15+ years",
         "toaster_type": "info",
         "toaster_info_text": "Test for HIV",
         "relevance": {

@@ -262,10 +262,10 @@
         }
       },
       {
-        "key": "ovc_name",
+        "key": "name_ovc",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "ovc_name",
+        "openmrs_entity_id": "name_ovc",
         "type": "edit_text",
         "hint": "Name of OVC",
         "edit_type": "name",

@@ -87,16 +87,16 @@
         "openmrs_entity": "person_identifier",
         "openmrs_entity_id": "unique_id",
         "type": "edit_text",
-        "hint": "Children/Adolescent (CA) ID",
+        "hint": "Children/Adolescent (VCA) ID",
         "edit_type": "name",
         "read_only": false,
         "v_required": {
           "value": false,
-          "err": "Please enter Children/Adolescent (CA) ID"
+          "err": "Please enter Children/Adolescent (VCA) ID"
         },
         "v_regex": {
           "value": "[0-9]*",
-          "err": "Children/Adolescent (CA) ID"
+          "err": "Children/Adolescent (VCA) ID"
         }
       },
       {
@@ -160,7 +160,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_recent_hiv_test_results",
         "type": "native_radio",
-        "label": "What is the child’s most recent HIV test result (Tick)  ",
+        "label": "What is the childâ€™s most recent HIV test result (Tick)  ",
         "options": [
           {
             "key": "negative",
@@ -239,7 +239,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "art_number",
         "type": "edit_text",
-        "hint": "What is the child’s ART Number",
+        "hint": "What is the childâ€™s ART Number",
         "v_numeric": {
           "value": "true",
           "err": "art numbers can only contain numbers "
@@ -257,7 +257,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_biological_mother_hiv",
         "type": "native_radio",
-        "label": "Is the child’s biological mother HIV+ or is her HIV status unknown?",
+        "label": "Is the childâ€™s biological mother HIV+ or is her HIV status unknown?",
         "options": [
           {
             "key": "yes",
@@ -281,7 +281,7 @@
         "openmrs_entity":"person_attribute",
         "openmrs_entity_id": "biological_parents_deceased",
         "type": "native_radio",
-        "label": "Are one or both of this child’s biological parents deceased?",
+        "label": "Are one or both of this childâ€™s biological parents deceased?",
         "options": [
           {
             "key": "yes",

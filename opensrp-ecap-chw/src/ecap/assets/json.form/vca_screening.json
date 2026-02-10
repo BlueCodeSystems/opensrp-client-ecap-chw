@@ -52,7 +52,7 @@
     }
   },
   "step1": {
-    "title": "Index CA Sub-population Screening Form",
+    "title": "Index VCA Sub-population Screening Form",
     "next": "step2",
     "fields": [
       {
@@ -61,10 +61,10 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "instructions",
         "type": "toaster_notes",
-        "text": "Index CA Sub-population Screening Form",
+        "text": "Index VCA Sub-population Screening Form",
         "text_color": "#000000",
         "label_text_style": "bold",
-        "toaster_info_text": "The Index CA Screening Form will be used to assess the CA Sub Population to determine whether s/he should be enrolled into the OVC Comprehensive program. \n\n The data collected on this tool are used to ensure that the criteria set for enrolling the CA Sub Populations is followed and that it is consistent and only the target sub-populations are enrolled into the program. The data will form the basis for enrolling an individual into the program. ",
+        "toaster_info_text": "The Index VCA Screening Form will be used to assess the VCA Sub Population to determine whether s/he should be enrolled into the OVC Comprehensive program. \n\n The data collected on this tool are used to ensure that the criteria set for enrolling the VCA Sub Populations is followed and that it is consistent and only the target sub-populations are enrolled into the program. The data will form the basis for enrolling an individual into the program. ",
         "toaster_info_title": "Introduction",
         "toaster_type": "info"
       },
@@ -107,7 +107,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unique_id",
         "type": "edit_text",
-        "hint": "Children/Adolescent (CA) ID",
+        "hint": "Children/Adolescent (VCA) ID",
         "edit_type": "name",
         "read_only": "true"
       },
@@ -197,7 +197,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "screening_location",
         "type": "edit_text",
-        "hint": "CA Screening Location",
+        "hint": "VCA Screening Location",
         "edit_type": "name",
         "v_required": {
           "value": true,
@@ -231,7 +231,7 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "first_name",
         "type": "edit_text",
-        "hint": "CA First Name",
+        "hint": "VCA First Name",
         "edit_type": "name",
         "v_required": {
           "value": true,
@@ -244,7 +244,7 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "last_name",
         "type": "edit_text",
-        "hint": "CA Last Name",
+        "hint": "VCA Last Name",
         "edit_type": "name",
         "v_required": {
           "value": true,
@@ -257,7 +257,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "gender",
         "type": "native_radio",
-        "label": "CA Gender",
+        "label": "VCA Gender",
         "options": [
           {
             "key": "male",
@@ -279,7 +279,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "adolescent_birthdate",
         "type": "date_picker",
-        "hint": "CA Date of birth",
+        "hint": "VCA Date of birth",
         "look_up": "true",
         "expanded": false,
         "duration": {
@@ -345,7 +345,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "school",
         "type": "native_radio",
-        "label": "Is the CA in School?",
+        "label": "Is the VCA in School?",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -1460,7 +1460,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "toaster_notes",
         "type": "toaster_notes",
-        "text": "“The goal of the USAID ECAP II OVC Comprehensive Program is to mitigate the impact of HIV and improve the health and well-being of CA through delivery of high-impact, evidence-informed, and age-appropriate interventions customized for each vulnerable child and adolescent sub-population. \n For the children and adolescents living with HIV, the program aims to support households and children living with HIV to ensure that they access appropriate care services to improve treatment outcome and sustain viral load suppression. \n\n If you consent to participate in the program, it entails that you will officially be:\n\n• Enrolled in the USAID ECAP II Program\n•  Assigned a Case Worker who will visit your household frequently to support you and your family to achieve your health and socioeconomic goals\n•  Exited from the program when deemed to have achieved graduation status. \n\nIf you have questions about this program or have any questions on what your rights are as a participant in this program, you can contact the PCZ Executive Director/Chief of Party: \n\nPCZ Executive Director/Chief of Party\nProject Concern Zambia\nP.O Box 32320 Lusaka-Zambia\nPhone #: +2609777771385/95\n ",
+        "text": "â€œThe goal of the USAID ECAP II OVC Comprehensive Program is to mitigate the impact of HIV and improve the health and well-being of VCA through delivery of high-impact, evidence-informed, and age-appropriate interventions customized for each vulnerable child and adolescent sub-population. \n For the children and adolescents living with HIV, the program aims to support households and children living with HIV to ensure that they access appropriate care services to improve treatment outcome and sustain viral load suppression. \n\n If you consent to participate in the program, it entails that you will officially be:\n\nâ€¢ Enrolled in the USAID ECAP II Program\nâ€¢  Assigned a Case Worker who will visit your household frequently to support you and your family to achieve your health and socioeconomic goals\nâ€¢  Exited from the program when deemed to have achieved graduation status. \n\nIf you have questions about this program or have any questions on what your rights are as a participant in this program, you can contact the PCZ Executive Director/Chief of Party: \n\nPCZ Executive Director/Chief of Party\nProject Concern Zambia\nP.O Box 32320 Lusaka-Zambia\nPhone #: +2609777771385/95\n ",
         "toaster_type": "info",
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title"
@@ -1471,7 +1471,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "purpose",
         "type": "toaster_notes",
-        "text": "This informed consent form is targeted at Children and Adolescents (CA) and their primary caregivers who are identified as eligible clients for enrollment in the USAID ECAP II OVC Comprehensive Program. \n\n The purpose of the consent form is to explain the USAID ECAP II program to the potential client before the client agrees to it. This will enable the client to ask questions and accept or deny participation in the program. \n\n\nThe process of the informed consent includes : \n\n• The client’s ability to decide. \n• Explanation of information needed to make the decision. \n• The client’s understanding of services provided under the USAID ECAP II Program \n• The client’s voluntary decision to be enrolled in the USAID ECAP II OVC Comprehensive Program \n\n This shared decision-making process between the client and service providers attached to the USAID ECAP II Program will empower the client to make educated and informed decisions about their care.",
+        "text": "This informed consent form is targeted at Children and Adolescents (VCA) and their primary caregivers who are identified as eligible clients for enrollment in the USAID ECAP II OVC Comprehensive Program. \n\n The purpose of the consent form is to explain the USAID ECAP II program to the potential client before the client agrees to it. This will enable the client to ask questions and accept or deny participation in the program. \n\n\nThe process of the informed consent includes : \n\nâ€¢ The clientâ€™s ability to decide. \nâ€¢ Explanation of information needed to make the decision. \nâ€¢ The clientâ€™s understanding of services provided under the USAID ECAP II Program \nâ€¢ The clientâ€™s voluntary decision to be enrolled in the USAID ECAP II OVC Comprehensive Program \n\n This shared decision-making process between the client and service providers attached to the USAID ECAP II Program will empower the client to make educated and informed decisions about their care.",
         "toaster_type": "info",
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title"
@@ -1560,7 +1560,7 @@
         "openmrs_entity_id": "subpop1",
         "value": "true",
         "type": "toaster_notes",
-        "text": "Based on your selection,this Index CA has been enrolled into the Sub Population : Children/Adolescents Living with HIV (C/ALHIV)",
+        "text": "Based on your selection,this Index VCA has been enrolled into the Sub Population : Children/Adolescents Living with HIV (C/ALHIV)",
         "toaster_type": "info",
         "toaster_info_text": "Children/Adolescents Living with HIV (C/ALHIV)",
         "toaster_info_title": "Sub Population",
@@ -1592,7 +1592,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop6_information_toast",
         "type": "toaster_notes",
-        "text": "Based on your selection, this Index CA has been enrolled as those whose Primary Caregivers are HIV Female Sex Workers (FSWs)",
+        "text": "Based on your selection, this Index VCA has been enrolled as those whose Primary Caregivers are HIV Female Sex Workers (FSWs)",
         "toaster_type": "info",
         "toaster_info_text": "Children/Adolescents whose Primary Caregivers are HIV Female Sex Workers (FSWs)",
         "toaster_info_title": "Sub Population",
@@ -1625,7 +1625,7 @@
         "openmrs_entity_id": "subpop2_information_toast",
         "type": "toaster_notes",
         "toaster_type": "info",
-        "text": "Based on your selection, this Index CA has been enrolled into the Sub Population : HIV Exposed Infant (HEI)",
+        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : HIV Exposed Infant (HEI)",
         "toaster_info_text": "HIV Exposed Infant (HEI)",
         "toaster_info_title": "Sub Population",
         "relevance": {
@@ -1642,7 +1642,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop3_information_toast",
         "type": "toaster_notes",
-        "text": "Based on your selection, this Index CA has been enrolled into the Sub Population : Children of Women Living with HIV (C/WLHIV)",
+        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children of Women Living with HIV (C/WLHIV)",
         "toaster_type": "info",
         "toaster_info_text": "Children of Women Living with HIV (C/WLHIV)",
         "toaster_info_title": "Sub Population",
@@ -1703,7 +1703,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop5_information_toast",
         "type": "toaster_notes",
-        "text": "Based on your selection, this Index CA has been enrolled into the Sub Population : Children/Adolescents who are Survivors of Sexual Violence",
+        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children/Adolescents who are Survivors of Sexual Violence",
         "toaster_type": "info",
         "toaster_info_text": "Children/Adolescents who are Survivors of Sexual Violence",
         "toaster_info_title": "Sub Population",
@@ -1721,7 +1721,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "suppop_abym",
         "type": "toaster_notes",
-        "text": "Based on your selection, this Index CA has been enrolled into the Sub Population : At Risk Adolescent boys and young men ",
+        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : At Risk Adolescent boys and young men ",
         "toaster_type": "info",
         "toaster_info_text": "At Risk Adolescent boys and young men ",
         "toaster_info_title": "Sub Population",

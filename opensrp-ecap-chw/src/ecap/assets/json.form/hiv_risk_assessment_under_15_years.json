@@ -76,7 +76,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unique_id",
         "type": "edit_text",
-        "hint": "Children/Adolescent (CA) ID",
+        "hint": "Children/Adolescent (VCA) ID",
         "edit_type": "name",
         "read_only": "true"
       },
@@ -298,7 +298,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "biological_mother",
         "type": "native_radio",
-        "label": "Is the child’s biological mother HIV+ or is her HIV status unknown?",
+        "label": "Is the childâ€™s biological mother HIV+ or is her HIV status unknown?",
         "options": [
           {
             "key": "yes",
@@ -322,7 +322,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "deceased_parents",
         "type": "native_radio",
-        "label": "Are one or both of this child’s biological parents deceased?",
+        "label": "Are one or both of this childâ€™s biological parents deceased?",
         "options": [
           {
             "key": "yes",
