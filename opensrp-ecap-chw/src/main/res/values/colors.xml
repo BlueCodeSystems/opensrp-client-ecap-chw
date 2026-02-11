@@ -80,7 +80,37 @@
     <color name="text_black">#212121</color>
     <color name="divider_grey">#E0E0E0</color>
 
+    <!-- Dashboard redesign -->
+    <color name="dash_bg">#F5F7FA</color>
 
+    <!-- Card: Children/Adolescents (teal gradient) -->
+    <color name="card_children_start">#0097A7</color>
+    <color name="card_children_end">#00BCD4</color>
+
+    <!-- Card: Households (indigo gradient) -->
+    <color name="card_households_start">#303F9F</color>
+    <color name="card_households_end">#5C6BC0</color>
+
+    <!-- Card: Due visits (warm red/orange gradient) -->
+    <color name="card_due_start">#D32F2F</color>
+    <color name="card_due_end">#EF5350</color>
+
+    <!-- Card: Due visits low (amber) -->
+    <color name="card_due_low_start">#F9A825</color>
+    <color name="card_due_low_end">#FDD835</color>
+
+    <!-- Chart card -->
+    <color name="chart_card_bg">#FFFFFF</color>
+
+    <!-- Bar chart palette -->
+    <color name="bar_calhiv">#0097A7</color>
+    <color name="bar_hei">#26C6DA</color>
+    <color name="bar_cwlhiv">#5C6BC0</color>
+    <color name="bar_cassv">#AB47BC</color>
+
+    <!-- Header gradient -->
+    <color name="dash_header_start">#1565C0</color>
+    <color name="dash_header_end">#1976D2</color>
 
 </resources>
 

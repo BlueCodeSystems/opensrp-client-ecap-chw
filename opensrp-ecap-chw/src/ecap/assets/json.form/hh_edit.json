@@ -288,6 +288,10 @@
             "key": "PBFW",
             "text": "PBFW"
 
+          },
+          {
+            "key": "HIV Positive PBFW",
+          "text": "HIV Positive PBFW"
           }
         ],
         "v_required": {
