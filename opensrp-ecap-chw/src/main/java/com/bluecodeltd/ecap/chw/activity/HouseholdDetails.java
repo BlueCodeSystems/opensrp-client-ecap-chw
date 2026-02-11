@@ -362,6 +362,45 @@ public class HouseholdDetails extends AppCompatActivity {
         }
     }
 
+    private Integer getCaregiverAgeYears() {
+        String birthdate = null;
+        if (updatedCaregiver != null && !TextUtils.isEmpty(updatedCaregiver.getNew_caregiver_birth_date())) {
+            birthdate = updatedCaregiver.getNew_caregiver_birth_date();
+        }
+        if (TextUtils.isEmpty(birthdate) && house != null && !TextUtils.isEmpty(house.getCaregiver_birth_date())) {
+            birthdate = house.getCaregiver_birth_date();
+        }
+        String normalized = normalizeBirthdate(birthdate);
+        if (normalized == null) {
+            return null;
+        }
+        try {
+            LocalDate dob = LocalDate.parse(normalized, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            return Period.between(dob, LocalDate.now()).getYears();
+        } catch (Exception e) {
+            Timber.e(e);
+            return null;
+        }
+    }
+
+    private String normalizeBirthdate(String birthdate) {
+        String trimmed = birthdate != null ? birthdate.trim() : null;
+        if (TextUtils.isEmpty(trimmed)) {
+            return null;
+        }
+        if (trimmed.matches("\\d{2}-\\d{2}-\\d{4}")) {
+            return trimmed;
+        }
+        String[] patterns = new String[]{"dd MMM yyyy", "yyyy-MM-dd", "dd/MM/yyyy"};
+        for (String pattern : patterns) {
+            try {
+                LocalDate parsed = LocalDate.parse(trimmed, DateTimeFormatter.ofPattern(pattern, Locale.ENGLISH));
+                return parsed.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            } catch (DateTimeParseException ignored) { }
+        }
+        return null;
+    }
+
 
     public HashMap<String, Household> populateMapWithHouse(Household houseToAdd)
     {
@@ -1333,6 +1372,11 @@ public class HouseholdDetails extends AppCompatActivity {
                             if (uniqueTb != null) uniqueTb.put("value", org.smartregister.util.JsonFormUtils.generateRandomUUIDString());
                             if (house.getBase_entity_id() != null) {
                                 tbForm.put("entity_id", house.getBase_entity_id());
+                            }
+                            Integer caregiverAgeYears = getCaregiverAgeYears();
+                            if (caregiverAgeYears != null && caregiverAgeYears < 10) {
+                                JSONObject sputumCollected = getFieldJSONObject(fields(tbForm, "step1"), "sputum_collected");
+                                if (sputumCollected != null) sputumCollected.put("type", "hidden");
                             }
                             Threading.main(() -> {
                                 if (isFinishing()) return;

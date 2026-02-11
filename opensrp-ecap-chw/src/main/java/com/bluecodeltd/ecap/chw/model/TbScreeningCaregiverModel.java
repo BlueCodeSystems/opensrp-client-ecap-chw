@@ -14,6 +14,7 @@ public class TbScreeningCaregiverModel {
     private String tb_symptoms_child_lt10_other;
     private String tb_symptoms_10plus;
     private String tb_symptoms_10plus_other;
+    private String sputum_collected;
     private String referred_for_tb_evaluation;
     private String tb_referral_comment;
     private String last_interacted_with;
@@ -67,6 +68,9 @@ public class TbScreeningCaregiverModel {
 
     public String getTb_symptoms_10plus_other() { return tb_symptoms_10plus_other; }
     public void setTb_symptoms_10plus_other(String tb_symptoms_10plus_other) { this.tb_symptoms_10plus_other = tb_symptoms_10plus_other; }
+
+    public String getSputum_collected() { return sputum_collected; }
+    public void setSputum_collected(String sputum_collected) { this.sputum_collected = sputum_collected; }
 
     public String getReferred_for_tb_evaluation() { return referred_for_tb_evaluation; }
     public void setReferred_for_tb_evaluation(String referred_for_tb_evaluation) { this.referred_for_tb_evaluation = referred_for_tb_evaluation; }

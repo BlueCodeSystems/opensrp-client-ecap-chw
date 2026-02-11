@@ -254,6 +254,13 @@
           }
         },
         {
+          "column_name": "sputum_collected",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sputum_collected"
+          }
+        },
+        {
           "column_name": "referred_for_tb_evaluation",
           "type": "Client",
           "json_mapping": {
@@ -11268,6 +11275,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.tb_symptoms_10plus_other"
+          }
+        },
+        {
+          "column_name": "sputum_collected",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sputum_collected"
           }
         },
         {

@@ -85,6 +85,7 @@ public class TbScreeningCaregiverDao extends AbstractDao {
             record.setTb_symptoms_child_lt10_other(getCursorValue(c, "tb_symptoms_child_lt10_other"));
             record.setTb_symptoms_10plus(getCursorValue(c, "tb_symptoms_10plus"));
             record.setTb_symptoms_10plus_other(getCursorValue(c, "tb_symptoms_10plus_other"));
+            record.setSputum_collected(getCursorValue(c, "sputum_collected"));
             record.setReferred_for_tb_evaluation(getCursorValue(c, "referred_for_tb_evaluation"));
             record.setTb_referral_comment(getCursorValue(c, "tb_referral_comment"));
             record.setLast_interacted_with(getCursorValue(c, "last_interacted_with"));

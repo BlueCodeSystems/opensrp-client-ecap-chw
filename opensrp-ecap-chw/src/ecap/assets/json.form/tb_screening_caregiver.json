@@ -253,6 +253,29 @@
         }
       },
       {
+        "key": "sputum_collected",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "sputum_collected",
+        "type": "native_radio",
+        "label": "Sputum collected",
+        "label_info_text": "(collect sputum for those\nwith symptoms and the\nnewly tested HIV+(tested\npositive within past one\nmonth) and HIV+ with\nunsuppressed VL\nincluding PBFW, those\nreporting contact with\nsomeone who has TB,\nmalnourished",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to indicate if Sputum was collected"
+        }
+      },
+      {
         "key": "referred_for_tb_evaluation",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",

@@ -1972,12 +1972,16 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     JSONObject lt10Other = getFieldJSONObject(fields(formToBeOpened, "step1"), "tb_symptoms_child_lt10_other");
                     JSONObject plus10 = getFieldJSONObject(fields(formToBeOpened, "step1"), "tb_symptoms_10plus");
                     JSONObject plus10Other = getFieldJSONObject(fields(formToBeOpened, "step1"), "tb_symptoms_10plus_other");
+                    JSONObject sputumCollected = getFieldJSONObject(fields(formToBeOpened, "step1"), "sputum_collected");
+
+
 
                     if (tbAge != null) {
                         if (tbAge < 10.0) {
                             // Hide 10+ fields
                             if (plus10 != null) plus10.put("type", "hidden");
                             if (plus10Other != null) plus10Other.put("type", "hidden");
+                            if (sputumCollected != null) sputumCollected.put("type", "hidden");
                         } else {
                             // Hide <10 fields
                             if (lt10 != null) lt10.put("type", "hidden");
