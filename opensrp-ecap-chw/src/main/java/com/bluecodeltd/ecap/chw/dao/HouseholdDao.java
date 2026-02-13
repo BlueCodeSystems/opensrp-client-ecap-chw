@@ -205,6 +205,28 @@ public class HouseholdDao extends AbstractDao {
             return false;
         }
     }
+    public static String countMaleCaregivers() {
+        try {
+            String sql = "SELECT COUNT(DISTINCT household_id) AS v FROM ec_household WHERE LOWER(caregiver_sex) = 'male' AND screened = 'true' AND (status IS NULL OR status != '1')";
+            AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
+            List<String> values = AbstractDao.readData(sql, dataMap);
+            return (values != null && !values.isEmpty()) ? values.get(0) : "0";
+        } catch (Exception e) {
+            return "0";
+        }
+    }
+
+    public static String countFemaleCaregivers() {
+        try {
+            String sql = "SELECT COUNT(DISTINCT household_id) AS v FROM ec_household WHERE LOWER(caregiver_sex) = 'female' AND screened = 'true' AND (status IS NULL OR status != '1')";
+            AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
+            List<String> values = AbstractDao.readData(sql, dataMap);
+            return (values != null && !values.isEmpty()) ? values.get(0) : "0";
+        } catch (Exception e) {
+            return "0";
+        }
+    }
+
     public static String countNumberoFHouseholds () {
         try {
             String sql = "SELECT count(DISTINCT household_id ) AS houses FROM ec_household WHERE screened = 'true' AND (status IS NULL OR status != '1')";

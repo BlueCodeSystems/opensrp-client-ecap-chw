@@ -50,6 +50,14 @@ public class EcMotherIndexDao extends AbstractDao {
         }
     }
 
+    public static String countAllPmtctMothers() {
+        String sql = "SELECT COUNT(*) v FROM ec_pmtct_mother WHERE (delete_status IS NULL OR delete_status <> '1')";
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
+        List<String> values = AbstractDao.readData(sql, dataMap);
+        if (values == null || values.isEmpty()) return "0";
+        return values.get(0);
+    }
+
     public static String countMothers(String householdId) {
         String sql = "SELECT COUNT(*) v FROM ec_pmtct_mother WHERE household_id = '" + householdId + "' " +
                 "AND (delete_status IS NULL OR delete_status <> '1')";

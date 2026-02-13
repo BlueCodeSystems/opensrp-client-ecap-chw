@@ -23,6 +23,14 @@ public class HivTestingServiceDao extends AbstractDao {
         return values.get(0);
     }
 
+    public static String countAllHtsClients() {
+        String sql = "SELECT COUNT(*) v FROM ec_hiv_testing_service WHERE (delete_status IS NULL OR delete_status != '1')";
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
+        List<String> values = AbstractDao.readData(sql, dataMap);
+        if (values == null || values.isEmpty()) return "0";
+        return values.get(0);
+    }
+
     public static List<HivTestingServiceModel> getAllHivTestingServices() {
         String sql = "SELECT * FROM ec_hiv_testing_service";
 

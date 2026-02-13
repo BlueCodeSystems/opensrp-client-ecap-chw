@@ -28,6 +28,14 @@ public class PMTCTMotherDao extends AbstractDao {
         return mother.get(0);
     }
 
+    public static String countAllMotherIndexRecords() {
+        String sql = "SELECT COUNT(*) v FROM ec_mother_index";
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
+        List<String> values = AbstractDao.readData(sql, dataMap);
+        if (values == null || values.isEmpty()) return "0";
+        return values.get(0);
+    }
+
     public static List<Mother> getMothers(String householdID) {
 
         String sql = "SELECT * FROM ec_mother_index WHERE household_id = '"+ householdID +"' ";

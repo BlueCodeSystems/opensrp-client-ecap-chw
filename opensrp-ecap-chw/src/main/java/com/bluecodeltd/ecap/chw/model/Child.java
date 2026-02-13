@@ -241,6 +241,14 @@ public class Child implements Serializable {
     @Expose
     private String other_reason;
 
+    @SerializedName("graduation_benchmark")
+    @Expose
+    private String graduation_benchmark;
+
+    @SerializedName("ovc_name")
+    @Expose
+    private String ovc_name;
+
     @SerializedName("base_entity_id")
     @Expose
     private String base_entity_id;
@@ -1164,6 +1172,22 @@ public class Child implements Serializable {
 
     public String getOther_reason() {
         return other_reason;
+    }
+
+    public String getGraduation_benchmark() {
+        return graduation_benchmark;
+    }
+
+    public void setGraduation_benchmark(String graduation_benchmark) {
+        this.graduation_benchmark = graduation_benchmark;
+    }
+
+    public String getOvc_name() {
+        return ovc_name;
+    }
+
+    public void setOvc_name(String ovc_name) {
+        this.ovc_name = ovc_name;
     }
 
     public String getCaseworker_name() {

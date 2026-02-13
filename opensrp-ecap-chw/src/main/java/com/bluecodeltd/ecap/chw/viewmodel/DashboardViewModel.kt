@@ -5,8 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bluecodeltd.ecap.chw.dao.CaregiverVisitationDao
+import com.bluecodeltd.ecap.chw.dao.EcMotherIndexDao
+import com.bluecodeltd.ecap.chw.dao.HivTestingServiceDao
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao
+import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao
 import com.bluecodeltd.ecap.chw.model.Child
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,6 +20,13 @@ data class DashboardState(
     val subpops: ArrayList<Int> = arrayListOf(),
     val householdsCount: String? = null,
     val vcasCount: String? = null,
+    val maleCount: String = "0",
+    val femaleCount: String = "0",
+    val caregiverMaleCount: String = "0",
+    val caregiverFemaleCount: String = "0",
+    val mothersCount: String = "0",
+    val htsCount: String = "0",
+    val pmtctCount: String = "0",
     val lastUpdated: LocalDateTime? = null
 )
 
@@ -29,14 +39,25 @@ class DashboardViewModel : ViewModel() {
             val now = LocalDateTime.now()
             val visitDates = CaregiverVisitationDao.getAllVisitDates()
             val visitsDue = computeVisitsDue(visitDates)
-            val subpops: ArrayList<Int> = if (caseworkerPhone.isNullOrEmpty())
-                countSubpop(IndexPersonDao.getAllChildrenSubpops())
+            val childList: List<Child>? = if (caseworkerPhone.isNullOrEmpty())
+                IndexPersonDao.getAllChildrenSubpops()
             else
-                countSubpop(IndexPersonDao.getAllChildrenSubpopsByCaseworkerPhoneNumber(caseworkerPhone))
+                IndexPersonDao.getAllChildrenSubpopsByCaseworkerPhoneNumber(caseworkerPhone)
+            val subpops = countSubpop(childList)
+            val genderCounts = countGender(childList)
             val householdsCount = if (caseworkerPhone.isNullOrEmpty())
                 HouseholdDao.countNumberoFHouseholds() else HouseholdDao.countNumberOfHouseholdsByCaseworkerPhone(caseworkerPhone)
             val vcasCount = if (caseworkerPhone.isNullOrEmpty())
                 IndexPersonDao.countAllChildren() else IndexPersonDao.countAllChildrenByCaseworkerPhoneNumber(caseworkerPhone)
+
+            // Caregiver gender counts
+            val caregiverMaleCount = try { HouseholdDao.countMaleCaregivers() ?: "0" } catch (_: Exception) { "0" }
+            val caregiverFemaleCount = try { HouseholdDao.countFemaleCaregivers() ?: "0" } catch (_: Exception) { "0" }
+
+            // Register counts
+            val mothersCount = try { PMTCTMotherDao.countAllMotherIndexRecords() ?: "0" } catch (_: Exception) { "0" }
+            val htsCount = try { HivTestingServiceDao.countAllHtsClients() ?: "0" } catch (_: Exception) { "0" }
+            val pmtctCount = try { EcMotherIndexDao.countAllPmtctMothers() ?: "0" } catch (_: Exception) { "0" }
 
             _state.postValue(
                 DashboardState(
@@ -44,6 +65,13 @@ class DashboardViewModel : ViewModel() {
                     subpops = subpops,
                     householdsCount = householdsCount,
                     vcasCount = vcasCount,
+                    maleCount = genderCounts[0].toString(),
+                    femaleCount = genderCounts[1].toString(),
+                    caregiverMaleCount = caregiverMaleCount,
+                    caregiverFemaleCount = caregiverFemaleCount,
+                    mothersCount = mothersCount,
+                    htsCount = htsCount,
+                    pmtctCount = pmtctCount,
                     lastUpdated = now
                 )
             )
@@ -52,8 +80,6 @@ class DashboardViewModel : ViewModel() {
 
     private fun computeVisitsDue(dates: List<String>?): Int {
         if (dates.isNullOrEmpty()) return 0
-        // Dates formatted as dd-MM-u in app logic; keep logic consistent using Java time via helpers if needed
-        // To avoid parsing overhead here, keep behavior aligned with existing Java code paths
         return try {
             val formatter = java.time.format.DateTimeFormatter.ofPattern("dd-MM-u")
             val today = java.time.LocalDate.now()
@@ -64,6 +90,18 @@ class DashboardViewModel : ViewModel() {
                 } catch (_: Exception) { false }
             }
         } catch (_: Exception) { 0 }
+    }
+
+    /** Returns [maleCount, femaleCount] from the child list. */
+    private fun countGender(childList: List<Child>?): IntArray {
+        var males = 0; var females = 0
+        childList?.forEach { c ->
+            when (c.gender?.lowercase()) {
+                "male" -> males++
+                "female" -> females++
+            }
+        }
+        return intArrayOf(males, females)
     }
 
     private fun countSubpop(childList: List<Child>?): ArrayList<Int> {
@@ -80,4 +118,3 @@ class DashboardViewModel : ViewModel() {
         return totals
     }
 }
-

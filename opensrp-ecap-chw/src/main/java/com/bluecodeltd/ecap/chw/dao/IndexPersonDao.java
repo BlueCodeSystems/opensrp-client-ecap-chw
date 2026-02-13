@@ -601,6 +601,8 @@ public class IndexPersonDao  extends AbstractDao {
             record.setIndex_check_box(getCursorValue(c, "index_check_box"));
             record.setCase_plan_id(getCursorValue(c, "case_plan_id"));
             record.setDeleted(getCursorValue(c, "deleted"));
+            record.setGraduation_benchmark(getCursorValue(c, "graduation_benchmark"));
+            record.setOvc_name(getCursorValue(c, "ovc_name"));
             return record;
         };
     }
@@ -609,7 +611,7 @@ public class IndexPersonDao  extends AbstractDao {
     public static Child getChildByBaseId(String UID){
         String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE unique_id = '" + UID + "' AND (adolescent_first_name IS NOT NULL OR adolescent_last_name IS NOT NULL OR adolescent_birthdate IS NOT NULL)";
         DataMap<Child> dataMap = c -> {
-            return new Child(
+            Child record = new Child(
                     getCursorValue(c, "last_interacted_with"),
                     getCursorValue(c, "phone"),
                     getCursorValue(c, "caseworker_name"),
@@ -701,6 +703,9 @@ public class IndexPersonDao  extends AbstractDao {
 
 
             );
+            record.setGraduation_benchmark(getCursorValue(c, "graduation_benchmark"));
+            record.setOvc_name(getCursorValue(c, "ovc_name"));
+            return record;
         };
         List <Child> children =  AbstractDao.readData(sql, dataMap);
         if (children == null || children.isEmpty()) {
@@ -712,7 +717,7 @@ public class IndexPersonDao  extends AbstractDao {
     public static List<Child> getAllChildrenSubpops(){
         String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE is_closed = 0 AND (deleted IS NULL OR deleted != '1')";
         DataMap<Child> dataMap = c -> {
-            return new Child(
+            Child record = new Child(
                     getCursorValue(c, "last_interacted_with"),
                     getCursorValue(c, "phone"),
                     getCursorValue(c, "caseworker_name"),
@@ -802,6 +807,9 @@ public class IndexPersonDao  extends AbstractDao {
                     getCursorValue(c, "signature")
 
             );
+            record.setGraduation_benchmark(getCursorValue(c, "graduation_benchmark"));
+            record.setOvc_name(getCursorValue(c, "ovc_name"));
+            return record;
         };
         List<Child> children = null;
         try {
@@ -848,7 +856,7 @@ public class IndexPersonDao  extends AbstractDao {
     public static List<Child> getAllChildrenSubpopsByCaseworkerPhoneNumber(String caseworkerPhoneNumber){
         String sql = "SELECT *, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE phone = '" + caseworkerPhoneNumber + "' AND is_closed = 0 AND (deleted IS NULL OR deleted != '1')";
         DataMap<Child> dataMap = c -> {
-            return new Child(
+            Child record = new Child(
                     getCursorValue(c, "last_interacted_with"),
                     getCursorValue(c, "phone"),
                     getCursorValue(c, "caseworker_name"),
@@ -938,6 +946,9 @@ public class IndexPersonDao  extends AbstractDao {
                     getCursorValue(c, "signature")
 
             );
+            record.setGraduation_benchmark(getCursorValue(c, "graduation_benchmark"));
+            record.setOvc_name(getCursorValue(c, "ovc_name"));
+            return record;
         };
         List <Child> children =  AbstractDao.readData(sql, dataMap);
         if (children == null) {

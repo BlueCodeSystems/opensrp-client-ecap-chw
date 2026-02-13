@@ -149,6 +149,19 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
                 startActivity(intent);
             });
         }
+        // Register row click listeners (Other Registers)
+        if (binding.registerRowMother != null) {
+            binding.registerRowMother.setOnClickListener(v ->
+                startActivity(new Intent(DashboardActivity.this, MotherIndexActivity.class)));
+        }
+        if (binding.registerRowHts != null) {
+            binding.registerRowHts.setOnClickListener(v ->
+                startActivity(new Intent(DashboardActivity.this, HivTestingServiceActivity.class)));
+        }
+        if (binding.registerRowPmtct != null) {
+            binding.registerRowPmtct.setOnClickListener(v ->
+                startActivity(new Intent(DashboardActivity.this, PMTCTRegisterActivity.class)));
+        }
         Bundle extras = getIntent().getExtras();
         String username = extras.getString("username");
         String password = extras.getString("password");
@@ -166,44 +179,52 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
             try {
                 int visits = state.getVisitsDue();
                 allDueVisits.setText(String.valueOf(visits));
-                // Color code due card: <5 light yellow, >5 red
+                // Color code due card: 0 = grey, 1-5 amber, >5 red
                 int bgColor;
-                int textColor;
-                int subTextColor;
-                if (visits > 5) {
-                    bgColor = Color.parseColor("#EF4444"); // red
-                    textColor = Color.WHITE;
-                    subTextColor = Color.WHITE;
+                int fgColor;
+                if (visits == 0) {
+                    bgColor = Color.parseColor("#E5E7EB"); // light grey
+                    fgColor = Color.parseColor("#374151"); // dark grey text/icon
+                } else if (visits > 5) {
+                    bgColor = Color.parseColor("#EF4444");
+                    fgColor = Color.WHITE;
                 } else {
-                    bgColor = Color.parseColor("#F1BA0B"); // light yellow (Material Yellow 200)
-                    textColor = Color.BLACK;
-                    subTextColor = Color.BLACK;
+                    bgColor = Color.parseColor("#F1BA0B");
+                    fgColor = Color.WHITE;
                 }
                 if (dueCardview != null) dueCardview.setCardBackgroundColor(bgColor);
-                // Force calendar icon, count, and label to white as requested
-                allDueVisits.setTextColor(Color.WHITE);
-                try { binding.iconDueVisits.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN); } catch (Exception ignored) {}
-                try { binding.dueVisitsView.setTextColor(Color.WHITE); } catch (Exception ignored) {}
+                allDueVisits.setTextColor(fgColor);
+                try { binding.iconDueVisits.setColorFilter(fgColor, PorterDuff.Mode.SRC_IN); } catch (Exception ignored) {}
+                try { binding.dueVisitsView.setTextColor(fgColor); } catch (Exception ignored) {}
                 BarData data = dataForBarchart(state.getSubpops());
                 configureChartAppearance();
                 prepareChartData(data);
                 allHouseHoldsCount = binding.allHouseholdsNumber;
                 allHouseHoldsCount.setText(state.getHouseholdsCount() != null ? state.getHouseholdsCount() : "0");
                 allVcasCount.setText(state.getVcasCount());
+                // Gender breakdown in Children card
+                binding.cardMaleCount.setText(state.getMaleCount());
+                binding.cardFemaleCount.setText(state.getFemaleCount());
+                // Gender breakdown in Households card (caregivers)
+                binding.cardCaregiverMaleCount.setText(state.getCaregiverMaleCount() != null ? state.getCaregiverMaleCount() : "0");
+                binding.cardCaregiverFemaleCount.setText(state.getCaregiverFemaleCount() != null ? state.getCaregiverFemaleCount() : "0");
+                // Register counts (Other Registers)
+                binding.registerMotherCount.setText(state.getMothersCount());
+                binding.registerHtsCount.setText(state.getHtsCount());
+                binding.registerPmtctCount.setText(state.getPmtctCount());
                 if (state.getLastUpdated() != null) {
-                    // state.lastUpdated is LocalDateTime
                     lastUpdated.setText(dtf.format(state.getLastUpdated()));
                 }
                 loadingDataProgressBar.setVisibility(View.INVISIBLE);
             } catch (Exception ignored) {}
         });
 
-        // Professional, high-contrast palette (4 series): Blue, Emerald, Violet, Amber
+        // Vibrant palette matching the new card gradients
         colors.clear();
-        colors.add(Color.parseColor("#B3CEE5")); // CALHIV
-        colors.add(Color.parseColor("#87CEEB")); // HEI
-        colors.add(Color.parseColor("#89A3B2")); // CWLHIV
-        colors.add(Color.parseColor("#967BB6")); // C/ASSV
+        colors.add(Color.parseColor("#0097A7")); // CALHIV  (teal)
+        colors.add(Color.parseColor("#26C6DA")); // HEI     (cyan)
+        colors.add(Color.parseColor("#5C6BC0")); // CWLHIV  (indigo)
+        colors.add(Color.parseColor("#AB47BC")); // C/ASSV  (purple)
         if (username != null && password != null) {
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(DashboardActivity.this);
             String code = sp.getString("code", "0000");
@@ -313,7 +334,6 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
         xAxis.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                //return SUBPOPS[(int) value];
                 return "";
             }
         });
@@ -323,21 +343,13 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
 
         l.getEntries();
 
-        // l.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
-
         l.setYEntrySpace(10f);
 
-        LegendEntry l1=new LegendEntry("CALHIV",Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#B3CEE5"));
-        LegendEntry l2=new LegendEntry("HEI", Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#87CEEB"));
-        LegendEntry l3=new LegendEntry("CWLHIV",Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#89A3B2"));
-        LegendEntry l5=new LegendEntry("C/ASSV",Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#967BB6"));
-        l.setCustom(new LegendEntry[]{l1,l2,l3,l5});
-        // l.setWordWrapEnabled(true);
-
-        // LegendEntry l1=new LegendEntry("Male",Legend.LegendForm.CIRCLE,10f,2f,null,Color.YELLOW);
-        // LegendEntry l2=new LegendEntry("Female", Legend.LegendForm.CIRCLE,10f,2f,null,Color.RED);
-
-        //  l.setCustom(new LegendEntry[]{l1,l2});
+        LegendEntry l1 = new LegendEntry("CALHIV",  Legend.LegendForm.CIRCLE, 10f, 2f, null, Color.parseColor("#0097A7"));
+        LegendEntry l2 = new LegendEntry("HEI",     Legend.LegendForm.CIRCLE, 10f, 2f, null, Color.parseColor("#26C6DA"));
+        LegendEntry l3 = new LegendEntry("CWLHIV",  Legend.LegendForm.CIRCLE, 10f, 2f, null, Color.parseColor("#5C6BC0"));
+        LegendEntry l5 = new LegendEntry("C/ASSV",  Legend.LegendForm.CIRCLE, 10f, 2f, null, Color.parseColor("#AB47BC"));
+        l.setCustom(new LegendEntry[]{l1, l2, l3, l5});
 
         l.setEnabled(true);
 

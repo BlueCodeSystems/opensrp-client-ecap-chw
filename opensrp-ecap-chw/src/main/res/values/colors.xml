@@ -112,5 +112,36 @@
     <color name="dash_header_start">#1565C0</color>
     <color name="dash_header_end">#1976D2</color>
 
+    <!-- Card text on dark backgrounds -->
+    <color name="card_text_primary">#FFFFFF</color>
+    <color name="card_text_secondary">#CCFFFFFF</color>
+    <color name="card_text_tertiary">#99FFFFFF</color>
+
+    <!-- Stat pills -->
+    <color name="stat_pill_male">#1976D2</color>
+    <color name="stat_pill_male_bg">#E3F2FD</color>
+    <color name="stat_pill_female">#C2185B</color>
+    <color name="stat_pill_female_bg">#FCE4EC</color>
+    <color name="stat_pill_hiv">#E65100</color>
+    <color name="stat_pill_hiv_bg">#FFF3E0</color>
+
+    <!-- Quick action cards -->
+    <color name="quick_action_bg">#FFFFFF</color>
+    <color name="quick_action_icon_tint">#546E7A</color>
+
+    <!-- Register list icons & backgrounds -->
+    <color name="register_vca_bg">#E0F7FA</color>
+    <color name="register_vca_icon">#0097A7</color>
+    <color name="register_household_bg">#E8EAF6</color>
+    <color name="register_household_icon">#303F9F</color>
+    <color name="register_mother_bg">#E8F5E9</color>
+    <color name="register_mother_icon">#2E7D32</color>
+    <color name="register_hts_bg">#E3F2FD</color>
+    <color name="register_hts_icon">#1565C0</color>
+    <color name="register_pmtct_bg">#F3E5F5</color>
+    <color name="register_pmtct_icon">#7B1FA2</color>
+    <color name="register_count_text">#546E7A</color>
+    <color name="register_card_bg">#FFFFFF</color>
+
 </resources>
 

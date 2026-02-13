@@ -260,6 +260,66 @@
         }
       },
       {
+        "key": "pregnant_breastfeeding",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "pregnant_attribute",
+        "openmrs_entity_id": "pregnant_breastfeeding",
+        "type": "native_radio",
+        "label": "Is mother pregnant/breastfeeding?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:services": {
+            "type": "string",
+            "ex": "equalTo(., \"caregiver\")"
+          }
+        }
+      },
+      {
+        "key": "enroll_mother_index_info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "enroll_mother_index_info",
+        "type": "toaster_notes",
+        "text": "Enroll in Mother Index",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_type": "info",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "service_report_household_toast.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "enroll_pmtct_info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "enroll_pmtct_info",
+        "type": "toaster_notes",
+        "text": "Enroll in PMTCT",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_type": "info",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "service_report_household_toast.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "health_services",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",

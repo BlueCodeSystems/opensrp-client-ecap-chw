@@ -390,6 +390,20 @@
           },
           {
             "field": "eventType",
+            "field_value": "Mother Register From Service",
+            "creates_case": [
+              "ec_mother_index"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Mother PMTCT Register From Service",
+            "creates_case": [
+              "ec_pmtct_mother"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "Mother Register Negative",
             "creates_case": [
               "ec_mother_index",

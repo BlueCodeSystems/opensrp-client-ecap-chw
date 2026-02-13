@@ -2673,6 +2673,13 @@
           }
         },
         {
+          "column_name": "graduation_benchmark",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.graduation_benchmark"
+          }
+        },
+        {
           "column_name": "date_referred",
           "type": "Client",
           "json_mapping": {
@@ -2971,6 +2978,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.name_ovc"
+          }
+        },
+        {
+          "column_name": "ovc_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.ovc_name"
           }
         },
         {

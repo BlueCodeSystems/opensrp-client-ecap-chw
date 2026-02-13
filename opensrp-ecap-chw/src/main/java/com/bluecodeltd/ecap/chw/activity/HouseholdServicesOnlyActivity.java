@@ -316,8 +316,7 @@ public class HouseholdServicesOnlyActivity extends AppCompatActivity {
                     case "Household Service Report":
 
                         if (!is_edit_mode) {
-                            maybeEnrollPmtctMother(jsonFormObject);
-                            maybeEnrollMotherIndex(jsonFormObject);
+                            maybeAutoEnrollMotherFromService(jsonFormObject);
                         }
                         Toasty.success(HouseholdServicesOnlyActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
                         refreshData();
@@ -357,10 +356,10 @@ public class HouseholdServicesOnlyActivity extends AppCompatActivity {
 
             FormTag formTag = getFormTag();
             String tableName;
-            if ("Mother Pmtct".equalsIgnoreCase(encounterType)) {
+            if (isPmtctEncounter(encounterType)) {
                 tableName = Constants.EcapClientTable.EC_MOTHER_PMTCT;
                 PmtctEnrollmentUtils.alignPmtctIdWithHouseholdId(fields);
-            } else if ("Mother Register".equalsIgnoreCase(encounterType)) {
+            } else if (isMotherIndexEncounter(encounterType)) {
                 tableName = Constants.EcapClientTable.EC_MOTHER_INDEX;
             } else {
                 tableName = "ec_household_service_report";
@@ -379,79 +378,6 @@ public class HouseholdServicesOnlyActivity extends AppCompatActivity {
         return null;
     }
 
-    private void maybeEnrollPmtctMother(JSONObject serviceForm) {
-        if (serviceForm == null || !PmtctEnrollmentUtils.isEligible(serviceForm)) {
-            return;
-        }
-        if (intent_householdId == null || intent_householdId.trim().isEmpty()) {
-            return;
-        }
-
-        Threading.io(() -> {
-            try {
-                if (PMTCTMotherDao.hasMotherRecord(intent_householdId)) {
-                    return;
-                }
-                Household household = HouseholdDao.getHousehold(intent_householdId);
-                if (household == null) {
-                    return;
-                }
-                if (household.getHousehold_id() == null || household.getHousehold_id().trim().isEmpty()) {
-                    household.setHousehold_id(intent_householdId);
-                }
-                if (household.getHousehold_id() == null || household.getHousehold_id().trim().isEmpty()) {
-                    return;
-                }
-                String serviceDate = PmtctEnrollmentUtils.resolveServiceDate(serviceForm);
-                JSONObject pmtctForm = PmtctEnrollmentUtils.buildMotherPmtctForm(this, household, serviceDate);
-                if (pmtctForm == null) {
-                    return;
-                }
-                ChildIndexEventClient childIndexEventClient = processRegistration(pmtctForm.toString());
-                if (childIndexEventClient == null) {
-                    return;
-                }
-                saveRegistration(childIndexEventClient, false, "Mother Pmtct");
-            } catch (Exception e) {
-                Timber.e(e);
-            }
-        });
-    }
-
-    private void maybeEnrollMotherIndex(JSONObject serviceForm) {
-        if (serviceForm == null || intent_householdId == null || intent_householdId.trim().isEmpty()) {
-            return;
-        }
-        Threading.io(() -> {
-            try {
-                if (IndexMotherDao.hasIndexMother(intent_householdId)) {
-                    return;
-                }
-                Household household = HouseholdDao.getHousehold(intent_householdId);
-                if (household == null) {
-                    return;
-                }
-                if (household.getHousehold_id() == null || household.getHousehold_id().trim().isEmpty()) {
-                    household.setHousehold_id(intent_householdId);
-                }
-                String serviceDate = PmtctEnrollmentUtils.resolveServiceDate(serviceForm);
-                if (!MotherIndexEnrollmentUtils.isEligible(serviceForm, household, serviceDate)) {
-                    return;
-                }
-                JSONObject motherIndexForm = MotherIndexEnrollmentUtils.buildMotherIndexForm(this, household, serviceDate);
-                if (motherIndexForm == null) {
-                    return;
-                }
-                ChildIndexEventClient childIndexEventClient = processRegistration(motherIndexForm.toString());
-                if (childIndexEventClient == null) {
-                    return;
-                }
-                saveRegistration(childIndexEventClient, false, "Mother Register");
-            } catch (Exception e) {
-                Timber.e(e);
-            }
-        });
-    }
 
     public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode,String encounterType) {
 
@@ -539,5 +465,112 @@ public class HouseholdServicesOnlyActivity extends AppCompatActivity {
         intent.putExtra("householdId", intent_householdId);
         startActivity(intent);
         finish();
+    }
+
+    private void maybeAutoEnrollMotherFromService(JSONObject serviceForm) {
+        if (serviceForm == null) {
+            return;
+        }
+        String services = PmtctEnrollmentUtils.getFieldValue(serviceForm, "services");
+        if (!"caregiver".equalsIgnoreCase(safe(services))) {
+            return;
+        }
+        String breastfeeding = PmtctEnrollmentUtils.getFieldValue(serviceForm, "pregnant_breastfeeding");
+        if (!"yes".equalsIgnoreCase(safe(breastfeeding))) {
+            return;
+        }
+        String hivStatus = PmtctEnrollmentUtils.getFieldValue(serviceForm, "is_hiv_positive");
+        if ("positive".equalsIgnoreCase(safe(hivStatus))) {
+            enrollMotherIndexFromService(serviceForm, hivStatus);
+            enrollPmtctMotherFromService(serviceForm);
+        } else if ("negative".equalsIgnoreCase(safe(hivStatus))) {
+            enrollMotherIndexFromService(serviceForm, hivStatus);
+        }
+    }
+
+    private void enrollMotherIndexFromService(JSONObject serviceForm, String hivStatus) {
+        if (intent_householdId == null || intent_householdId.trim().isEmpty()) {
+            return;
+        }
+        Threading.io(() -> {
+            try {
+                if (IndexMotherDao.hasIndexMother(intent_householdId)) {
+                    return;
+                }
+                Household household = HouseholdDao.getHousehold(intent_householdId);
+                if (household == null) {
+                    return;
+                }
+                if (household.getHousehold_id() == null || household.getHousehold_id().trim().isEmpty()) {
+                    household.setHousehold_id(intent_householdId);
+                }
+                if (household.getHousehold_id() == null || household.getHousehold_id().trim().isEmpty()) {
+                    return;
+                }
+                String serviceDate = PmtctEnrollmentUtils.resolveServiceDate(serviceForm);
+                JSONObject indexForm = MotherIndexEnrollmentUtils.buildMotherIndexForm(this, household, serviceDate, hivStatus);
+                if (indexForm == null) {
+                    return;
+                }
+                indexForm.put(JsonFormConstants.ENCOUNTER_TYPE, "Mother Register From Service");
+                ChildIndexEventClient childIndexEventClient = processRegistration(indexForm.toString());
+                if (childIndexEventClient == null) {
+                    return;
+                }
+                saveRegistration(childIndexEventClient, false, "Mother Register From Service");
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+        });
+    }
+
+    private void enrollPmtctMotherFromService(JSONObject serviceForm) {
+        if (intent_householdId == null || intent_householdId.trim().isEmpty()) {
+            return;
+        }
+        Threading.io(() -> {
+            try {
+                if (PMTCTMotherDao.hasMotherRecord(intent_householdId)) {
+                    return;
+                }
+                Household household = HouseholdDao.getHousehold(intent_householdId);
+                if (household == null) {
+                    return;
+                }
+                if (household.getHousehold_id() == null || household.getHousehold_id().trim().isEmpty()) {
+                    household.setHousehold_id(intent_householdId);
+                }
+                if (household.getHousehold_id() == null || household.getHousehold_id().trim().isEmpty()) {
+                    return;
+                }
+                String serviceDate = PmtctEnrollmentUtils.resolveServiceDate(serviceForm);
+                JSONObject pmtctForm = PmtctEnrollmentUtils.buildMotherPmtctForm(this, household, serviceDate);
+                if (pmtctForm == null) {
+                    return;
+                }
+                pmtctForm.put(JsonFormConstants.ENCOUNTER_TYPE, "Mother PMTCT Register From Service");
+                ChildIndexEventClient childIndexEventClient = processRegistration(pmtctForm.toString());
+                if (childIndexEventClient == null) {
+                    return;
+                }
+                saveRegistration(childIndexEventClient, false, "Mother PMTCT Register From Service");
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+        });
+    }
+
+    private static boolean isPmtctEncounter(String encounterType) {
+        return "Mother Pmtct".equalsIgnoreCase(encounterType)
+                || "Mother PMTCT Register From Service".equalsIgnoreCase(encounterType);
+    }
+
+    private static boolean isMotherIndexEncounter(String encounterType) {
+        return "Mother Register".equalsIgnoreCase(encounterType)
+                || "Mother Register From Service".equalsIgnoreCase(encounterType);
+    }
+
+    private static String safe(String value) {
+        return value == null ? "" : value.trim();
     }
 }
