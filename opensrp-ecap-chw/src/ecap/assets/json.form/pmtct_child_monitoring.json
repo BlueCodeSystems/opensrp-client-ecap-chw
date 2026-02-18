@@ -352,13 +352,9 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "nutrition_status",
         "type": "edit_text",
-        "hint": "What is the child’s MUAC measurement?",
+        "hint": "What is the child's MUAC measurement...",
         "edit_type": "number",
-        "read_only": false,
-        "v_regex": {
-          "value": "^(0|[1-9]|1[0-9]|2[0-6])(\\.\\d+)?$",
-          "err": "Please enter a valid MUAC measurement (0–26 cm)"
-        }
+        "read_only": false
       },
       {
         "key": "toaster_red",
@@ -384,7 +380,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "medical_complications",
         "type": "native_radio",
-        "label": "Medical Complications?",
+        "label": "Medical Complications...",
         "options": [
           {
             "key": "Medical Complications present",
@@ -461,7 +457,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "instructions_a",
         "type": "toaster_notes",
-        "text": " -Treat any infections\n-Prevent further weight loss and infections with fortified blended flours\n -Ensure adequate micronutrient intake",
+        "text": "-Treat any infections\n-Prevent further weight loss and infections with fortified blended flours\n -Ensure adequate micronutrient intake",
         "text_color": "#000000",
         "label_text_style": "bold",
         "toaster_type": "info",
@@ -629,7 +625,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "tb_referral",
         "type": "native_radio",
-        "label": "If the program participant screens positive for TB (presumptive TB case), has s/he been referred to the health facility for further evaluation?",
+        "label": "If the program participant screens positive for TB (presumptive TB case), has s/he been referred to the health facility for further evaluation...",
         "options": [
           {
             "key": "yes",

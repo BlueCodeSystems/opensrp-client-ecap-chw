@@ -125,12 +125,12 @@
             "text": "K500 - K999"
           },
           {
-            "key": "K1,000 – K1,999",
-            "text": "K1,000 – K1,999"
+            "key": "K1,000 - K1,999",
+            "text": "K1,000 - K1,999"
           },
           {
-            "key": "K2,000 – K4,999",
-            "text": "K2,000 – K4,999"
+            "key": "K2,000 - K4,999",
+            "text": "K2,000 - K4,999"
           },
           {
             "key": "Greater than K5,000",
@@ -195,7 +195,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "test_6months",
         "type": "native_radio",
-        "label": "Was the HIV test done less than 6 months ago? ",
+        "label": "Was the HIV test done less than 6 months ago...",
         "options": [
           {
             "key": "yes",
@@ -246,7 +246,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "symptoms",
         "type": "native_radio",
-        "label": "Do you have any of the following symptoms? Current cough, Fever, Weight loss, Night sweats?",
+        "label": "Do you have any of the following symptoms... Current cough, Fever, Weight loss, Night sweats...",
         "options": [
           {
             "key": "yes",
@@ -291,7 +291,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "private_parts",
         "type": "native_radio",
-        "label": "Do you have any of the following on your private parts? Sores, Blisters, Unusual Discharge",
+        "label": "Do you have any of the following on your private parts... Sores, Blisters, Unusual Discharge",
         "options": [
           {
             "key": "yes",
@@ -336,7 +336,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "exposed",
         "type": "native_radio",
-        "label": "In the last 6 months, have you been exposed to HIV through a needle stick, an injection, or a piercing? ",
+        "label": "In the last 6 months, have you been exposed to HIV through a needle stick, an injection, or a piercing...",
         "options": [
           {
             "key": "yes",
@@ -381,7 +381,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unprotected",
         "type": "native_radio",
-        "label": "In the last 12 months, have you had unprotected sex without using a condom with someone whose HIV status you did not know or who was HIV positive? ?",
+        "label": "In the last 12 months, have you had unprotected sex without using a condom with someone whose HIV status you did not know or who was HIV positive... ...",
         "options": [
           {
             "key": "yes",
@@ -426,7 +426,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "breastfeeding",
         "type": "native_radio",
-        "label": "Are you pregnant or breastfeeding?",
+        "label": "Are you pregnant or breastfeeding...",
         "options": [
           {
             "key": "yes",
@@ -547,7 +547,7 @@
         "openmrs_entity_id": "active_on_treatment",
         "type": "native_radio",
         "read_only": "false",
-        "label": "Is the primary Caregiver on ART?",
+        "label": "Is the primary Caregiver on ART...",
         "options": [
           {
             "key": "yes",
@@ -590,7 +590,7 @@
         "openmrs_entity_id": "appointments",
         "type": "native_radio",
         "read_only": "",
-        "label": "Has the primary caregiver been regularly attending ART appointments and collecting drugs from the facility on schedule?",
+        "label": "Has the primary caregiver been regularly attending ART appointments and collecting drugs from the facility on schedule...",
         "options": [
           {
             "key": "yes",
@@ -616,7 +616,7 @@
         "openmrs_entity_id": "art_regularly",
         "type": "native_radio",
         "read_only": "",
-        "label": "In the past year, has the primary caregiver been taking ART regularly as prescribed? ",
+        "label": "In the past year, has the primary caregiver been taking ART regularly as prescribed...",
         "options": [
           {
             "key": "yes",
@@ -703,7 +703,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "months_medication",
         "type": "native_radio",
-        "label": "How many months of medications are typically received from the facility?",
+        "label": "How many months of medications are typically received from the facility...",
         "options": [
           {
             "key": "0<3 months",
@@ -736,7 +736,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "viral_load_12months",
         "type": "native_radio",
-        "label": "Has the primary caregiver had a viral load test in the past 12 months?",
+        "label": "Has the primary caregiver had a viral load test in the past 12 months...",
         "options": [
           {
             "key": "yes",
@@ -819,7 +819,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "documented_12months",
         "type": "native_radio",
-        "label": "Was the primary caregiver documented as virally suppressed? Less than 1000 copies/mL in the most recent viral load test? ",
+        "label": "Was the primary caregiver documented as virally suppressed... Less than 1000 copies/mL in the most recent viral load test...",
         "options": [
           {
             "key": "yes",
@@ -843,7 +843,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "pmtct_enrolled",
         "type": "native_radio",
-        "label": "Has the primary caregiver enrolled in PMTCT (if pregnant or breastfeeding) ",
+        "label": "Has the primary caregiver enrolled in PMTCT (if pregnant or breastfeeding)",
         "options": [
           {
             "key": "yes",
@@ -891,7 +891,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "cancer_screened",
         "type": "native_radio",
-        "label": "Has the Primary Caregiver been screened for cervical cancer?",
+        "label": "Has the Primary Caregiver been screened for cervical cancer...",
         "options": [
           {
             "key": "yes",
@@ -936,7 +936,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "malnutrition_screened",
         "type": "native_radio",
-        "label": "Has the Primary Caregiver been screened for malnutrition?",
+        "label": "Has the Primary Caregiver been screened for malnutrition...",
         "options": [
           {
             "key": "yes",
@@ -976,7 +976,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "hd1",
         "type": "label",
-        "text": " INTIMATE PARTNER VIOLENCE SCREENING"
+        "text": "INTIMATE PARTNER VIOLENCE SCREENING"
       },
       {
         "key": "last_year",
@@ -984,7 +984,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "last_year",
         "type": "native_radio",
-        "label": "Within the last year, have you been hit,   slapped,   kicked   or   otherwise\nphysically hurt by your partner or\nsomeone important?",
+        "label": "Within the last year, have you been hit, slapped, kicked or otherwise\nphysically hurt by your partner or\nsomeone important...",
         "label_text_style": "",
         "text_color": "#000000",
         "exclusive": [
@@ -1030,7 +1030,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "relation",
         "type": "native_radio",
-        "label": "Are you in a relationship in which you\nhave   been   physically   hurt   or\nthreatened by your partner?",
+        "label": "Are you in a relationship in which you\nhave been physically hurt or\nthreatened by your partner...",
         "label_text_style": "",
         "text_color": "#000000",
         "exclusive": [
@@ -1076,7 +1076,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "partner_caregiver",
         "type": "native_radio",
-        "label": "Has your partner ever forced you to\nhave sex when you didn’t want to?\nDoes he force you to engage in sex\nthat makes you feel uncomfortable?",
+        "label": "Has your partner ever forced you to\nhave sex when you didn't want to...\nDoes he force you to engage in sex\nthat makes you feel uncomfortable...",
         "label_text_style": "",
         "text_color": "#000000",
         "exclusive": [
@@ -1131,7 +1131,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "household_number",
         "type": "edit_text",
-        "hint": "How many members does \nthe household have?",
+        "hint": "How many members does \nthe household have...",
         "edit_type": "number",
         "look_up": "true",
         "v_regex": {
@@ -1145,7 +1145,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_education",
         "type": "native_radio",
-        "label": "Caregiver’s education level",
+        "label": "Caregiver's education level",
         "label_text_style": "",
         "text_color": "#000000",
         "exclusive": [
@@ -1179,7 +1179,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "household_member",
         "type": "native_radio",
-        "label": "In the last 6 months, has there been\nat least one member of the household\nwho has consistently had formal or\ninformal   employment   or   is   self-\nemployed or has a business or is\nengaged   in   an   economically\nproductive activity?",
+        "label": "In the last 6 months, has there been\nat least one member of the household\nwho has consistently had formal or\ninformal employment or is self-\nemployed or has a business or is\nengaged in an economically\nproductive activity...",
         "text_color": "#000000",
         "exclusive": [
           "Yes"
@@ -1205,7 +1205,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "Refer   for   economic   strengthening interventions",
+        "text": "Refer for economic strengthening interventions",
         "toaster_type": "info",
         "toaster_info_text": "",
         "toaster_info_title": "",
@@ -1222,7 +1222,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "source_income",
         "type": "native_radio",
-        "label": "What   is   the   MAIN   SOURCE   of\nhousehold income?",
+        "label": "What is the MAIN SOURCE of\nhousehold income...",
         "text_color": "#000000",
         "exclusive": [
           "None"
@@ -1260,7 +1260,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "Refer   for   economic   strengthening interventions",
+        "text": "Refer for economic strengthening interventions",
         "toaster_type": "info",
         "toaster_info_text": "",
         "toaster_info_title": "Information Toaster Info Title",
@@ -1295,7 +1295,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "source_earner",
-        "hint": "Who is the MAIN household income earner?",
+        "hint": "Who is the MAIN household income earner...",
         "type": "spinner",
         "openmrs_data_type": "",
         "values": [
@@ -1334,7 +1334,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "last_time",
         "type": "native_radio",
-        "label": "The   last   time   there   was   an unexpected,   urgent   household\nexpense   (e.g.,   emergency   medical\nexpense   or   house   repair),   was\nsomeone in the household able to pay\nfor that expense?",
+        "label": "The last time there was an unexpected, urgent household\nexpense (e.g., emergency medical\nexpense or house repair), was\nsomeone in the household able to pay\nfor that expense...",
         "text_color": "#000000",
         "exclusive": [
           "Yes"
@@ -1360,7 +1360,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "Refer   for   economic   strengthening interventions",
+        "text": "Refer for economic strengthening interventions",
         "toaster_type": "info",
         "toaster_info_text": "",
         "toaster_info_title": "Information Toaster Info Title",
@@ -1377,7 +1377,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hh_head_spouse",
         "type": "native_radio",
-        "label": "Does   the   HH   head,   spouse,   or\ncaregiver have any form of severe\ndisability   (e.g.,   hearing,   speech,\nphysical,   mental,   visual,   genetic\ndeficiencies (albinism)) that prevents\nhim/her   from   engaging   in\neconomically productive activities?",
+        "label": "Does the HH head, spouse, or\ncaregiver have any form of severe\ndisability (e.g., hearing, speech,\nphysical, mental, visual, genetic\ndeficiencies (albinism)) that prevents\nhim/her from engaging in\neconomically productive activities...",
         "text_color": "#000000",
         "exclusive": [
           "Yes"
@@ -1403,7 +1403,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "any_adult",
         "type": "native_radio",
-        "label": "Does the household have ANY adult member who has been very sick for at\nleast three months during the past 12\nmonths?   (This   means   that   the\nhousehold head or any adult member\nwas too sick to work or do normal\nactivities around the house for at least\nthree of the past 12 months)",
+        "label": "Does the household have ANY adult member who has been very sick for at\nleast three months during the past 12\nmonths... (This means that the\nhousehold head or any adult member\nwas too sick to work or do normal\nactivities around the house for at least\nthree of the past 12 months)",
         "text_color": "#000000",
         "exclusive": [
           "Yes"
@@ -1429,7 +1429,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "household_stable",
         "type": "native_radio",
-        "label": "Does   the   household   have   stable\nshelter that is adequate, safe, and\ndry? (Please observe)",
+        "label": "Does the household have stable\nshelter that is adequate, safe, and\ndry... (Please observe)",
         "text_color": "#000000",
         "exclusive": [
           "Yes"
@@ -1455,7 +1455,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "every_member",
         "type": "native_radio",
-        "label": "Does every member of your \nhousehold have at least one pair of \nshoes?",
+        "label": "Does every member of your \nhousehold have at least one pair of \nshoes...",
         "text_color": "#000000",
         "exclusive": [
           "Yes"
@@ -1480,7 +1480,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "material_construction",
-        "hint": "What type of material is mainly used \nfor construction of the wall of the \ndwelling?",
+        "hint": "What type of material is mainly used \nfor construction of the wall of the \ndwelling...",
         "type": "spinner",
         "openmrs_data_type": "",
         "values": [
@@ -1535,7 +1535,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "early_childhood",
         "type": "native_radio",
-        "label": "Are there any children aged 0-5 year\nin this household enrolled in Early\nChildhood Development and/or Early\nChildhood Education services?",
+        "label": "Are there any children aged 0-5 year\nin this household enrolled in Early\nChildhood Development and/or Early\nChildhood Education services...",
         "text_color": "#000000",
         "exclusive": [
           "Yes"
@@ -1578,7 +1578,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "children_adolescent_a",
         "type": "native_radio",
-        "label": "Are   there   any   children/adolescents aged 6–19 years in this household\nwho are not enrolled in primary or secondary school? ",
+        "label": "Are there any children/adolescents aged 6-19 years in this household\nwho are not enrolled in primary or secondary school...",
         "text_color": "#000000",
         "exclusive": [
           "Yes"
@@ -1604,7 +1604,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "Discuss   barriers   with   primary\ncaregiver and refer to appropriate services",
+        "text": "Discuss barriers with primary\ncaregiver and refer to appropriate services",
         "toaster_type": "info",
         "toaster_info_text": "",
         "toaster_info_title": "Information Toaster Info Title",
@@ -1621,7 +1621,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "children_adolescent_b",
         "type": "native_radio",
-        "label": "Are   there   any   children/adolescents\naged 6–19 years in this household\nwho are enrolled in school and have\nmissed school for about 20 days in the\nlast school term?",
+        "label": "Are there any children/adolescents\naged 6-19 years in this household\nwho are enrolled in school and have\nmissed school for about 20 days in the\nlast school term...",
         "text_color": "#000000",
         "exclusive": [
           "Yes"
@@ -1647,7 +1647,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "Discuss   barriers   with   primary caregiver and refer to appropriate services",
+        "text": "Discuss barriers with primary caregiver and refer to appropriate services",
         "toaster_type": "info",
         "toaster_info_text": "",
         "toaster_info_title": "Information Toaster Info Title",
@@ -1665,7 +1665,7 @@
         "openmrs_entity_id": "drinking_water",
         "label_text_style": "",
         "type": "check_box",
-        "label": "What is the main source of drinking\nwater   for   members   of   your\nhousehold?",
+        "label": "What is the main source of drinking\nwater for members of your\nhousehold...",
         "exclusive": [
           "none"
         ],
@@ -1740,7 +1740,7 @@
         "openmrs_entity_id": "toilet_facility",
         "label_text_style": "",
         "type": "check_box",
-        "label": "What type of toilet facility does the \nhousehold mainly use?",
+        "label": "What type of toilet facility does the \nhousehold mainly use...",
         "exclusive": [
           "none"
         ],
@@ -1803,7 +1803,7 @@
         "openmrs_entity_id": "sanitary_products",
         "label_text_style": "",
         "type": "check_box",
-        "label": "Do AGYW in the household have access to sanitary products?",
+        "label": "Do AGYW in the household have access to sanitary products...",
         "exclusive": [
           "none"
         ],
@@ -1856,7 +1856,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "material_construction_food",
-        "hint": "Over the past month, what has been\nthe MAIN source of food consumed by\nthe household?",
+        "hint": "Over the past month, what has been\nthe MAIN source of food consumed by\nthe household...",
         "type": "spinner",
         "openmrs_data_type": "",
         "values": [
@@ -1880,7 +1880,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "Refer for economic strengthening\nand   Government   Livelihood   support\ninterventions",
+        "text": "Refer for economic strengthening\nand Government Livelihood support\ninterventions",
         "toaster_type": "warning",
         "toaster_info_text": "",
         "toaster_info_title": "Information Toaster Info Title",
@@ -1915,7 +1915,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "household_eaten",
-        "hint": "Has the household eaten at least 2\nmeals a day, every day, for the last\nmonth?",
+        "hint": "Has the household eaten at least 2\nmeals a day, every day, for the last\nmonth...",
         "type": "spinner",
         "openmrs_data_type": "",
         "values": [
@@ -1937,7 +1937,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "Refer for economic strengthening\nand   Government   Livelihood   support\ninterventions",
+        "text": "Refer for economic strengthening\nand Government Livelihood support\ninterventions",
         "toaster_type": "warning",
         "toaster_info_text": "",
         "toaster_info_title": "Information Toaster Info Title",
@@ -1953,7 +1953,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "household_eaten_month",
-        "hint": "In the last  month, did any child/adolescent in the household \ngo a whole day without eating \n anything because there was not \n enough to eat?",
+        "hint": "In the last month, did any child/adolescent in the household \ngo a whole day without eating \n anything because there was not \n enough to eat...",
         "type": "spinner",
         "openmrs_data_type": "",
         "values": [
@@ -1975,7 +1975,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "Conduct nutrition\nscreening   using   mid   upper   arm\ncircumference  (MUAC) for  child   over   6\nmonths of age up to 5 years old and\npregnant   caregiver;   refer   and   escort\nadolescent   and   caregiver     (not\npregnant)  for  Body   Mass   Index   (BMI)\nmeasurement   at   facility   and   conduct\nnutrition counseling and Young Child Feeding\n(IYCF) counselling",
+        "text": "Conduct nutrition\nscreening using mid upper arm\ncircumference (MUAC) for child over 6\nmonths of age up to 5 years old and\npregnant caregiver; refer and escort\nadolescent and caregiver (not\npregnant) for Body Mass Index (BMI)\nmeasurement at facility and conduct\nnutrition counseling and Young Child Feeding\n(IYCF) counselling",
         "toaster_info_text": "",
         "text_color": "#000000",
         "toaster_type": "warning",
@@ -1994,7 +1994,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "Conduct nutrition\nscreening   using   mid   upper   arm\ncircumference  (MUAC) for  child   over   6\nmonths of age up to 5 years old and\npregnant   caregiver;   refer   and   escort\nadolescent   and   caregiver     (not\npregnant)  for  Body   Mass   Index   (BMI)\nmeasurement   at   facility;   and   conduct\nnutrition counseling and Young Child Feeding\n(IYCF) counselling",
+        "text": "Conduct nutrition\nscreening using mid upper arm\ncircumference (MUAC) for child over 6\nmonths of age up to 5 years old and\npregnant caregiver; refer and escort\nadolescent and caregiver (not\npregnant) for Body Mass Index (BMI)\nmeasurement at facility; and conduct\nnutrition counseling and Young Child Feeding\n(IYCF) counselling",
         "toaster_type": "info",
         "toaster_info_text": "",
         "toaster_info_title": "Information Toaster Info Title",
@@ -2011,7 +2011,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "Conduct nutrition\nscreening   using   mid   upper   arm\ncircumference  (MUAC) for  child   over   6\nmonths of age up to 5 years old and\npregnant   caregiver;   refer   and   escort\nadolescent   and   caregiver     (not\npregnant)  for  Body   Mass   Index   (BMI)\nmeasurement   at   facility;   and   conduct\nnutrition counseling and Young Child Feeding\n(IYCF) counselling",
+        "text": "Conduct nutrition\nscreening using mid upper arm\ncircumference (MUAC) for child over 6\nmonths of age up to 5 years old and\npregnant caregiver; refer and escort\nadolescent and caregiver (not\npregnant) for Body Mass Index (BMI)\nmeasurement at facility; and conduct\nnutrition counseling and Young Child Feeding\n(IYCF) counselling",
         "toaster_type": "info",
         "toaster_info_text": " ",
         "toaster_info_title": "Information Toaster Info Title",
@@ -2027,7 +2027,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "lack_resources",
-        "hint": "In the last month, was there ever no\nfood of any kind to eat in your house\nbecause of lack of resources to get\nfood?",
+        "hint": "In the last month, was there ever no\nfood of any kind to eat in your house\nbecause of lack of resources to get\nfood...",
         "type": "spinner",
         "openmrs_data_type": "",
         "values": [
@@ -2049,7 +2049,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "Refer for economic\nstrengthening   and   Government   Livelihood\nsupport interventions",
+        "text": "Refer for economic\nstrengthening and Government Livelihood\nsupport interventions",
         "toaster_info_text": "",
         "text_color": "#000000",
         "toaster_type": "warning",
@@ -2066,7 +2066,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "limited_variety",
-        "hint": "In the past four weeks, did you or any\nhousehold member have to eat a\nlimited variety of foods due to a lack\nof resources?",
+        "hint": "In the past four weeks, did you or any\nhousehold member have to eat a\nlimited variety of foods due to a lack\nof resources...",
         "type": "spinner",
         "openmrs_data_type": "",
         "values": [
@@ -2088,7 +2088,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "Refer for economic\nstrengthening   and   Government   Livelihood\nsupport interventions",
+        "text": "Refer for economic\nstrengthening and Government Livelihood\nsupport interventions",
         "toaster_info_text": "",
         "text_color": "#000000",
         "toaster_type": "warning",
@@ -2105,7 +2105,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "night_hungry",
-        "hint": "In the last month, did you or any\nmember of the household go to sleep\nat night hungry because there was\nnot enough food?",
+        "hint": "In the last month, did you or any\nmember of the household go to sleep\nat night hungry because there was\nnot enough food...",
         "type": "spinner",
         "openmrs_data_type": "",
         "values": [
@@ -2127,7 +2127,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "Refer for economic\nstrengthening   and   Government   Livelihood\nsupport interventions",
+        "text": "Refer for economic\nstrengthening and Government Livelihood\nsupport interventions",
         "toaster_info_text": "",
         "text_color": "#000000",
         "toaster_type": "warning",
@@ -2155,9 +2155,9 @@
         "type": "check_box",
         "label_text_style": "",
         "text_color": "#000000",
-        "label_info_text": "Indicate ‘Yes’ by ticking   the appropriate boxes",
+        "label_info_text": "Indicate 'Yes' by ticking the appropriate boxes",
         "label_info_title": "Tip",
-        "label": "In the past 6 months, have you or any\nchild   in   the   household   had   the\nfollowing happen to him/her, in or\noutside of the household?",
+        "label": "In the past 6 months, have you or any\nchild in the household had the\nfollowing happen to him/her, in or\noutside of the household...",
         "options": [
           {
             "key": "Teenage Pregnancy",
@@ -2213,7 +2213,7 @@
         "type": "native_radio",
         "label_text_style": "",
         "text_color": "#000000",
-        "label": "Is there any child in this household who has not been registered at birth? …does not have a birth certificate or National Identification card?",
+        "label": "Is there any child in this household who has not been registered at birth... ...does not have a birth certificate or National Identification card...",
         "options": [
           {
             "key": "Yes",
@@ -2258,24 +2258,24 @@
         "type": "check_box",
         "label_text_style": "",
         "text_color": "#000000",
-        "label_info_text": "Indicate ‘Yes’ by ticking   the appropriate boxes",
+        "label_info_text": "Indicate 'Yes' by ticking the appropriate boxes",
         "label_info_title": "Tip",
         "label": "During the PAST 12 MONTHS, did you do any of the following:",
         "options": [
           {
             "key": "Drink any alcohol (more than a few sips)",
-            "text": "Drink any alcohol (more than a few sips)?",
+            "text": "Drink any alcohol (more than a few sips)...",
             "label_info_text": "Do not count sips of alcohol taken during\nfamily or religious events.",
             "label_info_title": "Tip"
           },
           {
-            "key": "Smoke any marijuana or hashish?",
-            "text": "Smoke any marijuana or hashish?"
+            "key": "Smoke any marijuana or hashish...",
+            "text": "Smoke any marijuana or hashish..."
           },
           {
-            "key": "Use anything else to get high?",
-            "text": "Use anything else to get high?",
-            "label_info_text": "'Anything else' includes illegal drugs, over\nthe   counter   and   prescription   drugs,   and\nthings that you sniff or “huff",
+            "key": "Use anything else to get high...",
+            "text": "Use anything else to get high...",
+            "label_info_text": "'Anything else' includes illegal drugs, over\nthe counter and prescription drugs, and\nthings that you sniff or'huff",
             "label_info_title": "Tip"
           }
         ]
@@ -2287,32 +2287,32 @@
         "openmrs_entity_id": "caregiver_question",
         "type": "check_box",
         "read_only": "false",
-        "label_info_text": "Indicate ‘Yes’ by ticking the appropriate boxes",
+        "label_info_text": "Indicate 'Yes' by ticking the appropriate boxes",
         "label_info_title": "Tip",
-        "label": "Since you responded ‘Yes’ to the above question(s)",
+        "label": "Since you responded 'Yes' to the above question(s)",
         "options": [
           {
             "key": "q1",
-            "text": "Have you ever ridden in a CAR driven\nby someone (including yourself) who was\n“high” or had been using alcohol or drugs?"
+            "text": "Have you ever ridden in a CAR driven\nby someone (including yourself) who was\n'high' or had been using alcohol or drugs..."
           },
           {
-            "key": "Do you ever use alcohol or drugs to RELAX, feel better about yourself, or fit in?",
-            "text": "Do you ever use alcohol or drugs to\nRELAX, feel better about yourself, or fit in?"
+            "key": "Do you ever use alcohol or drugs to RELAX, feel better about yourself, or fit in...",
+            "text": "Do you ever use alcohol or drugs to\nRELAX, feel better about yourself, or fit in..."
 
           },
           {
             "key": "q3",
-            "text": "Do you ever FORGET things you did while using alcohol or drugs?"
+            "text": "Do you ever FORGET things you did while using alcohol or drugs..."
 
           },
           {
             "key": "q4",
-            "text": "Do your FAMILY or FRIENDS ever tell you\nthat you should cut down on your drinking or\ndrug use? "
+            "text": "Do your FAMILY or FRIENDS ever tell you\nthat you should cut down on your drinking or\ndrug use..."
 
           },
           {
             "key": "q5",
-            "text": "Have you ever gotten into TROUBLE\nwhile you were using alcohol or drugs?"
+            "text": "Have you ever gotten into TROUBLE\nwhile you were using alcohol or drugs..."
           }
         ],
         "relevance": {
@@ -2330,33 +2330,33 @@
         "openmrs_entity_id": "caregiver_question",
         "type": "check_box",
         "label_text_style": "",
-        "label_info_text": "Indicate ‘Yes’ by ticking the appropriate boxes",
+        "label_info_text": "Indicate 'Yes' by ticking the appropriate boxes",
         "label_info_title": "Tip",
-        "label": "Since you responded ‘Yes’ to the above question(s)",
+        "label": "Since you responded 'Yes' to the above question(s)",
         "options": [
           {
             "key": "q1",
-            "text": "Have you ever ridden in a CAR driven\nby someone (including yourself) who was\n“high” or had been using alcohol or drugs?",
+            "text": "Have you ever ridden in a CAR driven\nby someone (including yourself) who was\n'high' or had been using alcohol or drugs...",
             "value": "false"
           },
           {
-            "key": "Do you ever use alcohol or drugs to RELAX, feel better about yourself, or fit in?",
-            "text": "Do you ever use alcohol or drugs to\nRELAX, feel better about yourself, or fit in?",
+            "key": "Do you ever use alcohol or drugs to RELAX, feel better about yourself, or fit in...",
+            "text": "Do you ever use alcohol or drugs to\nRELAX, feel better about yourself, or fit in...",
             "value": "false"
           },
           {
             "key": "q3",
-            "text": "Do you ever FORGET things you did while using alcohol or drugs?",
+            "text": "Do you ever FORGET things you did while using alcohol or drugs...",
             "value": "false"
           },
           {
             "key": "q4",
-            "text": "Do your FAMILY or FRIENDS ever tell you\nthat you should cut down on your drinking or\ndrug use? ",
+            "text": "Do your FAMILY or FRIENDS ever tell you\nthat you should cut down on your drinking or\ndrug use...",
             "value": "false"
           },
           {
             "key": "q5",
-            "text": "Have you ever gotten into TROUBLE\nwhile you were using alcohol or drugs?",
+            "text": "Have you ever gotten into TROUBLE\nwhile you were using alcohol or drugs...",
             "value": "false"
           }
         ],

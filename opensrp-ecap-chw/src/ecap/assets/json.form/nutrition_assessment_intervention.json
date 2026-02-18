@@ -281,7 +281,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "referral_completed",
         "type": "native_radio",
-        "label": "Was referral completed?*",
+        "label": "Was referral completed...*",
         "label_info_text": "Mark only one option",
         "options": [
           {

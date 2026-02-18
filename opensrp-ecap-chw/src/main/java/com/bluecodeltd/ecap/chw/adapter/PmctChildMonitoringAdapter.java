@@ -10,6 +10,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +64,7 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
     Context context;
     List<ChildMonitoringModel> postnatal;
     ObjectMapper oMapper;
+    private final SparseBooleanArray expandedPositions = new SparseBooleanArray();
 
     public PmctChildMonitoringAdapter(Context context, List<ChildMonitoringModel> postnatal) {
         this.context = context;
@@ -87,21 +89,7 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
         setText(holder.tvDate, valueOrNA(visit.getDate()));
         setText(holder.tvVisitTypeHeader, "Visit: " + valueOrNA(visit.getPediatic_care_follow_up()));
         setText(holder.tvVisitType, valueOrNA(visit.getPediatic_care_follow_up()));
-        setText(holder.tvHivTest, valueOrNA(visit.getHiv_test()));
-        setText(holder.tvNvp, valueOrNA(visit.getAzt_3tc_npv()));
-        setText(holder.tvCtx, valueOrNA(visit.getCtx()));
-        setText(holder.tvDateTested, valueOrNA(visit.getDate_tested()));
-        setText(holder.tvIycfCounselling, valueOrNA(visit.getIycf_counselling()));
-        setText(holder.tvFeedingOption, valueOrNA(visit.getInfant_feeding_options()));
-        setText(holder.tvHighRiskHei, valueOrNA(visit.getHigh_risk_hei()));
-        setText(holder.tvNutritionStatus, valueOrNA(visit.getNutrition_status()));
-        setText(holder.tvMedicalComplications, valueOrNA(visit.getMedical_complications()));
-        setText(holder.tvChildOedema, valueOrNA(visit.getChild_oedema()));
-        setText(holder.tvOedemaStage, valueOrNA(visit.getOedema_stage()));
-        setText(holder.tvTbSymptoms, valueOrNA(visit.getTb_screening_symptoms()));
-        setText(holder.tvTbOther, valueOrNA(visit.getOther_tb_symptom()));
-        setText(holder.tvTbReferral, valueOrNA(visit.getTb_referral()));
-        setText(holder.tvTbComments, valueOrNA(visit.getComments_tb()));
+        setMonitoringFields(holder, visit);
 
         View.OnClickListener openForm = v -> {
             try {
@@ -111,7 +99,15 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
             }
         };
 
-        holder.headerLayout.setOnClickListener(openForm);
+        boolean expanded = expandedPositions.get(position, false);
+        holder.detailsContainer.setVisibility(expanded ? View.VISIBLE : View.GONE);
+        holder.expandIcon.setRotation(expanded ? 180f : 0f);
+        holder.headerLayout.setOnClickListener(v -> {
+            boolean next = !expandedPositions.get(position, false);
+            expandedPositions.put(position, next);
+            holder.detailsContainer.setVisibility(next ? View.VISIBLE : View.GONE);
+            holder.expandIcon.animate().rotation(next ? 180f : 0f).setDuration(150).start();
+        });
         holder.editme.setOnClickListener(openForm);
         holder.delete.setOnClickListener(v -> {
             try {
@@ -335,14 +331,16 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
         TextView tvVisit, tvVisitTypeHeader, tvDate, tvVisitType, tvHivTest, tvNvp, tvCtx, tvDateTested,
                 tvIycfCounselling, tvFeedingOption, tvHighRiskHei, tvNutritionStatus, tvMedicalComplications,
                 tvChildOedema, tvOedemaStage, tvTbSymptoms, tvTbOther, tvTbReferral, tvTbComments;
-        LinearLayout headerLayout;
-        ImageView editme, delete;
+        LinearLayout headerLayout, detailsContainer;
+        ImageView editme, delete, expandIcon;
 
         public ViewHolder(View itemView) {
 
             super(itemView);
 
             headerLayout = itemView.findViewById(R.id.header_layout);
+            detailsContainer = itemView.findViewById(R.id.details_container);
+            expandIcon = itemView.findViewById(R.id.expand_icon);
             tvVisit = itemView.findViewById(R.id.tv_visit);
             tvVisitTypeHeader = itemView.findViewById(R.id.tv_visit_type_header);
             tvDate  = itemView.findViewById(R.id.tv_date);
@@ -407,6 +405,48 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
     private void setText(TextView view, String value) {
         if (view != null) {
             view.setText(value);
+        }
+    }
+
+    private void setMonitoringFields(ViewHolder holder, ChildMonitoringModel visit) {
+        TextView[] views = new TextView[]{
+                holder.tvHivTest,
+                holder.tvNvp,
+                holder.tvCtx,
+                holder.tvDateTested,
+                holder.tvIycfCounselling,
+                holder.tvFeedingOption,
+                holder.tvHighRiskHei,
+                holder.tvNutritionStatus,
+                holder.tvMedicalComplications,
+                holder.tvChildOedema,
+                holder.tvOedemaStage,
+                holder.tvTbSymptoms,
+                holder.tvTbOther,
+                holder.tvTbReferral,
+                holder.tvTbComments
+        };
+
+        String[] values = new String[]{
+                visit.getHiv_test(),
+                visit.getAzt_3tc_npv(),
+                visit.getCtx(),
+                visit.getDate_tested(),
+                visit.getIycf_counselling(),
+                visit.getInfant_feeding_options(),
+                visit.getHigh_risk_hei(),
+                visit.getNutrition_status(),
+                visit.getMedical_complications(),
+                visit.getChild_oedema(),
+                visit.getOedema_stage(),
+                visit.getTb_screening_symptoms(),
+                visit.getOther_tb_symptom(),
+                visit.getTb_referral(),
+                visit.getComments_tb()
+        };
+
+        for (int i = 0; i < views.length; i++) {
+            setText(views[i], valueOrNA(values[i]));
         }
     }
 

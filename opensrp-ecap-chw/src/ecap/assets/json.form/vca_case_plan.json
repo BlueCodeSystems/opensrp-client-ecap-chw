@@ -256,7 +256,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "calhiv",
         "type": "native_radio",
-        "label": "C/ALHIV?",
+        "label": "C/ALHIV...",
         "read_only": true,
         "options": [
           {
@@ -570,13 +570,13 @@
         "type": "repeating_group",
         "reference_edit_text": "",
         "reference_edit_text_hint": "SAFE :",
-        "repeating_group_label": "SAFE : Caregiverâ€™s ability to reduce risk of physical/emotional violence or neglect. Positive parenting training, emergency shelter, referral for post-violence care, etc.",
+        "repeating_group_label": "SAFE : Caregiver's ability to reduce risk of physical/emotional violence or neglect. Positive parenting training, emergency shelter, referral for post-violence care, etc.",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "safe",
         "v_required": {
           "value": false,
-          "err": "Please specify the number of vulnerability assessment under  Safe"
+          "err": "Please specify the number of vulnerability assessment under Safe"
         },
         "value": [
           {
@@ -720,7 +720,7 @@
         "openmrs_entity_id": "schooled",
         "v_required": {
           "value": false,
-          "err": "Please specify the number of vulnerability assessment under being schooled "
+          "err": "Please specify the number of vulnerability assessment under being schooled"
         },
         "value": [
           {
@@ -858,13 +858,13 @@
         "type": "repeating_group",
         "reference_edit_text": "",
         "reference_edit_text_hint": "STABLE :",
-        "repeating_group_label": "STABLE: ability to meet important family needs. Adolescentâ€™s participation in market-linked economic strengthening activity.",
+        "repeating_group_label": "STABLE: ability to meet important family needs. Adolescent's participation in market-linked economic strengthening activity.",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "stable",
         "v_required": {
           "value": false,
-          "err": "Please specify the number of vulnerability assessment under being stable "
+          "err": "Please specify the number of vulnerability assessment under being stable"
         },
         "value": [
           {

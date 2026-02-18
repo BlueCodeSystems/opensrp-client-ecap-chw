@@ -108,6 +108,9 @@ public class ChwRepositoryFlv {
                 case 25:
                     upgradeToVersion25(db);
                     break;
+                case 26:
+                    upgradeToVersion26(db);
+                    break;
                 default:
                     break;
             }
@@ -1130,6 +1133,14 @@ public class ChwRepositoryFlv {
 
         } catch (Exception e) {
             Timber.e(e, "upgradeToVersion25");
+        }
+    }
+
+    private static void upgradeToVersion26(SQLiteDatabase db) {
+        try {
+            db.execSQL("ALTER TABLE ec_household_service_report ADD COLUMN pregnant_breastfeeding TEXT");
+        } catch (Exception e) {
+            Timber.e(e, "upgradeToVersion26");
         }
     }
 

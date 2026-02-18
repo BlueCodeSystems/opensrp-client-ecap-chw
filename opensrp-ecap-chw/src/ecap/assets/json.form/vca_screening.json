@@ -345,7 +345,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "school",
         "type": "native_radio",
-        "label": "Is the VCA in School?",
+        "label": "Is the VCA in School...",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -386,7 +386,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "school  can only contain letters"
+          "err": "school can only contain letters"
         },
         "relevance": {
           "step1:school": {
@@ -475,7 +475,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_on_hiv_treatment",
         "type": "native_radio",
-        "label": "Is the Child/Adolescent currently on HIV treatment (ART)?",
+        "label": "Is the Child/Adolescent currently on HIV treatment (ART)...",
         "options": [
           {
             "key": "yes",
@@ -516,7 +516,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "viral_load_results_on_file",
         "type": "native_radio",
-        "label": "Does the Child/Adolescent have their viral load test results on file?",
+        "label": "Does the Child/Adolescent have their viral load test results on file...",
         "options": [
           {
             "key": "yes",
@@ -541,7 +541,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_tb_screening_results_on_file",
         "type": "native_radio",
-        "label": "Does the Child/Adolescent have their TB screening results on file?",
+        "label": "Does the Child/Adolescent have their TB screening results on file...",
         "options": [
           {
             "key": "yes",
@@ -566,7 +566,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "client_screened",
         "type": "native_radio",
-        "label": "Was the client screened for TB during the last clinical visit?",
+        "label": "Was the client screened for TB during the last clinical visit...",
         "options": [
           {
             "key": "Yes",
@@ -590,7 +590,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "client_result",
         "type": "native_radio",
-        "label": "What was the screening result?",
+        "label": "What was the screening result...",
         "options": [
           {
             "key": "Negative",
@@ -614,7 +614,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "tpt_client_eligibility",
         "type": "native_radio",
-        "label": "Was the client eligible for TB Preventive Therapy?",
+        "label": "Was the client eligible for TB Preventive Therapy...",
         "options": [
           {
             "key": "yes",
@@ -639,7 +639,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "tpt_client_initiated",
         "type": "native_radio",
-        "label": "Was the client initiated on TB Preventive Therapy (TPT)?",
+        "label": "Was the client initiated on TB Preventive Therapy (TPT)...",
         "options": [
           {
             "key": "yes",
@@ -664,7 +664,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "screened_for_malnutrition",
         "type": "native_radio",
-        "label": "Has the child/adolescent been screened for malnutrition?",
+        "label": "Has the child/adolescent been screened for malnutrition...",
         "options": [
           {
             "key": "yes",
@@ -688,7 +688,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "takes_drugs_to_prevent_other_diseases",
         "type": "native_radio",
-        "label": "Does the child/adolescent receive drugs to prevent other illnesses (cotrimoxazole prophylaxis)?",
+        "label": "Does the child/adolescent receive drugs to prevent other illnesses (cotrimoxazole prophylaxis)...",
         "options": [
           {
             "key": "yes",
@@ -717,7 +717,7 @@
         "value": "yes",
         "hint": "Less than 3yrs Old",
         "edit_type": "name",
-        "label": "Is the Child in the 0-2 years age group? (If no, screen for other sub populations).",
+        "label": "Is the Child in the 0-2 years age group... (If no, screen for other sub populations).",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -756,7 +756,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "positive_mother",
         "type": "native_radio",
-        "label": "Was the child born from a mother who is HIV Positive?",
+        "label": "Was the child born from a mother who is HIV Positive...",
         "options": [
           {
             "key": "yes",
@@ -781,7 +781,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "active_on_treatment",
         "type": "native_radio",
-        "label": "Is the mother currently on HIV treatment?",
+        "label": "Is the mother currently on HIV treatment...",
         "options": [
           {
             "key": "yes",
@@ -821,7 +821,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "adhering_to_treatment",
         "type": "native_radio",
-        "label": "Is the mother adhering to treatment?",
+        "label": "Is the mother adhering to treatment...",
         "options": [
           {
             "key": "yes",
@@ -846,7 +846,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_mother_virally_suppressed",
         "type": "native_radio",
-        "label": "Is the mother virally suppressed?",
+        "label": "Is the mother virally suppressed...",
         "options": [
           {
             "key": "yes",
@@ -872,7 +872,7 @@
         "openmrs_entity_id": "child_been_tested_for_hiv",
         "type": "edit_text",
         "value": "yes",
-        "hint": "Has the child been tested for HIV?",
+        "hint": "Has the child been tested for HIV...",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -892,7 +892,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_receiving_breastfeeding",
         "type": "native_radio",
-        "label": "Is the child receiving breast feeding?",
+        "label": "Is the child receiving breast feeding...",
         "options": [
           {
             "key": "yes",
@@ -917,7 +917,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_tested_for_hiv_inline_with_guidelines",
         "type": "native_radio",
-        "label": "Has the child been tested for HIV in line with the guidelines?",
+        "label": "Has the child been tested for HIV in line with the guidelines...",
         "options": [
           {
             "key": "yes",
@@ -941,7 +941,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "receives_drugs_to_prevent_hiv_and_other_illnesses_hei",
         "type": "native_radio",
-        "label": "Does the child/adolescent receive drugs to prevent HIV and other illnesses? (ARVs/cotrimoxazole prophylaxis)?",
+        "label": "Does the child/adolescent receive drugs to prevent HIV and other illnesses... (ARVs/cotrimoxazole prophylaxis)...",
         "options": [
           {
             "key": "yes",
@@ -965,7 +965,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_been_screened_for_malnutrition_hei",
         "type": "native_radio",
-        "label": "Has the child (6 months and above) been screened for malnutrition?",
+        "label": "Has the child (6 months and above) been screened for malnutrition...",
         "options": [
           {
             "key": "yes",
@@ -990,7 +990,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_gets_drugs_to_prevent_tb_hei",
         "type": "native_radio",
-        "label": "Does the child/adolescent get drugs to prevent Tuberculosis (TB Preventive Therapy (TPT))?",
+        "label": "Does the child/adolescent get drugs to prevent Tuberculosis (TB Preventive Therapy (TPT))...",
         "options": [
           {
             "key": "yes",
@@ -1015,7 +1015,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_enrolled_in_early_childhood_development_program",
         "type": "native_radio",
-        "label": "Is the child enrolled in an Early Childhood Development Program?",
+        "label": "Is the child enrolled in an Early Childhood Development Program...",
         "options": [
           {
             "key": "yes",
@@ -1064,7 +1064,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_biological_child_of_mother_living_with_hiv",
         "type": "native_radio",
-        "label": "Is the Child/Adolescent a biological child of a mother living with HIV?",
+        "label": "Is the Child/Adolescent a biological child of a mother living with HIV...",
         "options": [
           {
             "key": "yes",
@@ -1089,7 +1089,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_tested_for_hiv_with_mother_as_index_client",
         "type": "native_radio",
-        "label": "Has the Child/Adolescent been tested for HIV/Index testing with mother as index client?",
+        "label": "Has the Child/Adolescent been tested for HIV/Index testing with mother as index client...",
         "options": [
           {
             "key": "yes",
@@ -1114,7 +1114,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_mother_currently_on_treatment_wlhiv",
         "type": "native_radio",
-        "label": "Is the mother currently on HIV treatment?",
+        "label": "Is the mother currently on HIV treatment...",
         "options": [
           {
             "key": "yes",
@@ -1155,7 +1155,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_mother_adhering_to_treatment_wlhiv",
         "type": "native_radio",
-        "label": "Is the mother adhering to treatment?",
+        "label": "Is the mother adhering to treatment...",
         "options": [
           {
             "key": "yes",
@@ -1180,7 +1180,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_mother_virally_suppressed_wlhiv",
         "type": "native_radio",
-        "label": "Is the mother virally suppressed?",
+        "label": "Is the mother virally suppressed...",
         "options": [
           {
             "key": "yes",
@@ -1205,7 +1205,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_receiving_any_hiv_and_violence_prevention_intervention",
         "type": "native_radio",
-        "label": "Is the Child/Adolescent receiving any HIV and violence prevention intervention?",
+        "label": "Is the Child/Adolescent receiving any HIV and violence prevention intervention...",
         "options": [
           {
             "key": "yes",
@@ -1247,7 +1247,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_ever_experienced_sexual_violence",
         "type": "native_radio",
-        "label": "Has the child/adolescent ever experienced sexual violence?",
+        "label": "Has the child/adolescent ever experienced sexual violence...",
         "options": [
           {
             "key": "yes",
@@ -1265,7 +1265,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_still_living_in_the_same_household_as_the_perpetrator",
         "type": "native_radio",
-        "label": "Is the child/adolescent still living in the same household as the perpetrator? ",
+        "label": "Is the child/adolescent still living in the same household as the perpetrator...",
         "options": [
           {
             "key": "yes",
@@ -1315,7 +1315,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "did_the_child_access_clinical_care",
         "type": "native_radio",
-        "label": "Did the child/adolescent access clinical care?",
+        "label": "Did the child/adolescent access clinical care...",
         "options": [
           {
             "key": "yes",
@@ -1340,7 +1340,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_clinical_care_services_received",
         "type": "check_box",
-        "label": "Did the child/adolescent receive any of these clinical care services?",
+        "label": "Did the child/adolescent receive any of these clinical care services...",
         "options": [
           {
             "key": "pep",
@@ -1429,7 +1429,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of Person can  only contain letters"
+          "err": "Name of Person can only contain letters"
         }
       },
       {
@@ -1460,7 +1460,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "toaster_notes",
         "type": "toaster_notes",
-        "text": "â€œThe goal of the USAID ECAP II OVC Comprehensive Program is to mitigate the impact of HIV and improve the health and well-being of VCA through delivery of high-impact, evidence-informed, and age-appropriate interventions customized for each vulnerable child and adolescent sub-population. \n For the children and adolescents living with HIV, the program aims to support households and children living with HIV to ensure that they access appropriate care services to improve treatment outcome and sustain viral load suppression. \n\n If you consent to participate in the program, it entails that you will officially be:\n\nâ€¢ Enrolled in the USAID ECAP II Program\nâ€¢  Assigned a Case Worker who will visit your household frequently to support you and your family to achieve your health and socioeconomic goals\nâ€¢  Exited from the program when deemed to have achieved graduation status. \n\nIf you have questions about this program or have any questions on what your rights are as a participant in this program, you can contact the PCZ Executive Director/Chief of Party: \n\nPCZ Executive Director/Chief of Party\nProject Concern Zambia\nP.O Box 32320 Lusaka-Zambia\nPhone #: +2609777771385/95\n ",
+        "text": "The goal of the USAID ECAP II OVC Comprehensive Program is to mitigate the impact of HIV and improve the health and well-being of vulnerable children and adolescents (VCA) through the delivery of high-impact, evidence-informed, and age-appropriate interventions customized for each vulnerable child and adolescent sub-population.\n\nFor children and adolescents living with HIV, the program aims to support households and children living with HIV to ensure that they access appropriate care services to improve treatment outcomes and sustain viral load suppression.\n\nIf you consent to participate in the program, it entails that you will officially be:\n\n- Enrolled in the USAID ECAP II Program\n- Assigned a Case Worker who will visit your household regularly to support you and your family in achieving your health and socioeconomic goals\n- Exited from the program once you are deemed to have achieved graduation status\n\nIf you have questions about this program or about your rights as a participant, you may contact the PCZ Executive Director/Chief of Party:\n\nPCZ Executive Director/Chief of Party\nProject Concern Zambia\nP.O. Box 32320\nLusaka, Zambia\nPhone: +260 977 777 1385 / +260 95 777 71385",
         "toaster_type": "info",
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title"
@@ -1471,7 +1471,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "purpose",
         "type": "toaster_notes",
-        "text": "This informed consent form is targeted at Children and Adolescents (VCA) and their primary caregivers who are identified as eligible clients for enrollment in the USAID ECAP II OVC Comprehensive Program. \n\n The purpose of the consent form is to explain the USAID ECAP II program to the potential client before the client agrees to it. This will enable the client to ask questions and accept or deny participation in the program. \n\n\nThe process of the informed consent includes : \n\nâ€¢ The clientâ€™s ability to decide. \nâ€¢ Explanation of information needed to make the decision. \nâ€¢ The clientâ€™s understanding of services provided under the USAID ECAP II Program \nâ€¢ The clientâ€™s voluntary decision to be enrolled in the USAID ECAP II OVC Comprehensive Program \n\n This shared decision-making process between the client and service providers attached to the USAID ECAP II Program will empower the client to make educated and informed decisions about their care.",
+        "text": "This informed consent form is targeted at Children and Adolescents (VCA) and their primary caregivers who are identified as eligible clients for enrollment in the USAID ECAP II OVC Comprehensive Program. \n\n The purpose of the consent form is to explain the USAID ECAP II program to the potential client before the client agrees to it. This will enable the client to ask questions and accept or deny participation in the program. \n\n\nThe process of the informed consent includes : \n\n- The client's ability to decide. \n- Explanation of information needed to make the decision. \n- The client's understanding of services provided under the USAID ECAP II Program \n- The client's voluntary decision to be enrolled in the USAID ECAP II OVC Comprehensive Program \n\n This shared decision-making process between the client and service providers attached to the USAID ECAP II Program will empower the client to make educated and informed decisions about their care.",
         "toaster_type": "info",
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title"
@@ -1721,7 +1721,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "suppop_abym",
         "type": "toaster_notes",
-        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : At Risk Adolescent boys and young men ",
+        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : At Risk Adolescent boys and young men",
         "toaster_type": "info",
         "toaster_info_text": "At Risk Adolescent boys and young men ",
         "toaster_info_title": "Sub Population",
@@ -1783,7 +1783,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "acceptance",
         "type": "native_radio",
-        "label": "Do you accept the offer of the enrollment? ",
+        "label": "Do you accept the offer of the enrollment...",
         "label_text_style": "bold",
         "text_color": "#000000",
         "options": [
@@ -1810,7 +1810,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_enrolled",
         "type": "date_picker",
-        "hint": "Date Enrolled ",
+        "hint": "Date Enrolled",
         "label_info_title": "Date Of Enrollment",
         "expanded": false,
         "duration": {
@@ -1859,7 +1859,7 @@
         "openmrs_entity_id": "art_check_box",
         "type": "native_radio",
         "hidden": "true",
-        "label": "Is the child currently on ART?",
+        "label": "Is the child currently on ART...",
         "text_color": "#000000",
         "exclusive": [
           "Yes"
@@ -1926,7 +1926,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "vl_check_box",
         "type": "native_radio",
-        "label": "Is child eligible for VL test?",
+        "label": "Is child eligible for VL test...",
         "label_text_style": "bold",
         "text_color": "#000000",
         "exclusive": [
@@ -2055,7 +2055,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_mmd",
         "type": "native_radio",
-        "label": "Is the child on MMD?",
+        "label": "Is the child on MMD...",
         "label_text_style": "bold",
         "text_color": "#000000",
         "options": [
@@ -2082,7 +2082,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "level_mmd",
         "type": "spinner",
-        "hint": "Level of MMD for child ",
+        "hint": "Level of MMD for child",
         "values": [
           "Less than 3 months",
           "Between 3-5 months",

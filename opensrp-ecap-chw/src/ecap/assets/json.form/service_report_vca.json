@@ -192,7 +192,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_mmd",
         "type": "native_radio",
-        "label": "Is the child on MMD?",
+        "label": "Is the child on MMD...",
         "label_text_style": "bold",
         "text_color": "#000000",
         "relevance": {
@@ -218,7 +218,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "level_mmd",
         "type": "spinner",
-        "hint": "Level of MMD for child ",
+        "hint": "Level of MMD for child",
         "values": [
           "Less than 3 months",
           "Between 3-5 months",
@@ -240,8 +240,8 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "health_services",
-        "label": "HIV/HEALTHY ",
-        "label_info_text": "Tick (x) HIV/HEALTHY  Services Provided for Caregivers",
+        "label": "HIV/HEALTHY",
+        "label_info_text": "Tick (x) HIV/HEALTHY Services Provided for Caregivers",
         "type": "check_box",
         "exclusive": [
           "not applicable"
@@ -273,7 +273,7 @@
           },
           {
             "key": "Age-appropriate HIV prevention support ",
-            "text": "Age-appropriate HIV prevention support "
+            "text": "Age-appropriate HIV prevention support"
           },
           {
             "key": "Provided condoms",
@@ -321,7 +321,7 @@
           },
           {
             "key": "Followed up for EAC  followed up for eac lessons",
-            "text": "Followed up for EAC  followed up for eac lessons"
+            "text": "Followed up for EAC followed up for eac lessons"
           },
           {
             "key": "Viral load sample collection",
@@ -395,7 +395,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "other_service",
         "type": "edit_text",
-        "hint": "Specify any other HIV/HEALTH service provided ",
+        "hint": "Specify any other HIV/HEALTH service provided",
         "edit_type": "name",
         "v_required": {
           "value": true,
@@ -415,8 +415,8 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "schooled_services",
-        "label": "SCHOOLED ",
-        "label_info_text": "Tick (x) schooled  Services Provided for Caregivers",
+        "label": "SCHOOLED",
+        "label_info_text": "Tick (x) schooled Services Provided for Caregivers",
         "type": "check_box",
         "exclusive": [
           "not applicable"
@@ -494,7 +494,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "safe_services",
-        "label": "SAFE ",
+        "label": "SAFE",
         "label_info_text": "Tick (x) SAFE Services Provided for Caregivers",
         "type": "check_box",
         "exclusive": [
@@ -507,7 +507,7 @@
           },
           {
             "key": " Family/case conferencing to prevent occurrence of child abuse or neglect",
-            "text": " Family/case conferencing to prevent occurrence of child abuse/neglect"
+            "text": "Family/case conferencing to prevent occurrence of child abuse/neglect"
           },
           {
             "key": "Legal assistance (e.g. transport,legal fees) related to maltreatment, GBV, exploitation",
@@ -562,7 +562,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "stable_services",
-        "label": "STABLE ",
+        "label": "STABLE",
         "label_info_text": "Tick (x) stable Services Provided for Caregivers",
         "type": "check_box",
         "exclusive": [

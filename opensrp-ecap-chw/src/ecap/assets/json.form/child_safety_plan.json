@@ -77,7 +77,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of Person can  only contain letters"
+          "err": "Name of Person can only contain letters"
         }
       },
       {

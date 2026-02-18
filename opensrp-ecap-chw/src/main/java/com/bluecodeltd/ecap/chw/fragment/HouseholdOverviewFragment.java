@@ -255,7 +255,10 @@ public class HouseholdOverviewFragment extends Fragment {
                     txtSubpopulation.setText("HIV-positive Pregnant mother");
                 } else if (hivPositive && !pregnantYes && breastfeedingYes) {
                     txtSubpopulation.setText("HIV-positive Pregnant/Breastfeeding Women (P/BFW)");
-                } else if (hivNegative && motherAgeYes) {
+                } else if ((hivPositive && pregnantYes) || (hivPositive && breastfeedingYes) ) {
+                    txtSubpopulation.setText("HIV-positive PBFW");
+                }
+                else if (hivNegative && motherAgeYes) {
                     txtSubpopulation.setText("HIV-negative PBFW");
                 }
             }

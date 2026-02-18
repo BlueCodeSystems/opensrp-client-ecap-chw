@@ -60,7 +60,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "toaster_notes",
         "type": "toaster_notes",
-        "text": "“The goal of the USAID ECAP II OVC Comprehensive Program is to mitigate the impact of HIV and improve the health and well-being of vulnerable children and adolescents (VCA) through the delivery of high-impact, evidence-informed, and age-appropriate interventions customized for each vulnerable child and adolescent sub-population.\n\nFor children and adolescents living with HIV, the program aims to support households and children living with HIV to ensure that they access appropriate care services to improve treatment outcomes and sustain viral load suppression.\n\nIf you consent to participate in the program, it entails that you will officially be:\n\n• Enrolled in the USAID ECAP II Program\n• Assigned a Case Worker who will visit your household regularly to support you and your family in achieving your health and socioeconomic goals\n• Exited from the program once you are deemed to have achieved graduation status\n\nIf you have questions about this program or about your rights as a participant, you may contact the PCZ Executive Director/Chief of Party:\n\nPCZ Executive Director/Chief of Party\nProject Concern Zambia\nP.O. Box 32320\nLusaka, Zambia\nPhone: +260 977 777 1385 / +260 95 777 71385",
+        "text": "The goal of the USAID ECAP II OVC Comprehensive Program is to mitigate the impact of HIV and improve the health and well-being of vulnerable children and adolescents (VCA) through the delivery of high-impact, evidence-informed, and age-appropriate interventions customized for each vulnerable child and adolescent sub-population.\n\nFor children and adolescents living with HIV, the program aims to support households and children living with HIV to ensure that they access appropriate care services to improve treatment outcomes and sustain viral load suppression.\n\nIf you consent to participate in the program, it entails that you will officially be:\n\n- Enrolled in the USAID ECAP II Program\n- Assigned a Case Worker who will visit your household regularly to support you and your family in achieving your health and socioeconomic goals\n- Exited from the program once you are deemed to have achieved graduation status\n\nIf you have questions about this program or about your rights as a participant, you may contact the PCZ Executive Director/Chief of Party:\n\nPCZ Executive Director/Chief of Party\nProject Concern Zambia\nP.O. Box 32320\nLusaka, Zambia\nPhone: +260 977 777 1385 / +260 95 777 71385",
         "toaster_type": "info",
         "toaster_info_text": "This is an information note.",
         "toaster_info_title": "Information Toaster Info Title"
@@ -71,7 +71,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "purpose",
         "type": "toaster_notes",
-        "text": "This informed consent form is intended for vulnerable children and adolescents (VCA) and their primary caregivers who are identified as eligible clients for enrollment in the USAID ECAP II OVC Comprehensive Program.\n\nThe purpose of this consent form is to explain the USAID ECAP II Program to potential clients before they agree to participate. This enables the client to ask questions and to either accept or decline participation in the program.\n\nThe informed consent process includes:\n\n• The client’s ability to make a decision\n• An explanation of the information needed to make that decision\n• The client’s understanding of the services provided under the USAID ECAP II Program\n• The client’s voluntary decision to enroll in the USAID ECAP II OVC Comprehensive Program\n\nThis shared decision-making process between the client and the service providers attached to the USAID ECAP II Program empowers the client to make educated and informed decisions about their care.",
+        "text": "This informed consent form is intended for vulnerable children and adolescents (VCA) and their primary caregivers who are identified as eligible clients for enrollment in the USAID ECAP II OVC Comprehensive Program.\n\nThe purpose of this consent form is to explain the USAID ECAP II Program to potential clients before they agree to participate. This enables the client to ask questions and to either accept or decline participation in the program.\n\nThe informed consent process includes:\n\n- The client's ability to make a decision\n- An explanation of the information needed to make that decision\n- The client's understanding of the services provided under the USAID ECAP II Program\n- The client's voluntary decision to enroll in the USAID ECAP II OVC Comprehensive Program\n\nThis shared decision-making process between the client and the service providers attached to the USAID ECAP II Program empowers the client to make educated and informed decisions about their care.",
         "toaster_type": "info",
         "toaster_info_text": "This is an information note.",
         "toaster_info_title": "Information Toaster Info Title"
@@ -418,7 +418,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd1",
         "type": "label",
-        "text": " Household Information",
+        "text": "Household Information",
         "label_text_style": "bold"
       },
       {
@@ -590,7 +590,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "violence_six_months",
         "type": "native_radio",
-        "label": "Have you experienced violence in the home in the last six months?",
+        "label": "Have you experienced violence in the home in the last six months...",
         "options": [
           {
             "key": "yes",
@@ -612,7 +612,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "children_violence_six_months",
         "type": "native_radio",
-        "label": "Have the children experienced violence in the home in the last six months? ",
+        "label": "Have the children experienced violence in the home in the last six months...",
         "options": [
           {
             "key": "yes",
@@ -664,7 +664,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "active_on_treatment",
         "type": "native_radio",
-        "label": "Is the primary Caregiver on ART?",
+        "label": "Is the primary Caregiver on ART...",
         "options": [
           {
             "key": "yes",
@@ -837,7 +837,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "vl_suppressed",
         "type": "native_radio",
-        "label": "Are you virally suppressed as of your most recent viral load test?",
+        "label": "Are you virally suppressed as of your most recent viral load test...",
         "options": [
           {
             "key": "yes",
@@ -868,7 +868,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_mmd",
         "type": "native_radio",
-        "label": "Is the caregiver on MMD?",
+        "label": "Is the caregiver on MMD...",
         "label_text_style": "bold",
         "text_color": "#000000",
         "relevance": {
@@ -894,7 +894,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "level_mmd",
         "type": "spinner",
-        "hint": "Level of MMD for caregiver ",
+        "hint": "Level of MMD for caregiver",
         "values": [
           "Less than 3 months",
           "Between 3-5 months",
@@ -918,7 +918,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "biological_children",
         "type": "native_radio",
-        "label": "Do you have biological children 0-2 years?",
+        "label": "Do you have biological children 0-2 years...",
         "options": [
           {
             "key": "yes",
@@ -947,7 +947,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "enrolled_pmtct",
         "type": "native_radio",
-        "label": "Are you and your biological children enrolled in the PMTCT program?",
+        "label": "Are you and your biological children enrolled in the PMTCT program...",
         "options": [
           {
             "key": "yes",
@@ -992,7 +992,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "at_risk_reasons",
         "type": "native_radio",
-        "label": "Are there any reasons you may be at risk for HIV?)",
+        "label": "Are there any reasons you may be at risk for HIV...)",
         "options": [
           {
             "key": "yes",
@@ -1023,7 +1023,7 @@
         "hint": "State reason for HIV Risk",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid  test name"
+          "err": "Please enter a valid test name"
         },
         "v_required": {
           "value": true,
@@ -1063,7 +1063,7 @@
         "label_info_text": "For example: Able to provide 3 meals per day/ all school-going children enrolled in school; lowest level of education is secondary school; single-headed household; child-headed household; main material of the floor is not earth/sand; Has source of income through stable employment or is engaged in farming/livestock farming etc.",
         "toaster_info_title": "Example",
         "label_text_style": "",
-        "label": "Is your household food, socially and economically secure?",
+        "label": "Is your household food, socially and economically secure...",
         "options": [
           {
             "key": "yes",
@@ -1450,7 +1450,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid  entry type"
+          "err": "Please enter a valid entry type"
         },
         "relevance": {
           "step4:entry_type": {
@@ -1683,7 +1683,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "emergency_name",
         "type": "edit_text",
-        "hint": "Next of Kin Name ",
+        "hint": "Next of Kin Name",
         "edit_type": "name",
         "look_up": "true",
         "v_regex": {
@@ -1702,7 +1702,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "e_relationship",
         "type": "spinner",
-        "hint": "Relationship to caregiver ",
+        "hint": "Relationship to caregiver",
         "values": [
           "Parent",
           "Child",
@@ -1753,7 +1753,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "contact_number",
         "type": "edit_text",
-        "hint": "Next of kin Phone Number ",
+        "hint": "Next of kin Phone Number",
         "edit_type": "number",
         "v_numeric": {
           "value": false,

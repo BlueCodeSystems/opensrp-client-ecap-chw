@@ -256,7 +256,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_hiv_status",
         "type": "native_radio",
-        "label": "Is mother HIV+?",
+        "label": "Is mother HIV+...",
         "options": [
           {
             "key": "positive",
@@ -278,7 +278,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "active_on_treatment",
         "type": "native_radio",
-        "label": "Is mother active on treatment?",
+        "label": "Is mother active on treatment...",
         "options": [
           {
             "key": "yes",
@@ -318,7 +318,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "mother_pregnant",
         "type": "native_radio",
-        "label": "Is mother pregnant?",
+        "label": "Is mother pregnant...",
         "options": [
           {
             "key": "yes",
@@ -336,7 +336,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "mother_breastfeeding",
         "type": "native_radio",
-        "label": "Is mother breastfeeding?",
+        "label": "Is mother breastfeeding...",
         "options": [
           {
             "key": "yes",
@@ -355,7 +355,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "mother_age_range",
         "type": "native_radio",
-        "label": "Is mother between 10-25 years of age?",
+        "label": "Is mother between 10-25 years of age...",
         "options": [
           {
             "key": "yes",

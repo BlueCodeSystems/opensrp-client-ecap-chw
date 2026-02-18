@@ -155,7 +155,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Screening location  only take letters"
+          "err": "Screening location only take letters"
         }
       },
       {
@@ -189,7 +189,7 @@
       {
         "key": "blank_space",
         "type": "label",
-        "text": " "
+        "text": ""
       },
       {
         "key": "other_vca_sub_pop_screening_in_household",
@@ -214,7 +214,7 @@
       {
         "key": "blank_space",
         "type": "label",
-        "text": " "
+        "text": ""
       },
       {
         "key": "primary_caregivers_only",
@@ -232,7 +232,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "violence_six_months",
         "type": "native_radio",
-        "label": "Have you experienced violence in the home in the last six months?",
+        "label": "Have you experienced violence in the home in the last six months...",
         "options": [
           {
             "key": "yes",
@@ -250,7 +250,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "children_violence_six_months",
         "type": "native_radio",
-        "label": "Have the children experienced violence in the home in the last six months?? ",
+        "label": "Have the children experienced violence in the home in the last six months......",
         "options": [
           {
             "key": "yes",
@@ -294,7 +294,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "active_on_treatment",
         "type": "native_radio",
-        "label": "Are you active on treatment?",
+        "label": "Are you active on treatment...",
         "options": [
           {
             "key": "yes",
@@ -352,7 +352,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_caregiver_virally_suppressed",
         "type": "native_radio",
-        "label": "Is the caregiver virally suppressed?",
+        "label": "Is the caregiver virally suppressed...",
         "options": [
           {
             "key": "yes",
@@ -432,7 +432,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "biological_children",
         "type": "native_radio",
-        "label": "Do you have biological children 0-2 years?",
+        "label": "Do you have biological children 0-2 years...",
         "options": [
           {
             "key": "yes",
@@ -457,7 +457,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "enrolled_in_the_pmtct_program",
         "type": "native_radio",
-        "label": "Are you and your biological children enrolled in the PMTCT program?",
+        "label": "Are you and your biological children enrolled in the PMTCT program...",
         "options": [
           {
             "key": "yes",
@@ -482,7 +482,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "are_there_any_reasons_you_may_be_at_risk_for_hiv",
         "type": "native_radio",
-        "label": "Are there any reasons you may be at risk for HIV?)",
+        "label": "Are there any reasons you may be at risk for HIV...)",
         "options": [
           {
             "key": "yes",
@@ -511,7 +511,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid  test name"
+          "err": "Please enter a valid test name"
         },
         "relevance": {
           "rules-engine": {
@@ -542,9 +542,9 @@
         "key": "household_food_socially_and_economically_secure",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "fsw_child_and_caregiver_receiving_any_economic_strengthening_intervention?",
+        "openmrs_entity_id": "fsw_child_and_caregiver_receiving_any_economic_strengthening_intervention...",
         "type": "native_radio",
-        "label": "Is your household food, socially and economically secure? (for example: Able to provide 3 meals per day/ all school-going children enrolled in school; lowest level of education is secondary school; single-headed household; child-headed household; main material of the floor is not earth/sand; Has source of income through stable employment or is engaged in farming/livestock farming etc.)",
+        "label": "Is your household food, socially and economically secure... (for example: Able to provide 3 meals per day/ all school-going children enrolled in school; lowest level of education is secondary school; single-headed household; child-headed household; main material of the floor is not earth/sand; Has source of income through stable employment or is engaged in farming/livestock farming etc.)",
         "options": [
           {
             "key": "yes",
@@ -583,7 +583,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of Person can  only contain letters"
+          "err": "Name of Person can only contain letters"
         }
       },
       {
@@ -614,7 +614,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of Person can  only contain letters"
+          "err": "Name of Person can only contain letters"
         },
         "relevance": {
           "rules-engine": {
@@ -733,7 +733,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid  entry type"
+          "err": "Please enter a valid entry type"
         }
       },
       {
@@ -742,7 +742,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_education",
         "type": "native_radio",
-        "label": "Caregiverâ€™s education level",
+        "label": "Caregiver's education level",
         "label_text_style": "bold",
         "text_color": "#000000",
         "exclusive": [
@@ -807,13 +807,13 @@
             "value": false
           },
           {
-            "key": "K1,000 â€“K1,999",
-            "text": "K1,000 â€“K1,999",
+            "key": "K1,000 -K1,999",
+            "text": "K1,000 -K1,999",
             "value": false
           },
           {
-            "key": "K2,000 â€“K4,999",
-            "text": "K2,000 â€“K4,999",
+            "key": "K2,000 -K4,999",
+            "text": "K2,000 -K4,999",
             "value": false
           },
           {
@@ -859,7 +859,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid  Partner/Spouse Name"
+          "err": "Please enter a valid Partner/Spouse Name"
         },
         "relevance": {
           "rules-engine": {
@@ -879,7 +879,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid  Relationship Partner Name"
+          "err": "Please enter a valid Relationship Partner Name"
         },
         "relevance": {
           "rules-engine": {
@@ -1117,7 +1117,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "tested",
             "type": "native_radio",
-            "label": "Was child tested?",
+            "label": "Was child tested...",
             "label_text_style": "bold",
             "text_color": "#000000",
             "exclusive": [
@@ -1231,7 +1231,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "other_member_tested",
             "type": "native_radio",
-            "label": "Tested  for HIV?",
+            "label": "Tested for HIV...",
             "label_text_style": "bold",
             "text_color": "#000000",
             "exclusive": [
@@ -1428,7 +1428,7 @@
           },
           {
             "key": "immunization",
-            "label": "Has the child received the following vaccinations?",
+            "label": "Has the child received the following vaccinations...",
             "type": "check_box",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
@@ -1600,7 +1600,7 @@
         ],
         "v_required": {
           "value": false,
-          "err": "Number of ITNs  in use"
+          "err": "Number of ITNs in use"
         }
       },
       {
@@ -1643,7 +1643,7 @@
         "openmrs_entity_id": "case_worker_nrc",
         "entity_id": "guardian",
         "type": "edit_text",
-        "hint": "Case Worker  NRC number",
+        "hint": "Case Worker NRC number",
         "v_regex": {
           "value": "([0-9]{6}/[0-9]{2}/[0-9])|s*",
           "err": "Number must take the format of ######/##/#"

@@ -210,7 +210,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_mmd",
         "type": "native_radio",
-        "label": "Is the caregiver on MMD?",
+        "label": "Is the caregiver on MMD...",
         "label_text_style": "bold",
         "text_color": "#000000",
         "relevance": {
@@ -256,7 +256,7 @@
       {
         "key": "pregnant_breastfeeding",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "pregnant_attribute",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "pregnant_breastfeeding",
         "type": "native_radio",
         "label": "Is mother pregnant/breastfeeding?",
@@ -270,6 +270,10 @@
             "text": "No"
           }
         ],
+        "v_required": {
+          "value": true,
+          "err": "Is mother pregnant/breastfeeding?"
+        },
         "relevance": {
           "step1:services": {
             "type": "string",
@@ -318,8 +322,8 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "health_services",
-        "label": "HIV/HEALTHY ",
-        "label_info_text": "Tick (x) HIV/HEALTHY  Services Provided",
+        "label": "HIV/HEALTHY",
+        "label_info_text": "Tick (x) HIV/HEALTHY Services Provided",
         "type": "check_box",
         "exclusive": [
           "not applicable"
@@ -399,7 +403,7 @@
           },
           {
             "key": "Followed up for EAC  followed up for eac lessons",
-            "text": "Followed up for EAC  followed up for eac lessons"
+            "text": "Followed up for EAC followed up for eac lessons"
           },
           {
             "key": "Conducted/facilitated VL Sample Collection",
@@ -518,8 +522,8 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "schooled_services",
-        "label": "SCHOOLED ",
-        "label_info_text": "Tick (x) schooled  Services Provided",
+        "label": "SCHOOLED",
+        "label_info_text": "Tick (x) schooled Services Provided",
         "type": "check_box",
         "exclusive": [
           "not applicable"
@@ -603,7 +607,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "safe_services",
-        "label": "SAFE ",
+        "label": "SAFE",
         "label_info_text": "Tick (x) SAFE Services Provided",
         "type": "check_box",
         "exclusive": [
@@ -616,7 +620,7 @@
           },
           {
             "key": " Family/case conferencing to prevent occurrence of child abuse or neglect",
-            "text": " Family/case conferencing to prevent occurrence of child abuse/neglect"
+            "text": "Family/case conferencing to prevent occurrence of child abuse/neglect"
           },
           {
             "key": "Legal assistance (e.g. transport,legal fees) related to maltreatment, GBV, exploitation",
@@ -677,7 +681,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "stable_services",
-        "label": "STABLE ",
+        "label": "STABLE",
         "label_info_text": "Tick (x) stable Services Provided",
         "type": "check_box",
         "exclusive": [
@@ -739,7 +743,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "other_stable_services",
         "type": "edit_text",
-        "hint": "Specify any other stable service provided ",
+        "hint": "Specify any other stable service provided",
         "edit_type": "name",
         "v_required": {
           "value": true,
@@ -759,7 +763,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hh_level_services",
-        "label": " HH LEVEL SERVICES ",
+        "label": "HH LEVEL SERVICES",
         "label_info_text": "Tick (x) other hh level services Services Provided",
         "type": "check_box",
         "exclusive": [
@@ -841,7 +845,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "other_hh_level_services",
         "type": "edit_text",
-        "hint": "Specify any other hh level  service provided",
+        "hint": "Specify any other hh level service provided",
         "edit_type": "name",
         "v_required": {
           "value": true,

@@ -74,7 +74,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of Person can  only contain letters"
+          "err": "Name of Person can only contain letters"
         }
       },
       {
@@ -315,7 +315,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Entry point can  only contain letters"
+          "err": "Entry point can only contain letters"
         },
         "v_required": {
           "value": "true",
@@ -378,7 +378,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "ecap_id",
         "type": "edit_text",
-        "hint": " ECAPII ID (If Applicable)",
+        "hint": "ECAPII ID (If Applicable)",
         "read_only": "false",
         "relevance": {
           "step1:testing_modality": {
@@ -569,7 +569,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "test_done_hf",
         "type": "native_radio",
-        "label": "If HIV+, confirmatory test done at HF? ",
+        "label": "If HIV+, confirmatory test done at HF...",
         "options": [
           {
             "key": "Yes",

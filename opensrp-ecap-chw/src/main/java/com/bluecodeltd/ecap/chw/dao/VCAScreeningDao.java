@@ -194,6 +194,8 @@ public class VCAScreeningDao extends AbstractDao {
             record.setDistrict_moved_to(getCursorValue(c, "district_moved_to"));
             record.setName_ovc(getCursorValue(c, "name_ovc"));
             record.setOvc_district(getCursorValue(c,"ovc_district"));
+            record.setLocation_moved_to(getCursorValue(c,"location_moved_to"));
+
 
             return record;
         };

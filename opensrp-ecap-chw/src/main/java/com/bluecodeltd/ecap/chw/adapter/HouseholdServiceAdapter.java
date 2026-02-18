@@ -190,7 +190,8 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
                 } else {
                     try {
                         FormUtils formUtils = new FormUtils(context);
-                        openFormUsingFormUtils(context, "service_report_household_edit", service);
+                        String caregiverSex = finalHousehold != null ? finalHousehold.getCaregiver_sex() : null;
+                        openFormUsingFormUtils(context, "service_report_household_edit", service, caregiverSex);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -288,7 +289,7 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
         dialogButton.setOnClickListener(v -> dialog.dismiss());
     }
 
-    public void openFormUsingFormUtils(Context context, String formName, HouseholdServiceReportModel service) throws JSONException {
+    public void openFormUsingFormUtils(Context context, String formName, HouseholdServiceReportModel service, String caregiverSex) throws JSONException {
 
         oMapper = new ObjectMapper();
 
@@ -302,12 +303,14 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
         JSONObject formToBeOpened;
 
         formToBeOpened = formUtils.getFormJson(formName);
+        applyPregnantBreastfeedingVisibility(formToBeOpened, caregiverSex);
 
         formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).remove("read_only");
         formToBeOpened.put("entity_id", service.getBase_entity_id());
         HouseholdServiceReportModel householdReport = new HouseholdServiceReportModel();
         householdReport.setServices(service.getServices());
         householdReport.setServices_household(service.getServices_household());
+        householdReport.setPregnant_breastfeeding(service.getPregnant_breastfeeding());
 
         if (service.getHealth_services() == null && service.getServices_caregiver() != null){
             householdReport.setHealth_services(service.getServices_caregiver());
@@ -339,9 +342,62 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
         householdReport.setOther_services_household(service.getOther_services_household());
         householdReport.setDelete_status(service.getDelete_status());
         CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(householdReport, Map.class));
+        applyPregnantBreastfeedingValue(formToBeOpened, service.getPregnant_breastfeeding());
 
         startFormActivity(formToBeOpened);
 
+    }
+
+    private static boolean isFemaleCaregiver(String caregiverSex) {
+        return caregiverSex != null && caregiverSex.trim().equalsIgnoreCase("female");
+    }
+
+    private static void applyPregnantBreastfeedingVisibility(JSONObject form, String caregiverSex) {
+        if (isFemaleCaregiver(caregiverSex)) {
+            return;
+        }
+        try {
+            JSONObject step = form.getJSONObject(JsonFormConstants.STEP1);
+            JSONArray formFields = step.getJSONArray(JsonFormConstants.FIELDS);
+            for (int i = 0; i < formFields.length(); i++) {
+                JSONObject field = formFields.getJSONObject(i);
+                if ("pregnant_breastfeeding".equals(field.optString("key"))) {
+                    formFields.remove(i);
+                    break;
+                }
+            }
+        } catch (JSONException e) {
+            Timber.e(e);
+        }
+    }
+
+    private static void applyPregnantBreastfeedingValue(JSONObject form, String pregnantBreastfeeding) {
+        if (pregnantBreastfeeding == null) {
+            return;
+        }
+        try {
+            JSONObject step = form.getJSONObject(JsonFormConstants.STEP1);
+            JSONArray formFields = step.getJSONArray(JsonFormConstants.FIELDS);
+            for (int i = 0; i < formFields.length(); i++) {
+                JSONObject field = formFields.getJSONObject(i);
+                if (!"pregnant_breastfeeding".equals(field.optString("key"))) {
+                    continue;
+                }
+                JSONArray options = field.optJSONArray("options");
+                if (options == null) {
+                    break;
+                }
+                String target = pregnantBreastfeeding.trim().toLowerCase();
+                for (int j = 0; j < options.length(); j++) {
+                    JSONObject option = options.getJSONObject(j);
+                    String key = option.optString("key").trim().toLowerCase();
+                    option.put("value", key.equals(target));
+                }
+                break;
+            }
+        } catch (JSONException e) {
+            Timber.e(e);
+        }
     }
 
     public void startFormActivity(JSONObject jsonObject) {

@@ -124,6 +124,7 @@ public class HouseholdServiceReportDao extends AbstractDao {
             record.setHh_service_location(getCursorValue(c, "hh_service_location"));
             record.setServices_household(getCursorValue(c, "services_household"));
             record.setServices_caregiver(getCursorValue(c, "services_caregiver"));
+            record.setPregnant_breastfeeding(getCursorValue(c, "pregnant_breastfeeding"));
             record.setHealth_services(getCursorValue(c, "health_services"));
             record.setOther_health_services(getCursorValue(c, "other_health_services"));
             record.setSchooled_services(getCursorValue(c, "schooled_services"));

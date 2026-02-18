@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(.gradlew:*)",
+      "Bash(C:UsersBluecodeDocumentsopensrp-client-ecap-chwgradlew.bat :opensrp-ecap-chw:assembleEcapDebug)"
+    ]
+  }
+}

@@ -158,7 +158,7 @@
         "hint": "Ward",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Ward  only takes letters"
+          "err": "Ward only takes letters"
         }
       },
       {
@@ -852,7 +852,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "case_plan_question",
         "type": "native_radio",
-        "label": "Is this an Initial or Updated Case Plan?",
+        "label": "Is this an Initial or Updated Case Plan...",
         "options": [
           {
             "key": "yes",
@@ -1088,7 +1088,7 @@
         "openmrs_entity_id": "stable",
         "v_required": {
           "value": false,
-          "err": "Please specify the number of vulnerability assessment under being stable "
+          "err": "Please specify the number of vulnerability assessment under being stable"
         },
         "value": [
           {
@@ -1194,7 +1194,7 @@
         "openmrs_entity_id": "safe",
         "v_required": {
           "value": false,
-          "err": "Please specify the number of vulnerability assessment under  Safe"
+          "err": "Please specify the number of vulnerability assessment under Safe"
         },
         "value": [
           {

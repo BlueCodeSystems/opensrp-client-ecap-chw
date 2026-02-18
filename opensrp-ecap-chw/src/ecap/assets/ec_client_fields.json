@@ -7787,6 +7787,13 @@
           }
         },
         {
+          "column_name": "pregnant_breastfeeding",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.pregnant_breastfeeding"
+          }
+        },
+        {
           "column_name": "health_services",
           "type": "Client",
           "json_mapping": {

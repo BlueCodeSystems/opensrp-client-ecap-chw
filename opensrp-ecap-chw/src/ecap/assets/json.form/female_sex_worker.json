@@ -146,7 +146,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "children_under18",
         "type": "native_radio",
-        "label": "Does FSW Have Children/Dependent Aged 0-17yrs Old?",
+        "label": "Does FSW Have Children/Dependent Aged 0-17yrs Old...",
         "relevance": {
           "step1:age": {
             "type": "string",

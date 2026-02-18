@@ -249,7 +249,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_hiv_status",
         "type": "native_radio",
-        "label": "Is mother HIV+?",
+        "label": "Is mother HIV+...",
         "options": [
           {
             "key": "positive",
@@ -271,7 +271,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "active_on_treatment",
         "type": "native_radio",
-        "label": "Is mother active on treatment?",
+        "label": "Is mother active on treatment...",
         "options": [
           {
             "key": "yes",
@@ -310,7 +310,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "mother_pregnant",
         "type": "native_radio",
-        "label": "Is mother pregnant?",
+        "label": "Is mother pregnant...",
         "options": [
           {
             "key": "yes",
@@ -328,7 +328,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "mother_breastfeeding",
         "type": "native_radio",
-        "label": "Is mother breastfeeding?",
+        "label": "Is mother breastfeeding...",
         "options": [
           {
             "key": "yes",
@@ -346,7 +346,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "mother_age_range",
         "type": "native_radio",
-        "label": "Is mother between 10-25 years of age?",
+        "label": "Is mother between 10-25 years of age...",
         "options": [
           {
             "key": "yes",
@@ -466,7 +466,7 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "first_name",
         "type": "edit_text",
-        "hint": "Child's first name ",
+        "hint": "Child's first name",
         "edit_type": "name",
         "look_up": "true",
         "v_required": {
@@ -487,7 +487,7 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "last_name",
         "type": "edit_text",
-        "hint": "Child's last name ",
+        "hint": "Child's last name",
         "edit_type": "name",
         "look_up": "true",
         "v_required": {
@@ -567,7 +567,7 @@
         "type": "native_radio",
         "label_text_style": "bold",
         "text_color": "#000000",
-        "label": "Was the child tested for HIV?",
+        "label": "Was the child tested for HIV...",
         "options": [
           {
             "key": "yes",
@@ -631,7 +631,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_on_hiv_treatment",
         "type": "native_radio",
-        "label": "Is the Child/Adolescent currently on HIV treatment?",
+        "label": "Is the Child/Adolescent currently on HIV treatment...",
         "options": [
           {
             "key": "yes",
@@ -674,7 +674,7 @@
         "type": "native_radio",
         "value":"yes",
         "read_only": "true",
-        "label": "Is the Child/Adolescent a biological child of a mother living with HIV?",
+        "label": "Is the Child/Adolescent a biological child of a mother living with HIV...",
         "options": [
           {
             "key": "yes",

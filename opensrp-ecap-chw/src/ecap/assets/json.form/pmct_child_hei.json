@@ -265,7 +265,7 @@
         "hint": "DBS at Birth (Due Date)",
         "look_up": "true",
         "expanded": false,
-        "min_date": "today",
+        "min_date": "today - 100y ",
         "max_date": "today + 100y",
         "v_required": {
           "value": true,
@@ -281,7 +281,7 @@
         "hint": "DBS at Birth (Actual Date)",
         "look_up": "true",
         "expanded": false,
-        "min_date": "01-01-1900",
+        "min_date": "today - 100y",
         "max_date": "today",
         "v_required": {
           "value": true,

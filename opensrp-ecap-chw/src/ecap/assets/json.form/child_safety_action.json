@@ -89,7 +89,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "safety_threats",
         "type": "edit_text",
-        "hint": "What are the specific concerns related to child safety?\nDescribe safety threats."
+        "hint": "What are the specific concerns related to child safety...\nDescribe safety threats."
       },
       {
         "key": "safety_action",
@@ -97,7 +97,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "safety_action",
         "type": "edit_text",
-        "hint": "SAFETY ACTIONS:\nWhat specific actions have or will have to be taken to provide immediate child protection?",
+        "hint": "SAFETY ACTIONS:\nWhat specific actions have or will have to be taken to provide immediate child protection...",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -112,7 +112,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "safety_protection",
         "type": "edit_text",
-        "hint": "ABILITY TO IMMEDIATELY PROTECT:\nHow do these actions directly provide child protection?",
+        "hint": "ABILITY TO IMMEDIATELY PROTECT:\nHow do these actions directly provide child protection...",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -127,7 +127,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "To know how these actions for monitoring plans will be confirmed kindly state  when, frequency and who",
+        "text": "To know how these actions for monitoring plans will be confirmed kindly state when, frequency and who",
         "toaster_type": "info",
         "toaster_info_text": "",
         "toaster_info_title": "Information Toaster Info Title",

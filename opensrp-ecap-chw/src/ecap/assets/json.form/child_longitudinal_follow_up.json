@@ -206,7 +206,7 @@
         "label": "Oedema present",
         "options": [
           { "key": "no_oedema", "text": "1.No Oedema" },
-          { "key": "mild_oedema", "text": " 2.Mild Oedema (both feet and ankles)" },
+          { "key": "mild_oedema", "text": "2.Mild Oedema (both feet and ankles)" },
           { "key": "moderate_oedema", "text": "3.Moderate Oedema (both feet + lower legs and hands)" },
           { "key": "severe_oedema", "text": "4.Severe Oedema (including face/abdomen)" },
           { "key": "not_assessed", "text": "5.No assessment was done" }

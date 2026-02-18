@@ -114,7 +114,7 @@
         "type": "native_radio",
         "label_text_style": "bold",
         "text_color": "#000000",
-        "label": "HIV Tested ?",
+        "label": "HIV Tested ...",
         "options": [
           {
             "key": "yes",
@@ -214,7 +214,7 @@
         "openmrs_entity_id": "vl_result_at_trimester_2",
         "type": "edit_text",
         "edit_type": "name",
-        "hint": "VL Result at 2 nd  Trimester:"
+        "hint": "VL Result at 2 nd Trimester:"
       },
       {
         "key": "vl_result_at_trimester_3",
@@ -231,7 +231,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "male_partner_tested",
         "type": "native_radio",
-        "label": "Male partner tested?",
+        "label": "Male partner tested...",
         "options": [
           {
             "key": "yes",
@@ -379,7 +379,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "tb_screening",
         "type": "native_radio",
-        "label": "TB  Screening (Y/N)",
+        "label": "TB Screening (Y/N)",
         "options": [
           {
             "key": "yes",

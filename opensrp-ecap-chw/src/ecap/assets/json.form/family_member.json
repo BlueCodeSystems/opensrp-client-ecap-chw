@@ -172,7 +172,7 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "first_name",
         "type": "edit_text",
-        "hint": "First Name ",
+        "hint": "First Name",
         "edit_type": "name",
         "look_up": "true",
         "v_required": {
@@ -186,7 +186,7 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "last_name",
         "type": "edit_text",
-        "hint": "Last Name ",
+        "hint": "Last Name",
         "edit_type": "name",
         "look_up": "true",
         "v_required": {
@@ -243,7 +243,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "school",
         "type": "native_radio",
-        "label": "Is the Child in School?",
+        "label": "Is the Child in School...",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -284,7 +284,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "school  can only contain letters"
+          "err": "school can only contain letters"
         },
         "relevance": {
           "step1:school": {
@@ -316,7 +316,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_ever_experienced_sexual_violence",
         "type": "native_radio",
-        "label": "Has the child/adolescent ever experienced sexual violence?",
+        "label": "Has the child/adolescent ever experienced sexual violence...",
         "options": [
           {
             "key": "yes",
@@ -373,7 +373,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "agyw_sexually_active",
         "type": "native_radio",
-        "label": "Is this Sibling / Family member sexually active?",
+        "label": "Is this Sibling / Family member sexually active...",
         "options": [
           {
             "key": "yes",
@@ -402,7 +402,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "agyw_food_or_economically_insecure",
         "type": "native_radio",
-        "label": "Is the AGYW food or economically insecure?",
+        "label": "Is the AGYW food or economically insecure...",
         "options": [
           {
             "key": "yes",
@@ -453,7 +453,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpopulation",
         "type": "hidden",
-        "label": "Does the household member belong to another subpopulation?",
+        "label": "Does the household member belong to another subpopulation...",
         "options": [
           {
             "key": "yes",
@@ -504,7 +504,7 @@
       },
       {
         "key": "immunization",
-        "label": "Has the child received the following vaccinations?",
+        "label": "Has the child received the following vaccinations...",
         "type": "check_box",
         "openmrs_entity_parent": "immunization",
         "openmrs_entity": "person_attribute",

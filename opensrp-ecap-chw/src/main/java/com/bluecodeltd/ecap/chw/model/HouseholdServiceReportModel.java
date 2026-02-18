@@ -4,6 +4,7 @@ public class HouseholdServiceReportModel {
     private String services;
     private String services_household;
     private String services_caregiver;
+    private String pregnant_breastfeeding;
     private String health_services;
     private String other_health_services;
     private String schooled_services;
@@ -60,6 +61,14 @@ public class HouseholdServiceReportModel {
 
     public void setServices_caregiver(String services_caregiver) {
         this.services_caregiver = services_caregiver;
+    }
+
+    public String getPregnant_breastfeeding() {
+        return pregnant_breastfeeding;
+    }
+
+    public void setPregnant_breastfeeding(String pregnant_breastfeeding) {
+        this.pregnant_breastfeeding = pregnant_breastfeeding;
     }
 
     public String getHealth_services() {

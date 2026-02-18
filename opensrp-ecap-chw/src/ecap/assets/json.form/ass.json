@@ -411,7 +411,7 @@
         "openmrs_entity_id": "partners",
         "read_only": "true",
         "type": "edit_text",
-        "hint": "Implementing Partner ",
+        "hint": "Implementing Partner",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -448,7 +448,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Screening location  only take letters"
+          "err": "Screening location only take letters"
         }
       },
       {
@@ -489,7 +489,7 @@
         "read_only": "true",
         "font": "bald",
         "type": "edit_text",
-        "hint": "Physical  Address ",
+        "hint": "Physical Address",
         "edit_type": "name"
       },
       {
@@ -539,7 +539,7 @@
         "key": "household_summary_information",
         "type": "repeating_group",
         "reference_edit_text_hint": "Number of Household Members",
-        "repeating_group_label": "Household summary information ",
+        "repeating_group_label": "Household summary information",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
@@ -602,11 +602,11 @@
             "options": [
               {
                 "key": "1",
-                "text": "Children/Adolescents Living with HIV (C/ALHIV) "
+                "text": "Children/Adolescents Living with HIV (C/ALHIV)"
               },
               {
                 "key": "2",
-                "text": "HIV Exposed Infants (HEIs) "
+                "text": "HIV Exposed Infants (HEIs)"
               },
               {
                 "key": "3",
@@ -751,7 +751,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "native_radio",
-        "label": "Is the index VCA a C/ALHIV, HEI, Victim of Sexual Violence, or Children of FSW?",
+        "label": "Is the index VCA a C/ALHIV, HEI, Victim of Sexual Violence, or Children of FSW...",
         "options": [
           {
             "key": "yes",
@@ -769,7 +769,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "all_other_household_members_0_17years_know_their_hiv_status",
         "type": "native_radio",
-        "label": "Do all the siblings/other household members 0-17 years know their HIV status?",
+        "label": "Do all the siblings/other household members 0-17 years know their HIV status...",
         "options": [
           {
             "key": "yes",
@@ -804,7 +804,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "hiv_positive_children_adolescents",
         "type": "native_radio",
-        "label": "Are there children/Adolescents in the Household who are HIV Positive?",
+        "label": "Are there children/Adolescents in the Household who are HIV Positive...",
         "options": [
           {
             "key": "yes",
@@ -839,7 +839,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "hiv_positive_children_adolescents_not_on_active_treatment",
         "type": "native_radio",
-        "label": "Are the HIV Positive Children/Adolescents in the Household Active on Treatment?",
+        "label": "Are the HIV Positive Children/Adolescents in the Household Active on Treatment...",
         "options": [
           {
             "key": "yes",
@@ -880,7 +880,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "is_female_caregiver_hiv_positive",
         "type": "native_radio",
-        "label": "Is the female caregiver HIV-positive (WLHIV)?",
+        "label": "Is the female caregiver HIV-positive (WLHIV)...",
         "options": [
           {
             "key": "yes",
@@ -898,7 +898,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "if_female_caregiver_is_hiv_positive_do_all_biological_children_0_17years_know_their_hiv_status",
         "type": "native_radio",
-        "label": "Do all the biological children 0-17 years of the Caregiver know their HIV status?",
+        "label": "Do all the biological children 0-17 years of the Caregiver know their HIV status...",
         "options": [
           {
             "key": "yes",
@@ -940,7 +940,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "native_radio",
-        "label": "If other household member 0-2 years is HEI, are they receiving breastfeeding?",
+        "label": "If other household member 0-2 years is HEI, are they receiving breastfeeding...",
         "options": [
           {
             "key": "yes",
@@ -1016,7 +1016,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "native_radio",
-        "label": "If there are children in the household aged 0-5 years, are they enrolled in an Early Childhood Development Program and are their developmental milestones tracked?",
+        "label": "If there are children in the household aged 0-5 years, are they enrolled in an Early Childhood Development Program and are their developmental milestones tracked...",
         "options": [
           {
             "key": "yes",
@@ -1052,7 +1052,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "have_children_and_adolescents_in_the_household_been_screened_for_malnutrition",
         "type": "native_radio",
-        "label": "Have all children and adolescents in the household been screened for malnutrition?",
+        "label": "Have all children and adolescents in the household been screened for malnutrition...",
         "options": [
           {
             "key": "yes",
@@ -1226,7 +1226,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "have_all_the_male_hiv_negative_vca_in_the_household_15years_and_above_received_voluntary_medical_male_circumcision",
         "type": "native_radio",
-        "label": "Have all the male HIV-negative VCA in the household 15 years and above received voluntary medical male circumcision (VMMC)?",
+        "label": "Have all the male HIV-negative VCA in the household 15 years and above received voluntary medical male circumcision (VMMC)...",
         "options": [
           {
             "key": "yes",
@@ -1270,7 +1270,7 @@
         "key": "for_adolescent_girls_and_young_women_10_17years",
         "type": "repeating_group",
         "reference_edit_text_hint": "Number of AGYW 10-17years",
-        "repeating_group_label": " For questions in this section, ask EACH OF THE AGYW 10â€“17 years old in the household who is not an AGYW Index VCA, in privacy. Probe where needed.",
+        "repeating_group_label": "For questions in this section, ask EACH OF THE AGYW 10-17 years old in the household who is not an AGYW Index VCA, in privacy. Probe where needed.",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "for_adolescent_girls_and_young_women_10_17years",
@@ -1307,7 +1307,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "is_the_agyw_10_17years",
             "type": "native_radio",
-            "label": "Is the AGYW 10 -17 years? ",
+            "label": "Is the AGYW 10 -17 years...",
             "options": [
               {
                 "key": "yes",
@@ -1325,7 +1325,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "is_the_agyw_sexually_active",
             "type": "native_radio",
-            "label": "Is the AGYW sexually active?",
+            "label": "Is the AGYW sexually active...",
             "options": [
               {
                 "key": "yes",
@@ -1366,7 +1366,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "is_the_agyw_having_sex_with_older_men",
             "type": "native_radio",
-            "label": "Is the AGYW having sex with older men??",
+            "label": "Is the AGYW having sex with older men......",
             "options": [
               {
                 "key": "yes",
@@ -1407,7 +1407,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "is_the_agyw_engaged_in_transactional_sex",
             "type": "native_radio",
-            "label": "Is the AGYW engaged in transactional sex?",
+            "label": "Is the AGYW engaged in transactional sex...",
             "options": [
               {
                 "key": "yes",
@@ -1448,7 +1448,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "is_the_agyw_engaged_in_sex_work",
             "type": "native_radio",
-            "label": "Is the AGYW engaged in sex work?",
+            "label": "Is the AGYW engaged in sex work...",
             "options": [
               {
                 "key": "yes",
@@ -1489,7 +1489,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "is_the_agyw_food_or_economically_secure",
             "type": "native_radio",
-            "label": "Is the AGYW food or economically secure?",
+            "label": "Is the AGYW food or economically secure...",
             "options": [
               {
                 "key": "yes",
@@ -1530,7 +1530,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "did_the_agyw_marry_early",
             "type": "native_radio",
-            "label": "Did the AGYW marry early (child marriage)?",
+            "label": "Did the AGYW marry early (child marriage)...",
             "options": [
               {
                 "key": "yes",
@@ -1571,7 +1571,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "did_the_agyw_give_birth_before_age_of_18",
             "type": "native_radio",
-            "label": "Did the AGYW give birth before the age of 18(teen mom)?",
+            "label": "Did the AGYW give birth before the age of 18(teen mom)...",
             "options": [
               {
                 "key": "yes",
@@ -1612,7 +1612,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "does_the_agyw_give_have_a_patner_who_is_violent_or_has_experienced_violence",
             "type": "native_radio",
-            "label": "Does the AGYW have a partner who is violent or has experienced violence?",
+            "label": "Does the AGYW have a partner who is violent or has experienced violence...",
             "options": [
               {
                 "key": "yes",
@@ -1653,7 +1653,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "has_the_agyw_ever_been_diagnosed_with_a_sexually_transmitted_disease",
             "type": "native_radio",
-            "label": "Has the AGYW ever been diagnosed with a sexually transmitted illness(STI)?",
+            "label": "Has the AGYW ever been diagnosed with a sexually transmitted illness(STI)...",
             "options": [
               {
                 "key": "yes",
@@ -1694,7 +1694,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "has_the_agyw_been_tested_for_hiv",
             "type": "native_radio",
-            "label": "Has the AGYW been tested for HIV?",
+            "label": "Has the AGYW been tested for HIV...",
             "options": [
               {
                 "key": "yes",
@@ -1718,7 +1718,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "has_the_agyw_been_tested_for_hiv",
             "type": "native_radio",
-            "label": "Did the AGYW test positive for HIV?",
+            "label": "Did the AGYW test positive for HIV...",
             "options": [
               {
                 "key": "yes",
@@ -1776,7 +1776,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "is_the_agyw_in_school",
             "type": "native_radio",
-            "label": "Is the AGYW in school?",
+            "label": "Is the AGYW in school...",
             "options": [
               {
                 "key": "yes",
@@ -1817,7 +1817,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "agyw_receiving_an_economic_strengthening_intervention",
             "type": "native_radio",
-            "label": "Is the AGYW receiving an economic strengthening intervention?",
+            "label": "Is the AGYW receiving an economic strengthening intervention...",
             "options": [
               {
                 "key": "yes",
@@ -1941,7 +1941,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "experienced_violence_in_the_home_in_the_last_six_months",
         "type": "native_radio",
-        "label": "Have you experienced violence in the home in the last six months?",
+        "label": "Have you experienced violence in the home in the last six months...",
         "options": [
           {
             "key": "yes",
@@ -1954,12 +1954,12 @@
         ]
       },
       {
-        "key": "the_children_experienced_violence_in_the_home_in_the_last_six_months?",
+        "key": "the_children_experienced_violence_in_the_home_in_the_last_six_months...",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "native_radio",
-        "label": "Have the children experienced violence in the home in the last six months?? ",
+        "label": "Have the children experienced violence in the home in the last six months......",
         "options": [
           {
             "key": "yes",
@@ -1977,7 +1977,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "knows_hiv_status",
         "type": "native_radio",
-        "label": "What is your HIV Status?",
+        "label": "What is your HIV Status...",
         "options": [
           {
             "key": "hiv_negative",
@@ -1999,7 +1999,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "native_radio",
-        "label": "Are you active on treatment?",
+        "label": "Are you active on treatment...",
         "options": [
           {
             "key": "yes",
@@ -2045,7 +2045,7 @@
         "hint": "Indicate ART Number",
         "v_regex": {
           "value": "([0-9]{4}-[0-9]{3}-[0-9]{5}-[0-9])|\\s*",
-          "err": "ART should contain numbers  in the format of ^XXXX-XXX-XXXXX-X"
+          "err": "ART should contain numbers in the format of ^XXXX-XXX-XXXXX-X"
         },
         "relevance": {
           "rules-engine": {
@@ -2061,7 +2061,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "virally_suppressed",
         "type": "native_radio",
-        "label": "Are you virally suppressed as of your most recent viral load test?",
+        "label": "Are you virally suppressed as of your most recent viral load test...",
         "options": [
           {
             "key": "yes",
@@ -2141,7 +2141,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "if_hiv_positive_have_biological_children",
         "type": "native_radio",
-        "label": "Do you have biological children 0-2 years?",
+        "label": "Do you have biological children 0-2 years...",
         "options": [
           {
             "key": "yes",
@@ -2166,7 +2166,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "enrolled_in_the_pmtct_program",
         "type": "native_radio",
-        "label": "Are you and your biological children enrolled in the PMTCT program?",
+        "label": "Are you and your biological children enrolled in the PMTCT program...",
         "options": [
           {
             "key": "yes",
@@ -2191,7 +2191,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "are_there_any_reasons_you_may_be_at_risk_for_hiv",
         "type": "native_radio",
-        "label": "Are there any reasons you may be at risk of HIV?",
+        "label": "Are there any reasons you may be at risk of HIV...",
         "options": [
           {
             "key": "yes",
@@ -2220,7 +2220,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid  test name"
+          "err": "Please enter a valid test name"
         },
         "relevance": {
           "rules-engine": {
@@ -2253,7 +2253,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "household_food_socially_and_economically_secure",
         "type": "native_radio",
-        "label": "Is your household food, socially and economically secure? (for example: Able to provide 3 meals per day/ all school-going children enrolled in school; lowest level of education is secondary school; single-headed household; child-headed household; main material of the floor is not earth/sand; Has source of income through stable employment or is engaged in farming/livestock farming etc.)",
+        "label": "Is your household food, socially and economically secure... (for example: Able to provide 3 meals per day/ all school-going children enrolled in school; lowest level of education is secondary school; single-headed household; child-headed household; main material of the floor is not earth/sand; Has source of income through stable employment or is engaged in farming/livestock farming etc.)",
         "options": [
           {
             "key": "yes",
@@ -2293,7 +2293,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of Person can  only contain letters"
+          "err": "Name of Person can only contain letters"
         }
       },
       {
@@ -2324,7 +2324,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of Person can  only contain letters"
+          "err": "Name of Person can only contain letters"
         },
         "relevance": {
           "rules-engine": {
@@ -2786,7 +2786,7 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "first_name",
         "type": "edit_text",
-        "hint": "Caregiver First Name ",
+        "hint": "Caregiver First Name",
         "read_only" : "true",
         "edit_type": "name",
         "look_up": "true",
@@ -2805,7 +2805,7 @@
         "openmrs_entity_id": "last_name",
         "type": "edit_text",
         "read_only" : "true",
-        "hint": "Caregiver Last Name ",
+        "hint": "Caregiver Last Name",
         "edit_type": "name",
         "look_up": "true",
         "relevance": {
@@ -2889,7 +2889,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid  entry type"
+          "err": "Please enter a valid entry type"
         },
         "relevance": {
           "rules-engine": {
@@ -2905,7 +2905,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_education",
         "type": "native_radio",
-        "label": "Caregiverâ€™s education level",
+        "label": "Caregiver's education level",
         "label_text_style": "bold",
         "text_color": "#000000",
         "exclusive": [
@@ -2984,13 +2984,13 @@
             "value": false
           },
           {
-            "key": "K1,000 â€“K1,999",
-            "text": "K1,000 â€“K1,999",
+            "key": "K1,000 -K1,999",
+            "text": "K1,000 -K1,999",
             "value": false
           },
           {
-            "key": "K2,000 â€“K4,999",
-            "text": "K2,000 â€“K4,999",
+            "key": "K2,000 -K4,999",
+            "text": "K2,000 -K4,999",
             "value": false
           },
           {
@@ -3050,7 +3050,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid  Partner/Spouse Name"
+          "err": "Please enter a valid Partner/Spouse Name"
         },
         "relevance": {
           "rules-engine": {
@@ -3070,7 +3070,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid  Relationship Partner Name"
+          "err": "Please enter a valid Relationship Partner Name"
         },
         "relevance": {
           "rules-engine": {
@@ -3357,7 +3357,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "tested",
             "type": "native_radio",
-            "label": "Was child tested?",
+            "label": "Was child tested...",
             "label_text_style": "bold",
             "text_color": "#000000",
             "exclusive": [
@@ -3478,7 +3478,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "other_member_tested",
             "type": "native_radio",
-            "label": "Tested  for HIV?",
+            "label": "Tested for HIV...",
             "label_text_style": "bold",
             "text_color": "#000000",
             "exclusive": [
@@ -3717,7 +3717,7 @@
           },
           {
             "key": "immunization",
-            "label": "Has the child received the following vaccinations?",
+            "label": "Has the child received the following vaccinations...",
             "type": "check_box",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
@@ -3903,7 +3903,7 @@
         ],
         "v_required": {
           "value": false,
-          "err": "Number of ITNs  in use"
+          "err": "Number of ITNs in use"
         },
         "relevance": {
           "rules-engine": {
@@ -3967,7 +3967,7 @@
         "openmrs_entity_id": "case_worker_nrc",
         "entity_id": "guardian",
         "type": "edit_text",
-        "hint": "Case Worker  NRC number",
+        "hint": "Case Worker NRC number",
         "v_regex": {
           "value": "([0-9]{6}/[0-9]{2}/[0-9])|s*",
           "err": "Number must take the format of ######/##/#"

@@ -92,7 +92,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of Person can  only contain letters"
+          "err": "Name of Person can only contain letters"
         }
       },
       {
@@ -226,7 +226,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_art",
         "type": "native_radio",
-        "label": "Is Child enrolled on ART?",
+        "label": "Is Child enrolled on ART...",
         "options": [
           {
             "key": "yes",
@@ -255,7 +255,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "art_appointment",
         "type": "native_radio",
-        "label": "Check the ART appointment card.  Did child meet the last clinical/pharmacy appointment? ",
+        "label": "Check the ART appointment card. Did child meet the last clinical/pharmacy appointment...",
         "options": [
           {
             "key": "yes",
@@ -281,7 +281,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "counselling",
         "type": "native_radio",
-        "label": "If child missed last clinical/pharmacy appointment, not adhering \nto treatment or VL is greater than 1000, age appropriate \nadherence counselling was conducted during home visit?",
+        "label": "If child missed last clinical/pharmacy appointment, not adhering \nto treatment or VL is greater than 1000, age appropriate \nadherence counselling was conducted during home visit...",
         "options": [
           {
             "key": "yes",
@@ -307,7 +307,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "art_medication",
         "type": "native_radio",
-        "label": "If child is on ART, is s/he adhering to medication? ",
+        "label": "If child is on ART, is s/he adhering to medication...",
         "options": [
           {
             "key": "yes",
@@ -335,7 +335,7 @@
         "openmrs_entity_id": "child_mmd",
         "type": "native_radio",
         "read_only": "false",
-        "label": "Is the child on single or multi-month dispensation (MMD)?",
+        "label": "Is the child on single or multi-month dispensation (MMD)...",
         "options": [
           {
             "key": "yes",
@@ -380,12 +380,12 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "level_mmd",
         "type": "edit_text",
-        "hint": "Number of MMD months of drugs ",
+        "hint": "Number of MMD months of drugs",
         "edit_type": "number",
         "read_only": "false",
         "v_required": {
           "value": false,
-          "err": "Indicate the number of MMD months of drugs "
+          "err": "Indicate the number of MMD months of drugs"
         },
         "relevance": {
           "step1:child_mmd": {
@@ -400,7 +400,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "length_on_art",
         "type": "edit_text",
-        "hint": "How long has a child been on ART?",
+        "hint": "How long has a child been on ART...",
         "edit_type": "number",
         "v_regex": {
           "value": "^\\d+$",
@@ -419,7 +419,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "six_months",
         "type": "native_radio",
-        "label": "If the child has been on ART for longer than six months, have they submitted a sample for VL?",
+        "label": "If the child has been on ART for longer than six months, have they submitted a sample for VL...",
         "options": [
           {
             "key": "yes",
@@ -489,11 +489,11 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_art",
         "type": "edit_text",
-        "hint": "Number of months the child has been on ART ",
+        "hint": "Number of months the child has been on ART",
         "edit_type": "number",
         "v_required": {
           "value": false,
-          "err": "Number of months the child has been on ART "
+          "err": "Number of months the child has been on ART"
         },
         "relevance": {
           "rules-engine": {
@@ -558,7 +558,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_hiv",
         "type": "edit_text",
-        "hint": "How many months was the last HIV test done?",
+        "hint": "How many months was the last HIV test done...",
         "edit_type": "number",
         "read_only": false,
         "relevance": {
@@ -574,7 +574,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "visits",
         "type": "native_radio",
-        "label": "Is this the first visit?",
+        "label": "Is this the first visit...",
         "options": [
           {
             "key": "yes",
@@ -600,7 +600,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "visit_hiv_test",
         "type": "native_radio",
-        "label": "If first home visit and HIV test was conducted more than 3 months ago, has an HIV risk assessment been done?",
+        "label": "If first home visit and HIV test was conducted more than 3 months ago, has an HIV risk assessment been done...",
         "options": [
           {
             "key": "yes",
@@ -626,7 +626,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "referred_for_testing",
         "type": "native_radio",
-        "label": "Has child been referred for HIV testing at health facility if the HIV \nrisk assessment indicates an HIV test is required? ",
+        "label": "Has child been referred for HIV testing at health facility if the HIV \nrisk assessment indicates an HIV test is required...",
         "options": [
           {
             "key": "yes",
@@ -652,7 +652,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_risk",
         "type": "native_radio",
-        "label": "Has there been a change in the childâ€™s HIV risky behavior since the last visit?",
+        "label": "Has there been a change in the child's HIV risky behavior since the last visit...",
         "exclusive": [
           "none"
         ],
@@ -712,7 +712,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_assessment",
         "type": "native_radio",
-        "label": "If there has been a change in the childâ€™s HIV risk behavior since the last visit has an HIV risk reduction counselling \nand HIV risk assessment been conducted?",
+        "label": "If there has been a change in the child's HIV risk behavior since the last visit has an HIV risk reduction counselling \nand HIV risk assessment been conducted...",
         "options": [
           {
             "key": "yes",
@@ -755,7 +755,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "referred_facility",
         "type": "native_radio",
-        "label": "Has Primary Caregiver been referred to health facility for HIV testing if test is required?",
+        "label": "Has Primary Caregiver been referred to health facility for HIV testing if test is required...",
         "options": [
           {
             "key": "yes",
@@ -797,7 +797,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "eid_test",
         "type": "date_picker",
-        "hint": "Check childâ€™s under-five clinic card When was the last EID test done?",
+        "hint": "Check child's under-five clinic card When was the last EID test done...",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -818,7 +818,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "age_appropriate",
         "type": "native_radio",
-        "label": "Is the duration from the last test appropriate for age of child? ",
+        "label": "Is the duration from the last test appropriate for age of child...",
         "options": [
           {
             "key": "yes",
@@ -845,7 +845,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "not_appropriate_age",
         "type": "native_radio",
-        "label": "If duration from last test not appropriate for age of child, has the \nchild been referred to health facility for EID? ",
+        "label": "If duration from last test not appropriate for age of child, has the \nchild been referred to health facility for EID...",
         "options": [
           {
             "key": "yes",
@@ -871,7 +871,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_receiving_breastfeeding",
         "type": "native_radio",
-        "label": "Is infant still breastfeeding?",
+        "label": "Is infant still breastfeeding...",
         "options": [
           {
             "key": "yes",
@@ -921,7 +921,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "not_tested",
         "type": "native_radio",
-        "label": "If infant was not tested for HIV 6 weeks after cessation of \nbreastfeeding, has the child been referred for HIV testing?",
+        "label": "If infant was not tested for HIV 6 weeks after cessation of \nbreastfeeding, has the child been referred for HIV testing...",
         "options": [
           {
             "key": "yes",
@@ -955,7 +955,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_infection",
         "type": "hidden",
-        "label": "Is the child able to describe at least two HIV infection risks in their local community?",
+        "label": "Is the child able to describe at least two HIV infection risks in their local community...",
         "options": [
           {
             "key": "yes",
@@ -982,7 +982,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "infection_risk",
         "type": "native_radio",
-        "label": "If the child cannot describe at least two HIV infection risks in \ntheir local community or provide at least one example of how \nthey can protect themselves against HIV risk or correctly describe \nthe location of at least one place where HIV prevention support, \nhas the child been provided with HIV risk reduction counselling?",
+        "label": "If the child cannot describe at least two HIV infection risks in \ntheir local community or provide at least one example of how \nthey can protect themselves against HIV risk or correctly describe \nthe location of at least one place where HIV prevention support, \nhas the child been provided with HIV risk reduction counselling...",
         "options": [
           {
             "key": "yes",
@@ -1008,7 +1008,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "against_hiv_risk",
         "type": "native_radio",
-        "label": "Is the child able to provide at least one example of how they can protect themselves against HIV risk?",
+        "label": "Is the child able to provide at least one example of how they can protect themselves against HIV risk...",
         "options": [
           {
             "key": "yes",
@@ -1034,7 +1034,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "referred_health_facility",
         "type": "native_radio",
-        "label": "Has child been referred to health facility for HIV testing if test is required?",
+        "label": "Has child been referred to health facility for HIV testing if test is required...",
         "options": [
           {
             "key": "yes",
@@ -1060,7 +1060,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "prevention_support",
         "type": "native_radio",
-        "label": "Is the child able to correctly describe the location of at least one place where HIV prevention support is available?",
+        "label": "Is the child able to correctly describe the location of at least one place where HIV prevention support is available...",
         "options": [
           {
             "key": "yes",
@@ -1086,7 +1086,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "substance_support",
         "type": "native_radio",
-        "label": "If applicable, has the child/adolescent been referred for substance abuse support?",
+        "label": "If applicable, has the child/adolescent been referred for substance abuse support...",
         "options": [
           {
             "key": "yes",
@@ -1112,7 +1112,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd1",
         "type": "label",
-        "text": "Under-Five Children (ALL)  Section"
+        "text": "Under-Five Children (ALL) Section"
       },
       {
         "key": "under_five",
@@ -1120,7 +1120,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "under_five",
         "type": "native_radio",
-        "label": "Has the child been attending under-five clinic regularly?",
+        "label": "Has the child been attending under-five clinic regularly...",
         "options": [
           {
             "key": "yes",
@@ -1140,7 +1140,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "attending_under_five_clinic",
         "type": "native_radio",
-        "label": "If child has not been attending under-five clinic, has counselling \nbeen provided to the childâ€™s caregiver?",
+        "label": "If child has not been attending under-five clinic, has counselling \nbeen provided to the child's caregiver...",
         "options": [
           {
             "key": "yes",
@@ -1166,7 +1166,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "appropriate_vaccinations",
         "type": "native_radio",
-        "label": "Has the child received all appropriate vaccinations?",
+        "label": "Has the child received all appropriate vaccinations...",
         "options": [
           {
             "key": "yes",
@@ -1192,7 +1192,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "all_appropriate_vaccinations",
         "type": "native_radio",
-        "label": "If child has not received all appropriate vaccinations, has s/he \nbeen referred to the health facility? ",
+        "label": "If child has not received all appropriate vaccinations, has s/he \nbeen referred to the health facility...",
         "options": [
           {
             "key": "yes",
@@ -1219,7 +1219,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "nutrition_counselling_a",
         "type": "native_radio",
-        "label": "Was the primary caregiver of the child provided with nutrition counselling?",
+        "label": "Was the primary caregiver of the child provided with nutrition counselling...",
         "options": [
           {
             "key": "yes",
@@ -1274,7 +1274,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "If childâ€™s MUAC measurement is less than 14.5cm for children 5-9 years old or less than 18.5 cm for children 10-14 years or less than 22cm for children 15+ years",
+        "text": "If child's MUAC measurement is less than 14.5cm for children 5-9 years old or less than 18.5 cm for children 10-14 years or less than 22cm for children 15+ years",
         "toaster_type": "info",
         "toaster_info_text": "Test for HIV",
         "relevance": {
@@ -1291,7 +1291,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "nutrition_counselling_b",
         "type": "native_radio",
-        "label": "Was the primary caregiver of the child provided with nutrition counselling?",
+        "label": "Was the primary caregiver of the child provided with nutrition counselling...",
         "options": [
           {
             "key": "yes",
@@ -1372,7 +1372,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "neglected",
         "type": "native_radio",
-        "label": "Are there any signs that the child is being neglected or exploited?",
+        "label": "Are there any signs that the child is being neglected or exploited...",
         "options": [
           {
             "key": "yes",
@@ -1392,7 +1392,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "neglected_child_exploitation",
         "type": "native_radio",
-        "label": "If child is being neglected/exploited, has the child and caregiver participated in a structured family group conferencing to prevent occurrence/ reoccurrence of child exploitation or neglect?",
+        "label": "If child is being neglected/exploited, has the child and caregiver participated in a structured family group conferencing to prevent occurrence/ reoccurrence of child exploitation or neglect...",
         "options": [
           {
             "key": "yes",
@@ -1418,7 +1418,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_above_12_a",
         "type": "native_radio",
-        "label": "If child is 12 years and above, has s/he reported experiencing neglect or exploitation?",
+        "label": "If child is 12 years and above, has s/he reported experiencing neglect or exploitation...",
         "options": [
           {
             "key": "yes",
@@ -1445,7 +1445,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "neglected_child_relationships",
         "type": "native_radio",
-        "label": "If child is being neglected/exploited, has the family participated \nin a structured psycho-social support related to family conflict \nmitigation and family relationships?",
+        "label": "If child is being neglected/exploited, has the family participated \nin a structured psycho-social support related to family conflict \nmitigation and family relationships...",
         "options": [
           {
             "key": "yes",
@@ -1471,7 +1471,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "type_of_neglect",
         "type": "edit_text",
-        "hint": " List the type of neglect/exploitation",
+        "hint": "List the type of neglect/exploitation",
         "edit_type": "name",
         "read_only": "false",
         "look_up": "true",
@@ -1501,7 +1501,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "signs_of_violence",
         "type": "native_radio",
-        "label": "Are there any signs that the child is experiencing physical violence?",
+        "label": "Are there any signs that the child is experiencing physical violence...",
         "options": [
           {
             "key": "yes",
@@ -1547,7 +1547,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "physical_violence",
         "type": "native_radio",
-        "label": "If child is 12 years and above, has s/he reported experiencing physical violence?",
+        "label": "If child is 12 years and above, has s/he reported experiencing physical violence...",
         "options": [
           {
             "key": "yes",
@@ -1574,7 +1574,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "experiencing_neglected",
         "type": "native_radio",
-        "label": "Was a report filed of suspected abuse to child protection office, \npolice or other local authority?",
+        "label": "Was a report filed of suspected abuse to child protection office, \npolice or other local authority...",
         "options": [
           {
             "key": "yes",
@@ -1600,7 +1600,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "type_of_neglect_physical",
         "type": "edit_text",
-        "hint": " list the type of neglect/exploitation",
+        "hint": "list the type of neglect/exploitation",
         "edit_type": "name",
         "read_only": "false",
         "look_up": "true",
@@ -1630,7 +1630,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "sexually_abused",
         "type": "native_radio",
-        "label": "Are there any signs that the child is being sexually abused?",
+        "label": "Are there any signs that the child is being sexually abused...",
         "options": [
           {
             "key": "yes",
@@ -1650,7 +1650,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "post_gbv_care",
         "type": "native_radio",
-        "label": "If child is being sexually abused, has s/he been referred to the \nhealth facility for post GBV care? ",
+        "label": "If child is being sexually abused, has s/he been referred to the \nhealth facility for post GBV care...",
         "options": [
           {
             "key": "yes",
@@ -1676,7 +1676,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_ever_experienced_sexual_violence",
         "type": "native_radio",
-        "label": "If child is 12 years and above, has s/he reported experiencing any from of sexual abuse?",
+        "label": "If child is 12 years and above, has s/he reported experiencing any from of sexual abuse...",
         "options": [
           {
             "key": "yes",
@@ -1703,7 +1703,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "vsu_legal_support",
         "type": "native_radio",
-        "label": "If child is/was being sexually abused, has s/he been referred to \nVSU for legal support?",
+        "label": "If child is/was being sexually abused, has s/he been referred to \nVSU for legal support...",
         "options": [
           {
             "key": "yes",
@@ -1751,7 +1751,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "parenting_intervention",
         "type": "native_radio",
-        "label": "Did the Caregiver participate in an evidence-based parenting \nintervention to prevent and reduce violence and/or sexual risk \nof their children?",
+        "label": "Did the Caregiver participate in an evidence-based parenting \nintervention to prevent and reduce violence and/or sexual risk \nof their children...",
         "options": [
           {
             "key": "yes",
@@ -1778,7 +1778,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": " Project-filed report of suspected abuse to child protection office, police or other local authority",
+        "text": "Project-filed report of suspected abuse to child protection office, police or other local authority",
         "toaster_type": "info",
         "toaster_info_text": "",
         "relevance": {
@@ -1802,7 +1802,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_psychosocial",
         "type": "native_radio",
-        "label": "Was an assessment for the child`s psychosocial needs done?",
+        "label": "Was an assessment for the child`s psychosocial needs done...",
         "options": [
           {
             "key": "yes",
@@ -1852,7 +1852,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_other_services",
         "type": "native_radio",
-        "label": "Was the child referred for other services?",
+        "label": "Was the child referred for other services...",
         "options": [
           {
             "key": "yes",
@@ -1923,7 +1923,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "currently_in_school",
         "type": "native_radio",
-        "label": "Is child currently in school (if child is of school going age)?",
+        "label": "Is child currently in school (if child is of school going age)...",
         "options": [
           {
             "key": "yes",
@@ -1955,7 +1955,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_missed",
         "type": "edit_text",
-        "hint": "How many days of school has the child missed in the past 6 months?",
+        "hint": "How many days of school has the child missed in the past 6 months...",
         "edit_type": "number",
         "read_only": "false",
         "look_up": "true",
@@ -2006,7 +2006,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "challenges_barriers",
         "type": "native_radio",
-        "label": "If the number of school days missed were 20% or more, were \nthe challenges and/or barriers to school attendance discussed? ",
+        "label": "If the number of school days missed were 20% or more, were \nthe challenges and/or barriers to school attendance discussed...",
         "options": [
           {
             "key": "yes",
@@ -2033,7 +2033,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "not_in_school",
         "type": "native_radio",
-        "label": "If child is of school going age is not in school, were the barriers \nto being in school discussed?",
+        "label": "If child is of school going age is not in school, were the barriers \nto being in school discussed...",
         "options": [
           {
             "key": "yes",
@@ -2059,7 +2059,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_household",
         "type": "native_radio",
-        "label": "Was the child/household referred?",
+        "label": "Was the child/household referred...",
         "options": [
           {
             "key": "yes",
@@ -2121,7 +2121,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "verified_by_school",
         "type": "edit_text",
-        "hint": "What grade was the child doing in the\n last calendar year?",
+        "hint": "What grade was the child doing in the\n last calendar year...",
         "edit_type": "number",
         "read_only": "false",
         "look_up": "true",
@@ -2139,7 +2139,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "current_calendar",
         "type": "edit_text",
-        "hint": "What grade is the child doing in the \ncurrent calendar year?",
+        "hint": "What grade is the child doing in the \ncurrent calendar year...",
         "edit_type": "number",
         "read_only": "false",
         "look_up": "false",
@@ -2157,7 +2157,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "did_not_progress",
         "type": "native_radio",
-        "label": "If child of school going age did not progress to the next grade \nat the start of this calendar year, were the barriers to \nprogression discussed?",
+        "label": "If child of school going age did not progress to the next grade \nat the start of this calendar year, were the barriers to \nprogression discussed...",
         "options": [
           {
             "key": "yes",
@@ -2184,7 +2184,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "progression_child_household",
         "type": "native_radio",
-        "label": "Was the child/household referred?",
+        "label": "Was the child/household referred...",
         "options": [
           {
             "key": "yes",
@@ -2232,7 +2232,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "school_administration_name",
         "type": "edit_text",
-        "hint": "School Administration Name ",
+        "hint": "School Administration Name",
         "edit_type": "name",
         "look_up": "true",
         "read_only": "false",

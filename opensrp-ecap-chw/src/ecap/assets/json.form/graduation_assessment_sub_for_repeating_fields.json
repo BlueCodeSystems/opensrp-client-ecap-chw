@@ -146,7 +146,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "virally_suppressed",
         "type": "native_radio",
-        "label": "Has this beneficiary been documented as virally suppressed (with viral load below 1,000 in the last 12 months)?",
+        "label": "Has this beneficiary been documented as virally suppressed (with viral load below 1,000 in the last 12 months)...",
         "options": [
           {
             "key": "yes",
@@ -164,7 +164,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "signs_malnutrition",
         "type": "native_radio",
-        "label": "Are there any signs of malnutrition?",
+        "label": "Are there any signs of malnutrition...",
         "options": [
           {
             "key": "yes",

@@ -10,4 +10,5 @@
     <item name="referral_type_form_name" type="id" />
     <item name="action_scan_qr" type="id" />
     <item name="action_job_aids" type="id" />
+    <item name="details_container" type="id" />
 </resources>

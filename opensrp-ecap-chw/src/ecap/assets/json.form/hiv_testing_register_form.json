@@ -171,7 +171,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caseName_on_art",
         "type": "native_radio",
-        "label": "Are you on Art?",
+        "label": "Are you on Art...",
         "options": [
           {
             "key": "Yes",
@@ -236,7 +236,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Testing location can  only contain letters"
+          "err": "Testing location can only contain letters"
         }
       },
       {
@@ -250,7 +250,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of Person can  only contain letters"
+          "err": "Name of Person can only contain letters"
         }
       },
       {
@@ -264,7 +264,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of Person can  only contain letters"
+          "err": "Name of Person can only contain letters"
         }
       },
       {
@@ -278,7 +278,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of Person can  only contain letters"
+          "err": "Name of Person can only contain letters"
         }
       },
       {
@@ -292,7 +292,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of Person can  only contain letters"
+          "err": "Name of Person can only contain letters"
         }
       },
       {
@@ -306,7 +306,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of Person can  only contain letters"
+          "err": "Name of Person can only contain letters"
         }
       },
       {
@@ -403,7 +403,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "test_done_hf",
         "type": "native_radio",
-        "label": "If HIV+, confirmatory test done at HF? ",
+        "label": "If HIV+, confirmatory test done at HF...",
         "options": [
           {
             "key": "Yes",

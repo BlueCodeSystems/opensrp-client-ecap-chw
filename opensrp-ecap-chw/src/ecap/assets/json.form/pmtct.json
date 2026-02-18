@@ -139,7 +139,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of Person can  only contain letters"
+          "err": "Name of Person can only contain letters"
         }
       },
       {
@@ -291,7 +291,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "mothers_smh_no",
         "type": "edit_text",
-        "hint": "Mother’s SMH No."
+        "hint": "Mother's SMH No."
       },
       {
         "key": "home_address",
@@ -383,7 +383,7 @@
         "type": "native_radio",
         "label_text_style": "bold",
         "text_color": "#000000",
-        "label": "HIV Tested ?",
+        "label": "HIV Tested ...",
         "options": [
           {
             "key": "yes",
@@ -502,7 +502,7 @@
         "openmrs_entity_id": "vl_result_at_trimester_2",
         "type": "edit_text",
         "edit_type": "name",
-        "hint": "VL Result at 2 nd  Trimester:"
+        "hint": "VL Result at 2 nd Trimester:"
       },
 
       {
@@ -520,7 +520,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "male_partner_tested",
         "type": "native_radio",
-        "label": "Male partner tested?",
+        "label": "Male partner tested...",
         "options": [
           {
             "key": "yes",
@@ -670,7 +670,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "tb_screening",
         "type": "native_radio",
-        "label": "TB  Screening (Y/N)",
+        "label": "TB Screening (Y/N)",
         "options": [
           {
             "key": "yes",
@@ -812,7 +812,7 @@
         "openmrs_entity_id": "purpose",
         "type": "toaster_notes",
         "toaster_type": "info",
-        "text": " Labour and Delivery"
+        "text": "Labour and Delivery"
       },
 
       {
@@ -844,7 +844,7 @@
         "type": "native_radio",
         "label_text_style": "bold",
         "text_color": "#000000",
-        "label": "On ART at time of delivery?",
+        "label": "On ART at time of delivery...",
         "options": [
           {
             "key": "yes",
@@ -898,7 +898,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "mother_tested_for_hiv",
         "type": "date_picker",
-        "hint": "When was the mother tested for HIV?",
+        "hint": "When was the mother tested for HIV...",
         "look_up": "true",
         "expanded": false,
         "duration": {
@@ -1081,7 +1081,7 @@
         "openmrs_entity_id": "number_of_condoms_distributed_at_6_months",
         "type": "edit_text",
         "edit_type": "number",
-        "hint": "Number of Condoms Distributed(6 months) "
+        "hint": "Number of Condoms Distributed(6 months)"
       },
       {
         "key": "comments_at_postnatal_care_visit_6",
@@ -1188,7 +1188,7 @@
         "openmrs_entity_id": "number_of_condoms_distributed_at_9_months",
         "type": "edit_text",
         "edit_type": "number",
-        "hint": "Number of Condoms Distributed (9 months) "
+        "hint": "Number of Condoms Distributed (9 months)"
       },
       {
         "key": "comments_at_postnatal_care_visit_9",
@@ -1250,7 +1250,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "art_adherence_counselling_support_at_12_months",
         "type": "native_radio",
-        "label": "ART Adherence Counseling and Support  (12 months)",
+        "label": "ART Adherence Counseling and Support (12 months)",
         "options": [
           {
             "key": "yes",

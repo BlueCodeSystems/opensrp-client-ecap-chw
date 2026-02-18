@@ -162,7 +162,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "we_member_in_period",
         "type": "native_radio",
-        "label": "Was Participant a member of a WE group at some point during the reporting month?",
+        "label": "Was Participant a member of a WE group at some point during the reporting month...",
         "label_text_style": "italic",
         "options": [
           {
@@ -195,7 +195,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "we_loan_in_period",
         "type": "native_radio",
-        "label": "Did Participant take a loan during the reporting month?",
+        "label": "Did Participant take a loan during the reporting month...",
         "label_text_style": "italic",
         "options": [
           {
@@ -258,7 +258,7 @@
         "openmrs_entity_id": "we_loan_value1",
         "type": "edit_text",
         "read_only": "false",
-        "hint": "What is the value of the first loan taken?",
+        "hint": "What is the value of the first loan taken...",
         "edit_type": "name",
         "relevance": {
           "step1:we_loan_in_period": {
@@ -274,7 +274,7 @@
         "openmrs_entity_id": "we_loan_value2",
         "type": "edit_text",
         "read_only": "false",
-        "hint": "What is the value of the second loan taken?",
+        "hint": "What is the value of the second loan taken...",
         "edit_type": "name",
         "relevance": {
           "step1:we_loans_taken_in_period": {
@@ -303,7 +303,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "we_loans1_on_school",
         "type": "native_radio",
-        "label": "Did you use any of the first loan funds to pay for school fees?",
+        "label": "Did you use any of the first loan funds to pay for school fees...",
         "label_text_style": "italic",
         "options": [
           {
@@ -336,7 +336,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "we_loans2_on_school",
         "type": "native_radio",
-        "label": "Did you use any of the second loan funds to pay for school fees?",
+        "label": "Did you use any of the second loan funds to pay for school fees...",
         "label_text_style": "italic",
         "options": [
           {
@@ -369,7 +369,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "we_loans1_on_medical",
         "type": "native_radio",
-        "label": "Did you use any of the first loan funds to pay for medical expenses?",
+        "label": "Did you use any of the first loan funds to pay for medical expenses...",
         "label_text_style": "italic",
         "options": [
           {
@@ -402,7 +402,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "we_loan2_on_medical",
         "type": "native_radio",
-        "label": "Did you use any of the second loan funds to pay for medical expenses?",
+        "label": "Did you use any of the second loan funds to pay for medical expenses...",
         "label_text_style": "italic",
         "options": [
           {
@@ -435,7 +435,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "we_loan1_on_iga",
         "type": "native_radio",
-        "label": "Did you use the first loan to start an IGA?",
+        "label": "Did you use the first loan to start an IGA...",
         "label_text_style": "italic",
         "options": [
           {
@@ -468,7 +468,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "we_loan2_on_iga",
         "type": "native_radio",
-        "label": "Did you use the second loan to start an IGA?",
+        "label": "Did you use the second loan to start an IGA...",
         "label_text_style": "italic",
         "options": [
           {
@@ -502,7 +502,7 @@
         "openmrs_entity_id": "we_loan1_iga_type",
         "type": "edit_text",
         "read_only": "false",
-        "hint": "What type of IGA did you start with your first loan?",
+        "hint": "What type of IGA did you start with your first loan...",
         "edit_type": "name",
         "relevance": {
           "step1:we_loan_in_period": {
@@ -518,7 +518,7 @@
         "openmrs_entity_id": "we_loan2_iga_type",
         "type": "edit_text",
         "read_only": "false",
-        "hint": "What type of IGA did you start with your second loan?",
+        "hint": "What type of IGA did you start with your second loan...",
         "edit_type": "name",
         "relevance": {
           "step1:we_loans_taken_in_period": {
@@ -534,7 +534,7 @@
         "openmrs_entity_id": "we_loan1_use",
         "type": "edit_text",
         "read_only": "false",
-        "hint": "What did you use your first loan for?(Excluding school fees, medical expenses and IGAs)",
+        "hint": "What did you use your first loan for...(Excluding school fees, medical expenses and IGAs)",
         "edit_type": "name",
         "relevance": {
           "step1:we_loan_in_period": {
@@ -550,7 +550,7 @@
         "openmrs_entity_id": "we_loan2_use",
         "type": "edit_text",
         "read_only": "false",
-        "hint": "What did you use your second loan for?(Excluding school fees, medical expenses and IGAs)",
+        "hint": "What did you use your second loan for...(Excluding school fees, medical expenses and IGAs)",
         "edit_type": "name",
         "relevance": {
           "step1:we_loans_taken_in_period": {

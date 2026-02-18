@@ -148,7 +148,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of Person can  only contain letters"
+          "err": "Name of Person can only contain letters"
         }
       },
       {
@@ -319,7 +319,7 @@
         "openmrs_entity_id": "purpose",
         "type": "toaster_notes",
         "toaster_type": "info",
-        "text": "At risk  Adolescent Girls and Young Women (AGYW 10-17 years) Pregnant and/Or Breast Feeding",
+        "text": "At risk Adolescent Girls and Young Women (AGYW 10-17 years) Pregnant and/or Breast Feeding",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -381,7 +381,7 @@
         "openmrs_entity_id": "agyw_hiv_tested",
         "type": "native_radio",
         "text_color": "#000000",
-        "label": "HIV Tested?",
+        "label": "HIV Tested...",
         "options": [
           {
             "key": "yes",
@@ -507,7 +507,7 @@
         "openmrs_entity_id": "agyw_male_hiv_tested",
         "type": "native_radio",
         "text_color": "#000000",
-        "label": "Male partner tested for HIV?",
+        "label": "Male partner tested for HIV...",
         "options": [
           {
             "key": "yes",
@@ -698,7 +698,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "agyw_tb_screening",
         "type": "native_radio",
-        "label": "TB  Screening",
+        "label": "TB Screening",
         "options": [
           {
             "key": "yes",
@@ -892,7 +892,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "agyw_unsuppressed_vl_1st",
         "type": "native_radio",
-        "label": "Unsuppressed VL?",
+        "label": "Unsuppressed VL...",
         "options": [
           {
             "key": "yes",
@@ -936,7 +936,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "agyw_unsuppressed_vl_2nd",
         "type": "native_radio",
-        "label": "Unsuppressed VL?",
+        "label": "Unsuppressed VL...",
         "options": [
           {
             "key": "yes",
@@ -980,7 +980,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "agyw_unsuppressed_vl_3rd",
         "type": "native_radio",
-        "label": "Unsuppressed VL?",
+        "label": "Unsuppressed VL...",
         "options": [
           {
             "key": "yes",
@@ -1066,7 +1066,7 @@
         "openmrs_entity_id": "purpose",
         "type": "toaster_notes",
         "toaster_type": "info",
-        "text": "HIV+  and /Or Breastfeeding AGYW and 18+ Mothers",
+        "text": "HIV+ and /Or Breastfeeding AGYW and 18+ Mothers",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -1169,7 +1169,7 @@
         "openmrs_entity_id": "hiv_tested",
         "type": "native_radio",
         "text_color": "#000000",
-        "label": "HIV Tested ?",
+        "label": "HIV Tested ...",
         "options": [
           {
             "key": "yes",
@@ -1288,7 +1288,7 @@
         "openmrs_entity_id": "male_hiv_tested",
         "type": "native_radio",
         "text_color": "#000000",
-        "label": "Male partner tested for HIV?",
+        "label": "Male partner tested for HIV...",
         "options": [
           {
             "key": "yes",
@@ -1366,7 +1366,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "treatment_initiated",
         "type": "native_radio",
-        "label": "Treatment Initiated?",
+        "label": "Treatment Initiated...",
         "options": [
           {
             "key": "yes",
@@ -1424,7 +1424,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "tb_screening",
         "type": "native_radio",
-        "label": "TB  Screening",
+        "label": "TB Screening",
         "options": [
           {
             "key": "yes",
@@ -1619,7 +1619,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unsuppressed_vl_1st",
         "type": "native_radio",
-        "label": "Unsuppressed VL?",
+        "label": "Unsuppressed VL...",
         "options": [
           {
             "key": "yes",
@@ -1663,7 +1663,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unsuppressed_vl_2nd",
         "type": "native_radio",
-        "label": "Unsuppressed VL?",
+        "label": "Unsuppressed VL...",
         "options": [
           {
             "key": "yes",
@@ -1707,7 +1707,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unsuppressed_vl_3rd",
         "type": "native_radio",
-        "label": "Unsuppressed VL?",
+        "label": "Unsuppressed VL...",
         "options": [
           {
             "key": "yes",

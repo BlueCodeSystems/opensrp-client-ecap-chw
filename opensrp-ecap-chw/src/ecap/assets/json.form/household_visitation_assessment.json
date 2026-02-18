@@ -94,7 +94,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caseworker_lastname",
         "type": "edit_text",
-        "hint": "Case Work Last Name ",
+        "hint": "Case Work Last Name",
         "edit_type": "name",
         "look_up": "true",
         "read_only": "false",
@@ -277,7 +277,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_art",
         "type": "native_radio",
-        "label": "Is Primary Caregiver enrolled on ART?",
+        "label": "Is Primary Caregiver enrolled on ART...",
         "options": [
           {
             "key": "yes",
@@ -303,7 +303,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "clinical_care",
         "type": "native_radio",
-        "label": "Has Primary Caregiver been referred to Health Facility for enrollment into clinical care?",
+        "label": "Has Primary Caregiver been referred to Health Facility for enrollment into clinical care...",
         "options": [
           {
             "key": "yes",
@@ -329,7 +329,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_art",
         "type": "number",
-        "hint": "How long has the Primary Caregiver been on ART? (Indicate Number of Months)"
+        "hint": "How long has the Primary Caregiver been on ART... (Indicate Number of Months)"
       },
       {
         "key": "art_appointment",
@@ -337,7 +337,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "art_appointment",
         "type": "native_radio",
-        "label": "Check the ART appointment card. Did Caregiver meet the last clinical/pharmacy appointment? ",
+        "label": "Check the ART appointment card. Did Caregiver meet the last clinical/pharmacy appointment...",
         "options": [
           {
             "key": "yes",
@@ -364,7 +364,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "counselling",
         "type": "native_radio",
-        "label": "If Primary Caregiver missed last clinical/pharmacy appointment, not adhering to treatment or VL is greater than 1000, age appropriate adherence counselling was conducted during home visit?",
+        "label": "If Primary Caregiver missed last clinical/pharmacy appointment, not adhering to treatment or VL is greater than 1000, age appropriate adherence counselling was conducted during home visit...",
         "options": [
           {
             "key": "yes",
@@ -391,7 +391,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "art_medication",
         "type": "native_radio",
-        "label": "If Primary Caregiver is on ART, is s/he adhering to medication? ",
+        "label": "If Primary Caregiver is on ART, is s/he adhering to medication...",
         "options": [
           {
             "key": "yes",
@@ -418,7 +418,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "mmd",
         "type": "native_radio",
-        "label": "Is the Primary Caregiver on single or multi-month dispensation (MMD)?",
+        "label": "Is the Primary Caregiver on single or multi-month dispensation (MMD)...",
         "options": [
           {
             "key": "yes",
@@ -444,11 +444,11 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "mmd_months",
         "type": "edit_text",
-        "hint": "Indicate the number of MMD months of drugs ",
+        "hint": "Indicate the number of MMD months of drugs",
         "edit_type": "number",
         "v_required": {
           "value": false,
-          "err": "Indicate the number of MMD months of drugs "
+          "err": "Indicate the number of MMD months of drugs"
         },
         "relevance": {
           "step1:hiv_status": {
@@ -463,7 +463,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "six_months",
         "type": "native_radio",
-        "label": "If the Primary Caregiver has been on ART for longer than six months, have they submitted a sample for VL?",
+        "label": "If the Primary Caregiver has been on ART for longer than six months, have they submitted a sample for VL...",
         "options": [
           {
             "key": "yes",
@@ -541,7 +541,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_hiv",
         "type": "date_picker",
-        "hint": "When was the last HIV test done?",
+        "hint": "When was the last HIV test done...",
         "expanded": false,
         "duration": {
           "label": ""
@@ -550,7 +550,7 @@
         "max_date": "today",
         "v_required": {
           "value": false,
-          "err": " HIV test date cannot empty"
+          "err": "HIV test date cannot empty"
         },
         "relevance": {
           "step1:hiv_status": {
@@ -565,7 +565,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "visit_hiv_test",
         "type": "native_radio",
-        "label": "If first home visit and HIV test was conducted more than 3 months ago, has an HIV risk assessment been done?",
+        "label": "If first home visit and HIV test was conducted more than 3 months ago, has an HIV risk assessment been done...",
         "options": [
           {
             "key": "yes",
@@ -592,7 +592,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "referred_for_testing",
         "type": "native_radio",
-        "label": "Has the Primary Caregiver been referred for HIV testing at health facility if \nthe HIV risk assessment indicates an HIV test is required?",
+        "label": "Has the Primary Caregiver been referred for HIV testing at health facility if \nthe HIV risk assessment indicates an HIV test is required...",
         "options": [
           {
             "key": "yes",
@@ -619,7 +619,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_risk",
         "type": "native_radio",
-        "label": "Has there been a change in the Primary Caregiver’s HIV risky behavior since the last visit?",
+        "label": "Has there been a change in the Primary Caregiver's HIV risky behavior since the last visit...",
         "exclusive": [
           "none"
         ],
@@ -653,7 +653,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_assessment",
         "type": "native_radio",
-        "label": "If there has been a change in the Primary Caregiver’s HIV risk behavior since the last visit has an HIV risk reduction counselling and HIV risk assessment been conducted? ",
+        "label": "If there has been a change in the Primary Caregiver's HIV risk behavior since the last visit has an HIV risk reduction counselling and HIV risk assessment been conducted...",
         "options": [
           {
             "key": "yes",
@@ -723,7 +723,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "referred_facility",
         "type": "native_radio",
-        "label": "Has Primary Caregiver been referred to health facility for HIV testing if test is required?",
+        "label": "Has Primary Caregiver been referred to health facility for HIV testing if test is required...",
         "options": [
           {
             "key": "yes",
@@ -759,7 +759,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd1",
         "type": "label",
-        "text": "Dependents’ HIV Status Section"
+        "text": "Dependents' HIV Status Section"
       },
       {
         "key": "number_children",
@@ -777,7 +777,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_awareness_status",
         "type": "native_radio",
-        "label": "Is the Caregiver aware of the HIV status of all the children 0-17 years?",
+        "label": "Is the Caregiver aware of the HIV status of all the children 0-17 years...",
         "options": [
           {
             "key": "yes",
@@ -797,7 +797,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_not_aware",
         "type": "native_radio",
-        "label": "If Primary Caregiver is not aware of HIV status of children in household, has \nthe Caseworker provided HIV risk reduction counselling and risk \nassessment for all the children whose status is unknown?",
+        "label": "If Primary Caregiver is not aware of HIV status of children in household, has \nthe Caseworker provided HIV risk reduction counselling and risk \nassessment for all the children whose status is unknown...",
         "options": [
           {
             "key": "yes",
@@ -823,7 +823,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_test_referral",
         "type": "native_radio",
-        "label": "Has a referral been made for HIV test, based on the HIV risk assessment for children whose status is unknown?",
+        "label": "Has a referral been made for HIV test, based on the HIV risk assessment for children whose status is unknown...",
         "options": [
           {
             "key": "yes",
@@ -867,7 +867,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "school_fees",
         "type": "native_radio",
-        "label": "Was the Primary Caregiver able to pay for school fees for all children of school going age over the past 2 terms? ",
+        "label": "Was the Primary Caregiver able to pay for school fees for all children of school going age over the past 2 terms...",
         "options": [
           {
             "key": "yes",
@@ -888,7 +888,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unpaid_school_fees",
         "type": "native_radio",
-        "label": "If Primary Caregiver was not able to pay for school fees for all \nchildren of school going age, have the barriers/challenges been \ndiscussed?",
+        "label": "If Primary Caregiver was not able to pay for school fees for all \nchildren of school going age, have the barriers/challenges been \ndiscussed...",
         "options": [
           {
             "key": "yes",
@@ -914,7 +914,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "linked_economic",
         "type": "native_radio",
-        "label": "Has the Primary Caregiver been referred to market linked economic \nstrengthening activity?",
+        "label": "Has the Primary Caregiver been referred to market linked economic \nstrengthening activity...",
         "options": [
           {
             "key": "yes",
@@ -940,7 +940,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "referred_mcdss",
         "type": "native_radio",
-        "label": "Has the Primary Caregiver been referred to MCDSS for social cash transfer?",
+        "label": "Has the Primary Caregiver been referred to MCDSS for social cash transfer...",
         "options": [
           {
             "key": "yes",
@@ -1009,7 +1009,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "bills_associated",
         "type": "native_radio",
-        "label": "Was the Primary Caregiver able to pay for fees associated with medical treatment and care for all children \nand adolescents in the household in the past 6 months? ",
+        "label": "Was the Primary Caregiver able to pay for fees associated with medical treatment and care for all children \nand adolescents in the household in the past 6 months...",
         "options": [
           {
             "key": "yes",
@@ -1029,7 +1029,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "barriers_challenges",
         "type": "native_radio",
-        "label": "If Primary Caregiver was not able to pay the fees associated with \nmedical treatment and care for all children of school going age, \nhave the barriers/challenges been discussed?",
+        "label": "If Primary Caregiver was not able to pay the fees associated with \nmedical treatment and care for all children of school going age, \nhave the barriers/challenges been discussed...",
         "options": [
           {
             "key": "yes",
@@ -1055,7 +1055,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "economic_strengthening",
         "type": "native_radio",
-        "label": "Has the Primary Caregiver been referred to market linked economic strengthening activity? ",
+        "label": "Has the Primary Caregiver been referred to market linked economic strengthening activity...",
         "options": [
           {
             "key": "yes",
@@ -1081,7 +1081,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "social_cash",
         "type": "native_radio",
-        "label": "Has the Primary Caregiver been referred to MCDSS for social cash transfer?",
+        "label": "Has the Primary Caregiver been referred to MCDSS for social cash transfer...",
         "options": [
           {
             "key": "yes",
@@ -1157,7 +1157,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caseworker_lastname",
         "type": "edit_text",
-        "hint": "Case Work Last Name ",
+        "hint": "Case Work Last Name",
         "edit_type": "name",
         "look_up": "true",
         "read_only": "true",
@@ -1223,7 +1223,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caseworker_lastname",
         "type": "edit_text",
-        "hint": "Verified by Case Manager Last Name ",
+        "hint": "Verified by Case Manager Last Name",
         "edit_type": "name",
         "look_up": "true",
         "read_only": "true",
@@ -1288,7 +1288,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "school_administration_lastname",
         "type": "edit_text",
-        "hint": "Verified By School Administration Last Name ",
+        "hint": "Verified By School Administration Last Name",
         "edit_type": "name",
         "look_up": "true",
         "read_only": "false",

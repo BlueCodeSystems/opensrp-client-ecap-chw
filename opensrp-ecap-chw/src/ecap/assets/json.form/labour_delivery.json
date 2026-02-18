@@ -64,7 +64,7 @@
         "openmrs_entity_id": "purpose",
         "type": "toaster_notes",
         "toaster_type": "info",
-        "text": " Labour and Delivery"
+        "text": "Labour and Delivery"
       },
       {
         "key": "household_id",
@@ -106,7 +106,7 @@
         "openmrs_entity_id": "on_art_at_time_of_delivery",
         "type": "native_radio",
         "text_color": "#000000",
-        "label": "On ART at time of delivery?",
+        "label": "On ART at time of delivery...",
         "options": [
           {
             "key": "yes",
