@@ -312,18 +312,13 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             }
 
 
-              switch (v.getId()) {
-
-                  case (R.id.muac):
-
-                      try {
-                          String titleAge = holder.ageGender.getText() != null ? holder.ageGender.getText().toString() : "";
-                          openFormUsingFormUtils(context,"muac", child, titleAge);
-                      } catch (JSONException e) {
-                          e.printStackTrace();
-                      }
-
-                    break;
+            if (v.getId() == R.id.muac) {
+                try {
+                    String titleAge = holder.ageGender.getText() != null ? holder.ageGender.getText().toString() : "";
+                    openFormUsingFormUtils(context,"muac", child, titleAge);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         } );
 
@@ -346,32 +341,30 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
         holder.lview.setOnClickListener(v -> {
 
-            switch (v.getId()) {
+            if (v.getId() == R.id.register_columns) {
+                Child child = holder.itemView.getTag() instanceof Child ? (Child) holder.itemView.getTag() : initialChild;
+                String subpop3 = child != null ? child.getSubpop3() : null;
+                if (subpop3 == null) {
+                    Intent editIntent = new Intent(context, IndexDetailsActivity.class);
+                    editIntent.putExtra("Child", child != null ? child.getUnique_id() : childUniqueID);
+                    editIntent.putExtra("open_vca_edit_if_incomplete", true);
+                    context.startActivity(editIntent);
+                    return;
+                }
 
-                case (R.id.register_columns):
+                if((Integer.parseInt(memberAge) < 24) ){
 
-                    Child child = holder.itemView.getTag() instanceof Child ? (Child) holder.itemView.getTag() : initialChild;
-                    String subpop3 = child != null ? child.getSubpop3() : null;
-                    if (subpop3 == null) {
-                        Toasty.warning(context, "Member data incomplete", Toast.LENGTH_LONG, true).show();
-                        return;
-                    }
+                    Intent intent = new Intent(context, IndexDetailsActivity.class);
+                    intent.putExtra("fromIndex", "321");
+                    intent.putExtra("Child",  child != null ? child.getUnique_id() : childUniqueID);
+                    context.startActivity(intent);
 
-                    if((Integer.parseInt(memberAge) < 24) ){
+                } /*else if (!isEligibleForEnrollment(child)){
+                    Toasty.warning(context, "Member is not eligible on the Program", Toast.LENGTH_LONG, true).show();
 
-                        Intent intent = new Intent(context, IndexDetailsActivity.class);
-                        intent.putExtra("fromIndex", "321");
-                        intent.putExtra("Child",  child != null ? child.getUnique_id() : childUniqueID);
-                        context.startActivity(intent);
-
-                    } /*else if (!isEligibleForEnrollment(child)){
-                        Toasty.warning(context, "Member is not eligible on the Program", Toast.LENGTH_LONG, true).show();
-
-                    }*/else {
-                        Toasty.warning(context, "Member is not enrolled on the Program", Toast.LENGTH_LONG, true).show();
-                    }
-
-                    break;
+                }*/else {
+                    Toasty.warning(context, "Member is not enrolled on the Program", Toast.LENGTH_LONG, true).show();
+                }
             }
         });
 

@@ -31,6 +31,7 @@ import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
+import com.vijay.jsonwizard.domain.Form;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,6 +59,7 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
     Context context;
     List<CasePlanModel> caseplans;
     String hivStatus;
+    private ObjectMapper oMapper;
     AlertDialog.Builder builder;
     private static final long REFRESH_DELAY = 100;
     private Handler handler = new Handler();
@@ -140,17 +142,21 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
 
 
 
-        holder.linearLayout.setOnClickListener(v -> {
+        View.OnClickListener openCasePlanListener = v -> {
+            Intent i = new Intent(context, CasePlan.class);
+            i.putExtra("childId",  casePlan.getUnique_id());
+            i.putExtra("dateId",  casePlan.getCase_plan_date());
+            i.putExtra("case_plan_id",casePlan.getCase_plan_id());
+            i.putExtra("hivStatus",  hivStatus);
+            context.startActivity(i);
+        };
 
-            if (v.getId() == R.id.itemm) {
-
-                Intent i = new Intent(context, CasePlan.class);
-                i.putExtra("childId",  casePlan.getUnique_id());
-                i.putExtra("dateId",  casePlan.getCase_plan_date());
-                i.putExtra("case_plan_id",casePlan.getCase_plan_id());
-                i.putExtra("hivStatus",  hivStatus);
-                context.startActivity(i);
-
+        holder.linearLayout.setOnClickListener(openCasePlanListener);
+        holder.editme.setOnClickListener(v -> {
+            try {
+                openFormUsingFormUtils(context, "case_plan", casePlan);
+            } catch (JSONException e) {
+                Timber.e(e);
             }
         });
         holder.delete.setOnClickListener(v -> {
@@ -240,6 +246,42 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
         }
 
     }
+
+    public void openFormUsingFormUtils(Context context, String formName, CasePlanModel casePlan) throws JSONException {
+        oMapper = new ObjectMapper();
+
+        FormUtils formUtils = null;
+        try {
+            formUtils = new FormUtils(context);
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+        if (formUtils == null) {
+            return;
+        }
+
+        JSONObject formToBeOpened = formUtils.getFormJson(formName);
+        formToBeOpened.put("entity_id", casePlan.getBase_entity_id());
+        CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(casePlan, Map.class));
+        startFormActivity(formToBeOpened);
+    }
+
+    public void startFormActivity(JSONObject jsonObject) {
+        Form form = new Form();
+        form.setWizard(false);
+        form.setName("Case Plan");
+        form.setHideSaveLabel(true);
+        form.setNextLabel("Next");
+        form.setPreviousLabel("Previous");
+        form.setSaveLabel("Submit");
+        form.setActionBarBackground(org.smartregister.R.color.dark_grey);
+
+        Intent intent = new Intent(context, org.smartregister.family.util.Utils.metadata().familyFormActivity);
+        intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
+        intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
+        ((Activity) context).startActivityForResult(intent, com.bluecodeltd.ecap.chw.util.JsonFormUtils.REQUEST_CODE_GET_JSON);
+    }
+
     public ChildIndexEventClient processRegistration(String jsonString){
 
         try {
@@ -295,7 +337,7 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
 
                         JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
 
-                        if (isEditMode) {
+                        if (isEditMode && existingClientJsonObject != null) {
                             JSONObject mergedClientJsonObject =
                                     org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
                             ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
@@ -352,7 +394,7 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView txtCaseDate, txtQuarter, txtCasePlanStatus, txtVulnerabilities;
-        ImageView delete;
+        ImageView delete, editme;
 
         LinearLayout linearLayout;
 
@@ -366,6 +408,7 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
             txtQuarter = itemView.findViewById(R.id.quarter);
             txtCasePlanStatus = itemView.findViewById(R.id.case_plan_status);
             txtVulnerabilities = itemView.findViewById(R.id.vulnerabilities);
+            editme = itemView.findViewById(R.id.edit_me);
             delete = itemView.findViewById(R.id.delete_record);
 
         }
@@ -378,3 +421,5 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
     }
 
 }
+
+

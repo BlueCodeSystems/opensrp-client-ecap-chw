@@ -179,6 +179,7 @@ public class IndexPersonDao  extends AbstractDao {
             record.setSafe_services(getCursorValue(c,"safe_services"));
             record.setOther_safe_services(getCursorValue(c,"other_safe_services"));
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
@@ -576,6 +577,7 @@ public class IndexPersonDao  extends AbstractDao {
             record.setComment(getCursorValue(c, "comment"));
             record.setCase_plan_id(getCursorValue(c, "case_plan_id"));
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
           };
         }
@@ -603,6 +605,7 @@ public class IndexPersonDao  extends AbstractDao {
             record.setDeleted(getCursorValue(c, "deleted"));
             record.setGraduation_benchmark(getCursorValue(c, "graduation_benchmark"));
             record.setOvc_name(getCursorValue(c, "ovc_name"));
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
@@ -705,6 +708,7 @@ public class IndexPersonDao  extends AbstractDao {
             );
             record.setGraduation_benchmark(getCursorValue(c, "graduation_benchmark"));
             record.setOvc_name(getCursorValue(c, "ovc_name"));
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
         List <Child> children =  AbstractDao.readData(sql, dataMap);
@@ -809,6 +813,7 @@ public class IndexPersonDao  extends AbstractDao {
             );
             record.setGraduation_benchmark(getCursorValue(c, "graduation_benchmark"));
             record.setOvc_name(getCursorValue(c, "ovc_name"));
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
         List<Child> children = null;
@@ -948,6 +953,7 @@ public class IndexPersonDao  extends AbstractDao {
             );
             record.setGraduation_benchmark(getCursorValue(c, "graduation_benchmark"));
             record.setOvc_name(getCursorValue(c, "ovc_name"));
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
         List <Child> children =  AbstractDao.readData(sql, dataMap);
@@ -988,3 +994,5 @@ public class IndexPersonDao  extends AbstractDao {
 
     }
 }
+
+

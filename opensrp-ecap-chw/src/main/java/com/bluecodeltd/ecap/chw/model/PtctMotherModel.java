@@ -722,4 +722,21 @@ public class PtctMotherModel {
     public void setCaregiver_birth_date(String caregiver_birth_date) {
         this.caregiver_birth_date = caregiver_birth_date;
     }
+
+    private final java.util.Map<String, String> additionalFields = new java.util.HashMap<>();
+
+    public java.util.Map<String, String> getAdditionalFields() {
+        return additionalFields;
+    }
+
+    public String getAdditionalField(String key) {
+        if (key == null) return null;
+        return additionalFields.get(key);
+    }
+
+    public void setAdditionalField(String key, String value) {
+        if (key == null) return;
+        additionalFields.put(key, value);
+    }
 }
+

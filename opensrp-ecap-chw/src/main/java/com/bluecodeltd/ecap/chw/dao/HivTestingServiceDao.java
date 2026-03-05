@@ -83,8 +83,11 @@ public class HivTestingServiceDao extends AbstractDao {
             record.setDate_client_created(getCursorValue(c, "date_client_created"));
 
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 
 }
+
+

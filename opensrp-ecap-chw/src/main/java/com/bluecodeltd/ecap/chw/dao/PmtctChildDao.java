@@ -86,7 +86,10 @@ public class PmtctChildDao extends AbstractDao {
             record.setDelete_status(getCursorValue(c,"delete_status"));
 
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 }
+
+

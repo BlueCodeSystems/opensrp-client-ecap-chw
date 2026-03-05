@@ -1558,6 +1558,9 @@ public class HouseholdDetails extends AppCompatActivity {
                     return;
                 }
 
+                final boolean shouldCreatePmtctChildRecord =
+                        shouldCreatePmtctChildRecordFromFamilyMember(jsonFormObject, EncounterType, is_edit_mode);
+
                 Runnable postSave = () -> {
                     switch (EncounterType) {
 
@@ -1642,9 +1645,19 @@ public class HouseholdDetails extends AppCompatActivity {
                     }
                 };
 
-                boolean scheduled = saveRegistration(childIndexEventClient, is_edit_mode, EncounterType, postSave);
-                if (!scheduled) {
+                Runnable postSaveWithPmtct = () -> {
+                    if (shouldCreatePmtctChildRecord && childIndexEventClient.getClient() != null) {
+                        savePmtctChildRecordFromFamilyMember(
+                                jsonFormObject,
+                                childIndexEventClient.getClient().getBaseEntityId()
+                        );
+                    }
                     postSave.run();
+                };
+
+                boolean scheduled = saveRegistration(childIndexEventClient, is_edit_mode, EncounterType, postSaveWithPmtct);
+                if (!scheduled) {
+                    postSaveWithPmtct.run();
                 }
             } catch (Exception e) {
                 Timber.e(e);
@@ -1658,6 +1671,130 @@ public class HouseholdDetails extends AppCompatActivity {
         Intent openSignatureIntent   =  new Intent(this,SignatureActivity.class);
         openSignatureIntent.putExtra("jsonForm", jsonFormObject.toString());
         return openSignatureIntent;
+    }
+
+    private boolean shouldCreatePmtctChildRecordFromFamilyMember(JSONObject jsonFormObject, String encounterType, boolean isEditMode) {
+        if (!"Family Member".equals(encounterType) || isEditMode) {
+            return false;
+        }
+
+        String caregiverStatus = getFormFieldValue(jsonFormObject, "step3", "caregiver_hiv_status");
+        String childDob = getFormFieldValue(jsonFormObject, "step1", "adolescent_birthdate");
+
+        return isPositiveHivStatus(caregiverStatus) && isAgeBetweenZeroAndTwo(childDob);
+    }
+
+    private boolean isPositiveHivStatus(String status) {
+        if (TextUtils.isEmpty(status)) {
+            return false;
+        }
+
+        String normalized = status.trim().toLowerCase(Locale.ENGLISH);
+        return normalized.equals("positive")
+                || normalized.equals("hiv+")
+                || normalized.equals("hiv +")
+                || normalized.equals("yes");
+    }
+
+    private boolean isAgeBetweenZeroAndTwo(String childDob) {
+        String normalized = normalizeBirthdate(childDob);
+        if (TextUtils.isEmpty(normalized)) {
+            return false;
+        }
+
+        try {
+            LocalDate dob = LocalDate.parse(normalized, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            LocalDate today = LocalDate.now();
+            if (dob.isAfter(today)) {
+                return false;
+            }
+
+            int years = Period.between(dob, today).getYears();
+            return years >= 0 && years <= 2;
+        } catch (Exception e) {
+            Timber.e(e);
+            return false;
+        }
+    }
+
+    private void savePmtctChildRecordFromFamilyMember(JSONObject familyMemberFormObject, String baseEntityId) {
+        if (TextUtils.isEmpty(baseEntityId)) {
+            return;
+        }
+
+        try {
+            JSONObject pmtctChildForm = buildPmtctChildFamilyMemberForm(familyMemberFormObject, baseEntityId);
+            ChildIndexEventClient pmtctChildEventClient = processRegistration(pmtctChildForm.toString());
+            if (pmtctChildEventClient != null) {
+                saveRegistration(
+                        pmtctChildEventClient,
+                        true,
+                        "Mother Pmtct Child Family Member",
+                        null
+                );
+            }
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+    }
+
+    private JSONObject buildPmtctChildFamilyMemberForm(JSONObject familyMemberFormObject, String baseEntityId) throws JSONException {
+        JSONObject transformed = new JSONObject(familyMemberFormObject.toString());
+        transformed.put(JsonFormConstants.ENCOUNTER_TYPE, "Mother Pmtct Child Family Member");
+        transformed.put("entity_id", baseEntityId);
+
+        String firstName = getFormFieldValue(transformed, "step1", "first_name");
+        String lastName = getFormFieldValue(transformed, "step1", "last_name");
+        String birthDate = getFormFieldValue(transformed, "step1", "adolescent_birthdate");
+        String sex = getFormFieldValue(transformed, "step1", "gender");
+        String householdId = getFormFieldValue(transformed, "step1", "household_id");
+
+        upsertHiddenPersonAttributeField(transformed, "step1", "infant_first_name", "infant_first_name", firstName);
+        upsertHiddenPersonAttributeField(transformed, "step1", "infant_lastname", "infant_lastname", lastName);
+        upsertHiddenPersonAttributeField(transformed, "step1", "infants_date_of_birth", "infants_date_of_birth", birthDate);
+        upsertHiddenPersonAttributeField(transformed, "step1", "infants_sex", "infants_sex", sex);
+        upsertHiddenPersonAttributeField(transformed, "step1", "pmtct_id", "pmtct_id", householdId);
+
+        return transformed;
+    }
+
+    private void upsertHiddenPersonAttributeField(JSONObject formObject, String stepName, String key, String openmrsEntityId, String value) throws JSONException {
+        JSONObject step = formObject.optJSONObject(stepName);
+        if (step == null) {
+            return;
+        }
+
+        JSONArray stepFields = step.optJSONArray("fields");
+        if (stepFields == null) {
+            return;
+        }
+
+        JSONObject fieldObject = getFieldJSONObject(stepFields, key);
+        if (fieldObject == null) {
+            fieldObject = new JSONObject();
+            fieldObject.put("key", key);
+            fieldObject.put("openmrs_entity_parent", "");
+            fieldObject.put("openmrs_entity", "person_attribute");
+            fieldObject.put("openmrs_entity_id", openmrsEntityId);
+            fieldObject.put("type", "hidden");
+            stepFields.put(fieldObject);
+        } else {
+            fieldObject.put("openmrs_entity", "person_attribute");
+            fieldObject.put("openmrs_entity_id", openmrsEntityId);
+            fieldObject.put("type", "hidden");
+        }
+
+        fieldObject.put(JsonFormUtils.VALUE, TextUtils.isEmpty(value) ? "" : value);
+    }
+
+    private String getFormFieldValue(JSONObject formObject, String stepName, String key) {
+        try {
+            JSONObject fieldObject = getFieldJSONObject(fields(formObject, stepName), key);
+            return fieldObject != null ? fieldObject.optString(JsonFormUtils.VALUE, "") : "";
+        } catch (Exception e) {
+            Timber.e(e);
+            return "";
+        }
     }
 
 
@@ -1742,6 +1879,18 @@ public class HouseholdDetails extends AppCompatActivity {
                         FormTag formTag = getFormTag();
                         Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
                                 encounterType, Constants.EcapClientTable.EC_CLIENT_INDEX);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+
+                    break;
+
+                case "Mother Pmtct Child Family Member":
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_pmtct_child");
                         tagSyncMetadata(event);
                         Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
                         return new ChildIndexEventClient(event, client);

@@ -130,7 +130,11 @@
         "openmrs_entity_id": "adolescent_phone",
         "read_only": "true",
         "type": "edit_text",
-        "hint": "Telephone"
+        "hint": "Telephone",
+        "v_regex": {
+          "value": "((07||09||05)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,055,056,057,095, 096, or 097 and must be a total of 10 digits in length"
+        }
       },
       {
         "key": "physical_address",

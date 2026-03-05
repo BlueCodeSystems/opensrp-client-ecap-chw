@@ -73,6 +73,7 @@
         "openmrs_entity_id": "is_closed",
         "type": "hidden"
       },
+
       {
         "key": "household_id",
         "openmrs_entity_parent": "",
@@ -98,7 +99,7 @@
         "key": "district",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "countyDistrict",
+        "openmrs_entity_id": "district",
         "type": "edit_text",
         "hint": "District",
         "read_only": "true",
@@ -112,129 +113,9 @@
         "openmrs_entity_id": "ward",
         "type": "edit_text",
         "hint": "Ward",
-        "read_only": "false",
-        "edit_type": "name",
-        "look_up": "true"
-      },
-      {
-        "key": "facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "facility",
-        "type": "edit_text",
-        "hint": "Health Facility",
-        "read_only": "true",
-        "edit_type": "name"
-      },
-      {
-        "key": "partner",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "partner",
-        "type": "edit_text",
-        "hint": "Implementing Partner",
         "read_only": "true",
         "edit_type": "name",
         "look_up": "true"
-      },
-      {
-        "key": "caseworker_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_name",
-        "type": "edit_text",
-        "hint": "Name of Community Case Worker",
-        "read_only": "true",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of Person can only contain letters"
-        }
-      },
-      {
-        "key": "spacer",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "2",
-        "type": "spacer",
-        "spacer_height": "15dp"
-      },
-      {
-        "key": "info",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "purpose",
-        "type": "toaster_notes",
-        "toaster_type": "info",
-        "text": "PMTCT Mothers Details"
-      },
-      {
-        "key": "pmtct_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "pmtct_id",
-        "type": "edit_type",
-        "read_only": "false",
-        "edit_type": "name"
-      },
-
-      {
-        "key": "date_enrolled_ecap",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_enrolled_ecap",
-        "type": "date_picker",
-        "hint": "Date Enrolled in ECAP II Program",
-        "look_up": "true",
-        "expanded": false,
-        "min_date": "01-01-1900",
-        "max_date": "today",
-        "v_required": {
-          "value": true,
-          "err": "Please enter the date enrolled"
-        },
-        "relevance": {
-          "step1:ecap_id_question": {
-            "type": "string",
-            "ex": "equalTo(., \"Yes\")"
-          }
-        }
-      },
-      {
-        "key": "ecap_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "ecap_id",
-        "type": "edit_text",
-        "read_only": "false",
-        "hint": "ECAP II Comprehensive Program ID",
-        "edit_type": "name",
-        "v_required": {
-          "value": true,
-          "err": "Please enter the ECAP II comprehensive program ID"
-        },
-        "relevance": {
-          "step1:ecap_id_question": {
-            "type": "string",
-            "ex": "equalTo(., \"Yes\")"
-          }
-        }
-      },
-      {
-        "key": "date_enrolled_pmtct",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_enrolled_pmtct",
-        "type": "date_picker",
-        "hint": "Date Enrolled in Community PMTCT Program",
-        "look_up": "true",
-        "expanded": false,
-        "min_date": "01-01-1900",
-        "max_date": "today",
-        "v_required": {
-          "value": true,
-          "err": "Please enter the date enrolled"
-        }
       },
       {
         "key": "caregiver_name",
@@ -274,12 +155,75 @@
         }
       },
       {
-        "key": "home_address",
+        "key": "facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "home_address",
+        "openmrs_entity_id": "facility",
+        "hint": "Facility",
+        "type": "spinner",
+        "openmrs_data_type": "",
+        "value": false,
+        "values": [],
+        "keys": [],
+        "v_required": {
+          "value": true,
+          "err": "Facility is Required"
+        },
+        "read_only": "false",
+        "edit_type": "name"
+      },
+      {
+        "key": "partner",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "partner",
         "type": "edit_text",
-        "hint": "Address",
+        "hint": "Implementing Partner",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true"
+      },
+      {
+        "key": "spacer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "2",
+        "type": "spacer",
+        "spacer_height": "15dp"
+      },
+      {
+        "key": "info",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "purpose",
+        "type": "toaster_notes",
+        "toaster_type": "info",
+        "text": "PMTCT Mothers Details"
+      },
+      {
+        "key": "date_enrolled_pmtct",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_enrolled_pmtct",
+        "type": "date_picker",
+        "hint": "Date Enrolled in Community PMTCT Program",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "01-01-1900",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Please enter the date enrolled"
+        }
+      },
+
+      {
+        "key": "homeaddress",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "homeaddress",
+        "type": "edit_text",
+        "hint": "Home Address",
         "edit_type": "name",
         "v_required": {
           "value": false,
@@ -287,31 +231,30 @@
         }
       },
       {
-        "key": "nearest_landmark",
+        "key": "landmark",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "nearest_landmark",
+        "openmrs_entity_id": "landmark",
         "type": "edit_text",
-        "hint": "Landmark"
+        "hint": "Nearest Landmark"
       },
       {
-        "key": "mothers_phone",
+        "key": "caregiver_phone",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "mothers_phone",
+        "openmrs_entity_id": "caregiver_phone",
         "type": "edit_text",
-        "hint": "Phone Number",
+        "hint": "Mother's Phone Number",
         "edit_type": "number",
         "v_numeric": {
           "value": false,
           "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
         },
         "v_regex": {
-          "value": "((07||09)[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+          "value": "((07||09||05)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,055,056,057,095, 096, or 097 and must be a total of 10 digits in length"
         }
       },
-
       {
         "key": "agyw_info",
         "openmrs_entity_parent": "",
@@ -319,7 +262,7 @@
         "openmrs_entity_id": "purpose",
         "type": "toaster_notes",
         "toaster_type": "info",
-        "text": "At risk Adolescent Girls and Young Women (AGYW 10-17 years) Pregnant and/or Breast Feeding",
+        "text": "At risk  Adolescent Girls and Young Women (AGYW 10-17 years) Pregnant and/Or Breast Feeding",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -328,8 +271,6 @@
           }
         }
       },
-
-
       {
         "key": "agyw_date_1st_visit",
         "openmrs_entity_parent": "",
@@ -381,7 +322,7 @@
         "openmrs_entity_id": "agyw_hiv_tested",
         "type": "native_radio",
         "text_color": "#000000",
-        "label": "HIV Tested...",
+        "label": "HIV Tested?",
         "options": [
           {
             "key": "yes",
@@ -507,7 +448,7 @@
         "openmrs_entity_id": "agyw_male_hiv_tested",
         "type": "native_radio",
         "text_color": "#000000",
-        "label": "Male partner tested for HIV...",
+        "label": "Male partner tested for HIV?",
         "options": [
           {
             "key": "yes",
@@ -621,7 +562,6 @@
           }
         }
       },
-
       {
         "key": "agyw_date_initiated_art",
         "openmrs_entity_parent": "",
@@ -662,8 +602,6 @@
           }
         }
       },
-
-
       {
         "key": "agyw_on_treatment_anc_visit",
         "openmrs_entity_parent": "",
@@ -698,7 +636,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "agyw_tb_screening",
         "type": "native_radio",
-        "label": "TB Screening",
+        "label": "TB  Screening",
         "options": [
           {
             "key": "yes",
@@ -798,9 +736,6 @@
           }
         }
       },
-
-
-
       {
         "key": "agyw_hiv_result_1st_trimester",
         "openmrs_entity_parent": "",
@@ -870,7 +805,6 @@
           }
         }
       },
-
       {
         "key": "agyw_vl_result_1st_trimester",
         "openmrs_entity_parent": "",
@@ -892,7 +826,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "agyw_unsuppressed_vl_1st",
         "type": "native_radio",
-        "label": "Unsuppressed VL...",
+        "label": "Unsuppressed VL?",
         "options": [
           {
             "key": "yes",
@@ -936,7 +870,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "agyw_unsuppressed_vl_2nd",
         "type": "native_radio",
-        "label": "Unsuppressed VL...",
+        "label": "Unsuppressed VL?",
         "options": [
           {
             "key": "yes",
@@ -980,7 +914,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "agyw_unsuppressed_vl_3rd",
         "type": "native_radio",
-        "label": "Unsuppressed VL...",
+        "label": "Unsuppressed VL?",
         "options": [
           {
             "key": "yes",
@@ -1003,8 +937,6 @@
           }
         }
       },
-
-
       {
         "key": "preventive_services",
         "openmrs_entity_parent": "",
@@ -1013,7 +945,6 @@
         "type": "check_box",
         "label": "Preventive Services Provided/Referred (HIV- at risk AGYW)",
         "options": [
-
           {
             "key": "Conducted HIV risk assessment",
             "text": "Conducted HIV risk assessment"
@@ -1053,12 +984,6 @@
           }
         }
       },
-
-
-
-
-
-
       {
         "key": "Hiv_18_info",
         "openmrs_entity_parent": "",
@@ -1066,7 +991,7 @@
         "openmrs_entity_id": "purpose",
         "type": "toaster_notes",
         "toaster_type": "info",
-        "text": "HIV+ and /Or Breastfeeding AGYW and 18+ Mothers",
+        "text": "HIV+  and /Or Breastfeeding AGYW and 18+ Mothers",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -1097,7 +1022,6 @@
             }
           }
         }
-
       },
       {
         "key": "art_number",
@@ -1169,7 +1093,7 @@
         "openmrs_entity_id": "hiv_tested",
         "type": "native_radio",
         "text_color": "#000000",
-        "label": "HIV Tested ...",
+        "label": "HIV Tested ?",
         "options": [
           {
             "key": "yes",
@@ -1210,7 +1134,6 @@
           }
         }
       },
-
       {
         "key": "result_of_hiv_test",
         "openmrs_entity_parent": "",
@@ -1288,7 +1211,7 @@
         "openmrs_entity_id": "male_hiv_tested",
         "type": "native_radio",
         "text_color": "#000000",
-        "label": "Male partner tested for HIV...",
+        "label": "Male partner tested for HIV?",
         "options": [
           {
             "key": "yes",
@@ -1357,16 +1280,13 @@
           }
         }
       },
-
-
-
       {
         "key": "treatment_initiated",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "treatment_initiated",
         "type": "native_radio",
-        "label": "Treatment Initiated...",
+        "label": "Treatment Initiated?",
         "options": [
           {
             "key": "yes",
@@ -1424,7 +1344,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "tb_screening",
         "type": "native_radio",
-        "label": "TB Screening",
+        "label": "TB  Screening",
         "options": [
           {
             "key": "yes",
@@ -1526,7 +1446,6 @@
           }
         }
       },
-
       {
         "key": "hiv_result_1st_trimester",
         "openmrs_entity_parent": "",
@@ -1596,8 +1515,6 @@
           }
         }
       },
-
-
       {
         "key": "vl_result_1st_trimester",
         "openmrs_entity_parent": "",
@@ -1619,7 +1536,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unsuppressed_vl_1st",
         "type": "native_radio",
-        "label": "Unsuppressed VL...",
+        "label": "Unsuppressed VL?",
         "options": [
           {
             "key": "yes",
@@ -1663,7 +1580,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unsuppressed_vl_2nd",
         "type": "native_radio",
-        "label": "Unsuppressed VL...",
+        "label": "Unsuppressed VL?",
         "options": [
           {
             "key": "yes",
@@ -1707,7 +1624,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unsuppressed_vl_3rd",
         "type": "native_radio",
-        "label": "Unsuppressed VL...",
+        "label": "Unsuppressed VL?",
         "options": [
           {
             "key": "yes",
@@ -1730,6 +1647,7 @@
           }
         }
       }
+
     ]
   }
 }

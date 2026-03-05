@@ -113,4 +113,21 @@ public class TbScreeningCaregiverModel {
 
     public String getTb_treatment_outcome_other_comment() { return tb_treatment_outcome_other_comment; }
     public void setTb_treatment_outcome_other_comment(String tb_treatment_outcome_other_comment) { this.tb_treatment_outcome_other_comment = tb_treatment_outcome_other_comment; }
+
+    private final java.util.Map<String, String> additionalFields = new java.util.HashMap<>();
+
+    public java.util.Map<String, String> getAdditionalFields() {
+        return additionalFields;
+    }
+
+    public String getAdditionalField(String key) {
+        if (key == null) return null;
+        return additionalFields.get(key);
+    }
+
+    public void setAdditionalField(String key, String value) {
+        if (key == null) return;
+        additionalFields.put(key, value);
+    }
 }
+

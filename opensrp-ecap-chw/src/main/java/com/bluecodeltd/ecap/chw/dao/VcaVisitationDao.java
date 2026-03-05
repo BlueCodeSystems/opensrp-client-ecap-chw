@@ -333,6 +333,7 @@ public class VcaVisitationDao extends AbstractDao {
 
 
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
@@ -340,3 +341,5 @@ public class VcaVisitationDao extends AbstractDao {
 
 
 }
+
+

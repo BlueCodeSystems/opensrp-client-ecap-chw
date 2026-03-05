@@ -37,6 +37,11 @@ import java.util.Locale;
 
 public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegisterViewHolder> {
 
+    private static final String TAG = "IndexRegisterProvider";
+    private static final String AGE_NOT_SET = "Age Not Set";
+    private static final DateTimeFormatter DISPLAY_DOB_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-uuuu");
+    private static final DateTimeFormatter LEGACY_DOB_FORMATTER = DateTimeFormatter.ofPattern("dd MMM uuuu", Locale.ENGLISH);
+
     private final Context context;
     private View.OnClickListener onClickListener;
     private View.OnClickListener paginationViewHandler;
@@ -100,9 +105,14 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
 
 
     private String getVcaAge(String birthdate){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
-        LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
+        LocalDate localDateBirthdate = parseBirthdate(birthdate);
+        if (localDateBirthdate == null) {
+            return AGE_NOT_SET;
+        }
         LocalDate today =LocalDate.now();
+        if (localDateBirthdate.isAfter(today)) {
+            return AGE_NOT_SET;
+        }
         Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
         if(periodBetweenDateOfBirthAndNow.getYears() >0)
         {
@@ -129,13 +139,18 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
         else if(periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() ==0){
             return periodBetweenDateOfBirthAndNow.getDays() +" Days Old";
         }
-        else return "Age Not Set";
+        else return AGE_NOT_SET;
     }
 
     private String getAge(String birthdate) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
-        LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
+        LocalDate localDateBirthdate = parseBirthdate(birthdate);
+        if (localDateBirthdate == null) {
+            return AGE_NOT_SET;
+        }
         LocalDate today = LocalDate.now();
+        if (localDateBirthdate.isAfter(today)) {
+            return AGE_NOT_SET;
+        }
         Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
 
         int years = periodBetweenDateOfBirthAndNow.getYears();
@@ -145,18 +160,38 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
     }
 
     private String checkAndConvertDateFormat(String date){
-        if (date.matches("\\d{2}-\\d{2}-\\d{4}")) {
-            return date;
-        } else {
-            DateTimeFormatter oldFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH);
-            DateTimeFormatter newFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-            try {
-                LocalDate localDate = LocalDate.parse(date, oldFormatter);
-                return localDate.format(newFormatter);
-            } catch (DateTimeParseException e) {
-                Log.e("TAG", "Invalid date format: " + e.getMessage());
-                return "Invalid date format";
-            }
+        if (date == null) {
+            return null;
+        }
+        String trimmed = date.trim();
+        if (trimmed.isEmpty()) {
+            return null;
+        }
+        if (trimmed.matches("\\d{2}-\\d{2}-\\d{4}")) {
+            return trimmed;
+        }
+        try {
+            LocalDate localDate = LocalDate.parse(trimmed, LEGACY_DOB_FORMATTER);
+            return localDate.format(DISPLAY_DOB_FORMATTER);
+        } catch (DateTimeParseException e) {
+            Log.w(TAG, "Invalid birthdate format: " + trimmed, e);
+            return null;
+        }
+    }
+
+    private LocalDate parseBirthdate(String birthdate) {
+        if (birthdate == null) {
+            return null;
+        }
+        String trimmed = birthdate.trim();
+        if (trimmed.isEmpty()) {
+            return null;
+        }
+        try {
+            return LocalDate.parse(trimmed, DISPLAY_DOB_FORMATTER);
+        } catch (DateTimeParseException e) {
+            Log.w(TAG, "Unable to parse birthdate: " + trimmed, e);
+            return null;
         }
     }
 

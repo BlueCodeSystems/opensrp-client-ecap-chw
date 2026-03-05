@@ -187,7 +187,11 @@
         "type": "edit_text",
         "hint": "Caseworker Phone",
         "edit_type": "number",
-        "read_only": true
+        "read_only": true,
+        "v_regex": {
+          "value": "((07||09||05)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,055,056,057,095, 096, or 097 and must be a total of 10 digits in length"
+        }
       },
       {
         "key": "date_edited",
@@ -569,11 +573,11 @@
         "edit_type": "number",
         "v_numeric": {
           "value": false,
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+          "err": "Number must begin with 077,076,055,056,057,095, 096, or 097 and must be a total of 10 digits in length"
         },
         "v_regex": {
-          "value": "((07||09)[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+          "value": "((07||09||05)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,055,056,057,095, 096, or 097 and must be a total of 10 digits in length"
         }
       },
       {
@@ -1063,7 +1067,7 @@
         "label_info_text": "For example: Able to provide 3 meals per day/ all school-going children enrolled in school; lowest level of education is secondary school; single-headed household; child-headed household; main material of the floor is not earth/sand; Has source of income through stable employment or is engaged in farming/livestock farming etc.",
         "toaster_info_title": "Example",
         "label_text_style": "",
-        "label": "Is your household food, socially and economically secure...",
+        "label": "Is your household food, socially and economically secure?",
         "options": [
           {
             "key": "yes",
@@ -1757,11 +1761,11 @@
         "edit_type": "number",
         "v_numeric": {
           "value": false,
-          "err": "Number must begin with 077,076,095,096, or 097 and must be a total of 10 digits in length"
+          "err": "Number must begin with 077,076,055,056,057,095, 096, or 097 and must be a total of 10 digits in length"
         },
         "v_regex": {
-          "value": "((07||09)[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 077,076,095,096, or 097 and must be a total of 10 digits in length"
+          "value": "((07||09||05)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,055,056,057,095, 096, or 097 and must be a total of 10 digits in length"
         }
       },
       {

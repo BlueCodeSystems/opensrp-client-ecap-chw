@@ -95,6 +95,7 @@ public class HouseholdServiceReportDao extends AbstractDao {
             record.setDate_next_vl(getCursorValue(c, "date_next_vl"));
             record.setHousehold_id(getCursorValue(c, "household_id"));
             record.setDate(getCursorValue(c, "date"));
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
@@ -149,7 +150,10 @@ public class HouseholdServiceReportDao extends AbstractDao {
             record.setDelete_status(getCursorValue(c, "delete_status"));
             record.setSignature(getCursorValue(c, "signature"));
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 }
+
+

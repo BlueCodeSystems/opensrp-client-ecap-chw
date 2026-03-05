@@ -87,8 +87,11 @@ public class PmctMotherAncDao extends AbstractDao {
             record.setSyphilis_result(getCursorValue(c, "syphilis_result"));
             record.setDelete_status(getCursorValue(c, "delete_status"));
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 
 }
+
+

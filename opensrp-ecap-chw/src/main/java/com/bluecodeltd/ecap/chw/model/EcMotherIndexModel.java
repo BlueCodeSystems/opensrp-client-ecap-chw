@@ -155,4 +155,21 @@ public class EcMotherIndexModel extends PtctMotherModel {
     public void setMother_children_age_band(String mother_children_age_band) {
         this.mother_children_age_band = mother_children_age_band;
     }
+
+    private final java.util.Map<String, String> additionalFields = new java.util.HashMap<>();
+
+    public java.util.Map<String, String> getAdditionalFields() {
+        return additionalFields;
+    }
+
+    public String getAdditionalField(String key) {
+        if (key == null) return null;
+        return additionalFields.get(key);
+    }
+
+    public void setAdditionalField(String key, String value) {
+        if (key == null) return;
+        additionalFields.put(key, value);
+    }
 }
+

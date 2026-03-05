@@ -97,7 +97,10 @@ public class ChildMonitoringDao  extends AbstractDao {
 
             record.setDeleted_status(getCursorValue(c, "deleted_status"));
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 }
+
+

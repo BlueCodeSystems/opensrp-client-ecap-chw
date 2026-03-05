@@ -71,7 +71,7 @@
         "openmrs_entity_id": "pmtct_id",
         "type": "hidden",
         "read_only": "true",
-        "hint": "ECAPII Comprehensive Program ID",
+        "hint": "ECAP PLUS Comprehensive Program ID",
         "edit_type": "name"
       },
       {
@@ -331,14 +331,6 @@
         }
       },
       {
-        "key": "spacer",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "2",
-        "type": "spacer",
-        "spacer_height": "15dp"
-      },
-      {
         "key": "hd1",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
@@ -352,7 +344,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "nutrition_status",
         "type": "edit_text",
-        "hint": "What is the child's MUAC measurement...",
+        "hint": "What is the child's MUAC measurement.",
         "edit_type": "number",
         "read_only": false
       },
@@ -380,7 +372,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "medical_complications",
         "type": "native_radio",
-        "label": "Medical Complications...",
+        "label": "Medical Complications.",
         "options": [
           {
             "key": "Medical Complications present",
@@ -527,22 +519,6 @@
         }
       },
       {
-        "key": "spacer",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "2",
-        "type": "spacer",
-        "spacer_height": "15dp"
-      },
-      {
-        "key": "hd1",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "hd1",
-        "type": "label",
-        "text": "TB Screening"
-      },
-      {
         "key": "tb_screening_symptoms",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -612,20 +588,21 @@
           "step1:tb_screening_symptoms": {
             "ex-checkbox": [
               {
-                "or": ["other"]
+                "or": [
+                  "other"
+                ]
               }
             ]
           }
         }
       },
-
       {
         "key": "tb_referral",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "tb_referral",
         "type": "native_radio",
-        "label": "If the program participant screens positive for TB (presumptive TB case), has s/he been referred to the health facility for further evaluation...",
+        "label": "If the program participant screens positive for TB (presumptive TB case), has s/he been referred to the health facility for further evaluation.",
         "options": [
           {
             "key": "yes",
@@ -641,7 +618,6 @@
           "err": "Please indicate whether the participant was referred to a health facility for further TB evaluation."
         }
       },
-
       {
         "key": "comments_tb",
         "openmrs_entity_parent": "",
@@ -651,7 +627,6 @@
         "hint": "Add any additional comments or observations related to TB screening and referral",
         "edit_type": "name"
       }
-
     ]
   }
 }

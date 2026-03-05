@@ -37,13 +37,13 @@
                 android:textStyle="bold"
                 android:textColor="@android:color/black" />
 
-            <!-- Child ID (CA ID) -->
+            <!-- Child ID (VCA ID) -->
             <TextView
                 android:id="@+id/txtChildId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="CA ID: 123456789"
+                android:text="VCA ID: 123456789"
                 android:textSize="13sp"
                 android:textColor="@android:color/darker_gray"
                 android:singleLine="true"
@@ -275,3 +275,4 @@
         android:ellipsize="end" />
 
 </LinearLayout>
+

@@ -431,6 +431,7 @@ public class HouseholdDao extends AbstractDao {
             record.setOther_health_services(getCursorValue(c,"other_health_services"));
 
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
@@ -480,6 +481,7 @@ public class HouseholdDao extends AbstractDao {
             record.setCase_plan_id(getCursorValue(c,"case_plan_id"));
 
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
@@ -607,6 +609,7 @@ public class HouseholdDao extends AbstractDao {
 
 
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
@@ -712,6 +715,7 @@ public class HouseholdDao extends AbstractDao {
             record.setDistrict_moved_to(getCursorValue(c, "district_moved_to"));
 
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
@@ -845,3 +849,5 @@ public class HouseholdDao extends AbstractDao {
 
 
 }
+
+

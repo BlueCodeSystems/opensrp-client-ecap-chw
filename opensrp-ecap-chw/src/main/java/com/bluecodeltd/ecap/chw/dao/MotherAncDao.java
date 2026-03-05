@@ -47,7 +47,10 @@ public class MotherAncDao extends AbstractDao {
             record.setDelete_status(getCursorValue(c, "delete_status"));
             record.setEntity_type(getCursorValue(c, "entity_type"));
             record.setLast_interacted_with(getCursorValue(c, "last_interacted_with"));
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 }
+
+

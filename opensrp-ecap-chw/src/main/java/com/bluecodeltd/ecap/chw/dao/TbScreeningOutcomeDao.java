@@ -30,6 +30,7 @@ public class TbScreeningOutcomeDao extends AbstractDao {
             record.setTb_treatment_outcome(getCursorValue(c, "tb_treatment_outcome"));
             record.setTb_treatment_outcome_comment(getCursorValue(c, "tb_treatment_outcome_comment"));
             record.setLast_interacted_with(getCursorValue(c, "last_interacted_with"));
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
@@ -44,3 +45,5 @@ public class TbScreeningOutcomeDao extends AbstractDao {
         return AbstractDao.readData(sql, getMap());
     }
 }
+
+

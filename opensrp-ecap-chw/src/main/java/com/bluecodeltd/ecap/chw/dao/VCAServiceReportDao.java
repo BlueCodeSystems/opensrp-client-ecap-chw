@@ -159,7 +159,10 @@ public class VCAServiceReportDao extends AbstractDao {
             record.setVca_service_location(getCursorValue(c,"vca_service_location"));
             record.setSignature(getCursorValue(c,"signature"));
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 }
+
+

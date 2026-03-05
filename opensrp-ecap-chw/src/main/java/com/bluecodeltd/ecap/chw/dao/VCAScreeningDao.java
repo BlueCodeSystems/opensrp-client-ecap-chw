@@ -197,6 +197,7 @@ public class VCAScreeningDao extends AbstractDao {
             record.setLocation_moved_to(getCursorValue(c,"location_moved_to"));
 
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
@@ -297,8 +298,11 @@ public class VCAScreeningDao extends AbstractDao {
             record.setDistrict_moved_to(getCursorValue(c, "district_moved_to"));
 
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 
 }
+
+

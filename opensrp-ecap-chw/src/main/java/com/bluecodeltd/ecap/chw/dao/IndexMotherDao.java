@@ -65,8 +65,11 @@ public class IndexMotherDao extends AbstractDao {
             record.setMother_breastfeeding(getCursorValue(c, "mother_breastfeeding"));
             record.setPregnant_mother(getCursorValue(c, "pregnant_mother"));
             record.setMother_age_range(getCursorValue(c, "mother_age_range"));
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 }
+
+
 

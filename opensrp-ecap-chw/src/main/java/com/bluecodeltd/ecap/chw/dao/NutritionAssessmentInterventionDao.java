@@ -48,7 +48,10 @@ public class NutritionAssessmentInterventionDao extends AbstractDao {
             record.setOther_nutrition_counselling_services(getCursorValue(c, "other_nutrition_counselling_services"));
             record.setGood_practices_services(getCursorValue(c, "good_practices_services"));
             record.setOther_good_practices_services(getCursorValue(c, "other_good_practices_services"));
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 }
+
+

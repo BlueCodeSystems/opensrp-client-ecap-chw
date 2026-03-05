@@ -212,6 +212,7 @@ public class PMTCTMotherDao extends AbstractDao {
             record.setVl_result_3rd_trimester(getCursorValue(c, "vl_result_3rd_trimester"));
             record.setUnsuppressed_vl_3rd(getCursorValue(c, "unsuppressed_vl_3rd"));
             record.setDelete_status(getCursorValue(c, "delete_status"));
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
@@ -221,3 +222,5 @@ public class PMTCTMotherDao extends AbstractDao {
     }
 
 }
+
+

@@ -64,16 +64,6 @@
         "text": "Mother's Outcome"
       },
       {
-        "key": "household_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "household_id",
-        "type": "edit_text",
-        "read_only": "true",
-        "hint": "ECAPII Comprehensive Program ID",
-        "edit_type": "name"
-      },
-      {
         "key": "mothers_outcome",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -94,8 +84,17 @@
             "text": "Transited out and Exited from the program"
           }
         ]
+      },
+      {
+        "key": "household_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_id",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "ECAPII Comprehensive Program ID",
+        "edit_type": "name"
       }
-
     ]
   }
 }

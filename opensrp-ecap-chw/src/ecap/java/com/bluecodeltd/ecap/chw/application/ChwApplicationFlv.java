@@ -118,19 +118,13 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
 
         map.put(Constants.EcapClientTable.EC_CLIENT_INDEX, new String[]{
                 DBConstants.KEY.LAST_INTERACTED_WITH,
+                DBConstants.KEY.UNIQUE_ID,
                 DBConstants.KEY.FIRST_NAME,
                 DBConstants.KEY.LAST_NAME,
-                DBConstants.KEY.UNIQUE_ID,
                 "household_id",
-                "case_status",
-                "subpop1",
-                "subpop2",
-                "subpop3",
-                "subpop4",
-                "subpop5",
-                "subpop",
-                "deleted"
+                "case_status"
         });
+
 
         map.put(Constants.EcapClientTable.EC_MOTHER_INDEX, new String[]{
                 "index_check_box",
@@ -178,15 +172,9 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
                 DBConstants.KEY.FIRST_NAME,
                 DBConstants.KEY.LAST_NAME,
                 "household_id",
-                "case_status",
-                "subpop1",
-                "subpop2",
-                "subpop3",
-                "subpop4",
-                "subpop5",
-                "subpop",
-                "deleted"
+                "case_status"
         });
+
 
         map.put(Constants.EcapClientTable.EC_MOTHER_INDEX, new String[]{
                 DBConstants.KEY.LAST_INTERACTED_WITH,

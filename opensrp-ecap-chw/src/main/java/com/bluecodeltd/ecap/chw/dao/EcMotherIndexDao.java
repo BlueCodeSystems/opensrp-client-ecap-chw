@@ -174,7 +174,10 @@ public class EcMotherIndexDao extends AbstractDao {
             record.setMother_breastfeeding(getCursorValue(c, "mother_breastfeeding"));
             record.setMother_age_range(getCursorValue(c, "mother_age_range"));
             record.setMother_children_age_band(getCursorValue(c, "mother_children_age_band"));
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 }
+
+

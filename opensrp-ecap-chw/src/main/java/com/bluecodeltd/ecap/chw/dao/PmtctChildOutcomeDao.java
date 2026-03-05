@@ -32,7 +32,10 @@ public class PmtctChildOutcomeDao extends AbstractDao {
             record.setChild_outcome(getCursorValue(c, "child_outcome"));
 
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 }
+
+

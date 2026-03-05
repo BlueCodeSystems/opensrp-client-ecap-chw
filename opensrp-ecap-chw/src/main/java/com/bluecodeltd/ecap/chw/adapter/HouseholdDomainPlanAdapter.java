@@ -158,20 +158,15 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
                 try { household = HouseholdDao.getHousehold(casePlan.getHousehold_id()); } catch (Exception ignored) {}
                 Household finalHousehold = household;
                 Threading.main(() -> {
-                    if (finalHousehold != null && finalHousehold.getHousehold_case_status() != null &&
-                            ("0".equals(finalHousehold.getHousehold_case_status()) || "2".equals(finalHousehold.getHousehold_case_status()))) {
-                        showDialogBox(finalHousehold.getCaregiver_name(), "`s has been inactive or de-registered");
-                    } else {
-                        if (v.getId() == R.id.edit_me) {
-                            try {
-                                if (context instanceof CasePlan) {
-                                    openFormUsingFormUtils(context, "domain", casePlan, finalHousehold);
-                                } else {
-                                    openFormUsingFormUtils(context, "caregiver_domain", casePlan, finalHousehold);
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                    if (v.getId() == R.id.edit_me) {
+                        try {
+                            if (context instanceof CasePlan) {
+                                openFormUsingFormUtils(context, "domain", casePlan, finalHousehold);
+                            } else {
+                                openFormUsingFormUtils(context, "caregiver_domain", casePlan, finalHousehold);
                             }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
                     }
                 });
@@ -411,7 +406,7 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
 
                     JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
 
-                    if (isEditMode) {
+                    if (isEditMode && existingClientJsonObject != null) {
                         JSONObject mergedClientJsonObject =
                                 org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
                         ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
@@ -497,3 +492,5 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
         }
     }
 }
+
+

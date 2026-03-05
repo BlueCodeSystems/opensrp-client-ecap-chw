@@ -63,7 +63,7 @@
         "text": "Case Closure",
         "text_color": "#000000",
         "label_text_style": "bold",
-        "toaster_info_text": "The OVC De-Registration Form is used to record an individual who is no longer receiving support from the USAID ECAPII OVC comprehensive program. The form will be used to track how successful the program is at graduating beneficiaries as well as those who have exited without graduation such lost to follow up, aging out without transition plan, moved, or died.",
+        "toaster_info_text": "The OVC De-Registration Form is used to record an individual who is no longer receiving support from the ECAP II OVC comprehensive program. The form will be used to track how successful the program is at graduating beneficiaries as well as those who have exited without graduation such lost to follow up, aging out without transition plan, moved, or died.",
         "toaster_info_title": "Instructions",
         "toaster_type": "info"
       },
@@ -101,7 +101,6 @@
         "toaster_info_title": "Instructions",
         "toaster_type": "info"
       },
-
       {
         "key": "de_registration_date",
         "openmrs_entity_parent": "",
@@ -140,7 +139,6 @@
             "key": "Graduated (Household has met the graduation benchmarks in ALL domains)",
             "text": "Graduated (Household has met the graduation benchmarks in ALL domains)"
           }
-
         ],
         "relevance": {
           "step1:household_case_status": {
@@ -153,7 +151,6 @@
           "err": "Please select Reason for Closing Case"
         }
       },
-
       {
         "key": "graduation_benchmark",
         "openmrs_entity_parent": "",
@@ -186,12 +183,12 @@
             "text": "Transferred to other OVC program"
           },
           {
-            "key": "HH does not have VCA who falls under priority sub-population",
-            "text": "HH does not have VCA who falls under priority sub-population"
+            "key": "Transferred to other Ecap II ward/district",
+            "text": "Transferred to other Ecap II ward/district"
           },
           {
-            "key": "Transferred to other Ecap II /district",
-            "text": "Transferred to other Ecap II /district"
+            "key": "Lost to follow-up",
+            "text": "Lost to follow-up"
           },
           {
             "key": "Aging without transition plan",
@@ -212,6 +209,14 @@
           {
             "key": "other",
             "text": "Other"
+          },
+          {
+            "key": "HH does not have VCA who falls under priority sub-population",
+            "text": "HH does not have VCA who falls under priority sub-population"
+          },
+          {
+            "key": "Transferred to other Ecap II /district",
+            "text": "Transferred to other Ecap II /district"
           }
         ],
         "relevance": {
@@ -226,19 +231,24 @@
         }
       },
       {
-        "key": "priority sub-population",
+        "key": "date_of_death",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "instructions_a",
-        "type": "toaster_notes",
-        "text": "Select only if household does not have C/ALHIV, HEIs, Children of WLHIV, Survivors of Sexual Violence, Pregnant and Breastfeeding AGYW",
-        "text_color": "#000000",
-        "label_text_style": "bold",
-        "toaster_type": "info",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_of_death",
+        "type": "date_picker",
+        "hint": "Date of Death",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "01-01-1900",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        },
         "relevance": {
           "step1:exited_graduation_reason": {
             "type": "string",
-            "ex": "equalTo(., \"HH does not have VCA who falls under priority sub-population\")"
+            "ex": "equalTo(., \"Caregiver died\")"
           }
         }
       },
@@ -258,6 +268,79 @@
           "step1:exited_graduation_reason": {
             "type": "string",
             "ex": "equalTo(., \"Transferred to other Ecap II ward/district\")"
+          }
+        }
+      },
+      {
+        "key": "household_receiving_caseworker",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_receiving_caseworker",
+        "type": "edit_text",
+        "hint": "Receiving caseworker",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Provide caseworker name"
+        },
+        "relevance": {
+          "step1:exited_graduation_reason": {
+            "type": "string",
+            "ex": "equalTo(., \"Transferred to other Ecap II ward/district\")"
+          }
+        }
+      },
+      {
+        "key": "other_reason",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_reason",
+        "type": "edit_text",
+        "hint": "Other Reason",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Specify"
+        },
+        "relevance": {
+          "step1:exited_graduation_reason": {
+            "type": "string",
+            "ex": "equalTo(., \"other\")"
+          }
+        }
+      },
+      {
+        "key": "death_toast",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions",
+        "type": "toaster_notes",
+        "text": "Re-register the VCA/HH with a new caregiver",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_title": "Instructions",
+        "toaster_type": "warning",
+        "relevance": {
+          "step1:exited_graduation_reason": {
+            "type": "string",
+            "ex": "equalTo(., \"Caregiver died\")"
+          }
+        }
+      },
+      {
+        "key": "priority sub-population",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions_a",
+        "type": "toaster_notes",
+        "text": "Select only if household does not have C/ALHIV, HEIs, Children of WLHIV, Survivors of Sexual Violence, Pregnant and Breastfeeding AGYW",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:exited_graduation_reason": {
+            "type": "string",
+            "ex": "equalTo(., \"HH does not have VCA who falls under priority sub-population\")"
           }
         }
       },
@@ -334,62 +417,6 @@
           "step1:exited_graduation_reason": {
             "type": "string",
             "ex": "equalTo(., \"Transferred to other Ecap II /district\")"
-          }
-        }
-      },
-      {
-        "key": "household_receiving_caseworker",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "household_receiving_caseworker",
-        "type": "edit_text",
-        "hint": "Receiving caseworker",
-        "edit_type": "name",
-        "v_required": {
-          "value": true,
-          "err": "Provide caseworker name"
-        },
-        "relevance": {
-          "step1:exited_graduation_reason": {
-            "type": "string",
-            "ex": "equalTo(., \"Transferred to other Ecap II /district\")"
-          }
-        }
-      },
-      {
-        "key": "other_reason",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "other_reason",
-        "type": "edit_text",
-        "hint": "Other Reason",
-        "edit_type": "name",
-        "v_required": {
-          "value": true,
-          "err": "Specify"
-        },
-        "relevance": {
-          "step1:exited_graduation_reason": {
-            "type": "string",
-            "ex": "equalTo(., \"other\")"
-          }
-        }
-      },
-      {
-        "key": "death_toast",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "instructions",
-        "type": "toaster_notes",
-        "text": "Re-register the VCA/HH with a new caregiver",
-        "text_color": "#000000",
-        "label_text_style": "bold",
-        "toaster_info_title": "Instructions",
-        "toaster_type": "warning",
-        "relevance": {
-          "step1:exited_graduation_reason": {
-            "type": "string",
-            "ex": "equalTo(., \"Caregiver died\")"
           }
         }
       }

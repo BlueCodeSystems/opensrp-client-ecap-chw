@@ -21,7 +21,7 @@
         app:contentInsetLeft="0dp"
         app:contentInsetRight="0dp"
         app:contentInsetStart="0dp"
-        app:title="CA Case Plan"
+        app:title="VCA Case Plan"
         app:contentInsetStartWithNavigation="0dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -89,3 +89,4 @@
         app:rd_rippleType="wave" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

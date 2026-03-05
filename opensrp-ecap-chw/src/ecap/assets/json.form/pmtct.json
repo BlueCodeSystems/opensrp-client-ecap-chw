@@ -383,7 +383,7 @@
         "type": "native_radio",
         "label_text_style": "bold",
         "text_color": "#000000",
-        "label": "HIV Tested ...",
+        "label": "HIV Tested .",
         "options": [
           {
             "key": "yes",
@@ -520,7 +520,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "male_partner_tested",
         "type": "native_radio",
-        "label": "Male partner tested...",
+        "label": "Male partner tested.",
         "options": [
           {
             "key": "yes",
@@ -844,7 +844,7 @@
         "type": "native_radio",
         "label_text_style": "bold",
         "text_color": "#000000",
-        "label": "On ART at time of delivery...",
+        "label": "On ART at time of delivery.",
         "options": [
           {
             "key": "yes",
@@ -898,7 +898,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "mother_tested_for_hiv",
         "type": "date_picker",
-        "hint": "When was the mother tested for HIV...",
+        "hint": "When was the mother tested for HIV.",
         "look_up": "true",
         "expanded": false,
         "duration": {

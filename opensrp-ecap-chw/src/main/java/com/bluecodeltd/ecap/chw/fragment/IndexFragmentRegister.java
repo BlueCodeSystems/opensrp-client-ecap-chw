@@ -19,6 +19,7 @@ import com.bluecodeltd.ecap.chw.contract.IndexRegisterFragmentContract;
 import com.bluecodeltd.ecap.chw.presenter.IndexRegisterFragmentPresenter;
 import com.bluecodeltd.ecap.chw.provider.IndexRegisterProvider;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.ViewTagUtils;
 import com.github.javiersantos.appupdater.AppUpdater;
 
 import org.smartregister.chw.core.custom_views.NavigationMenu;
@@ -360,7 +361,7 @@ public class IndexFragmentRegister extends BaseSafeRegisterFragment implements I
     @Override
     protected String getMainCondition() {
         //return "case_status > 0 AND is_closed = 0 ";
-        return "(deleted IS NULL OR deleted != '1') AND (subpop1 = 'true' OR subpop2 = 'true' OR subpop3 = 'true' OR subpop4 = 'true' OR subpop5 = 'true' OR subpop = 'true') AND first_name IS NOT NULL";
+        return "(is_closed IS NULL OR is_closed != 1)";
     }
     @Override
     protected String getDefaultSortQuery() {
@@ -393,7 +394,8 @@ public class IndexFragmentRegister extends BaseSafeRegisterFragment implements I
 
         } else if (view.getId() == R.id.register_columns){
 
-            CommonPersonObjectClient client =(CommonPersonObjectClient) view.getTag();
+            CommonPersonObjectClient client = ViewTagUtils.getTaggedClient(view);
+            if (client == null) return;
             String childId = client.getColumnmaps().get("unique_id");
 
             goToIndexDetailActivity(childId,client);

@@ -100,7 +100,10 @@ public class TbScreeningCaregiverDao extends AbstractDao {
             record.setTb_treatment_outcome(getCursorValue(c, "tb_treatment_outcome"));
             record.setTb_treatment_outcome_comment(getCursorValue(c, "tb_treatment_outcome_comment"));
             record.setTb_treatment_outcome_other_comment(getCursorValue(c, "tb_treatment_outcome_other_comment"));
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 }
+
+

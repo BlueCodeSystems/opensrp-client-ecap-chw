@@ -31,7 +31,10 @@ public class PmtctMotherOutComeDao extends AbstractDao {
             record.setMothers_outcome(getCursorValue(c, "mothers_outcome"));
 
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 }
+
+

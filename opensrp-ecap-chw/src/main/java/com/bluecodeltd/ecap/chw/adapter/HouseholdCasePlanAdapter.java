@@ -31,6 +31,7 @@ import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
+import com.vijay.jsonwizard.domain.Form;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,6 +60,7 @@ public class HouseholdCasePlanAdapter extends RecyclerView.Adapter<HouseholdCase
 
     List<CasePlanModel> caseplans;
     Household house;
+    private ObjectMapper oMapper;
 
     public HouseholdCasePlanAdapter(List<CasePlanModel> caseplans, Context context, Household household){
 
@@ -139,6 +141,13 @@ public class HouseholdCasePlanAdapter extends RecyclerView.Adapter<HouseholdCase
 
             }
         });
+        holder.editme.setOnClickListener(v -> {
+            try {
+                openFormUsingFormUtils(context, "care_case_plan", casePlan);
+            } catch (JSONException e) {
+                Timber.e(e);
+            }
+        });
         Threading.ioBestEffort(() -> {
             String vulnerabilities = null;
             try { vulnerabilities = CasePlanDao.countCaregiverVulnerabilities(house.getHousehold_id(), casePlan.getCase_plan_date()); } catch (Exception ignored) {}
@@ -206,6 +215,41 @@ public class HouseholdCasePlanAdapter extends RecyclerView.Adapter<HouseholdCase
         });
 
     }
+    public void openFormUsingFormUtils(Context context, String formName, CasePlanModel casePlan) throws JSONException {
+        oMapper = new ObjectMapper();
+
+        FormUtils formUtils = null;
+        try {
+            formUtils = new FormUtils(context);
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+        if (formUtils == null) {
+            return;
+        }
+
+        JSONObject formToBeOpened = formUtils.getFormJson(formName);
+        formToBeOpened.put("entity_id", casePlan.getBase_entity_id());
+        CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(casePlan, Map.class));
+        startFormActivity(formToBeOpened);
+    }
+
+    public void startFormActivity(JSONObject jsonObject) {
+        Form form = new Form();
+        form.setWizard(false);
+        form.setName("Case Plan");
+        form.setHideSaveLabel(true);
+        form.setNextLabel("Next");
+        form.setPreviousLabel("Previous");
+        form.setSaveLabel("Submit");
+        form.setActionBarBackground(org.smartregister.R.color.dark_grey);
+
+        Intent intent = new Intent(context, org.smartregister.family.util.Utils.metadata().familyFormActivity);
+        intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
+        intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
+        ((Activity) context).startActivityForResult(intent, com.bluecodeltd.ecap.chw.util.JsonFormUtils.REQUEST_CODE_GET_JSON);
+    }
+
     public ChildIndexEventClient processRegistration(String jsonString){
 
         try {
@@ -312,7 +356,7 @@ public class HouseholdCasePlanAdapter extends RecyclerView.Adapter<HouseholdCase
 
         LinearLayout linearLayout;
 
-        ImageView delete;
+        ImageView delete, editme;
 
         public ViewHolder(View itemView) {
 
@@ -323,6 +367,7 @@ public class HouseholdCasePlanAdapter extends RecyclerView.Adapter<HouseholdCase
             txtQuarter = itemView.findViewById(R.id.quarter);
             txtCasePlanStatus = itemView.findViewById(R.id.case_plan_status);
             txtVulnerabilities = itemView.findViewById(R.id.vulnerabilities);
+            editme = itemView.findViewById(R.id.edit_me);
             delete = itemView.findViewById(R.id.delete_record);
 
 

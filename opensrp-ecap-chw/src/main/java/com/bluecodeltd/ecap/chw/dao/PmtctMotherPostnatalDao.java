@@ -43,7 +43,10 @@ public class PmtctMotherPostnatalDao extends AbstractDao {
             record.setComments_tb_10plus(getCursorValue(c,"comments_tb_10plus"));
             record.setDelete_status(getCursorValue(c, "delete_status"));
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 }
+
+

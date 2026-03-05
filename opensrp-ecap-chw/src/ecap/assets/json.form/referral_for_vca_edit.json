@@ -1,6 +1,6 @@
 {
   "count": "1",
-  "encounter_type": "Referral",
+  "encounter_type": "Referral Edit VCA",
   "entity_id": "",
   "metadata": {
     "start": {
@@ -56,7 +56,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unique_id",
         "type": "edit_text",
-        "hint": "Children/Adolescent (VCA) ID",
+        "hint": "VCA ID",
         "edit_type": "name",
         "read_only": "true"
       },
@@ -71,7 +71,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of Person can only contain letters"
+          "err": "Name of Person can  only contain letters"
         }
       },
       {
@@ -150,7 +150,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "referred_date",
         "type": "date_picker",
-        "hint": "Date Referred",
+        "hint": " Date Referred",
 
         "expanded": false,
         "duration": {
@@ -199,7 +199,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateCovidProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -240,7 +240,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateCD4Provided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -281,7 +281,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateHivAdherenceProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -320,7 +320,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateHivCounselingProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -359,7 +359,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "datePostGbvProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -398,7 +398,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateSubstanceAbuseProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -437,7 +437,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateTBScreeningProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -476,7 +476,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateSupplementaryProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -515,7 +515,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "datePrepProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -554,7 +554,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "datePlanningProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -593,7 +593,46 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateInsecticideProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "malaria_testing_referral_negative_pbfw",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "malaria_testing_referral_negative_pbfw",
+        "label": "Malaria testing referral for negative PBFW",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred"
+          },
+          {
+            "key": "provided",
+            "text": "Provided"
+          }
+        ]
+      },
+      {
+        "key": "dateMalariaTestingReferralNegativePbfwProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateMalariaTestingReferralNegativePbfwProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -632,7 +671,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateTreatmentProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -671,7 +710,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateHealthProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -710,7 +749,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateVmmcProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -749,7 +788,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateImmunizationProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -788,7 +827,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateCondomProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -827,7 +866,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateCareProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -866,7 +905,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateEmergencyProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -905,7 +944,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateAgeCounsellingProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -944,7 +983,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateTreatmentCareProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -983,7 +1022,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "datePmtctProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -1022,7 +1061,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateHygienceProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -1061,7 +1100,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateInfectionProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -1100,7 +1139,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "datePlhaProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -1139,7 +1178,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateViralLoadProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -1199,7 +1238,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "otherHealth",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -1249,7 +1288,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateFacilityProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -1288,7 +1327,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateTraumaProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -1327,7 +1366,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateAssistanceProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -1387,7 +1426,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateOtherSafetyProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -1417,7 +1456,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "vca_uniforms_books",
-        "label": "Support CAs with Uniforms and/or Book Materials",
+        "label": "Support VCAs with Uniforms and/or Book Materials",
         "type": "check_box",
         "options": [
           {
@@ -1436,7 +1475,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateUniformsProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -1475,7 +1514,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateEnrollmentProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -1514,7 +1553,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateBursariesProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -1574,7 +1613,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateSchooledProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -1623,7 +1662,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateCashProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -1662,7 +1701,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateSupportProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -1701,7 +1740,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateSecurityProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -1761,7 +1800,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "dateStabilityProvided",
         "type": "date_picker",
-        "hint": "Date Provided",
+        "hint": " Date Provided",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
