@@ -1,4 +1,4 @@
-{
+﻿{
   "count": "1",
   "encounter_type": "VCA Service Report",
   "entity_id": "",
@@ -47,7 +47,7 @@
     "encounter_location": ""
   },
   "step1": {
-    "title": "VCA Service Report",
+    "title": "CA Service Report",
     "fields": [
       {
         "key": "date",
@@ -70,7 +70,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unique_id",
         "type": "edit_text",
-        "hint": "VCA ID",
+        "hint": "CA ID",
         "edit_type": "name",
         "read_only": "true"
       },
@@ -192,7 +192,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_mmd",
         "type": "native_radio",
-        "label": "Is the child on MMD...",
+        "label": "Is the child on MMD",
         "label_text_style": "bold",
         "text_color": "#000000",
         "relevance": {

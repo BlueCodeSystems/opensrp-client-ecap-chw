@@ -1,4 +1,4 @@
-{
+﻿{
   "count": "1",
   "encounter_type": "Case_Plan_Index",
   "hide_blank_spaces": true,
@@ -852,7 +852,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "case_plan_question",
         "type": "native_radio",
-        "label": "Is this an Initial or Updated Case Plan...",
+        "label": "Is this an Initial or Updated Case Plan",
         "options": [
           {
             "key": "yes",

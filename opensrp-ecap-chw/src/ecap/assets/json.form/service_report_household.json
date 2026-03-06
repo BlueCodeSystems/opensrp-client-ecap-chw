@@ -1,4 +1,4 @@
-{
+﻿{
   "count": "1",
   "encounter_type": "Household Service Report",
   "entity_id": "",
@@ -210,7 +210,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_mmd",
         "type": "native_radio",
-        "label": "Is the caregiver on MMD...",
+        "label": "Is the caregiver on MMD",
         "label_text_style": "bold",
         "text_color": "#000000",
         "relevance": {

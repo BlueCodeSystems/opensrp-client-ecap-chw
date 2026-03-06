@@ -1,4 +1,4 @@
-{
+﻿{
   "count": "1",
   "encounter_type": "Sub Population",
   "entity_id": "",
@@ -73,7 +73,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "case_status",
         "type": "native_radio",
-        "label": "VCA Case record status",
+        "label": "CA Case record status",
         "options": [
           {
             "key": "1",
@@ -183,8 +183,8 @@
             "text": "Aging without transition plan"
           },
           {
-            "key": "VCA died",
-            "text": "VCA died"
+            "key": "CA died",
+            "text": "CA died"
           },
           {
             "key": "Moved (Relocated)",
@@ -205,7 +205,7 @@
           },
           {
             "key": "HH does not have VCA who falls under priority sub-population",
-            "text": "HH does not have VCA who falls under priority sub-population"
+            "text": "HH does not have CA who falls under priority sub-population"
           }
         ],
         "relevance": {
@@ -237,7 +237,7 @@
         "relevance": {
           "step1:exited_graduation_reason": {
             "type": "string",
-            "ex": "equalTo(., \"VCA died\")"
+            "ex": "equalTo(., \"CA died\")"
           }
         }
       },

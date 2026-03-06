@@ -69,17 +69,30 @@ public class VcaVisitationDao extends AbstractDao {
         }
 
         for (String status : values) {
-            try {
-                double nutritionValue = Double.parseDouble(status);
-                if (nutritionValue <= 12.5) {
-                    return false;
-                }
-            } catch (NumberFormatException e) {
+            Double nutritionValue = safeParseDouble(status);
+            if (nutritionValue == null || nutritionValue <= 12.5d) {
                 return false;
             }
         }
 
         return true;
+    }
+
+    private static Double safeParseDouble(String value) {
+        if (value == null) {
+            return null;
+        }
+
+        String normalized = value.trim();
+        if (normalized.isEmpty()) {
+            return null;
+        }
+
+        try {
+            return Double.parseDouble(normalized);
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
     public static boolean areAllVcasVisited(String householdID) {
 

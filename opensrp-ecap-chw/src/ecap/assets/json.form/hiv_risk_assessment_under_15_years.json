@@ -1,4 +1,4 @@
-{
+﻿{
   "validate_on_submit": true,
   "count": "1",
   "encounter_type": "HIV Risk Assessment Below 15",
@@ -76,7 +76,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unique_id",
         "type": "edit_text",
-        "hint": "Children/Adolescent (VCA) ID",
+        "hint": "Children/Adolescent (CA) ID",
         "edit_type": "name",
         "read_only": "true"
       },
@@ -170,7 +170,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_test",
         "type": "native_radio",
-        "label": "What was your most recent HIV test result...",
+        "label": "What was your most recent HIV test result",
         "options": [
           {
             "key": "negative",
@@ -203,7 +203,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "on_art",
         "type": "native_radio",
-        "label": "Are you on ART...",
+        "label": "Are you on ART",
         "options": [
           {
             "key": "yes",
@@ -273,7 +273,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "Question",
         "type": "native_radio",
-        "label": "Has the beneficiary had new HIV exposure since the last test...",
+        "label": "Has the beneficiary had new HIV exposure since the last test",
         "options": [
           {
             "key": "yes",
@@ -298,7 +298,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "biological_mother",
         "type": "native_radio",
-        "label": "Is the child's biological mother HIV+ or is her HIV status unknown...",
+        "label": "Is the child's biological mother HIV+ or is her HIV status unknown",
         "options": [
           {
             "key": "yes",
@@ -322,7 +322,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "deceased_parents",
         "type": "native_radio",
-        "label": "Are one or both of this child's biological parents deceased...",
+        "label": "Are one or both of this child's biological parents deceased",
         "options": [
           {
             "key": "yes",
@@ -346,7 +346,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "tb_symptoms",
         "type": "native_radio",
-        "label": "Does the child have any TB symptoms including cough, fever, weight loss poor weight gain, or night sweats...",
+        "label": "Does the child have any TB symptoms including cough, fever, weight loss poor weight gain, or night sweats",
         "options": [
           {
             "key": "yes",
@@ -370,7 +370,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_been_sick",
         "type": "native_radio",
-        "label": "In the last 6 months, has this child been sick more than other children or been \nadmitted to hospital...",
+        "label": "In the last 6 months, has this child been sick more than other children or been \nadmitted to hospital",
         "options": [
           {
             "key": "yes",
@@ -394,7 +394,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "frequent_rashes",
         "type": "native_radio",
-        "label": "Has the child had frequent rashes or other skin problems...",
+        "label": "Has the child had frequent rashes or other skin problems",
         "options": [
           {
             "key": "yes",
@@ -418,7 +418,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_had_pus",
         "type": "native_radio",
-        "label": "Has the child had pus coming from his or her ear...",
+        "label": "Has the child had pus coming from his or her ear",
         "options": [
           {
             "key": "yes",
@@ -474,7 +474,7 @@
         "type": "toaster_notes",
         "text": "Test for hiv and Tb",
         "toaster_type": "info",
-        "toaster_info_text": "The VCA is eligible for HIV testing. \n\nAgree with the guardian, that the child needs to be tested for HIV and eventually TB",
+        "toaster_info_text": "The CA is eligible for HIV testing. \n\nAgree with the guardian, that the child needs to be tested for HIV and eventually TB",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -489,7 +489,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_tb",
         "type": "native_radio",
-        "label": "Was the test for HIV and TB conducted...",
+        "label": "Was the test for HIV and TB conducted",
         "options": [
           {
             "key": "yes",

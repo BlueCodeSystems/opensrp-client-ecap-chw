@@ -124,6 +124,7 @@ public class VcaScreeningModel {
     private String transfer_reason;
     private String other_reason;
     private String exited_graduation_reason;
+    private String date_of_death;
     private String abym_years;
     private String abym_sexually_active;
     private String abym_preventions;
@@ -1119,6 +1120,14 @@ public class VcaScreeningModel {
 
     public void setExited_graduation_reason(String exited_graduation_reason) {
         this.exited_graduation_reason = exited_graduation_reason;
+    }
+
+    public String getDate_of_death() {
+        return date_of_death;
+    }
+
+    public void setDate_of_death(String date_of_death) {
+        this.date_of_death = date_of_death;
     }
 
     public String getAbym_years() {

@@ -2341,6 +2341,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         screeningModel.setTransfer_reason(indexVCA.getTransfer_reason());
         screeningModel.setOther_reason(indexVCA.getOther_reason());
         screeningModel.setExited_graduation_reason(indexVCA.getExited_graduation_reason());
+        screeningModel.setDate_of_death(indexVCA.getDate_of_death());
         screeningModel.setAbym_years(indexVCA.getAbym_years());
         screeningModel.setAbym_sexually_active(indexVCA.getAbym_sexually_active());
         screeningModel.setAbym_preventions(indexVCA.getAbym_preventions());

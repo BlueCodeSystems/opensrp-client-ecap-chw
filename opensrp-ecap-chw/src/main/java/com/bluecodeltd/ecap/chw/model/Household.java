@@ -94,6 +94,7 @@ public class Household {
     private String status;
     private String case_status;
     private String de_registration_date;
+    private String date_of_death;
     private String de_registration_reason;
     private String transfer_reason;
     private String other_de_registration_reason;
@@ -178,6 +179,14 @@ public class Household {
 
     public void setDe_registration_date(String de_registration_date) {
         this.de_registration_date = de_registration_date;
+    }
+
+    public String getDate_of_death() {
+        return date_of_death;
+    }
+
+    public void setDate_of_death(String date_of_death) {
+        this.date_of_death = date_of_death;
     }
 
     public String getDe_registration_reason() {

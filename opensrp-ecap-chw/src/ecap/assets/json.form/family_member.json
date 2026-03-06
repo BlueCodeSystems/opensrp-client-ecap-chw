@@ -1,4 +1,4 @@
-{
+﻿{
   "count": "4",
   "skip_blank_steps": "true",
   "encounter_type": "Family Member",
@@ -135,7 +135,7 @@
         "openmrs_entity_id": "unique_id",
         "type": "edit_text",
         "read_only": "true",
-        "hint": "Children/Adolescent (VCA) ID",
+        "hint": "Children/Adolescent (CA) ID",
         "edit_type": "name"
       },
       {
@@ -154,7 +154,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "member_type",
         "type": "native_radio",
-        "label": "Household Member Relationship to Index VCA",
+        "label": "Household Member Relationship to Index CA",
         "options": [
           {
             "key": "sibling",
@@ -243,7 +243,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "school",
         "type": "native_radio",
-        "label": "Is the Child in School...",
+        "label": "Is the Child in School",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -316,7 +316,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_ever_experienced_sexual_violence",
         "type": "native_radio",
-        "label": "Has the child/adolescent ever experienced sexual violence...",
+        "label": "Has the child/adolescent ever experienced sexual violence",
         "options": [
           {
             "key": "yes",
@@ -373,7 +373,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "agyw_sexually_active",
         "type": "native_radio",
-        "label": "Is this Sibling / Family member sexually active...",
+        "label": "Is this Sibling / Family member sexually active",
         "options": [
           {
             "key": "yes",
@@ -402,7 +402,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "agyw_food_or_economically_insecure",
         "type": "native_radio",
-        "label": "Is the AGYW food or economically insecure...",
+        "label": "Is the AGYW food or economically insecure",
         "options": [
           {
             "key": "yes",
@@ -453,7 +453,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpopulation",
         "type": "hidden",
-        "label": "Does the household member belong to another subpopulation...",
+        "label": "Does the household member belong to another subpopulation",
         "options": [
           {
             "key": "yes",
@@ -504,7 +504,7 @@
       },
       {
         "key": "immunization",
-        "label": "Has the child received the following vaccinations...",
+        "label": "Has the child received the following vaccinations",
         "type": "check_box",
         "openmrs_entity_parent": "immunization",
         "openmrs_entity": "person_attribute",
@@ -876,7 +876,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop2_toast",
         "type": "toaster_notes",
-        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : HIV Exposed Infant (HEI)",
+        "text": "Based on your selection, this Index CA has been enrolled into the Sub Population : HIV Exposed Infant (HEI)",
         "toaster_type": "info",
         "toaster_info_text": "HIV Exposed Infant (HEI)",
         "toaster_info_title": "Sub Population",
@@ -894,7 +894,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop3_toast",
         "type": "toaster_notes",
-        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children of Women Living with HIV (C/WLHIV)",
+        "text": "Based on your selection, this Index CA has been enrolled into the Sub Population : Children of Women Living with HIV (C/WLHIV)",
         "toaster_type": "info",
         "toaster_info_text": "Children of Women Living with HIV (C/WLHIV)",
         "toaster_info_title": "Sub Population",
@@ -912,7 +912,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop4_toast",
         "type": "toaster_notes",
-        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : At Risk Adolescent Girls and Young Women (AGYW)",
+        "text": "Based on your selection, this Index CA has been enrolled into the Sub Population : At Risk Adolescent Girls and Young Women (AGYW)",
         "toaster_type": "info",
         "toaster_info_text": "At Risk Adolescent Girls and Young Women (AGYW)",
         "toaster_info_title": "Sub Population",
@@ -930,7 +930,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop5_toast",
         "type": "toaster_notes",
-        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children/Adolescents who are Survivors of Sexual Violence",
+        "text": "Based on your selection, this Index CA has been enrolled into the Sub Population : Children/Adolescents who are Survivors of Sexual Violence",
         "toaster_type": "info",
         "toaster_info_text": "Children/Adolescents who are Survivors of Sexual Violence",
         "toaster_info_title": "Sub Population",
@@ -948,7 +948,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop_toast",
         "type": "toaster_notes",
-        "text": "Based on your selection, this Index VCA has been enrolled as those whose Primary Caregivers are Female Sex Workers (FSWs)",
+        "text": "Based on your selection, this Index CA has been enrolled as those whose Primary Caregivers are Female Sex Workers (FSWs)",
         "toaster_type": "info",
         "toaster_info_text": "Children/Adolescents whose Primary Caregivers are Female Sex Workers (FSWs)",
         "toaster_info_title": "Sub Population",
@@ -966,7 +966,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop1_toast_message",
         "type": "toaster_notes",
-        "text": "Based on your selection,this Index VCA has been enrolled into the Sub Population : Children/Adolescents Living with HIV (C/ALHIV)",
+        "text": "Based on your selection,this Index CA has been enrolled into the Sub Population : Children/Adolescents Living with HIV (C/ALHIV)",
         "toaster_type": "info",
         "toaster_info_text": "Children/Adolescents Living with HIV (C/ALHIV)",
         "toaster_info_title": "Sub Population",

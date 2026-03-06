@@ -1,4 +1,4 @@
-{
+﻿{
   "count": 2,
   "encounter_type": "Family Registration",
   "entity_id": "",
@@ -63,7 +63,7 @@
         "text_color": "#000000",
         "label_text_style": "bold",
         "type": "label",
-        "text": "A. Index VCA Sub Population"
+        "text": "A. Index CA Sub Population"
       },
       {
         "key": "vca_age",
@@ -71,7 +71,7 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "vca_age",
         "type": "edit_text",
-        "hint": "VCA Age",
+        "hint": "CA Age",
         "read_only": "true",
         "edit_type": "name",
         "value": ""
@@ -195,7 +195,7 @@
         "key": "other_vca_sub_pop_screening_in_household",
         "type": "label",
         "label_text_style": "bold",
-        "text": "D. Screening for other VCA Sub Populations and other vulnerable children/adolescents in the Household",
+        "text": "D. Screening for other CA Sub Populations and other vulnerable children/adolescents in the Household",
         "text_color": "#000000",
         "v_required": {
           "value": false
@@ -205,7 +205,7 @@
         "key": "refer_to_vca_screening_form",
         "type": "label",
         "label_text_style": "italic",
-        "text": "* Please Use Household Member Form to Screen for other VCA Sub Populations and VCAs in Household.",
+        "text": "* Please Use Household Member Form to Screen for other CA Sub Populations and CAs in Household.",
         "text_color": "#051204255",
         "v_required": {
           "value": false
@@ -232,7 +232,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "violence_six_months",
         "type": "native_radio",
-        "label": "Have you experienced violence in the home in the last six months...",
+        "label": "Have you experienced violence in the home in the last six months",
         "options": [
           {
             "key": "yes",
@@ -250,7 +250,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "children_violence_six_months",
         "type": "native_radio",
-        "label": "Have the children experienced violence in the home in the last six months......",
+        "label": "Have the children experienced violence in the home in the last six months",
         "options": [
           {
             "key": "yes",
@@ -294,7 +294,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "active_on_treatment",
         "type": "native_radio",
-        "label": "Are you active on treatment...",
+        "label": "Are you active on treatment",
         "options": [
           {
             "key": "yes",
@@ -352,7 +352,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_caregiver_virally_suppressed",
         "type": "native_radio",
-        "label": "Is the caregiver virally suppressed...",
+        "label": "Is the caregiver virally suppressed",
         "options": [
           {
             "key": "yes",
@@ -432,7 +432,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "biological_children",
         "type": "native_radio",
-        "label": "Do you have biological children 0-2 years...",
+        "label": "Do you have biological children 0-2 years",
         "options": [
           {
             "key": "yes",
@@ -457,7 +457,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "enrolled_in_the_pmtct_program",
         "type": "native_radio",
-        "label": "Are you and your biological children enrolled in the PMTCT program...",
+        "label": "Are you and your biological children enrolled in the PMTCT program",
         "options": [
           {
             "key": "yes",
@@ -482,7 +482,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "are_there_any_reasons_you_may_be_at_risk_for_hiv",
         "type": "native_radio",
-        "label": "Are there any reasons you may be at risk for HIV...)",
+        "label": "Are there any reasons you may be at risk for HIV)",
         "options": [
           {
             "key": "yes",
@@ -507,7 +507,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "reason_for_hiv_risk",
         "type": "edit_text",
-        "hint": "State reason...",
+        "hint": "State reason",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -544,7 +544,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "fsw_child_and_caregiver_receiving_any_economic_strengthening_intervention...",
         "type": "native_radio",
-        "label": "Is your household food, socially and economically secure... (for example: Able to provide 3 meals per day/ all school-going children enrolled in school; lowest level of education is secondary school; single-headed household; child-headed household; main material of the floor is not earth/sand; Has source of income through stable employment or is engaged in farming/livestock farming etc.)",
+        "label": "Is your household food, socially and economically secure (for example: Able to provide 3 meals per day/ all school-going children enrolled in school; lowest level of education is secondary school; single-headed household; child-headed household; main material of the floor is not earth/sand; Has source of income through stable employment or is engaged in farming/livestock farming etc.)",
         "options": [
           {
             "key": "yes",
@@ -1000,11 +1000,11 @@
             "hint": "First Name",
             "v_required": {
               "value": false,
-              "err": "Enter VCA First Name"
+              "err": "Enter CA First Name"
             },
             "v_regex": {
               "value": "",
-              "err": "Enter VCA First Name"
+              "err": "Enter CA First Name"
             }
           },
           {
@@ -1016,11 +1016,11 @@
             "hint": "Last Name",
             "v_required": {
               "value": false,
-              "err": "Enter VCA Last Name"
+              "err": "Enter CA Last Name"
             },
             "v_regex": {
               "value": "",
-              "err": "Enter VCA Last Name"
+              "err": "Enter CA Last Name"
             }
           },
           {
@@ -1117,7 +1117,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "tested",
             "type": "native_radio",
-            "label": "Was child tested...",
+            "label": "Was child tested",
             "label_text_style": "bold",
             "text_color": "#000000",
             "exclusive": [
@@ -1231,7 +1231,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "other_member_tested",
             "type": "native_radio",
-            "label": "Tested for HIV...",
+            "label": "Tested for HIV",
             "label_text_style": "bold",
             "text_color": "#000000",
             "exclusive": [
@@ -1428,7 +1428,7 @@
           },
           {
             "key": "immunization",
-            "label": "Has the child received the following vaccinations...",
+            "label": "Has the child received the following vaccinations",
             "type": "check_box",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",

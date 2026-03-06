@@ -1,4 +1,4 @@
-{
+﻿{
   "count": "6",
   "skip_blank_steps" : false,
   "encounter_type": "Sub Population",
@@ -53,7 +53,7 @@
     }
   },
   "step1": {
-    "title": " Index VCA Sub-populations Screening Form",
+    "title": " Index CA Sub-populations Screening Form",
     "next": "step2",
     "fields": [
       {
@@ -71,7 +71,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unique_id",
         "type": "edit_text",
-        "hint": "Children/Adolescent (VCA) ID",
+        "hint": "Children/Adolescent (CA) ID",
         "edit_type": "name",
         "read_only": "true"
       },
@@ -211,12 +211,12 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "adolescent_first_name",
         "type": "edit_text",
-        "hint": "VCA first name",
+        "hint": "CA first name",
         "edit_type": "name",
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Please enter VCA first name"
+          "err": "Please enter CA first name"
         },
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -229,12 +229,12 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "adolescent_last_namee",
         "type": "edit_text",
-        "hint": "VCA last name",
+        "hint": "CA last name",
         "edit_type": "name",
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Please enter VCA last name"
+          "err": "Please enter CA last name"
         },
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -247,7 +247,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "adolescent_birthdate",
         "type": "date_picker",
-        "hint": "VCA Date of birth",
+        "hint": "CA Date of birth",
         "look_up": "true",
         "expanded": false,
         "duration": {
@@ -354,7 +354,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "adolescent_gender",
         "type": "native_radio",
-        "label": "VCA Gender",
+        "label": "CA Gender",
         "options": [
           {
             "key": "male",
@@ -372,7 +372,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "school",
         "type": "native_radio",
-        "label": "Is the VCA in School...",
+        "label": "Is the CA in School",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -470,7 +470,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "is_on_hiv_treatment",
         "type": "native_radio",
-        "label": "Is the Child/Adolescent currently on HIV treatment...",
+        "label": "Is the Child/Adolescent currently on HIV treatment",
         "options": [
           {
             "key": "yes",
@@ -509,7 +509,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "is_viral_load_test_results_on_file",
         "type": "native_radio",
-        "label": "Does the Child/Adolescent have their viral load test results on file...",
+        "label": "Does the Child/Adolescent have their viral load test results on file",
         "options": [
           {
             "key": "yes",
@@ -534,7 +534,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "is_tb_screening_results_on_file",
         "type": "native_radio",
-        "label": "Does the Child/Adolescent have their TB screening results on file...",
+        "label": "Does the Child/Adolescent have their TB screening results on file",
         "options": [
           {
             "key": "yes",
@@ -559,7 +559,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "screened_for_malnutrition",
         "type": "native_radio",
-        "label": "Has the child/adolescent been screened for malnutrition...",
+        "label": "Has the child/adolescent been screened for malnutrition",
         "options": [
           {
             "key": "yes",
@@ -584,7 +584,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "gets_tb_preventive_therapy",
         "type": "native_radio",
-        "label": "Does the child/adolescent get drugs to prevent Tuberculosis (TB Preventive Therapy (TPT))...",
+        "label": "Does the child/adolescent get drugs to prevent Tuberculosis (TB Preventive Therapy (TPT))",
         "options": [
           {
             "key": "yes",
@@ -609,7 +609,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "takes_drugs_to_prevent_other_diseases",
         "type": "native_radio",
-        "label": "Does the child/adolescent receive drugs to prevent other illnesses (cotrimoxazole prophylaxis)...",
+        "label": "Does the child/adolescent receive drugs to prevent other illnesses (cotrimoxazole prophylaxis)",
         "options": [
           {
             "key": "yes",
@@ -638,7 +638,7 @@
         "value": "yes",
         "hint": "Less than 3yrs Old",
         "edit_type": "name",
-        "label": "D1. Is the Child in the 0-2 years age group... (If no, screen for other sub populations).",
+        "label": "D1. Is the Child in the 0-2 years age group (If no, screen for other sub populations).",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -677,7 +677,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "positive_mother",
         "type": "native_radio",
-        "label": "Was the child born from a mother who is HIV-positive...",
+        "label": "Was the child born from a mother who is HIV-positive",
         "options": [
           {
             "key": "yes",
@@ -702,7 +702,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "is_mother_currently_on_treatment",
         "type": "native_radio",
-        "label": "Is the mother currently on HIV treatment...",
+        "label": "Is the mother currently on HIV treatment",
         "options": [
           {
             "key": "yes",
@@ -746,7 +746,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "is_mother_adhering_to_treatment",
         "type": "native_radio",
-        "label": "Is the mother adhering to treatment...",
+        "label": "Is the mother adhering to treatment",
         "options": [
           {
             "key": "yes",
@@ -770,7 +770,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "is_mother_virally_suppressed",
         "type": "native_radio",
-        "label": "Is the mother virally suppressed...",
+        "label": "Is the mother virally suppressed",
         "options": [
           {
             "key": "yes",
@@ -796,7 +796,7 @@
         "openmrs_entity_id": "child_been_tested_for_hiv",
         "type": "edit_text",
         "value": "yes",
-        "hint": "Has the child been tested for HIV...",
+        "hint": "Has the child been tested for HIV",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -816,7 +816,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "child_receiving_breastfeeding",
         "type": "native_radio",
-        "label": "Is the child receiving breast feeding...",
+        "label": "Is the child receiving breast feeding",
         "options": [
           {
             "key": "yes",
@@ -841,7 +841,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "child_tested_for_hiv_inline_with_guidelines",
         "type": "native_radio",
-        "label": "Has the child been tested for HIV in line with the guidelines...",
+        "label": "Has the child been tested for HIV in line with the guidelines",
         "options": [
           {
             "key": "yes",
@@ -866,7 +866,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "receives_drugs_to_prevent_hiv_and_other_illnesses",
         "type": "native_radio",
-        "label": "Does the child/adolescent receive drugs to prevent HIV and other illnesses... (ARVs/cotrimoxazole prophylaxis)...",
+        "label": "Does the child/adolescent receive drugs to prevent HIV and other illnesses (ARVs/cotrimoxazole prophylaxis)",
         "options": [
           {
             "key": "yes",
@@ -891,7 +891,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "child_been_screened_for_malnutrition",
         "type": "native_radio",
-        "label": "Has the child (6 months and above) been screened for malnutrition...",
+        "label": "Has the child (6 months and above) been screened for malnutrition",
         "options": [
           {
             "key": "yes",
@@ -916,7 +916,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "child_gets_drugs_to_prevent_tb",
         "type": "native_radio",
-        "label": "Does the child/adolescent get drugs to prevent Tuberculosis (TB Preventive Therapy (TPT))...",
+        "label": "Does the child/adolescent get drugs to prevent Tuberculosis (TB Preventive Therapy (TPT))",
         "options": [
           {
             "key": "yes",
@@ -941,7 +941,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "child_enrolled_in_early_childhood_development_program",
         "type": "native_radio",
-        "label": "Is the child enrolled in an Early Childhood Development Program...",
+        "label": "Is the child enrolled in an Early Childhood Development Program",
         "options": [
           {
             "key": "yes",
@@ -990,7 +990,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "is_biological_child_of_mother_living_with_hiv",
         "type": "native_radio",
-        "label": "Is the Child/Adolescent a biological child of a mother living with HIV...",
+        "label": "Is the Child/Adolescent a biological child of a mother living with HIV",
         "options": [
           {
             "key": "yes",
@@ -1015,7 +1015,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "9",
         "type": "native_radio",
-        "label": "Has the Child/Adolescent been tested for HIV/Index testing with mother as index client...",
+        "label": "Has the Child/Adolescent been tested for HIV/Index testing with mother as index client",
         "options": [
           {
             "key": "yes",
@@ -1040,7 +1040,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "is_mother_currently_on_treatment_wlhiv",
         "type": "native_radio",
-        "label": "Is the mother currently on HIV treatment...",
+        "label": "Is the mother currently on HIV treatment",
         "options": [
           {
             "key": "yes",
@@ -1084,7 +1084,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "is_mother_adhering_to_treatment_wlhiv",
         "type": "native_radio",
-        "label": "Is the mother adhering to treatment...",
+        "label": "Is the mother adhering to treatment",
         "options": [
           {
             "key": "yes",
@@ -1109,7 +1109,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "is_mother_virally_suppressed_wlhiv",
         "type": "native_radio",
-        "label": "Is the mother virally suppressed...",
+        "label": "Is the mother virally suppressed",
         "options": [
           {
             "key": "yes",
@@ -1134,7 +1134,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "child_receiving_any_hiv_and_violence_prevention_intervention",
         "type": "native_radio",
-        "label": "Is the Child/Adolescent receiving any HIV and violence prevention intervention...",
+        "label": "Is the Child/Adolescent receiving any HIV and violence prevention intervention",
         "options": [
           {
             "key": "yes",
@@ -1183,7 +1183,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "agyw_sexually_active",
         "type": "native_radio",
-        "label": "Is the AGYW sexually active...",
+        "label": "Is the AGYW sexually active",
         "options": [
           {
             "key": "yes",
@@ -1208,7 +1208,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hiv_or_pregnancy_prevention_method_used",
         "type": "check_box",
-        "label": "Is AGYW using any of these HIV/pregnancy prevention methods...",
+        "label": "Is AGYW using any of these HIV/pregnancy prevention methods",
         "options": [
           {
             "key": "prep",
@@ -1265,7 +1265,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "agyw_having_sex_with_older_men",
         "type": "native_radio",
-        "label": "Is the AGYW having sex with older men...",
+        "label": "Is the AGYW having sex with older men",
         "options": [
           {
             "key": "yes",
@@ -1290,7 +1290,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "agyw_engaged_in_transactional_sex",
         "type": "native_radio",
-        "label": "Is the AGYW engaged in transactional sex...",
+        "label": "Is the AGYW engaged in transactional sex",
         "options": [
           {
             "key": "yes",
@@ -1315,7 +1315,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "agyw_engaged_in_sex_work",
         "type": "native_radio",
-        "label": "F6. Is the AGYW engaged in sex work...",
+        "label": "F6. Is the AGYW engaged in sex work",
         "options": [
           {
             "key": "yes",
@@ -1340,7 +1340,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "agyw_food_or_economically_insecure",
         "type": "native_radio",
-        "label": "Is the AGYW food or economically insecure...",
+        "label": "Is the AGYW food or economically insecure",
         "options": [
           {
             "key": "yes",
@@ -1365,7 +1365,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "agyw_marry_early",
         "type": "native_radio",
-        "label": "Did the AGYW marry early (child marriage)...",
+        "label": "Did the AGYW marry early (child marriage)",
         "options": [
           {
             "key": "yes",
@@ -1390,7 +1390,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "agyw_give_birth_before_the_age_of_18",
         "type": "native_radio",
-        "label": "Did the AGYW give birth before the age of 18 (teen mum)...",
+        "label": "Did the AGYW give birth before the age of 18 (teen mum)",
         "options": [
           {
             "key": "yes",
@@ -1415,7 +1415,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "agyw_have_a_partner_who_is_violent_or_has_experienced_violence",
         "type": "native_radio",
-        "label": "Does the AGYW have a partner who is violent or has experienced violence...",
+        "label": "Does the AGYW have a partner who is violent or has experienced violence",
         "options": [
           {
             "key": "yes",
@@ -1440,7 +1440,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "agyw_ever_been_diagnosed_with_a_Sexually_transmitted_illness",
         "type": "native_radio",
-        "label": "Has the AGYW ever been diagnosed with a Sexually Transmitted Illness (STI)...",
+        "label": "Has the AGYW ever been diagnosed with a Sexually Transmitted Illness (STI)",
         "options": [
           {
             "key": "yes",
@@ -1465,7 +1465,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "agyw_in_school",
         "type": "native_radio",
-        "label": "Is the AGYW in school...",
+        "label": "Is the AGYW in school",
         "options": [
           {
             "key": "yes",
@@ -1490,7 +1490,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "agyw_receiving_an_economic_strengthening_intervention",
         "type": "native_radio",
-        "label": "Is the AGYW receiving an economic strengthening intervention...",
+        "label": "Is the AGYW receiving an economic strengthening intervention",
         "options": [
           {
             "key": "yes",
@@ -1523,7 +1523,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "child_ever_experienced_sexual_violence",
         "type": "native_radio",
-        "label": "Has the child/adolescent ever experienced sexual violence...",
+        "label": "Has the child/adolescent ever experienced sexual violence",
         "options": [
           {
             "key": "yes",
@@ -1541,7 +1541,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "child_still_living_in_the_same_household_as_the_perpetrator",
         "type": "native_radio",
-        "label": "Is the child/adolescent still living in the same household as the perpetrator...",
+        "label": "Is the child/adolescent still living in the same household as the perpetrator",
         "options": [
           {
             "key": "yes",
@@ -1591,7 +1591,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "did_the_child_access_clinical_care",
         "type": "native_radio",
-        "label": "Did the child/adolescent access clinical care...",
+        "label": "Did the child/adolescent access clinical care",
         "options": [
           {
             "key": "yes",
@@ -1616,7 +1616,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "child_clinical_care_services_received",
         "type": "check_box",
-        "label": "Did the child/adolescent receive any of these clinical care services...",
+        "label": "Did the child/adolescent receive any of these clinical care services",
         "options": [
           {
             "key": "pep",
@@ -1699,7 +1699,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "is_the_child_caregiver_an_fsw",
         "type": "native_radio",
-        "label": "Is the child/adolescent's caregiver an FSW...",
+        "label": "Is the child/adolescent's caregiver an FSW",
         "options": [
           {
             "key": "yes",
@@ -1717,7 +1717,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "fsw_prevention_intervention",
         "type": "native_radio",
-        "label": "Is the Child/Adolescent receiving any age-appropriate HIV and sexual violence prevention intervention...",
+        "label": "Is the Child/Adolescent receiving any age-appropriate HIV and sexual violence prevention intervention",
         "options": [
           {
             "key": "yes",
@@ -1742,7 +1742,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "fsw_economic_strengthening_intervention",
         "type": "native_radio",
-        "label": "Is the Adolescent and caregiver receiving any economic strengthening intervention...",
+        "label": "Is the Adolescent and caregiver receiving any economic strengthening intervention",
         "options": [
           {
             "key": "yes",
@@ -1819,7 +1819,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "toaster_notes",
         "type": "toaster_notes",
-        "text": "The goal of the USAID ECAP II OVC Comprehensive Program is to mitigate the impact of HIV and improve the health and well-being of vulnerable children and adolescents (VCA) through the delivery of high-impact, evidence-informed, and age-appropriate interventions customized for each vulnerable child and adolescent sub-population.\n\nFor children and adolescents living with HIV, the program aims to support households and children living with HIV to ensure that they access appropriate care services to improve treatment outcomes and sustain viral load suppression.\n\nIf you consent to participate in the program, it entails that you will officially be:\n\n- Enrolled in the USAID ECAP II Program\n- Assigned a Case Worker who will visit your household regularly to support you and your family in achieving your health and socioeconomic goals\n- Exited from the program once you are deemed to have achieved graduation status\n\nIf you have questions about this program or about your rights as a participant, you may contact the PCZ Executive Director/Chief of Party:\n\nPCZ Executive Director/Chief of Party\nProject Concern Zambia\nP.O. Box 32320\nLusaka, Zambia\nPhone: +260 977 777 1385 / +260 95 777 71385",
+        "text": "The goal of the USAID ECAP II OVC Comprehensive Program is to mitigate the impact of HIV and improve the health and well-being of vulnerable children and adolescents (CA) through the delivery of high-impact, evidence-informed, and age-appropriate interventions customized for each vulnerable child and adolescent sub-population.\n\nFor children and adolescents living with HIV, the program aims to support households and children living with HIV to ensure that they access appropriate care services to improve treatment outcomes and sustain viral load suppression.\n\nIf you consent to participate in the program, it entails that you will officially be:\n\n- Enrolled in the USAID ECAP II Program\n- Assigned a Case Worker who will visit your household regularly to support you and your family in achieving your health and socioeconomic goals\n- Exited from the program once you are deemed to have achieved graduation status\n\nIf you have questions about this program or about your rights as a participant, you may contact the PCZ Executive Director/Chief of Party:\n\nPCZ Executive Director/Chief of Party\nProject Concern Zambia\nP.O. Box 32320\nLusaka, Zambia\nPhone: +260 977 777 1385 / +260 95 777 71385",
         "toaster_type": "info",
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title"
@@ -1830,7 +1830,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "purpose",
         "type": "toaster_notes",
-        "text": "This informed consent form is targeted at vulnerable Children and Adolescents (VCA) and their primary caregivers who are identified as eligible clients for enrollment in the USAID ECAP II OVC Comprehensive Program. \n\n The purpose of the consent form is to explain the USAID ECAP II program to the potential client before the client agrees to it. This will enable the client to ask questions and accept or deny participation in the program. \n\n\nThe process of the informed consent includes : \n\n- The client's ability to decide. \n- Explanation of information needed to make the decision. \n- The client's understanding of services provided under the USAID ECAP II Program \n- The client's voluntary decision to be enrolled in the USAID ECAP II OVC Comprehensive Program \n\n This shared decision-making process between the client and service providers attached to the USAID ECAP II Program will empower the client to make educated and informed decisions about their care.",
+        "text": "This informed consent form is targeted at vulnerable Children and Adolescents (CA) and their primary caregivers who are identified as eligible clients for enrollment in the USAID ECAP II OVC Comprehensive Program. \n\n The purpose of the consent form is to explain the USAID ECAP II program to the potential client before the client agrees to it. This will enable the client to ask questions and accept or deny participation in the program. \n\n\nThe process of the informed consent includes : \n\n- The client's ability to decide. \n- Explanation of information needed to make the decision. \n- The client's understanding of services provided under the USAID ECAP II Program \n- The client's voluntary decision to be enrolled in the USAID ECAP II OVC Comprehensive Program \n\n This shared decision-making process between the client and service providers attached to the USAID ECAP II Program will empower the client to make educated and informed decisions about their care.",
         "toaster_type": "info",
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title"
@@ -1864,7 +1864,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "subpop1_toast",
         "type": "toaster_notes",
-        "text": "Based on your selection,this Index VCA has been enrolled into the Sub Population : Children/Adolescents Living with HIV (C/ALHIV)",
+        "text": "Based on your selection,this Index CA has been enrolled into the Sub Population : Children/Adolescents Living with HIV (C/ALHIV)",
         "toaster_type": "positive",
         "toaster_info_text": "Children/Adolescents Living with HIV (C/ALHIV)",
         "toaster_info_title": "Sub Population",
@@ -1882,7 +1882,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "subpop2_toast",
         "type": "toaster_notes",
-        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : HIV Exposed Infant (HEI)",
+        "text": "Based on your selection, this Index CA has been enrolled into the Sub Population : HIV Exposed Infant (HEI)",
         "toaster_type": "positive",
         "toaster_info_text": "HIV Exposed Infant (HEI)",
         "toaster_info_title": "Sub Population",
@@ -1900,7 +1900,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "subpop3_toast",
         "type": "toaster_notes",
-        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children of Women Living with HIV (WLHIV)",
+        "text": "Based on your selection, this Index CA has been enrolled into the Sub Population : Children of Women Living with HIV (WLHIV)",
         "toaster_type": "positive",
         "toaster_info_text": "Children of Women Living with HIV (WLHIV)",
         "toaster_info_title": "Sub Population",
@@ -1918,7 +1918,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "subpop4_toast",
         "type": "toaster_notes",
-        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : At Risk Adolescent Girls and Young Women (AGYW)",
+        "text": "Based on your selection, this Index CA has been enrolled into the Sub Population : At Risk Adolescent Girls and Young Women (AGYW)",
         "toaster_type": "positive",
         "toaster_info_text": "At Risk Adolescent Girls and Young Women (AGYW)",
         "toaster_info_title": "Sub Population",
@@ -1936,7 +1936,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "subpop5_toast",
         "type": "toaster_notes",
-        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children/Adolescents who are Survivors of Sexual Violence",
+        "text": "Based on your selection, this Index CA has been enrolled into the Sub Population : Children/Adolescents who are Survivors of Sexual Violence",
         "toaster_type": "positive",
         "toaster_info_text": "Children/Adolescents who are Survivors of Sexual Violence",
         "toaster_info_title": "Sub Population",
@@ -1954,7 +1954,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "subpop6_toast",
         "type": "toaster_notes",
-        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children/Adolescents whose Primary Caregivers are HIV Female Sex Workers (FSWs)",
+        "text": "Based on your selection, this Index CA has been enrolled into the Sub Population : Children/Adolescents whose Primary Caregivers are HIV Female Sex Workers (FSWs)",
         "toaster_type": "positive",
         "toaster_info_text": "Children/Adolescents whose Primary Caregivers are HIV Female Sex Workers (FSWs)",
         "toaster_info_title": "Sub Population",
@@ -2111,7 +2111,7 @@
         "look_up": "true",
         "v_required": {
           "value": false,
-          "err": "Please enter VCA last name"
+          "err": "Please enter CA last name"
         },
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -2139,7 +2139,7 @@
         "openmrs_entity_id": "gender",
         "type": "native_radio",
         "read_only": "true",
-        "label": "VCA Gender",
+        "label": "CA Gender",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -2207,7 +2207,7 @@
         "type": "edit_text",
         "value": "yes",
         "read_only": "true",
-        "hint": "Was child identified through Index...",
+        "hint": "Was child identified through Index",
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -2292,7 +2292,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "acceptance",
         "type": "native_radio",
-        "label": "Do you accept the offer of the enrollment...",
+        "label": "Do you accept the offer of the enrollment",
         "label_text_style": "bold",
         "text_color": "#000000",
         "exclusive": [
@@ -2377,7 +2377,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "art_check_box",
         "type": "native_radio",
-        "label": "Is the child currently on ART...",
+        "label": "Is the child currently on ART",
         "label_text_style": "bold",
         "text_color": "#000000",
         "exclusive": [
@@ -2417,7 +2417,7 @@
         "edit_type": "number",
         "v_required": {
           "value": false,
-          "err": "Please enter VCA ART number"
+          "err": "Please enter CA ART number"
         },
         "v_regex": {
           "value": "([0-9]{4}-[0-9]{4}-[0-9]{6}-[0-9])|\\s*",
@@ -2463,7 +2463,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "vl_check_box",
         "type": "native_radio",
-        "label": "Is child eligible for VL test...",
+        "label": "Is child eligible for VL test",
         "label_text_style": "bold",
         "text_color": "#000000",
         "exclusive": [
@@ -2548,7 +2548,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "vl_suppressed",
         "type": "native_radio",
-        "label": "Is child VL suppressed... (less than 1000 copies/ml)",
+        "label": "Is child VL suppressed (less than 1000 copies/ml)",
         "label_text_style": "bold",
         "text_color": "#000000",
         "exclusive": [
@@ -2633,7 +2633,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "child_mmd",
         "type": "native_radio",
-        "label": "Is the child on MMD...",
+        "label": "Is the child on MMD",
         "label_text_style": "bold",
         "text_color": "#000000",
         "exclusive": [

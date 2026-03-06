@@ -1,4 +1,4 @@
-{
+﻿{
   "count": "1",
   "encounter_type": "TB Screening",
   "entity_id": "",
@@ -60,7 +60,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unique_id",
         "type": "edit_text",
-        "hint": "Children/Adolescent (VCA) ID",
+        "hint": "Children/Adolescent (CA) ID",
         "edit_type": "name",
         "read_only": "true",
         "v_required": {
@@ -82,7 +82,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "previous_tb_treatment",
         "type": "native_radio",
-        "label": "Previous TB treatment...",
+        "label": "Previous TB treatment",
         "text_color": "#000000",
         "options": [
           {
@@ -160,7 +160,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "history_close_tb_contact",
         "type": "native_radio",
-        "label": "History of close TB contact...",
+        "label": "History of close TB contact",
         "label_info_text": "Close contact with a person with TB",
         "options": [
           {
@@ -351,7 +351,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "referred_for_tb_evaluation",
         "type": "native_radio",
-        "label": "If the program participant screens positive for TB (presumptive TB case), has s/he been referred to the health facility for further evaluation...",
+        "label": "If the program participant screens positive for TB (presumptive TB case), has s/he been referred to the health facility for further evaluation",
         "label_info_text": "Mark only one option",
         "options": [
           {

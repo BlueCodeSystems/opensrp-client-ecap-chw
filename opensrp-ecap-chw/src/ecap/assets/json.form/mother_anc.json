@@ -1,4 +1,4 @@
-{
+﻿{
   "count": "1",
   "encounter_type": "ANC",
   "entity_id": "",
@@ -96,7 +96,7 @@
         "openmrs_entity_id": "hiv_tested",
         "type": "native_radio",
         "text_color": "#000000",
-        "label": "HIV Tested...",
+        "label": "HIV Tested",
         "options": [
           { "key": "yes", "text": "Yes" },
           { "key": "no", "text": "No" }
@@ -157,7 +157,7 @@
         "openmrs_entity_id": "male_hiv_tested",
         "type": "native_radio",
         "text_color": "#000000",
-        "label": "Male partner tested...",
+        "label": "Male partner tested",
         "options": [
           { "key": "yes", "text": "Yes" },
           { "key": "no", "text": "No" }

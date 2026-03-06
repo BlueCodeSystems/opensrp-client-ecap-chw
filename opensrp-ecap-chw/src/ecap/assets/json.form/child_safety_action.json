@@ -1,4 +1,4 @@
-{
+﻿{
   "validate_on_submit": true,
   "count": "1",
   "encounter_type": "Child Safety Actions",
@@ -62,7 +62,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unique_id",
         "type": "edit_text",
-        "hint": "Children/Adolescent (VCA) ID",
+        "hint": "Children/Adolescent (CA) ID",
         "edit_type": "name",
         "read_only": "true"
       },
@@ -89,7 +89,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "safety_threats",
         "type": "edit_text",
-        "hint": "What are the specific concerns related to child safety...\nDescribe safety threats."
+        "hint": "What are the specific concerns related to child safety\nDescribe safety threats."
       },
       {
         "key": "safety_action",
@@ -97,7 +97,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "safety_action",
         "type": "edit_text",
-        "hint": "SAFETY ACTIONS:\nWhat specific actions have or will have to be taken to provide immediate child protection...",
+        "hint": "SAFETY ACTIONS:\nWhat specific actions have or will have to be taken to provide immediate child protection",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -112,7 +112,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "safety_protection",
         "type": "edit_text",
-        "hint": "ABILITY TO IMMEDIATELY PROTECT:\nHow do these actions directly provide child protection...",
+        "hint": "ABILITY TO IMMEDIATELY PROTECT:\nHow do these actions directly provide child protection",
         "relevance": {
           "rules-engine": {
             "ex-rules": {

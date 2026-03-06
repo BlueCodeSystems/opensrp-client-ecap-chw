@@ -1,4 +1,4 @@
-{
+﻿{
   "count": "1",
   "encounter_type": "Household Case Status",
   "entity_id": "",
@@ -212,7 +212,7 @@
           },
           {
             "key": "HH does not have VCA who falls under priority sub-population",
-            "text": "HH does not have VCA who falls under priority sub-population"
+            "text": "HH does not have CA who falls under priority sub-population"
           },
           {
             "key": "Transferred to other Ecap II /district",
@@ -315,7 +315,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "instructions",
         "type": "toaster_notes",
-        "text": "Re-register the VCA/HH with a new caregiver",
+        "text": "Re-register the CA/HH with a new caregiver",
         "text_color": "#000000",
         "label_text_style": "bold",
         "toaster_info_title": "Instructions",

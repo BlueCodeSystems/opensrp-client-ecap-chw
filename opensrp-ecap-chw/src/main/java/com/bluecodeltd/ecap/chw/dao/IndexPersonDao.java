@@ -508,7 +508,11 @@ public class IndexPersonDao  extends AbstractDao {
 //                "JOIN ec_vca_case_plan_domain ON ec_vca_case_plan_domain.unique_id = ec_client_index.unique_id " +
 //                "WHERE ec_client_index.unique_id ='" + childID + "' " +
 //                "GROUP BY ec_client_index.unique_id, ec_client_index.case_status";
-        String sql = "SELECT household_id,first_name,last_name,unique_id, case_status FROM ec_client_index  WHERE unique_id = '" + childID + "'";
+        String sql = "SELECT household_id, first_name, last_name, unique_id, case_status, " +
+                "de_registration_date, reason, graduation_benchmark, exited_graduation_reason, " +
+                "date_of_death, district_moved_to, vca_receiving_caseworker, other_reason, " +
+                "ovc_district, ovc_name, location_moved_to " +
+                "FROM ec_client_index WHERE unique_id = '" + childID + "'";
 
         DataMap<CaseStatusModel> dataMap = c -> {
             CaseStatusModel model = new CaseStatusModel();
@@ -517,6 +521,18 @@ public class IndexPersonDao  extends AbstractDao {
             model.setUnique_id(getCursorValue(c, "unique_id"));
             model.setCase_status(getCursorValue(c, "case_status"));
             model.setHousehold_id(getCursorValue(c, "household_id"));
+            model.setDe_registration_date(getCursorValue(c, "de_registration_date"));
+            model.setReason(getCursorValue(c, "reason"));
+            model.setGraduation_benchmark(getCursorValue(c, "graduation_benchmark"));
+            model.setExited_graduation_reason(getCursorValue(c, "exited_graduation_reason"));
+            model.setDate_of_death(getCursorValue(c, "date_of_death"));
+            model.setDistrict_moved_to(getCursorValue(c, "district_moved_to"));
+            model.setVca_receiving_caseworker(getCursorValue(c, "vca_receiving_caseworker"));
+            model.setOther_reason(getCursorValue(c, "other_reason"));
+            model.setOvc_district(getCursorValue(c, "ovc_district"));
+            model.setOvc_name(getCursorValue(c, "ovc_name"));
+            model.setLocation_moved_to(getCursorValue(c, "location_moved_to"));
+            DaoModelFieldMapper.captureAdditionalFields(c, model);
 
             return model;
         };

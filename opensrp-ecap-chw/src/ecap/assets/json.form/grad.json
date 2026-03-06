@@ -1,4 +1,4 @@
-{
+﻿{
   "count": "3",
   "encounter_type": "Grad",
   "entity_id": "",
@@ -72,7 +72,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unique_id",
         "type": "edit_text",
-        "hint": "Children/Adolescent (VCA) ID",
+        "hint": "Children/Adolescent (CA) ID",
         "edit_type": "name",
         "read_only": "true"
       },
@@ -119,7 +119,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "virally_suppressed",
         "type": "native_radio",
-        "label": "Has this beneficiary been documented as virally suppressed (with viral load below 1,000 in the last 12 months)...",
+        "label": "Has this beneficiary been documented as virally suppressed (with viral load below 1,000 in the last 12 months)",
         "options": [
           {
             "key": "yes",
@@ -159,10 +159,10 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "instructions_a",
         "type": "toaster_notes",
-        "text": "Questions do not apply to this VCA. Proceed.",
+        "text": "Questions do not apply to this CA. Proceed.",
         "text_color": "#000000",
         "label_text_style": "bold",
-        "toaster_info_text": "Questions do not apply to this VCA. Proceed.",
+        "toaster_info_text": "Questions do not apply to this CA. Proceed.",
         "toaster_info_title": "Benchmark 3: Knowledgeable about HIV prevention",
         "toaster_type": "warning",
         "relevance": {
@@ -315,7 +315,7 @@
         "label_info_text": "Ask if he/she knows where to get an HIV test, where to get condoms, where to get advice... Tick if answered at least 2 correctly.",
         "label_info_title": "Prevention Support",
         "type": "check_box",
-        "label": "Tell me one place where HIV prevention support is available...",
+        "label": "Tell me one place where HIV prevention support is available",
         "options": [
           {
             "key": "condom_outlet",
@@ -412,7 +412,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "sign_malnutrition",
         "type": "native_radio",
-        "label": "Any Sign of Malnutrition...",
+        "label": "Any Sign of Malnutrition",
         "options": [
           {
             "key": "yes",

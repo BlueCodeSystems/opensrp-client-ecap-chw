@@ -1,4 +1,4 @@
-{
+﻿{
   "count": "1",
   "encounter_type": "Graduation Assessment 0-17 Years",
   "entity_id": "",
@@ -63,7 +63,7 @@
         "openmrs_entity_id": "first_name",
         "read_only": "false",
         "type": "edit_text",
-        "hint": "VCA First Name"
+        "hint": "CA First Name"
       },
       {
         "key": "last_name",
@@ -72,7 +72,7 @@
         "openmrs_entity_id": "last_name",
         "read_only": "false",
         "type": "edit_text",
-        "hint": "VCA Last Name"
+        "hint": "CA Last Name"
       },
       {
         "key": "child_dob",
@@ -108,7 +108,7 @@
         "openmrs_entity": "person_identifier",
         "openmrs_entity_id": "unique_id",
         "type": "edit_text",
-        "hint": "Children/Adolescent (VCA) ID",
+        "hint": "Children/Adolescent (CA) ID",
         "edit_type": "name",
         "read_only": false
       },
@@ -146,7 +146,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "virally_suppressed",
         "type": "native_radio",
-        "label": "Has this beneficiary been documented as virally suppressed (with viral load below 1,000 in the last 12 months)...",
+        "label": "Has this beneficiary been documented as virally suppressed (with viral load below 1,000 in the last 12 months)",
         "options": [
           {
             "key": "yes",
@@ -164,7 +164,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "signs_malnutrition",
         "type": "native_radio",
-        "label": "Are there any signs of malnutrition...",
+        "label": "Are there any signs of malnutrition",
         "options": [
           {
             "key": "yes",

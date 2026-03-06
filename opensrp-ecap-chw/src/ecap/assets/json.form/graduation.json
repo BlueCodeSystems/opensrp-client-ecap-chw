@@ -1,4 +1,4 @@
-{
+﻿{
   "count": "10",
   "encounter_type": "Graduation",
   "hide_blank_spaces": true,
@@ -62,7 +62,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "instructions",
         "type": "toaster_notes",
-        "text": "VCA And Family Graduation Benchmark Assessment Form",
+        "text": "CA And Family Graduation Benchmark Assessment Form",
         "text_color": "#000000",
         "label_text_style": "bold",
         "toaster_info_text": "This Form is to be completed by the Case Worker to assess progress made by OVC program beneficiaries and their households to qualify for graduation. The Form is to be administered after 12 months of the beneficiary enrolled on the OVC program.",
@@ -112,7 +112,7 @@
         "openmrs_entity_id": "asmt",
         "read_only": false,
         "type": "native_radio",
-        "label": "Has Family previously been assessed for graduation...",
+        "label": "Has Family previously been assessed for graduation",
         "options": [
           {
             "key": "yes",
@@ -210,7 +210,7 @@
         "openmrs_entity_id": "hiv_status_enrolled",
         "type": "native_radio",
         "read_only": true,
-        "label": "Has each child and adolescent below 18 years of age in the household; and enrolled in the project, been documented as'HIV status positive,' 'HIV status negative,' or 'test not required based on HIV risk assessment'...",
+        "label": "Has each child and adolescent below 18 years of age in the household; and enrolled in the project, been documented as'HIV status positive,' 'HIV status negative,' or 'test not required based on HIV risk assessment'",
         "options": [
           {
             "key": "yes",
@@ -229,7 +229,7 @@
         "openmrs_entity_id": "caregiver_hiv_status_enrolled",
         "type": "native_radio",
         "read_only": true,
-        "label": "Has the caregiver (parent/guardian) in the household been documented as'HIV status positive,' 'HIV status negative,' or 'test not required based on HIV risk assessment'...",
+        "label": "Has the caregiver (parent/guardian) in the household been documented as'HIV status positive,' 'HIV status negative,' or 'test not required based on HIV risk assessment'",
         "options": [
           {
             "key": "yes",
@@ -292,7 +292,7 @@
         "label_info_title":"Benchmark 2: Virally suppressed ",
         "type": "native_radio",
         "read_only" : true,
-        "label": "Has each VCA as a beneficiary been documented as virally suppressed (with viral load below 1,000 in the last 12 months)...",
+        "label": "Has each CA as a beneficiary been documented as virally suppressed (with viral load below 1,000 in the last 12 months)",
         "options": [
           {
             "key": "yes",
@@ -316,7 +316,7 @@
         "label_info_title":"Benchmark 2: Virally suppressed ",
         "type": "native_radio",
         "read_only" : true,
-        "label": "Has the caregiver as a beneficiary been documented as virally suppressed (with viral load below 1,000 in the last 12 months)...",
+        "label": "Has the caregiver as a beneficiary been documented as virally suppressed (with viral load below 1,000 in the last 12 months)",
         "options": [
           {
             "key": "yes",
@@ -405,7 +405,7 @@
         "label_info_title":"Benchmark 3: Knowledgeable about HIV prevention",
         "type": "native_radio",
         "read_only" : true,
-        "label": "Do all adolescents 10 to 17 have good HIV prevention knowledge...",
+        "label": "Do all adolescents 10 to 17 have good HIV prevention knowledge",
         "options": [
           {
             "key": "yes",
@@ -503,7 +503,7 @@
         "label_info_title":"Benchmark 4: Not undernourished",
         "read_only" : false,
         "type": "native_radio",
-        "label": "Are there no children below the age of 5 who are malnourished...",
+        "label": "Are there no children below the age of 5 who are malnourished",
         "options": [
           {
             "key": "yes",
@@ -588,7 +588,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "school_fees",
         "type": "native_radio",
-        "label": "Were you able to pay for the school fees for the last school year for all children and adolescents in the household in Grade 1 to 7 who are enrolled in the Project, without selling your working capital or tools/ livestock needed to continue to earn new income... Do not answer 'yes' if the child/adolescent had their school fee waived by the school or paid by the project.",
+        "label": "Were you able to pay for the school fees for the last school year for all children and adolescents in the household in Grade 1 to 7 who are enrolled in the Project, without selling your working capital or tools/ livestock needed to continue to earn new income Do not answer 'yes' if the child/adolescent had their school fee waived by the school or paid by the project.",
         "options": [
           {
             "key": "yes",
@@ -611,7 +611,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "medical_costs",
         "type": "native_radio",
-        "label": "Were you able to pay all medical costs in the past 6 months for all children and adolescents in your household, who are enrolled in the Project without selling your working capital or tools/livestock needed to continue to earn new income... Medical costs include medicine on prescription and transport to health facility.",
+        "label": "Were you able to pay all medical costs in the past 6 months for all children and adolescents in your household, who are enrolled in the Project without selling your working capital or tools/livestock needed to continue to earn new income Medical costs include medicine on prescription and transport to health facility.",
         "options": [
           {
             "key": "yes",
@@ -671,7 +671,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "record_abuse",
         "type": "native_radio",
-        "label": "Is there any record or evidence that a member of the household has been referred for legal / customary prosecution due to violence in the past six months...",
+        "label": "Is there any record or evidence that a member of the household has been referred for legal / customary prosecution due to violence in the past six months",
         "options": [
           {
             "key": "yes",
@@ -691,7 +691,7 @@
         "type": "native_radio",
         "label_info_text": "Talk with the primary guardian in privacy where no other person can hear. Remind the guardian that the information given is confidential. Tell her/him that they do not need to answer, if they do not feel comfortable about it, do not answer this question.",
         "label_info_title":"Benchmark 6: No violence and Sexual Abuse",
-        "label": "In the past 6 months, have you been beaten, punched, kicked or choked by a spouse or partner, or any other adult belonging to the home...",
+        "label": "In the past 6 months, have you been beaten, punched, kicked or choked by a spouse or partner, or any other adult belonging to the home",
         "options": [
           {
             "key": "yes",
@@ -710,7 +710,7 @@
         "openmrs_entity_id": "touching_in_sexual",
         "type": "native_radio",
         "label_info_title":"Benchmark 6: No violence and Sexual Abuse",
-        "label": "In the past 6 months, months, are you aware of any child, adolescent or youth in your household being touched in a sexual way or forced to have sex against his or her will... Touching in a sexual way could include fondling, pinching, grabbing, or touching a child, adolescent, or youth on or around his or her sexual body parts",
+        "label": "In the past 6 months, months, are you aware of any child, adolescent or youth in your household being touched in a sexual way or forced to have sex against his or her will Touching in a sexual way could include fondling, pinching, grabbing, or touching a child, adolescent, or youth on or around his or her sexual body parts",
         "options": [
           {
             "key": "yes",
@@ -735,7 +735,7 @@
         "type": "native_radio",
         "label_info_text": "Talk with the primary guardian in privacy where no other person can hear. Remind the guardian that the information given is confidential. Tell her/him that they do not need to answer, if they do not feel comfortable about it, do not answer this question.",
         "label_info_title":"Benchmark 6: No violence and Sexual Abuse",
-        "label": "In the past 6 months, has anyone (including your spouse or sexual partner) tried to make you have sex against your will...",
+        "label": "In the past 6 months, has anyone (including your spouse or sexual partner) tried to make you have sex against your will",
         "options": [
           {
             "key": "yes",
@@ -809,7 +809,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "stable_guardian",
         "type": "native_radio",
-        "label": "During the past 12 months, have all children and adolescents in the household been under the care of a stable adult guardian who lived in the home...",
+        "label": "During the past 12 months, have all children and adolescents in the household been under the care of a stable adult guardian who lived in the home",
         "options": [
           {
             "key": "yes",
@@ -867,7 +867,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "children_in_school",
         "type": "hidden",
-        "label": "Are there any children or adolescents of school age (Grade 1 to grade 7) in the household...",
+        "label": "Are there any children or adolescents of school age (Grade 1 to grade 7) in the household",
         "options": [
           {
             "key": "yes",
@@ -895,7 +895,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "in_school",
         "type": "native_radio",
-        "label": "Are all children and adolescents in the household of school age (Grade 1 to 7) enrolled in school...",
+        "label": "Are all children and adolescents in the household of school age (Grade 1 to 7) enrolled in school",
         "options": [
           {
             "key": "yes",
@@ -917,7 +917,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "year_school",
         "type": "native_radio",
-        "label": "Have all children and adolescents in the household enrolled in school attended school regularly over the past year (at least 4 days a week on average)...",
+        "label": "Have all children and adolescents in the household enrolled in school attended school regularly over the past year (at least 4 days a week on average)",
         "options": [
           {
             "key": "yes",
@@ -939,7 +939,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "repeat_school",
         "type": "native_radio",
-        "label": "Did all children and adolescents in the household enrolled in school progress to the next grade, from last school year to this school year... In other words, no child or adolescent had to repeat a grade this year, or they graduated from Grade 7.",
+        "label": "Did all children and adolescents in the household enrolled in school progress to the next grade, from last school year to this school year In other words, no child or adolescent had to repeat a grade this year, or they graduated from Grade 7.",
         "options": [
           {
             "key": "yes",

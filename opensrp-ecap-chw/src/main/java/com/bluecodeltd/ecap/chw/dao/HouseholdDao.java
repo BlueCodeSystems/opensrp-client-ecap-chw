@@ -578,6 +578,7 @@ public class HouseholdDao extends AbstractDao {
             record.setStatus(getCursorValue(c, "status"));
             record.setCase_status(getCursorValue(c,"case_status"));
             record.setDe_registration_date(getCursorValue(c,"de_registration_date"));
+            record.setDate_of_death(getCursorValue(c,"date_of_death"));
             record.setTransfer_reason(getCursorValue(c,"transfer_reason"));
             record.setOther_de_registration_reason(getCursorValue(c,"other_de_registration_reason"));
             record.setDe_registration_reason(getCursorValue(c,"de_registration_reason"));

@@ -1,4 +1,4 @@
-{
+﻿{
   "count": "1",
   "encounter_type": "Domain",
   "hide_blank_spaces": true,
@@ -61,7 +61,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unique_id",
         "type": "edit_text",
-        "hint": "Children/Adolescent (VCA) ID",
+        "hint": "Children/Adolescent (CA) ID",
         "edit_type": "name",
         "read_only": "true"
       },
@@ -106,7 +106,7 @@
         "options": [
           {
             "key": "hiv",
-            "text": "HIV Management of HIV+ Children/Adolescent (VCA)"
+            "text": "HIV Management of HIV+ Children/Adolescent (CA)"
           },
           {
             "key": "healthy",

@@ -1,4 +1,4 @@
-{
+﻿{
   "count": "1",
   "encounter_type": "Longitudinal Follow Up Record",
   "entity_id": "",
@@ -310,7 +310,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "lfu_hepb_on_treatment",
         "type": "native_radio",
-        "label": "If Hepatitis B is positive, on Treatment...",
+        "label": "If Hepatitis B is positive, on Treatment",
         "options": [
           { "key": "yes", "text": "Yes" },
           { "key": "no", "text": "No" }
@@ -354,7 +354,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "lfu_anc_as_couple",
         "type": "native_radio",
-        "label": "Went to ANC as Couple...",
+        "label": "Went to ANC as Couple",
         "options": [
           { "key": "yes", "text": "Yes" },
           { "key": "no", "text": "No" }
@@ -370,7 +370,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "lfu_partner_tested_hiv",
         "type": "native_radio",
-        "label": "Partner Tested for HIV...",
+        "label": "Partner Tested for HIV",
         "options": [
           { "key": "yes", "text": "Yes" },
           { "key": "no", "text": "No" },

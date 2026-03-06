@@ -1,4 +1,4 @@
-{
+﻿{
   "count": "1",
   "encounter_type": "Mother Pmtct Postnatal",
   "entity_id": "",
@@ -91,7 +91,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "mother_tested_for_hiv",
         "type": "date_picker",
-        "hint": "When was the mother tested for HIV...",
+        "hint": "When was the mother tested for HIV",
         "look_up": "true",
         "expanded": false,
         "min_date": "today-100y",

@@ -175,6 +175,7 @@ public class VCAScreeningDao extends AbstractDao {
             record.setTransfer_reason(getCursorValue(c, "transfer_reason"));
             record.setOther_reason(getCursorValue(c, "other_reason"));
             record.setExited_graduation_reason(getCursorValue(c, "exited_graduation_reason"));
+            record.setDate_of_death(getCursorValue(c, "date_of_death"));
             record.setAbym_years(getCursorValue(c, "abym_years"));
             record.setAbym_sexually_active(getCursorValue(c, "abym_sexually_active"));
             record.setAbym_preventions(getCursorValue(c, "abym_preventions"));
