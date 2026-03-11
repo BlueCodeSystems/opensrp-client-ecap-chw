@@ -375,7 +375,7 @@
                     android:minWidth="96dp"
                     android:paddingHorizontal="12dp"
                     android:paddingVertical="8dp"
-                    android:text="VCA Case Plan"
+                    android:text="CA Case Plan"
                     android:textSize="12sp"
                     />
 

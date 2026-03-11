@@ -1,4 +1,4 @@
-﻿{
+{
   "count": "1",
   "encounter_type": "Mother Register",
   "entity_id": "",
@@ -60,7 +60,7 @@
         "text": "Pediatric Surge Facility Index Mother Register",
         "text_color": "#000000",
         "label_text_style": "bold",
-        "toaster_info_text": "This Register serves as a detailed record for Vulnerable Children and Adolescents (CAs) aged 0-18 years identified through index tracing of Children/Adolescents of\nHIV+ mothers, offered and/or enrolled into the CA comprehensive program. ",
+        "toaster_info_text": "This Register serves as a detailed record for Vulnerable Children and Adolescents (VCAs) aged 0-18 years identified through index tracing of Children/Adolescents of\nHIV+ mothers, offered and/or enrolled into the VCA comprehensive program. ",
         "toaster_info_title": "Introduction",
         "toaster_type": "info"
       },
@@ -432,7 +432,7 @@
         "openmrs_entity_id": "unique_id",
         "type": "edit_text",
         "read_only": "true",
-        "hint": "Children/Adolescent (CA) ID",
+        "hint": "Children/Adolescent (VCA) ID",
         "edit_type": "name",
         "relevance": {
           "rules-engine": {

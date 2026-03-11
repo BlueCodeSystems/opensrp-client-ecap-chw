@@ -1,4 +1,4 @@
-﻿{
+{
   "count": "1",
   "encounter_type": "Caregiver Assessment",
   "skip_blank_steps": true,
@@ -2693,7 +2693,7 @@
         "max_date": "today",
         "v_required": {
           "value": false,
-          "err": "When was the CA initiated on ART"
+          "err": "When was the VCA initiated on ART"
         }
       }
     ]

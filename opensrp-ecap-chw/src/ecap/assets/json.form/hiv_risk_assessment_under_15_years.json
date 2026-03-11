@@ -1,4 +1,4 @@
-﻿{
+{
   "validate_on_submit": true,
   "count": "1",
   "encounter_type": "HIV Risk Assessment Below 15",
@@ -76,7 +76,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unique_id",
         "type": "edit_text",
-        "hint": "Children/Adolescent (CA) ID",
+        "hint": "Children/Adolescent (VCA) ID",
         "edit_type": "name",
         "read_only": "true"
       },
@@ -474,7 +474,7 @@
         "type": "toaster_notes",
         "text": "Test for hiv and Tb",
         "toaster_type": "info",
-        "toaster_info_text": "The CA is eligible for HIV testing. \n\nAgree with the guardian, that the child needs to be tested for HIV and eventually TB",
+        "toaster_info_text": "The VCA is eligible for HIV testing. \n\nAgree with the guardian, that the child needs to be tested for HIV and eventually TB",
         "relevance": {
           "rules-engine": {
             "ex-rules": {

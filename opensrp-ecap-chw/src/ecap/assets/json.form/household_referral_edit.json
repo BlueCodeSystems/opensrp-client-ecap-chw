@@ -1,4 +1,4 @@
-﻿{
+{
   "count": "1",
   "encounter_type": "Referral",
   "entity_id": "",
@@ -175,6 +175,45 @@
         "text_color": "#000000",
         "v_required": {
           "value": false
+        }
+      },
+      {
+        "key": "malaria_testing_referral_negative_pbfw",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "malaria_testing_referral_negative_pbfw",
+        "label": "Malaria testing referral for negative PBFW",
+        "type": "check_box",
+        "options": [
+          {
+            "key":"referred",
+            "text": "Referred"
+          },
+          {
+            "key": "provided",
+            "text": "Provided"
+          }
+        ]
+      },
+      {
+        "key": "dateMalariaTestingReferralNegativePbfwProvided",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "dateMalariaTestingReferralNegativePbfwProvided",
+        "type": "date_picker",
+        "hint": " Date Provided",
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Provide the date"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "referral_relevance.yml"
+            }
+          }
         }
       },
       {
@@ -1421,7 +1460,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "vca_uniforms_books",
-        "label": "Support CAs with Uniforms and/or Book Materials",
+        "label": "Support VCAs with Uniforms and/or Book Materials",
         "type": "check_box",
         "options": [
           {
@@ -1780,6 +1819,7 @@
           }
         }
       },
+
       {
         "key": "delete_status",
         "openmrs_entity_parent": "",

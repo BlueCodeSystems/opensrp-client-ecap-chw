@@ -1,4 +1,4 @@
-﻿{
+{
   "count": "1",
   "encounter_type": "Post Natal Care-Infant",
   "entity_id": "",
@@ -67,7 +67,7 @@
         "openmrs_entity_id": "unique_id",
         "type": "edit_text",
         "read_only": "true",
-        "hint": "Children/Adolescent (CA) ID",
+        "hint": "Children/Adolescent (VCA) ID",
         "edit_type": "name"
       },
       {

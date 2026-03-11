@@ -1,4 +1,4 @@
-﻿{
+{
   "count": "1",
   "encounter_type": "Household Visitation Form",
   "hide_blank_spaces": true,
@@ -152,7 +152,7 @@
         "openmrs_entity_id": "household_id",
         "type": "edit_text",
         "read_only": false,
-        "hint": "CA Household ID",
+        "hint": "VCA Household ID",
         "edit_type": "number",
         "v_required": {
           "value": false,
@@ -243,6 +243,7 @@
         "type": "label",
         "text": "Health Section"
       },
+
       {
         "key": "hiv_status",
         "openmrs_entity_parent": "",

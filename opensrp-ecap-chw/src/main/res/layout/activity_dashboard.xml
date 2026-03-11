@@ -140,8 +140,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:showText="true"
-                    android:textOff="All VCA"
-                    android:textOn="Only my VCA"
+                    android:textOff="All CA"
+                    android:textOn="Only my CA"
                     tools:ignore="TouchTargetSizeCheck" />
 
             </LinearLayout>

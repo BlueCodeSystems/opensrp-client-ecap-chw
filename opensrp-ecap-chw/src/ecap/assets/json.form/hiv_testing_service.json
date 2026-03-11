@@ -115,9 +115,23 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "facility",
-        "type": "edit_text",
-        "hint": "Health Facility",
-        "read_only": "true",
+        "hint": "Facility",
+        "type": "spinner",
+        "openmrs_data_type": "",
+        "value": false,
+        "values": [],
+        "keys": [],
+        "v_required": {
+          "value": true,
+          "err": "Facility is Required"
+        },
+        "relevance": {
+          "step1:facility_within_ward_question": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        },
+        "read_only": "false",
         "edit_type": "name",
         "look_up": "true"
       },
@@ -386,10 +400,9 @@
       {
         "key": "sub_population",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "sub_population",
         "type": "check_box",
-        "read_only": false,
         "label": "Sub Population :",
         "options": [
           {
@@ -408,28 +421,23 @@
             "value": "false"
           },
           {
-            "key": "subpop4",
-            "text": "Adolescent Girls and Young Women (AGYW)",
-            "value": "false"
-          },
-          {
             "key": "subpop5",
             "text": "Survivors of Sexual Violence",
             "value": "false"
           },
           {
-            "key": "subpop",
-            "text": "Children of Female Sex Workers (FSWs)",
-            "value": "false"
-          },
-          {
-            "key": "Siblings of the Index/Other family members",
+            "key": "Siblings of the Index and other family members",
             "text": "Siblings of the Index/Other family members"
 
           },
           {
-            "key": "PBFW",
-            "text": "PBFW"
+            "key": "HIV Negative PBFW",
+            "text": "HIV Negative PBFW"
+
+          },
+          {
+            "key": "Children of PBFW",
+            "text": "Children of PBFW"
 
           },
           {
@@ -459,22 +467,51 @@
             "text": "Known Positive"
           },
           {
-            "key": "Test Not Required (evidenced by an HIV risk assessment)",
-            "text": "Test Not Required (evidenced by an HIV risk assessment)"
+            "key": "Test Not required based on HIV Risk Assessment",
+            "text": "Test Not required based on HIV Risk Assessment"
           },
           {
-            "key": "HIV Status Unknown",
-            "text": "HIV Status Unknown"
+            "key": "Test Required based on HIV Risk Assessment",
+            "text": "Test Required based on HIV Risk Assessment"
+          },
+          {
+            "key": "Status Unknown",
+            "text": "Status Unknown"
           }
         ],
         "v_required": {
           "value": true,
           "err": "This field is Required"
-        },
+        }
+      },
+      {
+        "key": "instructions",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions",
+        "type": "toaster_notes",
+        "text": "Conduct HTS",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_text": "",
+        "toaster_info_title": "Introduction",
+        "toaster_type": "info",
         "relevance": {
-          "step1:testing_modality": {
+          "step1:hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"Other Community\")"
+            "ex": "equalTo(., \"Status Unknown\")"
+          }
+        }
+      },
+      {
+        "key": "label 1",
+        "type": "label",
+        "text": "New HIV Status",
+        "label_text_style": "bold",
+        "relevance": {
+          "step1:hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"Status Unknown\")"
           }
         }
       },
@@ -489,10 +526,12 @@
         "expanded": false,
         "min_date": "01-01-1900",
         "max_date": "today",
+
         "relevance": {
-          "step1:hiv_status": {
-            "type": "string",
-            "ex": "equalTo(., \"Known Negative\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_testing_service_relevance.yml"
+            }
           }
         }
       },
@@ -518,9 +557,10 @@
           "err": "This field is Required"
         },
         "relevance": {
-          "step1:hiv_status": {
-            "type": "string",
-            "ex": "equalTo(., \"Known Negative\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_testing_service_relevance.yml"
+            }
           }
         }
       },
@@ -592,9 +632,10 @@
         "min_date": "01-01-1900",
         "max_date": "today",
         "relevance": {
-          "step1:hiv_result": {
-            "type": "string",
-            "ex": "equalTo(., \"Newly Tested HIV+\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_testing_service_relevance.yml"
+            }
           }
         }
       },
@@ -610,9 +651,10 @@
         "min_date": "01-01-1900",
         "max_date": "today",
         "relevance": {
-          "step1:hiv_result": {
-            "type": "string",
-            "ex": "equalTo(., \"Newly Tested HIV+\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_testing_service_relevance.yml"
+            }
           }
         }
       },
@@ -649,7 +691,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_edited",
-        "type": "edit_text",
+        "type": "hidden",
         "read_only": "true",
         "hint": "Date edited",
         "edit_type": "number"
@@ -661,37 +703,6 @@
         "openmrs_entity_id": "delete_status",
         "type": "hidden",
         "hint": ""
-      },
-      {
-        "key": "instructions",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "instructions",
-        "type": "toaster_notes",
-        "text": "Conduct HTS",
-        "text_color": "#000000",
-        "label_text_style": "bold",
-        "toaster_info_text": "",
-        "toaster_info_title": "Introduction",
-        "toaster_type": "info",
-        "relevance": {
-          "step1:hiv_status": {
-            "type": "string",
-            "ex": "equalTo(., \"HIV Status Unknown\")"
-          }
-        }
-      },
-      {
-        "key": "label 1",
-        "type": "label",
-        "text": "New HIV Status",
-        "label_text_style": "bold",
-        "relevance": {
-          "step1:hiv_status": {
-            "type": "string",
-            "ex": "equalTo(., \"HIV Status Unknown\")"
-          }
-        }
       }
     ]
   }

@@ -89,7 +89,7 @@
 
         <!-- CONTENT AREA: summary of TB follow-up (from your JSON) -->
 
-        <!-- VCA ID -->
+        <!-- CA ID -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

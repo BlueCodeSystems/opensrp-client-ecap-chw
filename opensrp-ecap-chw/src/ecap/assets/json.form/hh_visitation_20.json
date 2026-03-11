@@ -1,4 +1,4 @@
-﻿{
+{
   "count": "1",
   "encounter_type": "Household Visitation Form 0-20 years",
   "hide_blank_spaces": true,
@@ -152,7 +152,7 @@
         "openmrs_entity_id": "household_id",
         "type": "edit_text",
         "read_only": false,
-        "hint": "CA Household ID",
+        "hint": "VCA Household ID",
         "edit_type": "number",
         "v_required": {
           "value": false,
@@ -183,16 +183,16 @@
         "openmrs_entity": "person_identifier",
         "openmrs_entity_id": "base_entity_id",
         "type": "edit_text",
-        "hint": "Children/Adolescent (CA) ID",
+        "hint": "Children/Adolescent (VCA) ID",
         "edit_type": "name",
         "read_only": true,
         "v_required": {
           "value": false,
-          "err": "Please enter Children/Adolescent (CA) ID"
+          "err": "Please enter Children/Adolescent (VCA) ID"
         },
         "v_regex": {
           "value": "[0-9]*",
-          "err": "Children/Adolescent (CA) ID"
+          "err": "Children/Adolescent (VCA) ID"
         }
       },
       {
@@ -202,7 +202,7 @@
         "openmrs_entity_id": "first_name",
         "read_only": "false",
         "type": "edit_text",
-        "hint": "CA First Name"
+        "hint": "VCA First Name"
       },
       {
         "key": "last_name",
@@ -211,7 +211,7 @@
         "openmrs_entity_id": "last_name",
         "read_only": "false",
         "type": "edit_text",
-        "hint": "CA Last Name"
+        "hint": "VCA Last Name"
       },
       {
         "key": "relation",
@@ -288,7 +288,7 @@
         "openmrs_entity_id": "age",
         "type": "edit_text",
         "read_only": false,
-        "hint": "CA Age",
+        "hint": "VCA Age",
         "calculation": {
           "rules-engine": {
             "ex-rules": {
@@ -869,7 +869,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd1",
         "type": "label",
-        "text": "HIV Exposed Infant (CA aged 24 months and below) Section"
+        "text": "HIV Exposed Infant (VCA aged 24 months and below) Section"
       },
 
       {
@@ -1413,7 +1413,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd1",
         "type": "label",
-        "text": "Nutrition (ALL CA except Under-Five Children) Section"
+        "text": "Nutrition (ALL VCA except Under-Five Children) Section"
       },
       {
         "key": "muac_measurement_b",

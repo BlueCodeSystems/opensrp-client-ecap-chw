@@ -1,4 +1,4 @@
-﻿{
+{
   "count": "1",
   "encounter_type": "Graduation Assessment 0-17 Years",
   "entity_id": "",
@@ -63,7 +63,7 @@
         "openmrs_entity_id": "first_name",
         "read_only": "false",
         "type": "edit_text",
-        "hint": "CA First Name"
+        "hint": "VCA First Name"
       },
       {
         "key": "last_name",
@@ -72,7 +72,7 @@
         "openmrs_entity_id": "last_name",
         "read_only": "false",
         "type": "edit_text",
-        "hint": "CA Last Name"
+        "hint": "VCA Last Name"
       },
       {
         "key": "child_dob",
@@ -108,7 +108,7 @@
         "openmrs_entity": "person_identifier",
         "openmrs_entity_id": "unique_id",
         "type": "edit_text",
-        "hint": "Children/Adolescent (CA) ID",
+        "hint": "Children/Adolescent (VCA) ID",
         "edit_type": "name",
         "read_only": false
       },

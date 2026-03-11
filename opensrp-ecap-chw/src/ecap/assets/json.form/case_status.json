@@ -1,4 +1,4 @@
-﻿{
+{
   "count": "1",
   "encounter_type": "Sub Population",
   "entity_id": "",
@@ -73,7 +73,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "case_status",
         "type": "native_radio",
-        "label": "CA Case record status",
+        "label": "VCA Case record status",
         "options": [
           {
             "key": "1",
@@ -184,7 +184,7 @@
           },
           {
             "key": "CA died",
-            "text": "CA died"
+            "text": "VCA died"
           },
           {
             "key": "Moved (Relocated)",
@@ -205,7 +205,7 @@
           },
           {
             "key": "HH does not have VCA who falls under priority sub-population",
-            "text": "HH does not have CA who falls under priority sub-population"
+            "text": "HH does not have VCA who falls under priority sub-population"
           }
         ],
         "relevance": {

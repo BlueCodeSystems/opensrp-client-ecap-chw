@@ -205,7 +205,13 @@
         "openmrs_entity_id": "vl_result_at_trimester_1",
         "type": "edit_text",
         "edit_type": "name",
-        "hint": "VL Result at 1st Trimester:"
+        "hint": "VL Result at 1st Trimester:",
+        "relevance": {
+          "step1:result_of_hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"R\")"
+          }
+        }
       },
       {
         "key": "vl_result_at_trimester_2",
@@ -214,7 +220,13 @@
         "openmrs_entity_id": "vl_result_at_trimester_2",
         "type": "edit_text",
         "edit_type": "name",
-        "hint": "VL Result at 2 nd Trimester:"
+        "hint": "VL Result at 2 nd Trimester:",
+        "relevance": {
+          "step1:result_of_hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"R\")"
+          }
+        }
       },
       {
         "key": "vl_result_at_trimester_3",
@@ -223,7 +235,13 @@
         "openmrs_entity_id": "vl_result_at_trimester_3",
         "type": "edit_text",
         "edit_type": "name",
-        "hint": "VL Result at 3rd Trimester:"
+        "hint": "VL Result at 3rd Trimester:",
+        "relevance": {
+          "step1:result_of_hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"R\")"
+          }
+        }
       },
       {
         "key": "male_partner_tested",

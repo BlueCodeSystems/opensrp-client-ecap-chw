@@ -1,4 +1,4 @@
-﻿{
+{
   "count": "3",
   "encounter_type": "Grad",
   "entity_id": "",
@@ -72,7 +72,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unique_id",
         "type": "edit_text",
-        "hint": "Children/Adolescent (CA) ID",
+        "hint": "Children/Adolescent (VCA) ID",
         "edit_type": "name",
         "read_only": "true"
       },
@@ -159,10 +159,10 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "instructions_a",
         "type": "toaster_notes",
-        "text": "Questions do not apply to this CA. Proceed.",
+        "text": "Questions do not apply to this VCA. Proceed.",
         "text_color": "#000000",
         "label_text_style": "bold",
-        "toaster_info_text": "Questions do not apply to this CA. Proceed.",
+        "toaster_info_text": "Questions do not apply to this VCA. Proceed.",
         "toaster_info_title": "Benchmark 3: Knowledgeable about HIV prevention",
         "toaster_type": "warning",
         "relevance": {

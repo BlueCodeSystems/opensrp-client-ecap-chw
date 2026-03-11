@@ -619,7 +619,7 @@
                     android:gravity="center"
                     android:minWidth="50dp"
                     android:padding="10dp"
-                    android:text="WE Services - VCA"
+                    android:text="WE Services - CA"
                     android:textStyle="italic"
                     />
 

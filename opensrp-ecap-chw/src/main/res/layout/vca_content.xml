@@ -264,7 +264,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
-                        android:text="VCA Screening"
+                        android:text="CA Screening"
                         android:background="#666666"
                         android:textColor="@android:color/white"
                         android:textStyle="italic"
@@ -445,7 +445,7 @@
                     android:gravity="center"
                     android:minWidth="50dp"
                     android:padding="10dp"
-                    android:text="VCA Case Plan"
+                    android:text="CA Case Plan"
                     android:textStyle="italic"
                     />
 
@@ -520,7 +520,7 @@
                     android:gravity="center"
                     android:minWidth="50dp"
                     android:padding="10dp"
-                    android:text="VCA Quarterly Re-assessment Form"
+                    android:text="CA Quarterly Re-assessment Form"
                     android:textStyle="italic"
                      />
 

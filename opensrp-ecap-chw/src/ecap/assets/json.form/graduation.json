@@ -1,4 +1,4 @@
-﻿{
+{
   "count": "10",
   "encounter_type": "Graduation",
   "hide_blank_spaces": true,
@@ -62,7 +62,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "instructions",
         "type": "toaster_notes",
-        "text": "CA And Family Graduation Benchmark Assessment Form",
+        "text": "VCA And Family Graduation Benchmark Assessment Form",
         "text_color": "#000000",
         "label_text_style": "bold",
         "toaster_info_text": "This Form is to be completed by the Case Worker to assess progress made by OVC program beneficiaries and their households to qualify for graduation. The Form is to be administered after 12 months of the beneficiary enrolled on the OVC program.",
@@ -292,7 +292,7 @@
         "label_info_title":"Benchmark 2: Virally suppressed ",
         "type": "native_radio",
         "read_only" : true,
-        "label": "Has each CA as a beneficiary been documented as virally suppressed (with viral load below 1,000 in the last 12 months)",
+        "label": "Has each VCA as a beneficiary been documented as virally suppressed (with viral load below 1,000 in the last 12 months)",
         "options": [
           {
             "key": "yes",

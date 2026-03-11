@@ -1,4 +1,4 @@
-﻿{
+{
   "count": 2,
   "encounter_type": "Family Registration",
   "entity_id": "",
@@ -59,7 +59,7 @@
         "key": "index_vca_sub_pop_part1",
         "type": "label",
         "label_text_style": "bold",
-        "text": "Part A: Index CA Sub Population",
+        "text": "Part A: Index VCA Sub Population",
         "text_color": "#000000",
         "v_required": {
           "value": false
@@ -73,12 +73,12 @@
         "read_only": "true",
         "font": "bald",
         "type": "edit_text",
-        "hint": "CA First Name",
+        "hint": "VCA First Name",
         "edit_type": "name",
         "value": "",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of CA only take letters"
+          "err": "Name of VCA only take letters"
         }
       },
       {
@@ -89,12 +89,12 @@
         "read_only": "true",
         "font": "bald",
         "type": "edit_text",
-        "hint": "CA Last Name",
+        "hint": "VCA Last Name",
         "edit_type": "name",
         "value": "",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of CA only take letters"
+          "err": "Name of VCA only take letters"
         }
       },
       {
@@ -104,7 +104,7 @@
         "openmrs_entity_id": "subpop_dob",
         "read_only": "true",
         "type": "date_picker",
-        "hint": "CA Date Of Birth",
+        "hint": "VCA Date Of Birth",
         "look_up": "true",
         "expanded": false,
         "duration": {
@@ -121,7 +121,7 @@
         "read_only": "true",
         "font": "bald",
         "type": "edit_text",
-        "hint": "Age of CA",
+        "hint": "Age of VCA",
         "calculation": {
           "rules-engine": {
             "ex-rules": {
@@ -138,11 +138,11 @@
         "read_only": "true",
         "font": "bald",
         "type": "edit_text",
-        "hint": "Gender of CA",
+        "hint": "Gender of VCA",
         "value": "",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of CA only take letters"
+          "err": "Name of VCA only take letters"
         }
       },
       {
@@ -192,7 +192,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of CA only take letters"
+          "err": "Name of VCA only take letters"
         },
         "relevance": {
           "rules-engine": {
@@ -401,7 +401,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of CA only take letters"
+          "err": "Name of VCA only take letters"
         }
       },
       {
@@ -415,7 +415,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of CA only take letters"
+          "err": "Name of VCA only take letters"
         },
         "relevance": {
           "rules-engine": {
@@ -576,7 +576,7 @@
             "openmrs_entity": "",
             "openmrs_entity_id": "sub_group",
             "type": "native_radio",
-            "label": "Relationship of Family Member to Index CA",
+            "label": "Relationship of Family Member to Index VCA",
             "options": [
               {
                 "key": "sibling_of_index",
@@ -739,7 +739,7 @@
         "key": "other_vca_sub_pop_screening_in_household",
         "type": "label",
         "label_text_style": "bold",
-        "text": "Part D.1: Other Housesehold Member CA Sub Populations 0-17 years",
+        "text": "Part D.1: Other Housesehold Member VCA Sub Populations 0-17 years",
         "text_color": "#000000",
         "v_required": {
           "value": false
@@ -751,7 +751,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "native_radio",
-        "label": "Is the index CA a C/ALHIV, HEI, Victim of Sexual Violence, or Children of FSW",
+        "label": "Is the index VCA a C/ALHIV, HEI, Victim of Sexual Violence, or Children of FSW",
         "options": [
           {
             "key": "yes",
@@ -787,7 +787,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "offer_HIV_index_testing",
         "type": "toaster_notes",
-        "text": "Please Offer HIV index testing/collect DBS if CA is HEI as part of enrollment for children/adolescents with unknown status",
+        "text": "Please Offer HIV index testing/collect DBS if VCA is HEI as part of enrollment for children/adolescents with unknown status",
         "toaster_type": "info",
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
@@ -822,7 +822,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "categorize_as_index_c_alhiv_vca",
         "type": "toaster_notes",
-        "text": "Categorize as an index C/ALHIV CA",
+        "text": "Categorize as an index C/ALHIV VCA",
         "toaster_type": "info",
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
@@ -999,7 +999,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "categorize_as_HEI_VCA",
         "type": "toaster_notes",
-        "text": "Categorize as HEI CA",
+        "text": "Categorize as HEI VCA",
         "toaster_type": "info",
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
@@ -1132,7 +1132,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "sexual_violence_care_clinical",
         "type": "toaster_notes",
-        "text": "Categorize as Victim of Sexual Violence CA. Refer to appropriate clinical services as part of enrollment",
+        "text": "Categorize as Victim of Sexual Violence VCA. Refer to appropriate clinical services as part of enrollment",
         "toaster_type": "info",
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
@@ -1174,7 +1174,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "sexual_violence_care",
         "type": "toaster_notes",
-        "text": "Categorize as Victim of Sexual Violence CA. Refer to appropriate non-clinical services as part of enrollment",
+        "text": "Categorize as Victim of Sexual Violence VCA. Refer to appropriate non-clinical services as part of enrollment",
         "toaster_type": "info",
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
@@ -1191,7 +1191,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "household_vca_receiving_age_appropriate_interventions",
         "type": "native_radio",
-        "label": "Are the CAs in the household receiving age-appropriate HIV and sexual violence preventive interventions",
+        "label": "Are the VCAs in the household receiving age-appropriate HIV and sexual violence preventive interventions",
         "options": [
           {
             "key": "yes",
@@ -1226,7 +1226,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "have_all_the_male_hiv_negative_vca_in_the_household_15years_and_above_received_voluntary_medical_male_circumcision",
         "type": "native_radio",
-        "label": "Have all the male HIV-negative CA in the household 15 years and above received voluntary medical male circumcision (VMMC)",
+        "label": "Have all the male HIV-negative VCA in the household 15 years and above received voluntary medical male circumcision (VMMC)",
         "options": [
           {
             "key": "yes",
@@ -1270,7 +1270,7 @@
         "key": "for_adolescent_girls_and_young_women_10_17years",
         "type": "repeating_group",
         "reference_edit_text_hint": "Number of AGYW 10-17years",
-        "repeating_group_label": "For questions in this section, ask EACH OF THE AGYW 10-17 years old in the household who is not an AGYW Index CA, in privacy. Probe where needed.",
+        "repeating_group_label": "For questions in this section, ask EACH OF THE AGYW 10-17 years old in the household who is not an AGYW Index VCA, in privacy. Probe where needed.",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "for_adolescent_girls_and_young_women_10_17years",
@@ -2370,7 +2370,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "offer_HIV_index_testing_list",
         "type": "toaster_notes",
-        "text": "Please Offer HIV index testing/collect DBS if CA is HEI as part of enrollment for children/adolescents with unknown status",
+        "text": "Please Offer HIV index testing/collect DBS if VCA is HEI as part of enrollment for children/adolescents with unknown status",
         "toaster_type": "info",
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
@@ -2387,7 +2387,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "categorize_as_index_c_alhiv_vca_list",
         "type": "toaster_notes",
-        "text": "Categorize as an index C/ALHIV CA",
+        "text": "Categorize as an index C/ALHIV VCA",
         "toaster_type": "info",
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
@@ -2438,7 +2438,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "categorize_as_HEI_VCA_list",
         "type": "toaster_notes",
-        "text": "Categorize as HEI CA",
+        "text": "Categorize as HEI VCA",
         "toaster_type": "info",
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
@@ -2506,7 +2506,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "sexual_violence_care_clinical_list",
         "type": "toaster_notes",
-        "text": "Categorize as Victim of Sexual Violence CA. Refer to appropriate clinical services as part of enrollment",
+        "text": "Categorize as Victim of Sexual Violence VCA. Refer to appropriate clinical services as part of enrollment",
         "toaster_type": "info",
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
@@ -2523,7 +2523,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "sexual_violence_care_list",
         "type": "toaster_notes",
-        "text": "Categorize as Victim of Sexual Violence CA. Refer to appropriate non-clinical services as part of enrollment",
+        "text": "Categorize as Victim of Sexual Violence VCA. Refer to appropriate non-clinical services as part of enrollment",
         "toaster_type": "info",
         "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
         "toaster_info_title": "Information Toaster Info Title",
@@ -3240,11 +3240,11 @@
             "hint": "First Name",
             "v_required": {
               "value": false,
-              "err": "Enter CA First Name"
+              "err": "Enter VCA First Name"
             },
             "v_regex": {
               "value": "",
-              "err": "Enter CA First Name"
+              "err": "Enter VCA First Name"
             }
           },
           {
@@ -3256,11 +3256,11 @@
             "hint": "Last Name",
             "v_required": {
               "value": false,
-              "err": "Enter CA Last Name"
+              "err": "Enter VCA Last Name"
             },
             "v_regex": {
               "value": "",
-              "err": "Enter CA Last Name"
+              "err": "Enter VCA Last Name"
             }
           },
           {

@@ -299,7 +299,14 @@ public class HouseholdDao extends AbstractDao {
     public static Household getHousehold (String householdID) {
 
        // String sql = "SELECT ec_household.*, ec_household.village AS adolescent_village, ec_household.base_entity_id AS bid FROM ec_household  WHERE ec_household.household_id = '" + householdID + "' ";
-        String sql = "SELECT *,A.* FROM (SELECT ec_household.*, ec_household.village AS adolescent_village, ec_household.base_entity_id AS bid FROM ec_household WHERE household_id = '" + householdID + "') AS A LEFT JOIN (SELECT * FROM ec_client_index WHERE household_id = '" + householdID + "' AND (deleted IS NULL OR deleted != '1') AND (ec_client_index.index_check_box = '1' OR index_check_box = 'yes')) AS B ON A.household_id = B.household_id";
+        String sql = "SELECT A.*, " +
+                "B.first_name AS index_first_name, " +
+                "B.last_name AS index_last_name, " +
+                "B.gender AS index_gender, " +
+                "B.adolescent_birthdate AS index_adolescent_birthdate " +
+                "FROM (SELECT ec_household.*, ec_household.village AS adolescent_village, ec_household.base_entity_id AS bid FROM ec_household WHERE household_id = '" + householdID + "') AS A " +
+                "LEFT JOIN (SELECT * FROM ec_client_index WHERE household_id = '" + householdID + "' AND (deleted IS NULL OR deleted != '1') AND (ec_client_index.index_check_box = '1' OR index_check_box = 'yes')) AS B " +
+                "ON A.household_id = B.household_id";
 
                 List<Household> values = AbstractDao.readData(sql, getHouseholdMap());
         if (values == null || values.size() == 0)
@@ -494,10 +501,10 @@ public class HouseholdDao extends AbstractDao {
             record.setSignature(getCursorValue(c, "signature"));
             //household_case_status
             record.setHousehold_case_status(getCursorValue(c, "household_case_status"));
-            record.setFirst_name(getCursorValue(c, "first_name"));
-            record.setLast_name(getCursorValue(c, "last_name"));
-            record.setGender(getCursorValue(c, "gender"));
-            record.setAdolescent_birthdate(getCursorValue(c, "adolescent_birthdate"));
+            record.setFirst_name(preferNonEmpty(getCursorValue(c, "index_first_name"), getCursorValue(c, "first_name")));
+            record.setLast_name(preferNonEmpty(getCursorValue(c, "index_last_name"), getCursorValue(c, "last_name")));
+            record.setGender(preferNonEmpty(getCursorValue(c, "index_gender"), getCursorValue(c, "gender")));
+            record.setAdolescent_birthdate(preferNonEmpty(getCursorValue(c, "index_adolescent_birthdate"), getCursorValue(c, "adolescent_birthdate")));
             record.setSubpop1(getCursorValue(c, "subpop1"));
             record.setSubpop2(getCursorValue(c, "subpop2"));
             record.setSubpop3(getCursorValue(c, "subpop3"));
@@ -613,6 +620,10 @@ public class HouseholdDao extends AbstractDao {
             DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
+    }
+
+    private static String preferNonEmpty(String preferred, String fallback) {
+        return preferred != null && !preferred.trim().isEmpty() ? preferred : fallback;
     }
     public static DataMap<HouseholdCSVModel> getHouseholdCSVMap() {
         return c -> {
