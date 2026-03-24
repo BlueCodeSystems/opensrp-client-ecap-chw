@@ -121,8 +121,10 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
                 DBConstants.KEY.UNIQUE_ID,
                 DBConstants.KEY.FIRST_NAME,
                 DBConstants.KEY.LAST_NAME,
+                "adolescent_first_name",
                 "household_id",
-                "case_status"
+                "case_status",
+                "deleted"
         });
 
 
@@ -171,8 +173,10 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
                 DBConstants.KEY.UNIQUE_ID,
                 DBConstants.KEY.FIRST_NAME,
                 DBConstants.KEY.LAST_NAME,
+                "adolescent_first_name",
                 "household_id",
-                "case_status"
+                "case_status",
+                "deleted"
         });
 
 

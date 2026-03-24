@@ -1,11 +1,14 @@
 package com.bluecodeltd.ecap.chw.activity;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -39,6 +42,7 @@ import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.model.CaregiverVisitationModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.presenter.GenerateCSVPresenter;
+import com.bluecodeltd.ecap.chw.util.CsvFormImportService;
 import com.github.javiersantos.appupdater.AppUpdater;
 import com.bluecodeltd.ecap.chw.util.UpdateManager;
 import com.github.mikephil.charting.charts.BarChart;
@@ -68,6 +72,7 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -106,6 +111,7 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
     ArrayList<Integer> colors;
     AppUpdater appUpdater;
     private DashboardViewModel dashboardViewModel;
+    private static final int REQUEST_CODE_IMPORT_CSV = 49011;
     // Background execution centralized via Threading
 
     @Override
@@ -656,6 +662,9 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
                         showCustomDialog(DashboardActivity.this,
                                 getString(R.string.csv_generated_location, getString(R.string.app_name))));
                 break;
+            case R.id.import_csv:
+                openCsvPicker();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -683,6 +692,10 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
 
 
     public void showCustomDialog(Context context, String message) {
+        showCustomDialog(context, message, null);
+    }
+
+    public void showCustomDialog(Context context, String message, Runnable onDismiss) {
 
         Dialog dialog = new Dialog(context);
 
@@ -693,11 +706,166 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
         messageTextView.setText(message);
 
         Button okButton = dialog.findViewById(R.id.dialog_ok_button);
-        okButton.setOnClickListener(v -> dialog.dismiss());
+        okButton.setOnClickListener(v -> {
+            dialog.dismiss();
+            if (onDismiss != null) {
+                onDismiss.run();
+            }
+        });
 
         dialog.show();
+        if (dialog.getWindow() != null) {
+            int width = (int) (context.getResources().getDisplayMetrics().widthPixels * 0.95f);
+            int height = (int) (context.getResources().getDisplayMetrics().heightPixels * 0.8f);
+            dialog.getWindow().setLayout(width, height);
+        }
     }
 
+    private void openCsvPicker() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"text/csv", "text/comma-separated-values", "application/vnd.ms-excel"});
+        startActivityForResult(intent, REQUEST_CODE_IMPORT_CSV);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode != REQUEST_CODE_IMPORT_CSV || resultCode != RESULT_OK || data == null) {
+            return;
+        }
+
+        List<Uri> csvUris = extractCsvUris(data);
+        if (csvUris.isEmpty()) {
+            showCustomDialog(this, "No CSV file selected.");
+            return;
+        }
+
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setIndeterminate(false);
+        progressDialog.setMax(100);
+        progressDialog.setProgress(0);
+        progressDialog.setMessage("Preparing import...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        Threading.io(() -> {
+            final int[] lastPercent = {-1};
+            Map<Uri, Integer> perFileRows = new LinkedHashMap<>();
+            int totalRowsAllFiles = 0;
+            for (Uri uri : csvUris) {
+                int rows = CsvFormImportService.getDataRowCount(DashboardActivity.this, uri);
+                int normalizedRows = Math.max(1, rows);
+                perFileRows.put(uri, normalizedRows);
+                totalRowsAllFiles += normalizedRows;
+            }
+            final int overallTotalRows = totalRowsAllFiles;
+
+            int importedAll = 0;
+            int skippedAll = 0;
+            int failedAll = 0;
+            int processedRowsAll = 0;
+            List<String> perFileSummary = new ArrayList<>();
+
+            for (int fileIndex = 0; fileIndex < csvUris.size(); fileIndex++) {
+                Uri csvUri = csvUris.get(fileIndex);
+                int currentFileIndex = fileIndex + 1;
+                int totalFiles = csvUris.size();
+                int rowsForCurrentFile = perFileRows.get(csvUri);
+                int processedBeforeFile = processedRowsAll;
+
+                CsvFormImportService.ImportSummary summary = CsvFormImportService.importFromCsvUri(
+                        DashboardActivity.this,
+                        csvUri,
+                        (processedRows, totalRows, importedRows, skippedRows, failedRows) -> {
+                            int currentFileTotal = totalRows > 0 ? totalRows : rowsForCurrentFile;
+                            int globalProcessedRows = Math.min(overallTotalRows, processedBeforeFile + Math.min(processedRows, currentFileTotal));
+
+                            // Keep row-processing phase below 100%; finalization jumps to 100 when all files complete.
+                            int percent = overallTotalRows > 0
+                                    ? Math.min(95, (globalProcessedRows * 95) / overallTotalRows)
+                                    : 95;
+                            if (percent == lastPercent[0]) {
+                                return;
+                            }
+                            lastPercent[0] = percent;
+                            Threading.main(() -> {
+                                progressDialog.setProgress(percent);
+                                String status = "Importing file " + currentFileIndex + "/" + totalFiles + ": " + percent + "%"
+                                        + "\nRows " + globalProcessedRows + "/" + overallTotalRows
+                                        + "\nImported " + importedRows + ", Skipped " + skippedRows + ", Failed " + failedRows;
+                                progressDialog.setMessage(status);
+                            });
+                        }
+                );
+
+                importedAll += summary.importedRows;
+                skippedAll += summary.skippedRows;
+                failedAll += summary.failedRows;
+                processedRowsAll += rowsForCurrentFile;
+
+                String fileLabel = summary.fileName != null ? summary.fileName : ("File " + currentFileIndex);
+                String status;
+                if (summary.timedOutDuringProcessing) {
+                    status = "TIMEOUT";
+                } else if (summary.hasFileFailure()) {
+                    status = "FAILED";
+                } else {
+                    status = "OK";
+                }
+                perFileSummary.add(fileLabel + " [" + status + "]: Imported " + summary.importedRows
+                        + ", Skipped " + summary.skippedRows
+                        + ", Failed " + summary.failedRows);
+            }
+
+            StringBuilder finalMessage = new StringBuilder();
+            finalMessage.append("CSV import finished for ").append(csvUris.size()).append(" file(s).")
+                    .append("\nImported: ").append(importedAll)
+                    .append(", Skipped: ").append(skippedAll)
+                    .append(", Failed: ").append(failedAll);
+
+            if (!perFileSummary.isEmpty()) {
+                finalMessage.append("\n\nPer-file summary:");
+                for (String line : perFileSummary) {
+                    finalMessage.append("\n- ").append(line);
+                }
+            }
+
+            String finalSummaryText = finalMessage.toString();
+            Threading.main(() -> {
+                progressDialog.setProgress(100);
+                progressDialog.setMessage("Finalizing: 100%");
+                progressDialog.dismiss();
+                showCustomDialog(DashboardActivity.this, finalSummaryText, this::loadData);
+            });
+        });
+    }
+
+    private List<Uri> extractCsvUris(Intent data) {
+        List<Uri> uris = new ArrayList<>();
+        Uri singleUri = data.getData();
+        if (singleUri != null) {
+            uris.add(singleUri);
+        }
+
+        ClipData clipData = data.getClipData();
+        if (clipData != null) {
+            for (int i = 0; i < clipData.getItemCount(); i++) {
+                ClipData.Item item = clipData.getItemAt(i);
+                if (item == null) {
+                    continue;
+                }
+                Uri uri = item.getUri();
+                if (uri != null && !uris.contains(uri)) {
+                    uris.add(uri);
+                }
+            }
+        }
+        return uris;
+    }
 
 
 

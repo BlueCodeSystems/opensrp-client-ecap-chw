@@ -209,6 +209,8 @@ public class VCAScreeningDao extends AbstractDao {
         return c -> {
 
             VcaCSVModel record = new VcaCSVModel();
+            record.setDeleted(getCursorValue(c, "deleted"));
+            record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setHousehold_id(getCursorValue(c, "household_id"));
             record.setUnique_id(getCursorValue(c, "unique_id"));
             record.setSignature(getCursorValue(c, "signature"));

@@ -14,7 +14,7 @@ public class GenerateCSVPresenter implements GenerateCSVContract.Presenter {
 
     @Override
     public void generateCSV() {
-        generateCSVs.createCSVFile(new GenerateCSVsModel.CSVCallback() {
+        generateCSVs.createAllEcClientFieldTablesCSVFiles(new GenerateCSVsModel.CSVCallback() {
             @Override
             public void onSuccess(String filePath) {
                 view.showCSVGeneratedMessage(filePath);
@@ -25,128 +25,5 @@ public class GenerateCSVPresenter implements GenerateCSVContract.Presenter {
                 view.showError(error);
             }
         });
-        generateCSVs.createVcaCSVFile(new GenerateCSVsModel.CSVCallback() {
-            @Override
-            public void onSuccess(String filePath) {
-                view.showCSVGeneratedMessage(filePath);
-            }
-
-            @Override
-            public void onError(String error) {
-                view.showError(error);
-            }
-        });
-        generateCSVs.createHtsCSVFile(new GenerateCSVsModel.CSVCallback() {
-            @Override
-            public void onSuccess(String filePath) {
-                view.showCSVGeneratedMessage(filePath);
-            }
-
-            @Override
-            public void onError(String error) {
-                view.showError(error);
-            }
-        });
-        generateCSVs.createVcaServicesCSVFile(new GenerateCSVsModel.CSVCallback() {
-            @Override
-            public void onSuccess(String filePath) {
-                view.showCSVGeneratedMessage(filePath);
-            }
-
-            @Override
-            public void onError(String error) {
-                view.showError(error);
-            }
-        });
-        generateCSVs.createHouseholdServicesCSVFile(new GenerateCSVsModel.CSVCallback() {
-            @Override
-            public void onSuccess(String filePath) {
-                view.showCSVGeneratedMessage(filePath);
-            }
-
-            @Override
-            public void onError(String error) {
-                view.showError(error);
-            }
-        });
-        generateCSVs.createVCAVisitationsCSVFile(new GenerateCSVsModel.CSVCallback() {
-            @Override
-            public void onSuccess(String filePath) {
-                view.showCSVGeneratedMessage(filePath);
-            }
-
-            @Override
-            public void onError(String error) {
-                view.showError(error);
-            }
-        });
-        generateCSVs.createHouseholdsVisitationsCSVFile(new GenerateCSVsModel.CSVCallback() {
-            @Override
-            public void onSuccess(String filePath) {
-                view.showCSVGeneratedMessage(filePath);
-            }
-
-            @Override
-            public void onError(String error) {
-                view.showError(error);
-            }
-        });
-        generateCSVs.createReferralsCSVFile(new GenerateCSVsModel.CSVCallback() {
-            @Override
-            public void onSuccess(String filePath) {
-                view.showCSVGeneratedMessage(filePath);
-            }
-
-            @Override
-            public void onError(String error) {
-                view.showError(error);
-            }
-        });
-        generateCSVs.createCaregiverHivAssessmentCSVFile(new GenerateCSVsModel.CSVCallback() {
-            @Override
-            public void onSuccess(String filePath) {
-                view.showCSVGeneratedMessage(filePath);
-            }
-
-            @Override
-            public void onError(String error) {
-                view.showError(error);
-            }
-        });
-        generateCSVs.createVcaCasePlansCSVFile(new GenerateCSVsModel.CSVCallback() {
-            @Override
-            public void onSuccess(String filePath) {
-                view.showCSVGeneratedMessage(filePath);
-            }
-
-            @Override
-            public void onError(String error) {
-                view.showError(error);
-            }
-        });
-        generateCSVs.createHouseholdCasePlansCSVFile(new GenerateCSVsModel.CSVCallback() {
-            @Override
-            public void onSuccess(String filePath) {
-                view.showCSVGeneratedMessage(filePath);
-            }
-
-            @Override
-            public void onError(String error) {
-                view.showError(error);
-            }
-        });
-        generateCSVs.createVcaHivAssessmentCSVFile(new GenerateCSVsModel.CSVCallback() {
-            @Override
-            public void onSuccess(String filePath) {
-                view.showCSVGeneratedMessage(filePath);
-            }
-
-            @Override
-            public void onError(String error) {
-                view.showError(error);
-            }
-        });
-
-
     }
 }

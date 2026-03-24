@@ -11,7 +11,7 @@ public class EcMotherIndexDao extends AbstractDao {
 
     public static List<EcMotherIndexModel> getMothers(String householdId) {
         String sql = "SELECT * FROM ec_pmtct_mother WHERE household_id = '" + householdId + "' " +
-                "AND (delete_status IS NULL OR delete_status <> '1')";
+                "AND delete_status IS NULL";
 
         List<EcMotherIndexModel> values = AbstractDao.readData(sql, getMotherIndexMap());
         if (values == null || values.isEmpty()) {
@@ -22,7 +22,7 @@ public class EcMotherIndexDao extends AbstractDao {
 
     public static EcMotherIndexModel getMotherByBaseEntityId(String baseEntityId) {
         String sql = "SELECT * FROM ec_pmtct_mother WHERE base_entity_id = '" + baseEntityId + "' " +
-                "AND (delete_status IS NULL OR delete_status <> '1')";
+                "AND delete_status IS NULL";
 
         List<EcMotherIndexModel> values = AbstractDao.readData(sql, getMotherIndexMap());
         if (values == null || values.isEmpty()) {
@@ -51,7 +51,7 @@ public class EcMotherIndexDao extends AbstractDao {
     }
 
     public static String countAllPmtctMothers() {
-        String sql = "SELECT COUNT(*) v FROM ec_pmtct_mother WHERE (delete_status IS NULL OR delete_status <> '1')";
+        String sql = "SELECT COUNT(*) v FROM ec_pmtct_mother WHERE delete_status IS NULL";
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
         List<String> values = AbstractDao.readData(sql, dataMap);
         if (values == null || values.isEmpty()) return "0";
@@ -60,7 +60,7 @@ public class EcMotherIndexDao extends AbstractDao {
 
     public static String countMothers(String householdId) {
         String sql = "SELECT COUNT(*) v FROM ec_pmtct_mother WHERE household_id = '" + householdId + "' " +
-                "AND (delete_status IS NULL OR delete_status <> '1')";
+                "AND delete_status IS NULL";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
         List<String> values = AbstractDao.readData(sql, dataMap);

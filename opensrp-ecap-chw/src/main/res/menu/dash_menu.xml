@@ -12,5 +12,9 @@
         android:id="@+id/generate_pdf"
         android:title="Generate CSV"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/import_csv"
+        android:title="Import CSV"
+        app:showAsAction="never"/>
 
 </menu>

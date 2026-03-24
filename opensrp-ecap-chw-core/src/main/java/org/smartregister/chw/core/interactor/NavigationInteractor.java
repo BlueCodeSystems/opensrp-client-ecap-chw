@@ -97,7 +97,7 @@ public class NavigationInteractor implements NavigationContract.Interactor {
                 return NavigationDao.getQueryCount(sqlChild);
 
             case CoreConstants.TABLE_NAME.EC_CLIENT_INDEX:
-                String clientIndexCountSql = "SELECT COUNT(DISTINCT base_entity_id) AS childrenCount FROM ec_client_index WHERE (deleted IS NULL OR deleted != '1') AND adolescent_birthdate IS NOT NULL";
+                String clientIndexCountSql = "SELECT COUNT(DISTINCT base_entity_id) AS childrenCount FROM ec_client_index WHERE (deleted IS NULL OR deleted != '1') AND adolescent_birthdate IS NOT NULL AND first_name IS NOT NULL";
                 return NavigationDao.getQueryCount(clientIndexCountSql);
 
             case CoreConstants.TABLE_NAME.EC_MOTHER_INDEX:

@@ -549,3 +549,80 @@ coveralls {
     jacocoReportPath = "${buildDir}/reports/jacoco/jacocoRootReport/merged.xml"
     sourceDirs = ["$project.projectDir/src/main/java"]
 }
+
+def findZipalignExecutable = {
+    boolean isWindows = System.getProperty("os.name").toLowerCase().contains("windows")
+    String executableName = isWindows ? "zipalign.exe" : "zipalign"
+    List<File> candidates = []
+
+    File sdkDir = android.sdkDirectory
+    if (sdkDir != null) {
+        if (android.buildToolsVersion != null) {
+            candidates << new File(sdkDir, "build-tools/${android.buildToolsVersion}/${executableName}")
+        }
+        File buildToolsRoot = new File(sdkDir, "build-tools")
+        if (buildToolsRoot.exists()) {
+            buildToolsRoot.listFiles()
+                    ?.findAll { it.isDirectory() }
+                    ?.sort { a, b -> b.name <=> a.name }
+                    ?.each { dir -> candidates << new File(dir, executableName) }
+        }
+    }
+
+    return candidates.find { it.exists() } ?: null
+}
+
+tasks.register("verify16kbAlignment") {
+    group = "verification"
+    description = "Verifies final APK/AAB outputs are 16KB page-size aligned using zipalign."
+    dependsOn("assembleEcapDebug", "bundleEcapDebug")
+
+    doLast {
+        File zipalignBinary = findZipalignExecutable()
+        if (zipalignBinary == null) {
+            throw new GradleException("zipalign executable not found in Android SDK build-tools.")
+        }
+
+        Set<File> artifacts = new LinkedHashSet<>()
+        [file("$buildDir/outputs/apk"), file("$buildDir/outputs/bundle")]
+                .findAll { it.exists() }
+                .each { dir ->
+                    artifacts.addAll(fileTree(dir).matching {
+                        include("**/*.apk")
+                        include("**/*.aab")
+                    }.files)
+                }
+
+        if (artifacts.isEmpty()) {
+            throw new GradleException("No APK/AAB artifacts found under $buildDir/outputs.")
+        }
+
+        List<String> failures = []
+        artifacts.toList().sort { it.absolutePath }.each { artifact ->
+            ByteArrayOutputStream out = new ByteArrayOutputStream()
+            ByteArrayOutputStream err = new ByteArrayOutputStream()
+            def result = exec {
+                executable zipalignBinary.absolutePath
+                args("-c", "-P", "16", "4", artifact.absolutePath)
+                ignoreExitValue = true
+                standardOutput = out
+                errorOutput = err
+            }
+
+            if (result.exitValue == 0) {
+                logger.lifecycle("16KB alignment OK: ${artifact}")
+            } else {
+                String details = (out.toString("UTF-8") + err.toString("UTF-8")).trim()
+                failures << "${artifact}\n${details}"
+            }
+        }
+
+        if (!failures.isEmpty()) {
+            throw new GradleException(
+                    "16KB alignment check failed for ${failures.size()} artifact(s):\n\n" + failures.join("\n\n")
+            )
+        }
+
+        logger.lifecycle("All ${artifacts.size()} final artifact(s) are 16KB aligned.")
+    }
+}

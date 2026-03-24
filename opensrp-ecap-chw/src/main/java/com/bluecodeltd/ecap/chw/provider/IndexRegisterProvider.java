@@ -64,12 +64,13 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
         String childId = Utils.getValue(personObjectClient.getColumnmaps(), "unique_id", false);
         String gender = Utils.getValue(personObjectClient.getColumnmaps(), "gender", true);
         String household_id = Utils.getValue(personObjectClient.getColumnmaps(), "household_id", true);
+        String childLookupId = firstNonBlank(childId, BaseEntityId, household_id);
         String birthdate = checkAndConvertDateFormat(Utils.getValue(personObjectClient.getColumnmaps(), "adolescent_birthdate", true));
         String age = getAge(birthdate);
         String vcaAge = getVcaAge(birthdate);
 
         // Load per-row details asynchronously to avoid UI jank
-        final String rowTag = childId;
+        final String rowTag = firstNonBlank(childLookupId, String.valueOf(cursor != null ? cursor.getPosition() : 0));
         indexRegisterViewHolder.itemView.setTag(R.id.tag_row_id, rowTag);
         Threading.ioBestEffort(() -> {
             int plans = 0;
@@ -77,8 +78,8 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
             String is_index = null;
             String status = null;
             String is_screened = null;
-            try { plans = CasePlanDao.checkCasePlan(childId); } catch (Exception ignored) {}
-            try { visits = VcaVisitationDao.countVisits(childId); } catch (Exception ignored) {}
+            try { plans = CasePlanDao.checkCasePlan(childLookupId); } catch (Exception ignored) {}
+            try { visits = VcaVisitationDao.countVisits(childLookupId); } catch (Exception ignored) {}
             try { is_index = IndexPersonDao.checkIndexPerson(BaseEntityId); } catch (Exception ignored) {}
             try { status = IndexPersonDao.getIndexStatus(BaseEntityId); } catch (Exception ignored) {}
             try { is_screened = HouseholdDao.checkIfScreened(household_id); } catch (Exception ignored) {}
@@ -91,7 +92,7 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
             Threading.main(() -> {
                 Object tag = indexRegisterViewHolder.itemView.getTag(R.id.tag_row_id);
                 if (!(tag instanceof String) || !rowTag.equals(tag)) return;
-                indexRegisterViewHolder.setupViews(firstName +" "+lastName, childId, fPlans, fVisits, fIsIndex, fStatus, gender, age, fIsScreened, vcaAge);
+                indexRegisterViewHolder.setupViews(firstName +" "+lastName, childLookupId, fPlans, fVisits, fIsIndex, fStatus, gender, age, fIsScreened, vcaAge);
                 indexRegisterViewHolder.itemView.setOnClickListener(onClickListener);
                 View warning = indexRegisterViewHolder.itemView.findViewById(R.id.index_warning);
                 warning.setOnClickListener(onClickListener);
@@ -101,6 +102,22 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
             });
         });
 
+    }
+
+    private String firstNonBlank(String... values) {
+        if (values == null) {
+            return "";
+        }
+        for (String value : values) {
+            if (value == null) {
+                continue;
+            }
+            String trimmed = value.trim();
+            if (!trimmed.isEmpty()) {
+                return trimmed;
+            }
+        }
+        return "";
     }
 
 

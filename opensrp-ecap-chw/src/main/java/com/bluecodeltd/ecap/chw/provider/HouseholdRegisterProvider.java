@@ -26,6 +26,7 @@ import org.smartregister.view.dialog.SortOption;
 import org.smartregister.view.viewholder.OnClickFormLauncher;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HouseholdRegisterProvider implements RecyclerViewProvider<HouseholdRegisterViewHolder>, View.OnClickListener{
@@ -53,13 +54,18 @@ public class HouseholdRegisterProvider implements RecyclerViewProvider<Household
 
         String is_closed = Utils.getValue(personObjectClient.getColumnmaps(), "is_closed", true);
         String baseId = Utils.getValue(personObjectClient.getColumnmaps(), "base_entity_id", true);
+        String hid = Utils.getValue(personObjectClient.getColumnmaps(), "hid", true);
+        String householdLookupId = firstNonBlank(householdId, hid, baseId);
         // Tag to avoid stale updates on recycled rows
-        final String rowTag = householdId;
+        final String rowTag = firstNonBlank(householdLookupId, String.valueOf(cursor != null ? cursor.getPosition() : 0));
         householdRegisterViewHolder.itemView.setTag(R.id.tag_row_id, rowTag);
         Threading.ioBestEffort(() -> {
-            List<String> genderList = IndexPersonDao.getGenders(householdId);
-            List<String> ageList = IndexPersonDao.getAges(householdId);
-            String is_screened = HouseholdDao.checkIfScreened(householdId);
+            List<String> genderList = new ArrayList<>();
+            List<String> ageList = new ArrayList<>();
+            String is_screened = null;
+            try { genderList = IndexPersonDao.getGenders(householdLookupId); } catch (Exception ignored) {}
+            try { ageList = IndexPersonDao.getAges(householdLookupId); } catch (Exception ignored) {}
+            try { is_screened = HouseholdDao.checkIfScreened(householdLookupId); } catch (Exception ignored) {}
 
             String caregiverName;
             if(updated_caregiver_name.isEmpty()){
@@ -67,11 +73,16 @@ public class HouseholdRegisterProvider implements RecyclerViewProvider<Household
             } else {
                 caregiverName =  Utils.getValue(personObjectClient.getColumnmaps(), "new_caregiver_name", true);
             }
+            final String fHouseholdLookupId = householdLookupId;
+            final List<String> fGenderList = genderList;
+            final List<String> fAgeList = ageList;
+            final String fIsScreened = is_screened;
+            final String fCaregiverName = caregiverName;
 
             Threading.main(() -> {
                 Object tag = householdRegisterViewHolder.itemView.getTag(R.id.tag_row_id);
                 if (!(tag instanceof String) || !rowTag.equals(tag)) return;
-                householdRegisterViewHolder.setupViews(caregiverName + " " + "Household", householdId, baseId, householdId, genderList, is_screened, ageList, context);
+                householdRegisterViewHolder.setupViews(fCaregiverName + " " + "Household", fHouseholdLookupId, baseId, fHouseholdLookupId, fGenderList, fIsScreened, fAgeList, context);
                 householdRegisterViewHolder.itemView.setOnClickListener(onClickListener);
                 View columns = householdRegisterViewHolder.itemView.findViewById(R.id.register_columns);
                 columns.setOnClickListener(onClickListener);
@@ -81,6 +92,22 @@ public class HouseholdRegisterProvider implements RecyclerViewProvider<Household
             });
         });
 
+    }
+
+    private String firstNonBlank(String... values) {
+        if (values == null) {
+            return "";
+        }
+        for (String value : values) {
+            if (value == null) {
+                continue;
+            }
+            String trimmed = value.trim();
+            if (!trimmed.isEmpty()) {
+                return trimmed;
+            }
+        }
+        return "";
     }
 
 

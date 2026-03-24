@@ -347,7 +347,7 @@ public class PMTCTRegisterFragment extends BaseSafeRegisterFragment implements I
     @Override
     protected String getMainCondition() {
         //return "case_status > 0 AND is_closed = 0 ";
-        return "COALESCE(delete_status, '0') <> '1'" +
+        return "ec_pmtct_mother.delete_status IS NULL " +
                 "AND (first_name IS NOT NULL " +
                 "     OR last_name IS NOT NULL " +
                 "     OR caregiver_name IS NOT NULL)";
