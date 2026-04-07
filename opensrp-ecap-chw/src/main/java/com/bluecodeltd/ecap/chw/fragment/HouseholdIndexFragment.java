@@ -1,6 +1,11 @@
 package com.bluecodeltd.ecap.chw.fragment;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.os.Handler;
+import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import com.bluecodeltd.ecap.chw.util.Threading;
 import android.view.View;
@@ -12,6 +17,7 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.ActionBar;
+import androidx.loader.content.Loader;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HouseholdDetails;
@@ -21,6 +27,8 @@ import com.bluecodeltd.ecap.chw.presenter.HouseholdIndexFragmentPresenter;
 import com.bluecodeltd.ecap.chw.provider.HouseholdRegisterProvider;
 import com.bluecodeltd.ecap.chw.util.Constants;
 
+import org.smartregister.AllConstants;
+import org.smartregister.CoreLibrary;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.cursoradapter.RecyclerViewPaginatedAdapter;
@@ -34,8 +42,36 @@ import es.dmoral.toasty.Toasty;
  
 
 public class HouseholdIndexFragment extends BaseSafeRegisterFragment implements HouseholdIndexFragmentContract.View{
+    private static final long SEARCH_DEBOUNCE_MS = 350L;
 
     private com.bluecodeltd.ecap.chw.databinding.FragmentBaseRegisterBinding binding;
+    private final Handler searchHandler = new Handler(Looper.getMainLooper());
+    private String pendingSearchText = "";
+    private final Runnable searchRunnable = () -> filter(pendingSearchText, "", getMainCondition(), false);
+    private final TextWatcher debouncedSearchWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+            // no-op
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+            org.smartregister.Context opensrpContext = CoreLibrary.getInstance().context();
+            if (opensrpContext.getAppProperties().isTrue(AllConstants.PROPERTY.ENABLE_SEARCH_BUTTON)
+                    && charSequence != null && charSequence.length() > 0) {
+                return;
+            }
+
+            pendingSearchText = charSequence == null ? "" : charSequence.toString();
+            searchHandler.removeCallbacks(searchRunnable);
+            searchHandler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_MS);
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            // no-op
+        }
+    };
     // Use centralized Threading
 
     @Override
@@ -284,6 +320,10 @@ public class HouseholdIndexFragment extends BaseSafeRegisterFragment implements 
 
     @Override
     public void onDestroyView() {
+        searchHandler.removeCallbacks(searchRunnable);
+        if (getSearchView() != null) {
+            getSearchView().removeTextChangedListener(debouncedSearchWatcher);
+        }
         super.onDestroyView();
         binding = null;
     }
@@ -347,6 +387,39 @@ public class HouseholdIndexFragment extends BaseSafeRegisterFragment implements 
     @Override
     public void setAdvancedSearchFormData(HashMap<String, String> hashMap) {
 
+    }
+
+    @Override
+    protected void updateSearchView() {
+        if (getSearchView() != null) {
+            getSearchView().removeTextChangedListener(textWatcher);
+            getSearchView().removeTextChangedListener(debouncedSearchWatcher);
+            getSearchView().addTextChangedListener(debouncedSearchWatcher);
+            getSearchView().setOnKeyListener(hideKeyboard);
+        }
+    }
+
+    @Override
+    public void filter(String filterString, String joinTableString, String mainConditionString, boolean qrCode) {
+        if (getSearchCancelView() != null) {
+            getSearchCancelView().setVisibility(filterString == null || filterString.isEmpty()
+                    ? View.INVISIBLE : View.VISIBLE);
+        }
+        if (filterString == null || filterString.isEmpty()) {
+            org.smartregister.util.Utils.hideKeyboard(getActivity());
+        }
+
+        this.filters = filterString;
+        this.joinTable = joinTableString;
+        this.mainCondition = mainConditionString;
+
+        if (clientAdapter.getCurrentlimit() == 0) {
+            clientAdapter.setCurrentlimit(20);
+        }
+        clientAdapter.setCurrentoffset(0);
+
+        showProgressView();
+        filterandSortExecute(countBundle());
     }
 
     @Override
@@ -435,6 +508,12 @@ public class HouseholdIndexFragment extends BaseSafeRegisterFragment implements 
         clientAdapter = new RecyclerViewPaginatedAdapter(null, registerProvider, context().commonrepository(Constants.EcapClientTable.EC_HOUSEHOLD));
         clientAdapter.setCurrentlimit(20);
         clientsView.setAdapter(clientAdapter);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        super.onLoadFinished(loader, cursor);
+        setTotalPatients();
     }
 
     private androidx.recyclerview.widget.RecyclerView findFirstRecyclerView(View root) {

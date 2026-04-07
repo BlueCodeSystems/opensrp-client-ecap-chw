@@ -208,6 +208,9 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
                 allHouseHoldsCount = binding.allHouseholdsNumber;
                 allHouseHoldsCount.setText(state.getHouseholdsCount() != null ? state.getHouseholdsCount() : "0");
                 allVcasCount.setText(state.getVcasCount());
+                boolean hasChartData = hasChartData(state.getSubpops());
+                binding.fragmentVerticalbarchartChart.setVisibility(hasChartData ? View.VISIBLE : View.INVISIBLE);
+                binding.chartEmptyState.setVisibility(hasChartData ? View.GONE : View.VISIBLE);
                 // Gender breakdown in Children card
                 binding.cardMaleCount.setText(state.getMaleCount());
                 binding.cardFemaleCount.setText(state.getFemaleCount());
@@ -221,8 +224,10 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
                 if (state.getLastUpdated() != null) {
                     lastUpdated.setText(dtf.format(state.getLastUpdated()));
                 }
-                loadingDataProgressBar.setVisibility(View.INVISIBLE);
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            } finally {
+                setChartLoading(false);
+            }
         });
 
         // Vibrant palette matching the new card gradients
@@ -246,10 +251,7 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(DashboardActivity.this);
         String facility = sp.getString("facility", "anonymous");
         phone = sp.getString("phone", "anonymous");
-
-
-
-        loadingDataProgressBar.setVisibility(View.VISIBLE);
+        setChartLoading(true);
         // Kick off initial async load and schedule periodic refreshes
         loadData();
         refreshData();
@@ -258,13 +260,11 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (facilityInformationSwitch.isChecked()){
-                    loadingDataProgressBar.setVisibility(View.VISIBLE);
                     loadCaseworkerData();
                     handler.removeCallbacks(runnable);
-                    loadingDataProgressBar.setVisibility(View.INVISIBLE);
                 } else{
-                    refreshData();
                     loadData();
+                    refreshData();
 
                 }
             }
@@ -375,6 +375,28 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
         data.setValueTextSize(12f);
         chart.setData(data);
         chart.invalidate();
+    }
+
+    private boolean hasChartData(ArrayList<Integer> subpops) {
+        if (subpops == null || subpops.isEmpty()) {
+            return false;
+        }
+        int[] include = new int[]{0, 1, 2, 4};
+        for (int idx : include) {
+            if (idx >= 0 && idx < subpops.size()) {
+                Integer value = subpops.get(idx);
+                if (value != null && value > 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private void setChartLoading(boolean isLoading) {
+        if (loadingDataProgressBar != null) {
+            loadingDataProgressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+        }
     }
 
     private int getDueVisits(List<CaregiverVisitationModel> visitDates) {
@@ -490,7 +512,9 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
 
 
     public void loadData() {
-        loadingDataProgressBar.setVisibility(View.VISIBLE);
+        setChartLoading(true);
+        binding.chartEmptyState.setVisibility(View.GONE);
+        binding.fragmentVerticalbarchartChart.setVisibility(View.VISIBLE);
         // Delegate to ViewModel (all-CHW view)
         dashboardViewModel.refresh(null);
         // AppUpdater is started in onCreate
@@ -637,7 +661,9 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
     }
 
     public void loadCaseworkerData(){
-        loadingDataProgressBar.setVisibility(View.VISIBLE);
+        setChartLoading(true);
+        binding.chartEmptyState.setVisibility(View.GONE);
+        binding.fragmentVerticalbarchartChart.setVisibility(View.VISIBLE);
         // Delegate to ViewModel (filtered by caseworker phone)
         dashboardViewModel.refresh(phone);
     }

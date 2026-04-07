@@ -139,6 +139,7 @@ public class HouseholdDetails extends AppCompatActivity {
     private TabLayoutMediator tabMediator;
     private boolean viewPagerInitialized = false;
     private boolean fabVisibilityInitialized = false;
+    private int pendingViewPagerPosition = 0;
     private Toolbar toolbar;
     private TextView visitTabCount, cname,updatedCaregiverName, txtDistrict, txtVillage,casePlanTabCount;
     public TextView childTabCount;
@@ -246,7 +247,7 @@ public class HouseholdDetails extends AppCompatActivity {
         // ViewModel: heavy data
         viewModel = new ViewModelProvider(this).get(HouseholdDetailsViewModel.class);
         viewModel.getState().observe(this, state -> applyState(state, householdId));
-        viewModel.refresh(householdId);
+        requestStateRefresh(false);
 
 
     }
@@ -508,6 +509,14 @@ public class HouseholdDetails extends AppCompatActivity {
         });
         tabMediator.attach();
 
+        int targetPosition = fragments.isEmpty()
+                ? 0
+                : Math.min(Math.max(pendingViewPagerPosition, 0), fragments.size() - 1);
+        try {
+            mViewPager.setCurrentItem(targetPosition, false);
+        } catch (Exception ignored) {}
+        pendingViewPagerPosition = targetPosition;
+
         // Apply custom tab titles/counts
         if (fragments.size() > 6) {
             updateHivRiskTabTitle();
@@ -617,6 +626,17 @@ public class HouseholdDetails extends AppCompatActivity {
         } catch (Exception e) {
             return 0;
         }
+    }
+
+    private void requestStateRefresh(boolean rebuildViewPager) {
+        if (viewModel == null || TextUtils.isEmpty(householdId) || isFinishing() || isDestroyed()) {
+            return;
+        }
+        if (rebuildViewPager) {
+            pendingViewPagerPosition = safeViewPagerPosition();
+            viewPagerInitialized = false;
+        }
+        viewModel.refresh(householdId);
     }
 
     // Safe getter for an existing page fragment managed by ViewPager2
@@ -2477,9 +2497,7 @@ public class HouseholdDetails extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.refresh:
-                finish();
-                startActivity(getIntent());
-
+                requestStateRefresh(true);
                 break;
 
             case R.id.call:
@@ -2811,19 +2829,6 @@ public class HouseholdDetails extends AppCompatActivity {
         finish();
     }
     public void refreshActivity() {
-        if (isFinishing() || isDestroyed()) {
-            return;
-        }
-        Intent intent = new Intent(getIntent());
-        intent.putExtra("refresh", "true");
-        if (householdId != null && !householdId.isEmpty()) {
-            intent.putExtra("householdId", householdId);
-            intent.putExtra("base_entity_id", householdId);
-        }
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        finish();
-        overridePendingTransition(0, 0);
-        startActivity(intent);
-        overridePendingTransition(0, 0);
+        requestStateRefresh(true);
     }
 }

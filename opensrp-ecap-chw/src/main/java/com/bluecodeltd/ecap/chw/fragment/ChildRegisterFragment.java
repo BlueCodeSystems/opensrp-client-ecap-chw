@@ -1,8 +1,18 @@
 package com.bluecodeltd.ecap.chw.fragment;
 
+import android.database.Cursor;
+import android.os.Handler;
+import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
+
+import androidx.loader.content.Loader;
+
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.ChildHomeVisitActivity;
 import com.bluecodeltd.ecap.chw.activity.ChildProfileActivity;
+import org.smartregister.AllConstants;
+import org.smartregister.CoreLibrary;
 import org.smartregister.chw.anc.domain.MemberObject;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import org.smartregister.chw.core.fragment.CoreChildRegisterFragment;
@@ -22,7 +32,36 @@ import timber.log.Timber;
 import static org.smartregister.chw.core.utils.ChildDBConstants.KEY.FAMILY_LAST_NAME;
 
 public class ChildRegisterFragment extends CoreChildRegisterFragment {
+    private static final long SEARCH_DEBOUNCE_MS = 350L;
+
     private com.bluecodeltd.ecap.chw.databinding.FragmentBaseRegisterBinding binding;
+    private final Handler searchHandler = new Handler(Looper.getMainLooper());
+    private String pendingSearchText = "";
+    private final Runnable searchRunnable = () -> filter(pendingSearchText, "", getActiveMainCondition(), false);
+    private final TextWatcher debouncedSearchWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+            // no-op
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+            org.smartregister.Context opensrpContext = CoreLibrary.getInstance().context();
+            if (opensrpContext.getAppProperties().isTrue(AllConstants.PROPERTY.ENABLE_SEARCH_BUTTON)
+                    && charSequence != null && charSequence.length() > 0) {
+                return;
+            }
+
+            pendingSearchText = charSequence == null ? "" : charSequence.toString();
+            searchHandler.removeCallbacks(searchRunnable);
+            searchHandler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_MS);
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            // no-op
+        }
+    };
 
     @Override
     protected void onViewClicked(android.view.View view) {
@@ -85,9 +124,56 @@ public class ChildRegisterFragment extends CoreChildRegisterFragment {
     }
 
     @Override
+    protected void updateSearchView() {
+        if (getSearchView() != null) {
+            getSearchView().removeTextChangedListener(textWatcher);
+            getSearchView().removeTextChangedListener(debouncedSearchWatcher);
+            getSearchView().addTextChangedListener(debouncedSearchWatcher);
+            getSearchView().setOnKeyListener(hideKeyboard);
+        }
+    }
+
+    @Override
+    public void filter(String filterString, String joinTableString, String mainConditionString, boolean qrCode) {
+        if (getSearchCancelView() != null) {
+            getSearchCancelView().setVisibility(filterString == null || filterString.isEmpty()
+                    ? android.view.View.INVISIBLE : android.view.View.VISIBLE);
+        }
+        if (filterString == null || filterString.isEmpty()) {
+            org.smartregister.util.Utils.hideKeyboard(getActivity());
+        }
+
+        this.filters = filterString;
+        this.joinTable = joinTableString;
+        this.mainCondition = mainConditionString;
+
+        if (clientAdapter.getCurrentlimit() == 0) {
+            clientAdapter.setCurrentlimit(20);
+        }
+        clientAdapter.setCurrentoffset(0);
+
+        showProgressView();
+        filterAndSortExecute();
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        super.onLoadFinished(loader, cursor);
+        setTotalPatients();
+    }
+
+    @Override
     public void onDestroyView() {
+        searchHandler.removeCallbacks(searchRunnable);
+        if (getSearchView() != null) {
+            getSearchView().removeTextChangedListener(debouncedSearchWatcher);
+        }
         super.onDestroyView();
         binding = null;
+    }
+
+    private String getActiveMainCondition() {
+        return dueFilterActive ? getDueFilterCondition() : presenter().getMainCondition();
     }
 
 }
