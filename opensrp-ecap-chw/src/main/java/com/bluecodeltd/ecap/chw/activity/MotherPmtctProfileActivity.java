@@ -33,12 +33,14 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.EcMotherIndexDao;
+import com.bluecodeltd.ecap.chw.model.EcMotherIndexModel;
 import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
 import com.bluecodeltd.ecap.chw.dao.PmctMotherAncDao;
 import com.bluecodeltd.ecap.chw.dao.PmtctChildDao;
 import com.bluecodeltd.ecap.chw.dao.PmtctDeliveryDao;
 import com.bluecodeltd.ecap.chw.dao.PmtctMotherOutComeDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
+import com.bluecodeltd.ecap.chw.fragment.AncMotherPmtctFragment;
 import com.bluecodeltd.ecap.chw.fragment.PMTCTMotherOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.PmctMotherHeiFragment;
 import com.bluecodeltd.ecap.chw.fragment.PostnatalCareFragment;
@@ -49,6 +51,7 @@ import com.bluecodeltd.ecap.chw.model.PmtctDeliveryDetailsModel;
 import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
 import com.bluecodeltd.ecap.chw.model.PtmctMotherMonitoringModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.PmtctChildClientIndexUtils;
 import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -118,6 +121,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
     int Rnumber;
     ObjectMapper householdMapper;
     String clientId;
+    String launchHouseholdId;
 
     AlertDialog.Builder builder;
 
@@ -149,28 +153,24 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         //commonMother = (CommonPersonObjectClient) getIntent().getSerializableExtra("mother");
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            clientId= extras.getString("client_id");
-            String householdId = extras.getString("25BBPMXINACTIVE");
-            if (isNullOrEmpty(householdId)) {
-                householdId = extras.getString("householdId");
-            }
-            if (isNullOrEmpty(clientId)) {
-                Object baseObj = extras.get("baseId");
-                if (baseObj instanceof CommonPersonObjectClient) {
-                    CommonPersonObjectClient baseClient = (CommonPersonObjectClient) baseObj;
-                    commonPersonObjectClient = baseClient;
-                    if (isNullOrEmpty(householdId)) {
-                        householdId = baseClient.getColumnmaps().get("household_id");
-                    }
-                    if (isNullOrEmpty(clientId)) {
-                        clientId = baseClient.getColumnmaps().get("pmtct_id");
-                    }
+            clientId = extras.getString("client_id");
+            launchHouseholdId = extras.getString("household_id");
+            if (isNullOrEmpty(launchHouseholdId)) launchHouseholdId = extras.getString("householdId");
+            if (isNullOrEmpty(launchHouseholdId)) launchHouseholdId = extras.getString("hh_id");
+            Object baseObj = extras.get("baseId");
+            if (baseObj instanceof CommonPersonObjectClient) {
+                CommonPersonObjectClient baseClient = (CommonPersonObjectClient) baseObj;
+                commonPersonObjectClient = baseClient;
+                if (isNullOrEmpty(launchHouseholdId)) {
+                    launchHouseholdId = baseClient.getColumnmaps().get("household_id");
+                }
+                if (isNullOrEmpty(clientId)) {
+                    clientId = baseClient.getColumnmaps().get("pmtct_id");
                 }
             }
-            if (isNullOrEmpty(clientId) && !isNullOrEmpty(householdId)) {
-                clientId = householdId;
+            if (isNullOrEmpty(clientId) && !isNullOrEmpty(launchHouseholdId)) {
+                clientId = launchHouseholdId;
             }
-
         }
 
         ptctMotherModel = null;
@@ -181,15 +181,31 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         txtAge.setText("");
 
         final String cid = clientId;
+        final String hhid = launchHouseholdId;
         Threading.io(() -> {
             PtctMotherModel mother = null;
             PmtctDeliveryDetailsModel delivery = null;
             PmctMotherAncModel anc = null;
             PmctMotherOutcomeModel outcome = null;
             try { mother = PMTCTMotherDao.getPMCTMother(cid); } catch (Exception ignored) {}
-            try { delivery = PmtctDeliveryDao.getPmtctDeliveryDetails(cid); } catch (Exception ignored) {}
-            try { anc = PmctMotherAncDao.getPMCTMotherAnc(cid); } catch (Exception ignored) {}
-            try { outcome = PmtctMotherOutComeDao.getPMCTmothersOutcome(cid); } catch (Exception ignored) {}
+            // Fallback: some rows are keyed by household_id rather than pmtct_id
+            try {
+                if (mother == null && !isNullOrEmpty(hhid) && (isNullOrEmpty(cid) || !hhid.equals(cid))) {
+                    mother = PMTCTMotherDao.getPMCTMother(hhid);
+                }
+            } catch (Exception ignored) {}
+            // Patch address/phone onto the model from the household record when missing
+            applyMotherIndexContactFallback(mother, hhid);
+            // Derive the ID to use for delivery, ANC, outcome lookups
+            String relatedHouseholdId = null;
+            if (mother != null && !isNullOrEmpty(mother.getHousehold_id())) {
+                relatedHouseholdId = mother.getHousehold_id();
+            }
+            if (isNullOrEmpty(relatedHouseholdId) && !isNullOrEmpty(hhid)) relatedHouseholdId = hhid;
+            if (isNullOrEmpty(relatedHouseholdId)) relatedHouseholdId = cid;
+            try { delivery = PmtctDeliveryDao.getPmtctDeliveryDetails(relatedHouseholdId); } catch (Exception ignored) {}
+            try { anc = PmctMotherAncDao.getPMCTMotherAnc(relatedHouseholdId); } catch (Exception ignored) {}
+            try { outcome = PmtctMotherOutComeDao.getPMCTmothersOutcome(relatedHouseholdId); } catch (Exception ignored) {}
 
             final PtctMotherModel finalMother = mother;
             final PmtctDeliveryDetailsModel finalDelivery = delivery;
@@ -218,6 +234,10 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
                     motherName.setText("Name not available");
                     txtAge.setText("Age not available");
                 }
+                updatePostnatalTitle();
+                updateHeiTitle();
+                updateAncTitle();
+                refreshPmtctFragments();
             });
         });
 
@@ -230,9 +250,9 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
 
         setupViewPager();
-//        updateAncTabTitle();
         updatePostnatalTitle();
         updateHeiTitle();
+        updateAncTitle();
         updateOverviewTitle();
         setupFabVisibility();
 
@@ -260,6 +280,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         fragments.add(new PMTCTMotherOverviewFragment());
         fragments.add(new PostnatalCareFragment());
         fragments.add(new PmctMotherHeiFragment());
+        fragments.add(new AncMotherPmtctFragment());
 
         com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter adapter = new com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter(this, fragments);
         mViewPager.setAdapter(adapter);
@@ -269,9 +290,38 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
                 case 0: tab.setText("OVERVIEW"); break;
                 case 1: tab.setText("POSTNATAL"); break;
                 case 2: tab.setText("HEI"); break;
+                case 3: tab.setText("ANC"); break;
             }
         });
         tabMediator.attach();
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T extends androidx.fragment.app.Fragment> T getPagerFragmentAt(int position, Class<T> type) {
+        try {
+            androidx.fragment.app.Fragment fragment = getSupportFragmentManager().findFragmentByTag("f" + position);
+            if (type.isInstance(fragment)) {
+                return (T) fragment;
+            }
+        } catch (Exception ignored) {}
+        return null;
+    }
+
+    private void refreshPmtctFragments() {
+        PMTCTMotherOverviewFragment overviewFragment = getPagerFragmentAt(0, PMTCTMotherOverviewFragment.class);
+        if (overviewFragment != null) {
+            overviewFragment.refreshViews();
+        }
+
+        PmctMotherHeiFragment heiFragment = getPagerFragmentAt(2, PmctMotherHeiFragment.class);
+        if (heiFragment != null) {
+            heiFragment.refreshViews();
+        }
+
+        AncMotherPmtctFragment ancFragment = getPagerFragmentAt(3, AncMotherPmtctFragment.class);
+        if (ancFragment != null) {
+            ancFragment.refreshViews();
+        }
     }
 
 //    private void updateAncTabTitle() {
@@ -321,12 +371,14 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
             mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
         }
 
-        final String cid = clientId;
+        final String heiSearchId = (ptctMotherModel != null && !isNullOrEmpty(ptctMotherModel.getHousehold_id()))
+                ? ptctMotherModel.getHousehold_id()
+                : clientId;
         Threading.ioBestEffort(() -> {
             String count = "0";
             try {
-                if (!isNullOrEmpty(cid)) {
-                    count = PmtctChildDao.countMotherHei(cid);
+                if (!isNullOrEmpty(heiSearchId)) {
+                    count = PmtctChildDao.countMotherHei(heiSearchId);
                 }
             } catch (Exception ignored) {}
             final String finalCount = count;
@@ -336,6 +388,35 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
             });
         });
     }
+
+    private void updateAncTitle() {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.pmct_titles, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
+        visitTabTitle.setText("ANC");
+        final TextView countView = taskTabTitleLayout.findViewById(R.id.children_count);
+        countView.setText("…");
+        if (mTabLayout.getTabAt(3) != null) {
+            mTabLayout.getTabAt(3).setCustomView(taskTabTitleLayout);
+        }
+
+        final String hhId = (ptctMotherModel != null && !isNullOrEmpty(ptctMotherModel.getHousehold_id()))
+                ? ptctMotherModel.getHousehold_id()
+                : resolveHouseholdId();
+        Threading.ioBestEffort(() -> {
+            int count = 0;
+            try {
+                if (!isNullOrEmpty(hhId)) {
+                    count = Integer.parseInt(PmctMotherAncDao.countMotherAnc(hhId));
+                }
+            } catch (Exception ignored) {}
+            final String finalCount = String.valueOf(count);
+            Threading.main(() -> {
+                if (isFinishing() || isDestroyed()) return;
+                countView.setText(finalCount);
+            });
+        });
+    }
+
     private void updateOverviewTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.pmct_titles, null);
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
@@ -515,6 +596,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
                 formToBeOpened.put("entity_id",  this.ptctMotherModel.getBase_entity_id());
               //  formToBeOpened.getJSONObject("step1").put("title", this.commonPersonObjectClient.getColumnmaps().get("caregiver_name") + " "  + txtAge.getText().toString());
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptctMotherModel, Map.class));
+                populateMotherPmtctContactFields(formToBeOpened, ptctMotherModel);
 
                 break;
 
@@ -540,20 +622,12 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
                 break;
             case "anc_details":
-                householdMapper = new ObjectMapper();
-//                if(pmctMotherAncModel == null){
-                PtctMotherModel ptctmodel = new PtctMotherModel();
-                ptctmodel.setPmtct_id(ptctMotherModel.getPmtct_id());
-//                    formToBeOpened.put("entity_id",  this.ptctMotherModel.getBase_entity_id());?\
-
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptctMotherModel, Map.class));
-
-//                }
-//                else {
-//                    formToBeOpened.put("entity_id",  this.ptmctMotherMonitoringModel.getBase_entity_id());
-//                    CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptmctMotherMonitoringModel, Map.class));
-//                }
-
+                if (ptctMotherModel != null && !isNullOrEmpty(ptctMotherModel.getHousehold_id())) {
+                    JSONObject householdIdField = getFieldJSONObject(fields(formToBeOpened, STEP1), "household_id");
+                    if (householdIdField != null) {
+                        householdIdField.put(JsonFormUtils.VALUE, ptctMotherModel.getHousehold_id());
+                    }
+                }
                 break;
 
             case "labour_delivery":
@@ -598,6 +672,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 break;
 
         }
+        ensurePmtctHouseholdLinking(formToBeOpened);
         startFormActivity(formToBeOpened);
 
     }
@@ -636,6 +711,11 @@ break;
                 e.printStackTrace();
             }
 
+
+            try {
+                ensurePmtctHouseholdLinking(jsonFormObject);
+                jsonString = jsonFormObject.toString();
+            } catch (Exception ignored) { }
 
             if(!jsonFormObject.optString("entity_id").isEmpty()){
                 is_edit_mode = true;
@@ -680,9 +760,6 @@ break;
 
         }
 
-        getData();
-        setupViewPager();
-//        updateChildTabTitle();
     }
 
     @NonNull
@@ -803,11 +880,13 @@ break;
 
                     JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
 
-                    if (isEditMode) {
+                    if (isEditMode && existingClientJsonObject != null) {
                         JSONObject mergedClientJsonObject =
                                 org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
+                        PmtctChildClientIndexUtils.mirrorClientIndexAttributes(mergedClientJsonObject, event);
                         ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
                     } else {
+                        PmtctChildClientIndexUtils.mirrorClientIndexAttributes(newClientJsonObject, event);
                         ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
                     }
 
@@ -1036,6 +1115,28 @@ break;
         startActivity(intent);
     }
 
+    /** Patches address/phone onto the model from the household (EcMotherIndex) record when they are missing. Called from IO thread. */
+    private void applyMotherIndexContactFallback(PtctMotherModel pmtctMother, String fallbackHouseholdId) {
+        if (pmtctMother == null) return;
+        if (!isNullOrEmpty(pmtctMother.getHome_address()) && !isNullOrEmpty(pmtctMother.getMothers_phone())) return;
+        String householdId = !isNullOrEmpty(pmtctMother.getHousehold_id())
+                ? pmtctMother.getHousehold_id()
+                : fallbackHouseholdId;
+        if (isNullOrEmpty(householdId)) return;
+        try {
+            List<EcMotherIndexModel> ecMothers = EcMotherIndexDao.getMothers(householdId);
+            if (!ecMothers.isEmpty()) {
+                EcMotherIndexModel ecMother = ecMothers.get(0);
+                if (isNullOrEmpty(pmtctMother.getHome_address()) && !isNullOrEmpty(ecMother.getHome_address())) {
+                    pmtctMother.setHome_address(ecMother.getHome_address());
+                }
+                if (isNullOrEmpty(pmtctMother.getMothers_phone()) && !isNullOrEmpty(ecMother.getMothers_phone())) {
+                    pmtctMother.setMothers_phone(ecMother.getMothers_phone());
+                }
+            }
+        } catch (Exception ignored) {}
+    }
+
     private String resolveHouseholdId() {
         if (ptctMotherModel != null && !isNullOrEmpty(ptctMotherModel.getHousehold_id())) {
             return ptctMotherModel.getHousehold_id();
@@ -1048,7 +1149,77 @@ break;
                 }
             } catch (Exception ignored) { }
         }
+        if (!isNullOrEmpty(launchHouseholdId)) {
+            return launchHouseholdId;
+        }
         return null;
+    }
+
+    private void ensurePmtctHouseholdLinking(JSONObject form) throws JSONException {
+        if (form == null) return;
+        String encounterType = form.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
+        if (!isHouseholdLinkedPmtctEncounter(encounterType)) return;
+
+        String householdId = resolveHouseholdId();
+        if (isNullOrEmpty(householdId) && ptctMotherModel != null) {
+            householdId = ptctMotherModel.getHousehold_id();
+        }
+        if (isNullOrEmpty(householdId)) {
+            householdId = launchHouseholdId;
+        }
+
+        String pmtctId = ptctMotherModel != null ? ptctMotherModel.getPmtct_id() : null;
+        if (isNullOrEmpty(pmtctId)) {
+            pmtctId = clientId;
+        }
+
+        if (!isNullOrEmpty(householdId)) {
+            setFieldValue(form, "household_id", householdId);
+            setFieldValue(form, "pmtct_id", householdId);
+            return;
+        }
+        if (!isNullOrEmpty(pmtctId)) {
+            setFieldValueIfMissing(form, "pmtct_id", pmtctId);
+        }
+    }
+
+    private boolean isHouseholdLinkedPmtctEncounter(String encounterType) {
+        if (isNullOrEmpty(encounterType)) return false;
+        switch (encounterType) {
+            case "Mother Pmtct":
+            case "Mother Pmtct Child":
+            case "Mother Pmtct ANC":
+            case "ANC":
+            case "Mother Pmtct Postnatal":
+            case "Mother Pmtct Delivery":
+            case "PMTCT Mother Outcome":
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private void setFieldValue(JSONObject form, String key, String value) throws JSONException {
+        if (isNullOrEmpty(value)) return;
+        JSONObject field = getFieldJSONObject(fields(form, STEP1), key);
+        if (field == null) return;
+        field.put(JsonFormUtils.VALUE, value);
+    }
+
+    private void setFieldValueIfMissing(JSONObject form, String key, String value) throws JSONException {
+        if (isNullOrEmpty(value)) return;
+        JSONObject field = getFieldJSONObject(fields(form, STEP1), key);
+        if (field == null) return;
+        if (isNullOrEmpty(field.optString(JsonFormUtils.VALUE))) {
+            field.put(JsonFormUtils.VALUE, value);
+        }
+    }
+
+    private void populateMotherPmtctContactFields(JSONObject formToBeOpened, PtctMotherModel model) throws JSONException {
+        if (formToBeOpened == null || model == null) return;
+        setFieldValueIfMissing(formToBeOpened, "homeaddress", model.getHome_address());
+        setFieldValueIfMissing(formToBeOpened, "landmark", model.getNearest_landmark());
+        setFieldValueIfMissing(formToBeOpened, "caregiver_phone", model.getMothers_phone());
     }
 
     private boolean isNullOrEmpty(String s) {

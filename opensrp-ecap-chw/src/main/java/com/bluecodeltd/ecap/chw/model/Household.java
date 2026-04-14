@@ -108,6 +108,10 @@ public class Household {
     private String new_caregiver_hiv_status;
     private String new_caregiver_phone;
     private String sub_population;
+    private String caregiver_nrc;
+    private String screening_location;
+    private String date_approved;
+    private String index_check_box;
     private String signature;
     private  String relationship_other;
     private String household_location;
@@ -910,6 +914,38 @@ public class Household {
 
     public void setNew_caregiver_name(String new_caregiver_name) {
         this.new_caregiver_name = new_caregiver_name;
+    }
+
+    public String getCaregiver_nrc() {
+        return caregiver_nrc;
+    }
+
+    public void setCaregiver_nrc(String caregiver_nrc) {
+        this.caregiver_nrc = caregiver_nrc;
+    }
+
+    public String getScreening_location() {
+        return screening_location;
+    }
+
+    public void setScreening_location(String screening_location) {
+        this.screening_location = screening_location;
+    }
+
+    public String getDate_approved() {
+        return date_approved;
+    }
+
+    public void setDate_approved(String date_approved) {
+        this.date_approved = date_approved;
+    }
+
+    public String getIndex_check_box() {
+        return index_check_box;
+    }
+
+    public void setIndex_check_box(String index_check_box) {
+        this.index_check_box = index_check_box;
     }
 
     public String getNew_caregiver_nrc() {

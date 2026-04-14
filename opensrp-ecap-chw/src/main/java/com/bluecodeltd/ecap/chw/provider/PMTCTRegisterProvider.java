@@ -113,8 +113,10 @@ public class PMTCTRegisterProvider implements RecyclerViewProvider<PMTCTRegister
         }
 
         String displayId = isNullOrEmpty(clientId) ? householdId : clientId;
+        String dateEnrolledPmtct = Utils.getValue(personObjectClient.getColumnmaps(), "date_enrolled_pmtct", false);
 
         pmtctRegisterViewHolder.setupViews(displayName,"ID : " + displayId, gender, age,client_type);
+        pmtctRegisterViewHolder.setEnrolledDate(dateEnrolledPmtct);
 
         // Per-row SQLCipher/DAO work should be best-effort and off the main thread.
         final String rowTag = (BaseEntityId != null && !BaseEntityId.trim().isEmpty()) ? BaseEntityId : displayId;

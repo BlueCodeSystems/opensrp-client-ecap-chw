@@ -19,7 +19,7 @@ public class PMTCTRegisterFragmentPresenter implements IndexRegisterFragmentCont
 
     @Override
     public String getDefaultSortQuery() {
-        return "ec_pmtct_mother.caregiver_name ASC ";
+        return "last_interacted_with DESC ";
     }
 
     @Override
@@ -30,9 +30,13 @@ public class PMTCTRegisterFragmentPresenter implements IndexRegisterFragmentCont
     @Override
     public void initializeQueries(String s) {
         String pmtct = Constants.EcapClientTable.EC_MOTHER_PMTCT;
-        // Provide base selects; BaseRegisterFragment applies mainCondition and sort
-        String countSelect = "SELECT COUNT(*) FROM " + pmtct + " ";
-        String mainSelect = "SELECT *, ec_pmtct_mother.pmtct_id as _id FROM ec_pmtct_mother ";
+        // Deduplicate rows that share the same pmtct_id or household_id by keeping only the MAX(id) row.
+        // BaseRegisterFragment appends mainCondition and ORDER BY from getMainCondition()/getDefaultSortQuery().
+        String dedupeKey = "COALESCE(NULLIF(TRIM(pmtct_id),''), NULLIF(TRIM(household_id),''), base_entity_id)";
+        String countSelect = "SELECT COUNT(*) FROM " + pmtct + " WHERE id IN " +
+                "(SELECT MAX(id) FROM " + pmtct + " GROUP BY " + dedupeKey + ") ";
+        String mainSelect = "SELECT *, ec_pmtct_mother.pmtct_id as _id FROM ec_pmtct_mother " +
+                "WHERE id IN (SELECT MAX(id) FROM ec_pmtct_mother GROUP BY " + dedupeKey + ") ";
 
         getView().initializeQueryParams(Constants.EcapClientTable.EC_MOTHER_PMTCT, countSelect, mainSelect);
         getView().initializeAdapter();

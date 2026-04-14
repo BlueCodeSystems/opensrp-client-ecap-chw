@@ -305,7 +305,7 @@ public class HouseholdDao extends AbstractDao {
                 "B.gender AS index_gender, " +
                 "B.adolescent_birthdate AS index_adolescent_birthdate " +
                 "FROM (SELECT ec_household.*, ec_household.village AS adolescent_village, ec_household.base_entity_id AS bid FROM ec_household WHERE household_id = '" + householdID + "') AS A " +
-                "LEFT JOIN (SELECT * FROM ec_client_index WHERE household_id = '" + householdID + "' AND (deleted IS NULL OR deleted != '1') AND (ec_client_index.index_check_box = '1' OR index_check_box = 'yes')) AS B " +
+                "LEFT JOIN (SELECT * FROM ec_client_index WHERE household_id = '" + householdID + "' AND (deleted IS NULL OR deleted != '1') AND (ec_client_index.index_check_box = '1' OR index_check_box = 'yes') ORDER BY id DESC LIMIT 1) AS B " +
                 "ON A.household_id = B.household_id";
 
                 List<Household> values = AbstractDao.readData(sql, getHouseholdMap());
@@ -512,6 +512,7 @@ public class HouseholdDao extends AbstractDao {
             record.setSubpop5(getCursorValue(c, "subpop5"));
             record.setSubpop(getCursorValue(c, "subpop"));
             record.setCaregiver_name(getCursorValue(c, "caregiver_name"));
+            record.setCaregiver_nrc(getCursorValue(c, "caregiver_nrc"));
             record.setCaregiver_sex(getCursorValue(c, "caregiver_sex"));
             record.setCaregiver_birth_date(getCursorValue(c, "caregiver_birth_date"));
             record.setPhysical_address(getCursorValue(c, "physical_address"));
@@ -534,6 +535,7 @@ public class HouseholdDao extends AbstractDao {
             record.setLandmark(getCursorValue(c, "landmark"));
             record.setMother_screening_date(getCursorValue(c, "mother_screening_date"));
             record.setScreening_date(getCursorValue(c, "screening_date"));
+            record.setScreening_location(getCursorValue(c, "screening_location"));
             record.setScreening_location_home(getCursorValue(c, "screening_location_home"));
             record.setViolence_six_months(getCursorValue(c, "violence_six_months"));
             record.setChildren_violence_six_months(getCursorValue(c, "children_violence_six_months"));
@@ -576,6 +578,8 @@ public class HouseholdDao extends AbstractDao {
             record.setAt_risk_reasons(getCursorValue(c, "at_risk_reasons"));
             record.setReason_for_hiv_risk(getCursorValue(c, "reason_for_hiv_risk"));
             record.setConsent_check_box(getCursorValue(c, "consent_check_box"));
+            record.setIndex_check_box(getCursorValue(c, "index_check_box"));
+            record.setDate_approved(getCursorValue(c, "date_approved"));
             record.setCaregiver_phone(getCursorValue(c, "caregiver_phone"));
             record.setWard(getCursorValue(c, "ward"));
             record.setProvince(getCursorValue(c, "province"));

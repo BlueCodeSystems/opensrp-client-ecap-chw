@@ -80,35 +80,38 @@ public class PmctMotherHeiFragment extends Fragment {
 
         vieww = inflater.inflate(R.layout.fragment_pmct_mother_hei, container, false);
 
+        recyclerView = vieww.findViewById(R.id.visitrecyclerView);
+        linearLayout = vieww.findViewById(R.id.visit_container);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        refreshViews();
+
+        return vieww;
+
+    }
+
+    public void refreshViews() {
+        if (!isAdded() || getActivity() == null || recyclerView == null || linearLayout == null) return;
+
         HashMap<String, PtctMotherModel> mymap = ((MotherPmtctProfileActivity) requireActivity()).getClientDetails();
 
-// Initialize motherDetails as null.
         PtctMotherModel motherDetails = null;
-
         String householdId = null;
         String pmtctId = null;
 
-
         if (mymap != null) {
             motherDetails = mymap.get("client");
-
             if (motherDetails != null) {
                 householdId = motherDetails.getHousehold_id();
                 pmtctId = motherDetails.getPmtct_id();
-
                 if (pmtctId == null || pmtctId.isEmpty()) {
                     pmtctId = householdId;
                 }
-            } else {
-
             }
-        } else {
-
         }
-
-
-        recyclerView = vieww.findViewById(R.id.visitrecyclerView);
-        linearLayout = vieww.findViewById(R.id.visit_container);
 
         pmtctChild.clear();
 
@@ -118,22 +121,14 @@ public class PmctMotherHeiFragment extends Fragment {
         }
         pmtctChild.addAll(PmtctChildDao.getPmctChildHei(idForHei));
 
-        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(eLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        childAdapter = new PmctMotherHeiAdapter(pmtctChild,getContext());
-        recyclerView.setAdapter(childAdapter);
-        childAdapter.notifyDataSetChanged();
-
-        if (childAdapter.getItemCount() > 0){
-
-            linearLayout.setVisibility(View.GONE);
+        if (childAdapter == null) {
+            childAdapter = new PmctMotherHeiAdapter(pmtctChild, getContext());
+            recyclerView.setAdapter(childAdapter);
+        } else {
+            childAdapter.notifyDataSetChanged();
         }
 
-
-        return vieww;
-
+        linearLayout.setVisibility(childAdapter.getItemCount() > 0 ? View.GONE : View.VISIBLE);
     }
 
 }

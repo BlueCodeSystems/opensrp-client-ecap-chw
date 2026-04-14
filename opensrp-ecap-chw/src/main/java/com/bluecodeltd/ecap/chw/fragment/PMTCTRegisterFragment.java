@@ -346,8 +346,7 @@ public class PMTCTRegisterFragment extends BaseSafeRegisterFragment implements I
 
     @Override
     protected String getMainCondition() {
-        //return "case_status > 0 AND is_closed = 0 ";
-        return "ec_pmtct_mother.delete_status IS NULL " +
+        return "COALESCE(delete_status, '0') <> '1' " +
                 "AND (first_name IS NOT NULL " +
                 "     OR last_name IS NOT NULL " +
                 "     OR caregiver_name IS NOT NULL)";
@@ -383,7 +382,8 @@ public class PMTCTRegisterFragment extends BaseSafeRegisterFragment implements I
 
         } else if (view.getId() == R.id.register_columns){
 
-            CommonPersonObjectClient client =(CommonPersonObjectClient) view.getTag();
+            CommonPersonObjectClient client = getTaggedClient(view);
+            if (client == null) return;
             String childId = client.getColumnmaps().get("base_entity_id");
             String clientId = client.getColumnmaps().get("pmtct_id");
             String householdId = client.getColumnmaps().get("household_id");
@@ -479,5 +479,20 @@ public class PMTCTRegisterFragment extends BaseSafeRegisterFragment implements I
 
     private boolean isNullOrEmpty(String s) {
         return s == null || s.trim().isEmpty();
+    }
+
+    /** Walk up view hierarchy to find a CommonPersonObjectClient tag (set by provider on itemView). */
+    private CommonPersonObjectClient getTaggedClient(View view) {
+        View v = view;
+        while (v != null) {
+            Object tag = v.getTag();
+            if (tag instanceof CommonPersonObjectClient) return (CommonPersonObjectClient) tag;
+            if (v.getParent() instanceof View) {
+                v = (View) v.getParent();
+            } else {
+                break;
+            }
+        }
+        return null;
     }
 }

@@ -106,12 +106,6 @@ public class PMTCTRegisterActivity extends BaseRegisterActivity implements Index
             menu.getNavigationAdapter().setSelectedView(Constants.DrawerMenu.PMTCT);
         }
 
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(PMTCTRegisterActivity.this);
-        String phone = sp.getString("phone", "anonymous");
-
-        notificationsList.addAll(VcaVisitationDao.getVisitsByCaseWorkerPhone(phone));
-        mCartItemCount = notificationsList.size();
-
     }
 
 
@@ -455,6 +449,14 @@ public class PMTCTRegisterActivity extends BaseRegisterActivity implements Index
         intent.putExtra("fromHousehold","000");
         Toasty.success(this, "Form Saved", Toast.LENGTH_LONG, true).show();
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, DashboardActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        finish();
     }
 
     @Override
