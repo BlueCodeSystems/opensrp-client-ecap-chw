@@ -22,6 +22,7 @@ public class VCAServiceModel {
     private String delete_status;
 
     private  String vca_service_location;
+    private String gps;
     private String signature;
 
     public String getVca_service_location() {
@@ -30,6 +31,20 @@ public class VCAServiceModel {
 
     public void setVca_service_location(String vca_service_location) {
         this.vca_service_location = vca_service_location;
+        if (vca_service_location != null && !vca_service_location.isEmpty()) {
+            this.gps = vca_service_location;
+        }
+    }
+
+    public String getGps() {
+        return gps;
+    }
+
+    public void setGps(String gps) {
+        this.gps = gps;
+        if (gps != null && !gps.isEmpty()) {
+            this.vca_service_location = gps;
+        }
     }
 
     public String getBase_entity_id() {

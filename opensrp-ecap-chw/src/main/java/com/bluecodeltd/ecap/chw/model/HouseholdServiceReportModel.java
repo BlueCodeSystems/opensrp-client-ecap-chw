@@ -29,6 +29,7 @@ public class HouseholdServiceReportModel {
     private String other_services_household;
     private String delete_status;
     private String hh_service_location;
+    private String gps;
     private String signature;
 
     public String getHh_service_location() {
@@ -37,6 +38,20 @@ public class HouseholdServiceReportModel {
 
     public void setHh_service_location(String hh_service_location) {
         this.hh_service_location = hh_service_location;
+        if (hh_service_location != null && !hh_service_location.isEmpty()) {
+            this.gps = hh_service_location;
+        }
+    }
+
+    public String getGps() {
+        return gps;
+    }
+
+    public void setGps(String gps) {
+        this.gps = gps;
+        if (gps != null && !gps.isEmpty()) {
+            this.hh_service_location = gps;
+        }
     }
 
     public String getServices() {

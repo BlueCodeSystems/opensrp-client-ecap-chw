@@ -1135,9 +1135,31 @@ public class HouseholdDetails extends AppCompatActivity {
                             ObjectMapper localHouseholdMapper = new ObjectMapper();
                             String childrenCount = IndexPersonDao.countChildren(householdId);
 
-                            JSONObject hhScreeningForm = hhFormUtils.getFormJson("hh_screening_entry");
+                            JSONObject hhScreeningForm = hhFormUtils.getFormJson("hh_edit");
                             hhScreeningForm.put("entity_id", HouseholdDetails.this.house.getBid());
                             CoreJsonFormUtils.populateJsonForm(hhScreeningForm, localHouseholdMapper.convertValue(house, Map.class));
+
+                            // If no index VCA exists, pre-fill index child fields with first available child
+                            if (android.text.TextUtils.isEmpty(house.getUnique_id())) {
+                                List<Child> children = IndexPersonDao.getFamilyChildren(householdId);
+                                if (!children.isEmpty()) {
+                                    Child firstChild = children.get(0);
+                                    String[][] indexFields = {
+                                            {"unique_id", firstChild.getUnique_id()},
+                                            {"first_name", firstChild.getFirst_name()},
+                                            {"last_name", firstChild.getLast_name()},
+                                            {"adolescent_birthdate", firstChild.getAdolescent_birthdate()},
+                                            {"gender", firstChild.getGender()}
+                                    };
+                                    for (String[] pair : indexFields) {
+                                        JSONObject field = getFieldJSONObject(fields(hhScreeningForm, STEP2), pair[0]);
+                                        if (field != null && !android.text.TextUtils.isEmpty(pair[1])) {
+                                            field.remove("value");
+                                            field.put("value", pair[1]);
+                                        }
+                                    }
+                                }
+                            }
 
                             JSONObject recentLocation = getFieldJSONObject(fields(hhScreeningForm, "step2"), "recent_location");
                             // left intentionally blank (historical placeholder)
@@ -1186,7 +1208,7 @@ public class HouseholdDetails extends AppCompatActivity {
                             }
                             if (shouldRemoveIndexChildFields(childrenCount)) {
                                 removeFieldsFromStep(hhScreeningForm, "step2",
-                                        "unique_id", "first_name", "last_name", "adolescent_birthdate", "gender","sub_population");
+                                        "unique_id", "first_name", "last_name", "adolescent_birthdate", "gender", "sub_population", "index_check_box");
                             }
                             hhScreeningForm.getJSONObject("step3").getJSONArray("fields").getJSONObject(3).put("value", "true");
 

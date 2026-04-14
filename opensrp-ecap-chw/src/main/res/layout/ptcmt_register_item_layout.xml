@@ -1,214 +1,255 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/register_columns"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
     android:layout_marginTop="4dp"
     android:layout_marginBottom="4dp"
-    android:background="@color/white"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="?attr/selectableItemBackground">
+    android:foreground="?attr/selectableItemBackground"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="1dp"
+    app:cardBackgroundColor="@color/white">
 
-    <!-- Left status stripe -->
-    <View
-        android:id="@+id/mystatusx"
-        android:layout_width="4dp"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:background="@drawable/bg_status_stripe" />
-
-    <!-- Main row content -->
     <LinearLayout
-        android:id="@+id/itemm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <!-- Left: avatar -->
-        <FrameLayout
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:layout_gravity="center_vertical">
-
-            <!-- You can swap this icon based on gender or client type -->
-            <ImageView
-                android:id="@+id/gender_image"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_mother"
-                android:contentDescription="@string/icon_mother_desc" />
-        </FrameLayout>
-
-        <!-- Center: main text content (keeps your original IDs) -->
+        <!-- Main row -->
         <LinearLayout
-            android:id="@+id/content_column"
-            android:layout_width="0dp"
+            android:id="@+id/itemm"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:minHeight="76dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-            <!-- Row 1: name + gender/age in a single line -->
+            <!-- Left PMTCT accent strip -->
+            <View
+                android:id="@+id/mystatusx"
+                android:layout_width="6dp"
+                android:layout_height="match_parent"
+                android:minHeight="76dp"
+                android:background="@color/register_pmtct_icon" />
+
+            <!-- Mother avatar -->
+            <FrameLayout
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/circle_light_grey"
+                android:backgroundTint="@color/register_pmtct_icon">
+
+                <ImageView
+                    android:id="@+id/gender_image"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_mother"
+                    android:tint="@color/white"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="@string/icon_mother_desc" />
+            </FrameLayout>
+
+            <!-- Center: text content -->
             <LinearLayout
-                android:id="@+id/row_title"
-                android:layout_width="match_parent"
+                android:id="@+id/content_column"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingStart="12dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp">
 
+                <!-- Name -->
                 <org.smartregister.view.customcontrols.CustomFontTextView
                     android:id="@+id/familyNameTextView"
                     style="@style/CustomFontTextViewStyle.ClientList"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:maxLines="1"
                     android:ellipsize="end"
-                    android:text="Patient Name"
-                    android:textColor="@color/text_black"
-                    android:textSize="18sp"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="15sp"
                     android:textStyle="bold"
-                    tools:text="Patient Name" />
+                    tools:text="Chanda Mwape" />
 
+                <!-- Age / Gender -->
                 <org.smartregister.view.customcontrols.CustomFontTextView
                     android:id="@+id/gender_age"
                     style="@style/CustomFontTextViewStyle.ClientList.Light"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
+                    android:layout_marginTop="3dp"
+                    android:maxLines="1"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="12sp"
+                    tools:text="Female · 28 yrs" />
+
+                <!-- Programme stage -->
+                <org.smartregister.view.customcontrols.CustomFontTextView
+                    android:id="@+id/client_type"
+                    style="@style/CustomFontTextViewStyle.ClientList.Light"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
                     android:maxLines="1"
                     android:ellipsize="end"
-                    android:text="Female · 3 years"
-                    android:textColor="@color/light_grey_text"
-                    android:textSize="14sp"
-                    tools:text="Female · 28 yrs" />
+                    android:textColor="@color/register_pmtct_icon"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    tools:text="ANC · 28 weeks" />
+
+                <!-- Facility / village -->
+                <org.smartregister.view.customcontrols.CustomFontTextView
+                    android:id="@+id/villageTextView"
+                    style="@style/CustomFontTextViewStyle.ClientList.Light"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:drawableStart="@drawable/ic_household"
+                    android:drawablePadding="4dp"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="11sp"
+                    tools:text="Kanyama Clinic" />
+
             </LinearLayout>
 
-            <!-- Optional client type -->
-            <org.smartregister.view.customcontrols.CustomFontTextView
-                android:id="@+id/client_type"
-                style="@style/CustomFontTextViewStyle.ClientList.Light"
+            <!-- Right: VL chips + badges -->
+            <LinearLayout
+                android:id="@+id/action_cluster"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:text="Client Type: SNT"
-                android:textColor="@color/light_grey_text"
-                android:textSize="14sp"
-                android:visibility="gone"
-                tools:visibility="visible"
-                tools:text="Client Type: PMTCT" />
+                android:layout_height="match_parent"
+                android:layout_marginEnd="4dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
 
-            <!-- Location / village / facility -->
-            <org.smartregister.view.customcontrols.CustomFontTextView
-                android:id="@+id/villageTextView"
-                style="@style/CustomFontTextViewStyle.ClientList.Light"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:text="Village / Facility"
-                android:textColor="@color/light_grey_text"
-                android:textSize="14sp"
-                tools:text="Kanyama Clinic" />
+                <!-- Unsuppressed VL chip -->
+                <TextView
+                    android:id="@+id/unsuppressed_vl_flag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:text="@string/unsuppressed_vl_flag"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:background="@drawable/bg_chip_danger"
+                    android:visibility="gone" />
+
+                <!-- Suppressed VL chip -->
+                <TextView
+                    android:id="@+id/suppressed_vl_flag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:text="@string/suppressed_vl_flag"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:background="@drawable/bg_chip_success" />
+
+                <!-- Index pill -->
+                <TextView
+                    android:id="@+id/index_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/rounded_corner_index"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:text="Index"
+                    android:textColor="@color/dark_grey_text"
+                    android:textSize="10sp"
+                    android:visibility="gone" />
+
+                <!-- Case plan icon -->
+                <ImageView
+                    android:id="@+id/index_case_plan"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginTop="4dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_baseline_content_paste_24"
+                    android:visibility="gone"
+                    app:tint="@color/light_grey_text" />
+
+            </LinearLayout>
+
+            <!-- Chevron -->
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_chevron_right"
+                android:contentDescription="@null" />
+
         </LinearLayout>
 
-        <!-- Right: action cluster (VL flags + index label + case plan) -->
+        <!-- Thin divider before footer -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_grey" />
+
+        <!-- Footer: enrolled date label -->
         <LinearLayout
-            android:id="@+id/action_cluster"
-            android:layout_width="wrap_content"
+            android:id="@+id/footer_row"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:orientation="horizontal"
             android:gravity="center_vertical">
 
-            <!-- Unsuppressed VL flag chip -->
-            <Button
-                android:id="@+id/unsuppressed_vl_flag"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:minHeight="0dp"
-                android:minWidth="0dp"
-                android:layout_marginStart="8dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:text="@string/unsuppressed_vl_flag"
-                android:textAllCaps="false"
-                android:textColor="@color/colorRed"
-                android:textSize="12sp"
-                android:fontFamily="sans-serif-medium"
-                android:background="@drawable/ripple_button_alert"
-                android:visibility="gone" />
-
-            <!-- Suppressed VL flag chip -->
-            <Button
-                android:id="@+id/suppressed_vl_flag"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:minHeight="0dp"
-                android:minWidth="0dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginStart="8dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:text="@string/suppressed_vl_flag"
-                android:textAllCaps="false"
-                android:textColor="@color/pie_chart_yes_green"
-                android:textSize="12sp"
-                android:fontFamily="sans-serif-medium"
-                android:background="@drawable/ripple_button_success"
-                />
-
-            <!-- Index pill -->
             <TextView
-                android:id="@+id/index_icon"
+                android:id="@+id/enrolled_date_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/rounded_corner_index"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
-                android:text="Index"
-                android:textColor="@color/dark_grey_text"
-                android:textSize="12sp"
-                android:visibility="gone" />
+                android:text="PMTCT Programme"
+                android:textSize="10sp"
+                android:textColor="@color/register_pmtct_icon"
+                android:textStyle="bold"
+                android:letterSpacing="0.05" />
 
-            <!-- Case plan icon -->
-            <ImageView
-                android:id="@+id/index_case_plan"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginStart="8dp"
-                android:contentDescription="Case plan"
-                android:src="@drawable/ic_baseline_content_paste_24"
-                android:visibility="gone"
-                app:tint="@color/light_grey_text" />
         </LinearLayout>
+
+        <!-- Inline unsuppressed VL alert panel -->
+        <include
+            android:id="@+id/unsuppressed_alert"
+            layout="@layout/view_pmtct_alert_unsuppressed_vl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
     </LinearLayout>
 
-    <!-- Inline alert panel for Unsuppressed VL (appears below row) -->
-    <include
-        android:id="@+id/unsuppressed_alert"
-        layout="@layout/view_pmtct_alert_unsuppressed_vl"
-        android:visibility="gone"
-        android:layout_below="@id/itemm"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        tools:ignore="IncludeLayoutParam" />
-
-</RelativeLayout>
+</androidx.cardview.widget.CardView>

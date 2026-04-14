@@ -24,6 +24,7 @@ public class PMTCTRegisterViewHolder extends RecyclerView.ViewHolder {
     private final TextView suppressedVlFlag;
     private final View unsuppressedAlert;
     private final TextView index_icon_layout;
+    private final TextView enrolledDateLabel;
 
     public PMTCTRegisterViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -39,6 +40,7 @@ public class PMTCTRegisterViewHolder extends RecyclerView.ViewHolder {
         unsuppressedVlFlag = itemView.findViewById(R.id.unsuppressed_vl_flag);
         suppressedVlFlag = itemView.findViewById(R.id.suppressed_vl_flag);
         unsuppressedAlert = itemView.findViewById(R.id.unsuppressed_alert);
+        enrolledDateLabel = itemView.findViewById(R.id.enrolled_date_label);
 
     }
 
@@ -88,11 +90,9 @@ public class PMTCTRegisterViewHolder extends RecyclerView.ViewHolder {
         }
         if (myStatus != null) {
             if (flagged) {
-                // Highlight left stripe in red for visibility
-                myStatus.setBackgroundColor(0xFFE53935); // colorRed-ish
+                myStatus.setBackgroundColor(0xFFE53935); // red when unsuppressed
             } else {
-                // Reset to default primary stripe
-                myStatus.setBackgroundResource(R.drawable.bg_status_stripe);
+                myStatus.setBackgroundResource(R.color.register_pmtct_icon);
             }
         }
         // no warning icon in register row
@@ -105,8 +105,24 @@ public class PMTCTRegisterViewHolder extends RecyclerView.ViewHolder {
         // When suppressed, ensure unsuppressed alert is hidden and stripe set to default
         if (flagged) {
             if (unsuppressedAlert != null) unsuppressedAlert.setVisibility(View.GONE);
-            if (myStatus != null) myStatus.setBackgroundResource(R.drawable.bg_status_stripe);
+            if (myStatus != null) myStatus.setBackgroundResource(R.color.register_pmtct_icon);
             if (unsuppressedVlFlag != null) unsuppressedVlFlag.clearAnimation();
+        }
+    }
+
+    public void setEnrolledDate(String dateStr) {
+        if (enrolledDateLabel == null) return;
+        if (dateStr == null || dateStr.trim().isEmpty()) {
+            enrolledDateLabel.setText("PMTCT Programme");
+            return;
+        }
+        try {
+            java.time.LocalDate d = java.time.LocalDate.parse(dateStr.trim(),
+                    java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            String formatted = d.format(java.time.format.DateTimeFormatter.ofPattern("dd MMM yyyy"));
+            enrolledDateLabel.setText("Enrolled: " + formatted);
+        } catch (Exception e) {
+            enrolledDateLabel.setText("Enrolled: " + dateStr.trim());
         }
     }
 

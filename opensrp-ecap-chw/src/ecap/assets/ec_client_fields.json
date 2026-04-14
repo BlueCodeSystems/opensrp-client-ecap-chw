@@ -6719,6 +6719,13 @@
           }
         },
         {
+          "column_name": "gps",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vca_service_location"
+          }
+        },
+        {
           "column_name": "date",
           "type": "Client",
           "json_mapping": {
@@ -11183,6 +11190,13 @@
       "columns": [
         {
           "column_name": "hh_service_location",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hh_service_location"
+          }
+        },
+        {
+          "column_name": "gps",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.hh_service_location"
