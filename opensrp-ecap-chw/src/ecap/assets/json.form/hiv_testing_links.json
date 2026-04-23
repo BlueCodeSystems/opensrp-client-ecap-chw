@@ -148,6 +148,9 @@
         "type": "check_box",
         "read_only": false,
         "label": "Sub Population :",
+        "exclusive": [
+          "not applicable"
+        ],
         "options": [
           {
             "key": "subpop1",
@@ -165,34 +168,44 @@
             "value": "false"
           },
           {
-            "key": "subpop4",
-            "text": "Adolescent Girls and Young Women (AGYW)",
-            "value": "false"
-          },
-          {
             "key": "subpop5",
             "text": "Survivors of Sexual Violence",
             "value": "false"
           },
           {
-            "key": "subpop",
-            "text": "Children of Female Sex Workers (FSWs)",
-            "value": "false"
-          },
-          {
-            "key": "Siblings of the Index/Other family members",
+            "key": "Siblings of the Index and other family members",
             "text": "Siblings of the Index/Other family members"
 
           },
           {
-            "key": "PBFW",
-            "text": "PBFW"
+            "key": "HIV Negative PBFW",
+            "text": "HIV Negative PBFW"
+
+          },
+          {
+            "key": "Children of PBFW",
+            "text": "Children of PBFW"
 
           },
           {
             "key": "HIV Positive PBFW",
             "text": "HIV Positive PBFW"
           }
+        ,
+          {
+            "key": "Caregiver-General",
+            "text": "Caregiver-General"
+
+          },
+          {
+            "key": "Caregiver-WLHIV",
+            "text": "Caregiver-WLHIV"
+          },
+          {
+            "key": "not applicable",
+            "text": "Not Applicable"
+          }
+
         ],
         "v_required": {
           "value": true,
@@ -508,10 +521,6 @@
         "edit_type": "name",
         "hint": "ART Number",
         "relevance": {
-          "step1:hiv_status": {
-            "type": "string",
-            "ex": "equalTo(., \"Known Positive\")"
-          },
           "rules-engine": {
             "ex-rules": {
               "rules-file": "hiv_testing_links.yml"
@@ -531,10 +540,6 @@
         "min_date": "01-01-1900",
         "max_date": "today",
         "relevance": {
-          "step1:hiv_status": {
-            "type": "string",
-            "ex": "equalTo(., \"Known Positive\")"
-          },
           "rules-engine": {
             "ex-rules": {
               "rules-file": "hiv_testing_links.yml"
@@ -554,10 +559,6 @@
         "min_date": "01-01-1900",
         "max_date": "today",
         "relevance": {
-          "step1:hiv_status": {
-            "type": "string",
-            "ex": "equalTo(., \"Known Positive\")"
-          },
           "rules-engine": {
             "ex-rules": {
               "rules-file": "hiv_testing_links.yml"
