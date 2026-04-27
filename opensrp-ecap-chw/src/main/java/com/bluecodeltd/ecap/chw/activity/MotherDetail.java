@@ -363,7 +363,7 @@ public class MotherDetail extends AppCompatActivity {
         childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
 
 
-        String children = IndexPersonDao.countChildren(commonPersonObjectClient.getColumnmaps().get("household_id"));
+        String children = IndexPersonDao.countMotherChildren(commonPersonObjectClient.getColumnmaps().get("household_id"));
 
         childTabCount.setText(children);
 

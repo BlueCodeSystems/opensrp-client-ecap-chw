@@ -487,12 +487,50 @@ public class IndexPersonDao  extends AbstractDao {
                 "GROUP BY " + CHILD_DEDUP_KEY +
                 ") ORDER BY id DESC";
 
-        List<Child> values = AbstractDao.readData(sql, getChildDataMap());// Remember to edit getChildDataMap METHOD Below
+        List<Child> values = AbstractDao.readData(sql, getChildDataMap());
         if (values == null || values.size() == 0)
             return new ArrayList<>();
 
         return values;
 
+    }
+
+    // Returns only children aged ≤ 2 years — for use in the mother/PMTCT children fragment.
+    // adolescent_birthdate is stored as dd-MM-yyyy.
+    private static final String AGE_UNDER_2 =
+            "(adolescent_birthdate IS NOT NULL AND TRIM(adolescent_birthdate) <> '' AND " +
+            "((strftime('%Y','now') - CAST(SUBSTR(adolescent_birthdate,7,4) AS INTEGER)) * 12 + " +
+            "(strftime('%m','now') - CAST(SUBSTR(adolescent_birthdate,4,2) AS INTEGER))) <= 24)";
+
+    public static List<Child> getMotherChildren(String householdID) {
+        String sql = "SELECT * FROM ec_client_index WHERE id IN (" +
+                "SELECT MAX(id) FROM ec_client_index WHERE household_id = '" + householdID + "' " +
+                "AND (deleted IS NULL OR deleted <> '1') " +
+                "AND unique_id IS NOT NULL AND TRIM(unique_id) <> '' " +
+                "AND ((first_name IS NOT NULL AND TRIM(first_name) <> '') OR (last_name IS NOT NULL AND TRIM(last_name) <> '')) " +
+                "AND " + AGE_UNDER_2 + " " +
+                "GROUP BY " + CHILD_DEDUP_KEY +
+                ") ORDER BY id DESC";
+
+        List<Child> values = AbstractDao.readData(sql, getChildDataMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+    }
+
+    public static String countMotherChildren(String householdID) {
+        String sql = "SELECT COUNT(DISTINCT " + CHILD_DEDUP_KEY + ") AS childrenCount FROM ec_client_index " +
+                "WHERE household_id = '" + householdID + "' " +
+                "AND (deleted IS NULL OR deleted <> '1') " +
+                "AND unique_id IS NOT NULL AND TRIM(unique_id) <> '' " +
+                "AND ((first_name IS NOT NULL AND TRIM(first_name) <> '') OR (last_name IS NOT NULL AND TRIM(last_name) <> '')) " +
+                "AND " + AGE_UNDER_2;
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "childrenCount");
+        List<String> values = AbstractDao.readData(sql, dataMap);
+        if (values == null || values.isEmpty()) return "0";
+        return values.get(0);
     }
 
     public static List<CasePlanModel> getDomainsById(String childID, String caseDate) {

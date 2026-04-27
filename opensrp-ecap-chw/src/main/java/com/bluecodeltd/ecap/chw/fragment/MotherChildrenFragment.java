@@ -61,7 +61,7 @@ public class MotherChildrenFragment extends Fragment {
         if (progress != null) progress.setVisibility(View.VISIBLE);
         viewModel = new ViewModelProvider(this).get(HouseholdChildrenViewModel.class);
         viewModel.getState().observe(getViewLifecycleOwner(), this::applyChildrenState);
-        viewModel.refresh(houseId);
+        viewModel.refresh(houseId, true);
 
 
         return view;
