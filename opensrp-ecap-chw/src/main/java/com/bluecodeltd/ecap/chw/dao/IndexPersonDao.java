@@ -16,6 +16,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class IndexPersonDao  extends AbstractDao {
 
+    private static final String CHILD_DEDUP_KEY = "COALESCE(NULLIF(TRIM(unique_id), ''), base_entity_id)";
+
     public static String checkIndexPerson (String baseEntityID) {
 
         String sql = "SELECT index_check_box FROM ec_client_index WHERE base_entity_id = '" + baseEntityID + "'";
@@ -47,11 +49,12 @@ public class IndexPersonDao  extends AbstractDao {
 
     public static String countChildren(String householdID){
 
-        String sql = "SELECT COUNT(*) AS childrenCount FROM ec_client_index " +
+        String sql = "SELECT COUNT(DISTINCT " + CHILD_DEDUP_KEY + ") AS childrenCount FROM ec_client_index " +
                 "WHERE household_id = '" + householdID + "' " +
-                "AND first_name IS NOT NULL AND TRIM(first_name) <> '' " +
-                "AND unique_id IS NOT NULL AND TRIM(unique_id) <> '' " +
-                "AND (deleted IS NULL OR deleted != '1')";
+                "AND (deleted IS NULL OR deleted <> '1') " +
+                "AND unique_id IS NOT NULL " +
+                "AND TRIM(unique_id) <> '' " +
+                "AND ((first_name IS NOT NULL AND TRIM(first_name) <> '') OR (last_name IS NOT NULL AND TRIM(last_name) <> ''))";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "childrenCount");
 
@@ -475,10 +478,14 @@ public class IndexPersonDao  extends AbstractDao {
 
     public static List<Child> getFamilyChildren(String householdID) {
 
-        String sql = "SELECT * FROM ec_client_index WHERE household_id = '"+ householdID +"' " +
-                "AND (deleted IS NULL OR deleted != '1') " +
-                "AND adolescent_birthdate IS NOT NULL " +
-                "AND unique_id IS NOT NULL AND TRIM(unique_id) <> ''";
+        String sql = "SELECT * FROM ec_client_index WHERE id IN (" +
+                "SELECT MAX(id) FROM ec_client_index WHERE household_id = '" + householdID + "' " +
+                "AND (deleted IS NULL OR deleted <> '1') " +
+                "AND unique_id IS NOT NULL " +
+                "AND TRIM(unique_id) <> '' " +
+                "AND ((first_name IS NOT NULL AND TRIM(first_name) <> '') OR (last_name IS NOT NULL AND TRIM(last_name) <> '')) " +
+                "GROUP BY " + CHILD_DEDUP_KEY +
+                ") ORDER BY id DESC";
 
         List<Child> values = AbstractDao.readData(sql, getChildDataMap());// Remember to edit getChildDataMap METHOD Below
         if (values == null || values.size() == 0)

@@ -1051,10 +1051,10 @@ public class HouseholdDetails extends AppCompatActivity {
 
                     // Collect error messages for failed conditions
                     if (!areAllVcasVisited) {
-                        errorMessages.add("Conduct visits for all VCAs in the household.");
+                        errorMessages.add("Conduct visits for all CAs in the household.");
                     }
                     if (!areAllVcasAssessed) {
-                        errorMessages.add("Complete vulnerability assessments for all VCAs.");
+                        errorMessages.add("Complete vulnerability assessments for all CAs.");
                     }
                     if (!hasVisitsByID) {
                         errorMessages.add("Record at least one caregiver visit for the household.");
@@ -1066,7 +1066,7 @@ public class HouseholdDetails extends AppCompatActivity {
                         errorMessages.add("Provide household services as required.");
                     }
                     if (!areAllVcasServiced) {
-                        errorMessages.add("Ensure all VCAs have received required services.");
+                        errorMessages.add("Ensure all CAs have received required services.");
                     }
 
                     Log.e("GraduationCheck", "Failed conditions: " + String.join(", ", errorMessages));

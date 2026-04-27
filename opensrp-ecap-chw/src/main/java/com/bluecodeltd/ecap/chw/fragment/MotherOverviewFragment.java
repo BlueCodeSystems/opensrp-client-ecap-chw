@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.MotherDetail;
+import com.bluecodeltd.ecap.chw.model.EcMotherIndexModel;
+import com.bluecodeltd.ecap.chw.model.Household;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.smartregister.commonregistry.CommonPersonObjectClient;
@@ -49,16 +51,31 @@ public class MotherOverviewFragment extends Fragment {
    }
 
     public void setViews(){
+        MotherDetail activity = (MotherDetail) requireActivity();
 
-        HashMap<String, CommonPersonObjectClient> mymap = ( (MotherDetail) requireActivity()).getData();
+        HashMap<String, CommonPersonObjectClient> mymap = activity.getData();
         mother = mymap.get("mother");
 
-        txtHouseholdId.setText(mother.getColumnmaps().get("household_id"));
-        txtAddress.setText(mother.getColumnmaps().get("homeaddress"));
-        txtPhone.setText(mother.getColumnmaps().get("caregiver_phone"));
-        txtTreatment.setText(mother.getColumnmaps().get("active_on_treatment"));
-        txtArt.setText(mother.getColumnmaps().get("caregiver_art_number"));
+        EcMotherIndexModel motherIndex = activity.getMotherIndex();
+        Household family = activity.getFamily();
 
+        txtHouseholdId.setText(mother.getColumnmaps().get("household_id"));
+
+        String address = motherIndex != null ? motherIndex.getHomeaddress() : null;
+        if ((address == null || address.isEmpty()) && family != null) address = family.getHomeaddress();
+        txtAddress.setText(address);
+
+        String phone = motherIndex != null ? motherIndex.getCaregiver_phone() : null;
+        if ((phone == null || phone.isEmpty()) && family != null) phone = family.getCaregiver_phone();
+        txtPhone.setText(phone);
+
+        String treatment = motherIndex != null ? motherIndex.getActive_on_treatment() : null;
+        if ((treatment == null || treatment.isEmpty()) && family != null) treatment = family.getActive_on_treatment();
+        txtTreatment.setText(treatment);
+
+        String artNumber = motherIndex != null ? motherIndex.getCaregiver_art_number() : null;
+        if ((artNumber == null || artNumber.isEmpty()) && family != null) artNumber = family.getCaregiver_art_number();
+        txtArt.setText(artNumber);
     }
 
     @Override

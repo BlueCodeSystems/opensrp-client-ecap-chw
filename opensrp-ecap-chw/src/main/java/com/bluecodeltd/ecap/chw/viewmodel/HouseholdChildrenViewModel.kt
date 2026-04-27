@@ -25,11 +25,10 @@ class HouseholdChildrenViewModel: ViewModel() {
             return
         }
         viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val list = ArrayList(IndexPersonDao.getFamilyChildren(id) ?: emptyList())
-                val count = IndexPersonDao.countChildren(id) ?: "0"
-                _state.postValue(HouseholdChildrenState(list, count))
-            } catch (_: Exception) {}
+            val children = runCatching { IndexPersonDao.getFamilyChildren(id) ?: emptyList() }
+                .getOrElse { emptyList() }
+            val count = children.size.toString()
+            _state.postValue(HouseholdChildrenState(ArrayList(children), count))
         }
     }
 }

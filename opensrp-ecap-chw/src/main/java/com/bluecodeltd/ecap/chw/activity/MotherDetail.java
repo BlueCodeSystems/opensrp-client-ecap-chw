@@ -7,11 +7,15 @@ import static org.smartregister.chw.core.utils.CoreReferralUtils.getCommonReposi
 import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 import static org.smartregister.util.JsonFormUtils.STEP1;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -41,6 +45,7 @@ import com.bluecodeltd.ecap.chw.dao.MotherOutcomeDao;
 import com.bluecodeltd.ecap.chw.dao.MotherLongitudinalFollowUpDao;
 import com.bluecodeltd.ecap.chw.dao.MotherPostnatalCareDao;
 import com.bluecodeltd.ecap.chw.dao.EcMotherIndexDao;
+import com.bluecodeltd.ecap.chw.model.EcMotherIndexModel;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.MotherChildrenFragment;
 import com.bluecodeltd.ecap.chw.fragment.MotherAncFragment;
@@ -51,7 +56,6 @@ import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.MotherDeliveryModel;
 import com.bluecodeltd.ecap.chw.model.MotherOutcomeModel;
 import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
-import com.bluecodeltd.ecap.chw.model.EcMotherIndexModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -73,6 +77,7 @@ import org.smartregister.domain.tag.FormTag;
 import org.smartregister.family.util.AppExecutors;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.repository.AllSharedPreferences;
+import org.smartregister.domain.UniqueId;
 import org.smartregister.repository.UniqueIdRepository;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
@@ -87,7 +92,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -117,11 +121,10 @@ public class MotherDetail extends AppCompatActivity {
             childFinalOutcomeLayout, childLongitudinalLayout, childPostnatalLayout;
     private boolean caregiverHivPositive;
     private UniqueIdRepository uniqueIdRepository;
+    private AlertDialog.Builder deleteBuilder;
     public String vca_id;
     public Household family;
     private EcMotherIndexModel motherIndex;
-    Random Number;
-    int Rnumber;
     ObjectMapper householdMapper;
 
     @Override
@@ -132,6 +135,7 @@ public class MotherDetail extends AppCompatActivity {
 
         toolbar = binding.toolbarx;
         setSupportActionBar(toolbar);
+        deleteBuilder = new AlertDialog.Builder(MotherDetail.this);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         NavigationMenu.getInstance(this, null, toolbar);
         mTabLayout =  binding.tabs;
@@ -308,7 +312,14 @@ public class MotherDetail extends AppCompatActivity {
 
     public HashMap<String, CommonPersonObjectClient> getData() {
         return  populateMapWithMother(commonPersonObjectClient);
+    }
 
+    public EcMotherIndexModel getMotherIndex() {
+        return motherIndex;
+    }
+
+    public Household getFamily() {
+        return family;
     }
 
     public HashMap<String, CommonPersonObjectClient> populateMapWithMother(CommonPersonObjectClient commonPersonObjectClient)
@@ -653,26 +664,22 @@ public class MotherDetail extends AppCompatActivity {
             case "child":
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MotherDetail.this);
                 Object obj = sp.getAll();
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened,oMapper.convertValue(obj, Map.class));
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(obj, Map.class));
                 formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", this.commonPersonObjectClient.getColumnmaps().get("household_id"));
 
-                Number = new Random();
-                Rnumber = Number.nextInt(900000000);
-                String newEntityId =  Integer.toString(Rnumber);
+                UniqueId uniqueId = getUniqueIdRepository().getNextUniqueId();
+                if (uniqueId == null || uniqueId.getOpenmrsId() == null || uniqueId.getOpenmrsId().isEmpty()) {
+                    Toasty.error(MotherDetail.this, "No unique ID available. Please sync first.", Toast.LENGTH_LONG, true).show();
+                    return;
+                }
+                vca_id = uniqueId.getOpenmrsId().replaceFirst("^0+(?!$)", "");
 
-
-                //******** POPULATE JSON FORM VCA UNIQUE ID ******//
+                //******** POPULATE JSON FORM WITH CA ID ******//
                 JSONObject stepOneUniqueId = getFieldJSONObject(fields(formToBeOpened, STEP1), "unique_id");
-
                 if (stepOneUniqueId != null) {
                     stepOneUniqueId.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
-                    try {
-                        stepOneUniqueId.put(JsonFormUtils.VALUE, newEntityId);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    stepOneUniqueId.put(JsonFormUtils.VALUE, vca_id);
                 }
-
 
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(commonPersonObjectClient.getColumnmaps(), Map.class));
 
@@ -1199,5 +1206,48 @@ public class MotherDetail extends AppCompatActivity {
         if (childFinalOutcomeLayout != null) childFinalOutcomeLayout.setVisibility(View.GONE);
         if (childLongitudinalLayout != null) childLongitudinalLayout.setVisibility(View.GONE);
         if (childPostnatalLayout != null) childPostnatalLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.mother_detail_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.delete_record) {
+            deleteBuilder.setMessage("You are about to delete this mother and all her forms.");
+            deleteBuilder.setNegativeButton("NO", (dialog, id) -> dialog.cancel());
+            deleteBuilder.setPositiveButton("YES", (dialogInterface, i) -> {
+                try {
+                    deleteMotherRecord();
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+                Toasty.success(MotherDetail.this, "Deleted", Toast.LENGTH_LONG, true).show();
+                onBackPressed();
+            });
+            AlertDialog alert = deleteBuilder.create();
+            alert.setTitle("Alert");
+            alert.show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void deleteMotherRecord() throws Exception {
+        String baseEntityId = commonPersonObjectClient.getColumnmaps().get("base_entity_id");
+        EcMotherIndexModel mother = EcMotherIndexDao.getMotherByBaseEntityId(baseEntityId);
+        if (mother == null) return;
+        mother.setDeleted("1");
+        FormUtils formUtils = new FormUtils(this);
+        JSONObject motherForm = formUtils.getFormJson("mother_index_edit");
+        CoreJsonFormUtils.populateJsonForm(motherForm, new ObjectMapper().convertValue(mother, Map.class));
+        motherForm.put("entity_id", baseEntityId);
+        ChildIndexEventClient childIndexEventClient = processRegistration(motherForm.toString());
+        if (childIndexEventClient == null) return;
+        saveRegistration(childIndexEventClient, true, null);
     }
 }
