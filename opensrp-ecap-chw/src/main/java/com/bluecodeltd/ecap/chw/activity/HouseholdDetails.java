@@ -2139,7 +2139,7 @@ public class HouseholdDetails extends AppCompatActivity {
                         JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
                         JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
 
-                        if (isEditMode) {
+                        if (isEditMode && existingClientJsonObject != null) {
                             JSONObject mergedClientJsonObject =
                                     org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
                             ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
