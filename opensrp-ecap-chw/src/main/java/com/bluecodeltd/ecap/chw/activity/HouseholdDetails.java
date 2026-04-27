@@ -56,6 +56,7 @@ import com.bluecodeltd.ecap.chw.dao.HouseholdServiceReportDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.MotherDao;
 import com.bluecodeltd.ecap.chw.dao.MuacDao;
+import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
 import com.bluecodeltd.ecap.chw.dao.VCAServiceReportDao;
 import com.bluecodeltd.ecap.chw.dao.VcaAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
