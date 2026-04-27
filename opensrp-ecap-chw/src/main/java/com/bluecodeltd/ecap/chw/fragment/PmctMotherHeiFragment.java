@@ -114,12 +114,7 @@ public class PmctMotherHeiFragment extends Fragment {
         }
 
         pmtctChild.clear();
-
-        String idForHei = householdId;
-        if (idForHei == null || idForHei.isEmpty()) {
-            idForHei = pmtctId;
-        }
-        pmtctChild.addAll(PmtctChildDao.getPmctChildHei(idForHei));
+        pmtctChild.addAll(PmtctChildDao.getPmctChildHei(pmtctId, householdId));
 
         if (childAdapter == null) {
             childAdapter = new PmctMotherHeiAdapter(pmtctChild, getContext());

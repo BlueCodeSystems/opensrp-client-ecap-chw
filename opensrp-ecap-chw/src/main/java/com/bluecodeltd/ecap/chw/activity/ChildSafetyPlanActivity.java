@@ -88,7 +88,7 @@ public class ChildSafetyPlanActivity extends AppCompatActivity {
         intent_cname = getIntent().getExtras().getString("vca_name");
 
 
-        hh_id.setText("VCA ID : " + intent_vcaid);
+        hh_id.setText("CA ID: " + intent_vcaid);
         vcaname.setText(intent_cname);
 
         childSafetyPlanList.addAll(ChildSafetyPlanDao.getChildSafetyPlanModel(intent_vcaid));

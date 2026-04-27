@@ -371,6 +371,12 @@
         "v_required": {
           "value": true,
           "err": "Please enter date"
+        },
+        "relevance": {
+          "step1:result_r_nr": {
+            "type": "string",
+            "ex": "equalTo(., \"R\")"
+          }
         }
       },
       {
@@ -389,7 +395,13 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "step1:result_r_nr": {
+            "type": "string",
+            "ex": "equalTo(., \"R\")"
+          }
+        }
       },
       {
         "key": "tb_screening",

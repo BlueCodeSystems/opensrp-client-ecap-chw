@@ -255,25 +255,7 @@
           "err": "Enter last name"
         }
       },
-      {
-        "key": "art_number",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "art_number",
-        "type": "edit_text",
-        "hint": "ART Number",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hiv_testing_service_relevance.yml"
-            }
-          }
-        },
-        "v_required": {
-          "value": "false",
-          "err": "ART number is Required"
-        }
-      },
+
       {
         "key": "gender",
         "openmrs_entity_parent": "",
@@ -404,6 +386,9 @@
         "openmrs_entity_id": "sub_population",
         "type": "check_box",
         "label": "Sub Population :",
+        "exclusive": [
+          "not applicable"
+        ],
         "options": [
           {
             "key": "subpop1",
@@ -444,6 +429,21 @@
             "key": "HIV Positive PBFW",
             "text": "HIV Positive PBFW"
           }
+        ,
+          {
+            "key": "Caregiver-General",
+            "text": "Caregiver-General"
+
+          },
+          {
+            "key": "Caregiver-WLHIV",
+            "text": "Caregiver-WLHIV"
+          },
+          {
+            "key": "not applicable",
+            "text": "Not Applicable"
+          }
+
         ],
         "v_required": {
           "value": true,
@@ -610,7 +610,7 @@
           }
         ],
         "v_required": {
-          "value": true,
+          "value": false,
           "err": "This field is Required"
         },
         "relevance": {
@@ -618,6 +618,25 @@
             "type": "string",
             "ex": "equalTo(., \"Newly Tested HIV+\")"
           }
+        }
+      },
+      {
+        "key": "art_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "art_number",
+        "type": "edit_text",
+        "hint": "ART Number",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_testing_service_relevance.yml"
+            }
+          }
+        },
+        "v_required": {
+          "value": "false",
+          "err": "ART number is Required"
         }
       },
       {
