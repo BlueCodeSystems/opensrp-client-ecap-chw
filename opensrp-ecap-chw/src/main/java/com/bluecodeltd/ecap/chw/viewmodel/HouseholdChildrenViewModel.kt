@@ -18,6 +18,7 @@ class HouseholdChildrenViewModel: ViewModel() {
     private val _state = MutableLiveData(HouseholdChildrenState())
     val state: LiveData<HouseholdChildrenState> = _state
 
+    @JvmOverloads
     fun refresh(householdId: String?, motherContext: Boolean = false) {
         val id = householdId?.trim()
         if (id.isNullOrEmpty()) {
