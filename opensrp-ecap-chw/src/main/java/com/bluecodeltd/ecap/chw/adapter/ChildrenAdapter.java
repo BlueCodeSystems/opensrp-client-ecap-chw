@@ -57,6 +57,9 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
     List<Child> children;
     String txtMuac;
+    private String indexUniqueIdToShow;
+    private int indexCacheSize = -1;
+    private String indexCacheFirstUniqueId;
     GradModel gradModel;
     MuacModel muacModel, cModel;
     ObjectMapper oMapper, gradMapper;
@@ -106,6 +109,8 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         holder.itemView.setTag(R.id.tag_row_id, rowTag);
         holder.itemView.setTag(initialChild);
 
+        ensureIndexCache();
+
         try{
 
             if(initialChild.getFirst_name() == null || initialChild.getLast_name() == null){
@@ -133,13 +138,9 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         final String dobLocal = dob;
 
 
-        try{
-            if(initialChild.getIndex_check_box() != null && (initialChild.getIndex_check_box().equals("1") || initialChild.getIndex_check_box().equals("yes"))){
-                holder.is_index.setVisibility(View.VISIBLE);
-            } else {
-                holder.is_index.setVisibility(View.GONE);
-            }
-        } catch(NullPointerException e) {
+        try {
+            holder.is_index.setVisibility(shouldShowIndexChip(initialChild, childUniqueID) ? View.VISIBLE : View.GONE);
+        } catch (Exception ignored) {
             holder.is_index.setVisibility(View.GONE);
         }
 
@@ -244,14 +245,8 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
                     } catch (Exception ignored) {}
 
                     try{
-                        if(finalChild.getIndex_check_box() != null && (finalChild.getIndex_check_box().equals("1") || finalChild.getIndex_check_box().equals("yes"))){
-                            holder.is_index.setVisibility(View.VISIBLE);
-                        } else {
-                            holder.is_index.setVisibility(View.GONE);
-                        }
-                    } catch (Exception ignored) {
-                        holder.is_index.setVisibility(View.GONE);
-                    }
+                        holder.is_index.setVisibility(shouldShowIndexChip(finalChild, childUniqueID) ? View.VISIBLE : View.GONE);
+                    } catch (Exception ignored) { holder.is_index.setVisibility(View.GONE); }
                 }
 
                 if(finalCaseStatus != null && finalCaseStatus.equals("1")){
@@ -379,6 +374,52 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         holder.muacButton.setTag(null);
         holder.is_index.setVisibility(View.GONE);
         holder.colorView.setBackgroundColor(Color.parseColor("#696969"));
+    }
+
+    private void ensureIndexCache() {
+        int currentSize = children != null ? children.size() : 0;
+        String currentFirstUniqueId = null;
+        try {
+            if (children != null && !children.isEmpty() && children.get(0) != null) {
+                currentFirstUniqueId = children.get(0).getUnique_id();
+            }
+        } catch (Exception ignored) {}
+
+        if (currentSize == indexCacheSize && safeEquals(currentFirstUniqueId, indexCacheFirstUniqueId)) {
+            return;
+        }
+
+        indexCacheSize = currentSize;
+        indexCacheFirstUniqueId = currentFirstUniqueId;
+        indexUniqueIdToShow = null;
+        if (children == null || children.isEmpty()) return;
+
+        // List is expected to be ordered DESC by id from the query; show Index chip only for the first index entry.
+        for (Child child : children) {
+            if (child == null) continue;
+            String uniqueId = child.getUnique_id();
+            if (!TextUtils.isEmpty(uniqueId) && isIndexVca(child.getIndex_check_box())) {
+                indexUniqueIdToShow = uniqueId;
+                break;
+            }
+        }
+    }
+
+    private boolean shouldShowIndexChip(Child child, String fallbackUniqueId) {
+        if (child == null) return false;
+        String uniqueId = child.getUnique_id();
+        if (TextUtils.isEmpty(uniqueId)) uniqueId = fallbackUniqueId;
+        return isIndexVca(child.getIndex_check_box())
+                && !TextUtils.isEmpty(uniqueId)
+                && uniqueId.equals(indexUniqueIdToShow);
+    }
+
+    private static boolean isIndexVca(String indexCheckBoxValue) {
+        return "yes".equalsIgnoreCase(indexCheckBoxValue) || "1".equals(indexCheckBoxValue);
+    }
+
+    private static boolean safeEquals(String a, String b) {
+        return a == b || (a != null && a.equals(b));
     }
 
     private String getAge(String birthdate){

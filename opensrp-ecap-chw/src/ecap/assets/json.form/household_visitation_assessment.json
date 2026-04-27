@@ -152,7 +152,7 @@
         "openmrs_entity_id": "household_id",
         "type": "edit_text",
         "read_only": false,
-        "hint": "VCA Household ID",
+        "hint": "CA Household ID",
         "edit_type": "number",
         "v_required": {
           "value": false,

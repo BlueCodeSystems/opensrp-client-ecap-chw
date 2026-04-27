@@ -984,7 +984,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     break;
                 }
                 if (!isTbScreeningCompliantForVisitation()) {
-                    Toasty.warning(IndexDetailsActivity.this, "TB screening for this quarter is required before household visitation for VCAs above 10 years.", Toast.LENGTH_LONG, true).show();
+                    Toasty.warning(IndexDetailsActivity.this, "TB screening for this quarter is required before household visitation for CAs above 10 years.", Toast.LENGTH_LONG, true).show();
                     break;
                 }
                 if(indexVCA.getDate_screened() != null) {

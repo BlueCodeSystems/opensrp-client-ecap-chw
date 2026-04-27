@@ -2693,7 +2693,7 @@
         "max_date": "today",
         "v_required": {
           "value": false,
-          "err": "When was the VCA initiated on ART"
+          "err": "When was the CA initiated on ART"
         }
       }
     ]

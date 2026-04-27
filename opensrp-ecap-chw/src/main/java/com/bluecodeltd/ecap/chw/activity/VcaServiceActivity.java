@@ -154,7 +154,7 @@ public class VcaServiceActivity extends AppCompatActivity {
         switch (id) {
             case R.id.services1:
                 if (!canAddServiceReport) {
-                    Toasty.warning(this, "TB screening for this month is required before adding a service report for a VCA under 10 years.", Toast.LENGTH_LONG, true).show();
+                    Toasty.warning(this, "TB screening for this month is required before adding a service report for a CA under 10 years.", Toast.LENGTH_LONG, true).show();
                     return;
                 }
                 Threading.io(() -> {

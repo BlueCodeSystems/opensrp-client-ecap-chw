@@ -5,25 +5,34 @@ import com.bluecodeltd.ecap.chw.model.PmtctChildModel;
 import org.smartregister.dao.AbstractDao;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 public class PmtctChildDao extends AbstractDao {
     public static List<PmtctChildModel> getPmctChildHei(String householdIdOrPmtctId) {
+        return getPmctChildHei(householdIdOrPmtctId, null);
+    }
 
-        String sql = "SELECT * FROM ec_pmtct_child WHERE (household_id = '" + householdIdOrPmtctId + "' OR pmtct_id = '" + householdIdOrPmtctId + "') " +
-                "AND (delete_status IS NULL OR delete_status <> '1')";
+    public static List<PmtctChildModel> getPmctChildHei(String primaryId, String secondaryId) {
+        String idClause = buildPmtctOrHouseholdIdClause(primaryId, secondaryId);
+        if (idClause == null) {
+            return new ArrayList<>();
+        }
+
+        String sql = "SELECT * FROM ec_pmtct_child WHERE " + idClause + " AND " + activeRecordClause();
 
         List<PmtctChildModel> values = AbstractDao.readData(sql, getPmtctChildModelMap());
-        if (values == null || values.size() == 0)
+        if (values == null || values.isEmpty()) {
             return new ArrayList<>();
+        }
 
         return values;
-
     }
+
     public static PmtctChildModel getPMCTChild(String pmtctID) {
 
-        String sql = "SELECT * FROM ec_pmtct_child WHERE unique_id = '" + pmtctID + "' " +
-                "AND (delete_status IS NULL OR delete_status <> '1')";
+        String sql = "SELECT * FROM ec_pmtct_child WHERE unique_id = '" + escapeSql(pmtctID) + "' AND " + activeRecordClause();
 
         List<PmtctChildModel> values = AbstractDao.readData(sql, getPmtctChildModelMap());
 
@@ -36,19 +45,42 @@ public class PmtctChildDao extends AbstractDao {
     }
 
     public static boolean hasDeletedHei(String householdIdOrPmtctId) {
+        return hasDeletedHei(householdIdOrPmtctId, null);
+    }
 
-        String sql = "SELECT * FROM ec_pmtct_child WHERE (household_id = '" + householdIdOrPmtctId + "' OR pmtct_id = '" + householdIdOrPmtctId + "') " +
-                "AND (delete_status IS NULL OR delete_status <> '1')";
+    /** Returns true when the mother has at least one active HEI record (i.e., not deleted). */
+    public static boolean hasDeletedHei(String primaryId, String secondaryId) {
+        String idClause = buildPmtctOrHouseholdIdClause(primaryId, secondaryId);
+        if (idClause == null) {
+            return false;
+        }
 
-        List<PmtctChildModel> values = AbstractDao.readData(sql, getPmtctChildModelMap());
+        String sql = "SELECT COUNT(*) v FROM ec_pmtct_child WHERE " + idClause + " AND " + activeRecordClause();
+        DataMap<String> dataMap = c -> getCursorValue(c, "v");
+        List<String> values = AbstractDao.readData(sql, dataMap);
 
-        return !values.isEmpty();
+        if (values == null || values.isEmpty()) {
+            return false;
+        }
+
+        try {
+            return Integer.parseInt(values.get(0)) > 0;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public static String countMotherHei (String householdIdOrPmtctId){
+        return countMotherHei(householdIdOrPmtctId, null);
+    }
 
-        String sql = "SELECT COUNT(*) v FROM ec_pmtct_child WHERE (household_id = '" + householdIdOrPmtctId + "' OR pmtct_id = '" + householdIdOrPmtctId + "') " +
-                "AND (delete_status IS NULL OR delete_status <> '1')";
+    public static String countMotherHei (String primaryId, String secondaryId){
+        String idClause = buildPmtctOrHouseholdIdClause(primaryId, secondaryId);
+        if (idClause == null) {
+            return "0";
+        }
+
+        String sql = "SELECT COUNT(*) v FROM ec_pmtct_child WHERE " + idClause + " AND " + activeRecordClause();
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
 
         List<String> values = AbstractDao.readData(sql, dataMap);
@@ -59,6 +91,7 @@ public class PmtctChildDao extends AbstractDao {
         return values.get(0);
 
     }
+
     public static DataMap<PmtctChildModel> getPmtctChildModelMap() {
         return c -> {
 
@@ -89,6 +122,50 @@ public class PmtctChildDao extends AbstractDao {
             DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
+    }
+
+    private static String buildPmtctOrHouseholdIdClause(String primaryId, String secondaryId) {
+        Set<String> identifiers = new LinkedHashSet<>();
+        addIdentifier(identifiers, primaryId);
+        addIdentifier(identifiers, secondaryId);
+
+        if (identifiers.isEmpty()) {
+            return null;
+        }
+
+        StringBuilder where = new StringBuilder();
+        boolean first = true;
+        for (String identifier : identifiers) {
+            if (!first) {
+                where.append(" OR ");
+            }
+            where.append("(pmtct_id = '")
+                    .append(escapeSql(identifier))
+                    .append("' OR household_id = '")
+                    .append(escapeSql(identifier))
+                    .append("')");
+            first = false;
+        }
+        return "(" + where + ")";
+    }
+
+    private static void addIdentifier(Set<String> identifiers, String value) {
+        if (value == null) {
+            return;
+        }
+        String trimmed = value.trim();
+        if (trimmed.isEmpty()) {
+            return;
+        }
+        identifiers.add(trimmed);
+    }
+
+    private static String escapeSql(String value) {
+        return value == null ? "" : value.replace("'", "''");
+    }
+
+    private static String activeRecordClause() {
+        return "(delete_status IS NULL OR delete_status <> '1')";
     }
 }
 

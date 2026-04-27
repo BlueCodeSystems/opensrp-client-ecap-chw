@@ -59,7 +59,7 @@
         "text": "Pediatric Surge Facility Index Mother Register",
         "text_color": "#000000",
         "label_text_style": "bold",
-        "toaster_info_text": "This Register serves as a detailed record for Children/Adolescent (VCA) aged 0-18 years identified through index tracing of Children/Adolescents of\nHIV+ mothers, offered and/or enrolled into the Children/Adolescent (VCA) comprehensive program. ",
+        "toaster_info_text": "This Register serves as a detailed record for CA aged 0-18 years identified through index tracing of Children/Adolescents of\nHIV+ mothers, offered and/or enrolled into the CA comprehensive program. ",
         "toaster_info_title": "Introduction",
         "toaster_type": "info"
       },
@@ -80,7 +80,7 @@
         "openmrs_entity_id": "unique_id",
         "type": "edit_text",
         "read_only": "true",
-        "hint": "Children/Adolescent (VCA) ID",
+        "hint": "CA ID",
         "edit_type": "name"
       },
       {
@@ -489,7 +489,7 @@
         "openmrs_entity_id": "is_biological_child_of_mother_living_with_hiv",
         "type": "native_radio",
         "value":"yes",
-        "read_only": "true",
+        "read_only": "false",
         "label": "Is the Child/Adolescent a biological child of a mother living with HIV",
         "options": [
           {
@@ -558,7 +558,7 @@
         "openmrs_entity_id": "subpop1_toast",
         "value": "true",
         "type": "toaster_notes",
-        "text": "This Children/Adolescent (VCA) has been enrolled into the Sub Population : Children/Adolescents Living with HIV (C/ALHIV)",
+        "text": "This CA has been enrolled into the Sub Population : Children/Adolescents Living with HIV (C/ALHIV)",
         "toaster_type": "info",
         "toaster_info_text": "Children/Adolescents Living with HIV (C/ALHIV)",
         "toaster_info_title": "Sub Population",
@@ -576,7 +576,7 @@
         "openmrs_entity_id": "subpop3",
         "value": "true",
         "type": "toaster_notes",
-        "text": "This Children/Adolescent (VCA) will be enrolled into the Sub Population : Children of Women Living with HIV (WLHIV)",
+        "text": "This CA will be enrolled into the Sub Population : Children of Women Living with HIV (WLHIV)",
         "toaster_type": "info",
         "toaster_info_text": "Children of Women Living with HIV (WLHIV)",
         "toaster_info_title": "Sub Population"

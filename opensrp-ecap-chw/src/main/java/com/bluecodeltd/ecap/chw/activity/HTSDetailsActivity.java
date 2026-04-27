@@ -1225,7 +1225,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
         //Creating dialog box
         AlertDialog alert = builder.create();
         //Setting the title manually
-        alert.setTitle("VCA Screening");
+        alert.setTitle("CA Screening");
         alert.show();
     }
 

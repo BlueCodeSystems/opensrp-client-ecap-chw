@@ -371,14 +371,17 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
             mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
         }
 
-        final String heiSearchId = (ptctMotherModel != null && !isNullOrEmpty(ptctMotherModel.getHousehold_id()))
-                ? ptctMotherModel.getHousehold_id()
+        final String primaryId = (ptctMotherModel != null && !isNullOrEmpty(ptctMotherModel.getPmtct_id()))
+                ? ptctMotherModel.getPmtct_id()
                 : clientId;
+        final String secondaryId = (ptctMotherModel != null && !isNullOrEmpty(ptctMotherModel.getHousehold_id()))
+                ? ptctMotherModel.getHousehold_id()
+                : resolveHouseholdId();
         Threading.ioBestEffort(() -> {
             String count = "0";
             try {
-                if (!isNullOrEmpty(heiSearchId)) {
-                    count = PmtctChildDao.countMotherHei(heiSearchId);
+                if (!isNullOrEmpty(primaryId) || !isNullOrEmpty(secondaryId)) {
+                    count = PmtctChildDao.countMotherHei(primaryId, secondaryId);
                 }
             } catch (Exception ignored) {}
             final String finalCount = count;
@@ -1018,7 +1021,13 @@ break;
             case R.id.delete_record:
 
 
-            Boolean checkForLinks = PmtctChildDao.hasDeletedHei(clientId);
+            String primaryId = (ptctMotherModel != null && !isNullOrEmpty(ptctMotherModel.getPmtct_id()))
+                    ? ptctMotherModel.getPmtct_id()
+                    : clientId;
+            String secondaryId = (ptctMotherModel != null && !isNullOrEmpty(ptctMotherModel.getHousehold_id()))
+                    ? ptctMotherModel.getHousehold_id()
+                    : resolveHouseholdId();
+            Boolean checkForLinks = PmtctChildDao.hasDeletedHei(primaryId, secondaryId);
             if (checkForLinks == false) {
 
 

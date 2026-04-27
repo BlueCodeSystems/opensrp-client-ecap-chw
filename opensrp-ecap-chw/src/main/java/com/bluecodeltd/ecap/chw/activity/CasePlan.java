@@ -111,7 +111,7 @@ public class CasePlan extends AppCompatActivity {
             actionBar.setHomeAsUpIndicator(upArrow);
         }
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
-        tvTitle.setText("VCA Case Plan");
+        tvTitle.setText("CA Case Plan");
     }
 
     private void applyLightStatusBar() {

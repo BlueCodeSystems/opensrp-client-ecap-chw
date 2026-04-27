@@ -145,7 +145,7 @@
         "hint": "Name of Receiving Organization",
         "v_required": {
           "value": true,
-          "err":  "Name of Receiving Organization is empty"
+          "err": "Name of Receiving Organization is empty"
         }
       },
       {
@@ -1460,7 +1460,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "vca_uniforms_books",
-        "label": "Support VCAs with Uniforms and/or Book Materials",
+        "label": "Support CAs with Uniforms and/or Book Materials",
         "type": "check_box",
         "options": [
           {
