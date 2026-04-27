@@ -216,6 +216,12 @@ public class PMTCTMotherDao extends AbstractDao {
         };
     }
 
+    public static void deletePmtctMotherByHouseholdId(String householdId) {
+        if (isNullOrEmpty(householdId)) return;
+        String sql = "UPDATE ec_pmtct_mother SET delete_status = '1' WHERE household_id = '" + householdId + "'";
+        updateDB(sql);
+    }
+
     private static boolean isNullOrEmpty(String s) {
         return s == null || s.trim().isEmpty();
     }

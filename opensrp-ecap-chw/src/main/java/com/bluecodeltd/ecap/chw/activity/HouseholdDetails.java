@@ -2515,14 +2515,13 @@ public class HouseholdDetails extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
+        switch (resolveViewIdName(item.getItemId())) {
 
-            case R.id.refresh:
+            case "refresh":
                 requestStateRefresh(true);
                 break;
 
-            case R.id.call:
+            case "call":
                 try {
                     String caregiverPhoneNumber = (house != null) ? house.getCaregiver_phone() : null;
                     if (caregiverPhoneNumber != null && !caregiverPhoneNumber.equals("")) {
@@ -2535,88 +2534,60 @@ public class HouseholdDetails extends AppCompatActivity {
                 } catch (Exception e) {
                     Log.e("Phone Number Error", "Exception", e);
                 }
-
                 return true;
 
-
-            case R.id.delete_record:
-
+            case "delete_record":
                 builder.setMessage("You are about to delete this household and all its forms.");
                 builder.setNegativeButton("NO", (dialog, id) -> {
-                    //  Action for 'NO' Button
                     dialog.cancel();
-
-                }).setPositiveButton("YES",((dialogInterface, i) -> {
-
-//                    HouseholdDao.deleteRecord(house.getHousehold_id(), house.getBase_entity_id(), childList);
-//                    HouseholdDao.deleteRecordfromSearch(house.getHousehold_id(), house.getBase_entity_id(), childList);
-
+                }).setPositiveButton("YES", ((dialogInterface, i) -> {
                     try {
-                       houseHoldsContainingSameId = (ArrayList) HouseholdDao.getDuplicatedHousehold(householdId);
-                       if(houseHoldsContainingSameId != null || houseHoldsContainingSameId.size() > 0 )
-                       {
-                           for(int houseHoldIterator=0; houseHoldIterator < houseHoldsContainingSameId.size(); houseHoldIterator++)
-                           {
-                               Household householdToDelete = (Household) houseHoldsContainingSameId.get(houseHoldIterator);
-
-                               changeHouseholdStatus(householdToDelete);
-                           }
-                       }
-                     deleteFamilyChildren(householdId);
-                       deleteMothers(householdId);
+                        houseHoldsContainingSameId = (ArrayList) HouseholdDao.getDuplicatedHousehold(householdId);
+                        if (houseHoldsContainingSameId != null && houseHoldsContainingSameId.size() > 0) {
+                            for (int houseHoldIterator = 0; houseHoldIterator < houseHoldsContainingSameId.size(); houseHoldIterator++) {
+                                Household householdToDelete = (Household) houseHoldsContainingSameId.get(houseHoldIterator);
+                                changeHouseholdStatus(householdToDelete);
+                            }
+                        }
+                        deleteFamilyChildren(householdId);
+                        deleteMothers(householdId);
+                        PMTCTMotherDao.deletePmtctMotherByHouseholdId(householdId);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     Toasty.success(HouseholdDetails.this, "Deleted", Toast.LENGTH_LONG, true).show();
                     super.onBackPressed();
                 }));
-
-                //Creating dialog box
                 AlertDialog alert = builder.create();
-                //Setting the title manually
                 alert.setTitle("Alert");
                 alert.show();
-
-
                 break;
-            case R.id.case_status:
-//                Boolean status = IndexPersonDao.checkGraduationStatus(householdId);
-//                if(status.equals(false)){
-//                    showDialogBox("You need to deregister all the vcas in the household");
-//                } else {
-                    try {
-                        openFormUsingFormUtils(getBaseContext(),"household_case_status");
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
-//                }
-//                FormUtils formUtils = null;
-//                try {
-//                    formUtils = new FormUtils(HouseholdDetails.this);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//                JSONObject indexRegisterForm = formUtils.getFormJson("household_case_status");
-//
-//                startFormActivity(indexRegisterForm);
 
-
-
-
-                break;
-            case R.id.update_caregiver_details:
+            case "case_status":
                 try {
-                    openFormUsingFormUtils(getBaseContext(),"update_caregiver_details");
+                    openFormUsingFormUtils(getBaseContext(), "household_case_status");
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
-
                 break;
 
-
-
+            case "update_caregiver_details":
+                try {
+                    openFormUsingFormUtils(getBaseContext(), "update_caregiver_details");
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private String resolveViewIdName(int viewId) {
+        try {
+            return getResources().getResourceEntryName(viewId);
+        } catch (Exception e) {
+            return "";
+        }
     }
 
     public void changeHouseholdStatus(Household house) throws Exception {
