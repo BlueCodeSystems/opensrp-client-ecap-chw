@@ -152,9 +152,13 @@ public class MotherIndexActivity extends BaseRegisterActivity implements MotherI
             String uId =  Integer.toString(Rnumber);
 
 
-            //******** POPULATE JSON FORM VCA UNIQUE ID ******//
-            JSONObject stepTwoUniqueId = getFieldJSONObject(fields(jsonObject, "step1"), "unique_id");
-            stepTwoUniqueId.put(JsonFormUtils.VALUE, uId);
+            // Populate unique id when the form contains it (some forms don't have this field).
+            JSONObject uniqueIdField = getFieldJSONObject(fields(jsonObject, STEP1), "unique_id");
+            if (uniqueIdField != null) {
+                uniqueIdField.put(JsonFormUtils.VALUE, uId);
+            } else {
+                Timber.w("Mother index form missing field 'unique_id' (skipping auto-populate)");
+            }
 
 
 
