@@ -408,6 +408,40 @@
           }
         }
       },
+
+      {
+        "key": "instructions",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions",
+        "type": "toaster_notes",
+        "text": "Conduct HTS",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_text": "",
+        "toaster_info_title": "Introduction",
+        "toaster_type": "info",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_testing_links.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "label_1",
+        "type": "label",
+        "text": "New HIV Status",
+        "label_text_style": "bold",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_testing_links.yml"
+            }
+          }
+        }
+      },
       {
         "key": "date_tested",
         "openmrs_entity_parent": "",
@@ -422,7 +456,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "hts_relevance.yml"
+              "rules-file": "hiv_testing_links.yml"
             }
           }
         }
@@ -451,7 +485,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "hts_relevance.yml"
+              "rules-file": "hiv_testing_links.yml"
             }
           }
         }
@@ -598,37 +632,6 @@
         "openmrs_entity_id": "delete_status",
         "type": "hidden",
         "read_only": "true"
-      },
-      {
-        "key": "instructions",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "instructions",
-        "type": "toaster_notes",
-        "text": "Conduct HTS",
-        "text_color": "#000000",
-        "label_text_style": "bold",
-        "toaster_info_text": "",
-        "toaster_info_title": "Introduction",
-        "toaster_type": "info",
-        "relevance": {
-          "step1:hiv_status": {
-            "type": "string",
-            "ex": "equalTo(., \"HIV Status Unknown\")"
-          }
-        }
-      },
-      {
-        "key": "label 1",
-        "type": "label",
-        "text": "New HIV Status",
-        "label_text_style": "bold",
-        "relevance": {
-          "step1:hiv_status": {
-            "type": "string",
-            "ex": "equalTo(., \"HIV Status Unknown\")"
-          }
-        }
       }
     ]
   }
