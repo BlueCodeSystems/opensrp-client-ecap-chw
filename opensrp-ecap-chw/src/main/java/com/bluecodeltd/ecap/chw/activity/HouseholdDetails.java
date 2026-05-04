@@ -57,6 +57,7 @@ import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.MotherDao;
 import com.bluecodeltd.ecap.chw.dao.MuacDao;
 import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
+import com.bluecodeltd.ecap.chw.dao.PmtctChildDao;
 import com.bluecodeltd.ecap.chw.dao.VCAServiceReportDao;
 import com.bluecodeltd.ecap.chw.dao.VcaAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
@@ -2538,6 +2539,21 @@ public class HouseholdDetails extends AppCompatActivity {
                 return true;
 
             case "delete_record":
+                // Require user to delete children first (both CA children and PMTCT HEI) before deleting a household.
+                try {
+                    java.util.List<Child> activeChildren = IndexPersonDao.getFamilyChildren(householdId);
+                    if (activeChildren != null && !activeChildren.isEmpty()) {
+                        Toasty.warning(HouseholdDetails.this, "Delete the child(ren) before deleting the household", Toast.LENGTH_LONG, true).show();
+                        break;
+                    }
+                } catch (Exception ignored) { }
+                try {
+                    if (PmtctChildDao.hasDeletedHei(householdId)) {
+                        Toasty.warning(HouseholdDetails.this, "Delete the HEI child(ren) before deleting the household", Toast.LENGTH_LONG, true).show();
+                        break;
+                    }
+                } catch (Exception ignored) { }
+
                 builder.setMessage("You are about to delete this household and all its forms.");
                 builder.setNegativeButton("NO", (dialog, id) -> {
                     dialog.cancel();
@@ -2550,14 +2566,17 @@ public class HouseholdDetails extends AppCompatActivity {
                                 changeHouseholdStatus(householdToDelete);
                             }
                         }
-                        deleteFamilyChildren(householdId);
                         deleteMothers(householdId);
                         PMTCTMotherDao.deletePmtctMotherByHouseholdId(householdId);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     Toasty.success(HouseholdDetails.this, "Deleted", Toast.LENGTH_LONG, true).show();
-                    super.onBackPressed();
+                    Intent returnToHouseholdIndexActivity = new Intent(getBaseContext(), HouseholdIndexActivity.class);
+                    returnToHouseholdIndexActivity.putExtra("refresh", "true");
+                    returnToHouseholdIndexActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(returnToHouseholdIndexActivity);
+                    finish();
                 }));
                 AlertDialog alert = builder.create();
                 alert.setTitle("Alert");

@@ -2,7 +2,16 @@
   "permissions": {
     "allow": [
       "Bash(.gradlew:*)",
-      "Bash(C:UsersBluecodeDocumentsopensrp-client-ecap-chwgradlew.bat :opensrp-ecap-chw:assembleEcapDebug)"
+      "Bash(C:UsersBluecodeDocumentsopensrp-client-ecap-chwgradlew.bat :opensrp-ecap-chw:assembleEcapDebug)",
+      "Bash(grep -l \"Fragment.*Presenter\\\\|Fragment.*Interactor\" \"C:\\\\Users\\\\Bluecode\\\\Documents\\\\opensrp-client-ecap-chw\\\\opensrp-ecap-chw\\\\src\\\\main\\\\java\\\\com\\\\bluecodeltd\\\\ecap\\\\chw\\\\fragment\"/*.java)",
+      "Bash(awk -F: '$1 >= 1100 && $1 <= 1282')",
+      "Bash(awk -F: '$1 >= 1100 && $1 <= 1230')",
+      "Bash(awk -F: '$1 >= 1095 && $1 <= 1285')",
+      "Bash(git -C /c/Users/Bluecode/Documents/opensrp-client-ecap-chw diff opensrp-ecap-chw/src/main/java/com/bluecodeltd/ecap/chw/dao/HouseholdDao.java)",
+      "Bash(git ls-tree *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(git add *)"
     ]
   }
 }

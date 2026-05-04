@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -33,12 +34,16 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.EcMotherIndexDao;
+import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
+import com.bluecodeltd.ecap.chw.dao.IndexMotherDao;
 import com.bluecodeltd.ecap.chw.model.EcMotherIndexModel;
+import com.bluecodeltd.ecap.chw.model.IndexMotherModel;
 import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
 import com.bluecodeltd.ecap.chw.dao.PmctMotherAncDao;
 import com.bluecodeltd.ecap.chw.dao.PmtctChildDao;
 import com.bluecodeltd.ecap.chw.dao.PmtctDeliveryDao;
 import com.bluecodeltd.ecap.chw.dao.PmtctMotherOutComeDao;
+import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.AncMotherPmtctFragment;
 import com.bluecodeltd.ecap.chw.fragment.PMTCTMotherOverviewFragment;
@@ -804,6 +809,28 @@ break;
                     }
                     break;
 
+                case "Mother Edit":
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_mother_index");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
+                case "Household Screening Edit":
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, com.bluecodeltd.ecap.chw.util.Constants.EcapClientTable.EC_HOUSEHOLD);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
                 case "Mother Pmtct Child":
 
                     if (fields != null) {
@@ -866,6 +893,58 @@ break;
     }
 
         return null;
+    }
+
+    private void softDeleteIndexMotherAndHousehold(@Nullable String householdId, @Nullable String motherBaseEntityId) {
+        try {
+            FormUtils formUtils = new FormUtils(this);
+
+            // Soft delete index mother (ec_mother_index) via Mother Edit form
+            try {
+                IndexMotherModel indexMother = null;
+                if (!isNullOrEmpty(motherBaseEntityId)) {
+                    indexMother = IndexMotherDao.getIndexMotherByBaseEntityId(motherBaseEntityId);
+                }
+                if (indexMother == null && !isNullOrEmpty(householdId)) {
+                    indexMother = IndexMotherDao.getIndexMotherByHouseholdId(householdId);
+                }
+
+                if (indexMother != null && !isNullOrEmpty(indexMother.getBase_entity_id())) {
+                    indexMother.setDeleted("1");
+                    JSONObject motherForm = formUtils.getFormJson("mother_index_edit");
+                    CoreJsonFormUtils.populateJsonForm(motherForm, new ObjectMapper().convertValue(indexMother, Map.class));
+                    motherForm.put("entity_id", indexMother.getBase_entity_id());
+                    ChildIndexEventClient ec = processRegistration(motherForm.toString());
+                    if (ec != null) {
+                        saveRegistration(ec, true);
+                    }
+                }
+            } catch (Exception e) {
+                Timber.w(e, "Failed to soft delete index mother record");
+            }
+
+            // Soft delete household (ec_household) via Household Screening Edit form
+            try {
+                if (!isNullOrEmpty(householdId)) {
+                    Household household = HouseholdDao.getHousehold(householdId);
+                    if (household != null && !isNullOrEmpty(household.getBase_entity_id())) {
+                        household.setStatus("1");
+                        JSONObject hhEdit = formUtils.getFormJson("hh_edit");
+                        CoreJsonFormUtils.populateJsonForm(hhEdit, new ObjectMapper().convertValue(household, Map.class));
+                        hhEdit.put("entity_id", household.getBase_entity_id());
+                        ChildIndexEventClient ec = processRegistration(hhEdit.toString());
+                        if (ec != null) {
+                            saveRegistration(ec, true);
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                Timber.w(e, "Failed to soft delete household record");
+            }
+
+        } catch (Exception e) {
+            Timber.w(e, "Unable to soft delete related index mother/household");
+        }
     }
 
     public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
@@ -1027,6 +1106,16 @@ break;
             String secondaryId = (ptctMotherModel != null && !isNullOrEmpty(ptctMotherModel.getHousehold_id()))
                     ? ptctMotherModel.getHousehold_id()
                     : resolveHouseholdId();
+
+            // Require user to delete children first (both CA children and PMTCT HEI) before deleting the mother.
+            try {
+                java.util.List<com.bluecodeltd.ecap.chw.model.Child> activeChildren = IndexPersonDao.getFamilyChildren(secondaryId);
+                if (activeChildren != null && !activeChildren.isEmpty()) {
+                    Toasty.warning(MotherPmtctProfileActivity.this, "Delete the child(ren) before deleting the record", Toast.LENGTH_LONG, true).show();
+                    break;
+                }
+            } catch (Exception ignored) { }
+
             Boolean checkForLinks = PmtctChildDao.hasDeletedHei(primaryId, secondaryId);
             if (checkForLinks == false) {
 
@@ -1060,6 +1149,13 @@ break;
                             return;
                         }
                         saveRegistration(childIndexEventClient, true);
+
+                        // Also soft delete linked index mother + household records
+                        String hhId = (ptctMotherModel != null && !isNullOrEmpty(ptctMotherModel.getHousehold_id()))
+                                ? ptctMotherModel.getHousehold_id()
+                                : resolveHouseholdId();
+                        String motherBaseId = ptctMotherModel != null ? ptctMotherModel.getBase_entity_id() : null;
+                        softDeleteIndexMotherAndHousehold(hhId, motherBaseId);
 
 
                     } catch (Exception e) {

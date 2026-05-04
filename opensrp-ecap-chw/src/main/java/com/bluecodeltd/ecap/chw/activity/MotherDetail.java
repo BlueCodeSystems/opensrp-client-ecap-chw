@@ -44,8 +44,9 @@ import com.bluecodeltd.ecap.chw.dao.MotherDeliveryDao;
 import com.bluecodeltd.ecap.chw.dao.MotherOutcomeDao;
 import com.bluecodeltd.ecap.chw.dao.MotherLongitudinalFollowUpDao;
 import com.bluecodeltd.ecap.chw.dao.MotherPostnatalCareDao;
-import com.bluecodeltd.ecap.chw.dao.EcMotherIndexDao;
-import com.bluecodeltd.ecap.chw.model.EcMotherIndexModel;
+import com.bluecodeltd.ecap.chw.dao.IndexMotherDao;
+import com.bluecodeltd.ecap.chw.dao.PmtctChildDao;
+import com.bluecodeltd.ecap.chw.model.IndexMotherModel;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.MotherChildrenFragment;
 import com.bluecodeltd.ecap.chw.fragment.MotherAncFragment;
@@ -124,7 +125,7 @@ public class MotherDetail extends AppCompatActivity {
     private AlertDialog.Builder deleteBuilder;
     public String vca_id;
     public Household family;
-    private EcMotherIndexModel motherIndex;
+    private IndexMotherModel motherIndex;
     ObjectMapper householdMapper;
 
     @Override
@@ -208,15 +209,13 @@ public class MotherDetail extends AppCompatActivity {
         try {
             String motherBaseId = commonPersonObjectClient.getColumnmaps().get("base_entity_id");
             String hhId = commonPersonObjectClient.getColumnmaps().get("household_id");
-            motherIndex = EcMotherIndexDao.getMotherByBaseEntityId(motherBaseId);
+            // MotherDetail is backed by ec_mother_index (index mother register), not the PMTCT mother table.
+            motherIndex = IndexMotherDao.getIndexMotherByBaseEntityId(motherBaseId);
             if (motherIndex == null && hhId != null) {
-                List<EcMotherIndexModel> mothersByHh = EcMotherIndexDao.getMothers(hhId);
-                if (!mothersByHh.isEmpty()) {
-                    motherIndex = mothersByHh.get(0);
-                }
+                motherIndex = IndexMotherDao.getIndexMotherByHouseholdId(hhId);
             }
         } catch (Exception e) {
-            Timber.w(e, "Unable to load mother index record via EcMotherIndexDao");
+            Timber.w(e, "Unable to load mother index record via IndexMotherDao");
         }
 
         try {
@@ -314,7 +313,7 @@ public class MotherDetail extends AppCompatActivity {
         return  populateMapWithMother(commonPersonObjectClient);
     }
 
-    public EcMotherIndexModel getMotherIndex() {
+    public IndexMotherModel getMotherIndex() {
         return motherIndex;
     }
 
@@ -582,15 +581,26 @@ public class MotherDetail extends AppCompatActivity {
             case R.id.pmtct_prof:
 
                 try {
-                    String baseId = commonPersonObjectClient.getColumnmaps().get("household_id");
-                    PtctMotherModel pmtctMother = getPmtctMotherByBaseEntity(baseId);
-                    if (pmtctMother == null || pmtctMother.getHousehold_id() == null || pmtctMother.getHousehold_id().isEmpty()) {
-                        Toasty.warning(MotherDetail.this, "Mother not enrolled in PMTCT", Toast.LENGTH_LONG, true).show();
-                    } else {
-                        Intent intent = new Intent(this, MotherPmtctProfileActivity.class);
-                        intent.putExtra("client_id", pmtctMother.getHousehold_id());
-                        startActivity(intent);
+                    String householdId = commonPersonObjectClient.getColumnmaps().get("household_id");
+                    String baseEntityId = commonPersonObjectClient.getColumnmaps().get("base_entity_id");
+                    PtctMotherModel pmtctMother = getPmtctMotherByBaseEntity(baseEntityId);
+
+                    // Always allow opening the PMTCT profile; if not yet enrolled, the profile will show limited info.
+                    String targetId = householdId;
+                    if (pmtctMother != null) {
+                        String pmtctId = pmtctMother.getPmtct_id();
+                        if (pmtctId != null && !pmtctId.trim().isEmpty()) {
+                            targetId = pmtctId;
+                        } else if (pmtctMother.getHousehold_id() != null && !pmtctMother.getHousehold_id().trim().isEmpty()) {
+                            targetId = pmtctMother.getHousehold_id();
+                        }
                     }
+
+                    Intent intent = new Intent(this, MotherPmtctProfileActivity.class);
+                    intent.putExtra("client_id", targetId);
+                    intent.putExtra("household_id", householdId);
+                    intent.putExtra("baseId", commonPersonObjectClient);
+                    startActivity(intent);
                 } catch (Exception e) {
                     Timber.e(e);
                     Toasty.error(MotherDetail.this, "Unable to open PMTCT profile", Toast.LENGTH_LONG, true).show();
@@ -665,14 +675,54 @@ public class MotherDetail extends AppCompatActivity {
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MotherDetail.this);
                 Object obj = sp.getAll();
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(obj, Map.class));
-                formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", this.commonPersonObjectClient.getColumnmaps().get("household_id"));
+
+                // Prefill only mother/household context fields (do not prefill child personal details)
+                try {
+                    java.util.Map<String, String> columns = this.commonPersonObjectClient != null ? this.commonPersonObjectClient.getColumnmaps() : null;
+                    java.util.Map<String, String> motherContext = new java.util.HashMap<>();
+                    if (columns != null) {
+                        // Keep these in sync with the read-only context fields in child.json
+                        String[] allowedKeys = new String[]{
+                                "household_id", "province", "district", "ward", "facility", "partner",
+                                "homeaddress", "landmark",
+                                "caregiver_name", "caregiver_phone", "caregiver_birth_date",
+                                "caregiver_hiv_status", "active_on_treatment", "caregiver_art_number"
+                        };
+                        for (String k : allowedKeys) {
+                            String v = columns.get(k);
+                            if (v != null) motherContext.put(k, v);
+                        }
+                    }
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, motherContext);
+                } catch (Exception ignored) { }
 
                 UniqueId uniqueId = getUniqueIdRepository().getNextUniqueId();
                 if (uniqueId == null || uniqueId.getOpenmrsId() == null || uniqueId.getOpenmrsId().isEmpty()) {
                     Toasty.error(MotherDetail.this, "No unique ID available. Please sync first.", Toast.LENGTH_LONG, true).show();
                     return;
                 }
-                vca_id = uniqueId.getOpenmrsId().replaceFirst("^0+(?!$)", "");
+
+                // Enforce 8-digit numeric ID format (e.g. 76788999)
+                String rawId = uniqueId.getOpenmrsId();
+                String digits = rawId.replaceAll("\\D+", "");
+                if (digits.length() > 8) {
+                    digits = digits.substring(digits.length() - 8);
+                } else if (digits.length() < 8) {
+                    digits = String.format(java.util.Locale.US, "%08d", Long.parseLong(digits.isEmpty() ? "0" : digits));
+                }
+                vca_id = digits;
+
+                // Ensure household_id is always set (columnmaps can be empty / contain stale values)
+                String childHouseholdId = null;
+                try {
+                    childHouseholdId = this.commonPersonObjectClient != null && this.commonPersonObjectClient.getColumnmaps() != null
+                            ? this.commonPersonObjectClient.getColumnmaps().get("household_id") : null;
+                } catch (Exception ignored) { }
+                JSONObject householdIdField = getFieldJSONObject(fields(formToBeOpened, STEP1), "household_id");
+                if (householdIdField != null && childHouseholdId != null) {
+                    householdIdField.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
+                    householdIdField.put(JsonFormUtils.VALUE, childHouseholdId);
+                }
 
                 //******** POPULATE JSON FORM WITH CA ID ******//
                 JSONObject stepOneUniqueId = getFieldJSONObject(fields(formToBeOpened, STEP1), "unique_id");
@@ -680,8 +730,6 @@ public class MotherDetail extends AppCompatActivity {
                     stepOneUniqueId.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
                     stepOneUniqueId.put(JsonFormUtils.VALUE, vca_id);
                 }
-
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(commonPersonObjectClient.getColumnmaps(), Map.class));
 
                 break;
 
@@ -904,6 +952,7 @@ public class MotherDetail extends AppCompatActivity {
 
             switch (encounterType) {
                 case "Mother Register":
+                case "Mother Edit":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
@@ -1218,6 +1267,23 @@ public class MotherDetail extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.delete_record) {
+            // Require user to delete all related children first before deleting a mother record.
+            try {
+                String hhId = commonPersonObjectClient != null && commonPersonObjectClient.getColumnmaps() != null
+                        ? commonPersonObjectClient.getColumnmaps().get("household_id") : null;
+                if (hhId != null && !hhId.trim().isEmpty()) {
+                    java.util.List<com.bluecodeltd.ecap.chw.model.Child> activeChildren = IndexPersonDao.getFamilyChildren(hhId);
+                    if (activeChildren != null && !activeChildren.isEmpty()) {
+                        Toasty.warning(MotherDetail.this, "Delete the child(ren) before deleting the mother", Toast.LENGTH_LONG, true).show();
+                        return true;
+                    }
+                    if (PmtctChildDao.hasDeletedHei(hhId)) {
+                        Toasty.warning(MotherDetail.this, "Delete the HEI child(ren) before deleting the mother", Toast.LENGTH_LONG, true).show();
+                        return true;
+                    }
+                }
+            } catch (Exception ignored) { }
+
             deleteBuilder.setMessage("You are about to delete this mother and all her forms.");
             deleteBuilder.setNegativeButton("NO", (dialog, id) -> dialog.cancel());
             deleteBuilder.setPositiveButton("YES", (dialogInterface, i) -> {
@@ -1227,7 +1293,11 @@ public class MotherDetail extends AppCompatActivity {
                     Timber.e(e);
                 }
                 Toasty.success(MotherDetail.this, "Deleted", Toast.LENGTH_LONG, true).show();
-                onBackPressed();
+                Intent returnToMotherIndex = new Intent(MotherDetail.this, MotherIndexActivity.class);
+                returnToMotherIndex.putExtra("refresh", "true");
+                returnToMotherIndex.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(returnToMotherIndex);
+                finish();
             });
             AlertDialog alert = deleteBuilder.create();
             alert.setTitle("Alert");
@@ -1239,7 +1309,7 @@ public class MotherDetail extends AppCompatActivity {
 
     public void deleteMotherRecord() throws Exception {
         String baseEntityId = commonPersonObjectClient.getColumnmaps().get("base_entity_id");
-        EcMotherIndexModel mother = EcMotherIndexDao.getMotherByBaseEntityId(baseEntityId);
+        IndexMotherModel mother = IndexMotherDao.getIndexMotherByBaseEntityId(baseEntityId);
         if (mother == null) return;
         mother.setDeleted("1");
         FormUtils formUtils = new FormUtils(this);
