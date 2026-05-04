@@ -247,7 +247,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "sub_population",
         "type": "check_box",
-        "read_only": true,
+        "read_only": false,
         "label": "Sub Population :",
         "options": [
           {

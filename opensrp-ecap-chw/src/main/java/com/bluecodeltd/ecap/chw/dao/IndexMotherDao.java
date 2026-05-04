@@ -9,6 +9,17 @@ import java.util.List;
 
 public class IndexMotherDao extends AbstractDao {
 
+    public static IndexMotherModel getIndexMotherByBaseEntityId(String baseEntityId) {
+        if (baseEntityId == null || baseEntityId.trim().isEmpty()) {
+            return null;
+        }
+        String sql = "SELECT * FROM ec_mother_index WHERE base_entity_id = '" + baseEntityId + "' " +
+                "AND (deleted IS NULL OR deleted <> '1')";
+        List<IndexMotherModel> values = AbstractDao.readData(sql, getIndexMotherModelMap());
+        if (values == null || values.isEmpty()) return null;
+        return values.get(0);
+    }
+
     public static IndexMotherModel getIndexMotherByHouseholdId(String householdId) {
         String sql = "SELECT * FROM ec_mother_index WHERE household_id = '" + householdId + "'";
         List<IndexMotherModel> values = AbstractDao.readData(sql, getIndexMotherModelMap());
@@ -63,7 +74,7 @@ public class IndexMotherDao extends AbstractDao {
             record.setMother_children_age_band(getCursorValue(c,"mother_children_age_band"));
             // Optional/legacy columns; AbstractDao.getCursorValue safely returns null if absent
             record.setMother_breastfeeding(getCursorValue(c, "mother_breastfeeding"));
-            record.setPregnant_mother(getCursorValue(c, "pregnant_mother"));
+            record.setPregnant_mother(getCursorValue(c, "mother_pregnant"));
             record.setMother_age_range(getCursorValue(c, "mother_age_range"));
             DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
