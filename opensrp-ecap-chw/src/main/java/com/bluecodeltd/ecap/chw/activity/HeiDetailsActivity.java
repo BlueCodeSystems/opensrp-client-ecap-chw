@@ -70,6 +70,7 @@ import com.bluecodeltd.ecap.chw.model.VcaScreeningModel;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.model.WeServiceVcaModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.PmtctChildClientIndexUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -700,12 +701,14 @@ public class HeiDetailsActivity extends AppCompatActivity {
 
                         JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
 
-                        if (isEditMode) {
+                        if (isEditMode && existingClientJsonObject != null) {
                             JSONObject mergedClientJsonObject =
                                     org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
+                            PmtctChildClientIndexUtils.mirrorClientIndexAttributes(mergedClientJsonObject, event);
                             ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
 
                         } else {
+                            PmtctChildClientIndexUtils.mirrorClientIndexAttributes(newClientJsonObject, event);
                             ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
                         }
 
@@ -715,9 +718,16 @@ public class HeiDetailsActivity extends AppCompatActivity {
                         Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
                         Date currentSyncDate = new Date(lastUpdatedAtDate);
 
-                        //Get saved event for processing
                         List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
-                        getClientProcessorForJava().processClient(savedEvents);
+                        if (savedEvents == null || savedEvents.isEmpty()) {
+                            savedEvents = ecSyncHelper.getEvents(currentSyncDate, BaseRepository.TYPE_Unprocessed);
+                        }
+                        if (savedEvents != null && !savedEvents.isEmpty()) {
+                            getClientProcessorForJava().processClient(savedEvents);
+                        } else {
+                            Timber.w("No saved events found for PMTCT monitoring form %s / %s",
+                                    event.getFormSubmissionId(), event.getBaseEntityId());
+                        }
                         getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
 
 

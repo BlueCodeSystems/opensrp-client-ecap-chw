@@ -29,7 +29,7 @@ public class PMTCTMotherDao extends AbstractDao {
     }
 
     public static String countAllMotherIndexRecords() {
-        String sql = "SELECT COUNT(*) v FROM ec_mother_index";
+        String sql = "SELECT COUNT(*) v FROM ec_mother_index WHERE (deleted IS NULL OR deleted != '1')";
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
         List<String> values = AbstractDao.readData(sql, dataMap);
         if (values == null || values.isEmpty()) return "0";

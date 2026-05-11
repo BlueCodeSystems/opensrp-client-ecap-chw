@@ -13,6 +13,10 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
@@ -59,7 +63,15 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Sentry.captureMessage("testing SDK setup");
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+        getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(this, R.color.chw_family_primary_dark));
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content), (v, insets) -> {
+            Insets statusBar = insets.getInsets(WindowInsetsCompat.Type.statusBars());
+            v.setPadding(0, statusBar.top, 0, 0);
+            return insets;
+        });
         txtUsername = findViewById(R.id.login_user_name_edit_text);
         txtPassword = findViewById(R.id.login_password_edit_text);
         exportDatabaseLauncher = registerForActivityResult(
@@ -185,15 +197,6 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        if (BuildConfig.DEBUG) {
-            if (hasPinLogin() && !pinLogger.isFirstAuthentication()) {
-                menu.add(getString(R.string.reset_pin_login));
-            }
-//            menu.add(getString(R.string.export_database));
-            return true;
-        }
-        menu.clear();
         return false;
     }
 
