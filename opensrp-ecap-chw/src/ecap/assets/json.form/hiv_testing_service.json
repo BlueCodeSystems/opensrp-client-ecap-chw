@@ -370,7 +370,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "ecap_id",
         "type": "edit_text",
-        "hint": " ECAP PLUS (If Applicable)",
+        "hint": " ECAP II (If Applicable)",
         "read_only": "false",
         "relevance": {
           "step1:testing_modality": {

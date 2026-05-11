@@ -14259,6 +14259,13 @@
           }
         },
         {
+          "column_name": "male_result_of_hiv_test",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.male_result_of_hiv_test"
+          }
+        },
+        {
           "column_name": "treatment_initiated",
           "type": "Client",
           "json_mapping": {

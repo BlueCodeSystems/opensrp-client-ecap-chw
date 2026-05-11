@@ -41,6 +41,7 @@ public class PmtctMotherPostnatalDao extends AbstractDao {
             record.setTb_screening_symptoms_10plus(getCursorValue(c,"tb_screening_symptoms_10plus"));
             record.setOther_tb_symptom_10plus(getCursorValue(c,"other_tb_symptom_10plus"));
             record.setComments_tb_10plus(getCursorValue(c,"comments_tb_10plus"));
+            record.setMale_result_of_hiv_test(getCursorValue(c,"male_result_of_hiv_test"));
             record.setDelete_status(getCursorValue(c, "delete_status"));
 
             DaoModelFieldMapper.captureAdditionalFields(c, record);

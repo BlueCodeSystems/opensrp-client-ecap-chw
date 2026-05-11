@@ -137,13 +137,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "ecap_id",
         "type": "edit_text",
-        "hint": " ECAP PLUS ID (If Applicable)",
+        "hint": " ECAP II ID (If Applicable)",
         "read_only": "false"
       },
       {
         "key": "sub_population",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "sub_population",
         "type": "check_box",
         "read_only": false,
@@ -153,24 +153,20 @@
         ],
         "options": [
           {
-            "key": "subpop1",
-            "text": "Children/Adolescents Living with HIV (C/ALHIV)",
-            "value": "false"
+            "key": "Children/Adolescents Living with HIV (C/ALHIV)",
+            "text": "Children/Adolescents Living with HIV (C/ALHIV)"
           },
           {
-            "key": "subpop2",
-            "text": "HIV Exposed Infants (HEIs)",
-            "value": "false"
+            "key": "HIV Exposed Infants (HEIs)",
+            "text": "HIV Exposed Infants (HEIs)"
           },
           {
-            "key": "subpop3",
-            "text": "Children of Women Living with HIV",
-            "value": "false"
+            "key": "Children of Women Living with HIV",
+            "text": "Children of Women Living with HIV"
           },
           {
-            "key": "subpop5",
-            "text": "Survivors of Sexual Violence",
-            "value": "false"
+            "key": "Survivors of Sexual Violence",
+            "text": "Survivors of Sexual Violence"
           },
           {
             "key": "Siblings of the Index and other family members",
@@ -330,7 +326,7 @@
         "openmrs_entity_id": "facility",
         "type": "edit_text",
         "hint": "Facility",
-        "read_only": "true"
+        "read_only": "false"
       },
       {
         "key": "phone",
@@ -536,7 +532,7 @@
           }
         ],
         "v_required": {
-          "value": true,
+          "value": false,
           "err": "This field is Required"
         },
         "relevance": {

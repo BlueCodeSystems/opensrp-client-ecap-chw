@@ -5,6 +5,7 @@ public class PmtctMotherPostnatalModel {
     private String relational_id;
     private String pmtct_id;
     private String caregiver_name;
+    private String male_result_of_hiv_test;
     private String household_id;
     private String date_of_st_post_natal_care;
     private String mother_tested_for_hiv;
@@ -179,6 +180,14 @@ public class PmtctMotherPostnatalModel {
     public void setAdditionalField(String key, String value) {
         if (key == null) return;
         additionalFields.put(key, value);
+    }
+
+    public String getMale_result_of_hiv_test() {
+        return male_result_of_hiv_test;
+    }
+
+    public void setMale_result_of_hiv_test(String male_result_of_hiv_test) {
+        this.male_result_of_hiv_test = male_result_of_hiv_test;
     }
 }
 
