@@ -51,7 +51,7 @@ public class EcMotherIndexDao extends AbstractDao {
     }
 
     public static String countAllPmtctMothers() {
-        String sql = "SELECT COUNT(*) v FROM ec_pmtct_mother WHERE delete_status IS NULL";
+        String sql = "SELECT COUNT(*) v FROM ec_pmtct_mother WHERE (delete_status IS NULL OR delete_status <> '1') AND (first_name IS NOT NULL OR last_name IS NOT NULL OR caregiver_name IS NOT NULL)";
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
         List<String> values = AbstractDao.readData(sql, dataMap);
         if (values == null || values.isEmpty()) return "0";
