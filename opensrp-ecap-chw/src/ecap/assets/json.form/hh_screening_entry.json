@@ -319,8 +319,8 @@
 
           },
           {
-            "key": "HIV Negative PBFW",
-            "text": "HIV Negative PBFW"
+            "key": "Negative PBFW",
+            "text": "Negative PBFW"
 
           },
           {
@@ -679,6 +679,10 @@
             "text": "No"
           }
         ],
+        "v_required": {
+          "value": true,
+          "err": "Is the primary Caregiver on ART"
+        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -712,10 +716,9 @@
         "hint": "Caregiver`s ART Number",
         "edit_type": "name",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
+          "step2:active_on_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         },
         "v_required": {
@@ -827,9 +830,9 @@
           "err": "This field is Required"
         },
         "relevance": {
-          "step2:date_of_last_viral_load": {
-            "type": "date",
-            "ex": "greaterThanEqualTo(., step2:date_of_last_viral_load)"
+          "step2:active_on_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         }
       },
@@ -1281,25 +1284,7 @@
           }
         }
       },
-      {
-        "key": "subpop6_toast",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop",
-        "value": "true",
-        "type": "toaster_notes",
-        "text": "Based on your selection, this Index CA has been enrolled as those whose Primary Caregivers are HIV Female Sex Workers (FSWs)",
-        "toaster_type": "info",
-        "toaster_info_text": "Children/Adolescents whose Primary Caregivers are HIV Female Sex Workers (FSWs)",
-        "toaster_info_title": "Sub Population",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
-          }
-        }
-      },
+
       {
         "key": "subpop2_toast",
         "openmrs_entity_parent": "",
@@ -1329,25 +1314,6 @@
         "text": "Based on your selection, this Index CA has been enrolled into the Sub Population : Children of Women Living with HIV (C/WLHIV)",
         "toaster_type": "info",
         "toaster_info_text": "Children of Women Living with HIV (C/WLHIV)",
-        "toaster_info_title": "Sub Population",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "subpop4_toast",
-        "value": "true",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop4",
-        "type": "toaster_notes",
-        "text": "Based on your selection, this Index CA has been enrolled into the Sub Population : At Risk Adolescent Girls and Young Women (AGYW)",
-        "toaster_type": "info",
-        "toaster_info_text": "At Risk Adolescent Girls and Young Women (AGYW)",
         "toaster_info_title": "Sub Population",
         "relevance": {
           "rules-engine": {

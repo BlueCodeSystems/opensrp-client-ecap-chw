@@ -288,6 +288,35 @@
         }
       },
       {
+        "key": "male_result_of_hiv_test",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "male_result_of_hiv_test",
+        "type": "native_radio",
+        "label": "Result of HIV Test (R/NR)",
+        "options": [
+          {
+            "key": "R",
+            "text": "R"
+          },
+          {
+            "key": "NR",
+            "text": "NR"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:male_partner_tested": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
+      {
         "key": "refer_toaster",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
