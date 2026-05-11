@@ -38,6 +38,16 @@ if (project.rootProject.file("local.properties").exists()) {
     githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
 }
 
+// Signing config: env vars take priority (CI), then local.properties
+def lp = new Properties()
+def lpFile = rootProject.file("local.properties")
+if (lpFile.exists()) lp.load(new FileInputStream(lpFile))
+
+def SIGNING_STORE_FILE     = System.getenv('SIGNING_STORE_FILE')     ?: lp.getProperty('signing.store.file')     ?: findProperty('RELEASE_STORE_FILE')
+def SIGNING_STORE_PASSWORD = System.getenv('SIGNING_STORE_PASSWORD') ?: lp.getProperty('signing.store.password') ?: findProperty('RELEASE_STORE_PASSWORD') ?: ""
+def SIGNING_KEY_ALIAS      = System.getenv('SIGNING_KEY_ALIAS')      ?: lp.getProperty('signing.key.alias')      ?: findProperty('RELEASE_KEY_ALIAS')      ?: ""
+def SIGNING_KEY_PASSWORD   = System.getenv('SIGNING_KEY_PASSWORD')   ?: lp.getProperty('signing.key.password')   ?: findProperty('RELEASE_KEY_PASSWORD')   ?: ""
+
 
 android {
     namespace  = "com.bluecodeltd.ecap.chw"
@@ -84,6 +94,18 @@ android {
         buildConfigField "String", "THINKMD_END_POINT", '"/#/start"'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+        // CI-friendly versionCode: use GITHUB_RUN_NUMBER + offset when available
+        def ghRun = System.getenv('GITHUB_RUN_NUMBER')
+        if (ghRun != null) {
+            try { versionCode 100000 + Integer.parseInt(ghRun) } catch (Exception ignored) {}
+        }
+        def vcProp = project.findProperty('VERSION_CODE') ?: project.findProperty('versionCode')
+        if (vcProp != null) {
+            try { versionCode Integer.parseInt(vcProp.toString()) } catch (Exception ignored) {}
+        }
+        def vnProp = project.findProperty('VERSION_NAME') ?: project.findProperty('versionName')
+        if (vnProp != null) { versionName vnProp.toString() }
+
         if (project.rootProject.file("local.properties").exists()) {
 
             Properties properties = new Properties()
@@ -128,14 +150,13 @@ android {
 
     signingConfigs {
         release {
-            def storeFileProp = findProperty("RELEASE_STORE_FILE")
-            if (storeFileProp) {
-                storeFile = rootProject.file(storeFileProp)
-                storePassword = findProperty("RELEASE_STORE_PASSWORD") ?: ""
-                keyAlias = findProperty("RELEASE_KEY_ALIAS") ?: ""
-                keyPassword = findProperty("RELEASE_KEY_PASSWORD") ?: ""
+            if (SIGNING_STORE_FILE) {
+                storeFile file(SIGNING_STORE_FILE)
+                if (SIGNING_STORE_PASSWORD) storePassword SIGNING_STORE_PASSWORD
+                if (SIGNING_KEY_ALIAS)      keyAlias SIGNING_KEY_ALIAS
+                if (SIGNING_KEY_PASSWORD)   keyPassword SIGNING_KEY_PASSWORD
             } else {
-                println("Release signing config not set; provide RELEASE_* properties to sign builds.")
+                println("Release signing config not set; provide SIGNING_* env vars or signing.* in local.properties.")
             }
         }
     }
@@ -163,7 +184,7 @@ android {
             buildConfigField "int", "STOCK_USAGE_REPORT_MINUTES", '1440'
             buildConfigField "boolean", "USE_UNIFIED_REFERRAL_APPROACH", "true"
             buildConfigField "boolean", "BUILD_FOR_BORESHA_AFYA_SOUTH", "false"
-            if (signingConfigs.release?.storeFile != null) {
+            if (SIGNING_STORE_FILE) {
                 signingConfig signingConfigs.release
             }
         }
