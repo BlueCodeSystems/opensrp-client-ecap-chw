@@ -140,6 +140,7 @@ public class VCAServiceReportDao extends AbstractDao {
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setUnique_id(getCursorValue(c, "unique_id"));
             record.setIs_hiv_positive(getCursorValue(c, "is_hiv_positive"));
+            record.setPregnant_breastfeeding(getCursorValue(c, "pregnant_breastfeeding"));
             record.setDate(getCursorValue(c, "date"));
             record.setArt_clinic(getCursorValue(c, "art_clinic"));
             record.setDate_last_vl(getCursorValue(c, "date_last_vl"));
