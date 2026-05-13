@@ -177,6 +177,18 @@
             android:src="@drawable/ic_edit"
             app:tint="#696969" />
 
+        <!-- Delete button -->
+        <ImageButton
+            android:id="@+id/delete_record"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="4dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Delete"
+            android:padding="4dp"
+            android:src="@drawable/delete_icon"
+            app:tint="#696969" />
+
     </LinearLayout>
 
     <!-- Subtle divider below the row -->

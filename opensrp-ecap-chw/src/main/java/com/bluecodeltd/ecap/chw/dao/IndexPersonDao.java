@@ -355,15 +355,20 @@ public class IndexPersonDao  extends AbstractDao {
         return vcaIds != null && !vcaIds.isEmpty();
     }
     public static boolean hasAtLeastOneVCAUnderFiveYearsOld(String householdID) {
-
-        String sql = "SELECT unique_id, adolescent_birthdate, household_id " +
-                "FROM ec_client_index " +
-                "WHERE (strftime('%Y', 'now') - substr(adolescent_birthdate, 7, 4)) <= 5 " +
-                "AND household_id = '" + householdID + "' AND (deleted IS NULL OR deleted <> '1')";
-
-        List<String> ids = AbstractDao.readData(sql, c -> getCursorValue(c, "unique_id"));
-
-        return ids != null && !ids.isEmpty();
+        String sql = "SELECT COUNT(*) AS child_count FROM ec_client_index " +
+                "WHERE ((strftime('%Y', 'now') - substr(adolescent_birthdate, 7, 4)) * 12 + " +
+                "       (strftime('%m', 'now') - substr(adolescent_birthdate, 4, 2))) <= 60 " +
+                "AND household_id = '" + householdID + "' " +
+                "AND (deleted IS NULL OR deleted <> '1')";
+        return getCount(sql, "child_count") > 0;
+    }
+    private static int getCount(String sql, String alias) {
+        AbstractDao.DataMap<Integer> dataMap = c -> getCursorIntValue(c, alias);
+        List<Integer> values = AbstractDao.readData(sql, dataMap);
+        if (values == null || values.isEmpty() || values.get(0) == null) {
+            return 0;
+        }
+        return values.get(0);
     }
     public static String countTestedAbove15Children(String householdID){
 

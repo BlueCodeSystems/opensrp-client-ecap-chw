@@ -38,6 +38,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.bluecodeltd.ecap.chw.dao.NutritionAssessmentInterventionDao;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
@@ -985,57 +986,25 @@ public class HouseholdDetails extends AppCompatActivity {
 
                         Boolean hasAtLeastOneVCAUnderFiveYearsOld = IndexPersonDao.hasAtLeastOneVCAUnderFiveYearsOld(householdId);
 
-                        Boolean hasAtLeastOneVCAFiveMonthsAndBelow = IndexPersonDao.hasAtLeastOneVCAFiveMonthsAndBelow(householdId);
-                        Boolean hasAtLeastOneVCABetweenSixMonthsAndFiveYearsOld = IndexPersonDao.hasAtLeastOneVCABetweenSixMonthsAndFiveYearsOld(householdId);
-                        Boolean checkForMuac = MuacDao.areAllMuacGreen(householdId);
-                        Boolean nutritionStatus = VcaVisitationDao.getNutritionStatusForAgeFiveAndBelowByHousehold(householdId);
-
                         JSONObject malnutrition = getFieldJSONObject(fields(graduationForm, "step5"), "undernourished");
                         JSONObject underFiveToast = getFieldJSONObject(fields(graduationForm, "step5"), "toaster_underFive");
 
-                        // Check for children between 6 months and 5 years
-                        if (hasAtLeastOneVCABetweenSixMonthsAndFiveYearsOld) {
-//                            if (checkForMuac && nutritionStatus) {
-//                                malnutrition.put(JsonFormUtils.VALUE, "yes");
-//                            } else {
-//                                malnutrition.put(JsonFormUtils.VALUE, "no");
-//                            }
-                            // Remove N/A option
-//                            JSONArray options = malnutrition.getJSONArray(OPTIONS_FIELD_NAME);
-//                            for (int i = 0; i < options.length(); i++) {
-//                                JSONObject option = options.getJSONObject(i);
-//                                if (option.getString("key").equals("N/A")) {
-//                                    options.remove(i);
-//                                    break;
-//                                }
-//                            }
-                        }
-
-                        // Check for children 5 months and below
-                        if (hasAtLeastOneVCAFiveMonthsAndBelow) {
-                            if (nutritionStatus) {
-                                malnutrition.put(JsonFormUtils.VALUE, "yes");
-                            } else {
-                                malnutrition.put(JsonFormUtils.VALUE, "no");
-                            }
-                            // Remove N/A option
+                        if (hasAtLeastOneVCAUnderFiveYearsOld) {
+                            boolean allWellNourished = NutritionAssessmentInterventionDao.areAllUnderFiveChildrenWellNourished(householdId);
+                            malnutrition.put(JsonFormUtils.VALUE, allWellNourished ? "yes" : "no");
                             JSONArray options = malnutrition.getJSONArray(OPTIONS_FIELD_NAME);
                             for (int i = 0; i < options.length(); i++) {
-                                JSONObject option = options.getJSONObject(i);
-                                if (option.getString("key").equals("N/A")) {
+                                if (options.getJSONObject(i).getString("key").equals("N/A")) {
                                     options.remove(i);
                                     break;
                                 }
                             }
-                        }
-
-                        // If no children in either age group
-                        if (!hasAtLeastOneVCABetweenSixMonthsAndFiveYearsOld && !hasAtLeastOneVCAFiveMonthsAndBelow) {
+                        } else {
                             malnutrition.put(JsonFormUtils.READ_ONLY, true);
                             malnutrition.put(JsonFormUtils.VALUE, "N/A");
                             underFiveToast.put("type", "toaster_notes");
                             underFiveToast.put("text", householdLabel +
-                                    " does not have any adolescents aged 5 and below who need to be assessed for undernourishment");
+                                    " does not have any children aged 5 and below who need to be assessed for undernourishment");
                         }
 
                         Threading.main(() -> {
@@ -1047,45 +1016,45 @@ public class HouseholdDetails extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                } else {
-                    // List to store error messages for toasts and logging
-                    List<String> errorMessages = new ArrayList<>();
-
-                    // Collect error messages for failed conditions
-                    if (!areAllVcasVisited) {
-                        errorMessages.add("Conduct visits for all CAs in the household.");
-                    }
-                    if (!areAllVcasAssessed) {
-                        errorMessages.add("Complete vulnerability assessments for all CAs.");
-                    }
-                    if (!hasVisitsByID) {
-                        errorMessages.add("Record at least one caregiver visit for the household.");
-                    }
-                    if (!hasCaregiverAssessment) {
-                        errorMessages.add("Complete the caregiver household assessment.");
-                    }
-                    if (!hasHouseholdServices) {
-                        errorMessages.add("Provide household services as required.");
-                    }
-                    if (!areAllVcasServiced) {
-                        errorMessages.add("Ensure all CAs have received required services.");
-                    }
-
-                    Log.e("GraduationCheck", "Failed conditions: " + String.join(", ", errorMessages));
-
-                    // Display each error message as a separate toast
-                    Threading.main(() -> {
-                        if (isFinishing()) return;
-                        if (!errorMessages.isEmpty()) {
-                            for (String message : errorMessages) {
-                                Toasty.error(HouseholdDetails.this, message, Toast.LENGTH_LONG, true).show();
-                            }
                         } else {
-                            // Fallback message if no specific conditions are identified (unlikely)
-                            Toasty.error(HouseholdDetails.this, "Cannot proceed with graduation. Please check household requirements.", Toast.LENGTH_LONG, true).show();
+                            // List to store error messages for toasts and logging
+                            List<String> errorMessages = new ArrayList<>();
+
+                            // Collect error messages for failed conditions
+                            if (!areAllVcasVisited) {
+                                errorMessages.add("Conduct visits for all VCAs in the household.");
+                            }
+                            if (!areAllVcasAssessed) {
+                                errorMessages.add("Complete vulnerability assessments for all VCAs.");
+                            }
+                            if (!hasVisitsByID) {
+                                errorMessages.add("Record at least one caregiver visit for the household.");
+                            }
+                            if (!hasCaregiverAssessment) {
+                                errorMessages.add("Complete the caregiver household assessment.");
+                            }
+                            if (!hasHouseholdServices) {
+                                errorMessages.add("Provide household services as required.");
+                            }
+                            if (!areAllVcasServiced) {
+                                errorMessages.add("Ensure all VCAs have received required services.");
+                            }
+
+                            Log.e("GraduationCheck", "Failed conditions: " + String.join(", ", errorMessages));
+
+                            // Display each error message as a separate toast
+                            Threading.main(() -> {
+                                if (isFinishing()) return;
+                                if (!errorMessages.isEmpty()) {
+                                    for (String message : errorMessages) {
+                                        Toasty.error(HouseholdDetails.this, message, Toast.LENGTH_LONG, true).show();
+                                    }
+                                } else {
+                                    // Fallback message if no specific conditions are identified (unlikely)
+                                    Toasty.error(HouseholdDetails.this, "Cannot proceed with graduation. Please check household requirements.", Toast.LENGTH_LONG, true).show();
+                                }
+                            });
                         }
-                    });
-                }
                     });
                 break;
 
