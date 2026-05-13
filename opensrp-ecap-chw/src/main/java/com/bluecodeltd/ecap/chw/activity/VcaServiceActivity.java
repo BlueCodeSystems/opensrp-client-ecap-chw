@@ -645,7 +645,14 @@ public class VcaServiceActivity extends AppCompatActivity {
             if (v.getId() == R.id.hh_service_link) {
 
                 Intent i = new Intent(this, HouseholdServicesOnlyActivity.class);
-                i.putExtra("householdId", household_id);
+                String resolvedHouseholdId = household_id;
+                try {
+                    EcClientIndexSummary summary = IndexPersonDao.getClientSummaryByUniqueId(intent_vcaid);
+                    if (summary != null && !TextUtils.isEmpty(summary.getHouseholdId())) {
+                        resolvedHouseholdId = summary.getHouseholdId();
+                    }
+                } catch (Exception ignored) {}
+                i.putExtra("householdId", resolvedHouseholdId);
                 i.putExtra("cname", c_name);
                 startActivity(i);
 

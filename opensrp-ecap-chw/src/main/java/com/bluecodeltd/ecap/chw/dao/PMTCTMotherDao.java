@@ -63,8 +63,14 @@ public class PMTCTMotherDao extends AbstractDao {
         }
 
         // Some records key the PMTCT mother by pmtct_id, others by household_id.
-        String sql = "SELECT * FROM ec_pmtct_mother WHERE (household_id = '" + pmtctID + "' OR pmtct_id = '" + pmtctID + "') " +
-                "AND (delete_status IS NULL OR delete_status <> '1')";
+        // Also support lookups by household_id (ec_household.household_id) when the PMTCT record was keyed by a VCA unique_id.
+        String sql = "SELECT * FROM ec_pmtct_mother WHERE (" +
+                "(household_id = '" + pmtctID + "' OR pmtct_id = '" + pmtctID + "') " +
+                "OR (household_id IN (SELECT DISTINCT unique_id FROM ec_client_index WHERE household_id = '" + pmtctID + "' " +
+                "AND (deleted IS NULL OR deleted <> '1') AND unique_id IS NOT NULL AND TRIM(unique_id) <> '') " +
+                "OR pmtct_id IN (SELECT DISTINCT unique_id FROM ec_client_index WHERE household_id = '" + pmtctID + "' " +
+                "AND (deleted IS NULL OR deleted <> '1') AND unique_id IS NOT NULL AND TRIM(unique_id) <> ''))" +
+                ") AND (delete_status IS NULL OR delete_status <> '1')";
 
         List<PtctMotherModel> values = AbstractDao.readData(sql, getPtctMotherModelMap());
 
@@ -80,8 +86,13 @@ public class PMTCTMotherDao extends AbstractDao {
         if (isNullOrEmpty(householdOrPmtctId)) {
             return false;
         }
-        String sql = "SELECT COUNT(*) v FROM ec_pmtct_mother WHERE (household_id = '" + householdOrPmtctId + "' OR pmtct_id = '" + householdOrPmtctId + "') " +
-                "AND (delete_status IS NULL OR delete_status <> '1')";
+        String sql = "SELECT COUNT(*) v FROM ec_pmtct_mother WHERE (" +
+                "(household_id = '" + householdOrPmtctId + "' OR pmtct_id = '" + householdOrPmtctId + "') " +
+                "OR (household_id IN (SELECT DISTINCT unique_id FROM ec_client_index WHERE household_id = '" + householdOrPmtctId + "' " +
+                "AND (deleted IS NULL OR deleted <> '1') AND unique_id IS NOT NULL AND TRIM(unique_id) <> '') " +
+                "OR pmtct_id IN (SELECT DISTINCT unique_id FROM ec_client_index WHERE household_id = '" + householdOrPmtctId + "' " +
+                "AND (deleted IS NULL OR deleted <> '1') AND unique_id IS NOT NULL AND TRIM(unique_id) <> ''))" +
+                ") AND (delete_status IS NULL OR delete_status <> '1')";
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
         List<String> values = AbstractDao.readData(sql, dataMap);
         if (values == null || values.isEmpty()) {
@@ -154,6 +165,7 @@ public class PMTCTMotherDao extends AbstractDao {
             record.setHousehold_id(getCursorValue(c, "household_id"));
             record.setNearest_landmark(getCursorValue(c, "nearest_landmark"));
             record.setMothers_phone(getCursorValue(c, "mothers_phone"));
+            record.setSource_from(getCursorValue(c, "source_from"));
             record.setAgyw_date_1st_visit(getCursorValue(c, "agyw_date_1st_visit"));
             record.setAgyw_gestation_age_in_weeks(getCursorValue(c, "agyw_gestation_age_in_weeks"));
             record.setAgyw_hiv_tested(getCursorValue(c, "agyw_hiv_tested"));

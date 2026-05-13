@@ -25,6 +25,7 @@ public class PtctMotherModel {
     private String household_id;
     private String nearest_landmark;
     private String mothers_phone;
+    private String source_from;
     private String agyw_date_1st_visit;
     private String agyw_gestation_age_in_weeks;
     private String agyw_hiv_tested;
@@ -241,6 +242,14 @@ public class PtctMotherModel {
 
     public void setMothers_phone(String mothers_phone) {
         this.mothers_phone = mothers_phone;
+    }
+
+    public String getSource_from() {
+        return source_from;
+    }
+
+    public void setSource_from(String source_from) {
+        this.source_from = source_from;
     }
 
     public String getAgyw_date_1st_visit() {

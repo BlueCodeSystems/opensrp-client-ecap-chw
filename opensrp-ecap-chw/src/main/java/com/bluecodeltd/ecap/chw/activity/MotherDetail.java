@@ -37,6 +37,7 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
+import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.MotherAncDao;
@@ -569,8 +570,22 @@ public class MotherDetail extends AppCompatActivity {
 
 //                } else {
 
+                    String rawHouseholdId = commonPersonObjectClient.getColumnmaps().get("household_id");
+                    String sourceFrom = commonPersonObjectClient.getColumnmaps().get("source_from");
+                    String resolvedHouseholdId = rawHouseholdId;
+
+                    if ("service_report_vca".equalsIgnoreCase(sourceFrom) && rawHouseholdId != null && !rawHouseholdId.trim().isEmpty()) {
+                        try {
+                            com.bluecodeltd.ecap.chw.model.EcClientIndexSummary summary =
+                                    IndexPersonDao.getClientSummaryByUniqueId(rawHouseholdId);
+                            if (summary != null && summary.getHouseholdId() != null && !summary.getHouseholdId().trim().isEmpty()) {
+                                resolvedHouseholdId = summary.getHouseholdId();
+                            }
+                        } catch (Exception ignored) {}
+                    }
+
                     Intent householdIntent = new Intent(this, HouseholdDetails.class);
-                    householdIntent.putExtra("householdId",  commonPersonObjectClient.getColumnmaps().get("household_id"));
+                    householdIntent.putExtra("householdId", resolvedHouseholdId);
                     startActivity(householdIntent);
 
 
