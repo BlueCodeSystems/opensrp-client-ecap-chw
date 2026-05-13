@@ -90,6 +90,13 @@
         "type": "hidden"
       },
       {
+        "key": "vca_gender",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vca_gender",
+        "type": "hidden"
+      },
+      {
         "key": "is_hiv_positive",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -232,6 +239,30 @@
           "step1:child_mmd": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "pregnant_breastfeeding",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pregnant_breastfeeding",
+        "type": "native_radio",
+        "label": "Are you pregnant/breastfeeding?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "step1:vca_gender": {
+            "type": "string",
+            "ex": "equalTo(., \"female\")"
           }
         }
       },

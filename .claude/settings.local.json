@@ -11,7 +11,14 @@
       "Bash(git ls-tree *)",
       "Bash(git commit -m ' *)",
       "Bash(git push *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "PowerShell(Get-ChildItem -Path \"D:\\\\ECAP-PLUS-APP\" -Directory | Select-Object -First 20 | ForEach-Object { $_.Name })",
+      "PowerShell(Get-ChildItem *)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\Bluecode\\\\Documents\\\\opensrp-client-ecap-chw\" -Recurse -Filter \"ec_client_fields.json\" -ErrorAction SilentlyContinue)",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(grep -E \"\\\\.\\(java|kt\\)$\")",
+      "Bash(xargs grep -l \"date\\\\|time\")",
+      "Bash(Get-ChildItem -Path \"D:\\\\ECAP-PLUS-APP\" -Filter \"build.gradle*\" -Recurse)"
     ]
   }
 }

@@ -30,6 +30,7 @@ import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.TbScreeningDao;
 import com.bluecodeltd.ecap.chw.dao.VCAServiceReportDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
+import com.bluecodeltd.ecap.chw.model.EcClientIndexSummary;
 import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.TbScreeningModel;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
@@ -207,10 +208,38 @@ public class VcaServiceActivity extends AppCompatActivity {
                             FormUtils formUtils = new FormUtils(this);
                             JSONObject indexRegisterForm = formUtils.getFormJson("service_report_vca");
 
-                            JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
+                            JSONArray step1Fields = fields(indexRegisterForm, STEP1);
+
+                            JSONObject cId = getFieldJSONObject(step1Fields, "unique_id");
                             cId.put("value", hh_id.getText().toString());
 
-                            JSONObject hiv = getFieldJSONObject(fields(indexRegisterForm, STEP1), "is_hiv_positive");
+                            EcClientIndexSummary summary = null;
+                            try { summary = IndexPersonDao.getClientSummaryByUniqueId(intent_vcaid); } catch (Exception ignored) {}
+                            String normalizedGender = summary != null && !TextUtils.isEmpty(summary.getGender())
+                                    ? summary.getGender().trim().toLowerCase(Locale.ENGLISH)
+                                    : null;
+                            if (!TextUtils.isEmpty(normalizedGender)) {
+                                JSONObject genderField = getFieldJSONObject(step1Fields, "vca_gender");
+                                genderField.put("value", normalizedGender);
+                            }
+
+                            Integer ageYears = summary != null ? getAgeInYearsFromBirthdate(summary.getAdolescentBirthdate()) : null;
+                            boolean shouldShowPregnantBreastfeeding =
+                                    "female".equalsIgnoreCase(normalizedGender) &&
+                                            ageYears != null &&
+                                            ageYears >= 10 &&
+                                            ageYears <= 25;
+
+                            if (!shouldShowPregnantBreastfeeding) {
+                                for (int i = step1Fields.length() - 1; i >= 0; i--) {
+                                    JSONObject field = step1Fields.optJSONObject(i);
+                                    if (field != null && "pregnant_breastfeeding".equals(field.optString(JsonFormConstants.KEY))) {
+                                        step1Fields.remove(i);
+                                    }
+                                }
+                            }
+
+                            JSONObject hiv = getFieldJSONObject(step1Fields, "is_hiv_positive");
                             hiv.put("value", hivstatus);
 
                             startFormActivity(indexRegisterForm);
@@ -468,6 +497,20 @@ public class VcaServiceActivity extends AppCompatActivity {
 
     private Integer getVcaAgeInYears(String vcaId) {
         String birthdate = getBirthdateSafe(vcaId);
+        String normalizedDate = normalizeBirthdate(birthdate);
+        if (normalizedDate == null) {
+            return null;
+        }
+        try {
+            LocalDate dob = LocalDate.parse(normalizedDate, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            return Period.between(dob, LocalDate.now()).getYears();
+        } catch (DateTimeParseException e) {
+            Timber.e(e);
+            return null;
+        }
+    }
+
+    private Integer getAgeInYearsFromBirthdate(String birthdate) {
         String normalizedDate = normalizeBirthdate(birthdate);
         if (normalizedDate == null) {
             return null;

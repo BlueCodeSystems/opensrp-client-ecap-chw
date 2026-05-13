@@ -6,6 +6,7 @@ import android.util.Log;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.Child;
+import com.bluecodeltd.ecap.chw.model.EcClientIndexSummary;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
 
 import org.smartregister.dao.AbstractDao;
@@ -181,6 +182,7 @@ public class IndexPersonDao  extends AbstractDao {
             record.setDate_next_vl(getCursorValue(c, "date_next_vl"));
             record.setChild_mmd(getCursorValue(c, "child_mmd"));
             record.setLevel_mmd(getCursorValue(c, "level_mmd"));
+            record.setPregnant_breastfeeding(getCursorValue(c, "pregnant_breastfeeding"));
             record.setServices(getCursorValue(c, "services"));
             record.setOther_service(getCursorValue(c, "other_service"));
             record.setSchooled_services(getCursorValue(c,"schooled_services"));
@@ -457,6 +459,33 @@ public class IndexPersonDao  extends AbstractDao {
 
         return values.get(0);
 
+    }
+
+    public static EcClientIndexSummary getClientSummaryByUniqueId(String uniqueId) {
+        if (uniqueId == null || uniqueId.trim().isEmpty()) {
+            return null;
+        }
+
+        String sql = "SELECT base_entity_id, household_id, first_name, last_name, gender, adolescent_birthdate " +
+                "FROM ec_client_index WHERE unique_id = '" + uniqueId + "' " +
+                "AND (deleted IS NULL OR deleted <> '1') " +
+                "ORDER BY id DESC LIMIT 1";
+
+        List<EcClientIndexSummary> values = AbstractDao.readData(sql, c -> {
+            EcClientIndexSummary summary = new EcClientIndexSummary();
+            summary.setBaseEntityId(getCursorValue(c, "base_entity_id"));
+            summary.setHouseholdId(getCursorValue(c, "household_id"));
+            summary.setFirstName(getCursorValue(c, "first_name"));
+            summary.setLastName(getCursorValue(c, "last_name"));
+            summary.setGender(getCursorValue(c, "gender"));
+            summary.setAdolescentBirthdate(getCursorValue(c, "adolescent_birthdate"));
+            return summary;
+        });
+
+        if (values == null || values.isEmpty()) {
+            return null;
+        }
+        return values.get(0);
     }
     
     public static List<String> getGenders(String household_id){

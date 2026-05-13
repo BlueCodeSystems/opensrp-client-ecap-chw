@@ -4,6 +4,7 @@ public class VCAServiceModel {
     private String base_entity_id;
     private String unique_id;
     private  String is_hiv_positive;
+    private String pregnant_breastfeeding;
     private String date;
     private String art_clinic;
     private String date_last_vl;
@@ -69,6 +70,14 @@ public class VCAServiceModel {
 
     public void setIs_hiv_positive(String is_hiv_positive) {
         this.is_hiv_positive = is_hiv_positive;
+    }
+
+    public String getPregnant_breastfeeding() {
+        return pregnant_breastfeeding;
+    }
+
+    public void setPregnant_breastfeeding(String pregnant_breastfeeding) {
+        this.pregnant_breastfeeding = pregnant_breastfeeding;
     }
 
     public String getDate() {

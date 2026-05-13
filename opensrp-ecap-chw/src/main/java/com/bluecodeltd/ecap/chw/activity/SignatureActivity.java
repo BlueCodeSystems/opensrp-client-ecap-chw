@@ -24,9 +24,11 @@ import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
+import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.IndexMotherDao;
 import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
+import com.bluecodeltd.ecap.chw.model.EcClientIndexSummary;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.JsonFormUtils;
@@ -50,6 +52,7 @@ import org.smartregister.family.util.AppExecutors;
 import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
+import org.smartregister.util.FormUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Collections;
@@ -203,6 +206,9 @@ public class SignatureActivity extends AppCompatActivity {
                             break;
 
                         case "VCA Service Report":
+                            if (!is_edit_mode) {
+                                maybeAutoEnrollMotherFromVcaService(screeningFormObject);
+                            }
                             Toasty.success(getApplicationContext(), "Service Report Saved", Toast.LENGTH_LONG, true).show();
                             Intent openVcaIntent = new Intent(SignatureActivity.this, VcaServiceActivity.class);
                             openVcaIntent.putExtra("vcaid", intent_vcaid);
@@ -716,6 +722,167 @@ public class SignatureActivity extends AppCompatActivity {
 
     private static String safe(String value) {
         return value == null ? "" : value.trim();
+    }
+
+    private void maybeAutoEnrollMotherFromVcaService(JSONObject serviceForm) {
+        if (serviceForm == null) {
+            return;
+        }
+
+        String breastfeeding = PmtctEnrollmentUtils.getFieldValue(serviceForm, "pregnant_breastfeeding");
+        if (!"yes".equalsIgnoreCase(safe(breastfeeding))) {
+            return;
+        }
+
+        String hivStatus = PmtctEnrollmentUtils.getFieldValue(serviceForm, "is_hiv_positive");
+        String hivStatusSafe = safe(hivStatus);
+
+        final String vcaId = intent_vcaid;
+        if (vcaId == null || vcaId.trim().isEmpty()) {
+            return;
+        }
+
+        Threading.io(() -> {
+            try {
+                EcClientIndexSummary summary = IndexPersonDao.getClientSummaryByUniqueId(vcaId);
+                if (summary == null) {
+                    return;
+                }
+
+                String gender = safe(summary.getGender());
+                if (!"female".equalsIgnoreCase(gender)) {
+                    return;
+                }
+
+                String baseEntityId = safe(summary.getBaseEntityId());
+                if (baseEntityId.isEmpty()) {
+                    return;
+                }
+
+                // VCA service form uses is_hiv_positive keys: yes/no/unknown
+                if ("no".equalsIgnoreCase(hivStatusSafe)) {
+                    if (IndexMotherDao.getIndexMotherByBaseEntityId(baseEntityId) != null) {
+                        return;
+                    }
+
+                    JSONObject indexForm = buildMotherIndexFormFromVca(serviceForm, summary);
+                    if (indexForm == null) {
+                        return;
+                    }
+
+                    indexForm.put(JsonFormConstants.ENCOUNTER_TYPE, "Mother Register From Service");
+                    indexForm.put("entity_id", baseEntityId);
+
+                    ChildIndexEventClient childIndexEventClient = processRegistration(indexForm.toString());
+                    if (childIndexEventClient == null) {
+                        return;
+                    }
+                    saveRegistration(childIndexEventClient, false);
+                } else if ("yes".equalsIgnoreCase(hivStatusSafe)) {
+                    String householdIdFromIndex = safe(summary.getHouseholdId());
+                    if (householdIdFromIndex.isEmpty()) {
+                        return;
+                    }
+                    if (PMTCTMotherDao.hasMotherRecord(householdIdFromIndex)) {
+                        return;
+                    }
+                    Household household = HouseholdDao.getHousehold(householdIdFromIndex);
+                    if (household == null) {
+                        return;
+                    }
+                    if (household.getHousehold_id() == null || household.getHousehold_id().trim().isEmpty()) {
+                        household.setHousehold_id(householdIdFromIndex);
+                    }
+                    if (household.getHousehold_id() == null || household.getHousehold_id().trim().isEmpty()) {
+                        return;
+                    }
+                    String serviceDate = safe(PmtctEnrollmentUtils.resolveServiceDate(serviceForm));
+                    JSONObject pmtctForm = PmtctEnrollmentUtils.buildMotherPmtctForm(this, household, serviceDate);
+                    if (pmtctForm == null) {
+                        return;
+                    }
+                    pmtctForm.put(JsonFormConstants.ENCOUNTER_TYPE, "Mother PMTCT Register From Service");
+                    ChildIndexEventClient childIndexEventClient = processRegistration(pmtctForm.toString());
+                    if (childIndexEventClient == null) {
+                        return;
+                    }
+                    saveRegistration(childIndexEventClient, false);
+                }
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+        });
+    }
+
+    private JSONObject buildMotherIndexFormFromVca(JSONObject vcaServiceForm, EcClientIndexSummary summary) {
+        try {
+            FormUtils formUtils = new FormUtils(this);
+            JSONObject form = formUtils.getFormJson("mother_index");
+            if (form == null) {
+                return null;
+            }
+
+            String fullName = (safe(summary.getFirstName()) + " " + safe(summary.getLastName())).trim();
+            if (!fullName.isEmpty()) {
+                setStep1FieldValue(form, "caregiver_name", fullName);
+            }
+
+            String birthdate = safe(summary.getAdolescentBirthdate());
+            if (!birthdate.isEmpty()) {
+                setStep1FieldValue(form, "caregiver_birth_date", birthdate);
+            }
+
+            setStep1FieldValue(form, "caregiver_sex", "female");
+
+            // service_report_vca uses is_hiv_positive keys: yes/no/unknown
+            // mother_index uses caregiver_hiv_status keys: positive/negative
+            String hivStatusRaw = safe(PmtctEnrollmentUtils.getFieldValue(vcaServiceForm, "is_hiv_positive"));
+            if ("yes".equalsIgnoreCase(hivStatusRaw)) {
+                setStep1FieldValue(form, "caregiver_hiv_status", "positive");
+            } else if ("no".equalsIgnoreCase(hivStatusRaw)) {
+                setStep1FieldValue(form, "caregiver_hiv_status", "negative");
+            }
+
+            String household = safe(summary.getHouseholdId());
+            if (!household.isEmpty()) {
+                setStep1FieldValue(form, "household_id", household);
+            }
+
+            String serviceDate = safe(PmtctEnrollmentUtils.resolveServiceDate(vcaServiceForm));
+            if (!serviceDate.isEmpty()) {
+                setStep1FieldValue(form, "mother_screening_date", serviceDate);
+            }
+
+            return form;
+        } catch (Exception e) {
+            Timber.e(e);
+            return null;
+        }
+    }
+
+    private void setStep1FieldValue(JSONObject form, String key, String value) {
+        if (form == null || key == null || key.trim().isEmpty() || value == null || value.trim().isEmpty()) {
+            return;
+        }
+        try {
+            JSONObject step = form.optJSONObject(JsonFormConstants.STEP1);
+            if (step == null) {
+                return;
+            }
+            JSONArray fields = step.optJSONArray(JsonFormConstants.FIELDS);
+            if (fields == null) {
+                return;
+            }
+            for (int i = 0; i < fields.length(); i++) {
+                JSONObject field = fields.optJSONObject(i);
+                if (field != null && key.equals(field.optString(JsonFormConstants.KEY))) {
+                    field.put(JsonFormConstants.VALUE, value);
+                    return;
+                }
+            }
+        } catch (Exception e) {
+            Timber.e(e);
+        }
     }
 
 

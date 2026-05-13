@@ -6726,6 +6726,14 @@
           }
         },
         {
+          "column_name": "pregnant_breastfeeding",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.pregnant_breastfeeding"
+          }
+        },
+
+        {
           "column_name": "gps",
           "type": "Client",
           "json_mapping": {
