@@ -16,6 +16,7 @@ public class NutritionAssessmentInterventionModel {
     private String other_nutrition_counselling_services;
     private String good_practices_services;
     private String other_good_practices_services;
+    private String delete_status;
 
     public String getBase_entity_id() { return base_entity_id; }
     public void setBase_entity_id(String base_entity_id) { this.base_entity_id = base_entity_id; }
@@ -62,20 +63,6 @@ public class NutritionAssessmentInterventionModel {
     public String getOther_good_practices_services() { return other_good_practices_services; }
     public void setOther_good_practices_services(String other_good_practices_services) { this.other_good_practices_services = other_good_practices_services; }
 
-    private final java.util.Map<String, String> additionalFields = new java.util.HashMap<>();
-
-    public java.util.Map<String, String> getAdditionalFields() {
-        return additionalFields;
-    }
-
-    public String getAdditionalField(String key) {
-        if (key == null) return null;
-        return additionalFields.get(key);
-    }
-
-    public void setAdditionalField(String key, String value) {
-        if (key == null) return;
-        additionalFields.put(key, value);
-    }
+    public String getDelete_status() { return delete_status; }
+    public void setDelete_status(String delete_status) { this.delete_status = delete_status; }
 }
-

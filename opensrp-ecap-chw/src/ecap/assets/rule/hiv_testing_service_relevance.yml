@@ -37,7 +37,7 @@ actions:
 name: step1_date_tested
 description: date_tested
 priority: 1
-condition: "step1_hiv_status.contains('Status Unknown') || step1_hiv_status.contains('Test Required based on HIV Risk Assessment')"
+condition: "step1_hiv_status.contains('Known Negative') || step1_hiv_status.contains('Status Unknown') || step1_hiv_status.contains('Test Required based on HIV Risk Assessment')"
 actions:
   - "isRelevant = true"
 ---

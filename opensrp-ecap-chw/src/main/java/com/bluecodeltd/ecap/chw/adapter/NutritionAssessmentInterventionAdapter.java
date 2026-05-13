@@ -8,6 +8,7 @@ import static org.smartregister.chw.fp.util.FpUtil.getClientProcessorForJava;
 import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -61,6 +62,14 @@ public class NutritionAssessmentInterventionAdapter extends RecyclerView.Adapter
     private final List<NutritionAssessmentInterventionModel> items;
     private final ObjectMapper oMapper = new ObjectMapper();
 
+    public interface OnDataUpdateListener {
+        void onDataUpdate();
+    }
+    private OnDataUpdateListener onDataUpdateListener;
+    public void setOnDataUpdateListener(OnDataUpdateListener listener) {
+        this.onDataUpdateListener = listener;
+    }
+
     public NutritionAssessmentInterventionAdapter(Context context, List<NutritionAssessmentInterventionModel> items) {
         this.context = context;
         this.items = items;
@@ -98,6 +107,44 @@ public class NutritionAssessmentInterventionAdapter extends RecyclerView.Adapter
         h.edit.setOnClickListener(v ->
                 android.widget.Toast.makeText(context, "Loading case status…", android.widget.Toast.LENGTH_SHORT).show());
 
+        h.delete.setOnClickListener(v -> {
+            new AlertDialog.Builder(context)
+                    .setTitle("Alert")
+                    .setMessage("You are about to delete this nutrition assessment")
+                    .setNegativeButton("NO", (dialog, id) -> dialog.cancel())
+                    .setPositiveButton("YES", (dialog, id) -> {
+                        FormUtils formUtils = null;
+                        try {
+                            formUtils = new FormUtils(context);
+                        } catch (Exception e) {
+                            Timber.e(e);
+                        }
+                        m.setDelete_status("1");
+                        JSONObject form = formUtils.getFormJson("nutrition_assessment_intervention");
+                        try {
+                            CoreJsonFormUtils.populateJsonForm(form, oMapper.convertValue(m, Map.class));
+                            form.put("entity_id", m.getBase_entity_id());
+                        } catch (JSONException e) {
+                            Timber.e(e);
+                        }
+                        try {
+                            ChildIndexEventClient eventClient = processRegistration(form.toString());
+                            if (eventClient != null) {
+                                saveRegistration(eventClient, true);
+                            }
+                        } catch (Exception e) {
+                            Timber.e(e);
+                        }
+                        int pos = h.getAdapterPosition();
+                        if (pos != RecyclerView.NO_ID) {
+                            items.remove(pos);
+                            notifyItemRemoved(pos);
+                        }
+                        if (onDataUpdateListener != null) onDataUpdateListener.onDataUpdate();
+                    })
+                    .show();
+        });
+
         final String uniqueId = m.getUnique_id();
         Threading.ioBestEffort(() -> {
             CaseStatusModel caseStatusModel = null;
@@ -129,7 +176,7 @@ public class NutritionAssessmentInterventionAdapter extends RecyclerView.Adapter
         });
     }
 
-    
+
 
     private void openForm(NutritionAssessmentInterventionModel visit) {
         try {
@@ -224,7 +271,7 @@ public class NutritionAssessmentInterventionAdapter extends RecyclerView.Adapter
     static class ViewHolder extends RecyclerView.ViewHolder {
         LinearLayout item;
         TextView date, muac, oedema, wfa, status;
-        ImageView edit;
+        ImageView edit, delete;
         View statusBar;
 
         ViewHolder(View itemView) {
@@ -236,6 +283,7 @@ public class NutritionAssessmentInterventionAdapter extends RecyclerView.Adapter
             wfa = itemView.findViewById(R.id.value_wfa);
             status = itemView.findViewById(R.id.value_status);
             edit = itemView.findViewById(R.id.edit_me);
+            delete = itemView.findViewById(R.id.delete_record);
             statusBar = itemView.findViewById(R.id.status_bar);
         }
     }
