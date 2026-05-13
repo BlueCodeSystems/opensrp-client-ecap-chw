@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.model.EcClientIndexSummary;
 import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.TbScreeningModel;
 import com.bluecodeltd.ecap.chw.util.Threading;
@@ -26,7 +27,14 @@ import org.smartregister.util.FormUtils;
 
 import android.content.Intent;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -315,7 +323,7 @@ public class TbScreeningAdapter extends RecyclerView.Adapter<TbScreeningAdapter.
     private void openForm(String formName, TbScreeningModel visit) {
         try {
             FormUtils formUtils = new FormUtils(context);
-            org.json.JSONObject form = formUtils.getFormJson(formName);
+            JSONObject form = formUtils.getFormJson(formName);
             // Default entity_id to base_entity_id; outcomes also use TB screening base_entity_id
             String entityId = visit != null ? visit.getBase_entity_id() : null;
             if (entityId == null || entityId.trim().isEmpty()) {
@@ -347,6 +355,25 @@ public class TbScreeningAdapter extends RecyclerView.Adapter<TbScreeningAdapter.
                 }
             } catch (Exception ignored) {}
 
+            // Apply the same age-based TB screening visibility rules used when opening from activities.
+            // When editing via adapter, we still need to hide sputum_collected for <10 and show the correct symptom fields.
+            try {
+                if (visit != null && visit.getUnique_id() != null && !visit.getUnique_id().trim().isEmpty()) {
+                    EcClientIndexSummary summary = IndexPersonDao.getClientSummaryByUniqueId(visit.getUnique_id());
+                    Integer ageYears = summary != null ? getAgeInYearsFromBirthdate(summary.getAdolescentBirthdate()) : null;
+                    if (ageYears != null) {
+                        if (ageYears < 10) {
+                            hideField(form, "tb_symptoms_10plus");
+                            hideField(form, "tb_symptoms_10plus_other");
+                            hideField(form, "sputum_collected");
+                        } else {
+                            hideField(form, "tb_symptoms_child_lt10");
+                            hideField(form, "tb_symptoms_child_lt10_other");
+                        }
+                    }
+                }
+            } catch (Exception ignored) {}
+
             Form f = new Form();
             f.setWizard(false);
             f.setName("TB Screening");
@@ -359,6 +386,61 @@ public class TbScreeningAdapter extends RecyclerView.Adapter<TbScreeningAdapter.
             intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, form.toString());
             ((android.app.Activity) context).startActivityForResult(intent, org.smartregister.family.util.JsonFormUtils.REQUEST_CODE_GET_JSON);
         } catch (Exception e) { }
+    }
+
+    private void hideField(JSONObject form, String key) {
+        if (form == null || key == null || key.trim().isEmpty()) {
+            return;
+        }
+        try {
+            JSONArray fields = form.optJSONObject("step1").optJSONArray("fields");
+            if (fields == null) {
+                return;
+            }
+            for (int i = 0; i < fields.length(); i++) {
+                JSONObject f = fields.optJSONObject(i);
+                if (f != null && key.equals(f.optString("key"))) {
+                    f.put("type", "hidden");
+                    return;
+                }
+            }
+        } catch (Exception ignored) {
+        }
+    }
+
+    private Integer getAgeInYearsFromBirthdate(String birthdate) {
+        String normalizedDate = normalizeBirthdate(birthdate);
+        if (normalizedDate == null) {
+            return null;
+        }
+        try {
+            LocalDate dob = LocalDate.parse(normalizedDate, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            return Period.between(dob, LocalDate.now()).getYears();
+        } catch (DateTimeParseException ignored) {
+            return null;
+        }
+    }
+
+    private String normalizeBirthdate(String birthdate) {
+        if (birthdate == null) {
+            return null;
+        }
+        String trimmed = birthdate.trim();
+        if (trimmed.isEmpty()) {
+            return null;
+        }
+        if (trimmed.matches("\\d{2}-\\d{2}-\\d{4}")) {
+            return trimmed;
+        }
+        String[] patterns = new String[]{"dd MMM yyyy", "yyyy-MM-dd", "dd/MM/yyyy"};
+        for (String pattern : patterns) {
+            try {
+                LocalDate parsedDate = LocalDate.parse(trimmed, DateTimeFormatter.ofPattern(pattern, Locale.ENGLISH));
+                return parsedDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            } catch (DateTimeParseException ignored) {
+            }
+        }
+        return null;
     }
 }
 

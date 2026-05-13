@@ -21,7 +21,9 @@ public class IndexMotherDao extends AbstractDao {
     }
 
     public static IndexMotherModel getIndexMotherByHouseholdId(String householdId) {
-        String sql = "SELECT * FROM ec_mother_index WHERE household_id = '" + householdId + "'";
+        String sql = "SELECT * FROM ec_mother_index WHERE household_id = '" + householdId + "' " +
+                "OR household_id IN (SELECT DISTINCT unique_id FROM ec_client_index WHERE household_id = '" + householdId + "' " +
+                "AND (deleted IS NULL OR deleted <> '1') AND unique_id IS NOT NULL AND TRIM(unique_id) <> '')";
         List<IndexMotherModel> values = AbstractDao.readData(sql, getIndexMotherModelMap());
         if (values == null || values.size() == 0) return null;
         return values.get(0);
@@ -31,7 +33,9 @@ public class IndexMotherDao extends AbstractDao {
         if (householdId == null || householdId.trim().isEmpty()) {
             return false;
         }
-        String sql = "SELECT COUNT(*) v FROM ec_mother_index WHERE household_id = '" + householdId + "' " +
+        String sql = "SELECT COUNT(*) v FROM ec_mother_index WHERE (household_id = '" + householdId + "' " +
+                "OR household_id IN (SELECT DISTINCT unique_id FROM ec_client_index WHERE household_id = '" + householdId + "' " +
+                "AND (deleted IS NULL OR deleted <> '1') AND unique_id IS NOT NULL AND TRIM(unique_id) <> '')) " +
                 "AND (deleted IS NULL OR deleted <> '1')";
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
         List<String> values = AbstractDao.readData(sql, dataMap);
@@ -40,7 +44,10 @@ public class IndexMotherDao extends AbstractDao {
     }
 
     public static List<IndexMotherModel> getIndexMothersByHouseholdId(String householdId) {
-        String sql = "SELECT * FROM ec_mother_index WHERE household_id = '" + householdId + "' AND (deleted IS NULL OR deleted <> '1')";
+        String sql = "SELECT * FROM ec_mother_index WHERE (household_id = '" + householdId + "' " +
+                "OR household_id IN (SELECT DISTINCT unique_id FROM ec_client_index WHERE household_id = '" + householdId + "' " +
+                "AND (deleted IS NULL OR deleted <> '1') AND unique_id IS NOT NULL AND TRIM(unique_id) <> '')) " +
+                "AND (deleted IS NULL OR deleted <> '1')";
         List<IndexMotherModel> values = AbstractDao.readData(sql, getIndexMotherModelMap());
         if (values == null || values.size() == 0) return new ArrayList<>();
         return values;
@@ -76,6 +83,7 @@ public class IndexMotherDao extends AbstractDao {
             record.setMother_breastfeeding(getCursorValue(c, "mother_breastfeeding"));
             record.setPregnant_mother(getCursorValue(c, "mother_pregnant"));
             record.setMother_age_range(getCursorValue(c, "mother_age_range"));
+            record.setSource_from(getCursorValue(c, "source_from"));
             DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };

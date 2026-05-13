@@ -80,6 +80,13 @@
         "type": "hidden"
       },
       {
+        "key": "source_from",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "source_from",
+        "type": "hidden"
+      },
+      {
         "key": "province",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",

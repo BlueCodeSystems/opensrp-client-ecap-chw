@@ -1244,12 +1244,33 @@ break;
 
     private String resolveHouseholdId() {
         if (ptctMotherModel != null && !isNullOrEmpty(ptctMotherModel.getHousehold_id())) {
-            return ptctMotherModel.getHousehold_id();
+            String householdId = ptctMotherModel.getHousehold_id();
+            if ("service_report_vca".equalsIgnoreCase(ptctMotherModel.getSource_from())) {
+                try {
+                    com.bluecodeltd.ecap.chw.model.EcClientIndexSummary summary =
+                            IndexPersonDao.getClientSummaryByUniqueId(householdId);
+                    if (summary != null && !isNullOrEmpty(summary.getHouseholdId())) {
+                        return summary.getHouseholdId();
+                    }
+                } catch (Exception ignored) { }
+            }
+            return householdId;
         }
         if (commonPersonObjectClient != null) {
             try {
                 String householdId = commonPersonObjectClient.getColumnmaps().get("household_id");
                 if (!isNullOrEmpty(householdId)) {
+                    String sourceFrom = null;
+                    try { sourceFrom = commonPersonObjectClient.getColumnmaps().get("source_from"); } catch (Exception ignored) { }
+                    if ("service_report_vca".equalsIgnoreCase(sourceFrom)) {
+                        try {
+                            com.bluecodeltd.ecap.chw.model.EcClientIndexSummary summary =
+                                    IndexPersonDao.getClientSummaryByUniqueId(householdId);
+                            if (summary != null && !isNullOrEmpty(summary.getHouseholdId())) {
+                                return summary.getHouseholdId();
+                            }
+                        } catch (Exception ignored) { }
+                    }
                     return householdId;
                 }
             } catch (Exception ignored) { }

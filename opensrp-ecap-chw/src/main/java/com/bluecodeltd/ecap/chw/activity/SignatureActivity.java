@@ -761,17 +761,24 @@ public class SignatureActivity extends AppCompatActivity {
 
                 // VCA service form uses is_hiv_positive keys: yes/no/unknown
                 if ("no".equalsIgnoreCase(hivStatusSafe)) {
-                    if (IndexMotherDao.getIndexMotherByBaseEntityId(baseEntityId) != null) {
+                    String householdIdFromIndex = safe(summary.getHouseholdId());
+                    if (householdIdFromIndex.isEmpty()) {
+                        return;
+                    }
+                    // For this VCA-service derived mother index record, we key household_id using the VCA unique_id.
+                    if (IndexMotherDao.hasIndexMother(vcaId)) {
                         return;
                     }
 
-                    JSONObject indexForm = buildMotherIndexFormFromVca(serviceForm, summary);
+                    JSONObject indexForm = buildMotherIndexFormFromVca(serviceForm, summary, vcaId);
                     if (indexForm == null) {
                         return;
                     }
+                    setStep1FieldValue(indexForm, "source_from", "service_report_vca");
 
                     indexForm.put(JsonFormConstants.ENCOUNTER_TYPE, "Mother Register From Service");
-                    indexForm.put("entity_id", baseEntityId);
+                    // Leave entity_id empty so a new base_entity_id is generated for this mother record.
+                    indexForm.put("entity_id", "");
 
                     ChildIndexEventClient childIndexEventClient = processRegistration(indexForm.toString());
                     if (childIndexEventClient == null) {
@@ -783,7 +790,8 @@ public class SignatureActivity extends AppCompatActivity {
                     if (householdIdFromIndex.isEmpty()) {
                         return;
                     }
-                    if (PMTCTMotherDao.hasMotherRecord(householdIdFromIndex)) {
+                    // PMTCT record is keyed by pmtct_id which we set to the VCA unique_id.
+                    if (PMTCTMotherDao.hasMotherRecord(vcaId)) {
                         return;
                     }
                     Household household = HouseholdDao.getHousehold(householdIdFromIndex);
@@ -802,6 +810,15 @@ public class SignatureActivity extends AppCompatActivity {
                         return;
                     }
                     pmtctForm.put(JsonFormConstants.ENCOUNTER_TYPE, "Mother PMTCT Register From Service");
+                    // For this VCA-service derived PMTCT record, key both household_id and pmtct_id using the VCA unique_id.
+                    setStep1FieldValue(pmtctForm, "household_id", vcaId);
+                    setStep1FieldValue(pmtctForm, "pmtct_id", vcaId);
+                    setStep1FieldValue(pmtctForm, "source_from", "service_report_vca");
+                    // District/Ward should come from ec_client_index, not household.
+                    setStep1FieldValue(pmtctForm, "district", safe(summary.getDistrict()));
+                    setStep1FieldValue(pmtctForm, "ward", safe(summary.getWard()));
+                    // Leave entity_id empty so a new base_entity_id is generated for this PMTCT record.
+                    pmtctForm.put("entity_id", "");
                     ChildIndexEventClient childIndexEventClient = processRegistration(pmtctForm.toString());
                     if (childIndexEventClient == null) {
                         return;
@@ -814,7 +831,7 @@ public class SignatureActivity extends AppCompatActivity {
         });
     }
 
-    private JSONObject buildMotherIndexFormFromVca(JSONObject vcaServiceForm, EcClientIndexSummary summary) {
+    private JSONObject buildMotherIndexFormFromVca(JSONObject vcaServiceForm, EcClientIndexSummary summary, String vcaUniqueId) {
         try {
             FormUtils formUtils = new FormUtils(this);
             JSONObject form = formUtils.getFormJson("mother_index");
@@ -843,10 +860,15 @@ public class SignatureActivity extends AppCompatActivity {
                 setStep1FieldValue(form, "caregiver_hiv_status", "negative");
             }
 
-            String household = safe(summary.getHouseholdId());
+            // Mother index household_id should use the VCA unique_id for this flow.
+            String household = safe(vcaUniqueId);
             if (!household.isEmpty()) {
                 setStep1FieldValue(form, "household_id", household);
             }
+
+            // District/Ward should come from ec_client_index, not household.
+            setStep1FieldValue(form, "district", safe(summary.getDistrict()));
+            setStep1FieldValue(form, "ward", safe(summary.getWard()));
 
             String serviceDate = safe(PmtctEnrollmentUtils.resolveServiceDate(vcaServiceForm));
             if (!serviceDate.isEmpty()) {

@@ -28,6 +28,7 @@ public class IndexMotherModel {
     private String pregnant_mother;
     private String mother_breastfeeding;
     private String mother_age_range;
+    private String source_from;
 
     public IndexMotherModel() {
     }
@@ -230,6 +231,14 @@ public class IndexMotherModel {
 
     public void setMother_age_range(String mother_age_range) {
         this.mother_age_range = mother_age_range;
+    }
+
+    public String getSource_from() {
+        return source_from;
+    }
+
+    public void setSource_from(String source_from) {
+        this.source_from = source_from;
     }
 
     public String getMother_children_age_band() {

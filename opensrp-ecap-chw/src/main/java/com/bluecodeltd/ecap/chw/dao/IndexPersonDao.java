@@ -466,7 +466,7 @@ public class IndexPersonDao  extends AbstractDao {
             return null;
         }
 
-        String sql = "SELECT base_entity_id, household_id, first_name, last_name, gender, adolescent_birthdate " +
+        String sql = "SELECT base_entity_id, household_id, first_name, last_name, gender, adolescent_birthdate, district, ward " +
                 "FROM ec_client_index WHERE unique_id = '" + uniqueId + "' " +
                 "AND (deleted IS NULL OR deleted <> '1') " +
                 "ORDER BY id DESC LIMIT 1";
@@ -479,6 +479,8 @@ public class IndexPersonDao  extends AbstractDao {
             summary.setLastName(getCursorValue(c, "last_name"));
             summary.setGender(getCursorValue(c, "gender"));
             summary.setAdolescentBirthdate(getCursorValue(c, "adolescent_birthdate"));
+            summary.setDistrict(getCursorValue(c, "district"));
+            summary.setWard(getCursorValue(c, "ward"));
             return summary;
         });
 
@@ -508,6 +510,18 @@ public class IndexPersonDao  extends AbstractDao {
         List<String> values = AbstractDao.readData(sql, dataMap);
 
         return values;
+    }
+
+    public static List<String> getUniqueIdsByHouseholdId(String householdId) {
+        if (householdId == null || householdId.trim().isEmpty()) {
+            return new ArrayList<>();
+        }
+        String sql = "SELECT DISTINCT unique_id FROM ec_client_index " +
+                "WHERE household_id = '" + householdId + "' " +
+                "AND (deleted IS NULL OR deleted <> '1') " +
+                "AND unique_id IS NOT NULL AND TRIM(unique_id) <> ''";
+        List<String> values = AbstractDao.readData(sql, c -> getCursorValue(c, "unique_id"));
+        return values == null ? new ArrayList<>() : values;
     }
 
     public static List<Child> getFamilyChildren(String householdID) {
