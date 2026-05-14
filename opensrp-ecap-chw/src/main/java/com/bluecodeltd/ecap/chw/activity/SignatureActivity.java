@@ -156,6 +156,8 @@ public class SignatureActivity extends AppCompatActivity {
                 if (!screeningFormObject.optString("entity_id").isEmpty()) {
                     is_edit_mode = true;
                 }
+                debugToast("SAVE: encounter=" + encounterType + " edit=" + is_edit_mode +
+                        " entity_id=" + safe(screeningFormObject.optString("entity_id")));
 
                 //householdId = FormUtils.getFieldJSONObject(FormUtils.fields(screeningFormObject, STEP2), "household_id").optString("value");
 
@@ -592,6 +594,13 @@ public class SignatureActivity extends AppCompatActivity {
                     getClientProcessorForJava().processClient(savedEvents);
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
 
+                    if (BuildConfig.DEBUG) {
+                        String eventType = safe(event.getEventType());
+                        if ("Mother Register From Service".equalsIgnoreCase(eventType)
+                                || "Mother PMTCT Register From Service".equalsIgnoreCase(eventType)) {
+                            debugCreatedToast("CREATED: " + eventType);
+                        }
+                    }
 
                 } catch (Exception e) {
                     Timber.e(e);
@@ -724,21 +733,55 @@ public class SignatureActivity extends AppCompatActivity {
         return value == null ? "" : value.trim();
     }
 
+    private void debugToast(String message) {
+        if (!BuildConfig.DEBUG) {
+            return;
+        }
+        if (message == null || message.trim().isEmpty()) {
+            return;
+        }
+        Threading.main(() -> {
+            try {
+                Toasty.info(SignatureActivity.this, message, Toast.LENGTH_LONG, true).show();
+            } catch (Exception ignored) {
+            }
+        });
+    }
+
+    private void debugCreatedToast(String message) {
+        if (!BuildConfig.DEBUG) {
+            return;
+        }
+        if (message == null || message.trim().isEmpty()) {
+            return;
+        }
+        Threading.main(() -> {
+            try {
+                Toasty.success(SignatureActivity.this, message, Toast.LENGTH_LONG, true).show();
+            } catch (Exception ignored) {
+            }
+        });
+    }
+
     private void maybeAutoEnrollMotherFromVcaService(JSONObject serviceForm) {
         if (serviceForm == null) {
+            debugToast("AUTO(VCA): serviceForm null");
             return;
         }
 
         String breastfeeding = PmtctEnrollmentUtils.getFieldValue(serviceForm, "pregnant_breastfeeding");
         if (!"yes".equalsIgnoreCase(safe(breastfeeding))) {
+            debugToast("AUTO(VCA): skip breastfeeding=" + safe(breastfeeding));
             return;
         }
 
         String hivStatus = PmtctEnrollmentUtils.getFieldValue(serviceForm, "is_hiv_positive");
         String hivStatusSafe = safe(hivStatus);
+        debugToast("AUTO(VCA): breastfeeding=yes hiv=" + hivStatusSafe);
 
         final String vcaId = intent_vcaid;
         if (vcaId == null || vcaId.trim().isEmpty()) {
+            debugToast("AUTO(VCA): skip missing vcaId");
             return;
         }
 
@@ -746,16 +789,19 @@ public class SignatureActivity extends AppCompatActivity {
             try {
                 EcClientIndexSummary summary = IndexPersonDao.getClientSummaryByUniqueId(vcaId);
                 if (summary == null) {
+                    debugToast("AUTO(VCA): skip no index summary for " + vcaId);
                     return;
                 }
 
                 String gender = safe(summary.getGender());
                 if (!"female".equalsIgnoreCase(gender)) {
+                    debugToast("AUTO(VCA): skip gender=" + gender);
                     return;
                 }
 
                 String baseEntityId = safe(summary.getBaseEntityId());
                 if (baseEntityId.isEmpty()) {
+                    debugToast("AUTO(VCA): skip baseEntityId empty");
                     return;
                 }
 
@@ -763,70 +809,89 @@ public class SignatureActivity extends AppCompatActivity {
                 if ("no".equalsIgnoreCase(hivStatusSafe)) {
                     String householdIdFromIndex = safe(summary.getHouseholdId());
                     if (householdIdFromIndex.isEmpty()) {
+                        debugToast("AUTO(VCA): negative skip householdId empty");
                         return;
                     }
-                    // For this VCA-service derived mother index record, we key household_id using the VCA unique_id.
                     if (IndexMotherDao.hasIndexMother(vcaId)) {
+                        debugToast("AUTO(VCA): negative skip mother index exists for " + vcaId);
                         return;
                     }
 
                     JSONObject indexForm = buildMotherIndexFormFromVca(serviceForm, summary, vcaId);
                     if (indexForm == null) {
+                        debugToast("AUTO(VCA): negative skip indexForm null");
                         return;
                     }
                     setStep1FieldValue(indexForm, "source_from", "service_report_vca");
 
                     indexForm.put(JsonFormConstants.ENCOUNTER_TYPE, "Mother Register From Service");
-                    // Leave entity_id empty so a new base_entity_id is generated for this mother record.
                     indexForm.put("entity_id", "");
 
                     ChildIndexEventClient childIndexEventClient = processRegistration(indexForm.toString());
                     if (childIndexEventClient == null) {
+                        debugToast("AUTO(VCA): negative skip processRegistration null");
                         return;
                     }
+                    debugToast("AUTO(VCA): creating Mother Index");
                     saveRegistration(childIndexEventClient, false);
                 } else if ("yes".equalsIgnoreCase(hivStatusSafe)) {
                     String householdIdFromIndex = safe(summary.getHouseholdId());
                     if (householdIdFromIndex.isEmpty()) {
+                        debugToast("AUTO(VCA): positive skip householdId empty");
                         return;
                     }
-                    // PMTCT record is keyed by pmtct_id which we set to the VCA unique_id.
-                    if (PMTCTMotherDao.hasMotherRecord(vcaId)) {
+                    // Use a targeted check (pmtct_id only) to avoid false positives from the
+                    // broader hasMotherRecord subquery, which can match PMTCT records enrolled
+                    // via household service after the mother index was created on a prior visit.
+                    if (PMTCTMotherDao.hasMotherRecordByHouseholdId(vcaId)) {
+                        debugToast("AUTO(VCA): positive skip PMTCT exists for household_id=" + vcaId);
                         return;
                     }
                     Household household = HouseholdDao.getHousehold(householdIdFromIndex);
                     if (household == null) {
+                        debugToast("AUTO(VCA): positive skip household null for " + householdIdFromIndex);
                         return;
                     }
                     if (household.getHousehold_id() == null || household.getHousehold_id().trim().isEmpty()) {
                         household.setHousehold_id(householdIdFromIndex);
                     }
                     if (household.getHousehold_id() == null || household.getHousehold_id().trim().isEmpty()) {
+                        debugToast("AUTO(VCA): positive skip household_id empty");
                         return;
                     }
                     String serviceDate = safe(PmtctEnrollmentUtils.resolveServiceDate(serviceForm));
                     JSONObject pmtctForm = PmtctEnrollmentUtils.buildMotherPmtctForm(this, household, serviceDate);
                     if (pmtctForm == null) {
+                        debugToast("AUTO(VCA): positive skip pmtctForm null");
                         return;
                     }
                     pmtctForm.put(JsonFormConstants.ENCOUNTER_TYPE, "Mother PMTCT Register From Service");
-                    // For this VCA-service derived PMTCT record, key both household_id and pmtct_id using the VCA unique_id.
                     setStep1FieldValue(pmtctForm, "household_id", vcaId);
-                    setStep1FieldValue(pmtctForm, "pmtct_id", vcaId);
                     setStep1FieldValue(pmtctForm, "source_from", "service_report_vca");
-                    // District/Ward should come from ec_client_index, not household.
+                    // Use the VCA's own details, not the household caregiver's.
+                    String vcaFullName = (safe(summary.getFirstName()) + " " + safe(summary.getLastName())).trim();
+                    if (!vcaFullName.isEmpty()) {
+                        setStep1FieldValue(pmtctForm, "caregiver_name", vcaFullName);
+                    }
+                    setStep1FieldValue(pmtctForm, "first_name", safe(summary.getFirstName()));
+                    setStep1FieldValue(pmtctForm, "last_name", safe(summary.getLastName()));
+                    setStep1FieldValue(pmtctForm, "caregiver_birth_date", safe(summary.getAdolescentBirthdate()));
                     setStep1FieldValue(pmtctForm, "district", safe(summary.getDistrict()));
                     setStep1FieldValue(pmtctForm, "ward", safe(summary.getWard()));
-                    // Leave entity_id empty so a new base_entity_id is generated for this PMTCT record.
                     pmtctForm.put("entity_id", "");
                     ChildIndexEventClient childIndexEventClient = processRegistration(pmtctForm.toString());
                     if (childIndexEventClient == null) {
+                        debugToast("AUTO(VCA): positive skip processRegistration null");
                         return;
                     }
+                    debugToast("AUTO(VCA): creating PMTCT date=" + serviceDate);
                     saveRegistration(childIndexEventClient, false);
+                } else {
+                    debugToast("AUTO(VCA): skip hiv=" + hivStatusSafe);
                 }
             } catch (Exception e) {
                 Timber.e(e);
+                debugToast("AUTO(VCA): exception=" + e.getClass().getSimpleName());
             }
         });
     }

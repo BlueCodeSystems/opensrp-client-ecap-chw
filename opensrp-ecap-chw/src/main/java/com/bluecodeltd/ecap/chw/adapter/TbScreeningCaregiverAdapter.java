@@ -193,9 +193,86 @@ public class TbScreeningCaregiverAdapter extends RecyclerView.Adapter<TbScreenin
     }
 
     private String buildCommentsSummary(TbScreeningCaregiverModel m) {
-        String comments = m.getTb_treatment_outcome_comment();
-        if (comments == null || comments.trim().isEmpty()) comments = m.getSection_c_comments();
-        return comments;
+        StringBuilder sb = new StringBuilder();
+
+        String outcomeText = formatOutcomeCsv(m != null ? m.getTb_treatment_outcome() : null);
+        if (outcomeText != null && !outcomeText.isEmpty()) {
+            sb.append("Outcome: ").append(outcomeText);
+        }
+
+        String comments = m != null ? m.getTb_treatment_outcome_comment() : null;
+        if (comments == null || comments.trim().isEmpty()) comments = m != null ? m.getSection_c_comments() : null;
+        if (comments != null && !comments.trim().isEmpty()) {
+            if (sb.length() > 0) sb.append("\n");
+            sb.append(comments.trim());
+        }
+        return sb.toString();
+    }
+
+    private String formatOutcomeCsv(String raw) {
+        if (raw == null) return "";
+        String trimmed = raw.trim();
+        if (trimmed.isEmpty()) return "";
+
+        if (trimmed.startsWith("[") && trimmed.endsWith("]")) {
+            try {
+                org.json.JSONArray arr = new org.json.JSONArray(trimmed);
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < arr.length(); i++) {
+                    String key = arr.optString(i, null);
+                    if (key == null) continue;
+                    String label = mapOutcome(key);
+                    if (label == null || label.trim().isEmpty()) continue;
+                    if (sb.length() > 0) sb.append(", ");
+                    sb.append(label);
+                }
+                return sb.toString();
+            } catch (Exception ignored) {
+            }
+        }
+
+        if ((trimmed.startsWith("\"") && trimmed.endsWith("\"")) || (trimmed.startsWith("'") && trimmed.endsWith("'"))) {
+            trimmed = trimmed.substring(1, trimmed.length() - 1).trim();
+        }
+
+        if (trimmed.contains(",")) {
+            String[] parts = trimmed.split("\\s*,\\s*");
+            StringBuilder sb = new StringBuilder();
+            for (String p : parts) {
+                if (p == null) continue;
+                String key = p.trim();
+                if (key.isEmpty()) continue;
+                String label = mapOutcome(key);
+                if (label == null || label.trim().isEmpty()) continue;
+                if (sb.length() > 0) sb.append(", ");
+                sb.append(label);
+            }
+            return sb.toString();
+        }
+
+        return mapOutcome(trimmed);
+    }
+
+    private String mapOutcome(String key) {
+        if (key == null) return "";
+        switch (key) {
+            case "cured":
+                return "Cured";
+            case "treatment_completed":
+                return "Treatment completed";
+            case "treatment_failed":
+                return "Treatment failed";
+            case "not_evaluated":
+                return "Not evaluated";
+            case "died":
+                return "Died";
+            case "exited_ovc_comprehensive_program":
+                return "Exited OVC comprehensive program";
+            case "other":
+                return "Other";
+            default:
+                return key;
+        }
     }
 
     private String mapYesNoNa(String raw) {

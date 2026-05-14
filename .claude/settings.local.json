@@ -18,7 +18,9 @@
       "Bash(Select-Object -ExpandProperty FullName)",
       "Bash(grep -E \"\\\\.\\(java|kt\\)$\")",
       "Bash(xargs grep -l \"date\\\\|time\")",
-      "Bash(Get-ChildItem -Path \"D:\\\\ECAP-PLUS-APP\" -Filter \"build.gradle*\" -Recurse)"
+      "Bash(Get-ChildItem -Path \"D:\\\\ECAP-PLUS-APP\" -Filter \"build.gradle*\" -Recurse)",
+      "Bash(git commit *)",
+      "Bash(python3 *)"
     ]
   }
 }

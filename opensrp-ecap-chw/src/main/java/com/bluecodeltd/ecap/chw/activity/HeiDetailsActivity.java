@@ -981,6 +981,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
                 formToBeOpened.put("entity_id", this.pmtctChild.getBase_entity_id());
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(pmtctChild, Map.class));
                 populateCaseworkerPhoneAndName(formToBeOpened);
+                populateProgramInfoFromSharedPreferences(formToBeOpened);
                 JSONObject dateEdited = getFieldJSONObject(fields(formToBeOpened, "step1"),"date_edited");
                 if (dateEdited  != null) {
                     dateEdited.remove(JsonFormUtils.VALUE);
@@ -1178,6 +1179,34 @@ public class HeiDetailsActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    private void populateProgramInfoFromSharedPreferences(JSONObject formToBeOpened) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(HeiDetailsActivity.this);
+
+        String province = prefs.getString("province", "");
+        String district = prefs.getString("district", "");
+        String ward = prefs.getString("ward", "");
+        String facility = prefs.getString("facility", "");
+        String partner = prefs.getString("partner", "");
+
+        setStep1FieldValue(formToBeOpened, "province", province);
+        setStep1FieldValue(formToBeOpened, "district", district);
+        setStep1FieldValue(formToBeOpened, "ward", ward);
+        setStep1FieldValue(formToBeOpened, "facility", facility);
+        setStep1FieldValue(formToBeOpened, "partner", partner);
+    }
+
+    private void setStep1FieldValue(JSONObject formToBeOpened, String key, String value) {
+        if (android.text.TextUtils.isEmpty(value)) return;
+        JSONObject field = getFieldJSONObject(fields(formToBeOpened, "step1"), key);
+        if (field == null) return;
+        field.remove(JsonFormUtils.VALUE);
+        try {
+            field.put(JsonFormUtils.VALUE, value);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void populateHivStatus(JSONObject formToBeOpened, String dateString) {

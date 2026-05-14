@@ -12209,6 +12209,13 @@
           }
         },
         {
+          "column_name": "source_from",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.source_from"
+          }
+        },
+        {
           "column_name": "caregiver_name",
           "type": "Client",
           "json_mapping": {

@@ -605,7 +605,21 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
               //  formToBeOpened.getJSONObject("step1").put("title", this.commonPersonObjectClient.getColumnmaps().get("caregiver_name") + " "  + txtAge.getText().toString());
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptctMotherModel, Map.class));
                 populateMotherPmtctContactFields(formToBeOpened, ptctMotherModel);
+                // Ensure location fields reflect current user context
+                populateProgramInfoFromSharedPreferences(formToBeOpened);
 
+                break;
+
+            case "mother_pmtct_edit":
+                householdMapper = new ObjectMapper();
+                if (ptctMotherModel != null && ptctMotherModel.getBase_entity_id() != null) {
+                    formToBeOpened.put("entity_id", this.ptctMotherModel.getBase_entity_id());
+                }
+                if (ptctMotherModel != null) {
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, householdMapper.convertValue(ptctMotherModel, Map.class));
+                }
+                // Requested: district/ward should come from shared prefs (safe to set all location keys)
+                populateProgramInfoFromSharedPreferences(formToBeOpened);
                 break;
 
             case "pmct_child_hei":
@@ -627,6 +641,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
                 }
 
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened,householdMapper.convertValue(ptctMotherModel, Map.class));
+                populateProgramInfoFromSharedPreferences(formToBeOpened);
 
                 break;
             case "anc_details":
@@ -683,6 +698,34 @@ break;
         ensurePmtctHouseholdLinking(formToBeOpened);
         startFormActivity(formToBeOpened);
 
+    }
+
+    private void populateProgramInfoFromSharedPreferences(JSONObject formToBeOpened) {
+        android.content.SharedPreferences prefs = android.preference.PreferenceManager.getDefaultSharedPreferences(MotherPmtctProfileActivity.this);
+
+        String province = prefs.getString("province", "");
+        String district = prefs.getString("district", "");
+        String ward = prefs.getString("ward", "");
+        String facility = prefs.getString("facility", "");
+        String partner = prefs.getString("partner", "");
+
+        setStep1FieldValue(formToBeOpened, "province", province);
+        setStep1FieldValue(formToBeOpened, "district", district);
+        setStep1FieldValue(formToBeOpened, "ward", ward);
+        setStep1FieldValue(formToBeOpened, "facility", facility);
+        setStep1FieldValue(formToBeOpened, "partner", partner);
+    }
+
+    private void setStep1FieldValue(JSONObject formToBeOpened, String key, String value) {
+        if (android.text.TextUtils.isEmpty(value)) return;
+        JSONObject field = getFieldJSONObject(fields(formToBeOpened, STEP1), key);
+        if (field == null) return;
+        field.remove(JsonFormUtils.VALUE);
+        try {
+            field.put(JsonFormUtils.VALUE, value);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void startFormActivity(JSONObject jsonObject) {
@@ -1209,14 +1252,27 @@ break;
     }
 
     private void openHouseholdProfile() {
-        String householdId = resolveHouseholdId();
-        if (isNullOrEmpty(householdId)) {
+        String rawHouseholdId = commonPersonObjectClient.getColumnmaps().get("household_id");
+        String sourceFrom = commonPersonObjectClient.getColumnmaps().get("source_from");
+        String resolvedHouseholdId = rawHouseholdId;
+
+        if ("service_report_vca".equalsIgnoreCase(sourceFrom) && !isNullOrEmpty(rawHouseholdId)) {
+            try {
+                com.bluecodeltd.ecap.chw.model.EcClientIndexSummary summary =
+                        IndexPersonDao.getClientSummaryByUniqueId(rawHouseholdId);
+                if (summary != null && !isNullOrEmpty(summary.getHouseholdId())) {
+                    resolvedHouseholdId = summary.getHouseholdId();
+                }
+            } catch (Exception ignored) {}
+        }
+
+        if (isNullOrEmpty(resolvedHouseholdId)) {
             Toasty.warning(MotherPmtctProfileActivity.this, "Household record not found", Toast.LENGTH_LONG, true).show();
             return;
         }
 
         Intent intent = new Intent(this, HouseholdDetails.class);
-        intent.putExtra("householdId", householdId);
+        intent.putExtra("householdId", resolvedHouseholdId);
         startActivity(intent);
     }
 

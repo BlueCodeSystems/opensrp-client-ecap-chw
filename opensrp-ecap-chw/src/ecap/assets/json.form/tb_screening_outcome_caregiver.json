@@ -242,7 +242,7 @@
             "text": "Treatment Completed"
           },
           {
-            "key": "treatment_failed",
+            "key": "treatment failed",
             "text": "Treatment Failed"
           },
           {

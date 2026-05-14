@@ -290,6 +290,15 @@ public class VcaServiceActivity extends AppCompatActivity {
                 is_edit_mode = true;
             }
             String EncounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
+            if (BuildConfig.DEBUG) {
+                try {
+                    Toasty.info(VcaServiceActivity.this,
+                            "FORM: encounter=" + EncounterType + " edit=" + is_edit_mode +
+                                    " entity_id=" + (jsonFormObject.optString("entity_id") == null ? "" : jsonFormObject.optString("entity_id")),
+                            Toast.LENGTH_LONG, true).show();
+                } catch (Exception ignored) {
+                }
+            }
             if(EncounterType.equals("VCA Service Report")){
                 Intent passClosureForm   =  new Intent(this,SignatureActivity.class);
                 passClosureForm.putExtra("jsonForm", jsonFormObject.toString());
