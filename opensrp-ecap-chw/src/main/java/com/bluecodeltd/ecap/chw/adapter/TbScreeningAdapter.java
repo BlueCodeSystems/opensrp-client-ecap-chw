@@ -260,8 +260,9 @@ public class TbScreeningAdapter extends RecyclerView.Adapter<TbScreeningAdapter.
     private String buildCommentsSummary(TbScreeningModel m) {
         StringBuilder sb = new StringBuilder();
         String outcome = m.getTb_treatment_outcome();
-        if (outcome != null && !outcome.isEmpty()) {
-            sb.append("Outcome: ").append(mapOutcome(outcome));
+        String outcomeText = formatOutcomeCsv(outcome);
+        if (outcomeText != null && !outcomeText.isEmpty()) {
+            sb.append("Outcome: ").append(outcomeText);
         }
         String outcomeComment = m.getTb_treatment_outcome_comment();
         if (outcomeComment != null && !outcomeComment.trim().isEmpty()) {
@@ -274,6 +275,54 @@ public class TbScreeningAdapter extends RecyclerView.Adapter<TbScreeningAdapter.
             sb.append(sectionComments.trim());
         }
         return sb.toString();
+    }
+
+    private String formatOutcomeCsv(String raw) {
+        if (raw == null) return "";
+        String trimmed = raw.trim();
+        if (trimmed.isEmpty()) return "";
+
+        // Stored sometimes as a JSON array string e.g. ["cured","died"]
+        if (trimmed.startsWith("[") && trimmed.endsWith("]")) {
+            try {
+                JSONArray arr = new JSONArray(trimmed);
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < arr.length(); i++) {
+                    String key = arr.optString(i, null);
+                    if (key == null) continue;
+                    String label = mapOutcome(key);
+                    if (label == null || label.trim().isEmpty()) continue;
+                    if (sb.length() > 0) sb.append(", ");
+                    sb.append(label);
+                }
+                return sb.toString();
+            } catch (Exception ignored) {
+                // fallback to string cleanup below
+            }
+        }
+
+        // Single value possibly wrapped in quotes
+        if ((trimmed.startsWith("\"") && trimmed.endsWith("\"")) || (trimmed.startsWith("'") && trimmed.endsWith("'"))) {
+            trimmed = trimmed.substring(1, trimmed.length() - 1).trim();
+        }
+
+        // If it's a comma-separated list already, map each piece
+        if (trimmed.contains(",")) {
+            String[] parts = trimmed.split("\\s*,\\s*");
+            StringBuilder sb = new StringBuilder();
+            for (String p : parts) {
+                if (p == null) continue;
+                String key = p.trim();
+                if (key.isEmpty()) continue;
+                String label = mapOutcome(key);
+                if (label == null || label.trim().isEmpty()) continue;
+                if (sb.length() > 0) sb.append(", ");
+                sb.append(label);
+            }
+            return sb.toString();
+        }
+
+        return mapOutcome(trimmed);
     }
 
     private String mapYesNoNa(String value) {

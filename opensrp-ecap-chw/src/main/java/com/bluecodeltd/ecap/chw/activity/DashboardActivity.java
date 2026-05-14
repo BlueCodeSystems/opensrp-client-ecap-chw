@@ -546,6 +546,7 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
                         String partner = jObj.getString("partner");
                         String phone = jObj.getString("phone");
                         String district = jObj.getString("district");
+                        String ward = jObj.optString("ward", "");
                         String facility = jObj.getString("facility");
                         String email = jObj.getString("email");
                         String nrc = jObj.getString("nrc");
@@ -564,6 +565,7 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
                         edit.putString("partner", partner);
                         edit.putString("phone", phone);
                         edit.putString("district", district);
+                        edit.putString("ward", ward);
                         edit.putString("facility", facility);
                         edit.putString("email", email);
                         edit.putString("nrc", nrc);

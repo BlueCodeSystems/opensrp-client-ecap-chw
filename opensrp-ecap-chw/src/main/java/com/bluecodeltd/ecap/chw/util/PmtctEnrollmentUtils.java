@@ -52,6 +52,7 @@ public final class PmtctEnrollmentUtils {
             setFieldValue(form, "caregiver_birth_date", household.getCaregiver_birth_date());
             setFieldValue(form, "first_name", household.getFirst_name());
             setFieldValue(form, "last_name", household.getLast_name());
+            setFieldValue(form, "province", household.getProvince());
             setFieldValue(form, "district", household.getDistrict());
             setFieldValue(form, "ward", household.getWard());
             setFieldValue(form, "facility", household.getFacility());

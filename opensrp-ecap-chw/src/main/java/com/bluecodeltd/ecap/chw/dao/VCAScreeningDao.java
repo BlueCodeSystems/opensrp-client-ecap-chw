@@ -193,7 +193,9 @@ public class VCAScreeningDao extends AbstractDao {
             record.setAbym_economic_strengthening(getCursorValue(c, "abym_economic_strengthening"));
             record.setVca_receiving_caseworker(getCursorValue(c, "vca_receiving_caseworker"));
             record.setDistrict_moved_to(getCursorValue(c, "district_moved_to"));
+            // Support both legacy column `name_ovc` and current column `ovc_name`
             record.setName_ovc(getCursorValue(c, "name_ovc"));
+            record.setOvc_name(getCursorValue(c, "ovc_name"));
             record.setOvc_district(getCursorValue(c,"ovc_district"));
             record.setLocation_moved_to(getCursorValue(c,"location_moved_to"));
 

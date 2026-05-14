@@ -259,6 +259,10 @@
             "text": "No"
           }
         ],
+        "v_required": {
+          "value": true,
+          "err": "This is a required field"
+        },
         "relevance": {
           "step1:vca_gender": {
             "type": "string",

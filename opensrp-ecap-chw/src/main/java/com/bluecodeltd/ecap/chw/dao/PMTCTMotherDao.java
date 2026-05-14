@@ -82,6 +82,20 @@ public class PMTCTMotherDao extends AbstractDao {
         return values.get(0);
     }
 
+    public static boolean hasMotherRecordByHouseholdId(String householdId) {
+        if (isNullOrEmpty(householdId)) {
+            return false;
+        }
+        String sql = "SELECT COUNT(*) v FROM ec_pmtct_mother WHERE household_id = '" + householdId + "' " +
+                "AND (delete_status IS NULL OR delete_status <> '1')";
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
+        List<String> values = AbstractDao.readData(sql, dataMap);
+        if (values == null || values.isEmpty()) {
+            return false;
+        }
+        return !"0".equals(values.get(0));
+    }
+
     public static boolean hasMotherRecord(String householdOrPmtctId) {
         if (isNullOrEmpty(householdOrPmtctId)) {
             return false;

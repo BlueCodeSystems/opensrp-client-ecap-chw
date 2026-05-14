@@ -682,6 +682,7 @@ public class MotherDetail extends AppCompatActivity {
                 }
 
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, motherMap);
+                populateLocationFromSharedPreferences(formToBeOpened);
 
 
                 break;
@@ -705,7 +706,7 @@ public class MotherDetail extends AppCompatActivity {
                         };
                         for (String k : allowedKeys) {
                             String v = columns.get(k);
-                            if (v != null) motherContext.put(k, v);
+                            if (!android.text.TextUtils.isEmpty(v)) motherContext.put(k, v);
                         }
                     }
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, motherContext);
@@ -860,6 +861,27 @@ public class MotherDetail extends AppCompatActivity {
         }
         startFormActivity(formToBeOpened);
 
+    }
+
+    private void populateLocationFromSharedPreferences(JSONObject formToBeOpened) {
+        try {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MotherDetail.this);
+            setStep1FieldValue(formToBeOpened, "province", prefs.getString("province", ""));
+            setStep1FieldValue(formToBeOpened, "district", prefs.getString("district", ""));
+            setStep1FieldValue(formToBeOpened, "ward", prefs.getString("ward", ""));
+            setStep1FieldValue(formToBeOpened, "facility", prefs.getString("facility", ""));
+            setStep1FieldValue(formToBeOpened, "partner", prefs.getString("partner", ""));
+        } catch (Exception ignored) { }
+    }
+
+    private void setStep1FieldValue(JSONObject formToBeOpened, String key, String value) {
+        if (android.text.TextUtils.isEmpty(value)) return;
+        try {
+            JSONObject field = getFieldJSONObject(fields(formToBeOpened, STEP1), key);
+            if (field == null) return;
+            field.remove(JsonFormUtils.VALUE);
+            field.put(JsonFormUtils.VALUE, value);
+        } catch (Exception ignored) { }
     }
 
     public void startFormActivity(JSONObject jsonObject) {
