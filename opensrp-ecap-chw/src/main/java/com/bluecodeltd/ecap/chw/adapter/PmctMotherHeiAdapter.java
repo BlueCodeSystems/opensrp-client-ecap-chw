@@ -25,8 +25,8 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 public class PmctMotherHeiAdapter extends  RecyclerView.Adapter<PmctMotherHeiAdapter.ViewHolder>{
-ArrayList<PmtctChildModel> model;
-Context context;
+    ArrayList<PmtctChildModel> model;
+    Context context;
 
     public PmctMotherHeiAdapter(ArrayList<PmtctChildModel> model, Context context) {
         this.model = model;
@@ -45,9 +45,9 @@ Context context;
     @Override
     public void onBindViewHolder(@NonNull PmctMotherHeiAdapter.ViewHolder holder, int position) {
 
-           final PmtctChildModel monitoringModel = model.get(position);
-                holder.fullName.setText(monitoringModel.getInfant_first_name() + " " + monitoringModel.getInfant_lastname());
-                holder.age.setText("Age : " + getAge(monitoringModel.getInfants_date_of_birth()));
+        final PmtctChildModel monitoringModel = model.get(position);
+        holder.fullName.setText(monitoringModel.getInfant_first_name() + " " + monitoringModel.getInfant_lastname());
+        holder.age.setText("Age : " + getAge(monitoringModel.getInfants_date_of_birth()));
 
 
 
@@ -151,13 +151,13 @@ Context context;
         });
 
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent heiProfile = new Intent(context, HeiDetailsActivity.class);
-                        heiProfile.putExtra("client_id",monitoringModel.getUnique_id());
-                        context.startActivity(heiProfile);
-                    }
-                });
+            @Override
+            public void onClick(View v) {
+                Intent heiProfile = new Intent(context, HeiDetailsActivity.class);
+                heiProfile.putExtra("client_id",monitoringModel.getUnique_id());
+                context.startActivity(heiProfile);
+            }
+        });
 
     }
 
@@ -236,3 +236,4 @@ Context context;
         }
     }
 }
+

@@ -78,6 +78,7 @@ import com.bluecodeltd.ecap.chw.model.Caregiver;
 import com.bluecodeltd.ecap.chw.model.CaregiverAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.CaregiverHivAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.CaregiverHouseholdvisitationModel;
+import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
 import com.bluecodeltd.ecap.chw.model.CaregiverVisitationModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.GraduationModel;
@@ -1484,8 +1485,12 @@ public class HouseholdDetails extends AppCompatActivity {
                     }
 
 
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,oMapper.convertValue(obj, Map.class));
-                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm,caregiverMapper.convertValue(caregiver, Map.class));
+                    CoreJsonFormUtils.populateJsonForm(indexRegisterForm, oMapper.convertValue(obj, Map.class));
+                    if (caregiver != null) {
+                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, caregiverMapper.convertValue(caregiver, Map.class));
+                    } else if (house != null) {
+                        CoreJsonFormUtils.populateJsonForm(indexRegisterForm, caregiverMapper.convertValue(house, Map.class));
+                    }
                     startFormActivity(indexRegisterForm);
 
 
@@ -2536,7 +2541,7 @@ public class HouseholdDetails extends AppCompatActivity {
                             }
                         }
                         deleteMothers(householdId);
-                        PMTCTMotherDao.deletePmtctMotherByHouseholdId(householdId);
+                        deletePmtctMother(householdId);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -2654,7 +2659,35 @@ public class HouseholdDetails extends AppCompatActivity {
                 Child child = allChildren.get(i);
                 child.setDeleted("1");
                 JSONObject vcaScreeningForm = formUtils.getFormJson("vca_edit");
-                CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(child, Map.class));
+                ObjectMapper deleteMapper = new ObjectMapper();
+                Map<String, Object> childMap = deleteMapper.convertValue(child, Map.class);
+                Caregiver childCaregiver = caregiver != null ? caregiver : CaregiverDao.getCaregiver(child.getHousehold_id());
+                if (childCaregiver != null) {
+                    Map<String, Object> cgMap = deleteMapper.convertValue(childCaregiver, Map.class);
+                    cgMap.forEach((k, v) -> { if (v != null && childMap.get(k) == null) childMap.put(k, v); });
+                }
+                Map<String, String> childStringMap = new HashMap<>();
+                childMap.forEach((k, v) -> { if (k != null && v != null) childStringMap.put(k, String.valueOf(v)); });
+
+                // Fill with CHW location + caseworker from SharedPreferences only when missing
+                try {
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(HouseholdDetails.this);
+
+                    String district = childStringMap.get("district");
+                    if (android.text.TextUtils.isEmpty(district)) {
+                        String prefDistrict = prefs.getString("district", "");
+                        if (!android.text.TextUtils.isEmpty(prefDistrict)) childStringMap.put("district", prefDistrict);
+                    }
+
+                    String caseworker = childStringMap.get("caseworker_name");
+                    if (android.text.TextUtils.isEmpty(caseworker)) {
+                        String prefCaseworker = prefs.getString("caseworker_name", "Anonymous");
+                        if (!android.text.TextUtils.isEmpty(prefCaseworker)) childStringMap.put("caseworker_name", prefCaseworker);
+                    }
+                } catch (Exception ignored) { }
+
+                CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, childStringMap);
+
                 vcaScreeningForm.put("entity_id", child.getBase_entity_id());
 
                 try {
@@ -2674,6 +2707,44 @@ public class HouseholdDetails extends AppCompatActivity {
         }
 
 
+    }
+
+    private void deletePmtctMother(String householdId) {
+        try {
+            PtctMotherModel pmtctMother = PMTCTMotherDao.getPMCTMother(householdId);
+            if (pmtctMother == null) {
+                return;
+            }
+
+            // Safety: only allow PMTCT delete when all HEI are already deleted
+            try {
+                String heiCount = PmtctChildDao.countMotherHei(householdId, pmtctMother.getPmtct_id());
+                if (heiCount != null && !"0".equals(heiCount)) {
+                    return;
+                }
+            } catch (Exception ignored) { }
+
+            pmtctMother.setDelete_status("1");
+
+            FormUtils formUtils = new FormUtils(this);
+            JSONObject pmtctForm = formUtils.getFormJson("mother_pmtct_edit");
+            CoreJsonFormUtils.populateJsonForm(pmtctForm, new ObjectMapper().convertValue(pmtctMother, Map.class));
+            pmtctForm.put("entity_id", pmtctMother.getBase_entity_id());
+            try {
+                JSONObject del = getFieldJSONObject(fields(pmtctForm, "step1"), "delete_status");
+                if (del != null) {
+                    del.put(JsonFormUtils.VALUE, "1");
+                }
+            } catch (Exception ignored) { }
+
+            ChildIndexEventClient eventClient = processRegistration(pmtctForm.toString());
+            if (eventClient == null) {
+                return;
+            }
+            saveRegistration(eventClient, true, "Mother Pmtct", null);
+        } catch (Exception e) {
+            Timber.e(e);
+        }
     }
     public void getDeregistrationStatus(){
         if (house == null) {

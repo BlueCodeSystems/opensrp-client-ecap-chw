@@ -1325,7 +1325,7 @@ public class MotherDetail extends AppCompatActivity {
             deleteBuilder.setNegativeButton("NO", (dialog, id) -> dialog.cancel());
             deleteBuilder.setPositiveButton("YES", (dialogInterface, i) -> {
                 try {
-                    deleteMotherRecord();
+                    performCascadeDeleteFromMotherProfile();
                 } catch (Exception e) {
                     Timber.e(e);
                 }
@@ -1344,17 +1344,95 @@ public class MotherDetail extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void deleteMotherRecord() throws Exception {
-        String baseEntityId = commonPersonObjectClient.getColumnmaps().get("base_entity_id");
-        IndexMotherModel mother = IndexMotherDao.getIndexMotherByBaseEntityId(baseEntityId);
-        if (mother == null) return;
-        mother.setDeleted("1");
+    private void performCascadeDeleteFromMotherProfile() throws Exception {
+        String hhId = commonPersonObjectClient != null && commonPersonObjectClient.getColumnmaps() != null
+                ? commonPersonObjectClient.getColumnmaps().get("household_id") : null;
+        String baseEntityId = commonPersonObjectClient != null && commonPersonObjectClient.getColumnmaps() != null
+                ? commonPersonObjectClient.getColumnmaps().get("base_entity_id") : null;
+
+        if (hhId == null || hhId.trim().isEmpty()) {
+            return;
+        }
+
+        // Only delete when all children/HEI are already deleted
+        try {
+            java.util.List<com.bluecodeltd.ecap.chw.model.Child> activeChildren = IndexPersonDao.getFamilyChildren(hhId);
+            if (activeChildren != null && !activeChildren.isEmpty()) {
+                return;
+            }
+        } catch (Exception ignored) { }
+
+        PtctMotherModel pmtctMother = null;
+        try {
+            pmtctMother = PMTCTMotherDao.getPMCTMother(hhId);
+        } catch (Exception ignored) { }
+        if (pmtctMother != null) {
+            try {
+                String heiCount = PmtctChildDao.countMotherHei(hhId, pmtctMother.getPmtct_id());
+                if (heiCount != null && !"0".equals(heiCount)) {
+                    return;
+                }
+            } catch (Exception ignored) { }
+        }
+
         FormUtils formUtils = new FormUtils(this);
-        JSONObject motherForm = formUtils.getFormJson("mother_index_edit");
-        CoreJsonFormUtils.populateJsonForm(motherForm, new ObjectMapper().convertValue(mother, Map.class));
-        motherForm.put("entity_id", baseEntityId);
-        ChildIndexEventClient childIndexEventClient = processRegistration(motherForm.toString());
-        if (childIndexEventClient == null) return;
-        saveRegistration(childIndexEventClient, true, null);
+
+        // Delete mother index via OpenSRP edit form/event
+        try {
+            IndexMotherModel mother = !android.text.TextUtils.isEmpty(baseEntityId)
+                    ? IndexMotherDao.getIndexMotherByBaseEntityId(baseEntityId)
+                    : IndexMotherDao.getIndexMotherByHouseholdId(hhId);
+            if (mother != null) {
+                mother.setDeleted("1");
+                JSONObject motherForm = formUtils.getFormJson("mother_index_edit");
+                CoreJsonFormUtils.populateJsonForm(motherForm, new ObjectMapper().convertValue(mother, Map.class));
+                motherForm.put("entity_id", mother.getBase_entity_id() != null ? mother.getBase_entity_id() : baseEntityId);
+                ChildIndexEventClient ec = processRegistration(motherForm.toString());
+                if (ec != null) {
+                    saveRegistration(ec, true, null);
+                }
+            }
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+
+        // Delete PMTCT mother via OpenSRP edit form/event (only if present)
+        try {
+            if (pmtctMother != null) {
+                pmtctMother.setDelete_status("1");
+                JSONObject pmtctForm = formUtils.getFormJson("mother_pmtct_edit");
+                CoreJsonFormUtils.populateJsonForm(pmtctForm, new ObjectMapper().convertValue(pmtctMother, Map.class));
+                pmtctForm.put("entity_id", pmtctMother.getBase_entity_id());
+                try {
+                    JSONObject del = getFieldJSONObject(fields(pmtctForm, STEP1), "delete_status");
+                    if (del != null) {
+                        del.put(JsonFormUtils.VALUE, "1");
+                    }
+                } catch (Exception ignored) { }
+                ChildIndexEventClient ec = processRegistration(pmtctForm.toString());
+                if (ec != null) {
+                    saveRegistration(ec, true, null);
+                }
+            }
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+
+        // Delete household via OpenSRP edit form/event
+        try {
+            Household household = HouseholdDao.getHousehold(hhId);
+            if (household != null && household.getBase_entity_id() != null && !household.getBase_entity_id().trim().isEmpty()) {
+                household.setStatus("1");
+                JSONObject hhForm = formUtils.getFormJson("hh_edit");
+                CoreJsonFormUtils.populateJsonForm(hhForm, new ObjectMapper().convertValue(household, Map.class));
+                hhForm.put("entity_id", household.getBase_entity_id());
+                ChildIndexEventClient ec = processRegistration(hhForm.toString());
+                if (ec != null) {
+                    saveRegistration(ec, true, null);
+                }
+            }
+        } catch (Exception e) {
+            Timber.e(e);
+        }
     }
 }

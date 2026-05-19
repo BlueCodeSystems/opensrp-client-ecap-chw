@@ -47,6 +47,11 @@ public class MotherChildrenFragment extends Fragment {
 
         CommonPersonObjectClient mother = mymap.get("mother");
         String houseId = (mother != null && mother.getColumnmaps() != null) ? mother.getColumnmaps().get("household_id") : null;
+        String motherSourceFrom = (mother != null && mother.getColumnmaps() != null) ? mother.getColumnmaps().get("source_from") : null;
+        boolean allowVcaProfileNavigation = true;
+        if (motherSourceFrom != null && motherSourceFrom.trim().equalsIgnoreCase("vca_screening")) {
+            allowVcaProfileNavigation = false;
+        }
 
         recyclerView = binding.recyclerView;
 
@@ -54,7 +59,7 @@ public class MotherChildrenFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new ChildrenAdapter(childList, getContext(), "0");
+        recyclerViewadapter = new ChildrenAdapter(childList, getContext(), "0", allowVcaProfileNavigation);
         recyclerView.setAdapter(recyclerViewadapter);
 
         View progress = binding.progressLoading;

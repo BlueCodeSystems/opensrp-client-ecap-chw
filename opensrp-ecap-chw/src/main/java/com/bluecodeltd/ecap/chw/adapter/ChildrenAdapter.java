@@ -65,6 +65,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
     ObjectMapper oMapper, gradMapper;
     String dob;
     String caseStatus;
+    private final boolean allowVcaProfileNavigation;
     // Use centralized Threading
 
 
@@ -75,6 +76,17 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         this.children = children;
         this.txtMuac = txtMuac;
         this.context = context;
+        this.allowVcaProfileNavigation = true;
+    }
+
+    public ChildrenAdapter(List<Child> children, Context context, String txtMuac, boolean allowVcaProfileNavigation){
+
+        super();
+
+        this.children = children;
+        this.txtMuac = txtMuac;
+        this.context = context;
+        this.allowVcaProfileNavigation = allowVcaProfileNavigation;
     }
 
     @Override
@@ -317,51 +329,79 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             }
         } );
 
-        holder.openProfileBtn.setOnClickListener(v -> {
-            try {
-                Child child = holder.itemView.getTag() instanceof Child ? (Child) holder.itemView.getTag() : initialChild;
-                String baseEntityId = child != null ? child.getBase_entity_id() : null;
-                String householdId = child != null ? child.getHousehold_id() : null;
-                String uniqueId = child != null ? child.getUnique_id() : null;
-                ChildNonPmtctDetail.start((Activity) context, baseEntityId, householdId, uniqueId);
-            } catch (Exception e) {
-                Toasty.error(context, "Unable to open child profile", Toast.LENGTH_LONG, true).show();
-            }
-        });
-        // Show child profile button only when caregiver HIV status is negative/unknown
-        String caregiverStatus = initialChild.getCaregiver_hiv_status();
-        boolean caregiverPositive = caregiverStatus != null &&
-                (caregiverStatus.equalsIgnoreCase("positive") || caregiverStatus.equalsIgnoreCase("HIV+"));
-        holder.openProfileBtn.setVisibility(caregiverPositive ? View.GONE : View.VISIBLE);
-
-        holder.lview.setOnClickListener(v -> {
-
-            if (v.getId() == R.id.register_columns) {
-                Child child = holder.itemView.getTag() instanceof Child ? (Child) holder.itemView.getTag() : initialChild;
-                String subpop3 = child != null ? child.getSubpop3() : null;
-                if (subpop3 == null) {
-                    Intent editIntent = new Intent(context, IndexDetailsActivity.class);
-                    editIntent.putExtra("Child", child != null ? child.getUnique_id() : childUniqueID);
-                    editIntent.putExtra("open_vca_edit_if_incomplete", true);
-                    context.startActivity(editIntent);
-                    return;
+        if (!allowVcaProfileNavigation) {
+            holder.openProfileBtn.setOnClickListener(null);
+            holder.openProfileBtn.setVisibility(View.GONE);
+        } else {
+            holder.openProfileBtn.setOnClickListener(v -> {
+                try {
+                    Child child = holder.itemView.getTag() instanceof Child ? (Child) holder.itemView.getTag() : initialChild;
+                    String baseEntityId = child != null ? child.getBase_entity_id() : null;
+                    String householdId = child != null ? child.getHousehold_id() : null;
+                    String uniqueId = child != null ? child.getUnique_id() : null;
+                    ChildNonPmtctDetail.start((Activity) context, baseEntityId, householdId, uniqueId);
+                } catch (Exception e) {
+                    Toasty.error(context, "Unable to open child profile", Toast.LENGTH_LONG, true).show();
                 }
+            });
+            // Show child profile button only when caregiver HIV status is negative/unknown
+            String caregiverStatus = initialChild.getCaregiver_hiv_status();
+            boolean caregiverPositive = caregiverStatus != null &&
+                    (caregiverStatus.equalsIgnoreCase("positive") || caregiverStatus.equalsIgnoreCase("HIV+"));
+            holder.openProfileBtn.setVisibility(caregiverPositive ? View.GONE : View.VISIBLE);
+        }
 
-                if((Integer.parseInt(memberAge) < 24) ){
-
-                    Intent intent = new Intent(context, IndexDetailsActivity.class);
-                    intent.putExtra("fromIndex", "321");
-                    intent.putExtra("Child",  child != null ? child.getUnique_id() : childUniqueID);
-                    context.startActivity(intent);
-
-                } /*else if (!isEligibleForEnrollment(child)){
-                    Toasty.warning(context, "Member is not eligible on the Program", Toast.LENGTH_LONG, true).show();
-
-                }*/else {
-                    Toasty.warning(context, "Member is not enrolled on the Program", Toast.LENGTH_LONG, true).show();
+        if (!allowVcaProfileNavigation) {
+            // In mother profile context (source_from = vca_screening): do not allow opening VCA profile.
+            // Keep row clickable but route to the child profile instead.
+            View.OnClickListener openChildProfile = v -> {
+                try {
+                    Child child = holder.itemView.getTag() instanceof Child ? (Child) holder.itemView.getTag() : initialChild;
+                    String baseEntityId = child != null ? child.getBase_entity_id() : null;
+                    String householdId = child != null ? child.getHousehold_id() : null;
+                    String uniqueId = child != null ? child.getUnique_id() : null;
+                    ChildNonPmtctDetail.start((Activity) context, baseEntityId, householdId, uniqueId);
+                } catch (Exception e) {
+                    Toasty.error(context, "Unable to open child profile", Toast.LENGTH_LONG, true).show();
                 }
-            }
-        });
+            };
+
+            holder.itemView.setClickable(true);
+            holder.itemView.setEnabled(true);
+            holder.itemView.setOnClickListener(openChildProfile);
+            holder.lview.setClickable(true);
+            holder.lview.setEnabled(true);
+            holder.lview.setOnClickListener(openChildProfile);
+        } else {
+            holder.lview.setOnClickListener(v -> {
+
+                if (v.getId() == R.id.register_columns) {
+                    Child child = holder.itemView.getTag() instanceof Child ? (Child) holder.itemView.getTag() : initialChild;
+                    String subpop3 = child != null ? child.getSubpop3() : null;
+                    if (subpop3 == null) {
+                        Intent editIntent = new Intent(context, IndexDetailsActivity.class);
+                        editIntent.putExtra("Child", child != null ? child.getUnique_id() : childUniqueID);
+                        editIntent.putExtra("open_vca_edit_if_incomplete", true);
+                        context.startActivity(editIntent);
+                        return;
+                    }
+
+                    if((Integer.parseInt(memberAge) < 24) ){
+
+                        Intent intent = new Intent(context, IndexDetailsActivity.class);
+                        intent.putExtra("fromIndex", "321");
+                        intent.putExtra("Child",  child != null ? child.getUnique_id() : childUniqueID);
+                        context.startActivity(intent);
+
+                    } /*else if (!isEligibleForEnrollment(child)){
+                        Toasty.warning(context, "Member is not eligible on the Program", Toast.LENGTH_LONG, true).show();
+
+                    }*/else {
+                        Toasty.warning(context, "Member is not enrolled on the Program", Toast.LENGTH_LONG, true).show();
+                    }
+                }
+            });
+        }
 
     }
 

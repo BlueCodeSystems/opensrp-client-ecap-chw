@@ -422,6 +422,13 @@
         }
       },
       {
+        "key": "pmtct_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pmtct_id",
+        "type": "hidden"
+      },
+      {
         "key": "household_id",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",

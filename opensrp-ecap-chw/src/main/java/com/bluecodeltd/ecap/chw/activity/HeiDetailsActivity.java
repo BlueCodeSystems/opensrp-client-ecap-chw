@@ -14,6 +14,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
@@ -31,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -46,6 +48,7 @@ import com.bluecodeltd.ecap.chw.adapter.ViewPagerAdapterFragment;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.ChildMonitoringDao;
+import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
 import com.bluecodeltd.ecap.chw.dao.PmtctChildDao;
 import com.bluecodeltd.ecap.chw.dao.PmtctChildOutcomeDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
@@ -62,6 +65,7 @@ import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentUnder15Model;
 import com.bluecodeltd.ecap.chw.model.PmtctChildModel;
 import com.bluecodeltd.ecap.chw.model.PmtctChildOutcomeModel;
+import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
 import com.bluecodeltd.ecap.chw.model.VCAModel;
 import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
@@ -186,6 +190,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
         NavigationMenu.getInstance(this, null, toolbar);
 
         motherProfile = binding.motherProfile;
+        setupToolbarBackNavigation();
 
         builder = new AlertDialog.Builder(HeiDetailsActivity.this);
 
@@ -281,13 +286,90 @@ public class HeiDetailsActivity extends AppCompatActivity {
         updateAncTabTitle();
 
 
+        updateMotherProfileButton();
+    }
+
+    private void setupToolbarBackNavigation() {
+        try {
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setDisplayShowHomeEnabled(true);
+
+                final Drawable upArrow = getResources().getDrawable(R.drawable.ic_arrow_back_white_24dp);
+                upArrow.setColorFilter(getResources().getColor(org.smartregister.R.color.white), PorterDuff.Mode.SRC_ATOP);
+                actionBar.setHomeAsUpIndicator(upArrow);
+                actionBar.setElevation(0);
+            }
+
+            toolbar.setNavigationOnClickListener(v -> navigateUpToMotherProfile());
+        } catch (Exception ignored) { }
+    }
+
+    private void updateMotherProfileButton() {
+        if (motherProfile == null) return;
+
+        final String pmtctId = getLinkedMotherPmtctId();
+
+        PtctMotherModel mother = null;
+        try {
+            if (!TextUtils.isEmpty(pmtctId)) {
+                mother = PMTCTMotherDao.getPMCTMother(pmtctId);
+            }
+        } catch (Exception ignored) { }
+
+        boolean hide = false;
+        if (mother != null && !TextUtils.isEmpty(mother.getSource_from())) {
+            hide = "service_report_vca".equalsIgnoreCase(mother.getSource_from().trim());
+        }
+
+        motherProfile.setVisibility(hide ? View.GONE : View.VISIBLE);
+        if (hide) return;
+
         motherProfile.setOnClickListener(v -> {
-            if (pmtctChild == null || TextUtils.isEmpty(pmtctChild.getHousehold_id())) {
+            if (TextUtils.isEmpty(pmtctId)) {
                 Toasty.warning(HeiDetailsActivity.this, "Mother record not available", Toast.LENGTH_LONG, true).show();
                 return;
             }
-            goToMotherDetailActivity(pmtctChild.getHousehold_id());
+            Intent intent = new Intent(this, MotherPmtctProfileActivity.class);
+            intent.putExtra("client_id", pmtctId);
+            startActivity(intent);
         });
+    }
+
+    private String getLinkedMotherPmtctId() {
+        try {
+            if (pmtctChild != null) return pmtctChild.getPmtct_id();
+        } catch (Exception ignored) { }
+        return null;
+    }
+
+    private void navigateUpToMotherProfile() {
+        if (!isTaskRoot()) {
+            finish();
+            return;
+        }
+
+        String pmtctId = getLinkedMotherPmtctId();
+
+        String householdId = null;
+        String sourceFrom = null;
+        try {
+            if (!TextUtils.isEmpty(pmtctId)) {
+                PtctMotherModel mother = PMTCTMotherDao.getPMCTMother(pmtctId);
+                if (mother != null) {
+                    householdId = mother.getHousehold_id();
+                    sourceFrom = mother.getSource_from();
+                }
+            }
+        } catch (Exception ignored) { }
+
+        Intent intent = new Intent(this, MotherPmtctProfileActivity.class);
+        intent.putExtra("client_id", pmtctId);
+        if (!TextUtils.isEmpty(householdId)) intent.putExtra("household_id", householdId);
+        if (!TextUtils.isEmpty(sourceFrom)) intent.putExtra("source_from", sourceFrom);
+        startActivity(intent);
+        finish();
     }
 
     public void animateFAB(){
@@ -1036,6 +1118,9 @@ public class HeiDetailsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
+            case android.R.id.home:
+                navigateUpToMotherProfile();
+                return true;
             case R.id.refresh:
                 finish();
                 startActivity(getIntent());
@@ -1317,11 +1402,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(this, MotherPmtctProfileActivity.class);
-        intent.putExtra("client_id",  pmtctChild.getHousehold_id());
-        startActivity(intent);
-        this.finish();
+        navigateUpToMotherProfile();
 
     }
 }

@@ -179,7 +179,7 @@
         "hint": "District",
         "read_only": "true",
         "edit_type": "name",
-        "look_up": "true"
+        "look_up": "false"
       },
       {
         "key": "ward",

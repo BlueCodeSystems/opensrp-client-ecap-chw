@@ -171,8 +171,8 @@
             "text": "Transferred to other OVC program"
           },
           {
-            "key": "Transferred to other Ecap II ward/district",
-            "text": "Transferred to other Ecap II ward/district"
+            "key": "Transferred to other ECAP II district",
+            "text": "Transferred to other ECAP II district"
           },
           {
             "key": "Lost to follow-up",
@@ -256,7 +256,7 @@
         "relevance": {
           "step1:exited_graduation_reason": {
             "type": "string",
-            "ex": "equalTo(., \"Transferred to other Ecap II ward/district\")"
+            "ex": "equalTo(., \"Transferred to other ECAP II district\")"
           }
         }
       },
@@ -275,7 +275,7 @@
         "relevance": {
           "step1:exited_graduation_reason": {
             "type": "string",
-            "ex": "equalTo(., \"Transferred to other Ecap II ward/district\")"
+            "ex": "equalTo(., \"Transferred to other ECAP II district\")"
           }
         }
       },
