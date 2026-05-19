@@ -127,6 +127,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
     ObjectMapper householdMapper;
     String clientId;
     String launchHouseholdId;
+    String launchSourceFrom;
 
     AlertDialog.Builder builder;
 
@@ -162,6 +163,8 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
             launchHouseholdId = extras.getString("household_id");
             if (isNullOrEmpty(launchHouseholdId)) launchHouseholdId = extras.getString("householdId");
             if (isNullOrEmpty(launchHouseholdId)) launchHouseholdId = extras.getString("hh_id");
+            launchSourceFrom = extras.getString("source_from");
+            if (isNullOrEmpty(launchSourceFrom)) launchSourceFrom = extras.getString("sourceFrom");
             Object baseObj = extras.get("baseId");
             if (baseObj instanceof CommonPersonObjectClient) {
                 CommonPersonObjectClient baseClient = (CommonPersonObjectClient) baseObj;
@@ -172,11 +175,19 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
                 if (isNullOrEmpty(clientId)) {
                     clientId = baseClient.getColumnmaps().get("pmtct_id");
                 }
+                if (isNullOrEmpty(launchSourceFrom)) {
+                    try { launchSourceFrom = baseClient.getColumnmaps().get("source_from"); } catch (Exception ignored) { }
+                }
             }
             if (isNullOrEmpty(clientId) && !isNullOrEmpty(launchHouseholdId)) {
                 clientId = launchHouseholdId;
             }
         }
+
+        // If launched from Service Report, hide the "Mother Profile" shortcut button.
+        updateMotherProfileButtonVisibility();
+        // Hide/show Household button immediately from Intent extras (when source_from was passed).
+        updateHouseholdButtonVisibility(launchSourceFrom);
 
         ptctMotherModel = null;
         pmtctDeliveryDetailsModel = null;
@@ -223,6 +234,10 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
                 pmctMotherAncModel = finalAnc;
                 pmctMotherOutcomeModel = finalOutcome;
 
+                updateMotherProfileButtonVisibility();
+                // Hide/show Household button again after loading the PMTCT mother from DB.
+                updateHouseholdButtonVisibility(null);
+
                 if (ptctMotherModel != null) {
                     String mothersFullName = isNullOrEmpty(ptctMotherModel.getCaregiver_name())
                             ? String.format("%s %s", valueOrEmpty(ptctMotherModel.getFirst_name()), valueOrEmpty(ptctMotherModel.getLast_name())).trim()
@@ -261,6 +276,69 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         updateOverviewTitle();
         setupFabVisibility();
 
+    }
+
+    private void updateMotherProfileButtonVisibility() {
+        try {
+            View motherProfileButton = findViewById(R.id.mother_prof);
+            if (motherProfileButton == null) return;
+
+            String sourceFrom = null;
+            try {
+                if (ptctMotherModel != null) {
+                    sourceFrom = ptctMotherModel.getSource_from();
+                }
+            } catch (Exception ignored) { }
+
+            if (isNullOrEmpty(sourceFrom)) {
+                try {
+                    if (commonPersonObjectClient != null && commonPersonObjectClient.getColumnmaps() != null) {
+                        sourceFrom = commonPersonObjectClient.getColumnmaps().get("source_from");
+                    }
+                } catch (Exception ignored) { }
+            }
+
+            boolean hide = false;
+            if (!isNullOrEmpty(sourceFrom)) {
+                String normalized = sourceFrom.trim().toLowerCase();
+                hide = "service_report_vca".equals(normalized) || normalized.contains("service_report");
+            }
+            motherProfileButton.setVisibility(hide ? View.GONE : View.VISIBLE);
+        } catch (Exception ignored) { }
+    }
+
+    private void updateHouseholdButtonVisibility(String sourceFromOverride) {
+        try {
+            View householdButton = findViewById(R.id.hh_prof);
+            if (householdButton == null) return;
+
+            String sourceFrom = sourceFromOverride;
+            if (isNullOrEmpty(sourceFrom)) {
+                try {
+                    if (ptctMotherModel != null) {
+                        sourceFrom = ptctMotherModel.getSource_from();
+                    }
+                } catch (Exception ignored) { }
+            }
+
+            if (isNullOrEmpty(sourceFrom)) {
+                try {
+                    if (commonPersonObjectClient != null && commonPersonObjectClient.getColumnmaps() != null) {
+                        sourceFrom = commonPersonObjectClient.getColumnmaps().get("source_from");
+                    }
+                } catch (Exception ignored) { }
+            }
+
+            if (isNullOrEmpty(sourceFrom)) {
+                sourceFrom = launchSourceFrom;
+            }
+
+            boolean hide = false;
+            if (!isNullOrEmpty(sourceFrom)) {
+                hide = sourceFrom.trim().toLowerCase().startsWith("service_report");
+            }
+            householdButton.setVisibility(hide ? View.GONE : View.VISIBLE);
+        } catch (Exception ignored) { }
     }
 
     public HashMap<String, CommonPersonObjectClient> getData() {
@@ -1112,6 +1190,17 @@ break;
 
     }
 
+    /** Exposes identifiers used to link PMTCT mother to HEI rows for fragments (pmtct_id + household_id). */
+    public String[] getPmtctIdentifiersForHei() {
+        String primaryId = (ptctMotherModel != null && !isNullOrEmpty(ptctMotherModel.getPmtct_id()))
+                ? ptctMotherModel.getPmtct_id()
+                : clientId;
+        String secondaryId = (ptctMotherModel != null && !isNullOrEmpty(ptctMotherModel.getHousehold_id()))
+                ? ptctMotherModel.getHousehold_id()
+                : resolveHouseholdId();
+        return new String[]{ primaryId, secondaryId };
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -1176,10 +1265,16 @@ break;
                         e.printStackTrace();
                     }
                     ptctMotherModel.setDelete_status("1");
-                    JSONObject openForm = formUtils.getFormJson("mother_pmtct");
+                    JSONObject openForm = formUtils.getFormJson("mother_pmtct_edit");
                     try {
                         CoreJsonFormUtils.populateJsonForm(openForm, new ObjectMapper().convertValue(ptctMotherModel, Map.class));
                         openForm.put("entity_id", ptctMotherModel.getBase_entity_id());
+                        try {
+                            JSONObject del = getFieldJSONObject(fields(openForm, "step1"), "delete_status");
+                            if (del != null) {
+                                del.put(JsonFormUtils.VALUE, "1");
+                            }
+                        } catch (Exception ignored) { }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -1252,23 +1347,39 @@ break;
     }
 
     private void openHouseholdProfile() {
-        String rawHouseholdId = commonPersonObjectClient.getColumnmaps().get("household_id");
-        String sourceFrom = commonPersonObjectClient.getColumnmaps().get("source_from");
-        String resolvedHouseholdId = rawHouseholdId;
+        String householdId = null;
+        String sourceFrom = null;
+        try {
+            if (commonPersonObjectClient != null && commonPersonObjectClient.getColumnmaps() != null) {
+                householdId = commonPersonObjectClient.getColumnmaps().get("household_id");
+                sourceFrom = commonPersonObjectClient.getColumnmaps().get("source_from");
+            }
+        } catch (Exception ignored) { }
 
-        if ("service_report_vca".equalsIgnoreCase(sourceFrom) && !isNullOrEmpty(rawHouseholdId)) {
+        if (isNullOrEmpty(householdId)) {
+            householdId = resolveHouseholdId();
+        }
+
+        if (isNullOrEmpty(sourceFrom)) {
+            try {
+                if (ptctMotherModel != null) sourceFrom = ptctMotherModel.getSource_from();
+            } catch (Exception ignored) { }
+        }
+
+        if (isNullOrEmpty(householdId)) {
+            Toasty.warning(MotherPmtctProfileActivity.this, "Household record not found", Toast.LENGTH_LONG, true).show();
+            return;
+        }
+
+        String resolvedHouseholdId = householdId;
+        if ("service_report_vca".equalsIgnoreCase(sourceFrom)) {
             try {
                 com.bluecodeltd.ecap.chw.model.EcClientIndexSummary summary =
-                        IndexPersonDao.getClientSummaryByUniqueId(rawHouseholdId);
+                        IndexPersonDao.getClientSummaryByUniqueId(householdId);
                 if (summary != null && !isNullOrEmpty(summary.getHouseholdId())) {
                     resolvedHouseholdId = summary.getHouseholdId();
                 }
-            } catch (Exception ignored) {}
-        }
-
-        if (isNullOrEmpty(resolvedHouseholdId)) {
-            Toasty.warning(MotherPmtctProfileActivity.this, "Household record not found", Toast.LENGTH_LONG, true).show();
-            return;
+            } catch (Exception ignored) { }
         }
 
         Intent intent = new Intent(this, HouseholdDetails.class);
@@ -1355,12 +1466,17 @@ break;
             pmtctId = clientId;
         }
 
-        if (!isNullOrEmpty(householdId)) {
-            setFieldValue(form, "household_id", householdId);
-            setFieldValue(form, "pmtct_id", householdId);
-            return;
+        // If household_id is missing (common when launching with only client_id), fall back to pmtct_id so HEI rows still link.
+        if (isNullOrEmpty(householdId)) {
+            householdId = pmtctId;
         }
+
+        if (!isNullOrEmpty(householdId)) {
+            setFieldValueIfMissing(form, "household_id", householdId);
+        }
+
         if (!isNullOrEmpty(pmtctId)) {
+            // Prefer setting pmtct_id as the PMTCT identifier (not householdId); some forms may not have this key.
             setFieldValueIfMissing(form, "pmtct_id", pmtctId);
         }
     }
@@ -1416,8 +1532,8 @@ break;
     }
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         Intent intent = new Intent(this, PMTCTRegisterActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
         this.finish();
 

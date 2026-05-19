@@ -10,24 +10,49 @@ import java.util.List;
 public class NutritionAssessmentInterventionDao extends AbstractDao {
 
     public static NutritionAssessmentInterventionModel getByVcaId(String vcaId) {
-        String sql = "SELECT * FROM ec_nutrition_assessment_intervention WHERE unique_id = '" + vcaId + "'";
-        List<NutritionAssessmentInterventionModel> values = AbstractDao.readData(sql, getMap());
-        if (values == null || values.size() == 0) return null;
-        return values.get(0);
+        if (vcaId == null || vcaId.trim().isEmpty()) return null;
+        try {
+            String sql = "SELECT * FROM ec_nutrition_assessment_intervention WHERE unique_id = '" + vcaId + "' " +
+                    "AND (delete_status IS NULL OR delete_status <> '1')";
+            List<NutritionAssessmentInterventionModel> values = AbstractDao.readData(sql, getMap());
+            if (values == null || values.isEmpty()) return null;
+            return values.get(0);
+        } catch (Exception ignored) {
+            String sql = "SELECT * FROM ec_nutrition_assessment_intervention WHERE unique_id = '" + vcaId + "'";
+            List<NutritionAssessmentInterventionModel> values = AbstractDao.readData(sql, getMap());
+            if (values == null || values.isEmpty()) return null;
+            return values.get(0);
+        }
     }
 
     public static List<NutritionAssessmentInterventionModel> listByVcaId(String vcaId) {
-        String sql = "SELECT * FROM ec_nutrition_assessment_intervention WHERE unique_id = '" + vcaId + "' " +
-                "AND (delete_status IS NULL OR delete_status <> '1')";
-        List<NutritionAssessmentInterventionModel> values = AbstractDao.readData(sql, getMap());
-        return values;
+        if (vcaId == null || vcaId.trim().isEmpty()) return java.util.Collections.emptyList();
+        try {
+            String sql = "SELECT * FROM ec_nutrition_assessment_intervention WHERE unique_id = '" + vcaId + "' " +
+                    "AND (delete_status IS NULL OR delete_status <> '1')";
+            List<NutritionAssessmentInterventionModel> values = AbstractDao.readData(sql, getMap());
+            return values != null ? values : java.util.Collections.emptyList();
+        } catch (Exception ignored) {
+            String sql = "SELECT * FROM ec_nutrition_assessment_intervention WHERE unique_id = '" + vcaId + "'";
+            List<NutritionAssessmentInterventionModel> values = AbstractDao.readData(sql, getMap());
+            return values != null ? values : java.util.Collections.emptyList();
+        }
     }
 
     public static int countByVcaId(String vcaId) {
-        String sql = "SELECT COUNT(*) AS count FROM ec_nutrition_assessment_intervention WHERE unique_id = '" + vcaId + "'";
-        DataMap<Integer> mapper = c -> Integer.parseInt(getCursorValue(c, "count"));
-        List<Integer> res = AbstractDao.readData(sql, mapper);
-        return res != null && res.size() > 0 ? res.get(0) : 0;
+        if (vcaId == null || vcaId.trim().isEmpty()) return 0;
+
+        DataMap<Integer> mapper = c -> getCursorIntValue(c, "count");
+        try {
+            String sql = "SELECT COUNT(*) AS count FROM ec_nutrition_assessment_intervention WHERE unique_id = '" + vcaId + "' " +
+                    "AND (delete_status IS NULL OR delete_status <> '1')";
+            List<Integer> res = AbstractDao.readData(sql, mapper);
+            return res != null && !res.isEmpty() && res.get(0) != null ? res.get(0) : 0;
+        } catch (Exception ignored) {
+            String sql = "SELECT COUNT(*) AS count FROM ec_nutrition_assessment_intervention WHERE unique_id = '" + vcaId + "'";
+            List<Integer> res = AbstractDao.readData(sql, mapper);
+            return res != null && !res.isEmpty() && res.get(0) != null ? res.get(0) : 0;
+        }
     }
 
     /**

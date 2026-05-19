@@ -183,8 +183,8 @@
             "text": "Transferred to other OVC program"
           },
           {
-            "key": "Transferred to other Ecap II ward/district",
-            "text": "Transferred to other Ecap II ward/district"
+            "key": "Transferred to other Ecap II district",
+            "text": "Transferred to other Ecap II district"
           },
           {
             "key": "Lost to follow-up",
@@ -248,25 +248,7 @@
           }
         }
       },
-      {
-        "key": "district_moved_to",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "district_moved_to",
-        "type": "edit_text",
-        "hint": "District",
-        "edit_type": "name",
-        "v_required": {
-          "value": true,
-          "err": "Provide district"
-        },
-        "relevance": {
-          "step1:exited_graduation_reason": {
-            "type": "string",
-            "ex": "equalTo(., \"Transferred to other Ecap II ward/district\")"
-          }
-        }
-      },
+
       {
         "key": "household_receiving_caseworker",
         "openmrs_entity_parent": "",
@@ -282,7 +264,7 @@
         "relevance": {
           "step1:exited_graduation_reason": {
             "type": "string",
-            "ex": "equalTo(., \"Transferred to other Ecap II ward/district\")"
+            "ex": "equalTo(., \"Transferred to other Ecap II district\")"
           }
         }
       },
@@ -337,6 +319,25 @@
           "step1:exited_graduation_reason": {
             "type": "string",
             "ex": "equalTo(., \"HH does not have CA who falls under priority sub-population\")"
+          }
+        }
+      },
+      {
+        "key": "district_moved_to",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "district_moved_to",
+        "type": "edit_text",
+        "hint": "District",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Provide district"
+        },
+        "relevance": {
+          "step1:exited_graduation_reason": {
+            "type": "string",
+            "ex": "equalTo(., \"Transferred to other OVC program\")"
           }
         }
       },

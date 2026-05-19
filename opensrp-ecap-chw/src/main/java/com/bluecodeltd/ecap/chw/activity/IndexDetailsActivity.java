@@ -52,6 +52,7 @@ import com.bluecodeltd.ecap.chw.dao.GraduationDao;
 import com.bluecodeltd.ecap.chw.dao.HivAssessmentAbove15Dao;
 import com.bluecodeltd.ecap.chw.dao.HivAssessmentUnder15Dao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
+import com.bluecodeltd.ecap.chw.dao.IndexMotherDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.ReferralDao;
 import com.bluecodeltd.ecap.chw.dao.NutritionAssessmentInterventionDao;
@@ -61,7 +62,9 @@ import com.bluecodeltd.ecap.chw.dao.VcaCasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.dao.WeServiceVcaDao;
 import com.bluecodeltd.ecap.chw.dao.TbScreeningDao;
+import com.bluecodeltd.ecap.chw.dao.CaregiverDao;
 import com.bluecodeltd.ecap.chw.dao.newCaregiverDao;
+import com.bluecodeltd.ecap.chw.model.Caregiver;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.ChildVisitsFragment;
@@ -73,6 +76,7 @@ import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
 import com.bluecodeltd.ecap.chw.model.GraduationModel;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentUnder15Model;
+import com.bluecodeltd.ecap.chw.model.IndexMotherModel;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
 import com.bluecodeltd.ecap.chw.model.VCAModel;
 import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
@@ -147,6 +151,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private RelativeLayout txtScreening, rassessment, rcase_plan, referral,  household_visitation_for_vca, hiv_assessment,hiv_assessment2,childPlan,weServicesVca, nutrition_assessment_intervention, tb_screening;
 
     public VcaScreeningModel indexVCA;
+    private Caregiver householdCaregiver;
     private  VcaAssessmentModel assessmentModel;
     private TextView txtName, txtGender, txtAge, txtChildid;
     private TabLayout mTabLayout;
@@ -171,6 +176,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
     VcaVisitationModel vcaVisitationModel;
     VcaCasePlanModel vcaCasePlanModel;
     newCaregiverModel updatedCaregiver;
+    private boolean hideHouseholdProfileButton;
 
 
     public VCAModel client;
@@ -234,6 +240,23 @@ public class IndexDetailsActivity extends AppCompatActivity {
             try { indexVCA = VCAScreeningDao.getVcaScreening(finalChildId); } catch (Exception ignored) { indexVCA = null; }
             try { child = IndexPersonDao.getChildByBaseId(finalChildId); } catch (Exception ignored) { child = null; }
 
+            hideHouseholdProfileButton = false;
+            try {
+                String householdId = indexVCA != null ? indexVCA.getHousehold_id() : null;
+                if (!TextUtils.isEmpty(householdId)) {
+                    java.util.List<IndexMotherModel> mothers = IndexMotherDao.getIndexMothersByHouseholdId(householdId);
+                    if (mothers != null && !mothers.isEmpty()) {
+                        for (IndexMotherModel mother : mothers) {
+                            String sourceFrom = mother != null ? mother.getSource_from() : null;
+                            if (!TextUtils.isEmpty(sourceFrom) && "service_report_vca".equalsIgnoreCase(sourceFrom.trim())) {
+                                hideHouseholdProfileButton = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            } catch (Exception ignored) { }
+
             gender = indexVCA != null ? indexVCA.getGender() : null;
             uniqueId = indexVCA != null ? indexVCA.getUnique_id() : null;
 
@@ -260,8 +283,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
             if (indexVCA != null && !TextUtils.isEmpty(indexVCA.getHousehold_id())) {
                 try { updatedCaregiver = newCaregiverDao.getNewCaregiverById(indexVCA.getHousehold_id()); } catch (Exception ignored) { updatedCaregiver = null; }
+                try { householdCaregiver = CaregiverDao.getCaregiver(indexVCA.getHousehold_id()); } catch (Exception ignored) { householdCaregiver = null; }
             } else {
                 updatedCaregiver = null;
+                householdCaregiver = null;
             }
 
             Threading.main(() -> {
@@ -278,6 +303,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
         fabReferal = binding.referToFacilityFab;
         fabCasePlan =  binding.casePlanFab;
         fabAssessment = binding.fabAssessment;
+
+        applyHouseholdProfileButtonVisibility();
 
         oMapper = new ObjectMapper();
         clientMapper = new ObjectMapper();
@@ -357,6 +384,14 @@ public class IndexDetailsActivity extends AppCompatActivity {
         mViewPager.setCurrentItem(page, false);
 
         createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE);
+    }
+
+    private void applyHouseholdProfileButtonVisibility() {
+        try {
+            View btn = findViewById(R.id.household_profile);
+            if (btn == null) return;
+            btn.setVisibility(hideHouseholdProfileButton ? View.GONE : View.VISIBLE);
+        } catch (Exception ignored) { }
     }
 
 
@@ -2062,7 +2097,34 @@ public class IndexDetailsActivity extends AppCompatActivity {
                         child.setDeleted("1");
                             JSONObject vcaScreeningForm = formUtils.getFormJson("vca_edit");
                             try {
-                                CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(child, Map.class));
+                                ObjectMapper deleteMapper = new ObjectMapper();
+                                Map<String, Object> childMap = deleteMapper.convertValue(child, Map.class);
+                                Caregiver deleteCaregiver = householdCaregiver != null ? householdCaregiver : CaregiverDao.getCaregiver(child.getHousehold_id());
+                                if (deleteCaregiver != null) {
+                                    Map<String, Object> caregiverMap = deleteMapper.convertValue(deleteCaregiver, Map.class);
+                                    caregiverMap.forEach((k, v) -> { if (v != null && childMap.get(k) == null) childMap.put(k, v); });
+                                }
+                                Map<String, String> childStringMap = new HashMap<>();
+                                childMap.forEach((k, v) -> { if (k != null && v != null) childStringMap.put(k, String.valueOf(v)); });
+
+                                // Fill with CHW location + caseworker from SharedPreferences only when missing
+                                try {
+                                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(IndexDetailsActivity.this);
+                                    String district = childStringMap.get("district");
+                                    if (TextUtils.isEmpty(district)) {
+                                        String prefDistrict = prefs.getString("district", "");
+                                        if (!TextUtils.isEmpty(prefDistrict)) childStringMap.put("district", prefDistrict);
+                                    }
+
+                                    String caseworker = childStringMap.get("caseworker_name");
+                                    if (TextUtils.isEmpty(caseworker)) {
+                                        String prefCaseworker = prefs.getString("caseworker_name", "Anonymous");
+                                        if (!TextUtils.isEmpty(prefCaseworker)) childStringMap.put("caseworker_name", prefCaseworker);
+                                    }
+                                } catch (Exception ignored) { }
+
+                                CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, childStringMap);
+
                                 vcaScreeningForm.put("entity_id", child.getBase_entity_id());
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -2228,6 +2290,33 @@ public class IndexDetailsActivity extends AppCompatActivity {
         screeningModel.setWard(indexVCA.getWard());
         screeningModel.setFacility(indexVCA.getFacility());
         screeningModel.setPartner(indexVCA.getPartner());
+
+        // Fill from CHW context (SharedPreferences) only when missing on the client record.
+        try {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(IndexDetailsActivity.this);
+
+            if (TextUtils.isEmpty(screeningModel.getProvince())) {
+                String province = prefs.getString("province", "");
+                if (!TextUtils.isEmpty(province)) {
+                    screeningModel.setProvince(province);
+                }
+            }
+
+            if (TextUtils.isEmpty(screeningModel.getDistrict())) {
+                String district = prefs.getString("district", "");
+                if (!TextUtils.isEmpty(district)) {
+                    screeningModel.setDistrict(district);
+                }
+            }
+
+            if (TextUtils.isEmpty(screeningModel.getCaseworker_name())) {
+                String caseworkerName = prefs.getString("caseworker_name", "Anonymous");
+                if (!TextUtils.isEmpty(caseworkerName)) {
+                    screeningModel.setCaseworker_name(caseworkerName);
+                }
+            }
+        } catch (Exception ignored) { }
+
         screeningModel.setAdolescent_first_name(indexVCA.getAdolescent_first_name());
         screeningModel.setAdolescent_last_name(indexVCA.getAdolescent_last_name());
         screeningModel.setAdolescent_birthdate(indexVCA.getAdolescent_birthdate());
@@ -2329,13 +2418,13 @@ public class IndexDetailsActivity extends AppCompatActivity {
 //        screeningModel.setDate_next_vl(indexVCA.getDate_next_vl());
         screeningModel.setChild_mmd(indexVCA.getChild_mmd());
         screeningModel.setLevel_mmd(indexVCA.getLevel_mmd());
-        screeningModel.setCaregiver_name(indexVCA.getCaregiver_name());
-        screeningModel.setCaregiver_nrc(indexVCA.getCaregiver_nrc());
-        screeningModel.setCaregiver_sex(indexVCA.getCaregiver_sex());
-        screeningModel.setCaregiver_birth_date(indexVCA.getCaregiver_birth_date());
-        screeningModel.setCaregiver_hiv_status(indexVCA.getCaregiver_hiv_status());
-        screeningModel.setRelation(indexVCA.getRelation());
-        screeningModel.setCaregiver_phone(indexVCA.getCaregiver_phone());
+        screeningModel.setCaregiver_name(indexVCA.getCaregiver_name() != null ? indexVCA.getCaregiver_name() : (householdCaregiver != null ? householdCaregiver.getCaregiver_name() : null));
+        screeningModel.setCaregiver_nrc(indexVCA.getCaregiver_nrc() != null ? indexVCA.getCaregiver_nrc() : (householdCaregiver != null ? householdCaregiver.getCaregiver_nrc() : null));
+        screeningModel.setCaregiver_sex(indexVCA.getCaregiver_sex() != null ? indexVCA.getCaregiver_sex() : (householdCaregiver != null ? householdCaregiver.getCaregiver_sex() : null));
+        screeningModel.setCaregiver_birth_date(indexVCA.getCaregiver_birth_date() != null ? indexVCA.getCaregiver_birth_date() : (householdCaregiver != null ? householdCaregiver.getCaregiver_birth_date() : null));
+        screeningModel.setCaregiver_hiv_status(indexVCA.getCaregiver_hiv_status() != null ? indexVCA.getCaregiver_hiv_status() : (householdCaregiver != null ? householdCaregiver.getCaregiver_hiv_status() : null));
+        screeningModel.setRelation(indexVCA.getRelation() != null ? indexVCA.getRelation() : (householdCaregiver != null ? householdCaregiver.getRelation() : null));
+        screeningModel.setCaregiver_phone(indexVCA.getCaregiver_phone() != null ? indexVCA.getCaregiver_phone() : (householdCaregiver != null ? householdCaregiver.getCaregiver_phone() : null));
         screeningModel.setDe_registration_date(indexVCA.getDe_registration_date());
         screeningModel.setReason(indexVCA.getReason());
         screeningModel.setTransfer_reason(indexVCA.getTransfer_reason());

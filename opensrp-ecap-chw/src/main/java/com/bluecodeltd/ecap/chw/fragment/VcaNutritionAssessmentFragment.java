@@ -21,12 +21,12 @@ import com.bluecodeltd.ecap.chw.model.NutritionAssessmentInterventionModel;
 import com.bluecodeltd.ecap.chw.model.VcaScreeningModel;
 import com.bluecodeltd.ecap.chw.util.Threading;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 public class VcaNutritionAssessmentFragment extends Fragment {
 
@@ -51,9 +51,9 @@ public class VcaNutritionAssessmentFragment extends Fragment {
         if (progress != null) progress.setVisibility(View.VISIBLE);
 
         Threading.io(() -> {
+            final List<NutritionAssessmentInterventionModel> items;
             VcaScreeningModel screen = VCAScreeningDao.getVcaScreening(childId);
             boolean eligible = isUnderOrEqualFive(screen != null ? screen.getAdolescent_birthdate() : null);
-            final List<NutritionAssessmentInterventionModel> items;
             if (eligible) {
                 List<NutritionAssessmentInterventionModel> list = NutritionAssessmentInterventionDao.listByVcaId(childId);
                 items = list != null ? list : new ArrayList<>();
