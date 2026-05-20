@@ -21,12 +21,14 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.activity.ChildNonPmtctDetail;
 import com.bluecodeltd.ecap.chw.dao.GradDao;
+import com.bluecodeltd.ecap.chw.dao.IndexMotherDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.MuacDao;
 import com.bluecodeltd.ecap.chw.dao.VCAServiceReportDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.GradModel;
+import com.bluecodeltd.ecap.chw.model.IndexMotherModel;
 import com.bluecodeltd.ecap.chw.model.MuacModel;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,9 +49,11 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import com.bluecodeltd.ecap.chw.util.Threading;
 
 import es.dmoral.toasty.Toasty;
+import timber.log.Timber;
 
 public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHolder>{
 
@@ -66,6 +70,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
     String dob;
     String caseStatus;
     private final boolean allowVcaProfileNavigation;
+    private final Map<String, Boolean> motherIndexSourceVcaScreeningByHouseholdId = new ConcurrentHashMap<>();
     // Use centralized Threading
 
 
@@ -284,10 +289,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
                 try {
                     Child current = holder.itemView.getTag() instanceof Child ? (Child) holder.itemView.getTag() : null;
-                    String caregiverStatusLocal = current != null ? current.getCaregiver_hiv_status() : null;
-                    boolean caregiverPositive = caregiverStatusLocal != null &&
-                            (caregiverStatusLocal.equalsIgnoreCase("positive") || caregiverStatusLocal.equalsIgnoreCase("HIV+"));
-                    holder.openProfileBtn.setVisibility(caregiverPositive ? View.GONE : View.VISIBLE);
+                    updateOpenProfileButtonVisibility(holder, current, rowTag);
                 } catch (Exception ignored) {}
             });
         });
@@ -344,11 +346,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
                     Toasty.error(context, "Unable to open child profile", Toast.LENGTH_LONG, true).show();
                 }
             });
-            // Show child profile button only when caregiver HIV status is negative/unknown
-            String caregiverStatus = initialChild.getCaregiver_hiv_status();
-            boolean caregiverPositive = caregiverStatus != null &&
-                    (caregiverStatus.equalsIgnoreCase("positive") || caregiverStatus.equalsIgnoreCase("HIV+"));
-            holder.openProfileBtn.setVisibility(caregiverPositive ? View.GONE : View.VISIBLE);
+            updateOpenProfileButtonVisibility(holder, initialChild, rowTag);
         }
 
         if (!allowVcaProfileNavigation) {
@@ -460,6 +458,59 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
     private static boolean safeEquals(String a, String b) {
         return a == b || (a != null && a.equals(b));
+    }
+
+    private void updateOpenProfileButtonVisibility(ViewHolder holder, Child child, String rowTag) {
+        if (holder == null || holder.openProfileBtn == null) return;
+
+        if (!allowVcaProfileNavigation) {
+            Timber.d("ChildrenAdapter openProfileBtn hidden: allowVcaProfileNavigation=false rowTag=%s", rowTag);
+            holder.openProfileBtn.setVisibility(View.GONE);
+            return;
+        }
+
+        // Default to GONE until we confirm mother source_from (prevents brief incorrect visibility).
+        holder.openProfileBtn.setVisibility(View.GONE);
+
+        String caregiverStatus = child != null ? child.getCaregiver_hiv_status() : null;
+        final boolean caregiverPositive = caregiverStatus != null &&
+                (caregiverStatus.equalsIgnoreCase("positive") || caregiverStatus.equalsIgnoreCase("HIV+"));
+
+        String householdId = child != null ? child.getHousehold_id() : null;
+        if (TextUtils.isEmpty(householdId)) {
+            Timber.d("ChildrenAdapter openProfileBtn householdId missing rowTag=%s caregiverPositive=%s", rowTag, caregiverPositive);
+            holder.openProfileBtn.setVisibility(caregiverPositive ? View.GONE : View.VISIBLE);
+            return;
+        }
+
+        Boolean cached = motherIndexSourceVcaScreeningByHouseholdId.get(householdId);
+        if (cached != null) {
+            Timber.d("ChildrenAdapter openProfileBtn cached householdId=%s vca_screening=%s caregiverPositive=%s", householdId, cached, caregiverPositive);
+            boolean hide = cached || caregiverPositive;
+            holder.openProfileBtn.setVisibility(hide ? View.GONE : View.VISIBLE);
+            return;
+        }
+
+        final String finalHouseholdId = householdId;
+        Threading.ioBestEffort(() -> {
+            boolean isVcaScreening = false;
+            try {
+                IndexMotherModel mother = IndexMotherDao.getIndexMotherByHouseholdId(finalHouseholdId);
+                String sourceFrom = mother != null ? mother.getSource_from() : null;
+                isVcaScreening = sourceFrom != null && sourceFrom.trim().equalsIgnoreCase("vca_screening");
+                Timber.d("ChildrenAdapter openProfileBtn db householdId=%s source_from=%s isVcaScreening=%s", finalHouseholdId, sourceFrom, isVcaScreening);
+            } catch (Exception ignored) { }
+            motherIndexSourceVcaScreeningByHouseholdId.put(finalHouseholdId, isVcaScreening);
+
+            final boolean finalIsVcaScreening = isVcaScreening;
+            Threading.main(() -> {
+                Object currentTag = holder.itemView.getTag(R.id.tag_row_id);
+                if (!(currentTag instanceof String) || !rowTag.equals(currentTag)) return;
+                boolean hide = finalIsVcaScreening || caregiverPositive;
+                Timber.d("ChildrenAdapter openProfileBtn apply householdId=%s hide=%s caregiverPositive=%s", finalHouseholdId, hide, caregiverPositive);
+                holder.openProfileBtn.setVisibility(hide ? View.GONE : View.VISIBLE);
+            });
+        });
     }
 
     private String getAge(String birthdate){

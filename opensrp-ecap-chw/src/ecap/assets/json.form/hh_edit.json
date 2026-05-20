@@ -210,6 +210,7 @@
         "type": "edit_text",
         "hint": "Index CA First Name",
         "edit_type": "name",
+        "read_only": "true",
         "v_regex": {
           "value": "[A-Za-z]*",
           "err": "First name of CA only accepts letters"
@@ -227,6 +228,7 @@
         "type": "edit_text",
         "hint": "Index CA Last Name",
         "edit_type": "name",
+        "read_only": "true",
         "value": "",
         "v_regex": {
           "value": "[A-Za-z]*",
@@ -245,6 +247,7 @@
         "type": "date_picker",
         "hint": "Index CA Date of birth",
         "look_up": "true",
+        "read_only": "true",
         "expanded": false,
         "duration": {
           "label": "Age"
@@ -263,6 +266,7 @@
         "openmrs_entity_id": "gender",
         "type": "native_radio",
         "label": "CA Gender",
+        "read_only": "true",
         "options": [
           {
             "key": "male",
