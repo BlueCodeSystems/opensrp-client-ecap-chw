@@ -16,8 +16,10 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HouseholdDetails;
 import com.bluecodeltd.ecap.chw.activity.MotherDetail;
 import com.bluecodeltd.ecap.chw.adapter.ChildrenAdapter;
+import com.bluecodeltd.ecap.chw.dao.IndexMotherDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.model.Child;
+import com.bluecodeltd.ecap.chw.model.IndexMotherModel;
 import com.bluecodeltd.ecap.chw.viewmodel.HouseholdChildrenState;
 import com.bluecodeltd.ecap.chw.viewmodel.HouseholdChildrenViewModel;
 import com.bluecodeltd.ecap.chw.model.Household;
@@ -27,6 +29,8 @@ import org.smartregister.commonregistry.CommonPersonObjectClient;
 import java.util.ArrayList;
 import java.util.HashMap;
 import com.bluecodeltd.ecap.chw.util.Threading;
+
+import timber.log.Timber;
 
 public class MotherChildrenFragment extends Fragment {
 
@@ -47,11 +51,47 @@ public class MotherChildrenFragment extends Fragment {
 
         CommonPersonObjectClient mother = mymap.get("mother");
         String houseId = (mother != null && mother.getColumnmaps() != null) ? mother.getColumnmaps().get("household_id") : null;
+        if (houseId == null && mother != null && mother.getColumnmaps() != null) {
+            houseId = mother.getColumnmaps().get("householdId");
+        }
+        if (houseId == null && mother != null && mother.getColumnmaps() != null) {
+            houseId = mother.getColumnmaps().get("hh_id");
+        }
+        String motherBaseEntityId = (mother != null && mother.getColumnmaps() != null) ? mother.getColumnmaps().get("base_entity_id") : null;
         String motherSourceFrom = (mother != null && mother.getColumnmaps() != null) ? mother.getColumnmaps().get("source_from") : null;
         boolean allowVcaProfileNavigation = true;
+        Timber.d("MotherChildrenFragment init: houseId=%s base_entity_id=%s source_from(col)=%s", houseId, motherBaseEntityId, motherSourceFrom);
         if (motherSourceFrom != null && motherSourceFrom.trim().equalsIgnoreCase("vca_screening")) {
             allowVcaProfileNavigation = false;
+        } else {
+            // Fallback: mother columnmaps may not include source_from; resolve from DB using base_entity_id first,
+            // then household_id (and handle multiple mother records).
+            try {
+                IndexMotherModel indexMother = null;
+                if (motherBaseEntityId != null && !motherBaseEntityId.trim().isEmpty()) {
+                    indexMother = IndexMotherDao.getIndexMotherByBaseEntityId(motherBaseEntityId);
+                }
+                String dbSourceFrom = indexMother != null ? indexMother.getSource_from() : null;
+                Timber.d("MotherChildrenFragment db(by base_entity_id): source_from=%s", dbSourceFrom);
+                if (dbSourceFrom != null && dbSourceFrom.trim().equalsIgnoreCase("vca_screening")) {
+                    allowVcaProfileNavigation = false;
+                } else if (houseId != null && !houseId.trim().isEmpty()) {
+                    java.util.List<IndexMotherModel> mothers = IndexMotherDao.getIndexMothersByHouseholdId(houseId);
+                    Timber.d("MotherChildrenFragment db(by household): mothers=%s", mothers != null ? mothers.size() : 0);
+                    if (mothers != null) {
+                        for (IndexMotherModel m : mothers) {
+                            String sf = m != null ? m.getSource_from() : null;
+                            Timber.d("MotherChildrenFragment db mother row source_from=%s", sf);
+                            if (sf != null && sf.trim().equalsIgnoreCase("vca_screening")) {
+                                allowVcaProfileNavigation = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+            } catch (Exception ignored) { }
         }
+        Timber.d("MotherChildrenFragment allowVcaProfileNavigation=%s", allowVcaProfileNavigation);
 
         recyclerView = binding.recyclerView;
 
