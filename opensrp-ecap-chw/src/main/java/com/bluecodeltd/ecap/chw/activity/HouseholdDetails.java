@@ -2659,6 +2659,11 @@ public class HouseholdDetails extends AppCompatActivity {
                 Child child = allChildren.get(i);
                 child.setDeleted("1");
                 JSONObject vcaScreeningForm = formUtils.getFormJson("vca_edit");
+                try {
+                    if (shouldRemoveVcaEditStep5ForServiceReportVca(child)) {
+                        removeVcaEditStep5(vcaScreeningForm);
+                    }
+                } catch (Exception ignored) { }
                 ObjectMapper deleteMapper = new ObjectMapper();
                 Map<String, Object> childMap = deleteMapper.convertValue(child, Map.class);
                 Caregiver childCaregiver = caregiver != null ? caregiver : CaregiverDao.getCaregiver(child.getHousehold_id());
@@ -2707,6 +2712,77 @@ public class HouseholdDetails extends AppCompatActivity {
         }
 
 
+    }
+
+    private static void removeVcaEditStep5(JSONObject form) {
+        if (form == null) return;
+        try { form.remove("step5"); } catch (Exception ignored) { }
+        try { form.put("count", "4"); } catch (Exception ignored) { }
+        try {
+            JSONObject step4 = form.optJSONObject("step4");
+            if (step4 != null) {
+                String next = step4.optString("next", null);
+                if (next != null && "step5".equalsIgnoreCase(next.trim())) {
+                    step4.put("next", "");
+                }
+            }
+        } catch (Exception ignored) { }
+    }
+
+    private boolean shouldRemoveVcaEditStep5ForServiceReportVca(Child child) {
+        if (child == null) return false;
+        String householdId = null;
+        try { householdId = child.getHousehold_id(); } catch (Exception ignored) { }
+        String uniqueId = null;
+        try { uniqueId = child.getUnique_id(); } catch (Exception ignored) { }
+
+        return hasMotherSourceFromServiceReportVca(householdId, uniqueId);
+    }
+
+    private boolean hasMotherSourceFromServiceReportVca(String householdId, String vcaUniqueId) {
+        if (android.text.TextUtils.isEmpty(householdId) && android.text.TextUtils.isEmpty(vcaUniqueId)) return false;
+
+        try {
+            if (!android.text.TextUtils.isEmpty(householdId)) {
+                java.util.List<com.bluecodeltd.ecap.chw.model.PtctMotherModel> pmtctMothers = com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao.getPMTCTMothersByHouseholdId(householdId);
+                if (pmtctMothers != null) {
+                    for (com.bluecodeltd.ecap.chw.model.PtctMotherModel mother : pmtctMothers) {
+                        String sourceFrom = mother != null ? mother.getSource_from() : null;
+                        if (!android.text.TextUtils.isEmpty(sourceFrom) && "service_report_vca".equalsIgnoreCase(sourceFrom.trim())) return true;
+                    }
+                }
+            }
+        } catch (Exception ignored) { }
+
+        try {
+            if (!android.text.TextUtils.isEmpty(householdId)) {
+                com.bluecodeltd.ecap.chw.model.PtctMotherModel mother = com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao.getPMCTMother(householdId);
+                String sourceFrom = mother != null ? mother.getSource_from() : null;
+                if (!android.text.TextUtils.isEmpty(sourceFrom) && "service_report_vca".equalsIgnoreCase(sourceFrom.trim())) return true;
+            }
+        } catch (Exception ignored) { }
+
+        try {
+            if (!android.text.TextUtils.isEmpty(vcaUniqueId)) {
+                com.bluecodeltd.ecap.chw.model.PtctMotherModel mother = com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao.getPMCTMother(vcaUniqueId);
+                String sourceFrom = mother != null ? mother.getSource_from() : null;
+                if (!android.text.TextUtils.isEmpty(sourceFrom) && "service_report_vca".equalsIgnoreCase(sourceFrom.trim())) return true;
+            }
+        } catch (Exception ignored) { }
+
+        try {
+            if (!android.text.TextUtils.isEmpty(householdId)) {
+                java.util.List<com.bluecodeltd.ecap.chw.model.IndexMotherModel> mothers = com.bluecodeltd.ecap.chw.dao.IndexMotherDao.getIndexMothersByHouseholdId(householdId);
+                if (mothers != null) {
+                    for (com.bluecodeltd.ecap.chw.model.IndexMotherModel mother : mothers) {
+                        String sourceFrom = mother != null ? mother.getSource_from() : null;
+                        if (!android.text.TextUtils.isEmpty(sourceFrom) && "service_report_vca".equalsIgnoreCase(sourceFrom.trim())) return true;
+                    }
+                }
+            }
+        } catch (Exception ignored) { }
+
+        return false;
     }
 
     private void deletePmtctMother(String householdId) {

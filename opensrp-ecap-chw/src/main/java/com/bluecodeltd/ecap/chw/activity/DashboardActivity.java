@@ -78,6 +78,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 import com.bluecodeltd.ecap.chw.util.Threading;
+import com.bluecodeltd.ecap.chw.util.PublicGoogleDriveFolderDownloader;
 
 public class DashboardActivity extends AppCompatActivity  implements GenerateCSVContract.View {
     private com.bluecodeltd.ecap.chw.databinding.ActivityDashboardBinding binding;
@@ -112,6 +113,9 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
     AppUpdater appUpdater;
     private DashboardViewModel dashboardViewModel;
     private static final int REQUEST_CODE_IMPORT_CSV = 49011;
+    private static final String ECAP_SOPS_FOLDER_ID = "1ojVjohWcR1S4RlHCHvyiA0jPSofiVQKo";
+    private static final String ECAP_SOPS_TARGET_DIR = "ECAP II SOPs";
+    private static final String ECAP_SOPS_FOLDER_URL = "https://drive.google.com/drive/folders/" + ECAP_SOPS_FOLDER_ID + "?usp=drive_link";
     // Background execution centralized via Threading
 
     @Override
@@ -693,8 +697,71 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
             case R.id.import_csv:
                 openCsvPicker();
                 break;
+            case R.id.download_ecap_sops:
+                downloadEcapSops();
+                break;
+            case R.id.view_ecap_sops:
+                openEcapSops();
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void downloadEcapSops() {
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Downloading SOPs");
+        progressDialog.setMessage("Preparing…");
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        try {
+            progressDialog.show();
+        } catch (Exception ignored) {
+        }
+
+        // Android 14: use MediaStore Downloads + RELATIVE_PATH to automatically create Downloads/ECAP II SOPs.
+        PublicGoogleDriveFolderDownloader.downloadPublicFolderToPublicDownloads(
+                this,
+                ECAP_SOPS_FOLDER_ID,
+                ECAP_SOPS_TARGET_DIR,
+                new PublicGoogleDriveFolderDownloader.Callback() {
+                    @Override
+                    public void onProgress(int downloaded, int total) {
+                        try {
+                            progressDialog.setIndeterminate(false);
+                            progressDialog.setMax(Math.max(total, 1));
+                            progressDialog.setProgress(downloaded);
+                            progressDialog.setMessage("Downloading " + downloaded + " / " + total);
+                        } catch (Exception ignored) {
+                        }
+                    }
+
+                    @Override
+                    public void onSuccess(java.io.File targetDir, int downloaded) {
+                        try { progressDialog.dismiss(); } catch (Exception ignored) {}
+                        showCustomDialog(DashboardActivity.this,
+                                "Downloaded " + downloaded + " file(s) to:\nDownloads/" + ECAP_SOPS_TARGET_DIR);
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        try { progressDialog.dismiss(); } catch (Exception ignored) {}
+                        String msg = "Download failed: " + (t != null ? String.valueOf(t.getMessage()) : "Unknown error") +
+                                "\n\nIf Drive asks for permission, request access in your browser and try again.";
+                        showCustomDialog(DashboardActivity.this, msg, () -> {
+                            try {
+                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(ECAP_SOPS_FOLDER_URL)));
+                            } catch (Exception ignored) { }
+                        });
+                    }
+                }
+        );
+    }
+
+    private void openEcapSops() {
+        Intent i = new Intent(this, SopDocumentsActivity.class);
+        i.putExtra(SopDocumentsActivity.EXTRA_TITLE, "ECAP II SOPs");
+        // Default relative path in activity is Downloads/ECAP II SOPs/
+        startActivity(i);
     }
 
     @Override
@@ -761,7 +828,9 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode != REQUEST_CODE_IMPORT_CSV || resultCode != RESULT_OK || data == null) {
+        if (resultCode != RESULT_OK || data == null) return;
+
+        if (requestCode != REQUEST_CODE_IMPORT_CSV) {
             return;
         }
 

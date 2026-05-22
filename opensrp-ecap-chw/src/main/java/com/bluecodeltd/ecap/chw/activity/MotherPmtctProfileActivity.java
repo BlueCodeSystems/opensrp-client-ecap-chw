@@ -234,6 +234,9 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
                 pmctMotherAncModel = finalAnc;
                 pmctMotherOutcomeModel = finalOutcome;
 
+                // Ensure ward/caseworker_name always reflect current user context
+                applyWardAndCaseworkerFromSharedPreferences(ptctMotherModel);
+
                 updateMotherProfileButtonVisibility();
                 // Hide/show Household button again after loading the PMTCT mother from DB.
                 updateHouseholdButtonVisibility(null);
@@ -786,12 +789,27 @@ break;
         String ward = prefs.getString("ward", "");
         String facility = prefs.getString("facility", "");
         String partner = prefs.getString("partner", "");
+        String caseworkerName = prefs.getString("caseworker_name", "");
 
         setStep1FieldValue(formToBeOpened, "province", province);
         setStep1FieldValue(formToBeOpened, "district", district);
         setStep1FieldValue(formToBeOpened, "ward", ward);
         setStep1FieldValue(formToBeOpened, "facility", facility);
         setStep1FieldValue(formToBeOpened, "partner", partner);
+        setStep1FieldValue(formToBeOpened, "caseworker_name", caseworkerName);
+    }
+
+    private void applyWardAndCaseworkerFromSharedPreferences(PtctMotherModel model) {
+        if (model == null) return;
+        android.content.SharedPreferences prefs = android.preference.PreferenceManager.getDefaultSharedPreferences(MotherPmtctProfileActivity.this);
+        String ward = prefs.getString("ward", "");
+        String caseworkerName = prefs.getString("caseworker_name", "");
+        if (!android.text.TextUtils.isEmpty(ward)) {
+            model.setWard(ward);
+        }
+        if (!android.text.TextUtils.isEmpty(caseworkerName)) {
+            model.setCaseworker_name(caseworkerName);
+        }
     }
 
     private void setStep1FieldValue(JSONObject formToBeOpened, String key, String value) {
