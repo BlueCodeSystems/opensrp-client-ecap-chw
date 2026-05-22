@@ -392,23 +392,19 @@
         "options": [
           {
             "key": "subpop1",
-            "text": "Children/Adolescents Living with HIV (C/ALHIV)",
-            "value": "false"
+            "text": "Children/Adolescents Living with HIV (C/ALHIV)"
           },
           {
             "key": "subpop2",
-            "text": "HIV Exposed Infants (HEIs)",
-            "value": "false"
+            "text": "HIV Exposed Infants (HEIs)"
           },
           {
             "key": "subpop3",
-            "text": "Children of Women Living with HIV",
-            "value": "false"
+            "text": "Children of Women Living with HIV"
           },
           {
             "key": "subpop5",
-            "text": "Survivors of Sexual Violence",
-            "value": "false"
+            "text": "Survivors of Sexual Violence"
           },
           {
             "key": "Siblings of the Index and other family members",

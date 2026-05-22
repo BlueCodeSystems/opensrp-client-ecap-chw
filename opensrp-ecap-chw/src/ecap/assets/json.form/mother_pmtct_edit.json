@@ -113,7 +113,7 @@
         "openmrs_entity_id": "ward",
         "type": "edit_text",
         "hint": "Ward",
-        "read_only": "true",
+        "read_only": "false",
         "edit_type": "name",
         "look_up": "true"
       },
@@ -175,6 +175,20 @@
         "read_only": "true",
         "edit_type": "name",
         "look_up": "true"
+      },
+      {
+        "key": "caseworker_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_name",
+        "type": "edit_text",
+        "hint": "Name of Community Case Worker",
+        "read_only": "true",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Name of Person can  only contain letters"
+        }
       },
       {
         "key": "spacer",

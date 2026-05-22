@@ -17,4 +17,13 @@
         android:title="Import CSV"
         app:showAsAction="never"/>
 
+    <item
+        android:id="@+id/download_ecap_sops"
+        android:title="Download ECAP II SOPs"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/view_ecap_sops"
+        android:title="View ECAP II SOPs"
+        app:showAsAction="never"/>
+
 </menu>

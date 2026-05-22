@@ -99,7 +99,7 @@
         "openmrs_entity_id": "ward",
         "type": "edit_text",
         "hint": "Ward",
-        "read_only": "true",
+        "read_only": "false",
         "edit_type": "name",
         "look_up": "true"
       },

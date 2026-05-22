@@ -82,6 +82,17 @@ public class PMTCTMotherDao extends AbstractDao {
         return values.get(0);
     }
 
+    public static List<PtctMotherModel> getPMTCTMothersByHouseholdId(String householdId) {
+        if (isNullOrEmpty(householdId)) {
+            return new ArrayList<>();
+        }
+        String sql = "SELECT * FROM ec_pmtct_mother WHERE household_id = '" + householdId + "' " +
+                "AND (delete_status IS NULL OR delete_status <> '1')";
+        List<PtctMotherModel> values = AbstractDao.readData(sql, getPtctMotherModelMap());
+        if (values == null || values.isEmpty()) return new ArrayList<>();
+        return values;
+    }
+
     public static boolean hasMotherRecordByHouseholdId(String householdId) {
         if (isNullOrEmpty(householdId)) {
             return false;

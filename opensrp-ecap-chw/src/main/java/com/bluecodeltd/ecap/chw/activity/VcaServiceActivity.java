@@ -26,12 +26,16 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.VCAServiceAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
+import com.bluecodeltd.ecap.chw.dao.IndexMotherDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
 import com.bluecodeltd.ecap.chw.dao.TbScreeningDao;
 import com.bluecodeltd.ecap.chw.dao.VCAServiceReportDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.EcClientIndexSummary;
 import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
+import com.bluecodeltd.ecap.chw.model.IndexMotherModel;
+import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
 import com.bluecodeltd.ecap.chw.model.TbScreeningModel;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
@@ -115,6 +119,7 @@ public class VcaServiceActivity extends AppCompatActivity {
         c_name = getIntent().getExtras().getString("vcaname");
         signature = getIntent().getExtras().getString("signature");
 
+        applyHouseholdServicesLinkVisibility();
         evaluateAddServiceButtonState();
 
         hh_id.setText(intent_vcaid);
@@ -669,6 +674,59 @@ public class VcaServiceActivity extends AppCompatActivity {
 
         });
     }
+
+    private void applyHouseholdServicesLinkVisibility() {
+        if (hh_services_link == null) return;
+
+        // Default to GONE until we confirm the "source_from" context (prevents brief incorrect visibility).
+        hh_services_link.setVisibility(View.GONE);
+
+        final String finalHouseholdId = household_id;
+        if (TextUtils.isEmpty(finalHouseholdId)) {
+            hh_services_link.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        Threading.ioBestEffort(() -> {
+            boolean shouldHide = false;
+            try {
+                // First priority: hide when ec_pmtct_mother for this household_id has source_from=service_report_vca
+                List<PtctMotherModel> pmtctMothers = PMTCTMotherDao.getPMTCTMothersByHouseholdId(finalHouseholdId);
+                if (pmtctMothers != null) {
+                    for (PtctMotherModel mother : pmtctMothers) {
+                        String sourceFrom = mother != null ? mother.getSource_from() : null;
+                        if (!TextUtils.isEmpty(sourceFrom) && "service_report_vca".equalsIgnoreCase(sourceFrom.trim())) {
+                            shouldHide = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!shouldHide) {
+                    // Backward-compat: in vca_screening context, also keep the household-services link hidden.
+                    List<IndexMotherModel> mothers = IndexMotherDao.getIndexMothersByHouseholdId(finalHouseholdId);
+                    if (mothers != null) {
+                        for (IndexMotherModel mother : mothers) {
+                            String sourceFrom = mother != null ? mother.getSource_from() : null;
+                            if (!TextUtils.isEmpty(sourceFrom) && "vca_screening".equalsIgnoreCase(sourceFrom.trim())) {
+                                shouldHide = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            } catch (Exception ignored) { }
+
+            final boolean finalShouldHide = shouldHide;
+            Threading.main(() -> {
+                try {
+                    if (isFinishing() || isDestroyed()) return;
+                } catch (Exception ignored) { }
+                hh_services_link.setVisibility(finalShouldHide ? View.GONE : View.VISIBLE);
+            });
+        });
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

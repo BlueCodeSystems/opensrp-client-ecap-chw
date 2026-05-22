@@ -146,26 +146,25 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "sub_population",
         "type": "check_box",
-        "read_only": false,
         "label": "Sub Population :",
         "exclusive": [
           "not applicable"
         ],
         "options": [
           {
-            "key": "Children/Adolescents Living with HIV (C/ALHIV)",
+            "key": "subpop1",
             "text": "Children/Adolescents Living with HIV (C/ALHIV)"
           },
           {
-            "key": "HIV Exposed Infants (HEIs)",
+            "key": "subpop2",
             "text": "HIV Exposed Infants (HEIs)"
           },
           {
-            "key": "Children of Women Living with HIV",
+            "key": "subpop3",
             "text": "Children of Women Living with HIV"
           },
           {
-            "key": "Survivors of Sexual Violence",
+            "key": "subpop5",
             "text": "Survivors of Sexual Violence"
           },
           {
