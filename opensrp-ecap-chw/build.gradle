@@ -161,10 +161,14 @@ android {
         }
     }
 
+
+
     buildTypes {
 
         release {
             //debuggable true // Useful when debugging release builds
+
+         
             minifyEnabled false
             shrinkResources false
             zipAlignEnabled true

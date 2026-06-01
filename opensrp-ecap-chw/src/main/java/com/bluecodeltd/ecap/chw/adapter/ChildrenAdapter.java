@@ -377,10 +377,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
                     Child child = holder.itemView.getTag() instanceof Child ? (Child) holder.itemView.getTag() : initialChild;
                     String subpop3 = child != null ? child.getSubpop3() : null;
                     if (subpop3 == null) {
-                        Intent editIntent = new Intent(context, IndexDetailsActivity.class);
-                        editIntent.putExtra("Child", child != null ? child.getUnique_id() : childUniqueID);
-                        editIntent.putExtra("open_vca_edit_if_incomplete", true);
-                        context.startActivity(editIntent);
+                        Toasty.warning(context, "Go to the VCA Register to complete this VCA’s profile", Toast.LENGTH_LONG, true).show();
                         return;
                     }
 
