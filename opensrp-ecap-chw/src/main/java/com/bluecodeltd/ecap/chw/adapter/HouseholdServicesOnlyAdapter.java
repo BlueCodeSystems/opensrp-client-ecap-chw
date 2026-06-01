@@ -140,7 +140,8 @@ public class HouseholdServicesOnlyAdapter extends RecyclerView.Adapter<Household
                         if (v.getId() == R.id.itemm) {
                             FormUtils formUtils = null;
                             try { formUtils = new FormUtils(context); } catch (Exception e) { e.printStackTrace(); }
-                            try { openFormUsingFormUtils(context, "service_report_household", service); } catch (JSONException e) { e.printStackTrace(); }
+                            String caregiverSex = finalHouse != null ? finalHouse.getCaregiver_sex() : null;
+                            try { openFormUsingFormUtils(context, "service_report_household", service, caregiverSex); } catch (JSONException e) { e.printStackTrace(); }
                         }
                     }
                 });
@@ -233,7 +234,7 @@ public class HouseholdServicesOnlyAdapter extends RecyclerView.Adapter<Household
 
     }
 
-    public void openFormUsingFormUtils(Context context, String formName, HouseholdServiceReportModel service) throws JSONException {
+    public void openFormUsingFormUtils(Context context, String formName, HouseholdServiceReportModel service, String caregiverSex) throws JSONException {
 
         oMapper = new ObjectMapper();
 
@@ -247,6 +248,7 @@ public class HouseholdServicesOnlyAdapter extends RecyclerView.Adapter<Household
         JSONObject formToBeOpened;
 
         formToBeOpened = formUtils.getFormJson(formName);
+        applyPregnantBreastfeedingVisibility(formToBeOpened, caregiverSex);
 
         formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).remove("read_only");
         formToBeOpened.put("entity_id", service.getBase_entity_id());
@@ -286,6 +288,29 @@ public class HouseholdServicesOnlyAdapter extends RecyclerView.Adapter<Household
 
         startFormActivity(formToBeOpened);
 
+    }
+
+    private static boolean isFemaleCaregiver(String caregiverSex) {
+        return caregiverSex != null && caregiverSex.trim().equalsIgnoreCase("female");
+    }
+
+    private static void applyPregnantBreastfeedingVisibility(JSONObject form, String caregiverSex) {
+        if (isFemaleCaregiver(caregiverSex)) {
+            return;
+        }
+        try {
+            JSONObject step = form.getJSONObject(JsonFormConstants.STEP1);
+            JSONArray formFields = step.getJSONArray(JsonFormConstants.FIELDS);
+            for (int i = 0; i < formFields.length(); i++) {
+                JSONObject field = formFields.getJSONObject(i);
+                if ("pregnant_breastfeeding".equals(field.optString(JsonFormConstants.KEY))) {
+                    formFields.remove(i);
+                    break;
+                }
+            }
+        } catch (JSONException e) {
+            Timber.e(e);
+        }
     }
 
     public void startFormActivity(JSONObject jsonObject) {

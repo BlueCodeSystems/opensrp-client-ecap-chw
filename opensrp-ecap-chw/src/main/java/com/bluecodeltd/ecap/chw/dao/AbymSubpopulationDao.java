@@ -43,7 +43,10 @@ public class AbymSubpopulationDao extends AbstractDao {
 
 
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 }
+
+

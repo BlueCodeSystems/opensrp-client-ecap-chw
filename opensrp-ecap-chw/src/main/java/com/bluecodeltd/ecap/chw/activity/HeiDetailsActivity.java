@@ -14,6 +14,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
@@ -31,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -46,6 +48,7 @@ import com.bluecodeltd.ecap.chw.adapter.ViewPagerAdapterFragment;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.ChildMonitoringDao;
+import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
 import com.bluecodeltd.ecap.chw.dao.PmtctChildDao;
 import com.bluecodeltd.ecap.chw.dao.PmtctChildOutcomeDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
@@ -62,6 +65,7 @@ import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentUnder15Model;
 import com.bluecodeltd.ecap.chw.model.PmtctChildModel;
 import com.bluecodeltd.ecap.chw.model.PmtctChildOutcomeModel;
+import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
 import com.bluecodeltd.ecap.chw.model.VCAModel;
 import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
@@ -70,6 +74,7 @@ import com.bluecodeltd.ecap.chw.model.VcaScreeningModel;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.model.WeServiceVcaModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.PmtctChildClientIndexUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -185,6 +190,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
         NavigationMenu.getInstance(this, null, toolbar);
 
         motherProfile = binding.motherProfile;
+        setupToolbarBackNavigation();
 
         builder = new AlertDialog.Builder(HeiDetailsActivity.this);
 
@@ -280,13 +286,90 @@ public class HeiDetailsActivity extends AppCompatActivity {
         updateAncTabTitle();
 
 
+        updateMotherProfileButton();
+    }
+
+    private void setupToolbarBackNavigation() {
+        try {
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setDisplayShowHomeEnabled(true);
+
+                final Drawable upArrow = getResources().getDrawable(R.drawable.ic_arrow_back_white_24dp);
+                upArrow.setColorFilter(getResources().getColor(org.smartregister.R.color.white), PorterDuff.Mode.SRC_ATOP);
+                actionBar.setHomeAsUpIndicator(upArrow);
+                actionBar.setElevation(0);
+            }
+
+            toolbar.setNavigationOnClickListener(v -> navigateUpToMotherProfile());
+        } catch (Exception ignored) { }
+    }
+
+    private void updateMotherProfileButton() {
+        if (motherProfile == null) return;
+
+        final String pmtctId = getLinkedMotherPmtctId();
+
+        PtctMotherModel mother = null;
+        try {
+            if (!TextUtils.isEmpty(pmtctId)) {
+                mother = PMTCTMotherDao.getPMCTMother(pmtctId);
+            }
+        } catch (Exception ignored) { }
+
+        boolean hide = false;
+        if (mother != null && !TextUtils.isEmpty(mother.getSource_from())) {
+            hide = "service_report_vca".equalsIgnoreCase(mother.getSource_from().trim());
+        }
+
+        motherProfile.setVisibility(hide ? View.GONE : View.VISIBLE);
+        if (hide) return;
+
         motherProfile.setOnClickListener(v -> {
-            if (pmtctChild == null || TextUtils.isEmpty(pmtctChild.getPmtct_id())) {
+            if (TextUtils.isEmpty(pmtctId)) {
                 Toasty.warning(HeiDetailsActivity.this, "Mother record not available", Toast.LENGTH_LONG, true).show();
                 return;
             }
-            goToMotherDetailActivity(pmtctChild.getPmtct_id());
+            Intent intent = new Intent(this, MotherPmtctProfileActivity.class);
+            intent.putExtra("client_id", pmtctId);
+            startActivity(intent);
         });
+    }
+
+    private String getLinkedMotherPmtctId() {
+        try {
+            if (pmtctChild != null) return pmtctChild.getPmtct_id();
+        } catch (Exception ignored) { }
+        return null;
+    }
+
+    private void navigateUpToMotherProfile() {
+        if (!isTaskRoot()) {
+            finish();
+            return;
+        }
+
+        String pmtctId = getLinkedMotherPmtctId();
+
+        String householdId = null;
+        String sourceFrom = null;
+        try {
+            if (!TextUtils.isEmpty(pmtctId)) {
+                PtctMotherModel mother = PMTCTMotherDao.getPMCTMother(pmtctId);
+                if (mother != null) {
+                    householdId = mother.getHousehold_id();
+                    sourceFrom = mother.getSource_from();
+                }
+            }
+        } catch (Exception ignored) { }
+
+        Intent intent = new Intent(this, MotherPmtctProfileActivity.class);
+        intent.putExtra("client_id", pmtctId);
+        if (!TextUtils.isEmpty(householdId)) intent.putExtra("household_id", householdId);
+        if (!TextUtils.isEmpty(sourceFrom)) intent.putExtra("source_from", sourceFrom);
+        startActivity(intent);
+        finish();
     }
 
     public void animateFAB(){
@@ -504,11 +587,12 @@ public class HeiDetailsActivity extends AppCompatActivity {
 
             String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
 
-            JSONObject jsonFormObject = null;
+            final JSONObject jsonFormObject;
             try {
                 jsonFormObject = new JSONObject(jsonString);
             } catch (JSONException e) {
                 e.printStackTrace();
+                return;
             }
             String encounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
 
@@ -524,48 +608,55 @@ public class HeiDetailsActivity extends AppCompatActivity {
                     return;
                 }
 
-                saveRegistration(childIndexEventClient, is_edit_mode);
+                Runnable postSave = () -> {
+                    switch (encounterType) {
+                        case "VCA Case Plan":
 
-                switch (encounterType) {
-                    case "VCA Case Plan":
+                            try {
+                                JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
+                                String dateId = cpdate != null ? cpdate.optString("value") : "";
+                                refreshActivity();
+                                openVcaCasplanToAddVulnarabilities(dateId);
+                            } catch (Exception e) {
+                                Timber.e(e);
+                                refreshActivity();
+                            }
 
-                        JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
-                        String dateId = cpdate.optString("value");
-                        finish();
-                        startActivity(getIntent());
-                        openVcaCasplanToAddVulnarabilities(dateId);
+                            break;
 
-                        break;
+                        case "Household Visitation Form 0-20 years":
+                        case "Member Sub Population":
+                        case "Sub Population":
+                        case "VCA Assessment":
+                        case "HIV Risk Assessment Above 15":
+                        case "HIV Risk Assessment Below 15":
+                        case "Ptmct Child Monitoring":
+                        case "Mother Pmtct Child":
 
-                    case "Household Visitation Form 0-20 years":
-                    case "Member Sub Population":
-                    case "Sub Population":
-                    case "VCA Assessment":
-                    case "HIV Risk Assessment Above 15":
-                    case "HIV Risk Assessment Below 15":
-                    case "Ptmct Child Monitoring":
-                    case "Mother Pmtct Child":
+                            refreshActivity();
 
-                        finish();
-                        startActivity(getIntent());
+                            break;
+                        case "Case Record Status":
 
-                        break;
-                    case "Case Record Status":
+                            refreshActivity();
+                            Intent i = new Intent(getApplicationContext(), IndexRegisterActivity.class);
+                            startActivity(i);
 
-                        finish();
-                        startActivity(getIntent());
-                        Intent i = new Intent(getApplicationContext(), IndexRegisterActivity.class);
-                        startActivity(i);
+                            break;
 
-                        break;
+                        default:
+                            refreshActivity();
+                            break;
 
-                    default:
-                        finish();
-                        startActivity(getIntent());
+                    }
 
+                    Toasty.success(HeiDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
+                };
+
+                boolean scheduled = saveRegistration(childIndexEventClient, is_edit_mode, postSave);
+                if (!scheduled) {
+                    postSave.run();
                 }
-
-                Toasty.success(HeiDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
 
             } catch (Exception e) {
                 Timber.e(e);
@@ -676,44 +767,59 @@ public class HeiDetailsActivity extends AppCompatActivity {
         return null;
     }
 
-    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode, Runnable onComplete) {
 
         Runnable runnable = () -> {
 
             Event event = childIndexEventClient.getEvent();
             Client client = childIndexEventClient.getClient();
 
-            if (event != null && client != null) {
-                try {
-                    ECSyncHelper ecSyncHelper = getECSyncHelper();
+            try {
+                if (event != null && client != null) {
+                    try {
+                        ECSyncHelper ecSyncHelper = getECSyncHelper();
 
-                    JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
+                        JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
 
-                    JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
+                        JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
 
-                    if (isEditMode) {
-                        JSONObject mergedClientJsonObject =
-                                org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
-                        ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
+                        if (isEditMode && existingClientJsonObject != null) {
+                            JSONObject mergedClientJsonObject =
+                                    org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
+                            PmtctChildClientIndexUtils.mirrorClientIndexAttributes(mergedClientJsonObject, event);
+                            ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
 
-                    } else {
-                        ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                        } else {
+                            PmtctChildClientIndexUtils.mirrorClientIndexAttributes(newClientJsonObject, event);
+                            ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                        }
+
+                        JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
+                        ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
+
+                        Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
+                        Date currentSyncDate = new Date(lastUpdatedAtDate);
+
+                        List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
+                        if (savedEvents == null || savedEvents.isEmpty()) {
+                            savedEvents = ecSyncHelper.getEvents(currentSyncDate, BaseRepository.TYPE_Unprocessed);
+                        }
+                        if (savedEvents != null && !savedEvents.isEmpty()) {
+                            getClientProcessorForJava().processClient(savedEvents);
+                        } else {
+                            Timber.w("No saved events found for PMTCT monitoring form %s / %s",
+                                    event.getFormSubmissionId(), event.getBaseEntityId());
+                        }
+                        getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
+
+
+                    } catch (Exception e) {
+                        Timber.e(e);
                     }
-
-                    JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
-                    ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
-
-                    Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
-                    Date currentSyncDate = new Date(lastUpdatedAtDate);
-
-                    //Get saved event for processing
-                    List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
-                    getClientProcessorForJava().processClient(savedEvents);
-                    getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
-
-
-                } catch (Exception e) {
-                    Timber.e(e);
+                }
+            } finally {
+                if (onComplete != null) {
+                    runOnUiThread(onComplete);
                 }
             }
 
@@ -725,6 +831,9 @@ public class HeiDetailsActivity extends AppCompatActivity {
             return true;
         } catch (Exception exception) {
             Timber.e(exception);
+            if (onComplete != null) {
+                runOnUiThread(onComplete);
+            }
             return false;
         }
     }
@@ -810,6 +919,18 @@ public class HeiDetailsActivity extends AppCompatActivity {
 
     private ClientProcessorForJava getClientProcessorForJava() {
         return ChwApplication.getInstance().getClientProcessorForJava();
+    }
+
+    private void refreshActivity() {
+        if (isFinishing() || isDestroyed()) {
+            return;
+        }
+        Intent intent = new Intent(getIntent());
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 
 
@@ -942,6 +1063,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
                 formToBeOpened.put("entity_id", this.pmtctChild.getBase_entity_id());
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(pmtctChild, Map.class));
                 populateCaseworkerPhoneAndName(formToBeOpened);
+                populateProgramInfoFromSharedPreferences(formToBeOpened);
                 JSONObject dateEdited = getFieldJSONObject(fields(formToBeOpened, "step1"),"date_edited");
                 if (dateEdited  != null) {
                     dateEdited.remove(JsonFormUtils.VALUE);
@@ -996,6 +1118,9 @@ public class HeiDetailsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
+            case android.R.id.home:
+                navigateUpToMotherProfile();
+                return true;
             case R.id.refresh:
                 finish();
                 startActivity(getIntent());
@@ -1043,7 +1168,17 @@ public class HeiDetailsActivity extends AppCompatActivity {
                             if (childIndexEventClient == null) {
                                 return;
                             }
-                            saveRegistration(childIndexEventClient, true);
+                            Runnable onComplete = () -> {
+                                Toasty.success(HeiDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
+                                Intent intent = new Intent(this, MotherPmtctProfileActivity.class);
+                                intent.putExtra("client_id",  pmtctChild.getPmtct_id());
+                                startActivity(intent);
+                                this.finish();
+                            };
+                            boolean scheduled = saveRegistration(childIndexEventClient, true, onComplete);
+                            if (!scheduled) {
+                                onComplete.run();
+                            }
 
 
                         } catch (Exception e) {
@@ -1051,12 +1186,6 @@ public class HeiDetailsActivity extends AppCompatActivity {
                         }
 
 
-                        Toasty.success(HeiDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
-
-                        Intent intent = new Intent(this, MotherPmtctProfileActivity.class);
-                        intent.putExtra("client_id",  pmtctChild.getPmtct_id());
-                        startActivity(intent);
-                        this.finish();
                     }));
 
                     //Creating dialog box
@@ -1135,6 +1264,34 @@ public class HeiDetailsActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    private void populateProgramInfoFromSharedPreferences(JSONObject formToBeOpened) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(HeiDetailsActivity.this);
+
+        String province = prefs.getString("province", "");
+        String district = prefs.getString("district", "");
+        String ward = prefs.getString("ward", "");
+        String facility = prefs.getString("facility", "");
+        String partner = prefs.getString("partner", "");
+
+        setStep1FieldValue(formToBeOpened, "province", province);
+        setStep1FieldValue(formToBeOpened, "district", district);
+        setStep1FieldValue(formToBeOpened, "ward", ward);
+        setStep1FieldValue(formToBeOpened, "facility", facility);
+        setStep1FieldValue(formToBeOpened, "partner", partner);
+    }
+
+    private void setStep1FieldValue(JSONObject formToBeOpened, String key, String value) {
+        if (android.text.TextUtils.isEmpty(value)) return;
+        JSONObject field = getFieldJSONObject(fields(formToBeOpened, "step1"), key);
+        if (field == null) return;
+        field.remove(JsonFormUtils.VALUE);
+        try {
+            field.put(JsonFormUtils.VALUE, value);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void populateHivStatus(JSONObject formToBeOpened, String dateString) {
@@ -1233,7 +1390,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
         //Creating dialog box
         AlertDialog alert = builder.create();
         //Setting the title manually
-        alert.setTitle("VCA Screening");
+        alert.setTitle("CA Screening");
         alert.show();
     }
     protected void goToMotherDetailActivity(String clientId) {
@@ -1245,11 +1402,9 @@ public class HeiDetailsActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(this, MotherPmtctProfileActivity.class);
-        intent.putExtra("client_id",  pmtctChild.getPmtct_id());
-        startActivity(intent);
-        this.finish();
+        navigateUpToMotherProfile();
 
     }
 }
+
+

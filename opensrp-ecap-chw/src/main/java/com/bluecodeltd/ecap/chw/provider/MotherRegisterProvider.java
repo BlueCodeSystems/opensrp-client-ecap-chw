@@ -8,8 +8,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.view_holder.IndexRegisterViewHolder;
+import com.bluecodeltd.ecap.chw.dao.IndexMotherDao;
+import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.model.IndexMotherModel;
 import com.bluecodeltd.ecap.chw.view_holder.MotherRegisterViewHolder;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 import org.smartregister.chw.core.holders.FooterViewHolder;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
@@ -23,6 +26,10 @@ import org.smartregister.view.dialog.SortOption;
 import org.smartregister.view.viewholder.OnClickFormLauncher;
 
 import java.text.MessageFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,10 +52,86 @@ public class MotherRegisterProvider implements RecyclerViewProvider<MotherRegist
         CommonPersonObjectClient personObjectClient = (CommonPersonObjectClient) smartRegisterClient;
         String fullName = Utils.getValue(personObjectClient.getColumnmaps(), "caregiver_name", true);
         String household_id = Utils.getValue(personObjectClient.getColumnmaps(), "household_id", true);
+        String caregiverBirthDate = Utils.getValue(personObjectClient.getColumnmaps(), "caregiver_birth_date", true);
+        String lastInteractedWith = Utils.getValue(personObjectClient.getColumnmaps(), "last_interacted_with", true);
 
-        motherRegisterViewHolder.setupViews(fullName, household_id);
+        final String age = getMotherAge(caregiverBirthDate);
+        final String enrollmentLabel = buildEnrollmentLabel(lastInteractedWith);
+
+        // Tag to avoid stale updates on recycled rows.
+        final String rowTag = household_id != null ? household_id : "";
+        motherRegisterViewHolder.itemView.setTag(R.id.tag_row_id, rowTag);
+
+        // Set fallbacks immediately; refine asynchronously.
+        motherRegisterViewHolder.setupViews(fullName, household_id, age, buildChildrenSummary("0", null), enrollmentLabel);
+
+        final String fHouseholdId = household_id;
+        Threading.ioBestEffort(() -> {
+            String childrenCount = null;
+            IndexMotherModel indexMother = null;
+            try { childrenCount = IndexPersonDao.countChildren(fHouseholdId); } catch (Exception ignored) { }
+            try { indexMother = IndexMotherDao.getIndexMotherByHouseholdId(fHouseholdId); } catch (Exception ignored) { }
+            final String ageBand = indexMother != null ? indexMother.getMother_children_age_band() : null;
+            final String childrenSummary = buildChildrenSummary(childrenCount, ageBand);
+            Threading.main(() -> {
+                Object tag = motherRegisterViewHolder.itemView.getTag(R.id.tag_row_id);
+                if (!(tag instanceof String) || !rowTag.equals(tag)) return;
+                motherRegisterViewHolder.setupViews(fullName, fHouseholdId, age, childrenSummary, enrollmentLabel);
+            });
+        });
         motherRegisterViewHolder.itemView.setOnClickListener(onClickListener);
         motherRegisterViewHolder.itemView.setTag(smartRegisterClient);
+    }
+
+    private String getMotherAge(String birthDateRaw) {
+        if (birthDateRaw == null || birthDateRaw.trim().isEmpty()) {
+            return "";
+        }
+        // Try common formats; fall back gracefully on failure
+        String[] patterns = new String[]{
+                "dd-MM-yyyy",
+                "dd-MM-uuuu",
+                "dd MMM yyyy"
+        };
+        Date birthDate = null;
+        for (String pattern : patterns) {
+            try {
+                birthDate = new SimpleDateFormat(pattern, Locale.ENGLISH).parse(birthDateRaw);
+                if (birthDate != null) break;
+            } catch (ParseException ignored) { }
+        }
+        if (birthDate == null) {
+            return "";
+        }
+        long diffMillis = System.currentTimeMillis() - birthDate.getTime();
+        if (diffMillis <= 0) {
+            return "";
+        }
+        long years = diffMillis / (365L * 24 * 60 * 60 * 1000);
+        return years > 0 ? years + " yrs" : "";
+    }
+
+    private String buildChildrenSummary(String childrenCount, String ageBand) {
+        String count = (childrenCount == null || childrenCount.trim().isEmpty()) ? "0" : childrenCount.trim();
+        if ("1".equals(count)) {
+            return "1 child";
+        }
+        return count + " children";
+    }
+
+    private String buildEnrollmentLabel(String lastInteractedWithRaw) {
+        if (lastInteractedWithRaw == null || lastInteractedWithRaw.trim().isEmpty()) {
+            return "";
+        }
+        // last_interacted_with is stored as a long timestamp (event.version)
+        try {
+            long timestamp = Long.parseLong(lastInteractedWithRaw);
+            Date date = new Date(timestamp);
+            String formatted = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH).format(date);
+            return "Enrolled: " + formatted;
+        } catch (Exception e) {
+            return "";
+        }
     }
 
 

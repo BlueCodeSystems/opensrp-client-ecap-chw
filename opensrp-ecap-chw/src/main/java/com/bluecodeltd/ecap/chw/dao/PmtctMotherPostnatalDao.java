@@ -8,9 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PmtctMotherPostnatalDao extends AbstractDao {
-    public static List<PmtctMotherPostnatalModel> getPostnatalMother(String pmtctID) {
+    public static List<PmtctMotherPostnatalModel> getPostnatalMother(String householdIdOrPmtctId) {
 
-        String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_of_st_post_natal_care,7,4) || '-' || substr(date_of_st_post_natal_care,4,2) || '-' || substr(date_of_st_post_natal_care,1,2)) as sortable_date  FROM ec_pmtct_mother_postnatal WHERE pmtct_id = '" + pmtctID + "'  ORDER BY sortable_date DESC";
+        String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_of_st_post_natal_care,7,4) || '-' || substr(date_of_st_post_natal_care,4,2) || '-' || substr(date_of_st_post_natal_care,1,2)) as sortable_date  " +
+                "FROM ec_pmtct_mother_postnatal WHERE (household_id = '" + householdIdOrPmtctId + "')  ORDER BY sortable_date DESC";
 
         List<PmtctMotherPostnatalModel> values = AbstractDao.readData(sql, getPmtctMotherPostnatalModelMap());
         if (values == null || values.size() == 0)
@@ -26,6 +27,8 @@ public class PmtctMotherPostnatalDao extends AbstractDao {
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setRelational_id(getCursorValue(c, "relational_id"));
             record.setPmtct_id(getCursorValue(c, "pmtct_id"));
+            record.setHousehold_id(getCursorValue(c, "household_id"));
+            record.setCaregiver_name(getCursorValue(c, "caregiver_name"));
             record.setDate_of_st_post_natal_care(getCursorValue(c, "date_of_st_post_natal_care"));
             record.setMother_tested_for_hiv(getCursorValue(c, "mother_tested_for_hiv"));
             record.setPostnatal_care_visit(getCursorValue(c, "postnatal_care_visit"));
@@ -35,9 +38,16 @@ public class PmtctMotherPostnatalDao extends AbstractDao {
             record.setFamily_planning_counselling(getCursorValue(c, "family_planning_counselling"));
             record.setNumber_of_condoms_distributed(getCursorValue(c, "number_of_condoms_distributed"));
             record.setComments_at_postnatal_care_visit(getCursorValue(c, "comments_at_postnatal_care_visit"));
+            record.setTb_screening_symptoms_10plus(getCursorValue(c,"tb_screening_symptoms_10plus"));
+            record.setOther_tb_symptom_10plus(getCursorValue(c,"other_tb_symptom_10plus"));
+            record.setComments_tb_10plus(getCursorValue(c,"comments_tb_10plus"));
+            record.setMale_result_of_hiv_test(getCursorValue(c,"male_result_of_hiv_test"));
             record.setDelete_status(getCursorValue(c, "delete_status"));
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 }
+
+

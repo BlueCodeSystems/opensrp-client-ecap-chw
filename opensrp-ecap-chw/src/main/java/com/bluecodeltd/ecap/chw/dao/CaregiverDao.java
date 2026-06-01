@@ -39,7 +39,10 @@ public class CaregiverDao extends AbstractDao {
             record.setActive_on_treatment(getCursorValue(c, "active_on_treatment"));
             record.setCaregiver_art_number(getCursorValue(c, "caregiver_art_number"));
             record.setRelation(getCursorValue(c, "relation"));
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 }
+
+

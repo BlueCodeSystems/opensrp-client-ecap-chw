@@ -33,6 +33,7 @@ public class VcaCasePlanDao extends AbstractDao {
             record.setCase_plan_id(getCursorValue(c, "case_plan_id"));
 
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
@@ -40,3 +41,5 @@ public class VcaCasePlanDao extends AbstractDao {
 
 
 }
+
+

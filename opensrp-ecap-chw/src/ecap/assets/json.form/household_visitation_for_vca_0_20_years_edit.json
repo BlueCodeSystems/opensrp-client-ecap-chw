@@ -53,7 +53,7 @@
     }
   },
   "step1": {
-    "title": "Household Visitation For VCA 0-20 years",
+    "title": "Household Visitation For CA 0-20 years",
     "fields": [
       {
         "key": "unique_id",
@@ -61,7 +61,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unique_id",
         "type": "edit_text",
-        "hint": "VCA ID",
+        "hint": "CA ID",
         "edit_type": "name",
         "read_only": "true"
       },
@@ -72,7 +72,7 @@
         "openmrs_entity_id": "age",
         "type": "edit_text",
         "read_only": "true",
-        "hint": "VCA Age",
+        "hint": "CA Age",
         "calculation": {
           "rules-engine": {
             "ex-rules": {
@@ -109,8 +109,8 @@
           "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
         },
         "v_regex": {
-          "value": "((07||09)[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+          "value": "((07||09||05)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,055,056,057,095, 096, or 097 and must be a total of 10 digits in length"
         }
       },
       {
@@ -394,11 +394,7 @@
         "openmrs_entity_id": "length_on_art",
         "type": "edit_text",
         "hint": "How long has a child been on ART?",
-        "edit_type": "number",
-        "v_regex": {
-          "value": "^\\d+$",
-          "err": "The months value must be a valid number"
-        },
+        "edit_type": "name",
         "relevance": {
           "step1:child_art": {
             "type": "string",
@@ -645,7 +641,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_risk",
         "type": "native_radio",
-        "label": "Has there been a change in the child’s HIV risky behavior since the last visit?",
+        "label": "Has there been a change in the child's HIV risky behavior since the last visit?",
         "exclusive": [
           "none"
         ],
@@ -705,7 +701,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "hiv_assessment",
         "type": "native_radio",
-        "label": "If there has been a change in the child’s HIV risk behavior since the last visit has an HIV risk reduction counselling \nand HIV risk assessment been conducted?",
+        "label": "If there has been a change in the child's HIV risk behavior since the last visit has an HIV risk reduction counselling \nand HIV risk assessment been conducted?",
         "options": [
           {
             "key": "yes",
@@ -782,7 +778,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd1",
         "type": "label",
-        "text": "HIV Exposed Infant (VCA aged 24 months and below) Section"
+        "text": "HIV Exposed Infant (CA aged 24 months and below) Section"
       },
       {
         "key": "eid_test",
@@ -790,7 +786,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "eid_test",
         "type": "date_picker",
-        "hint": "Check child’s under-five clinic card When was the last EID test done?",
+        "hint": "Check child's under-five clinic card When was the last EID test done?",
         "min_date": "today-100y",
         "max_date": "today",
         "v_required": {
@@ -989,9 +985,10 @@
           }
         ],
         "relevance": {
-          "step1:hiv_infection": {
-            "type": "string",
-            "ex": "equalTo(., \"no\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
           }
         }
       },
@@ -1015,9 +1012,10 @@
           }
         ],
         "relevance": {
-          "step1:hiv_infection": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "household_visitation_form_0_20.yml"
+            }
           }
         }
       },
@@ -1133,7 +1131,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "attending_under_five_clinic",
         "type": "native_radio",
-        "label": "If child has not been attending under-five clinic, has counselling \nbeen provided to the child’s caregiver?",
+        "label": "If child has not been attending under-five clinic, has counselling \nbeen provided to the child's caregiver?",
         "options": [
           {
             "key": "yes",
@@ -1266,7 +1264,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "toaster_notes",
-        "text": "If child’s MUAC measurement is less than 14.5cm for children 5-9 years old or less than 18.5 cm for children 10-14 years or less than 22cm for children 15+ years",
+        "text": "If child's MUAC measurement is less than 14.5cm for children 5-9 years old or less than 18.5 cm for children 10-14 years or less than 22cm for children 15+ years",
         "toaster_type": "info",
         "toaster_info_text": "Test for HIV",
         "relevance": {
@@ -1331,15 +1329,14 @@
           }
         }
       },
-
       {
-        "key": "nutrition_status",
+        "key": "muac_other_b",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "nutrition_status",
+        "openmrs_entity_id": "muac_other_b",
         "type": "edit_text",
-        "hint": "What is the child’s MUAC measurement?",
-        "edit_type": "number",
+        "hint": "Other",
+        "edit_type": "name",
         "read_only": false,
         "v_regex": {
           "value": "^(0|[1-9]|1[0-9]|2[0-6])(\\.\\d+)?$",
@@ -1449,36 +1446,26 @@
         }
       },
       {
-        "key": "oedema_stage",
+        "key": "nutrition_status",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "oedema_stage",
-        "type": "native_radio",
-        "label": "Oedema Stage",
+        "openmrs_entity_id": "nutrition_status",
+        "type": "hidden",
+        "label": "With reference to the age of the child, what is the nutrition status of the child?",
         "options": [
           {
-            "key": "Grade 1",
-            "text": "Grade 1"
+            "key": "MAM",
+            "text": "MAM"
           },
           {
-            "key": "Grade 2",
-            "text": "Grade 2"
+            "key": "SAM",
+            "text": "SAM"
           },
           {
-            "key": "Grade 3",
-            "text": "Grade 3"
-          },
-          {
-            "key": "nill",
-            "text": "Nil"
+            "key": "Normal",
+            "text": "Normal"
           }
-        ],
-        "relevance": {
-          "step1:child_oedema": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
+        ]
       },
       {
         "key": "spacer",
@@ -2399,8 +2386,8 @@
           "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
         },
         "v_regex": {
-          "value": "((07||09)[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+          "value": "((07||09||05)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,055,056,057,095, 096, or 097 and must be a total of 10 digits in length"
         },
         "relevance": {
           "rules-engine": {

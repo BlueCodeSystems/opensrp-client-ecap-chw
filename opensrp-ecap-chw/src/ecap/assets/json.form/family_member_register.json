@@ -657,8 +657,8 @@
           "err": "{{family_member_register.step1.phone_number.v_numeric.err}}"
         },
         "v_regex": {
-          "value": "(0[0-9]{9})|\\s*",
-          "err": "{{family_member_register.step1.phone_number.v_regex.err}}"
+          "value": "((07||09||05)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,055,056,057,095, 096, or 097 and must be a total of 10 digits in length"
         },
         "v_required": {
           "value": false,
@@ -677,8 +677,8 @@
           "err": "{{family_member_register.step1.other_phone_number.v_numeric.err}}"
         },
         "v_regex": {
-          "value": "(0[0-9]{9})|\\s*",
-          "err": "{{family_member_register.step1.other_phone_number.v_regex.err}}"
+          "value": "((07||09||05)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,055,056,057,095, 096, or 097 and must be a total of 10 digits in length"
         }
       },
       {

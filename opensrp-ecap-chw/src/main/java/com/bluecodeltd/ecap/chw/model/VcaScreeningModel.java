@@ -12,6 +12,7 @@ public class VcaScreeningModel {
     private String caseworker_name;
     private String province;
     private String district;
+    private String location_moved_to;
     private String ward;
     private String facility;
     private String partner;
@@ -123,6 +124,7 @@ public class VcaScreeningModel {
     private String transfer_reason;
     private String other_reason;
     private String exited_graduation_reason;
+    private String date_of_death;
     private String abym_years;
     private String abym_sexually_active;
     private String abym_preventions;
@@ -141,7 +143,7 @@ public class VcaScreeningModel {
     private String vca_receiving_caseworker;
     private String district_moved_to;
     private String name_ovc;
-    private  String location_moved_to;
+    private String ovc_name;
     private String ovc_district;
 
     public String getLast_interacted_with() {
@@ -1120,6 +1122,14 @@ public class VcaScreeningModel {
         this.exited_graduation_reason = exited_graduation_reason;
     }
 
+    public String getDate_of_death() {
+        return date_of_death;
+    }
+
+    public void setDate_of_death(String date_of_death) {
+        this.date_of_death = date_of_death;
+    }
+
     public String getAbym_years() {
         return abym_years;
     }
@@ -1257,11 +1267,25 @@ public class VcaScreeningModel {
     }
 
     public String getName_ovc() {
-        return name_ovc;
+        return name_ovc != null ? name_ovc : ovc_name;
     }
 
     public void setName_ovc(String name_ovc) {
         this.name_ovc = name_ovc;
+        if (this.ovc_name == null) {
+            this.ovc_name = name_ovc;
+        }
+    }
+
+    public String getOvc_name() {
+        return ovc_name != null ? ovc_name : name_ovc;
+    }
+
+    public void setOvc_name(String ovc_name) {
+        this.ovc_name = ovc_name;
+        if (this.name_ovc == null) {
+            this.name_ovc = ovc_name;
+        }
     }
 
     public String getLocation_moved_to() {
@@ -1279,6 +1303,23 @@ public class VcaScreeningModel {
     public void setOvc_district(String ovc_district) {
         this.ovc_district = ovc_district;
     }
+
+    private final java.util.Map<String, String> additionalFields = new java.util.HashMap<>();
+
+    public java.util.Map<String, String> getAdditionalFields() {
+        return additionalFields;
+    }
+
+    public String getAdditionalField(String key) {
+        if (key == null) return null;
+        return additionalFields.get(key);
+    }
+
+    public void setAdditionalField(String key, String value) {
+        if (key == null) return;
+        additionalFields.put(key, value);
+    }
 }
+
 
 

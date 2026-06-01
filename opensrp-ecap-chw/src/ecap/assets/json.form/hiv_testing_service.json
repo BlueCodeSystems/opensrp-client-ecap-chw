@@ -111,19 +111,29 @@
         }
       },
       {
-        "key": "health_facility",
+        "key": "facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "health_facility",
-        "type": "edit_text",
-        "hint": "Health Facility",
-        "read_only": "true",
-        "edit_type": "name",
-        "look_up": "true",
+        "openmrs_entity_id": "facility",
+        "hint": "Facility",
+        "type": "spinner",
+        "openmrs_data_type": "",
+        "value": false,
+        "values": [],
+        "keys": [],
         "v_required": {
-          "value": "true",
-          "err": "Health facility Required"
-        }
+          "value": true,
+          "err": "Facility is Required"
+        },
+        "relevance": {
+          "step1:facility_within_ward_question": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        },
+        "read_only": "false",
+        "edit_type": "name",
+        "look_up": "true"
       },
       {
         "key": "district",
@@ -175,7 +185,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "testing_modality",
         "type": "native_radio",
-        "label": "Testing Modality (SNS/Index/Other Community)",
+        "label": "Testing Modality (SNT/Index/Other Community)",
         "options": [
           {
             "key": "SNT",
@@ -245,25 +255,7 @@
           "err": "Enter last name"
         }
       },
-      {
-        "key": "art_number",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "art_number",
-        "type": "edit_text",
-        "hint": "ART Number",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hiv_testing_service_relevance.yml"
-            }
-          }
-        },
-        "v_required": {
-          "value": "false",
-          "err": "ART number is Required"
-        }
-      },
+
       {
         "key": "gender",
         "openmrs_entity_parent": "",
@@ -362,8 +354,8 @@
         "read_only": "false",
         "edit_type": "number",
         "v_regex": {
-          "value": "((07||09)[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+          "value": "((07||09||05)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,055,056,057,095, 096, or 097 and must be a total of 10 digits in length"
         },
         "relevance": {
           "step1:testing_modality": {
@@ -378,7 +370,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "ecap_id",
         "type": "edit_text",
-        "hint": " ECAPII ID (If Applicable)",
+        "hint": " ECAP II (If Applicable)",
         "read_only": "false",
         "relevance": {
           "step1:testing_modality": {
@@ -393,56 +385,65 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "sub_population",
         "type": "check_box",
-        "read_only": "false",
-        "label": "Sub-population",
+        "label": "Sub Population :",
+        "exclusive": [
+          "not applicable"
+        ],
         "options": [
           {
-            "key": "Children/Adolescents Living with HIV (C/ALHIV)",
+            "key": "subpop1",
             "text": "Children/Adolescents Living with HIV (C/ALHIV)"
-
           },
           {
-            "key": "HIV Exposed Infants (HEIs)",
+            "key": "subpop2",
             "text": "HIV Exposed Infants (HEIs)"
-
           },
           {
-            "key": "Children of Women Living with HIV",
+            "key": "subpop3",
             "text": "Children of Women Living with HIV"
-
           },
           {
-            "key": "Survivors of Sexual Violence",
+            "key": "subpop5",
             "text": "Survivors of Sexual Violence"
-
           },
           {
-            "key": "Adolescent Girls and Young Women (AGYW)",
-            "text": "Adolescent Girls and Young Women (AGYW)"
-          },
-          {
-            "key": "Siblings of the Index/Other family members",
+            "key": "Siblings of the Index and other family members",
             "text": "Siblings of the Index/Other family members"
 
           },
           {
-            "key": "Caregiver-Women Living With HIV",
-            "text": "Caregiver-Women Living With HIV"
+            "key": "HIV Negative PBFW",
+            "text": "HIV Negative PBFW"
 
           },
           {
-            "key": "Children of Female Sex Workers (FSWs)",
-            "text": "Children of Female Sex Workers (FSWs)"
+            "key": "Children of PBFW",
+            "text": "Children of PBFW"
 
           },
+          {
+            "key": "HIV Positive PBFW",
+            "text": "HIV Positive PBFW"
+          }
+        ,
           {
             "key": "Caregiver-General",
             "text": "Caregiver-General"
+
+          },
+          {
+            "key": "Caregiver-WLHIV",
+            "text": "Caregiver-WLHIV"
+          },
+          {
+            "key": "not applicable",
+            "text": "Not Applicable"
           }
+
         ],
         "v_required": {
-          "value": false,
-          "err": "Select sub population"
+          "value": true,
+          "err": "You are required to select at least ONE option here."
         }
       },
       {
@@ -462,18 +463,51 @@
             "text": "Known Positive"
           },
           {
-            "key": "Test Not Required (evidenced by an HIV risk assessment)",
-            "text": "Test Not Required (evidenced by an HIV risk assessment)"
+            "key": "Test Not required based on HIV Risk Assessment",
+            "text": "Test Not required based on HIV Risk Assessment"
+          },
+          {
+            "key": "Test Required based on HIV Risk Assessment",
+            "text": "Test Required based on HIV Risk Assessment"
+          },
+          {
+            "key": "Status Unknown",
+            "text": "Status Unknown"
           }
         ],
         "v_required": {
           "value": true,
           "err": "This field is Required"
-        },
+        }
+      },
+      {
+        "key": "instructions",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions",
+        "type": "toaster_notes",
+        "text": "Conduct HTS",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_text": "",
+        "toaster_info_title": "Introduction",
+        "toaster_type": "info",
         "relevance": {
-          "step1:testing_modality": {
+          "step1:hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"Other Community\")"
+            "ex": "equalTo(., \"Status Unknown\")"
+          }
+        }
+      },
+      {
+        "key": "label 1",
+        "type": "label",
+        "text": "New HIV Status",
+        "label_text_style": "bold",
+        "relevance": {
+          "step1:hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"Status Unknown\")"
           }
         }
       },
@@ -488,10 +522,12 @@
         "expanded": false,
         "min_date": "01-01-1900",
         "max_date": "today",
+
         "relevance": {
-          "step1:hiv_status": {
-            "type": "string",
-            "ex": "equalTo(., \"Known Negative\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_testing_service_relevance.yml"
+            }
           }
         }
       },
@@ -511,16 +547,16 @@
             "key": "Newly Tested HIV+",
             "text": "Newly Tested HIV+"
           }
-
         ],
         "v_required": {
           "value": true,
           "err": "This field is Required"
         },
         "relevance": {
-          "step1:hiv_status": {
-            "type": "string",
-            "ex": "equalTo(., \"Known Negative\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_testing_service_relevance.yml"
+            }
           }
         }
       },
@@ -540,7 +576,6 @@
             "key": "No",
             "text": "No"
           }
-
         ],
         "v_required": {
           "value": true,
@@ -569,7 +604,6 @@
             "key": "LT",
             "text": "LT"
           }
-
         ],
         "v_required": {
           "value": false,
@@ -580,6 +614,25 @@
             "type": "string",
             "ex": "equalTo(., \"Newly Tested HIV+\")"
           }
+        }
+      },
+      {
+        "key": "art_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "art_number",
+        "type": "edit_text",
+        "hint": "ART Number",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_testing_service_relevance.yml"
+            }
+          }
+        },
+        "v_required": {
+          "value": "false",
+          "err": "ART number is Required"
         }
       },
       {
@@ -594,9 +647,10 @@
         "min_date": "01-01-1900",
         "max_date": "today",
         "relevance": {
-          "step1:hiv_result": {
-            "type": "string",
-            "ex": "equalTo(., \"Newly Tested HIV+\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_testing_service_relevance.yml"
+            }
           }
         }
       },
@@ -612,9 +666,10 @@
         "min_date": "01-01-1900",
         "max_date": "today",
         "relevance": {
-          "step1:hiv_result": {
-            "type": "string",
-            "ex": "equalTo(., \"Newly Tested HIV+\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_testing_service_relevance.yml"
+            }
           }
         }
       },
@@ -651,7 +706,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_edited",
-        "type": "edit_text",
+        "type": "hidden",
         "read_only": "true",
         "hint": "Date edited",
         "edit_type": "number"

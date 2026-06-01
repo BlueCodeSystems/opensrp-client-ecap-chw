@@ -46,4 +46,21 @@ public class VcaCasePlanModel {
     public void setCase_plan_status(String case_plan_status) {
         this.case_plan_status = case_plan_status;
     }
+
+    private final java.util.Map<String, String> additionalFields = new java.util.HashMap<>();
+
+    public java.util.Map<String, String> getAdditionalFields() {
+        return additionalFields;
+    }
+
+    public String getAdditionalField(String key) {
+        if (key == null) return null;
+        return additionalFields.get(key);
+    }
+
+    public void setAdditionalField(String key, String value) {
+        if (key == null) return;
+        additionalFields.put(key, value);
+    }
 }
+

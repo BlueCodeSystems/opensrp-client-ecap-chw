@@ -75,4 +75,21 @@ public class IdentificationRegisterModel implements IdentificationRegisterContra
         event.setClientDatabaseVersion(BuildConfig.DATABASE_VERSION);
         event.setClientApplicationVersion(BuildConfig.VERSION_CODE);
     }
+
+    private final java.util.Map<String, String> additionalFields = new java.util.HashMap<>();
+
+    public java.util.Map<String, String> getAdditionalFields() {
+        return additionalFields;
+    }
+
+    public String getAdditionalField(String key) {
+        if (key == null) return null;
+        return additionalFields.get(key);
+    }
+
+    public void setAdditionalField(String key, String value) {
+        if (key == null) return;
+        additionalFields.put(key, value);
+    }
 }
+

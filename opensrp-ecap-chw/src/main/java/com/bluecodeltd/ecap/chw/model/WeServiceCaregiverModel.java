@@ -227,4 +227,21 @@ public class WeServiceCaregiverModel {
     public void setWe_loans_taken_in_period(String we_loans_taken_in_period) {
         this.we_loans_taken_in_period = we_loans_taken_in_period;
     }
+
+    private final java.util.Map<String, String> additionalFields = new java.util.HashMap<>();
+
+    public java.util.Map<String, String> getAdditionalFields() {
+        return additionalFields;
+    }
+
+    public String getAdditionalField(String key) {
+        if (key == null) return null;
+        return additionalFields.get(key);
+    }
+
+    public void setAdditionalField(String key, String value) {
+        if (key == null) return;
+        additionalFields.put(key, value);
+    }
 }
+

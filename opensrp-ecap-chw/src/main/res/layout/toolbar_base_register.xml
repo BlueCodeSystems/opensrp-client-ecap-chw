@@ -15,11 +15,12 @@
         android:textColor="@android:color/white"
         android:textSize="18sp" />
 
-    <LinearLayout
-        android:id="@+id/register_nav_bar_container"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="end"
-        android:gravity="center_vertical" />
+	    <LinearLayout
+	        android:id="@+id/register_nav_bar_container"
+	        android:layout_width="wrap_content"
+	        android:layout_height="match_parent"
+	        android:layout_gravity="end"
+	        android:gravity="center_vertical"
+	        android:orientation="horizontal" />
 
 </androidx.appcompat.widget.Toolbar>

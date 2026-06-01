@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,12 +26,20 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.VCAServiceAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
+import com.bluecodeltd.ecap.chw.dao.IndexMotherDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
+import com.bluecodeltd.ecap.chw.dao.TbScreeningDao;
 import com.bluecodeltd.ecap.chw.dao.VCAServiceReportDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
+import com.bluecodeltd.ecap.chw.model.EcClientIndexSummary;
 import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
+import com.bluecodeltd.ecap.chw.model.IndexMotherModel;
+import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
+import com.bluecodeltd.ecap.chw.model.TbScreeningModel;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.rey.material.widget.Button;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -50,10 +59,18 @@ import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
@@ -69,10 +86,12 @@ public class VcaServiceActivity extends AppCompatActivity {
     private TextView vcaname,hh_id;
 
     private Button hh_services_link;
+    private Button addServiceReportButton;
     VCAServiceModel vcaServiceModel;
 
     private Toolbar toolbar;
     public String hivstatus, household_id,c_name,intent_vcaid,signature;
+    private boolean canAddServiceReport = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +109,7 @@ public class VcaServiceActivity extends AppCompatActivity {
         vcaname = binding.caregiverName;
         hh_id = binding.hhid;
         hh_services_link = binding.hhServiceLink;
+        addServiceReportButton = binding.services1;
         HouseholdLinkFromVca();
 
         intent_vcaid = getIntent().getExtras().getString("vcaid");
@@ -99,15 +119,11 @@ public class VcaServiceActivity extends AppCompatActivity {
         c_name = getIntent().getExtras().getString("vcaname");
         signature = getIntent().getExtras().getString("signature");
 
-
+        applyHouseholdServicesLinkVisibility();
+        evaluateAddServiceButtonState();
 
         hh_id.setText(intent_vcaid);
         vcaname.setText(intent_cname);
-
-
-        familyServiceList.addAll(VCAServiceReportDao.getServicesByVCAID(intent_vcaid));
-        vcaServiceModel = VCAServiceReportDao.getVcaService(intent_vcaid);
-
 
         if (recyclerViewadapter == null) {
             RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(VcaServiceActivity.this);
@@ -125,14 +141,13 @@ public class VcaServiceActivity extends AppCompatActivity {
             try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
         }
 
-        if (recyclerViewadapter.getItemCount() > 0){
-
-            linearLayout.setVisibility(View.GONE);
-        }
+        linearLayout.setVisibility(View.VISIBLE);
+        refreshData();
     }
     @Override
     public void onResume() {
         super.onResume();
+        evaluateAddServiceButtonState();
         recyclerView.setAdapter(recyclerViewadapter);
         try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
     }
@@ -144,54 +159,100 @@ public class VcaServiceActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.services1:
-                CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(intent_vcaid);
-
-                if (caseStatusModel == null) {
-                    break;
+                if (!canAddServiceReport) {
+                    Toasty.warning(this, "TB screening for this month is required before adding a service report for a CA under 10 years.", Toast.LENGTH_LONG, true).show();
+                    return;
                 }
+                Threading.io(() -> {
+                    CaseStatusModel caseStatusModel = null;
+                    int casePlanCount = 0;
+                    try { caseStatusModel = IndexPersonDao.getCaseStatus(intent_vcaid); } catch (Exception ignored) {}
+                    try { casePlanCount = CasePlanDao.checkCasePlan(intent_vcaid); } catch (Exception ignored) {}
 
-                if (CasePlanDao.checkCasePlan(intent_vcaid) == 0) {
-                    Dialog dialog = new Dialog(this);
-                    dialog.setContentView(R.layout.dialog_layout);
-                    dialog.show();
+                    CaseStatusModel finalCaseStatusModel = caseStatusModel;
+                    int finalCasePlanCount = casePlanCount;
 
-                    TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                    dialogMessage.setText(
-                            "Unable to add service(s) for " + caseStatusModel.getFirst_name() + " " +
-                                    caseStatusModel.getLast_name() + " because no Case Plan(s) have been added"
-                    );
+                    Threading.main(() -> {
+                        if (finalCaseStatusModel == null) {
+                            return;
+                        }
 
-                    android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
-                    dialogButton.setOnClickListener(view -> dialog.dismiss());
-                } else if (caseStatusModel.getCase_status() != null &&
-                        ("0".equals(caseStatusModel.getCase_status()) || "2".equals(caseStatusModel.getCase_status()))) {
-                    Dialog dialog = new Dialog(this);
-                    dialog.setContentView(R.layout.dialog_layout);
-                    dialog.show();
+                        if (finalCasePlanCount == 0) {
+                            Dialog dialog = new Dialog(this);
+                            dialog.setContentView(R.layout.dialog_layout);
+                            dialog.show();
 
-                    TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                    String firstName = caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "";
-                    String lastName = caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "";
-                    dialogMessage.setText(firstName + " " + lastName + " was either de-registered or inactive in the program");
+                            TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                            dialogMessage.setText(
+                                    "Unable to add service(s) for " + finalCaseStatusModel.getFirst_name() + " " +
+                                            finalCaseStatusModel.getLast_name() + " because no Case Plan(s) have been added"
+                            );
 
-                    android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
-                    dialogButton.setOnClickListener(view -> dialog.dismiss());
-                } else {
-                    try {
-                        FormUtils formUtils = new FormUtils(this);
-                        JSONObject indexRegisterForm = formUtils.getFormJson("service_report_vca");
+                            android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                            dialogButton.setOnClickListener(view -> dialog.dismiss());
+                            return;
+                        }
 
-                        JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
-                        cId.put("value", hh_id.getText().toString());
+                        if (finalCaseStatusModel.getCase_status() != null &&
+                                ("0".equals(finalCaseStatusModel.getCase_status()) || "2".equals(finalCaseStatusModel.getCase_status()))) {
+                            Dialog dialog = new Dialog(this);
+                            dialog.setContentView(R.layout.dialog_layout);
+                            dialog.show();
 
-                        JSONObject hiv = getFieldJSONObject(fields(indexRegisterForm, STEP1), "is_hiv_positive");
-                        hiv.put("value", hivstatus);
+                            TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                            String firstName = finalCaseStatusModel.getFirst_name() != null ? finalCaseStatusModel.getFirst_name() : "";
+                            String lastName = finalCaseStatusModel.getLast_name() != null ? finalCaseStatusModel.getLast_name() : "";
+                            dialogMessage.setText(firstName + " " + lastName + " was either de-registered or inactive in the program");
 
-                        startFormActivity(indexRegisterForm);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
+                            android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                            dialogButton.setOnClickListener(view -> dialog.dismiss());
+                            return;
+                        }
+
+                        try {
+                            FormUtils formUtils = new FormUtils(this);
+                            JSONObject indexRegisterForm = formUtils.getFormJson("service_report_vca");
+
+                            JSONArray step1Fields = fields(indexRegisterForm, STEP1);
+
+                            JSONObject cId = getFieldJSONObject(step1Fields, "unique_id");
+                            cId.put("value", hh_id.getText().toString());
+
+                            EcClientIndexSummary summary = null;
+                            try { summary = IndexPersonDao.getClientSummaryByUniqueId(intent_vcaid); } catch (Exception ignored) {}
+                            String normalizedGender = summary != null && !TextUtils.isEmpty(summary.getGender())
+                                    ? summary.getGender().trim().toLowerCase(Locale.ENGLISH)
+                                    : null;
+                            if (!TextUtils.isEmpty(normalizedGender)) {
+                                JSONObject genderField = getFieldJSONObject(step1Fields, "vca_gender");
+                                genderField.put("value", normalizedGender);
+                            }
+
+                            Integer ageYears = summary != null ? getAgeInYearsFromBirthdate(summary.getAdolescentBirthdate()) : null;
+                            boolean shouldShowPregnantBreastfeeding =
+                                    "female".equalsIgnoreCase(normalizedGender) &&
+                                            ageYears != null &&
+                                            ageYears >= 10 &&
+                                            ageYears <= 25;
+
+                            if (!shouldShowPregnantBreastfeeding) {
+                                for (int i = step1Fields.length() - 1; i >= 0; i--) {
+                                    JSONObject field = step1Fields.optJSONObject(i);
+                                    if (field != null && "pregnant_breastfeeding".equals(field.optString(JsonFormConstants.KEY))) {
+                                        step1Fields.remove(i);
+                                    }
+                                }
+                            }
+
+                            JSONObject hiv = getFieldJSONObject(step1Fields, "is_hiv_positive");
+                            hiv.put("value", hivstatus);
+
+                            startFormActivity(indexRegisterForm);
+                        } catch (Exception e) {
+                            Timber.e(e);
+                        }
+                    });
+                });
 
                 break;
         }
@@ -234,6 +295,15 @@ public class VcaServiceActivity extends AppCompatActivity {
                 is_edit_mode = true;
             }
             String EncounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
+            if (BuildConfig.DEBUG) {
+                try {
+                    Toasty.info(VcaServiceActivity.this,
+                            "FORM: encounter=" + EncounterType + " edit=" + is_edit_mode +
+                                    " entity_id=" + (jsonFormObject.optString("entity_id") == null ? "" : jsonFormObject.optString("entity_id")),
+                            Toast.LENGTH_LONG, true).show();
+                } catch (Exception ignored) {
+                }
+            }
             if(EncounterType.equals("VCA Service Report")){
                 Intent passClosureForm   =  new Intent(this,SignatureActivity.class);
                 passClosureForm.putExtra("jsonForm", jsonFormObject.toString());
@@ -262,9 +332,7 @@ public class VcaServiceActivity extends AppCompatActivity {
 
                 case "VCA Service Report Edit":
                     Toasty.success(VcaServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
-                    familyServiceList.clear();
-                    familyServiceList.addAll(VCAServiceReportDao.getServicesByVCAID(intent_vcaid));
-                    try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
+                    refreshData();
                     break;
 
             }
@@ -390,10 +458,198 @@ public class VcaServiceActivity extends AppCompatActivity {
         return ChwApplication.getInstance().getClientProcessorForJava();
     }
     private void refreshData() {
-        familyServiceList.clear();
-        List<VCAServiceModel> updatedList = VCAServiceReportDao.getServicesByVCAID(intent_vcaid);
-        familyServiceList.addAll(updatedList);
-        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
+        final String vcaId = intent_vcaid;
+        Threading.io(() -> {
+            List<VCAServiceModel> updatedList = Collections.emptyList();
+            VCAServiceModel model = null;
+            try { updatedList = VCAServiceReportDao.getServicesByVCAID(vcaId); } catch (Exception ignored) {}
+            try { model = VCAServiceReportDao.getVcaService(vcaId); } catch (Exception ignored) {}
+
+            List<VCAServiceModel> finalUpdatedList = updatedList == null ? Collections.emptyList() : updatedList;
+            VCAServiceModel finalModel = model;
+
+            Threading.main(() -> {
+                vcaServiceModel = finalModel;
+                familyServiceList.clear();
+                familyServiceList.addAll(finalUpdatedList);
+                try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
+                if (linearLayout != null) {
+                    linearLayout.setVisibility(finalUpdatedList.isEmpty() ? View.VISIBLE : View.GONE);
+                }
+            });
+        });
+    }
+
+    private void evaluateAddServiceButtonState() {
+        final String vcaId = intent_vcaid;
+        Threading.ioBestEffort(() -> {
+            boolean allowed = true;
+            try { allowed = shouldAllowServiceReport(vcaId); } catch (Exception ignored) {}
+            boolean finalAllowed = allowed;
+            Threading.main(() -> {
+                canAddServiceReport = finalAllowed;
+                if (addServiceReportButton != null) {
+                    // Keep button visually dimmed but clickable so we can surface the toast guard in onClick.
+                    addServiceReportButton.setAlpha(canAddServiceReport ? 1f : 0.5f);
+                    addServiceReportButton.setEnabled(true);
+                    addServiceReportButton.setClickable(true);
+                }
+            });
+        });
+    }
+
+    private boolean shouldAllowServiceReport(String vcaId) {
+        if (TextUtils.isEmpty(vcaId)) {
+            return true;
+        }
+        Integer age = getVcaAgeInYears(vcaId);
+        if (age != null && age < 10) {
+            return hasTbScreeningInCurrentMonth(vcaId);
+        }
+        return true;
+    }
+
+    private Integer getVcaAgeInYears(String vcaId) {
+        String birthdate = getBirthdateSafe(vcaId);
+        String normalizedDate = normalizeBirthdate(birthdate);
+        if (normalizedDate == null) {
+            return null;
+        }
+        try {
+            LocalDate dob = LocalDate.parse(normalizedDate, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            return Period.between(dob, LocalDate.now()).getYears();
+        } catch (DateTimeParseException e) {
+            Timber.e(e);
+            return null;
+        }
+    }
+
+    private Integer getAgeInYearsFromBirthdate(String birthdate) {
+        String normalizedDate = normalizeBirthdate(birthdate);
+        if (normalizedDate == null) {
+            return null;
+        }
+        try {
+            LocalDate dob = LocalDate.parse(normalizedDate, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            return Period.between(dob, LocalDate.now()).getYears();
+        } catch (DateTimeParseException e) {
+            Timber.e(e);
+            return null;
+        }
+    }
+
+    private String normalizeBirthdate(String birthdate) {
+        if (TextUtils.isEmpty(birthdate)) {
+            return null;
+        }
+        String trimmed = birthdate.trim();
+        if (trimmed.matches("\\d{2}-\\d{2}-\\d{4}")) {
+            return trimmed;
+        }
+        String[] patterns = new String[]{"dd MMM yyyy", "yyyy-MM-dd", "dd/MM/yyyy"};
+        for (String pattern : patterns) {
+            try {
+                LocalDate parsedDate = LocalDate.parse(trimmed, DateTimeFormatter.ofPattern(pattern, Locale.ENGLISH));
+                return parsedDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            } catch (DateTimeParseException ignored) {
+            }
+        }
+        return null;
+    }
+
+    private String getBirthdateSafe(String vcaId) {
+        try {
+            return IndexPersonDao.getBirthdate(vcaId);
+        } catch (Exception e) {
+            Timber.e(e);
+            return null;
+        }
+    }
+
+    private boolean hasTbScreeningInCurrentMonth(String vcaId) {
+        try {
+            List<TbScreeningModel> screenings = TbScreeningDao.listByVcaId(vcaId);
+            if (screenings == null || screenings.isEmpty()) {
+                return false;
+            }
+
+            Calendar now = Calendar.getInstance();
+            int currentMonth = now.get(Calendar.MONTH);
+            int currentYear = now.get(Calendar.YEAR);
+
+            for (TbScreeningModel screening : screenings) {
+                Date screeningDate = resolveScreeningDate(screening);
+                if (screeningDate == null) {
+                    continue;
+                }
+
+                Calendar screeningCal = Calendar.getInstance();
+                screeningCal.setTime(screeningDate);
+                if (screeningCal.get(Calendar.MONTH) == currentMonth && screeningCal.get(Calendar.YEAR) == currentYear) {
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+        return false;
+    }
+
+    private Date resolveScreeningDate(TbScreeningModel screening) {
+        if (screening == null) {
+            return null;
+        }
+
+        Date fromTimestamp = parseTimestamp(screening.getLast_interacted_with());
+        if (fromTimestamp != null) {
+            return fromTimestamp;
+        }
+        Date fromLastInteracted = parseDayMonthYear(screening.getLast_interacted_with());
+        if (fromLastInteracted != null) {
+            return fromLastInteracted;
+        }
+
+        Date fromFollowUp = parseDayMonthYear(screening.getFollowup_date());
+        if (fromFollowUp != null) {
+            return fromFollowUp;
+        }
+
+        Date fromFacility = parseDayMonthYear(screening.getDate_screened_at_facility());
+        if (fromFacility != null) {
+            return fromFacility;
+        }
+
+        return parseDayMonthYear(screening.getTreatment_followup_date());
+    }
+
+    private Date parseTimestamp(String timestamp) {
+        if (TextUtils.isEmpty(timestamp)) {
+            return null;
+        }
+        try {
+            long value = Long.parseLong(timestamp);
+            if (timestamp.length() <= 10) {
+                value *= 1000;
+            }
+            return new Date(value);
+        } catch (NumberFormatException e) {
+            Timber.e(e);
+            return null;
+        }
+    }
+
+    private Date parseDayMonthYear(String dateString) {
+        if (TextUtils.isEmpty(dateString)) {
+            return null;
+        }
+        String[] patterns = new String[]{"dd-MM-yyyy", "dd/MM/yyyy", "yyyy-MM-dd"};
+        for (String pattern : patterns) {
+            try {
+                return new SimpleDateFormat(pattern, Locale.ENGLISH).parse(dateString);
+            } catch (ParseException ignored) {
+            }
+        }
+        return null;
     }
 
     public void HouseholdLinkFromVca(){
@@ -403,7 +659,14 @@ public class VcaServiceActivity extends AppCompatActivity {
             if (v.getId() == R.id.hh_service_link) {
 
                 Intent i = new Intent(this, HouseholdServicesOnlyActivity.class);
-                i.putExtra("householdId", household_id);
+                String resolvedHouseholdId = household_id;
+                try {
+                    EcClientIndexSummary summary = IndexPersonDao.getClientSummaryByUniqueId(intent_vcaid);
+                    if (summary != null && !TextUtils.isEmpty(summary.getHouseholdId())) {
+                        resolvedHouseholdId = summary.getHouseholdId();
+                    }
+                } catch (Exception ignored) {}
+                i.putExtra("householdId", resolvedHouseholdId);
                 i.putExtra("cname", c_name);
                 startActivity(i);
 
@@ -411,8 +674,62 @@ public class VcaServiceActivity extends AppCompatActivity {
 
         });
     }
+
+    private void applyHouseholdServicesLinkVisibility() {
+        if (hh_services_link == null) return;
+
+        // Default to GONE until we confirm the "source_from" context (prevents brief incorrect visibility).
+        hh_services_link.setVisibility(View.GONE);
+
+        final String finalHouseholdId = household_id;
+        if (TextUtils.isEmpty(finalHouseholdId)) {
+            hh_services_link.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        Threading.ioBestEffort(() -> {
+            boolean shouldHide = false;
+            try {
+                // First priority: hide when ec_pmtct_mother for this household_id has source_from=service_report_vca
+                List<PtctMotherModel> pmtctMothers = PMTCTMotherDao.getPMTCTMothersByHouseholdId(finalHouseholdId);
+                if (pmtctMothers != null) {
+                    for (PtctMotherModel mother : pmtctMothers) {
+                        String sourceFrom = mother != null ? mother.getSource_from() : null;
+                        if (!TextUtils.isEmpty(sourceFrom) && "service_report_vca".equalsIgnoreCase(sourceFrom.trim())) {
+                            shouldHide = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!shouldHide) {
+                    // Backward-compat: in vca_screening context, also keep the household-services link hidden.
+                    List<IndexMotherModel> mothers = IndexMotherDao.getIndexMothersByHouseholdId(finalHouseholdId);
+                    if (mothers != null) {
+                        for (IndexMotherModel mother : mothers) {
+                            String sourceFrom = mother != null ? mother.getSource_from() : null;
+                            if (!TextUtils.isEmpty(sourceFrom) && "vca_screening".equalsIgnoreCase(sourceFrom.trim())) {
+                                shouldHide = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            } catch (Exception ignored) { }
+
+            final boolean finalShouldHide = shouldHide;
+            Threading.main(() -> {
+                try {
+                    if (isFinishing() || isDestroyed()) return;
+                } catch (Exception ignored) { }
+                hh_services_link.setVisibility(finalShouldHide ? View.GONE : View.VISIBLE);
+            });
+        });
+    }
+
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         Intent intent = new Intent(VcaServiceActivity.this, IndexDetailsActivity.class);
         intent.putExtra("Child", intent_vcaid);
         startActivity(intent);

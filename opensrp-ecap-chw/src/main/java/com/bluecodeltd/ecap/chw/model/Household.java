@@ -4,6 +4,9 @@ public class Household {
 
 
     private String unique_id;
+    private String graduation_benchmark;
+    private String exited_graduation_reason;
+    private String other_reason;
     private String user_select_hiv;
     private String new_caregiver_death_date;
     private String caseworker_name;
@@ -91,6 +94,7 @@ public class Household {
     private String status;
     private String case_status;
     private String de_registration_date;
+    private String date_of_death;
     private String de_registration_reason;
     private String transfer_reason;
     private String other_de_registration_reason;
@@ -104,6 +108,10 @@ public class Household {
     private String new_caregiver_hiv_status;
     private String new_caregiver_phone;
     private String sub_population;
+    private String caregiver_nrc;
+    private String screening_location;
+    private String date_approved;
+    private String index_check_box;
     private String signature;
     private  String relationship_other;
     private String household_location;
@@ -119,7 +127,7 @@ public class Household {
 
     private String household_receiving_facility;
 
-    private String ovc_name;
+    private String name_ovc;
 
     public String getHousehold_receiving_caseworker() {
         return household_receiving_caseworker;
@@ -175,6 +183,14 @@ public class Household {
 
     public void setDe_registration_date(String de_registration_date) {
         this.de_registration_date = de_registration_date;
+    }
+
+    public String getDate_of_death() {
+        return date_of_death;
+    }
+
+    public void setDate_of_death(String date_of_death) {
+        this.date_of_death = date_of_death;
     }
 
     public String getDe_registration_reason() {
@@ -900,6 +916,38 @@ public class Household {
         this.new_caregiver_name = new_caregiver_name;
     }
 
+    public String getCaregiver_nrc() {
+        return caregiver_nrc;
+    }
+
+    public void setCaregiver_nrc(String caregiver_nrc) {
+        this.caregiver_nrc = caregiver_nrc;
+    }
+
+    public String getScreening_location() {
+        return screening_location;
+    }
+
+    public void setScreening_location(String screening_location) {
+        this.screening_location = screening_location;
+    }
+
+    public String getDate_approved() {
+        return date_approved;
+    }
+
+    public void setDate_approved(String date_approved) {
+        this.date_approved = date_approved;
+    }
+
+    public String getIndex_check_box() {
+        return index_check_box;
+    }
+
+    public void setIndex_check_box(String index_check_box) {
+        this.index_check_box = index_check_box;
+    }
+
     public String getNew_caregiver_nrc() {
         return new_caregiver_nrc;
     }
@@ -988,12 +1036,12 @@ public class Household {
         this.household_receiving_facility = household_receiving_facility;
     }
 
-    public String getOvc_name() {
-        return ovc_name;
+    public String getName_ovc() {
+        return name_ovc;
     }
 
-    public void setOvc_name(String ovc_name) {
-        this.ovc_name = ovc_name;
+    public void setName_ovc(String name_ovc) {
+        this.name_ovc = name_ovc;
     }
 
     public String getUser_select_hiv() {
@@ -1003,4 +1051,44 @@ public class Household {
     public void setUser_select_hiv(String user_select_hiv) {
         this.user_select_hiv = user_select_hiv;
     }
+    public String getGraduation_benchmark() {
+        return graduation_benchmark;
+    }
+
+    public void setGraduation_benchmark(String graduation_benchmark) {
+        this.graduation_benchmark = graduation_benchmark;
+    }
+
+    public String getExited_graduation_reason() {
+        return exited_graduation_reason;
+    }
+
+    public void setExited_graduation_reason(String exited_graduation_reason) {
+        this.exited_graduation_reason = exited_graduation_reason;
+    }
+
+    public String getOther_reason() {
+        return other_reason;
+    }
+
+    public void setOther_reason(String other_reason) {
+        this.other_reason = other_reason;
+    }
+
+    private final java.util.Map<String, String> additionalFields = new java.util.HashMap<>();
+
+    public java.util.Map<String, String> getAdditionalFields() {
+        return additionalFields;
+    }
+
+    public String getAdditionalField(String key) {
+        if (key == null) return null;
+        return additionalFields.get(key);
+    }
+
+    public void setAdditionalField(String key, String value) {
+        if (key == null) return;
+        additionalFields.put(key, value);
+    }
 }
+

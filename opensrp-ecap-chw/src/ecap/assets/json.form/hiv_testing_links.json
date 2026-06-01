@@ -137,7 +137,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "ecap_id",
         "type": "edit_text",
-        "hint": " ECAPII ID (If Applicable)",
+        "hint": " ECAP II ID (If Applicable)",
         "read_only": "false"
       },
       {
@@ -146,55 +146,65 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "sub_population",
         "type": "check_box",
-        "read_only": "false",
-        "label": "Sub-population",
+        "label": "Sub Population :",
+        "exclusive": [
+          "not applicable"
+        ],
         "options": [
           {
-            "key": "HIV Exposed Infants (HEIs)",
+            "key": "subpop1",
+            "text": "Children/Adolescents Living with HIV (C/ALHIV)"
+          },
+          {
+            "key": "subpop2",
             "text": "HIV Exposed Infants (HEIs)"
-
           },
           {
-            "key": "Children of Female Sex Workers (CFSWs)",
-            "text": "Children of Female Sex Workers (CFSWs)"
-
-          },
-          {
-            "key": "Children of Women Living with HIV",
+            "key": "subpop3",
             "text": "Children of Women Living with HIV"
-
           },
           {
-            "key": "Survivors of Sexual Violence",
+            "key": "subpop5",
             "text": "Survivors of Sexual Violence"
-
           },
           {
-            "key": "Adolescent Girls and Young Women (AGYW)",
-            "text": "Adolescent Girls and Young Women (AGYW)"
-          },
-          {
-            "key": "Siblings of the Index/Other family members",
+            "key": "Siblings of the Index and other family members",
             "text": "Siblings of the Index/Other family members"
 
           },
           {
-            "key": "Caregiver-Women Living With HIV",
-            "text": "Caregiver-Women Living With HIV"
+            "key": "HIV Negative PBFW",
+            "text": "HIV Negative PBFW"
 
           },
           {
-            "key": "Caregiver-FSW",
-            "text": "Caregiver-FSW"
+            "key": "Children of PBFW",
+            "text": "Children of PBFW"
+
           },
+          {
+            "key": "HIV Positive PBFW",
+            "text": "HIV Positive PBFW"
+          }
+        ,
           {
             "key": "Caregiver-General",
             "text": "Caregiver-General"
+
+          },
+          {
+            "key": "Caregiver-WLHIV",
+            "text": "Caregiver-WLHIV"
+          },
+          {
+            "key": "not applicable",
+            "text": "Not Applicable"
           }
+
         ],
         "v_required": {
-          "value": false,
-          "err": "Select sub population"
+          "value": true,
+          "err": "You are required to select at least ONE option here."
         }
       },
       {
@@ -309,6 +319,15 @@
         "read_only": "false"
       },
       {
+        "key": "facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "facility",
+        "type": "edit_text",
+        "hint": "Facility",
+        "read_only": "false"
+      },
+      {
         "key": "phone",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -318,8 +337,8 @@
         "read_only": "false",
         "edit_type": "number",
         "v_regex": {
-          "value": "((07||09)[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+          "value": "((07||09||05)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,055,056,057,095, 096, or 097 and must be a total of 10 digits in length"
         }
       },
       {
@@ -344,7 +363,6 @@
           "err": "This field is Required"
         }
       },
-
       {
         "key": "hiv_status",
         "openmrs_entity_parent": "",
@@ -362,8 +380,16 @@
             "text": "Known Positive"
           },
           {
-            "key": "Test Not Required (evidenced by an HIV risk assessment)",
-            "text": "Test Not Required (evidenced by an HIV risk assessment)"
+            "key": "Test Not Required Based on HIV risk assessment",
+            "text": "Test Not Required Based on HIV risk assessment"
+          },
+          {
+            "key": "Test Required Based on HIV risk assessment",
+            "text": "Test Required Based on HIV risk assessment"
+          },
+          {
+            "key": "HIV Status Unknown",
+            "text": "HIV Status Unknown"
           }
         ],
         "v_required": {
@@ -377,21 +403,56 @@
           }
         }
       },
+
+      {
+        "key": "instructions",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions",
+        "type": "toaster_notes",
+        "text": "Conduct HTS",
+        "text_color": "#000000",
+        "label_text_style": "bold",
+        "toaster_info_text": "",
+        "toaster_info_title": "Introduction",
+        "toaster_type": "info",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_testing_links.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "label_1",
+        "type": "label",
+        "text": "New HIV Status",
+        "label_text_style": "bold",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_testing_links.yml"
+            }
+          }
+        }
+      },
       {
         "key": "date_tested",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "date_tested",
         "type": "date_picker",
-         "hint": "Date tested",
+        "hint": "Date tested",
         "look_up": "true",
         "expanded": false,
         "min_date": "01-01-1900",
         "max_date": "today",
         "relevance": {
-          "step1:hiv_status": {
-            "type": "string",
-            "ex": "equalTo(., \"Known Negative\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_testing_links.yml"
+            }
           }
         }
       },
@@ -411,20 +472,19 @@
             "key": "Newly Tested HIV+",
             "text": "Newly Tested HIV+"
           }
-
         ],
         "v_required": {
           "value": true,
           "err": "This field is Required"
         },
         "relevance": {
-          "step1:hiv_status": {
-            "type": "string",
-            "ex": "equalTo(., \"Known Negative\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hiv_testing_links.yml"
+            }
           }
         }
       },
-
       {
         "key": "test_done_hf",
         "openmrs_entity_parent": "",
@@ -441,7 +501,6 @@
             "key": "No",
             "text": "No"
           }
-
         ],
         "v_required": {
           "value": true,
@@ -470,7 +529,6 @@
             "key": "LT",
             "text": "LT"
           }
-
         ],
         "v_required": {
           "value": false,

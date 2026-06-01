@@ -8,6 +8,7 @@ public class PtctMotherModel {
     private String sm_number;
     private String district;
     private String ward;
+    private String caregiver_birth_date;
     private String facility;
     private String partner;
     private String caseworker_name;
@@ -20,8 +21,11 @@ public class PtctMotherModel {
     private String last_name;
     private String mothers_age;
     private String home_address;
+    private String caregiver_name;
+    private String household_id;
     private String nearest_landmark;
     private String mothers_phone;
+    private String source_from;
     private String agyw_date_1st_visit;
     private String agyw_gestation_age_in_weeks;
     private String agyw_hiv_tested;
@@ -238,6 +242,14 @@ public class PtctMotherModel {
 
     public void setMothers_phone(String mothers_phone) {
         this.mothers_phone = mothers_phone;
+    }
+
+    public String getSource_from() {
+        return source_from;
+    }
+
+    public void setSource_from(String source_from) {
+        this.source_from = source_from;
     }
 
     public String getAgyw_date_1st_visit() {
@@ -695,4 +707,45 @@ public class PtctMotherModel {
     public void setDelete_status(String delete_status) {
         this.delete_status = delete_status;
     }
+
+    public String getCaregiver_name() {
+        return caregiver_name;
+    }
+
+    public void setCaregiver_name(String caregiver_name) {
+        this.caregiver_name = caregiver_name;
+    }
+
+    public String getHousehold_id() {
+        return household_id;
+    }
+
+    public void setHousehold_id(String household_id) {
+        this.household_id = household_id;
+    }
+
+    public String getCaregiver_birth_date() {
+        return caregiver_birth_date;
+    }
+
+    public void setCaregiver_birth_date(String caregiver_birth_date) {
+        this.caregiver_birth_date = caregiver_birth_date;
+    }
+
+    private final java.util.Map<String, String> additionalFields = new java.util.HashMap<>();
+
+    public java.util.Map<String, String> getAdditionalFields() {
+        return additionalFields;
+    }
+
+    public String getAdditionalField(String key) {
+        if (key == null) return null;
+        return additionalFields.get(key);
+    }
+
+    public void setAdditionalField(String key, String value) {
+        if (key == null) return;
+        additionalFields.put(key, value);
+    }
 }
+

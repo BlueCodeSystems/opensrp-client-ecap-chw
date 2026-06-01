@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Professional blue background -->
+    <solid android:color="#739273" /> <!-- Material-ish deep blue -->
+
+    <!-- White border -->
+    <stroke
+        android:width="1dp"
+        android:color="@android:color/white" />
+
+    <!-- Softer, modern rounded corners -->
+    <corners android:radius="8dp" />
+
+    <!-- Optional: internal padding so text/icons breathe -->
+    <padding
+        android:left="12dp"
+        android:top="6dp"
+        android:right="12dp"
+        android:bottom="6dp" />
+
+</shape>

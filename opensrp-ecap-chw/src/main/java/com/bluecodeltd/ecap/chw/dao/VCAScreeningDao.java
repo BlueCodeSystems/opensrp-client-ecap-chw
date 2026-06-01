@@ -175,6 +175,7 @@ public class VCAScreeningDao extends AbstractDao {
             record.setTransfer_reason(getCursorValue(c, "transfer_reason"));
             record.setOther_reason(getCursorValue(c, "other_reason"));
             record.setExited_graduation_reason(getCursorValue(c, "exited_graduation_reason"));
+            record.setDate_of_death(getCursorValue(c, "date_of_death"));
             record.setAbym_years(getCursorValue(c, "abym_years"));
             record.setAbym_sexually_active(getCursorValue(c, "abym_sexually_active"));
             record.setAbym_preventions(getCursorValue(c, "abym_preventions"));
@@ -192,9 +193,14 @@ public class VCAScreeningDao extends AbstractDao {
             record.setAbym_economic_strengthening(getCursorValue(c, "abym_economic_strengthening"));
             record.setVca_receiving_caseworker(getCursorValue(c, "vca_receiving_caseworker"));
             record.setDistrict_moved_to(getCursorValue(c, "district_moved_to"));
+            // Support both legacy column `name_ovc` and current column `ovc_name`
             record.setName_ovc(getCursorValue(c, "name_ovc"));
+            record.setOvc_name(getCursorValue(c, "ovc_name"));
             record.setOvc_district(getCursorValue(c,"ovc_district"));
+            record.setLocation_moved_to(getCursorValue(c,"location_moved_to"));
 
+
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
@@ -205,6 +211,8 @@ public class VCAScreeningDao extends AbstractDao {
         return c -> {
 
             VcaCSVModel record = new VcaCSVModel();
+            record.setDeleted(getCursorValue(c, "deleted"));
+            record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setHousehold_id(getCursorValue(c, "household_id"));
             record.setUnique_id(getCursorValue(c, "unique_id"));
             record.setSignature(getCursorValue(c, "signature"));
@@ -295,8 +303,11 @@ public class VCAScreeningDao extends AbstractDao {
             record.setDistrict_moved_to(getCursorValue(c, "district_moved_to"));
 
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 
 }
+
+

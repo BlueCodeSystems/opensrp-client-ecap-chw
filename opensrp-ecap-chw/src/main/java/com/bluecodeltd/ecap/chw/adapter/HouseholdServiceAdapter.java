@@ -147,61 +147,60 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
 //            }
 //
 //        }
-        Household household = HouseholdDao.getHousehold(service.getHousehold_id());
-
+        final String rowTag = service.getBase_entity_id() != null ? service.getBase_entity_id()
+                : (service.getHousehold_id() != null ? service.getHousehold_id() + ":" + position : String.valueOf(position));
+        holder.itemView.setTag(R.id.tag_row_id, rowTag);
 
         String encodedSignature = service.getSignature();
-        String encodeSignatureHousehold = household.getSignature();
-
-
-        if(encodedSignature != null && encodedSignature != "") {
+        if (encodedSignature != null && !encodedSignature.isEmpty()) {
             setImageViewFromBase64(encodedSignature, holder.signatureView);
         } else {
-            if(encodeSignatureHousehold != null && encodeSignatureHousehold != "") {
-                setImageViewFromBase64(encodeSignatureHousehold, holder.signatureView);
-            } else {
-                holder.signatureView.setVisibility(View.GONE);
-            }
+            holder.signatureView.setVisibility(View.GONE);
         }
-        holder.edit.setOnClickListener(v -> {
-            if (household.getHousehold_case_status() != null &&
-                    (household.getHousehold_case_status().equals("0") || household.getHousehold_case_status().equals("2"))) {
-                showDialogBox(service.getHousehold_id(), "`s has been inactive or de-registered");
-            } else {
-                try {
-                    FormUtils formUtils = new FormUtils(context);
-                    openFormUsingFormUtils(context, "service_report_household_edit", service);
-                } catch (Exception e) {
-                    e.printStackTrace();
+
+        final String hid = service.getHousehold_id();
+        Threading.ioBestEffort(() -> {
+            Household household = null;
+            try { household = HouseholdDao.getHousehold(hid); } catch (Exception ignored) {}
+            final Household finalHousehold = household;
+            Threading.main(() -> {
+                Object tag = holder.itemView.getTag(R.id.tag_row_id);
+                if (!(tag instanceof String) || !rowTag.equals(tag)) return;
+
+                if ((encodedSignature == null || encodedSignature.isEmpty()) && finalHousehold != null) {
+                    String hSig = finalHousehold.getSignature();
+                    if (hSig != null && !hSig.isEmpty()) {
+                        holder.signatureView.setVisibility(View.VISIBLE);
+                        setImageViewFromBase64(hSig, holder.signatureView);
+                    }
                 }
-            }
+            });
         });
-        holder.linearLayout.setOnClickListener(v -> {
 
-           if (household.getHousehold_case_status() != null && (household.getHousehold_case_status().equals("0") || household.getHousehold_case_status().equals("2"))) {
-                showDialogBox(service.getHousehold_id(), "`s has been inactive or de-registered");
-            } else {
-                if (v.getId() == R.id.itemm) {
-
-                    FormUtils formUtils = null;
+        View.OnClickListener openEdit = v -> Threading.io(() -> {
+            Household household = null;
+            try { household = HouseholdDao.getHousehold(hid); } catch (Exception ignored) {}
+            final Household finalHousehold = household;
+            Threading.main(() -> {
+                Object tag = holder.itemView.getTag(R.id.tag_row_id);
+                if (!(tag instanceof String) || !rowTag.equals(tag)) return;
+                String status = finalHousehold != null ? finalHousehold.getHousehold_case_status() : null;
+                if (status != null && ("0".equals(status) || "2".equals(status))) {
+                    showDialogBox(hid, "`s has been inactive or de-registered");
+                } else {
                     try {
-                        formUtils = new FormUtils(context);
+                        FormUtils formUtils = new FormUtils(context);
+                        String caregiverSex = finalHousehold != null ? finalHousehold.getCaregiver_sex() : null;
+                        openFormUsingFormUtils(context, "service_report_household_edit", service, caregiverSex);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
-
-                    try {
-                        openFormUsingFormUtils(context, "service_report_household_edit", service);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
                 }
-            }
-
+            });
         });
+
+        holder.edit.setOnClickListener(openEdit);
+        holder.linearLayout.setOnClickListener(openEdit);
         holder.delete.setOnClickListener(v -> {
             try {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -290,7 +289,7 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
         dialogButton.setOnClickListener(v -> dialog.dismiss());
     }
 
-    public void openFormUsingFormUtils(Context context, String formName, HouseholdServiceReportModel service) throws JSONException {
+    public void openFormUsingFormUtils(Context context, String formName, HouseholdServiceReportModel service, String caregiverSex) throws JSONException {
 
         oMapper = new ObjectMapper();
 
@@ -304,12 +303,14 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
         JSONObject formToBeOpened;
 
         formToBeOpened = formUtils.getFormJson(formName);
+        applyPregnantBreastfeedingVisibility(formToBeOpened, caregiverSex);
 
         formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).remove("read_only");
         formToBeOpened.put("entity_id", service.getBase_entity_id());
         HouseholdServiceReportModel householdReport = new HouseholdServiceReportModel();
         householdReport.setServices(service.getServices());
         householdReport.setServices_household(service.getServices_household());
+        householdReport.setPregnant_breastfeeding(service.getPregnant_breastfeeding());
 
         if (service.getHealth_services() == null && service.getServices_caregiver() != null){
             householdReport.setHealth_services(service.getServices_caregiver());
@@ -341,9 +342,62 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
         householdReport.setOther_services_household(service.getOther_services_household());
         householdReport.setDelete_status(service.getDelete_status());
         CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(householdReport, Map.class));
+        applyPregnantBreastfeedingValue(formToBeOpened, service.getPregnant_breastfeeding());
 
         startFormActivity(formToBeOpened);
 
+    }
+
+    private static boolean isFemaleCaregiver(String caregiverSex) {
+        return caregiverSex != null && caregiverSex.trim().equalsIgnoreCase("female");
+    }
+
+    private static void applyPregnantBreastfeedingVisibility(JSONObject form, String caregiverSex) {
+        if (isFemaleCaregiver(caregiverSex)) {
+            return;
+        }
+        try {
+            JSONObject step = form.getJSONObject(JsonFormConstants.STEP1);
+            JSONArray formFields = step.getJSONArray(JsonFormConstants.FIELDS);
+            for (int i = 0; i < formFields.length(); i++) {
+                JSONObject field = formFields.getJSONObject(i);
+                if ("pregnant_breastfeeding".equals(field.optString("key"))) {
+                    formFields.remove(i);
+                    break;
+                }
+            }
+        } catch (JSONException e) {
+            Timber.e(e);
+        }
+    }
+
+    private static void applyPregnantBreastfeedingValue(JSONObject form, String pregnantBreastfeeding) {
+        if (pregnantBreastfeeding == null) {
+            return;
+        }
+        try {
+            JSONObject step = form.getJSONObject(JsonFormConstants.STEP1);
+            JSONArray formFields = step.getJSONArray(JsonFormConstants.FIELDS);
+            for (int i = 0; i < formFields.length(); i++) {
+                JSONObject field = formFields.getJSONObject(i);
+                if (!"pregnant_breastfeeding".equals(field.optString("key"))) {
+                    continue;
+                }
+                JSONArray options = field.optJSONArray("options");
+                if (options == null) {
+                    break;
+                }
+                String target = pregnantBreastfeeding.trim().toLowerCase();
+                for (int j = 0; j < options.length(); j++) {
+                    JSONObject option = options.getJSONObject(j);
+                    String key = option.optString("key").trim().toLowerCase();
+                    option.put("value", key.equals(target));
+                }
+                break;
+            }
+        } catch (JSONException e) {
+            Timber.e(e);
+        }
     }
 
     public void startFormActivity(JSONObject jsonObject) {

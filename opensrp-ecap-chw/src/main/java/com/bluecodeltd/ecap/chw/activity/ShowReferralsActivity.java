@@ -91,7 +91,7 @@ public class ShowReferralsActivity extends AppCompatActivity {
 //
 //
         if (hh_id != null) {
-            hh_id.setText("VCA ID : " + (intent_vcaid != null ? intent_vcaid : "-"));
+            hh_id.setText("CA ID: " + (intent_vcaid != null ? intent_vcaid : "-"));
         }
         if (vcaname != null) {
             vcaname.setText(intent_cname != null ? intent_cname : "");
