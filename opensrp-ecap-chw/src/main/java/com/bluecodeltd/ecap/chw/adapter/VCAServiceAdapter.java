@@ -129,7 +129,7 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
 
         holder.signatureView.setVisibility(View.GONE);
         holder.signatureView.setTag(service.getBase_entity_id());
-        Threading.io(() -> {
+        Threading.ioBestEffort(() -> {
             try {
                 VcaScreeningModel vcaScreeningModel = VCAScreeningDao.getVcaScreening(service.getUnique_id());
                 Household household = (vcaScreeningModel != null) ? HouseholdDao.getHousehold(vcaScreeningModel.getHousehold_id()) : null;
@@ -150,79 +150,83 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
             }
         });
 
-        CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(service.getUnique_id());
+        final String rowTag = service.getBase_entity_id() != null ? service.getBase_entity_id()
+                : (service.getUnique_id() != null ? service.getUnique_id() : String.valueOf(position));
+        holder.itemView.setTag(R.id.tag_row_id, rowTag);
 
-        holder.edit.setOnClickListener(v -> {
-            if (caseStatusModel != null && caseStatusModel.getCase_status() != null && (caseStatusModel.getCase_status().equals("0") || caseStatusModel.getCase_status().equals("2"))) {
-                Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.dialog_layout);
-                dialog.show();
+        holder.edit.setOnClickListener(v ->
+                android.widget.Toast.makeText(context, "Loading case status…", android.widget.Toast.LENGTH_SHORT).show());
+        holder.linearLayout.setOnClickListener(v ->
+                android.widget.Toast.makeText(context, "Loading case status…", android.widget.Toast.LENGTH_SHORT).show());
 
-                TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                String firstName = caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "";
-                String lastName = caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "";
-                dialogMessage.setText(firstName + " " + lastName + " was either de-registered or inactive in the program");
+        final String uniqueId = service.getUnique_id();
+        Threading.ioBestEffort(() -> {
+            CaseStatusModel caseStatusModel = null;
+            try { caseStatusModel = IndexPersonDao.getCaseStatus(uniqueId); } catch (Exception ignored) {}
+            final CaseStatusModel finalCaseStatusModel = caseStatusModel;
+            Threading.main(() -> {
+                Object tag = holder.itemView.getTag(R.id.tag_row_id);
+                if (!(tag instanceof String) || !rowTag.equals(tag)) return;
 
-                Button dialogButton = dialog.findViewById(R.id.dialog_button);
-                dialogButton.setOnClickListener(va -> dialog.dismiss());
-//                }
-            } else {
-                FormUtils formUtils = null;
-                try {
-                    formUtils = new FormUtils(context);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                View.OnClickListener openFormListener = v -> {
+                    String status = finalCaseStatusModel != null ? finalCaseStatusModel.getCase_status() : null;
+                    boolean inactive = status != null && ("0".equals(status) || "2".equals(status));
+                    if (inactive) {
+                        Dialog dialog = new Dialog(context);
+                        dialog.setContentView(R.layout.dialog_layout);
+                        dialog.show();
 
-                try {
-                    openFormUsingFormUtils(context, "service_report_vca_edit", service);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
+                        TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                        String firstName = finalCaseStatusModel.getFirst_name() != null ? finalCaseStatusModel.getFirst_name() : "";
+                        String lastName = finalCaseStatusModel.getLast_name() != null ? finalCaseStatusModel.getLast_name() : "";
+                        dialogMessage.setText(firstName + " " + lastName + " was either de-registered or inactive in the program");
 
+                        Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                        dialogButton.setOnClickListener(va -> dialog.dismiss());
+                    }
 
+                    if (v != null && v.getId() == R.id.itemm) {
+                        try {
+                            FormUtils formUtils = new FormUtils(context);
+                            openFormUsingFormUtils(context, "service_report_vca_edit", service);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
 
+                holder.linearLayout.setOnClickListener(openFormListener);
+                holder.edit.setOnClickListener(v -> {
+                    String status = finalCaseStatusModel != null ? finalCaseStatusModel.getCase_status() : null;
+                    if (status != null && ("0".equals(status) || "2".equals(status))) {
+                        Dialog dialog = new Dialog(context);
+                        dialog.setContentView(R.layout.dialog_layout);
+                        dialog.show();
 
+                        TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                        String firstName = finalCaseStatusModel.getFirst_name() != null ? finalCaseStatusModel.getFirst_name() : "";
+                        String lastName = finalCaseStatusModel.getLast_name() != null ? finalCaseStatusModel.getLast_name() : "";
+                        dialogMessage.setText(firstName + " " + lastName + " was either de-registered or inactive in the program");
 
-
+                        Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                        dialogButton.setOnClickListener(va -> dialog.dismiss());
+                    } else {
+                        try {
+                            FormUtils formUtils = new FormUtils(context);
+                            openFormUsingFormUtils(context, "service_report_vca_edit", service);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            });
         });
 
-        holder.linearLayout.setOnClickListener(v -> {
-            if (caseStatusModel != null && caseStatusModel.getCase_status() != null && (caseStatusModel.getCase_status().equals("0") || caseStatusModel.getCase_status().equals("2"))) {
-//                String caseStatus = caseStatusModel.getCase_status();
-//                if ("0".equals(caseStatus) || "2".equals(caseStatus)) {
-                    Dialog dialog = new Dialog(context);
-                    dialog.setContentView(R.layout.dialog_layout);
-                    dialog.show();
-
-                    TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                    String firstName = caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "";
-                    String lastName = caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "";
-                    dialogMessage.setText(firstName + " " + lastName + " was either de-registered or inactive in the program");
-
-                    Button dialogButton = dialog.findViewById(R.id.dialog_button);
-                    dialogButton.setOnClickListener(va -> dialog.dismiss());
-//                }
-            } else {
-            }
-
-            if (v != null && v.getId() == R.id.itemm) {
-                FormUtils formUtils = null;
-                try {
-                    formUtils = new FormUtils(context);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                try {
-                    openFormUsingFormUtils(context, "service_report_vca_edit", service);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-        });
+        // linearLayout click is set from async case-status load above
 
         holder.delete.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);

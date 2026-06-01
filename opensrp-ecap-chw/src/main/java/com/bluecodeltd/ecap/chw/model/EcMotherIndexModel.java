@@ -1,0 +1,175 @@
+package com.bluecodeltd.ecap.chw.model;
+
+public class EcMotherIndexModel extends PtctMotherModel {
+
+    private String deleted;
+    private String user_select_hiv;
+    private String homeaddress;
+    private String province;
+    private String landmark;
+    private String mother_screening_date;
+    private String screening_location_home;
+    private String caregiver_sex;
+    private String caregiver_hiv_status;
+    private String active_on_treatment;
+    private String caregiver_art_number;
+    private String caregiver_phone;
+    private String comment;
+    private String mother_pregnant;
+    private String mother_breastfeeding;
+    private String mother_age_range;
+    private String mother_children_age_band;
+
+    public String getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(String deleted) {
+        this.deleted = deleted;
+    }
+
+    public String getUser_select_hiv() {
+        return user_select_hiv;
+    }
+
+    public void setUser_select_hiv(String user_select_hiv) {
+        this.user_select_hiv = user_select_hiv;
+    }
+
+    public String getHomeaddress() {
+        return homeaddress;
+    }
+
+    public void setHomeaddress(String homeaddress) {
+        this.homeaddress = homeaddress;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getLandmark() {
+        return landmark;
+    }
+
+    public void setLandmark(String landmark) {
+        this.landmark = landmark;
+    }
+
+    public String getMother_screening_date() {
+        return mother_screening_date;
+    }
+
+    public void setMother_screening_date(String mother_screening_date) {
+        this.mother_screening_date = mother_screening_date;
+    }
+
+    public String getScreening_location_home() {
+        return screening_location_home;
+    }
+
+    public void setScreening_location_home(String screening_location_home) {
+        this.screening_location_home = screening_location_home;
+    }
+
+    public String getCaregiver_sex() {
+        return caregiver_sex;
+    }
+
+    public void setCaregiver_sex(String caregiver_sex) {
+        this.caregiver_sex = caregiver_sex;
+    }
+
+    public String getCaregiver_hiv_status() {
+        return caregiver_hiv_status;
+    }
+
+    public void setCaregiver_hiv_status(String caregiver_hiv_status) {
+        this.caregiver_hiv_status = caregiver_hiv_status;
+    }
+
+    public String getActive_on_treatment() {
+        return active_on_treatment;
+    }
+
+    public void setActive_on_treatment(String active_on_treatment) {
+        this.active_on_treatment = active_on_treatment;
+    }
+
+    public String getCaregiver_art_number() {
+        return caregiver_art_number;
+    }
+
+    public void setCaregiver_art_number(String caregiver_art_number) {
+        this.caregiver_art_number = caregiver_art_number;
+    }
+
+    public String getCaregiver_phone() {
+        return caregiver_phone;
+    }
+
+    public void setCaregiver_phone(String caregiver_phone) {
+        this.caregiver_phone = caregiver_phone;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getMother_pregnant() {
+        return mother_pregnant;
+    }
+
+    public void setMother_pregnant(String mother_pregnant) {
+        this.mother_pregnant = mother_pregnant;
+    }
+
+    public String getMother_breastfeeding() {
+        return mother_breastfeeding;
+    }
+
+    public void setMother_breastfeeding(String mother_breastfeeding) {
+        this.mother_breastfeeding = mother_breastfeeding;
+    }
+
+    public String getMother_age_range() {
+        return mother_age_range;
+    }
+
+    public void setMother_age_range(String mother_age_range) {
+        this.mother_age_range = mother_age_range;
+    }
+
+    public String getMother_children_age_band() {
+        return mother_children_age_band;
+    }
+
+    public void setMother_children_age_band(String mother_children_age_band) {
+        this.mother_children_age_band = mother_children_age_band;
+    }
+
+    private final java.util.Map<String, String> additionalFields = new java.util.HashMap<>();
+
+    public java.util.Map<String, String> getAdditionalFields() {
+        return additionalFields;
+    }
+
+    public String getAdditionalField(String key) {
+        if (key == null) return null;
+        return additionalFields.get(key);
+    }
+
+    public void setAdditionalField(String key, String value) {
+        if (key == null) return;
+        additionalFields.put(key, value);
+    }
+}
+

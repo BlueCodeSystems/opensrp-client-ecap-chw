@@ -60,9 +60,9 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "toaster_notes",
         "type": "toaster_notes",
-        "text": "“The goal of the USAID ECAP II OVC Comprehensive Program is to mitigate the impact of HIV and improve the health and well-being of VCA through delivery of high-impact, evidence-informed, and age-appropriate interventions customized for each vulnerable child and adolescent sub-population. \n For the children and adolescents living with HIV, the program aims to support households and children living with HIV to ensure that they access appropriate care services to improve treatment outcome and sustain viral load suppression. \n\n If you consent to participate in the program, it entails that you will officially be:\n\n• Enrolled in the USAID ECAP II Program\n•  Assigned a Case Worker who will visit your household frequently to support you and your family to achieve your health and socioeconomic goals\n•  Exited from the program when deemed to have achieved graduation status. \n\nIf you have questions about this program or have any questions on what your rights are as a participant in this program, you can contact the PCZ Executive Director/Chief of Party: \n\nPCZ Executive Director/Chief of Party\nProject Concern Zambia\nP.O Box 32320 Lusaka-Zambia\nPhone #: +2609777771385/95\n ",
+        "text": "The goal of the USAID ECAP II OVC Comprehensive Program is to mitigate the impact of HIV and improve the health and well-being of vulnerable CAs through the delivery of high-impact, evidence-informed, and age-appropriate interventions customized for each vulnerable child and adolescent sub-population.\n\nFor children and adolescents living with HIV, the program aims to support households and children living with HIV to ensure that they access appropriate care services to improve treatment outcomes and sustain viral load suppression.\n\nIf you consent to participate in the program, it entails that you will officially be:\n\n- Enrolled in the USAID ECAP II Program\n- Assigned a Case Worker who will visit your household regularly to support you and your family in achieving your health and socioeconomic goals\n- Exited from the program once you are deemed to have achieved graduation status\n\nIf you have questions about this program or about your rights as a participant, you may contact the PCZ Executive Director/Chief of Party:\n\nPCZ Executive Director/Chief of Party\nProject Concern Zambia\nP.O. Box 32320\nLusaka, Zambia\nPhone: +260 977 777 1385 / +260 95 777 71385",
         "toaster_type": "info",
-        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_text": "This is an information note.",
         "toaster_info_title": "Information Toaster Info Title"
       },
       {
@@ -71,11 +71,12 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "purpose",
         "type": "toaster_notes",
-        "text": "This informed consent form is targeted at vulnerable Children and Adolescents (VCA) and their primary caregivers who are identified as eligible clients for enrollment in the USAID ECAP II OVC Comprehensive Program. \n\n The purpose of the consent form is to explain the USAID ECAP II program to the potential client before the client agrees to it. This will enable the client to ask questions and accept or deny participation in the program. \n\n\nThe process of the informed consent includes : \n\n• The client’s ability to decide. \n• Explanation of information needed to make the decision. \n• The client’s understanding of services provided under the USAID ECAP II Program \n• The client’s voluntary decision to be enrolled in the USAID ECAP II OVC Comprehensive Program \n\n This shared decision-making process between the client and service providers attached to the USAID ECAP II Program will empower the client to make educated and informed decisions about their care.",
+        "text": "This informed consent form is intended for vulnerable CAs and their primary caregivers who are identified as eligible clients for enrollment in the USAID ECAP II OVC Comprehensive Program.\n\nThe purpose of this consent form is to explain the USAID ECAP II Program to potential clients before they agree to participate. This enables the client to ask questions and to either accept or decline participation in the program.\n\nThe informed consent process includes:\n\n- The client's ability to make a decision\n- An explanation of the information needed to make that decision\n- The client's understanding of the services provided under the USAID ECAP II Program\n- The client's voluntary decision to enroll in the USAID ECAP II OVC Comprehensive Program\n\nThis shared decision-making process between the client and the service providers attached to the USAID ECAP II Program empowers the client to make educated and informed decisions about their care.",
         "toaster_type": "info",
-        "toaster_info_text": "This is an information note, This is an information note, This is an information note, This is an information note,This is an information note, This is an information note",
+        "toaster_info_text": "This is an information note.",
         "toaster_info_title": "Information Toaster Info Title"
       },
+
       {
         "key": "consent_check_box",
         "openmrs_entity_parent": "",
@@ -109,7 +110,7 @@
         "text": "HOUSEHOLD SCREENING",
         "text_color": "#000000",
         "label_text_style": "bold",
-        "toaster_info_text": "The Household Screening Form will be used to assess the index VCA Sub Population and his/her household to identify other household members who should be enrolled into the OVC Comprehensive program.\n\n The data collected on this tool are used to ensure that the criteria set for enrolling other household members is followed and that it is consistent to ensure other household members are enrolled based on set program criteria. The data will form the basis for enrolling other household members into the program and providing family-centered services.",
+        "toaster_info_text": "The Household Screening Form will be used to assess the index CA Sub Population and his/her household to identify other household members who should be enrolled into the OVC Comprehensive program.\n\n The data collected on this tool are used to ensure that the criteria set for enrolling other household members is followed and that it is consistent to ensure other household members are enrolled based on set program criteria. The data will form the basis for enrolling other household members into the program and providing family-centered services.",
         "toaster_info_title": "Introduction",
         "toaster_type": "info"
       },
@@ -127,14 +128,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd1",
         "type": "label",
-        "text": "Index VCA Sub Population Screening"
-      },
-      {
-        "key": "status",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "status",
-        "type": "hidden"
+        "text": "Index CA Sub Population Screening"
       },
       {
         "key": "household_id",
@@ -156,7 +150,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unique_id",
         "type": "edit_text",
-        "hint": "VCA ID",
+        "hint": "CA ID",
         "edit_type": "name",
         "read_only": "true",
         "v_required": {
@@ -165,20 +159,65 @@
         }
       },
       {
+        "key": "date_edited_check",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_edited_check",
+        "type": "hidden",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_calculation.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "phone",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "phone",
+        "type": "edit_text",
+        "hint": "Caseworker Phone",
+        "edit_type": "number",
+        "read_only": true,
+        "v_regex": {
+          "value": "((07||09||05)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,055,056,057,095, 096, or 097 and must be a total of 10 digits in length"
+        }
+      },
+      {
+        "key": "date_edited",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_edited",
+        "type": "edit_text",
+        "hint": "Info Last Edited",
+        "read_only": "true",
+        "look_up": "true",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_calculation.yml"
+            }
+          }
+        }},
+      {
         "key": "first_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
         "openmrs_entity_id": "first_name",
         "type": "edit_text",
-        "hint": "VCA First Name",
+        "hint": "Index CA First Name",
         "edit_type": "name",
+        "read_only": "true",
         "v_regex": {
           "value": "[A-Za-z]*",
-          "err": "First name of VCA only accepts letters"
+          "err": "First name of CA only accepts letters"
         },
         "v_required": {
           "value": true,
-          "err": "VCA First Name is Required"
+          "err": "CA First Name is Required"
         }
       },
       {
@@ -187,16 +226,17 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "last_name",
         "type": "edit_text",
-        "hint": "VCA Last Name",
+        "hint": "Index CA Last Name",
         "edit_type": "name",
+        "read_only": "true",
         "value": "",
         "v_regex": {
           "value": "[A-Za-z]*",
-          "err": "Last name of VCA only accepts letters"
+          "err": "Last name of CA only accepts letters"
         },
         "v_required": {
           "value": true,
-          "err": "VCA Last Name is Required"
+          "err": "CA Last Name is Required"
         }
       },
       {
@@ -205,8 +245,9 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "adolescent_birthdate",
         "type": "date_picker",
-        "hint": "VCA Date of birth",
+        "hint": "Index CA Date of birth",
         "look_up": "true",
+        "read_only": "true",
         "expanded": false,
         "duration": {
           "label": "Age"
@@ -215,7 +256,7 @@
         "max_date": "today",
         "v_required": {
           "value": true,
-          "err": "VCA Date of Birth is Required"
+          "err": "CA Date of Birth is Required"
         }
       },
       {
@@ -224,7 +265,8 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "gender",
         "type": "native_radio",
-        "label": "VCA Gender",
+        "label": "CA Gender",
+        "read_only": "true",
         "options": [
           {
             "key": "male",
@@ -237,16 +279,15 @@
         ],
         "v_required": {
           "value": true,
-          "err": "VCA Gender is Required"
+          "err": "CA Gender is Required"
         }
       },
       {
         "key": "sub_population",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "sub_population",
         "type": "check_box",
-        "read_only": true,
         "label": "Sub Population :",
         "options": [
           {
@@ -265,29 +306,28 @@
             "value": "false"
           },
           {
-            "key": "subpop4",
-            "text": "Adolescent Girls and Young Women (AGYW)",
-            "value": "false"
-          },
-          {
             "key": "subpop5",
             "text": "Survivors of Sexual Violence",
             "value": "false"
           },
           {
-            "key": "subpop",
-            "text": "Children of Female Sex Workers (FSWs)",
-            "value": "false"
-          },
-          {
-            "key": "Siblings of the Index/Other family members",
+            "key": "Siblings of the Index and other family members",
             "text": "Siblings of the Index/Other family members"
 
           },
           {
-            "key": "PBFW",
-            "text": "PBFW"
+            "key": "Negative PBFW",
+            "text": "Negative PBFW"
 
+          },
+          {
+            "key": "Children of PBFW",
+            "text": "Children of PBFW"
+
+          },
+          {
+            "key": "HIV Positive PBFW",
+            "text": "HIV Positive PBFW"
           }
         ],
         "v_required": {
@@ -299,10 +339,9 @@
         "key": "facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "health_facility",
+        "openmrs_entity_id": "facility",
         "type": "edit_text",
         "hint": "Health Facility",
-        "value": "Choma General Hospital",
         "read_only": "true",
         "edit_type": "name",
         "look_up": "true",
@@ -314,11 +353,10 @@
       {
         "key": "province",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "stateProvince",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "province",
         "type": "edit_text",
         "hint": "Province",
-        "value": "Southern",
         "read_only": "true",
         "edit_type": "name",
         "look_up": "true",
@@ -334,7 +372,6 @@
         "openmrs_entity_id": "countyDistrict",
         "type": "edit_text",
         "hint": "District",
-        "value": "Choma",
         "read_only": "true",
         "edit_type": "name",
         "look_up": "true",
@@ -346,33 +383,26 @@
       {
         "key": "ward",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_address",
-        "openmrs_entity_id": "subTown",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "ward",
         "type": "edit_text",
         "hint": "Ward",
-        "value": "Choma Central",
+        "read_only": "false",
+        "edit_type": "name"
+      },
+      {
+        "key": "partner",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "partner",
+        "type": "edit_text",
+        "hint": "Implementing Partner",
         "read_only": "true",
         "edit_type": "name",
         "look_up": "true",
         "v_required": {
           "value": true,
-          "err": "Ward is Required"
-        }
-      },
-      {
-        "key": "partners",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "partners",
-        "type": "edit_text",
-        "hint": "Partners",
-        "value": "ZCCB",
-        "read_only": "false",
-        "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": true,
-          "err": "Partners is Required"
+          "err": "Partner is Required"
         }
       },
       {
@@ -389,7 +419,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "hd1",
         "type": "label",
-        "text": " Household Information",
+        "text": "Household Information",
         "label_text_style": "bold"
       },
       {
@@ -408,27 +438,32 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "homeaddress",
         "type": "edit_text",
-        "hint": "Home Address",
-        "v_required": {
-          "value": true,
-          "err": "Village is Required"
-        }
+        "hint": "Home Address"
+      },
+      {
+        "key": "landmark",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "landmark",
+        "type": "edit_text",
+        "hint": "Nearest Landmark"
       },
       {
         "key": "household_location",
-        "openmrs_entity_parent": "",
+        "openmrs_entity_parent": "usual_residence",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "household_location",
         "openmrs_data_type": "text",
         "type": "gps"
       },
+
       {
         "key": "screening_date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "screening_date",
         "type": "date_picker",
-        "hint": "Date of screening",
+        "hint": "Date of household screening",
         "look_up": "true",
         "expanded": false,
         "min_date": "01-01-1900",
@@ -439,17 +474,13 @@
         }
       },
       {
-        "key": "screening_location",
+        "key": "screening_location_home",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "screening_location",
+        "openmrs_entity_id": "screening_location_home",
         "type": "edit_text",
-        "hint": "Screening Location",
+        "hint": "Household Screening Location",
         "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Screening location  only take letters"
-        },
         "v_required": {
           "value": true,
           "err": "Screening Location is Required"
@@ -539,11 +570,11 @@
         "edit_type": "number",
         "v_numeric": {
           "value": false,
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+          "err": "Number must begin with 077,076,055,056,057,095, 096, or 097 and must be a total of 10 digits in length"
         },
         "v_regex": {
-          "value": "((07||09)[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+          "value": "((07||09||05)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,055,056,057,095, 096, or 097 and must be a total of 10 digits in length"
         }
       },
       {
@@ -560,7 +591,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "violence_six_months",
         "type": "native_radio",
-        "label": "Have you experienced violence in the home in the last six months?",
+        "label": "Have you experienced violence in the home in the last six months",
         "options": [
           {
             "key": "yes",
@@ -582,7 +613,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "children_violence_six_months",
         "type": "native_radio",
-        "label": "Have the children experienced violence in the home in the last six months? ",
+        "label": "Have the children experienced violence in the home in the last six months",
         "options": [
           {
             "key": "yes",
@@ -605,29 +636,27 @@
         "openmrs_entity_id": "caregiver_hiv_status",
         "type": "native_radio",
         "label": "Caregiver's HIV Status",
-        "read_only":"false",
-
         "options": [
           {
-            "key": "HIV+",
-            "text": "HIV+"
+            "key": "positive",
+            "text": "Positive"
           },
           {
-            "key": "HIV-",
-            "text": "HIV-"
+            "key": "negative",
+            "text": "Negative"
           },
           {
-            "key": "Unknown",
+            "key": "unknown",
             "text": "Unknown"
           },
           {
-            "key": "not_required",
+            "key": "status_not_required",
             "text": "Status not required based on risk assessment"
           }
         ],
         "v_required": {
           "value": true,
-          "err": "This is a required field."
+          "err": "This field is Required"
         }
       },
       {
@@ -636,7 +665,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "active_on_treatment",
         "type": "native_radio",
-        "label": "Is the primary Caregiver on ART?",
+        "label": "Is the primary Caregiver on ART",
         "options": [
           {
             "key": "yes",
@@ -647,6 +676,10 @@
             "text": "No"
           }
         ],
+        "v_required": {
+          "value": true,
+          "err": "Is the primary Caregiver on ART"
+        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -680,10 +713,9 @@
         "hint": "Caregiver`s ART Number",
         "edit_type": "name",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
+          "step2:active_on_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
           }
         },
         "v_required": {
@@ -710,19 +742,22 @@
         }
       },
       {
-        "key": "viral_load_results",
+        "key": "date_started_art",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "viral_load_results",
-        "type": "edit_text",
-        "hint": "Result of most recent viral load test.",
-        "v_numeric": {
-          "value": "true",
-          "err": "Viral load can only contain numbers"
+        "openmrs_entity_id": "date_started_art",
+        "type": "date_picker",
+        "hint": "Date started ART",
+        "label_info_text": "Give an estimate if the exact date is not known",
+        "expanded": false,
+        "duration": {
+          "label": ""
         },
+        "min_date": "today-100y",
+        "max_date": "today",
         "v_required": {
-          "value": false,
-          "err": "This is a Required field."
+          "value": true,
+          "err": "Required"
         },
         "relevance": {
           "step2:active_on_treatment": {
@@ -732,40 +767,6 @@
         }
       },
       {
-
-        "key": "vl_suppressed",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "vl_suppressed",
-        "type": "native_radio",
-        "label": "Are you virally suppressed as of your most recent viral load test?",
-        "options": [
-          {
-            "key": "Less than 1000 copies/ml",
-            "text": "Yes"
-          },
-          {
-            "key": "Above 1000 copies/ml",
-            "text": "No"
-          }
-        ],
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_calculation.yml"
-            }
-          }
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-
         "key": "date_of_last_viral_load",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -788,12 +789,140 @@
         }
       },
       {
+        "key": "viral_load_results",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "viral_load_results",
+        "type": "edit_text",
+        "hint": "Result of most recent viral load test.",
+        "edit_type": "number",
+        "v_numeric": {
+          "value": "true",
+          "err": "Viral load can only contain numbers"
+        },
+        "v_required": {
+          "value": false,
+          "err": "This is a Required field."
+        },
+        "relevance": {
+          "step2:active_on_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "date_next_vl",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_next_vl",
+        "type": "date_picker",
+        "hint": "Date of next VL test",
+        "expanded": false,
+        "duration": {
+          "label": ""
+        },
+        "v_required": {
+          "value": false,
+          "err": "This field is Required"
+        },
+        "relevance": {
+          "step2:active_on_treatment": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
+      {
+
+        "key": "vl_suppressed",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vl_suppressed",
+        "type": "native_radio",
+        "label": "Are you virally suppressed as of your most recent viral load test",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hh_screening_calculation.yml"
+            }
+          }
+        },
+        "relevance": {
+          "step2:caregiver_hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"positive\")"
+          }
+        }
+      },
+      {
+        "key": "caregiver_mmd",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_mmd",
+        "type": "native_radio",
+        "label": "Is the caregiver on MMD",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "relevance": {
+          "step2:caregiver_hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"positive\")"
+          }
+        },
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "level_mmd",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "level_mmd",
+        "type": "spinner",
+        "hint": "Level of MMD for caregiver",
+        "values": [
+          "Less than 3 months",
+          "Between 3-5 months",
+          "6 months or more"
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Select level of MMD for caregiver"
+        },
+        "relevance": {
+          "step2:caregiver_mmd": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
+      {
         "key": "biological_children",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "biological_children",
         "type": "native_radio",
-        "label": "Do you have biological children 0-2 years?",
+        "label": "Do you have biological children 0-2 years",
         "options": [
           {
             "key": "yes",
@@ -822,7 +951,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "enrolled_pmtct",
         "type": "native_radio",
-        "label": "Are you and your biological children enrolled in the PMTCT program?",
+        "label": "Are you and your biological children enrolled in the PMTCT program",
         "options": [
           {
             "key": "yes",
@@ -867,7 +996,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "at_risk_reasons",
         "type": "native_radio",
-        "label": "Are there any reasons you may be at risk for HIV?)",
+        "label": "Are there any reasons you may be at risk for HIV)",
         "options": [
           {
             "key": "yes",
@@ -885,7 +1014,7 @@
         "relevance": {
           "step2:caregiver_hiv_status": {
             "type": "string",
-            "ex": "equalTo(., \"HIV-\")"
+            "ex": "equalTo(., \"negative\")"
           }
         }
       },
@@ -898,7 +1027,7 @@
         "hint": "State reason for HIV Risk",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid  test name"
+          "err": "Please enter a valid test name"
         },
         "v_required": {
           "value": true,
@@ -991,6 +1120,13 @@
           "value": true,
           "err": "This is a Required field."
         }
+      },
+      {
+        "key": "signature",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "signature",
+        "type": "hidden"
       },
       {
         "key": "date_approved",
@@ -1095,9 +1231,9 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "index_check_box",
         "type": "toaster_notes",
-        "text": "This VCA has been Identified as an Index",
+        "text": "This CA has been Identified as an Index",
         "toaster_type": "info",
-        "toaster_info_text": "This VCA has been Identified as an Index",
+        "toaster_info_text": "This CA has been Identified as an Index",
         "toaster_info_title": "Index Tracing",
         "relevance": {
           "rules-engine": {
@@ -1130,7 +1266,7 @@
         "openmrs_entity_id": "subpop1",
         "value": "true",
         "type": "toaster_notes",
-        "text": "Based on your selection,this Index VCA has been enrolled into the Sub Population : Children/Adolescents Living with HIV (C/ALHIV)",
+        "text": "Based on your selection,this Index CA has been enrolled into the Sub Population : Children/Adolescents Living with HIV (C/ALHIV)",
         "toaster_type": "info",
         "toaster_info_text": "Children/Adolescents Living with HIV (C/ALHIV)",
         "toaster_info_title": "Sub Population",
@@ -1142,25 +1278,7 @@
           }
         }
       },
-      {
-        "key": "subpop6_toast",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop",
-        "value": "true",
-        "type": "toaster_notes",
-        "text": "Based on your selection, this Index VCA has been enrolled as those whose Primary Caregivers are HIV Female Sex Workers (FSWs)",
-        "toaster_type": "info",
-        "toaster_info_text": "Children/Adolescents whose Primary Caregivers are HIV Female Sex Workers (FSWs)",
-        "toaster_info_title": "Sub Population",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
-          }
-        }
-      },
+
       {
         "key": "subpop2_toast",
         "openmrs_entity_parent": "",
@@ -1169,7 +1287,7 @@
         "value": "true",
         "type": "toaster_notes",
         "toaster_type": "info",
-        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : HIV Exposed Infant (HEI)",
+        "text": "Based on your selection, this Index CA has been enrolled into the Sub Population : HIV Exposed Infant (HEI)",
         "toaster_info_text": "HIV Exposed Infant (HEI)",
         "toaster_info_title": "Sub Population",
         "relevance": {
@@ -1187,7 +1305,7 @@
         "openmrs_entity_id": "subpop3",
         "value": "true",
         "type": "toaster_notes",
-        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children of Women Living with HIV (WLHIV)",
+        "text": "Based on your selection, this Index CA has been enrolled into the Sub Population : Children of Women Living with HIV (WLHIV)",
         "toaster_type": "info",
         "toaster_info_text": "Children of Women Living with HIV (C/WLHIV)",
         "toaster_info_title": "Sub Population",
@@ -1199,25 +1317,7 @@
           }
         }
       },
-      {
-        "key": "subpop4_toast",
-        "value": "true",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop4",
-        "type": "toaster_notes",
-        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : At Risk Adolescent Girls and Young Women (AGYW)",
-        "toaster_type": "info",
-        "toaster_info_text": "At Risk Adolescent Girls and Young Women (AGYW)",
-        "toaster_info_title": "Sub Population",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hh_screening_relevance.yml"
-            }
-          }
-        }
-      },
+
       {
         "key": "subpop5_toast",
         "value": "true",
@@ -1225,7 +1325,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "subpop5",
         "type": "toaster_notes",
-        "text": "Based on your selection, this Index VCA has been enrolled into the Sub Population : Children/Adolescents who are Survivors of Sexual Violence",
+        "text": "Based on your selection, this Index CA has been enrolled into the Sub Population : Children/Adolescents who are Survivors of Sexual Violence",
         "toaster_type": "info",
         "toaster_info_text": "Children/Adolescents who are Survivors of Sexual Violence",
         "toaster_info_title": "Sub Population",
@@ -1240,7 +1340,7 @@
     ]
   },
   "step4":{
-    "title":"Household Enrollment",
+    "title": "Household Enrollment",
     "fields":[
       {
         "key": "hd1",
@@ -1315,7 +1415,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid  entry type"
+          "err": "Please enter a valid entry type"
         },
         "relevance": {
           "step4:entry_type": {
@@ -1334,9 +1434,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_education",
         "type": "native_radio",
-        "label": "Caregiver’s education level",
-        "label_text_style": "bold",
-        "text_color": "#000000",
+        "label": "Caregiver's education level",
         "exclusive": [
           "Yes"
         ],
@@ -1527,12 +1625,12 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "emergency_name",
         "type": "edit_text",
-        "hint": "Emergency Contact Name ",
+        "hint": "Emergency Contact Name",
         "edit_type": "name",
         "look_up": "true",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of VCA only take letters"
+          "err": "Name of CA only take letters"
         },
         "v_required": {
           "value": true,
@@ -1546,7 +1644,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "e_relationship",
         "type": "spinner",
-        "hint": "Relationship to caregiver ",
+        "hint": "Relationship to caregiver",
         "values": [
           "Parent",
           "Child",
@@ -1597,15 +1695,15 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "contact_number",
         "type": "edit_text",
-        "hint": "Contact Phone Number ",
+        "hint": "Contact Phone Number",
         "edit_type": "number",
         "v_numeric": {
           "value": false,
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+          "err": "Number must begin with 077,076,055,056,057,095, 096, or 097 and must be a total of 10 digits in length"
         },
         "v_regex": {
-          "value": "((07||09)[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+          "value": "((07||09||05)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,055,056,057,095, 096, or 097 and must be a total of 10 digits in length"
         }
       }
     ]

@@ -1,4 +1,4 @@
-{
+﻿{
   "count": "1",
   "encounter_type": "Mother Pmtct ANC",
   "entity_id": "",
@@ -68,10 +68,10 @@
         "text": "PMTCT Register ANC"
       },
       {
-        "key": "pmtct_id",
+        "key": "household_id",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "pmtct_id",
+        "openmrs_entity_id": "household_id",
         "type": "edit_text",
         "read_only": "true",
         "hint": "ECAPII Comprehensive Program ID",
@@ -114,7 +114,7 @@
         "type": "native_radio",
         "label_text_style": "bold",
         "text_color": "#000000",
-        "label": "HIV Tested ?",
+        "label": "HIV Tested ",
         "options": [
           {
             "key": "yes",
@@ -188,13 +188,13 @@
           }
         ],
         "v_required": {
-          "value": true,
+          "value": false,
           "err": "This field is required"
         },
         "relevance": {
           "step1:result_of_hiv_test": {
             "type": "string",
-            "ex": "equalTo(., \"NR\")"
+            "ex": "equalTo(., \"R\")"
           }
         }
       },
@@ -205,7 +205,13 @@
         "openmrs_entity_id": "vl_result_at_trimester_1",
         "type": "edit_text",
         "edit_type": "name",
-        "hint": "VL Result at 1st Trimester:"
+        "hint": "VL Result at 1st Trimester:",
+        "relevance": {
+          "step1:result_of_hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"R\")"
+          }
+        }
       },
       {
         "key": "vl_result_at_trimester_2",
@@ -214,7 +220,13 @@
         "openmrs_entity_id": "vl_result_at_trimester_2",
         "type": "edit_text",
         "edit_type": "name",
-        "hint": "VL Result at 2 nd  Trimester:"
+        "hint": "VL Result at 2 nd Trimester:",
+        "relevance": {
+          "step1:result_of_hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"R\")"
+          }
+        }
       },
       {
         "key": "vl_result_at_trimester_3",
@@ -223,7 +235,13 @@
         "openmrs_entity_id": "vl_result_at_trimester_3",
         "type": "edit_text",
         "edit_type": "name",
-        "hint": "VL Result at 3rd Trimester:"
+        "hint": "VL Result at 3rd Trimester:",
+        "relevance": {
+          "step1:result_of_hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"R\")"
+          }
+        }
       },
       {
         "key": "male_partner_tested",
@@ -231,7 +249,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "male_partner_tested",
         "type": "native_radio",
-        "label": "Male partner tested?",
+        "label": "Male partner tested",
         "options": [
           {
             "key": "yes",
@@ -269,6 +287,35 @@
           }
         }
       },
+      {
+        "key": "male_result_of_hiv_test",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "male_result_of_hiv_test",
+        "type": "native_radio",
+        "label": "Result of HIV Test (R/NR)",
+        "options": [
+          {
+            "key": "R",
+            "text": "R"
+          },
+          {
+            "key": "NR",
+            "text": "NR"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:male_partner_tested": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+
       {
         "key": "refer_toaster",
         "openmrs_entity_parent": "",
@@ -353,6 +400,12 @@
         "v_required": {
           "value": true,
           "err": "Please enter date"
+        },
+        "relevance": {
+          "step1:result_r_nr": {
+            "type": "string",
+            "ex": "equalTo(., \"R\")"
+          }
         }
       },
       {
@@ -371,7 +424,13 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "step1:result_r_nr": {
+            "type": "string",
+            "ex": "equalTo(., \"R\")"
+          }
+        }
       },
       {
         "key": "tb_screening",
@@ -379,7 +438,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "tb_screening",
         "type": "native_radio",
-        "label": "TB  Screening (Y/N)",
+        "label": "TB Screening (Y/N)",
         "options": [
           {
             "key": "yes",

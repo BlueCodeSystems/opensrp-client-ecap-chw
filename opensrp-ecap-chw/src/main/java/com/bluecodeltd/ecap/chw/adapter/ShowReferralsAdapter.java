@@ -34,6 +34,7 @@ import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -107,43 +108,52 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
 
             }
         });
-        CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(showReferrals.getUnique_id());
+        final String rowTag = showReferrals.getBase_entity_id() != null ? showReferrals.getBase_entity_id()
+                : (showReferrals.getUnique_id() != null ? showReferrals.getUnique_id() : String.valueOf(position));
+        holder.itemView.setTag(R.id.tag_row_id, rowTag);
 
-        if (caseStatusModel != null) {
-            holder.editme.setOnClickListener(v -> {
-                try {
-                    String caseStatus = caseStatusModel.getCase_status();
-                    if (caseStatus != null && (caseStatus.equals("0") || caseStatus.equals("2"))) {
-                        Dialog dialog = new Dialog(context);
-                        dialog.setContentView(R.layout.dialog_layout);
-                        dialog.show();
+        holder.editme.setOnClickListener(v ->
+                Toast.makeText(context, "Loading case status…", Toast.LENGTH_SHORT).show());
 
-                        TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                        String firstName = caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "Unknown";
-                        String lastName = caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "User";
+        final String uniqueId = showReferrals.getUnique_id();
+        Threading.ioBestEffort(() -> {
+            CaseStatusModel caseStatusModel = null;
+            try { caseStatusModel = IndexPersonDao.getCaseStatus(uniqueId); } catch (Exception ignored) {}
+            final CaseStatusModel finalCaseStatusModel = caseStatusModel;
+            Threading.main(() -> {
+                Object tag = holder.itemView.getTag(R.id.tag_row_id);
+                if (!(tag instanceof String) || !rowTag.equals(tag)) return;
 
-                        dialogMessage.setText(firstName + " " + lastName + " was either de-registered or inactive in the program");
+                holder.editme.setOnClickListener(v -> {
+                    try {
+                        String caseStatus = finalCaseStatusModel != null ? finalCaseStatusModel.getCase_status() : null;
+                        if (caseStatus != null && ("0".equals(caseStatus) || "2".equals(caseStatus))) {
+                            Dialog dialog = new Dialog(context);
+                            dialog.setContentView(R.layout.dialog_layout);
+                            dialog.show();
 
-                        Button dialogButton = dialog.findViewById(R.id.dialog_button);
-                        dialogButton.setOnClickListener(va -> dialog.dismiss());
-                    } else {
-                        if (v.getId() == R.id.edit_me) {
+                            TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                            String firstName = finalCaseStatusModel != null && finalCaseStatusModel.getFirst_name() != null ? finalCaseStatusModel.getFirst_name() : "Unknown";
+                            String lastName = finalCaseStatusModel != null && finalCaseStatusModel.getLast_name() != null ? finalCaseStatusModel.getLast_name() : "User";
+
+                            dialogMessage.setText(firstName + " " + lastName + " was either de-registered or inactive in the program");
+
+                            Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                            dialogButton.setOnClickListener(va -> dialog.dismiss());
+                        } else {
                             try {
                                 openFormUsingFormUtils(context, "referral_for_vca_edit", showReferrals);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(context, "An error occurred while handling the action.", Toast.LENGTH_SHORT).show();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(context, "An error occurred while handling the action.", Toast.LENGTH_SHORT).show();
-                }
+                });
             });
-        } else {
-
-            Toast.makeText(context, "Unable to retrieve case status. Please try again.", Toast.LENGTH_SHORT).show();
-        }
+        });
 
         holder.delete.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -193,20 +203,26 @@ public class ShowReferralsAdapter extends RecyclerView.Adapter<ShowReferralsAdap
             alert.show();
         });
 
-        Household household = HouseholdDao.getHouseholdVcaId(showReferrals.getUnique_id());
-
+        // Load household signature asynchronously to avoid DB work on main thread.
         String encodedSignature = showReferrals.getSignature();
-        String encodeSignatureHousehold = household.getSignature();
-
-
-        if(encodedSignature != null && encodedSignature != "") {
+        if (encodedSignature != null && !encodedSignature.isEmpty()) {
             setImageViewFromBase64(encodedSignature, holder.signatureView);
         } else {
-            if(encodeSignatureHousehold != null && encodeSignatureHousehold != "") {
-                setImageViewFromBase64(encodeSignatureHousehold, holder.signatureView);
-            } else {
-                holder.signatureView.setVisibility(View.GONE);
-            }
+            holder.signatureView.setVisibility(View.GONE);
+            Threading.ioBestEffort(() -> {
+                Household household = null;
+                try { household = HouseholdDao.getHouseholdVcaId(uniqueId); } catch (Exception ignored) {}
+                final Household finalHousehold = household;
+                Threading.main(() -> {
+                    Object tag = holder.itemView.getTag(R.id.tag_row_id);
+                    if (!(tag instanceof String) || !rowTag.equals(tag)) return;
+                    String hSig = finalHousehold != null ? finalHousehold.getSignature() : null;
+                    if (hSig != null && !hSig.isEmpty()) {
+                        holder.signatureView.setVisibility(View.VISIBLE);
+                        setImageViewFromBase64(hSig, holder.signatureView);
+                    }
+                });
+            });
         }
 
     }

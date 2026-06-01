@@ -31,6 +31,7 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CaregiverVisitationModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -89,28 +90,54 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
         holder.setIsRecyclable(false);
 
         holder.txtDate.setText(visit.getVisit_date());
-        Household household = HouseholdDao.getHousehold(visit.getHousehold_id());
 
+        final String rowTag = visit.getBase_entity_id() != null ? visit.getBase_entity_id()
+                : (visit.getHousehold_id() != null ? visit.getHousehold_id() + ":" + position : String.valueOf(position));
+        holder.itemView.setTag(R.id.tag_row_id, rowTag);
 
         String encodedSignature = visit.getSignature();
-        String encodeSignatureHousehold = household.getSignature();
-
-
-        if(encodedSignature != null && encodedSignature != "") {
+        if (encodedSignature != null && !encodedSignature.isEmpty()) {
             setImageViewFromBase64(encodedSignature, holder.signatureView);
         } else {
-            if(encodeSignatureHousehold != null && encodeSignatureHousehold != "") {
-                setImageViewFromBase64(encodeSignatureHousehold, holder.signatureView);
-            } else {
-                holder.signatureView.setVisibility(View.GONE);
-            }
+            holder.signatureView.setVisibility(View.GONE);
         }
 
-        if (household.getCaregiver_hiv_status().equals("positive")){
-            holder.exPandableView.setVisibility(View.GONE);
-            holder.expMore.setVisibility(View.GONE);
-            holder.expLess.setVisibility(View.GONE);
-        }
+        holder.intialHivStatus.setText("Loading…");
+        holder.initialHivStatusDate.setText("");
+
+        final String hid = visit.getHousehold_id();
+        Threading.ioBestEffort(() -> {
+            Household household = null;
+            try { household = HouseholdDao.getHousehold(hid); } catch (Exception ignored) {}
+            final Household finalHousehold = household;
+            Threading.main(() -> {
+                Object tag = holder.itemView.getTag(R.id.tag_row_id);
+                if (!(tag instanceof String) || !rowTag.equals(tag)) return;
+
+                if (finalHousehold != null) {
+                    String hSig = finalHousehold.getSignature();
+                    if ((encodedSignature == null || encodedSignature.isEmpty()) && hSig != null && !hSig.isEmpty()) {
+                        holder.signatureView.setVisibility(View.VISIBLE);
+                        setImageViewFromBase64(hSig, holder.signatureView);
+                    }
+
+                    String caregiverStatus = finalHousehold.getCaregiver_hiv_status();
+                    if ("positive".equalsIgnoreCase(caregiverStatus)) {
+                        holder.exPandableView.setVisibility(View.GONE);
+                        holder.expMore.setVisibility(View.GONE);
+                        holder.expLess.setVisibility(View.GONE);
+                        holder.intialHivStatus.setText("Positive");
+                    } else if ("unknown".equalsIgnoreCase(caregiverStatus)) {
+                        holder.intialHivStatus.setText("Unknown");
+                    } else {
+                        holder.intialHivStatus.setText("Negative");
+                    }
+                    holder.initialHivStatusDate.setText(finalHousehold.getScreening_date());
+                } else {
+                    holder.intialHivStatus.setText("N/A");
+                }
+            });
+        });
         holder.linearLayout.setOnClickListener(v -> {
 
             if (v.getId() == R.id.itemm) {
@@ -146,14 +173,7 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
         });
 
 
-        if(household.getCaregiver_hiv_status() != null && household.getCaregiver_hiv_status().equals("positive")){
-            holder.intialHivStatus.setText("Positive");
-        } else if(household.getCaregiver_hiv_status().equals("unknown")) {
-            holder.intialHivStatus.setText("Unknown");
-        } else {
-            holder.intialHivStatus.setText("Negative");
-        }
-        holder.initialHivStatusDate.setText(household.getScreening_date());
+        // initial HIV status/date are set asynchronously above
 
         if(visit.getCaregiver_hiv_status() != null && visit.getCaregiver_hiv_status().equals("positive")){
             holder.updateHivStatus.setText("Positive");
@@ -182,25 +202,25 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
         });
 
 
-        holder.editme.setOnClickListener(v -> {
-
-           if (household.getHousehold_case_status() != null && (household.getHousehold_case_status().equals("0") || household.getHousehold_case_status().equals("2"))) {
-                showDialogBox(visit.getHousehold_id(), "`s has been inactive or de-registered");
-            } else{
-                if (v.getId() == R.id.edit_me) {
-
+        holder.editme.setOnClickListener(v -> Threading.io(() -> {
+            Household household = null;
+            try { household = HouseholdDao.getHousehold(hid); } catch (Exception ignored) {}
+            final Household finalHousehold = household;
+            Threading.main(() -> {
+                Object tag = holder.itemView.getTag(R.id.tag_row_id);
+                if (!(tag instanceof String) || !rowTag.equals(tag)) return;
+                String status = finalHousehold != null ? finalHousehold.getHousehold_case_status() : null;
+                if (status != null && ("0".equals(status) || "2".equals(status))) {
+                    showDialogBox(hid, "`s has been inactive or de-registered");
+                } else {
                     try {
-
                         openFormUsingFormUtils(context, "household_visitation_for_caregiver_edit", visit);
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
                 }
-            }
-
-        });
+            });
+        }));
         holder.delete.setOnClickListener(v -> {
             try {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -262,8 +282,17 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
         dialog.show();
 
         TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-        Household house = HouseholdDao.getHousehold(householdId);
-        dialogMessage.setText(house.getCaregiver_name() + message);
+        dialogMessage.setText("Loading...");
+        final String hid = householdId;
+        Threading.io(() -> {
+            Household house = null;
+            try { house = HouseholdDao.getHousehold(hid); } catch (Exception ignored) {}
+            final Household finalHouse = house;
+            Threading.main(() -> {
+                String name = (finalHouse != null && finalHouse.getCaregiver_name() != null) ? finalHouse.getCaregiver_name() : "Household";
+                dialogMessage.setText(name + message);
+            });
+        });
 
         android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
         dialogButton.setOnClickListener(v -> dialog.dismiss());

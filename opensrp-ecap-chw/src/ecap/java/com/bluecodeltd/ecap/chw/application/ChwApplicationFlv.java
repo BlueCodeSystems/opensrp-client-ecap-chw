@@ -118,19 +118,15 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
 
         map.put(Constants.EcapClientTable.EC_CLIENT_INDEX, new String[]{
                 DBConstants.KEY.LAST_INTERACTED_WITH,
+                DBConstants.KEY.UNIQUE_ID,
                 DBConstants.KEY.FIRST_NAME,
                 DBConstants.KEY.LAST_NAME,
-                DBConstants.KEY.UNIQUE_ID,
+                "adolescent_first_name",
                 "household_id",
                 "case_status",
-                "subpop1",
-                "subpop2",
-                "subpop3",
-                "subpop4",
-                "subpop5",
-                "subpop",
                 "deleted"
         });
+
 
         map.put(Constants.EcapClientTable.EC_MOTHER_INDEX, new String[]{
                 "index_check_box",
@@ -159,6 +155,8 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
                 "first_name",
                 "last_name",
                 "pmtct_id",
+                "household_id",
+                "caregiver_name",
                 "delete_status"
         });
 
@@ -175,16 +173,12 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
                 DBConstants.KEY.UNIQUE_ID,
                 DBConstants.KEY.FIRST_NAME,
                 DBConstants.KEY.LAST_NAME,
+                "adolescent_first_name",
                 "household_id",
                 "case_status",
-                "subpop1",
-                "subpop2",
-                "subpop3",
-                "subpop4",
-                "subpop5",
-                "subpop",
                 "deleted"
         });
+
 
         map.put(Constants.EcapClientTable.EC_MOTHER_INDEX, new String[]{
                 DBConstants.KEY.LAST_INTERACTED_WITH,
@@ -214,6 +208,8 @@ public class ChwApplicationFlv extends DefaultChwApplicationFlv {
                 "first_name",
                 "last_name",
                 "pmtct_id",
+                "household_id",
+                "caregiver_name",
                 "delete_status"
         });
         return map;

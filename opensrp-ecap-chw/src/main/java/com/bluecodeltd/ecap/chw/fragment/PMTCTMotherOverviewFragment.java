@@ -12,10 +12,14 @@ import androidx.fragment.app.Fragment;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.MotherPmtctProfileActivity;
+import com.bluecodeltd.ecap.chw.dao.EcMotherIndexDao;
 import com.bluecodeltd.ecap.chw.dao.PmtctDeliveryDao;
+import com.bluecodeltd.ecap.chw.model.EcMotherIndexModel;
 import com.bluecodeltd.ecap.chw.model.PmtctDeliveryDetailsModel;
 import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.List;
 
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 
@@ -48,7 +52,7 @@ public class PMTCTMotherOverviewFragment extends Fragment {
 
         fab = getActivity().findViewById(R.id.fabx);
 
-        setViews();
+        refreshViews();
 
         return view;
 
@@ -56,8 +60,8 @@ public class PMTCTMotherOverviewFragment extends Fragment {
 
 
 
-    public void setViews() {
-        if (getActivity() == null) return;  // safety check
+    public void refreshViews() {
+        if (getActivity() == null || binding == null) return;  // safety check
 
         HashMap<String, PtctMotherModel> mymap = ((MotherPmtctProfileActivity) requireActivity()).getClientDetails();
 
@@ -78,12 +82,35 @@ public class PMTCTMotherOverviewFragment extends Fragment {
         if (motherDetails != null) {
             // Mother details
             txtHouseholdId.setText(getSafeString(motherDetails.getPmtct_id()));
-            txtAddress.setText(getSafeString(motherDetails.getHome_address()));
-            txtPhone.setText(getSafeString(motherDetails.getMothers_phone()));
             txtPmtctDateEnrolled.setText(getSafeString(motherDetails.getDate_enrolled_pmtct()));
 
-            // Delivery details
-            PmtctDeliveryDetailsModel pmtctDeliveryModel = PmtctDeliveryDao.getPmtctDeliveryDetails(motherDetails.getPmtct_id());
+            // Address and phone — fall back to EcMotherIndexDao if not set on the model
+            String homeAddress = motherDetails.getHome_address();
+            String mothersPhone = motherDetails.getMothers_phone();
+            if ((homeAddress == null || homeAddress.trim().isEmpty())
+                    || (mothersPhone == null || mothersPhone.trim().isEmpty())) {
+                String householdId = motherDetails.getHousehold_id();
+                if (householdId != null && !householdId.trim().isEmpty()) {
+                    List<EcMotherIndexModel> ecMothers = EcMotherIndexDao.getMothers(householdId);
+                    if (!ecMothers.isEmpty()) {
+                        EcMotherIndexModel ecMother = ecMothers.get(0);
+                        if (homeAddress == null || homeAddress.trim().isEmpty()) {
+                            homeAddress = ecMother.getHome_address();
+                        }
+                        if (mothersPhone == null || mothersPhone.trim().isEmpty()) {
+                            mothersPhone = ecMother.getMothers_phone();
+                        }
+                    }
+                }
+            }
+            txtAddress.setText(getSafeString(homeAddress));
+            txtPhone.setText(getSafeString(mothersPhone));
+
+            // Delivery details — DAO queries by household_id column; fall back to pmtct_id
+            String deliveryLookupId = !isNullOrEmpty(motherDetails.getHousehold_id())
+                    ? motherDetails.getHousehold_id()
+                    : motherDetails.getPmtct_id();
+            PmtctDeliveryDetailsModel pmtctDeliveryModel = PmtctDeliveryDao.getPmtctDeliveryDetails(deliveryLookupId);
             if (pmtctDeliveryModel != null) {
                 txtdate_of_delivery.setText(getSafeString(pmtctDeliveryModel.getDate_of_delivery()));
                 txtplace_of_delivery.setText(getSafeString(pmtctDeliveryModel.getPlace_of_delivery()));
@@ -100,6 +127,10 @@ public class PMTCTMotherOverviewFragment extends Fragment {
 
     private String getSafeString(String value) {
         return (value != null && !value.trim().isEmpty()) ? value : "Not set";
+    }
+
+    private boolean isNullOrEmpty(String value) {
+        return value == null || value.trim().isEmpty();
     }
 
 

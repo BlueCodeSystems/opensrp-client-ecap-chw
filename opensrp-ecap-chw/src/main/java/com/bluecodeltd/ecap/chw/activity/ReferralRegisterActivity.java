@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.bottomnavigation.LabelVisibilityMode;
+import com.google.android.material.navigation.NavigationBarView;
 
 import org.apache.commons.lang3.tuple.Triple;
 import org.jetbrains.annotations.NotNull;
@@ -73,7 +73,7 @@ public class ReferralRegisterActivity extends BaseReferralRegisterActivity {
         bottomNavigationView = findViewById(org.smartregister.R.id.bottom_navigation);
 
         if (bottomNavigationView != null) {
-            bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
+            bottomNavigationView.setLabelVisibilityMode(NavigationBarView.LABEL_VISIBILITY_LABELED);
             bottomNavigationView.getMenu().removeItem(org.smartregister.R.id.action_clients);
             // Remove referral module register action if present (avoid hard dependency on referral R)
             int referralRegisterId = getResources().getIdentifier("action_register", "id", "org.smartregister.chw.referral");

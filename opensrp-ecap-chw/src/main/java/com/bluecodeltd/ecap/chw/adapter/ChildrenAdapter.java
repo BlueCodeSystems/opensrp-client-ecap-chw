@@ -19,13 +19,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
+import com.bluecodeltd.ecap.chw.activity.ChildNonPmtctDetail;
 import com.bluecodeltd.ecap.chw.dao.GradDao;
+import com.bluecodeltd.ecap.chw.dao.IndexMotherDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.MuacDao;
 import com.bluecodeltd.ecap.chw.dao.VCAServiceReportDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.GradModel;
+import com.bluecodeltd.ecap.chw.model.IndexMotherModel;
 import com.bluecodeltd.ecap.chw.model.MuacModel;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -46,9 +49,11 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import com.bluecodeltd.ecap.chw.util.Threading;
 
 import es.dmoral.toasty.Toasty;
+import timber.log.Timber;
 
 public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHolder>{
 
@@ -56,11 +61,16 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
     List<Child> children;
     String txtMuac;
+    private String indexUniqueIdToShow;
+    private int indexCacheSize = -1;
+    private String indexCacheFirstUniqueId;
     GradModel gradModel;
     MuacModel muacModel, cModel;
     ObjectMapper oMapper, gradMapper;
     String dob;
     String caseStatus;
+    private final boolean allowVcaProfileNavigation;
+    private final Map<String, Boolean> motherIndexSourceVcaScreeningByHouseholdId = new ConcurrentHashMap<>();
     // Use centralized Threading
 
 
@@ -71,6 +81,17 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         this.children = children;
         this.txtMuac = txtMuac;
         this.context = context;
+        this.allowVcaProfileNavigation = true;
+    }
+
+    public ChildrenAdapter(List<Child> children, Context context, String txtMuac, boolean allowVcaProfileNavigation){
+
+        super();
+
+        this.children = children;
+        this.txtMuac = txtMuac;
+        this.context = context;
+        this.allowVcaProfileNavigation = allowVcaProfileNavigation;
     }
 
     @Override
@@ -100,20 +121,19 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             return;
         }
 
-        Child fetchedChild = IndexPersonDao.getChildByBaseId(childUniqueID);
-        final Child child = fetchedChild != null ? fetchedChild : listChild;
-        if (child == null) {
-            Log.w("ChildrenAdapter", "Unable to load child record for unique_id: " + childUniqueID);
-            resetViewHolder(holder);
-            return;
-        }
+        final Child initialChild = listChild;
+        final String rowTag = childUniqueID;
+        holder.itemView.setTag(R.id.tag_row_id, rowTag);
+        holder.itemView.setTag(initialChild);
+
+        ensureIndexCache();
 
         try{
 
-            if(child.getFirst_name() == null || child.getLast_name() == null){
+            if(initialChild.getFirst_name() == null || initialChild.getLast_name() == null){
                 holder.fullName.setText("");
             } else {
-                holder.fullName.setText(child.getFirst_name() + " " + child.getLast_name());
+                holder.fullName.setText(initialChild.getFirst_name() + " " + initialChild.getLast_name());
             }
         } catch (NullPointerException e) {
             holder.fullName.setText("");
@@ -122,7 +142,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
         try{
 
-            dob = checkAndConvertDateFormat(child.getAdolescent_birthdate());
+            dob = checkAndConvertDateFormat(initialChild.getAdolescent_birthdate());
 
         } catch (NullPointerException e) {
 
@@ -132,142 +152,152 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
 
         String memberAge = getAgeWithoutText(dob);
+        final String dobLocal = dob;
 
 
-        try{
-            caseStatus = IndexPersonDao.getIndexStatus(child.getBaseEntity_id());
-        } catch(NullPointerException e) {
-            caseStatus = "1";
-        }
-
-        try{
-            if(child.getIndex_check_box() != null && (child.getIndex_check_box().equals("1") || child.getIndex_check_box().equals("yes"))){
-                holder.is_index.setVisibility(View.VISIBLE);
-            } else {
-                holder.is_index.setVisibility(View.GONE);
-            }
-        } catch(NullPointerException e) {
+        try {
+            holder.is_index.setVisibility(shouldShowIndexChip(initialChild, childUniqueID) ? View.VISIBLE : View.GONE);
+        } catch (Exception ignored) {
             holder.is_index.setVisibility(View.GONE);
         }
 
 
 
 
-        isGraduationButtonToBeDisplayed(holder,isEligibleForEnrollment(child));
-
-        holder.gradBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.grad_bg));
-        holder.gradBtn.setColorFilter(ContextCompat.getColor(context, org.smartregister.R.color.dark_grey));
-        holder.gradBtn.setTag(childUniqueID);
-        Threading.io(() -> {
-            GradModel gm = null;
-            try { gm = GradDao.getGrad(child.getUnique_id()); } catch (Exception ignored) {}
-            GradModel finalGm = gm;
-            Threading.main(() -> {
-                if (!childUniqueID.equals(holder.gradBtn.getTag())) return;
-                if (finalGm != null) {
-                    holder.gradBtn.setColorFilter(ContextCompat.getColor(context, org.smartregister.chw.core.R.color.colorGreen));
-                }
-            });
-        });
-        if (!memberAge.equals("Invalid birthdate format")) {
-            int age = getAgeForGraduation(dob);
-            if (age < 10 || age > 17) {
-                holder.gradBtn.setVisibility(View.INVISIBLE);
-            } else {
-                holder.gradBtn.setVisibility(View.VISIBLE);
-            }
-        } else {
-            Log.e("TAG", "Invalid birthdate format");
-        }
-
-        holder.gradBtn.setOnClickListener(v->{
-
-            FormUtils formUtils = null;
-            try {
-                formUtils = new FormUtils(context);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            JSONObject formToBeOpened;
-
-            formToBeOpened = formUtils.getFormJson("grad");
-
-            try {
-                formToBeOpened.getJSONObject("step1").put("title", child.getFirst_name() + " " + child.getLast_name() + " : " + holder.age.getText().toString() + " - " + child.getGender());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            if (v.getId() == R.id.grad_id) {
-                try {
-                    openFormUsingFormUtils(context, "grad", child, holder.age.getText().toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        // Graduation button and form are no longer used
 
 //        newCaregiverModel caregiverModel = newCaregiverDao.getNewCaregiverById(child.getHousehold_id());
 
-        if(caseStatus != null && caseStatus.equals("1")){
-
-            holder.colorView.setBackgroundColor(Color.parseColor("#05b714"));
-
-        } else if (caseStatus != null && caseStatus.equals("0")) {
-
-            holder.colorView.setBackgroundColor(Color.parseColor("#ff0000"));
-
-        } else if(caseStatus != null && caseStatus.equals("2")){
-
-            holder.colorView.setBackgroundColor(Color.parseColor("#ffa500"));
-        }
-        else{
-            holder.colorView.setBackgroundColor(Color.parseColor("#696969"));
-        }
+        holder.colorView.setBackgroundColor(Color.parseColor("#696969"));
 
 //        if(caregiverModel.getHousehold_case_status() != null && caregiverModel.getHousehold_case_status().equals("0")){
 //
 //            holder.colorView.setBackgroundColor(Color.parseColor("#ff0000"));
 //        }
 
-        if(dob != null){
+        // Populate age and gender line
+        String ageText = (dob != null && !"Invalid birthdate format".equals(dob)) ? getAge(dob) : null;
+        String gender = initialChild.getGender();
+        StringBuilder ageGenderLine = new StringBuilder();
+        if (ageText != null && !ageText.isEmpty()) {
+            ageGenderLine.append(ageText);
+        }
+        if (gender != null && !gender.isEmpty()) {
+            if (ageGenderLine.length() > 0) ageGenderLine.append(" \u2022 ");
+            ageGenderLine.append(gender.substring(0, 1).toUpperCase(Locale.ENGLISH))
+                    .append(gender.length() > 1 ? gender.substring(1).toLowerCase(Locale.ENGLISH) : "");
+        }
+        holder.ageGender.setText(ageGenderLine.toString());
 
-            holder.age.setText("Age : " + getAge(dob));
-
+        // Caregiver / mother name
+        String caregiver = initialChild.getCaregiver_name();
+        if (caregiver != null && !caregiver.isEmpty()) {
+            holder.caregiverName.setText("Mother: " + caregiver);
         } else {
-
-            holder.age.setText("Not Set");
-
+            holder.caregiverName.setText("");
         }
 
+        holder.muacButton.setVisibility(View.GONE);
+        holder.muacButton.setTag(null);
 
-        // Enable MUAC Button
-        if(caseStatus != null && (caseStatus.equals("0") || caseStatus.equals("1")) && isAgeBetween6MonthsAnd5Years(dob)){
+        Threading.ioBestEffort(() -> {
+            Child fetchedChild = null;
+            try { fetchedChild = IndexPersonDao.getChildByBaseId(childUniqueID); } catch (Exception ignored) {}
+            Child effectiveChild = fetchedChild != null ? fetchedChild : initialChild;
 
-            holder.muacButton.setVisibility(View.VISIBLE);
+            String resolvedCaseStatus = null;
+            try {
+                String baseEntityId = effectiveChild != null ? effectiveChild.getBaseEntity_id() : null;
+                if (!TextUtils.isEmpty(baseEntityId)) {
+                    resolvedCaseStatus = IndexPersonDao.getIndexStatus(baseEntityId);
+                }
+            } catch (Exception ignored) {}
 
-            holder.muacButton.setTag(childUniqueID);
-            Threading.io(() -> {
-                MuacModel localMuac = null;
-                try { localMuac = MuacDao.getMuac(child.getUnique_id()); } catch (Exception ignored) {}
-                MuacModel finalMuac = localMuac;
-                Threading.main(() -> {
-                    if (!childUniqueID.equals(holder.muacButton.getTag())) return;
-                    if(finalMuac != null){
-                        holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_outline_blue, 0, 0, 0);
-                    } else {
-                        holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_warning_orange, 0, 0, 0);
-                    }
-                });
+            boolean eligibleForMuac = resolvedCaseStatus != null &&
+                    (resolvedCaseStatus.equals("0") || resolvedCaseStatus.equals("1")) &&
+                    isAgeBetween6MonthsAnd5Years(dobLocal);
+
+            MuacModel muac = null;
+            if (eligibleForMuac) {
+                try { muac = MuacDao.getMuac(childUniqueID); } catch (Exception ignored) {}
+            }
+
+            Child finalChild = effectiveChild;
+            String finalCaseStatus = resolvedCaseStatus;
+            boolean finalEligibleForMuac = eligibleForMuac;
+            boolean hasMuac = muac != null;
+
+            Threading.main(() -> {
+                Object currentTag = holder.itemView.getTag(R.id.tag_row_id);
+                if (!(currentTag instanceof String) || !rowTag.equals(currentTag)) return;
+
+                if (finalChild != null) {
+                    holder.itemView.setTag(finalChild);
+
+                    try{
+                        if(finalChild.getFirst_name() == null || finalChild.getLast_name() == null){
+                            holder.fullName.setText("");
+                        } else {
+                            holder.fullName.setText(finalChild.getFirst_name() + " " + finalChild.getLast_name());
+                        }
+                    } catch (Exception ignored) {}
+
+                    try{
+                        String resolvedDob = checkAndConvertDateFormat(finalChild.getAdolescent_birthdate());
+                        String resolvedAgeText = (resolvedDob != null && !"Invalid birthdate format".equals(resolvedDob)) ? getAge(resolvedDob) : null;
+                        String resolvedGender = finalChild.getGender();
+                        StringBuilder resolvedAgeGender = new StringBuilder();
+                        if (resolvedAgeText != null && !resolvedAgeText.isEmpty()) resolvedAgeGender.append(resolvedAgeText);
+                        if (resolvedGender != null && !resolvedGender.isEmpty()) {
+                            if (resolvedAgeGender.length() > 0) resolvedAgeGender.append(" \u2022 ");
+                            resolvedAgeGender.append(resolvedGender.substring(0, 1).toUpperCase(Locale.ENGLISH))
+                                    .append(resolvedGender.length() > 1 ? resolvedGender.substring(1).toLowerCase(Locale.ENGLISH) : "");
+                        }
+                        holder.ageGender.setText(resolvedAgeGender.toString());
+                    } catch (Exception ignored) {}
+
+                    try{
+                        String cg = finalChild.getCaregiver_name();
+                        holder.caregiverName.setText(!TextUtils.isEmpty(cg) ? ("Mother: " + cg) : "");
+                    } catch (Exception ignored) {}
+
+                    try{
+                        holder.is_index.setVisibility(shouldShowIndexChip(finalChild, childUniqueID) ? View.VISIBLE : View.GONE);
+                    } catch (Exception ignored) { holder.is_index.setVisibility(View.GONE); }
+                }
+
+                if(finalCaseStatus != null && finalCaseStatus.equals("1")){
+                    holder.colorView.setBackgroundColor(Color.parseColor("#05b714"));
+                } else if (finalCaseStatus != null && finalCaseStatus.equals("0")) {
+                    holder.colorView.setBackgroundColor(Color.parseColor("#ff0000"));
+                } else if(finalCaseStatus != null && finalCaseStatus.equals("2")){
+                    holder.colorView.setBackgroundColor(Color.parseColor("#ffa500"));
+                } else{
+                    holder.colorView.setBackgroundColor(Color.parseColor("#696969"));
+                }
+
+                if (finalEligibleForMuac) {
+                    holder.muacButton.setTag(childUniqueID);
+                    holder.muacButton.setCompoundDrawablesWithIntrinsicBounds(
+                            hasMuac ? R.drawable.ic_info_outline_blue : R.drawable.ic_warning_orange,
+                            0, 0, 0
+                    );
+                } else {
+                    holder.muacButton.setVisibility(View.GONE);
+                    holder.muacButton.setTag(null);
+                }
+
+                try {
+                    Child current = holder.itemView.getTag() instanceof Child ? (Child) holder.itemView.getTag() : null;
+                    updateOpenProfileButtonVisibility(holder, current, rowTag);
+                } catch (Exception ignored) {}
             });
-
-        } else {
-            holder.muacButton.setVisibility(View.GONE);
-        }
+        });
 
 
         holder.muacButton.setOnClickListener(v -> {
 
+            Child child = holder.itemView.getTag() instanceof Child ? (Child) holder.itemView.getTag() : initialChild;
             FormUtils formUtils = null;
             try {
                 formUtils = new FormUtils(context);
@@ -278,7 +308,9 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
             formToBeOpened = formUtils.getFormJson("muac");
             try {
-                formToBeOpened.getJSONObject("step1").put("title", child.getFirst_name() + " " + child.getLast_name() + " : " + holder.age.getText().toString() + " - " + child.getGender());
+                String titleAge = holder.ageGender.getText() != null ? holder.ageGender.getText().toString() : "";
+                formToBeOpened.getJSONObject("step1").put("title",
+                        child.getFirst_name() + " " + child.getLast_name() + " : " + titleAge);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -289,37 +321,71 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             }
 
 
-            switch (v.getId()) {
-
-                case (R.id.muac):
-
-                    try {
-                        openFormUsingFormUtils(context,"muac", child, holder.age.getText().toString());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    break;
+            if (v.getId() == R.id.muac) {
+                try {
+                    String titleAge = holder.ageGender.getText() != null ? holder.ageGender.getText().toString() : "";
+                    openFormUsingFormUtils(context,"muac", child, titleAge);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         } );
 
-        holder.lview.setOnClickListener(v -> {
+        if (!allowVcaProfileNavigation) {
+            holder.openProfileBtn.setOnClickListener(null);
+            holder.openProfileBtn.setVisibility(View.GONE);
+        } else {
+            holder.openProfileBtn.setOnClickListener(v -> {
+                try {
+                    Child child = holder.itemView.getTag() instanceof Child ? (Child) holder.itemView.getTag() : initialChild;
+                    String baseEntityId = child != null ? child.getBase_entity_id() : null;
+                    String householdId = child != null ? child.getHousehold_id() : null;
+                    String uniqueId = child != null ? child.getUnique_id() : null;
+                    ChildNonPmtctDetail.start((Activity) context, baseEntityId, householdId, uniqueId);
+                } catch (Exception e) {
+                    Toasty.error(context, "Unable to open child profile", Toast.LENGTH_LONG, true).show();
+                }
+            });
+            updateOpenProfileButtonVisibility(holder, initialChild, rowTag);
+        }
 
-            switch (v.getId()) {
+        if (!allowVcaProfileNavigation) {
+            // In mother profile context (source_from = vca_screening): do not allow opening VCA profile.
+            // Keep row clickable but route to the child profile instead.
+            View.OnClickListener openChildProfile = v -> {
+                try {
+                    Child child = holder.itemView.getTag() instanceof Child ? (Child) holder.itemView.getTag() : initialChild;
+                    String baseEntityId = child != null ? child.getBase_entity_id() : null;
+                    String householdId = child != null ? child.getHousehold_id() : null;
+                    String uniqueId = child != null ? child.getUnique_id() : null;
+                    ChildNonPmtctDetail.start((Activity) context, baseEntityId, householdId, uniqueId);
+                } catch (Exception e) {
+                    Toasty.error(context, "Unable to open child profile", Toast.LENGTH_LONG, true).show();
+                }
+            };
 
-                case (R.id.register_columns):
+            holder.itemView.setClickable(true);
+            holder.itemView.setEnabled(true);
+            holder.itemView.setOnClickListener(openChildProfile);
+            holder.lview.setClickable(true);
+            holder.lview.setEnabled(true);
+            holder.lview.setOnClickListener(openChildProfile);
+        } else {
+            holder.lview.setOnClickListener(v -> {
 
-                    String subpop3 = child.getSubpop3();
+                if (v.getId() == R.id.register_columns) {
+                    Child child = holder.itemView.getTag() instanceof Child ? (Child) holder.itemView.getTag() : initialChild;
+                    String subpop3 = child != null ? child.getSubpop3() : null;
                     if (subpop3 == null) {
                         Toasty.warning(context, "Go to the VCA Register to complete this VCA’s profile", Toast.LENGTH_LONG, true).show();
                         return;
                     }
 
-                    if((Integer.parseInt(memberAge) < 24) || isEligibleForEnrollment(child)){
+                    if((Integer.parseInt(memberAge) < 24) ){
 
                         Intent intent = new Intent(context, IndexDetailsActivity.class);
                         intent.putExtra("fromIndex", "321");
-                        intent.putExtra("Child",  child.getUnique_id());
+                        intent.putExtra("Child",  child != null ? child.getUnique_id() : childUniqueID);
                         context.startActivity(intent);
 
                     } /*else if (!isEligibleForEnrollment(child)){
@@ -328,10 +394,9 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
                     }*/else {
                         Toasty.warning(context, "Member is not enrolled on the Program", Toast.LENGTH_LONG, true).show();
                     }
-
-                    break;
-            }
-        });
+                }
+            });
+        }
 
     }
 
@@ -339,14 +404,110 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
     private void resetViewHolder(ViewHolder holder) {
         holder.fullName.setText("");
-        holder.age.setText("Not Set");
-        holder.gradBtn.setVisibility(View.GONE);
+        holder.ageGender.setText("Not Set");
         holder.muacButton.setVisibility(View.GONE);
         holder.muacButton.setTag(null);
-        holder.gradBtn.setTag(null);
-        holder.gradBtn.setColorFilter(ContextCompat.getColor(context, org.smartregister.R.color.dark_grey));
         holder.is_index.setVisibility(View.GONE);
         holder.colorView.setBackgroundColor(Color.parseColor("#696969"));
+    }
+
+    private void ensureIndexCache() {
+        int currentSize = children != null ? children.size() : 0;
+        String currentFirstUniqueId = null;
+        try {
+            if (children != null && !children.isEmpty() && children.get(0) != null) {
+                currentFirstUniqueId = children.get(0).getUnique_id();
+            }
+        } catch (Exception ignored) {}
+
+        if (currentSize == indexCacheSize && safeEquals(currentFirstUniqueId, indexCacheFirstUniqueId)) {
+            return;
+        }
+
+        indexCacheSize = currentSize;
+        indexCacheFirstUniqueId = currentFirstUniqueId;
+        indexUniqueIdToShow = null;
+        if (children == null || children.isEmpty()) return;
+
+        // List is expected to be ordered DESC by id from the query; show Index chip only for the first index entry.
+        for (Child child : children) {
+            if (child == null) continue;
+            String uniqueId = child.getUnique_id();
+            if (!TextUtils.isEmpty(uniqueId) && isIndexVca(child.getIndex_check_box())) {
+                indexUniqueIdToShow = uniqueId;
+                break;
+            }
+        }
+    }
+
+    private boolean shouldShowIndexChip(Child child, String fallbackUniqueId) {
+        if (child == null) return false;
+        String uniqueId = child.getUnique_id();
+        if (TextUtils.isEmpty(uniqueId)) uniqueId = fallbackUniqueId;
+        return isIndexVca(child.getIndex_check_box())
+                && !TextUtils.isEmpty(uniqueId)
+                && uniqueId.equals(indexUniqueIdToShow);
+    }
+
+    private static boolean isIndexVca(String indexCheckBoxValue) {
+        return "yes".equalsIgnoreCase(indexCheckBoxValue) || "1".equals(indexCheckBoxValue);
+    }
+
+    private static boolean safeEquals(String a, String b) {
+        return a == b || (a != null && a.equals(b));
+    }
+
+    private void updateOpenProfileButtonVisibility(ViewHolder holder, Child child, String rowTag) {
+        if (holder == null || holder.openProfileBtn == null) return;
+
+        if (!allowVcaProfileNavigation) {
+            Timber.d("ChildrenAdapter openProfileBtn hidden: allowVcaProfileNavigation=false rowTag=%s", rowTag);
+            holder.openProfileBtn.setVisibility(View.GONE);
+            return;
+        }
+
+        // Default to GONE until we confirm mother source_from (prevents brief incorrect visibility).
+        holder.openProfileBtn.setVisibility(View.GONE);
+
+        String caregiverStatus = child != null ? child.getCaregiver_hiv_status() : null;
+        final boolean caregiverPositive = caregiverStatus != null &&
+                (caregiverStatus.equalsIgnoreCase("positive") || caregiverStatus.equalsIgnoreCase("HIV+"));
+
+        String householdId = child != null ? child.getHousehold_id() : null;
+        if (TextUtils.isEmpty(householdId)) {
+            Timber.d("ChildrenAdapter openProfileBtn householdId missing rowTag=%s caregiverPositive=%s", rowTag, caregiverPositive);
+            holder.openProfileBtn.setVisibility(caregiverPositive ? View.GONE : View.VISIBLE);
+            return;
+        }
+
+        Boolean cached = motherIndexSourceVcaScreeningByHouseholdId.get(householdId);
+        if (cached != null) {
+            Timber.d("ChildrenAdapter openProfileBtn cached householdId=%s vca_screening=%s caregiverPositive=%s", householdId, cached, caregiverPositive);
+            boolean hide = cached || caregiverPositive;
+            holder.openProfileBtn.setVisibility(hide ? View.GONE : View.VISIBLE);
+            return;
+        }
+
+        final String finalHouseholdId = householdId;
+        Threading.ioBestEffort(() -> {
+            boolean isVcaScreening = false;
+            try {
+                IndexMotherModel mother = IndexMotherDao.getIndexMotherByHouseholdId(finalHouseholdId);
+                String sourceFrom = mother != null ? mother.getSource_from() : null;
+                isVcaScreening = sourceFrom != null && sourceFrom.trim().equalsIgnoreCase("vca_screening");
+                Timber.d("ChildrenAdapter openProfileBtn db householdId=%s source_from=%s isVcaScreening=%s", finalHouseholdId, sourceFrom, isVcaScreening);
+            } catch (Exception ignored) { }
+            motherIndexSourceVcaScreeningByHouseholdId.put(finalHouseholdId, isVcaScreening);
+
+            final boolean finalIsVcaScreening = isVcaScreening;
+            Threading.main(() -> {
+                Object currentTag = holder.itemView.getTag(R.id.tag_row_id);
+                if (!(currentTag instanceof String) || !rowTag.equals(currentTag)) return;
+                boolean hide = finalIsVcaScreening || caregiverPositive;
+                Timber.d("ChildrenAdapter openProfileBtn apply householdId=%s hide=%s caregiverPositive=%s", finalHouseholdId, hide, caregiverPositive);
+                holder.openProfileBtn.setVisibility(hide ? View.GONE : View.VISIBLE);
+            });
+        });
     }
 
     private String getAge(String birthdate){
@@ -530,23 +691,26 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView fullName, age, is_index;
+        TextView fullName;
+        TextView ageGender;
+        TextView caregiverName;
+        TextView is_index;
         View colorView;
         RelativeLayout lview;
         Button muacButton;
-        ImageButton gradBtn;
+        Button openProfileBtn;
 
         public ViewHolder(View itemView) {
 
             super(itemView);
 
-
-            fullName = itemView.findViewById(R.id.familyNameTextView);
-            age = itemView.findViewById(R.id.child_age);
             lview = itemView.findViewById(R.id.register_columns);
             colorView = itemView.findViewById(R.id.mycolor);
+            fullName = itemView.findViewById(R.id.child_name);
+            ageGender = itemView.findViewById(R.id.child_age_gender);
+            caregiverName = itemView.findViewById(R.id.caregiver_name);
             muacButton = itemView.findViewById(R.id.muac);
-            gradBtn = itemView.findViewById(R.id.grad_id);
+            openProfileBtn = itemView.findViewById(R.id.btn_open_profile);
             is_index = itemView.findViewById(R.id.index_icon);
 
         }
@@ -561,49 +725,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
     }
 
-    public Boolean isEligibleForEnrollment(Child child ) {
-
-        return true;
-
-  /*      try{
-
-            if ((child.getIs_hiv_positive().equals("yes")) || (child.getSubpop1() != null && child.getSubpop1().equals("true")) || (child.getSubpop2() != null && child.getSubpop2().equals("true")) ||
-                    (child.getSubpop3() != null && child.getSubpop3().equals("true")) || (child.getSubpop4() != null && child.getSubpop4().equals("true")) ||
-                    (child.getSubpop5() != null && child.getSubpop5().equals("true")) || (child.getSubpop6() != null && child.getSubpop6().equals("true"))) {
-
-                return true;
-            }
-
-            return false;
-
-        } catch (NullPointerException exception) {
-
-            Log.e("childrenexeption", exception.getMessage());
-            return false;
-
-        }
-*/
-
-    }
-
-
-    public void isGraduationButtonToBeDisplayed(ViewHolder holder,Boolean check){
-        if(check !=null && check) {
-            holder.gradBtn.setVisibility(View.VISIBLE);
-        } else {
-            holder.gradBtn.setVisibility(View.GONE);
-        }
-    }
-
-    public Boolean checkAgeEligibility(String age)
-    {
-        if(Integer.parseInt(age) <= 2)
-        {
-            return false;
-        }
-
-        return true;
-    }
+    // Graduation-related helpers removed – feature no longer used
     private String checkAndConvertDateFormat(String date){
         if (date.matches("\\d{2}-\\d{2}-\\d{4}")) {
             return date;

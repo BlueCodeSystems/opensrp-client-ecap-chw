@@ -3,6 +3,7 @@ package com.bluecodeltd.ecap.chw.model;
 public class VcaCSVModel {
 
     private String deleted;
+    private String base_entity_id;
     private String household_id;
     private String unique_id;
     private String signature;
@@ -146,6 +147,14 @@ public class VcaCSVModel {
 
     public void setDeleted(String deleted) {
         this.deleted = deleted;
+    }
+
+    public String getBase_entity_id() {
+        return base_entity_id;
+    }
+
+    public void setBase_entity_id(String base_entity_id) {
+        this.base_entity_id = base_entity_id;
     }
 
     public String getHousehold_id() {
@@ -1227,4 +1236,21 @@ public class VcaCSVModel {
     public void setDistrict_moved_to(String district_moved_to) {
         this.district_moved_to = district_moved_to;
     }
+
+    private final java.util.Map<String, String> additionalFields = new java.util.HashMap<>();
+
+    public java.util.Map<String, String> getAdditionalFields() {
+        return additionalFields;
+    }
+
+    public String getAdditionalField(String key) {
+        if (key == null) return null;
+        return additionalFields.get(key);
+    }
+
+    public void setAdditionalField(String key, String value) {
+        if (key == null) return;
+        additionalFields.put(key, value);
+    }
 }
+

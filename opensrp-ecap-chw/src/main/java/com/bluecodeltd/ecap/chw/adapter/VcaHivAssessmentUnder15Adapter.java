@@ -31,6 +31,7 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentUnder15Model;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -100,37 +101,45 @@ public class VcaHivAssessmentUnder15Adapter extends RecyclerView.Adapter<VcaHivA
             }
         });
 
-        CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(assessmentUnder15Model.getUnique_id());
+        final String rowTag = assessmentUnder15Model.getBase_entity_id() != null ? assessmentUnder15Model.getBase_entity_id()
+                : (assessmentUnder15Model.getUnique_id() != null ? assessmentUnder15Model.getUnique_id() : String.valueOf(position));
+        holder.itemView.setTag(R.id.tag_row_id, rowTag);
 
-        holder.editme.setOnClickListener(v -> {
-            String status = null;
-            try { status = caseStatusModel != null ? caseStatusModel.getCase_status() : null; } catch (Exception ignored) {}
-            if (status != null && (status.equals("0") || status.equals("2"))) {
-                Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.dialog_layout);
-                dialog.show();
+        holder.editme.setOnClickListener(v ->
+                android.widget.Toast.makeText(context, "Loading case status…", android.widget.Toast.LENGTH_SHORT).show());
 
-                TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                String first = caseStatusModel != null && caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "This beneficiary";
-                String last = caseStatusModel != null && caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "";
-                dialogMessage.setText(first + (last.isEmpty()? "":(" "+last)) + " was either de-registered or inactive in the program");
+        final String uniqueId = assessmentUnder15Model.getUnique_id();
+        Threading.ioBestEffort(() -> {
+            CaseStatusModel caseStatusModel = null;
+            try { caseStatusModel = IndexPersonDao.getCaseStatus(uniqueId); } catch (Exception ignored) {}
+            final CaseStatusModel finalCaseStatusModel = caseStatusModel;
+            Threading.main(() -> {
+                Object tag = holder.itemView.getTag(R.id.tag_row_id);
+                if (!(tag instanceof String) || !rowTag.equals(tag)) return;
+                holder.editme.setOnClickListener(v -> {
+                    String status = null;
+                    try { status = finalCaseStatusModel != null ? finalCaseStatusModel.getCase_status() : null; } catch (Exception ignored) {}
+                    if (status != null && ("0".equals(status) || "2".equals(status))) {
+                        Dialog dialog = new Dialog(context);
+                        dialog.setContentView(R.layout.dialog_layout);
+                        dialog.show();
 
-                Button dialogButton = dialog.findViewById(R.id.dialog_button);
-                dialogButton.setOnClickListener(va -> dialog.dismiss());
+                        TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                        String first = finalCaseStatusModel != null && finalCaseStatusModel.getFirst_name() != null ? finalCaseStatusModel.getFirst_name() : "This beneficiary";
+                        String last = finalCaseStatusModel != null && finalCaseStatusModel.getLast_name() != null ? finalCaseStatusModel.getLast_name() : "";
+                        dialogMessage.setText(first + (last.isEmpty()? "":(" "+last)) + " was either de-registered or inactive in the program");
 
-            } else {
-                if (v.getId() == R.id.edit_me) {
-
-                    try {
-
-                        openFormUsingFormUtils(context, "hiv_risk_assessment_under_15_years", assessmentUnder15Model);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                        dialogButton.setOnClickListener(va -> dialog.dismiss());
+                    } else {
+                        try {
+                            openFormUsingFormUtils(context, "hiv_risk_assessment_under_15_years", assessmentUnder15Model);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-
-                }
-            }
+                });
+            });
         });
 
         holder.delete.setOnClickListener(v -> {
@@ -162,16 +171,16 @@ public class VcaHivAssessmentUnder15Adapter extends RecyclerView.Adapter<VcaHivA
                     if (childIndexEventClient == null) {
                         return;
                     }
-                    saveRegistration(childIndexEventClient,true);
+                    Runnable onComplete = () -> refreshIndexProfile(assessmentUnder15Model.getUnique_id());
+                    boolean scheduled = saveRegistration(childIndexEventClient, true, onComplete);
+                    if (!scheduled) {
+                        onComplete.run();
+                    }
 
 
                 } catch (Exception e) {
                     Timber.e(e);
                 }
-                Intent returnToProfile = new Intent(context, IndexDetailsActivity.class);
-                returnToProfile.putExtra("Child",  assessmentUnder15Model.getUnique_id());
-                context.startActivity(returnToProfile);
-                ((Activity) context).finish();
 
             }));
 
@@ -343,44 +352,50 @@ public class VcaHivAssessmentUnder15Adapter extends RecyclerView.Adapter<VcaHivA
 
         return null;
     }
-    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode, Runnable onComplete) {
 
         Runnable runnable = () -> {
 
             Event event = childIndexEventClient.getEvent();
             Client client = childIndexEventClient.getClient();
 
-            if (event != null && client != null) {
-                try {
-                    ECSyncHelper ecSyncHelper = getECSyncHelper();
+            try {
+                if (event != null && client != null) {
+                    try {
+                        ECSyncHelper ecSyncHelper = getECSyncHelper();
 
-                    JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
+                        JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
 
-                    JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
+                        JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
 
-                    if (isEditMode) {
-                        JSONObject mergedClientJsonObject =
-                                org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
-                        ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
+                        if (isEditMode) {
+                            JSONObject mergedClientJsonObject =
+                                    org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
+                            ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
 
-                    } else {
-                        ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                        } else {
+                            ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                        }
+
+                        JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
+                        ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
+
+                        Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
+                        Date currentSyncDate = new Date(lastUpdatedAtDate);
+
+                        //Get saved event for processing
+                        List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
+                        getClientProcessorForJava().processClient(savedEvents);
+                        getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
+
+
+                    } catch (Exception e) {
+                        Timber.e(e);
                     }
-
-                    JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
-                    ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
-
-                    Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
-                    Date currentSyncDate = new Date(lastUpdatedAtDate);
-
-                    //Get saved event for processing
-                    List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
-                    getClientProcessorForJava().processClient(savedEvents);
-                    getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
-
-
-                } catch (Exception e) {
-                    Timber.e(e);
+                }
+            } finally {
+                if (onComplete != null) {
+                    runOnUiThread(onComplete);
                 }
             }
 
@@ -392,8 +407,30 @@ public class VcaHivAssessmentUnder15Adapter extends RecyclerView.Adapter<VcaHivA
             return true;
         } catch (Exception exception) {
             Timber.e(exception);
+            if (onComplete != null) {
+                runOnUiThread(onComplete);
+            }
             return false;
         }
+    }
+    private void runOnUiThread(Runnable runnable) {
+        if (context instanceof Activity && runnable != null) {
+            ((Activity) context).runOnUiThread(runnable);
+        }
+    }
+
+    private void refreshIndexProfile(String uniqueId) {
+        if (!(context instanceof Activity)) {
+            return;
+        }
+        Activity activity = (Activity) context;
+        Intent intent = new Intent(context, IndexDetailsActivity.class);
+        intent.putExtra("Child", uniqueId);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        activity.finish();
+        activity.overridePendingTransition(0, 0);
+        context.startActivity(intent);
+        activity.overridePendingTransition(0, 0);
     }
     private ECSyncHelper getECSyncHelper() {
         return ChwApplication.getInstance().getEcSyncHelper();

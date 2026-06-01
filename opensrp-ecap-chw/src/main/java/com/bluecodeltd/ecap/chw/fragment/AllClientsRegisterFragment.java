@@ -1,11 +1,20 @@
 package com.bluecodeltd.ecap.chw.fragment;
 
+import android.database.Cursor;
+import android.os.Handler;
 import android.os.Bundle;
+import android.os.Looper;
+import androidx.loader.content.Loader;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 
 import com.bluecodeltd.ecap.chw.R;
+import org.apache.commons.lang3.StringUtils;
+import org.smartregister.AllConstants;
+import org.smartregister.CoreLibrary;
 import org.smartregister.chw.core.fragment.CoreAllClientsRegisterFragment;
 import org.smartregister.chw.core.utils.CoreConstants;
 import com.bluecodeltd.ecap.chw.dao.FamilyDao;
@@ -14,10 +23,40 @@ import com.bluecodeltd.ecap.chw.util.AllClientsUtils;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.family.util.Constants;
 import org.smartregister.opd.utils.OpdDbConstants;
+import org.smartregister.util.Utils;
 
 public class AllClientsRegisterFragment extends CoreAllClientsRegisterFragment {
+    private static final long SEARCH_DEBOUNCE_MS = 350L;
+
     private com.bluecodeltd.ecap.chw.databinding.FragmentBaseRegisterBinding binding;
     public static final String REGISTER_TYPE = "register_type";
+    private final Handler searchHandler = new Handler(Looper.getMainLooper());
+    private String pendingSearchText = "";
+    private final Runnable searchRunnable = () -> filter(pendingSearchText, "", getMainCondition(), false);
+    private final TextWatcher debouncedSearchWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+            // no-op
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+            org.smartregister.Context opensrpContext = CoreLibrary.getInstance().context();
+            if (opensrpContext.getAppProperties().isTrue(AllConstants.PROPERTY.ENABLE_SEARCH_BUTTON)
+                    && StringUtils.isNotEmpty(charSequence.toString())) {
+                return;
+            }
+
+            pendingSearchText = charSequence == null ? "" : charSequence.toString();
+            searchHandler.removeCallbacks(searchRunnable);
+            searchHandler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_MS);
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            // no-op
+        }
+    };
 
     @Override
     public void setupViews(View view) {
@@ -38,7 +77,54 @@ public class AllClientsRegisterFragment extends CoreAllClientsRegisterFragment {
     }
 
     @Override
+    protected void updateSearchView() {
+        if (getSearchView() != null) {
+            getSearchView().removeTextChangedListener(textWatcher);
+            getSearchView().removeTextChangedListener(debouncedSearchWatcher);
+            getSearchView().addTextChangedListener(debouncedSearchWatcher);
+            getSearchView().setOnKeyListener(hideKeyboard);
+        }
+    }
+
+    @Override
+    public void filter(String filterString, String joinTableString, String mainConditionString, boolean qrCode) {
+        if (qrCode) {
+            super.filter(filterString, joinTableString, mainConditionString, true);
+            return;
+        }
+
+        if (getSearchCancelView() != null) {
+            getSearchCancelView().setVisibility(StringUtils.isEmpty(filterString) ? View.INVISIBLE : View.VISIBLE);
+        }
+        if (StringUtils.isEmpty(filterString)) {
+            Utils.hideKeyboard(getActivity());
+        }
+
+        this.filters = filterString;
+        this.joinTable = joinTableString;
+        this.mainCondition = mainConditionString;
+
+        if (clientAdapter.getCurrentlimit() == 0) {
+            clientAdapter.setCurrentlimit(20);
+        }
+        clientAdapter.setCurrentoffset(0);
+
+        showProgressView();
+        filterandSortExecute(countBundle());
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        super.onLoadFinished(loader, cursor);
+        setTotalPatients();
+    }
+
+    @Override
     public void onDestroyView() {
+        searchHandler.removeCallbacks(searchRunnable);
+        if (getSearchView() != null) {
+            getSearchView().removeTextChangedListener(debouncedSearchWatcher);
+        }
         super.onDestroyView();
         binding = null;
     }

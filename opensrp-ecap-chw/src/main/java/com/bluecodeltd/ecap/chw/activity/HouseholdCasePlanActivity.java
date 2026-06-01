@@ -225,8 +225,7 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
                 Timber.e(e);
             }
         }
-        finish();
-        startActivity(getIntent());
+        recreate();
     }
 
     public ChildIndexEventClient processRegistration(String jsonString){
@@ -405,8 +404,7 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
 
     }
     public void refresh(){
-        finish();
-        startActivity(getIntent());
+        recreate();
     }
 
     public void showDialogBox(String householdId,String message){

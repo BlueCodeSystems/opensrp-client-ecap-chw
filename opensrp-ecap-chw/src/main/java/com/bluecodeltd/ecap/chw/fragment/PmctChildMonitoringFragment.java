@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -45,6 +46,7 @@ public class PmctChildMonitoringFragment extends Fragment {
     RecyclerView.Adapter recyclerViewadapter;
     private ArrayList<ChildMonitoringModel> assessmentList = new ArrayList<>();
     private LinearLayout linearLayout;
+    private TextView visitCount;
     View vieww;
     /**
      * Use this factory method to create a new instance of
@@ -106,6 +108,7 @@ public class PmctChildMonitoringFragment extends Fragment {
 
         recyclerView = vieww.findViewById(R.id.visitrecyclerView);
         linearLayout = vieww.findViewById(R.id.visit_container);
+        visitCount = vieww.findViewById(R.id.tv_visit_count);
 
         assessmentList.clear();
 
@@ -119,7 +122,12 @@ public class PmctChildMonitoringFragment extends Fragment {
         recyclerView.setAdapter(recyclerViewadapter);
         try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
 
-        if (recyclerViewadapter.getItemCount() > 0){
+        int count = recyclerViewadapter != null ? recyclerViewadapter.getItemCount() : 0;
+        if (visitCount != null) {
+            visitCount.setText(count + (count == 1 ? " visit" : " visits"));
+        }
+
+        if (count > 0){
 
             linearLayout.setVisibility(View.GONE);
         }

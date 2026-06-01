@@ -56,7 +56,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="15dp"
                         android:paddingStart="0dp"
-                        android:text="VCA : Bertha Mwansa"
+                        android:text="CA : Bertha Mwansa"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/activity_title_size" />
                     <org.smartregister.view.customcontrols.CustomFontTextView

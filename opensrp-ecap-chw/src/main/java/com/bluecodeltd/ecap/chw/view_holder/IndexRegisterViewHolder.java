@@ -160,7 +160,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
         dueButton.setText("Conduct Visit");
         final String rowTag = village;
         dueButton.setTag(rowTag);
-        Threading.io(() -> {
+        Threading.ioBestEffort(() -> {
             VcaVisitationModel visitStatus = null;
             VcaAssessmentModel assessmentModel = null;
             VcaScreeningModel screening = null;

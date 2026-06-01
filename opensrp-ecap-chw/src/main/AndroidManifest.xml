@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
 
     <uses-feature
@@ -39,14 +40,19 @@
             android:name=".activity.HeiDetailsActivity"
             android:exported="false"
             android:theme="@style/ChwTheme.NoActionBar"/>
-        <activity
-            android:name=".ShowOnlyHouseholdServicesActivity"
-            android:exported="false"
-            android:label="@string/title_activity_show_only_household_services"
-            android:theme="@style/ChwTheme.NoActionBar" />
+
         <activity
             android:name=".activity.FlagActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".activity.SopDocumentsActivity"
+            android:exported="false"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
+            android:name=".activity.SopPdfViewerActivity"
+            android:exported="false"
+            android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.NotificationActivity"
             android:label="Final HIV Status Visits Due"
@@ -65,6 +71,9 @@
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.ChildSafetyPlanActions"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
+            android:name=".activity.ChildNonPmtctDetail"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.HouseholdServiceActivity"
@@ -259,7 +268,7 @@
             android:launchMode="singleTask"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:screenOrientation="portrait"
-            android:theme="@style/ChwTheme.Login"
+            android:theme="@style/ChwTheme.AppCompatLogin"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -337,6 +346,9 @@
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.GuideBooksCounselingActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
+            android:name=".activity.TbScreeningActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
 
         <meta-data

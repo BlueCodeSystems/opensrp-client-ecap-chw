@@ -1,0 +1,10 @@
+<!-- res/drawable/case_status_background.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="10dp"/>
+    <padding
+        android:left="6dp"
+        android:right="6dp"
+        android:top="2dp"
+        android:bottom="2dp"/>
+    <solid android:color="@color/light_grey"/>
+</shape>

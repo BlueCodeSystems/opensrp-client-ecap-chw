@@ -50,7 +50,10 @@ public class WeServiceCaregiverDoa extends AbstractDao {
             record.setWe_loan2_use(getCursorValue(c, "we_loan2_use"));
             record.setSold_items(getCursorValue(c, "sold_items"));
             record.setOther_sold_item(getCursorValue(c, "other_sold_item"));
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 }
+
+

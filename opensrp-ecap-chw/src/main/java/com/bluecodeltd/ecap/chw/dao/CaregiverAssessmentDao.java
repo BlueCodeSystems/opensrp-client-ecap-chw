@@ -107,8 +107,11 @@ public class CaregiverAssessmentDao extends AbstractDao {
 
 
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 
 }
+
+

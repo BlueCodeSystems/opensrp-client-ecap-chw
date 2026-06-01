@@ -70,8 +70,11 @@ public class GraduationAssessmentDao extends AbstractDao {
             record.setRcmc_signature(getCursorValue(c, "rcmc_signature"));
             record.setRcmc_date_signed(getCursorValue(c, "rcmc_date_signed"));
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 
 }
+
+

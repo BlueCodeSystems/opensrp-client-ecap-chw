@@ -18,14 +18,20 @@ class HouseholdChildrenViewModel: ViewModel() {
     private val _state = MutableLiveData(HouseholdChildrenState())
     val state: LiveData<HouseholdChildrenState> = _state
 
-    fun refresh(householdId: String) {
+    @JvmOverloads
+    fun refresh(householdId: String?, motherContext: Boolean = false) {
+        val id = householdId?.trim()
+        if (id.isNullOrEmpty()) {
+            _state.postValue(HouseholdChildrenState(arrayListOf(), "0"))
+            return
+        }
         viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val list = ArrayList(IndexPersonDao.getFamilyChildren(householdId))
-                val count = IndexPersonDao.countChildren(householdId)
-                _state.postValue(HouseholdChildrenState(list, count))
-            } catch (_: Exception) {}
+            val children = runCatching {
+                if (motherContext) IndexPersonDao.getMotherChildren(id) ?: emptyList()
+                else IndexPersonDao.getFamilyChildren(id) ?: emptyList()
+            }.getOrElse { emptyList() }
+            val count = children.size.toString()
+            _state.postValue(HouseholdChildrenState(ArrayList(children), count))
         }
     }
 }
-

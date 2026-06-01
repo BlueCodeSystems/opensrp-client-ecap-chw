@@ -70,6 +70,36 @@ public class HouseholdServiceReportDao extends AbstractDao {
 
     }
 
+    /**
+     * Lightweight variant for "latest VL" UI display.
+     * Avoids SELECT * (which can load large JSON/text columns into the cursor window).
+     */
+    public static HouseholdServiceReportModel getLatestVLSummaryByHousehold(String householdId) {
+        String sql =
+                "SELECT vl_last_result, level_mmd, date_next_vl, household_id, date\n" +
+                        "FROM ec_household_service_report\n" +
+                        "WHERE household_id = '" + householdId + "' AND (delete_status IS NULL OR delete_status <> '1')\n" +
+                        "ORDER BY substr(date,7,4) DESC, substr(date,4,2) DESC, substr(date,1,2) DESC\n" +
+                        "LIMIT 1";
+
+        List<HouseholdServiceReportModel> values = AbstractDao.readData(sql, getVLSummaryModelMap());
+        if (values == null || values.isEmpty()) return null;
+        return values.get(0);
+    }
+
+    private static AbstractDao.DataMap<HouseholdServiceReportModel> getVLSummaryModelMap() {
+        return c -> {
+            HouseholdServiceReportModel record = new HouseholdServiceReportModel();
+            record.setVl_last_result(getCursorValue(c, "vl_last_result"));
+            record.setLevel_mmd(getCursorValue(c, "level_mmd"));
+            record.setDate_next_vl(getCursorValue(c, "date_next_vl"));
+            record.setHousehold_id(getCursorValue(c, "household_id"));
+            record.setDate(getCursorValue(c, "date"));
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
+            return record;
+        };
+    }
+
     public static boolean checkForHouseholdViralLoad(String householdId) {
         String sql = "SELECT *, is_hiv_positive, date, vl_last_result, level_mmd, caregiver_mmd,household_id,strftime('%Y-%m-%d', substr(date,7,4) || '-' || substr(date,4,2) || '-' || substr(date,1,2)) as sortable_date " +
                 "FROM ec_household_service_report WHERE  household_id = '" + householdId + "'AND services = 'caregiver' AND (delete_status IS NULL OR delete_status <> '1') ORDER BY sortable_date DESC LIMIT 1";
@@ -92,9 +122,14 @@ public class HouseholdServiceReportDao extends AbstractDao {
             HouseholdServiceReportModel record = new HouseholdServiceReportModel();
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setServices(getCursorValue(c, "services"));
-            record.setHh_service_location(getCursorValue(c, "hh_service_location"));
+            String hhLocation = getCursorValue(c, "hh_service_location");
+            record.setHh_service_location(hhLocation);
+            String gpsVal = getCursorValue(c, "gps");
+            if (gpsVal == null || gpsVal.isEmpty()) gpsVal = hhLocation;
+            record.setGps(gpsVal);
             record.setServices_household(getCursorValue(c, "services_household"));
             record.setServices_caregiver(getCursorValue(c, "services_caregiver"));
+            record.setPregnant_breastfeeding(getCursorValue(c, "pregnant_breastfeeding"));
             record.setHealth_services(getCursorValue(c, "health_services"));
             record.setOther_health_services(getCursorValue(c, "other_health_services"));
             record.setSchooled_services(getCursorValue(c, "schooled_services"));
@@ -119,7 +154,10 @@ public class HouseholdServiceReportDao extends AbstractDao {
             record.setDelete_status(getCursorValue(c, "delete_status"));
             record.setSignature(getCursorValue(c, "signature"));
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 }
+
+

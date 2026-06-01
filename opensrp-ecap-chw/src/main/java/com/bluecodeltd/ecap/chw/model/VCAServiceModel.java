@@ -4,6 +4,7 @@ public class VCAServiceModel {
     private String base_entity_id;
     private String unique_id;
     private  String is_hiv_positive;
+    private String pregnant_breastfeeding;
     private String date;
     private String art_clinic;
     private String date_last_vl;
@@ -22,6 +23,7 @@ public class VCAServiceModel {
     private String delete_status;
 
     private  String vca_service_location;
+    private String gps;
     private String signature;
 
     public String getVca_service_location() {
@@ -30,6 +32,20 @@ public class VCAServiceModel {
 
     public void setVca_service_location(String vca_service_location) {
         this.vca_service_location = vca_service_location;
+        if (vca_service_location != null && !vca_service_location.isEmpty()) {
+            this.gps = vca_service_location;
+        }
+    }
+
+    public String getGps() {
+        return gps;
+    }
+
+    public void setGps(String gps) {
+        this.gps = gps;
+        if (gps != null && !gps.isEmpty()) {
+            this.vca_service_location = gps;
+        }
     }
 
     public String getBase_entity_id() {
@@ -54,6 +70,14 @@ public class VCAServiceModel {
 
     public void setIs_hiv_positive(String is_hiv_positive) {
         this.is_hiv_positive = is_hiv_positive;
+    }
+
+    public String getPregnant_breastfeeding() {
+        return pregnant_breastfeeding;
+    }
+
+    public void setPregnant_breastfeeding(String pregnant_breastfeeding) {
+        this.pregnant_breastfeeding = pregnant_breastfeeding;
     }
 
     public String getDate() {
@@ -191,4 +215,21 @@ public class VCAServiceModel {
     public void setSignature(String signature) {
         this.signature = signature;
     }
+
+    private final java.util.Map<String, String> additionalFields = new java.util.HashMap<>();
+
+    public java.util.Map<String, String> getAdditionalFields() {
+        return additionalFields;
+    }
+
+    public String getAdditionalField(String key) {
+        if (key == null) return null;
+        return additionalFields.get(key);
+    }
+
+    public void setAdditionalField(String key, String value) {
+        if (key == null) return;
+        additionalFields.put(key, value);
+    }
 }
+

@@ -77,4 +77,24 @@
     <dimen name="family_register_text_size">14sp</dimen>
     <dimen name="family_register_image_size">16dp</dimen>
     <dimen name="family_register_count_size">20dp</dimen>
+
+    <!-- Dashboard KPI cards -->
+    <dimen name="dash_card_min_height">130dp</dimen>
+    <dimen name="dash_kpi_number">24sp</dimen>
+    <dimen name="dash_card_label">10sp</dimen>
+    <dimen name="dash_card_sublabel">9sp</dimen>
+    <dimen name="dash_card_radius">16dp</dimen>
+    <dimen name="dash_card_elevation">4dp</dimen>
+    <dimen name="dash_card_gap">5dp</dimen>
+    <dimen name="dash_icon_size">20dp</dimen>
+    <dimen name="dash_icon_circle">34dp</dimen>
+    <dimen name="dash_pill_radius">20dp</dimen>
+    <dimen name="dash_pill_vertical_padding">6dp</dimen>
+    <dimen name="dash_pill_horizontal_padding">14dp</dimen>
+
+    <!-- Register list -->
+    <dimen name="register_icon_size">36dp</dimen>
+    <dimen name="register_icon_inner">18dp</dimen>
+    <dimen name="register_row_vertical_padding">14dp</dimen>
+    <dimen name="register_row_horizontal_padding">16dp</dimen>
 </resources>

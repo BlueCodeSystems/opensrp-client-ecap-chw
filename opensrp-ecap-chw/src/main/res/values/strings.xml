@@ -6,6 +6,8 @@
     <string name="unit">Unit</string>
     <string name="title_activity_show_only_household_services">Household Services</string>
     <string name="issue_referral">Issue Referral</string>
+    <!-- Force CoordinatorLayout to use the correct AppBarLayout behavior -->
+    <string name="appbar_scrolling_view_behavior" translatable="false">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
     <string name="due_today">Due today</string>
     <string name="referral_reason">Referral reason</string>
     <string name="tutorials">Tutorials</string>
@@ -18,7 +20,7 @@
     <string name="routine_household_visit">Routine household visit</string>
     <string name="update">Update</string>
     <string name="vaccination_done_earlier">Vaccination done earlier</string>
-    <string name="enter_pin_for_user">Enter PIN for user</string>
+    <string name="enter_pin_for_user">Enter PIN for %s</string>
     <string name="forgot_pin">Forgot PIN?</string>
     <string name="use_your_password">Use your password</string>
     <string name="sick_visits">Sick visits</string>
@@ -41,8 +43,8 @@
     <string name="pnc_observation_and_illness_mother">Observation and illness - mother</string>
     <string name="pnc_umblicord_care">Umbilical cord care</string>
     <string name="pnc_umblicord_care_child">Umbilical cord care (child)</string>
-    <string name="profile_activity_completed">Completed</string>
-    <string name="profile_activity_not_visited">Not visited</string>
+    <string name="profile_activity_completed">Completed on %s</string>
+    <string name="profile_activity_not_visited">Not visited on %s</string>
     <string name="received_llin">Received LLIN</string>
     <string name="refer_to_facilty">Refer to facility</string>
     <string name="refresh_indicators">Refresh indicators</string>
@@ -186,6 +188,8 @@
 
     <!-- Additional base strings to satisfy references -->
     <string name="app_name">ECAP II</string>
+    <!-- Title: Prevention of Mother-to-Child Transmission register -->
+    <string name="pmtct_register_title">Prevention of Mother-to-Child Transmission</string>
     <string name="all_households">Household Register</string>
     <string name="all_households_title">Household Register</string>
     <string name="all_index_title">VCA Register</string>
@@ -198,6 +202,31 @@
     <string name="anc_home_visit_pregnancy_risk">Pregnancy risk</string>
     <string name="anc_home_visit_remarks_and_comments">Remarks and comments</string>
     <string name="anc_indicator1">Women of reproductive age (10–49)</string>
+    <!-- PMTCT clinical decision support: Unsuppressed VL alert -->
+    <string name="pmtct_alert_unsuppressed_title">Mother with Unsuppressed Viral Load</string>
+    <string name="pmtct_alert_flagged">Flagged</string>
+    <string name="pmtct_alert_unsuppressed_actions_header">Recommended actions</string>
+    <string name="pmtct_alert_unsuppressed_actions_bullets">• Conduct enhanced adherence counselling
+• Case conferencing
+• Refer for further clinical management</string>
+    <string name="pmtct_alert_unsuppressed_actions_bullets_child">
+1: • Conduct enhanced adherence counselling\n
+    • Case conferencing\n\n
+2: • Check if they are on CTX and AZT+3TC+NVP
+</string>
+
+
+
+    <string name="unsuppressed_vl_flag">Unsuppressed VL</string>
+    <string name="suppressed_vl_flag">Suppressed VL</string>
+    <string name="hei_high_risk_flag">HEI: High Risk</string>
+    <!-- HEI HIV-positive alert -->
+    <string name="hei_hiv_positive_flag">HEI: HIV-positive</string>
+    <string name="hei_hiv_positive_title">HEI tests HIV-positive</string>
+    <string name="hei_hiv_positive_actions_header">Recommended action</string>
+    <string name="hei_hiv_positive_actions_bullets">• Link the child to treatment.</string>
+    <string name="icon_mother_desc">Mother</string>
+    <string name="icon_child_desc">Child</string>
     <string name="anc_indicator2">Pregnant women</string>
     <string name="anc_indicator3">Pregnant women up to date with ANC home visits</string>
     <string name="anc_indicator4">Pregnant women up to date with ANC facility visits</string>
@@ -215,12 +244,12 @@
     <string name="children_6_23_months_upto_date_mnp">Children (6–23 months) up to date with MNP supplementation</string>
     <string name="children_6_59_months_received_vitamin_A">Children (6–59 months) received vitamin A (last 6 months)</string>
     <string name="client_malaria_follow_up">Client malaria follow-up</string>
-    <string name="created">Created</string>
+    <string name="created">Created: %s</string>
     <string name="danger_signs_counselling">Danger signs counselling</string>
-    <string name="deworming_number_dose">Deworming dose number</string>
+    <string name="deworming_number_dose">Deworming %s dose</string>
     <string name="error_opening_profile">Error opening profile</string>
-    <string name="exclusive_breastfeeding_months">Exclusive breastfeeding (months)</string>
-    <string name="facility_ovc_register"> VCA Register</string>
+    <string name="exclusive_breastfeeding_months">Exclusive breastfeeding %s months</string>
+    <string name="facility_ovc_register">VCA Register</string>
     <string name="family_has_nothing_else_due">Family has nothing else due</string>
     <string name="family_planning_not_done">Family planning not done</string>
     <string name="family_planning_done">Family planning counseling at the health facility was done</string>
@@ -242,7 +271,7 @@
     <string name="menu_all_families">All families</string>
     <string name="menu_anc">ANC</string>
     <string name="menu_pnc">PNC</string>
-    <string name="mnp_number_pack">MNP pack number</string>
+    <string name="mnp_number_pack">MNP %s pack</string>
     <string name="moderate">Moderate</string>
     <string name="mother_index_register">Mother index register</string>
     <string name="normal">Normal</string>
@@ -263,7 +292,7 @@
     <string name="tb_referral">TB referral</string>
     <string name="unique_id_text">Unique ID</string>
     <string name="updating">Updating…</string>
-    <string name="vitamin_a_number_dose">Vitamin A dose number</string>
+    <string name="vitamin_a_number_dose">Vitamin A %s dose</string>
     <string name="open_referral_form">Open %s referral</string>
     
     <!-- Placeholders for locales missing default values (to satisfy aapt2) -->
@@ -312,6 +341,11 @@
     <string name="menu_labour_and_delivery">Labour and delivery</string>
     <string name="no_slice_label">No</string>
     <string name="not_counseled">Not counseled</string>
+
+    <!-- Non-PMTCT child profile labels -->
+    <string name="child_final_outcome">Child final outcome</string>
+    <string name="child_longitudinal_follow_up">Child longitudinal follow-up</string>
+    <string name="child_postnatal_care">Child postnatal care</string>
     <string name="not_provided">Not provided</string>
     <string name="notification">Notification</string>
     <string name="number">Number</string>
@@ -334,6 +368,7 @@
 
     <!-- Default strings for translated resources -->
     <string name="login_title">ECAP App</string>
+    <string name="offline_login_token_expired">Offline login token expired. Please connect to the internet and log in again.</string>
     <string name="title_family_detail">Household details</string>
     <string name="go_to_family_s_profile">Go to household profile</string>
     <string name="family_has_nothing_due">Household has no services due</string>
@@ -347,6 +382,9 @@
     <string name="view_medical_history">View medical history</string>
     <string name="not_visiting_this_month">Not visiting this month</string>
     <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="expand">Expand</string>
+    <string name="empty_state_image">Empty state image</string>
     <string name="visit_not_done_btn_child_profile">Visit not done</string>
     <string name="medical_history">Medical history</string>
     <string name="add_date_separately">+ ADD A DATE FOR EACH VACCINE</string>
@@ -369,6 +407,7 @@
     <string name="delivery_kit">Delivery kit</string>
     <string name="anc_home_visit_delivery_kit_received">Delivery kit received</string>
     <string name="menu_child">Child</string>
+    <string name="menu_child_clients">VCA Register</string>
     <string name="menu_malaria">Malaria</string>
     <string name="january">January</string>
     <string name="february">February</string>

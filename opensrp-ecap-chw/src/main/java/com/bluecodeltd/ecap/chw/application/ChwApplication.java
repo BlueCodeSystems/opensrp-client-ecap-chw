@@ -5,6 +5,7 @@ import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -41,6 +42,7 @@ import com.bluecodeltd.ecap.chw.util.ChwLocationBasedClassifier;
 import com.bluecodeltd.ecap.chw.util.FailSafeRecalledID;
 import com.bluecodeltd.ecap.chw.util.FileUtils;
 import com.bluecodeltd.ecap.chw.util.JsonFormUtils;
+import com.bluecodeltd.ecap.chw.util.SafeDebugTree;
 import com.bluecodeltd.ecap.chw.util.Utils;
 import com.evernote.android.job.JobApi;
 import com.evernote.android.job.JobConfig;
@@ -266,7 +268,11 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         // This prevents NoClassDefFoundError from org.smartregister.util.CrashLyticsTree
         try {
             Timber.uprootAll();
-            Timber.plant(new Timber.DebugTree());
+            if (BuildConfig.DEBUG) {
+                Timber.plant(new SafeDebugTree());
+            } else {
+                Timber.plant(new SafeDebugTree(4_000, Log.WARN));
+            }
         } catch (Throwable t) {
             // Ignore; logging is non-critical
         }

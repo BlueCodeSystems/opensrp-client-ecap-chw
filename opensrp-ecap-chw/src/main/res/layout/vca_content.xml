@@ -205,9 +205,11 @@
                     app:tabContentStart="0dp"
                     app:tabGravity="fill"
                     app:tabIndicatorColor="#E2E363"
-                    app:tabIndicatorHeight="4dp"
+                    app:tabIndicatorHeight="3dp"
+                    app:tabIndicatorFullWidth="false"
                     app:tabMaxWidth="0dp"
-                    app:tabMode="fixed"
+                    app:tabMode="scrollable"
+                    app:tabRippleColor="@color/white"
                     app:tabSelectedTextColor="@color/white"
                     app:tabTextAppearance="@style/CustomFontTextViewStyle.tabIndicator.sub.white" />
 
@@ -219,6 +221,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/collapsing_toolbar_appbarlayout"
+            android:nestedScrollingEnabled="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
@@ -261,7 +264,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
-                        android:text="VCA Screening"
+                        android:text="CA Screening"
                         android:background="#666666"
                         android:textColor="@android:color/white"
                         android:textStyle="italic"
@@ -272,6 +275,96 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/callFabx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    app:backgroundTint="@color/white"
+                    app:fabSize="mini"
+                    app:srcCompat="@drawable/baseline_mode_edit_24" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/tb_screening"
+                android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:background="#666666"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_toLeftOf="@+id/fabTbScreening"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:minWidth="50dp"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:text="TB Screening"
+                        android:background="#666666"
+                        android:textColor="@android:color/white"
+                        android:textStyle="italic"
+                        android:visibility="visible" />
+
+                </RelativeLayout>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fabTbScreening"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    app:backgroundTint="@color/white"
+                    app:fabSize="mini"
+                    app:srcCompat="@drawable/baseline_mode_edit_24" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/nutrition_assessment_intervention"
+                android:onClick="onClick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:background="#666666"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_toLeftOf="@+id/fabNutrition"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:minWidth="50dp"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:text="Nutrition Assessment and Intervention"
+                        android:background="#666666"
+                        android:textColor="@android:color/white"
+                        android:textStyle="italic"
+                        android:visibility="visible" />
+
+                </RelativeLayout>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fabNutrition"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -352,7 +445,7 @@
                     android:gravity="center"
                     android:minWidth="50dp"
                     android:padding="10dp"
-                    android:text="VCA Case Plan"
+                    android:text="CA Case Plan"
                     android:textStyle="italic"
                     />
 
@@ -427,7 +520,7 @@
                     android:gravity="center"
                     android:minWidth="50dp"
                     android:padding="10dp"
-                    android:text="VCA Quarterly Re-assessment Form"
+                    android:text="CA Quarterly Re-assessment Form"
                     android:textStyle="italic"
                      />
 
@@ -615,3 +708,4 @@
     </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+

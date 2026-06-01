@@ -140,6 +140,7 @@ public class VCAServiceReportDao extends AbstractDao {
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setUnique_id(getCursorValue(c, "unique_id"));
             record.setIs_hiv_positive(getCursorValue(c, "is_hiv_positive"));
+            record.setPregnant_breastfeeding(getCursorValue(c, "pregnant_breastfeeding"));
             record.setDate(getCursorValue(c, "date"));
             record.setArt_clinic(getCursorValue(c, "art_clinic"));
             record.setDate_last_vl(getCursorValue(c, "date_last_vl"));
@@ -156,10 +157,17 @@ public class VCAServiceReportDao extends AbstractDao {
             record.setStable_services(getCursorValue(c, "stable_services"));
             record.setOther_stable_services(getCursorValue(c, "other_stable_services"));
             record.setDelete_status(getCursorValue(c, "delete_status"));
-            record.setVca_service_location(getCursorValue(c,"vca_service_location"));
+            String vcaLocation = getCursorValue(c, "vca_service_location");
+            record.setVca_service_location(vcaLocation);
+            String vcaGps = getCursorValue(c, "gps");
+            if (vcaGps == null || vcaGps.isEmpty()) vcaGps = vcaLocation;
+            record.setGps(vcaGps);
             record.setSignature(getCursorValue(c,"signature"));
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 }
+
+

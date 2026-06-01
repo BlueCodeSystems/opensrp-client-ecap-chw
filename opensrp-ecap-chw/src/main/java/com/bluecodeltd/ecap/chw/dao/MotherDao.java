@@ -38,7 +38,9 @@ public class MotherDao  extends AbstractDao {
 
     public static List<Mother> getMothers(String householdID) {
 
-        String sql = "SELECT * FROM ec_mother_index WHERE household_id = '"+ householdID +"' ";
+        String sql = "SELECT * FROM ec_mother_index WHERE household_id = '" + householdID + "' " +
+                "OR household_id IN (SELECT DISTINCT unique_id FROM ec_client_index WHERE household_id = '" + householdID + "' " +
+                "AND (deleted IS NULL OR deleted <> '1') AND unique_id IS NOT NULL AND TRIM(unique_id) <> '')";
 
         DataMap<Mother> dataMap = c -> {
             return new Mother(
