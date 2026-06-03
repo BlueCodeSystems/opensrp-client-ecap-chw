@@ -30,6 +30,16 @@ if (project.rootProject.file("local.properties").exists()) {
     githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
 }
 
+kapt {
+    javacOptions {
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED")
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED")
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED")
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED")
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED")
+    }
+}
+
 android {
     namespace = "org.smartregister.chw.core"
     useLibrary 'org.apache.http.legacy'
@@ -400,15 +410,15 @@ dependencies {
     api 'io.reactivex.rxjava2:rxjava:2.2.15'
     api 'com.evernote:android-job:1.4.3'
     api 'org.greenrobot:eventbus:3.1.1'
-    api("org.smartregister:android-p2p-sync:0.3.8-aplha4-SNAPSHOT") {
-        transitive = true
-        exclude group: 'com.github.BlueCodeSystems', module: 'opensrp-client-core'
-        exclude group: 'org.smartregister', module: 'opensrp-client-core'
-        exclude group: 'com.github.BlueCodeSystems.Opensrp-client-native-form-new', module: 'opensrp-client-native-form'
-        exclude group: 'com.github.BlueCodeSystems.Opensrp-client-native-form-new', module: 'circleprogressbar'
-        exclude group: 'io.github.bluecodesystems', module: 'opensrp-client-core'
-        exclude group: 'io.github.bluecodesystems', module: 'android-p2p-sync'
-    }
+    // api("org.smartregister:android-p2p-sync:0.3.8-aplha4-SNAPSHOT") {
+    //    transitive = true
+    //    exclude group: 'com.github.BlueCodeSystems', module: 'opensrp-client-core'
+    //    exclude group: 'org.smartregister', module: 'opensrp-client-core'
+    //    exclude group: 'com.github.BlueCodeSystems.Opensrp-client-native-form-new', module: 'opensrp-client-native-form'
+    //    exclude group: 'com.github.BlueCodeSystems.Opensrp-client-native-form-new', module: 'circleprogressbar'
+    //    exclude group: 'io.github.bluecodesystems', module: 'opensrp-client-core'
+    //    exclude group: 'io.github.bluecodesystems', module: 'android-p2p-sync'
+    // }
 
     // RxJava support used across core and app
     api 'io.reactivex.rxjava2:rxjava:2.2.21'
@@ -567,7 +577,7 @@ publishing {
                  * gpr.usr=GITHUB_USER_ID &  gpr.key=PERSONAL_ACCESS_TOKEN
                  * otherwise set env variable GPR_USER & GPR_API_KEY
                  */
-                username = properties['gpr.usr'] ?: System.getenv("GPR_USER")
+                username = properties['gpr.user'] ?: System.getenv("GPR_USER")
                 password = properties['gpr.key'] ?: System.getenv("GPR_API_KEY")
             }
         }
