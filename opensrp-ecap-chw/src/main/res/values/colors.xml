@@ -140,6 +140,12 @@
     <color name="register_hts_icon">#1565C0</color>
     <color name="register_pmtct_bg">#F3E5F5</color>
     <color name="register_pmtct_icon">#7B1FA2</color>
+    <color name="register_malaria_bg">#E0F7FA</color>
+    <color name="register_malaria_icon">#00838F</color>
+    <color name="register_nutrition_bg">#FFF3E0</color>
+    <color name="register_nutrition_icon">#EF6C00</color>
+    <color name="register_tb_bg">#F3E5F5</color>
+    <color name="register_tb_icon">#6A1B9A</color>
     <color name="register_count_text">#546E7A</color>
     <color name="register_card_bg">#FFFFFF</color>
 

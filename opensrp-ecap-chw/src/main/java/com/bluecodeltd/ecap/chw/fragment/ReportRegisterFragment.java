@@ -1,0 +1,401 @@
+package com.bluecodeltd.ecap.chw.fragment;
+
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.RecyclerView.ItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.ReportRegisterActivity;
+import com.bluecodeltd.ecap.chw.adapter.ReportFormOptionAdapter;
+import com.bluecodeltd.ecap.chw.contract.ReportRegisterFragmentContract;
+import com.bluecodeltd.ecap.chw.domain.ReportType;
+import com.bluecodeltd.ecap.chw.presenter.ReportRegisterFragmentPresenter;
+import com.bluecodeltd.ecap.chw.util.Constants;
+
+import org.smartregister.chw.core.custom_views.NavigationMenu;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+public class ReportRegisterFragment extends BaseSafeRegisterFragment implements ReportRegisterFragmentContract.View {
+
+    private com.bluecodeltd.ecap.chw.databinding.FragmentBaseRegisterBinding binding;
+    private RecyclerView.Adapter<?> formsAdapter;
+    private boolean reportGridSpacingApplied;
+
+    @Override
+    protected void initializePresenter() {
+        presenter = new ReportRegisterFragmentPresenter();
+        ((ReportRegisterFragmentPresenter) presenter).initView(this);
+    }
+
+    @Override
+    public void setupViews(View view) {
+        try {
+            binding = com.bluecodeltd.ecap.chw.databinding.FragmentBaseRegisterBinding.bind(view);
+        } catch (Throwable ignored) {
+        }
+
+        super.setupViews(view);
+
+        try {
+            ensureReportGridConfig();
+        } catch (Exception ignored) {
+        }
+
+        Toolbar toolbar = null;
+        try {
+            toolbar = view.findViewById(org.smartregister.R.id.register_toolbar);
+        } catch (Exception ignored) {
+        }
+        if (toolbar != null) {
+            if (getActivity() instanceof AppCompatActivity) {
+                AppCompatActivity act = (AppCompatActivity) getActivity();
+                act.setSupportActionBar(toolbar);
+                if (act.getSupportActionBar() != null) {
+                    act.getSupportActionBar().setDisplayShowTitleEnabled(false);
+                }
+            }
+            toolbar.setTitle("");
+            android.widget.TextView titleLabel = toolbar.findViewById(org.smartregister.R.id.txt_title_label);
+            if (titleLabel != null) {
+                titleLabel.setVisibility(View.GONE);
+            }
+            NavigationMenu menu = NavigationMenu.getInstance(getActivity(), null, toolbar);
+            if (menu != null && menu.getNavigationAdapter() != null) {
+                menu.getNavigationAdapter().setSelectedView(Constants.DrawerMenu.REPORT_REGISTER);
+            }
+            try {
+                if (menu != null && getActivity() != null) {
+                    androidx.drawerlayout.widget.DrawerLayout drawer = menu.getDrawer();
+                    androidx.appcompat.graphics.drawable.DrawerArrowDrawable arrow = new androidx.appcompat.graphics.drawable.DrawerArrowDrawable(getActivity());
+                    arrow.setColor(android.graphics.Color.WHITE);
+                    toolbar.setNavigationIcon(arrow);
+                    toolbar.setNavigationOnClickListener(v -> {
+                        if (drawer != null) {
+                            drawer.openDrawer(androidx.core.view.GravityCompat.START);
+                        }
+                    });
+                }
+            } catch (Throwable ignored) {
+            }
+        } else {
+            NavigationMenu menu = NavigationMenu.getInstance(getActivity(), null, null);
+            if (menu != null && menu.getNavigationAdapter() != null) {
+                menu.getNavigationAdapter().setSelectedView(Constants.DrawerMenu.REPORT_REGISTER);
+            }
+        }
+
+        View navbarContainer = view.findViewById(org.smartregister.R.id.register_nav_bar_container);
+        if (navbarContainer != null) {
+            navbarContainer.setFocusable(false);
+            navbarContainer.bringToFront();
+        }
+
+        View searchBarLayout = view.findViewById(R.id.search_bar_layout);
+        if (searchBarLayout != null) {
+            searchBarLayout.setVisibility(View.GONE);
+        }
+
+        ImageView logo = view.findViewById(R.id.opensrp_logo_image_view);
+        if (logo != null) {
+            logo.setVisibility(View.GONE);
+        }
+
+        android.widget.TextView titleView = view.findViewById(org.smartregister.R.id.txt_title_label);
+        if (titleView != null) {
+            titleView.setVisibility(View.GONE);
+        }
+
+        if (getSearchView() != null) {
+            getSearchView().setBackgroundResource(R.color.white);
+            getSearchView().setCompoundDrawablesWithIntrinsicBounds(org.smartregister.R.drawable.ic_action_search, 0, 0, 0);
+            getSearchView().setTextColor(getResources().getColor(org.smartregister.R.color.text_black));
+        }
+
+        hideIfPresent(view, org.smartregister.R.id.top_right_layout);
+        hideIfPresent(view, org.smartregister.R.id.top_left_layout);
+        hideIfPresent(view, org.smartregister.R.id.register_sort_filter_bar_layout);
+        hideIfPresent(view, org.smartregister.R.id.filter_sort_layout);
+    }
+
+    private void hideIfPresent(View root, int viewId) {
+        View target = null;
+        try {
+            target = root.findViewById(viewId);
+        } catch (Exception ignored) {
+        }
+        if (target != null) {
+            target.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        View root = getView();
+        if (root != null) {
+            android.widget.TextView titleLabel = root.findViewById(org.smartregister.R.id.txt_title_label);
+            if (titleLabel != null) {
+                titleLabel.setVisibility(View.VISIBLE);
+                titleLabel.setText(getReportTitle());
+            }
+            Toolbar toolbar = root.findViewById(org.smartregister.R.id.register_toolbar);
+            if (toolbar != null) {
+                toolbar.setTitle("");
+            }
+        }
+        if (getActivity() instanceof AppCompatActivity) {
+            AppCompatActivity act = (AppCompatActivity) getActivity();
+            if (act.getSupportActionBar() != null) {
+                act.getSupportActionBar().setDisplayShowTitleEnabled(false);
+            }
+        }
+    }
+
+    @Override
+    protected void setUpActionBar() {
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        if (activity == null) {
+            return;
+        }
+        ActionBar actionBar = activity.getSupportActionBar();
+        if (actionBar == null) {
+            View root = getView();
+            if (root != null) {
+                Toolbar toolbar = root.findViewById(org.smartregister.R.id.register_toolbar);
+                if (toolbar != null) {
+                    activity.setSupportActionBar(toolbar);
+                    actionBar = activity.getSupportActionBar();
+                }
+            }
+        }
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(false);
+            View root = getView();
+            if (root != null) {
+                android.widget.TextView titleLabel = root.findViewById(org.smartregister.R.id.txt_title_label);
+                if (titleLabel != null) {
+                    titleLabel.setVisibility(View.VISIBLE);
+                    titleLabel.setText(getReportTitle());
+                }
+            }
+        }
+    }
+
+    @Override
+    public String getSelectedReportType() {
+        if (getActivity() instanceof com.bluecodeltd.ecap.chw.activity.ReportRegisterActivity) {
+            return ((com.bluecodeltd.ecap.chw.activity.ReportRegisterActivity) getActivity()).getSelectedReportType();
+        }
+        return com.bluecodeltd.ecap.chw.activity.ReportRegisterActivity.REPORT_TYPE_MALARIA;
+    }
+
+    private String getReportTitle() {
+        return getString(R.string.report_forms_title);
+    }
+
+    @Override
+    public void setUniqueID(String s) {
+        // No-op
+    }
+
+    @Override
+    public void setAdvancedSearchFormData(HashMap<String, String> hashMap) {
+        // No-op
+    }
+
+    @Override
+    protected String getMainCondition() {
+        return "(delete_status IS NULL OR delete_status <> '1')";
+    }
+
+    @Override
+    protected String getDefaultSortQuery() {
+        return "substr(date,7,4) DESC, substr(date,4,2) DESC, substr(date,1,2) DESC";
+    }
+
+    @Override
+    protected void startRegistration() {
+        // No-op
+    }
+
+    @Override
+    protected void onViewClicked(View view) {
+        // No-op
+    }
+
+    @Override
+    public void showNotFoundPopup(String s) {
+        // No-op
+    }
+
+    @Override
+    public void initializeAdapter() {
+        try {
+            ensureReportGridConfig();
+        } catch (Exception ignored) {
+        }
+
+        if (clientsView == null) {
+            Log.e("ReportRegisterFragment", "RecyclerView not found; skipping adapter initialization");
+            return;
+        }
+
+        if (formsAdapter == null) {
+            formsAdapter = new ReportFormOptionAdapter(buildFormOptions(), reportType -> {
+                if (getActivity() instanceof ReportRegisterActivity) {
+                    ((ReportRegisterActivity) getActivity()).launchReportForm(reportType.getID());
+                }
+            });
+        }
+        clientsView.setAdapter(formsAdapter);
+    }
+
+    @Override
+    public void showProgressView() {
+        try {
+            ProgressBar progressBar = null;
+            if (binding != null) {
+                progressBar = binding.clientListProgress;
+            }
+            if (progressBar == null && getView() != null) {
+                progressBar = getView().findViewById(R.id.client_list_progress);
+            }
+            if (progressBar != null && progressBar.getVisibility() != View.VISIBLE) {
+                progressBar.setVisibility(View.VISIBLE);
+            }
+        } catch (Exception e) {
+            Log.w("ReportRegisterFragment", "Could not show progress view: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void hideProgressView() {
+        try {
+            ProgressBar progressBar = null;
+            if (binding != null) {
+                progressBar = binding.clientListProgress;
+            }
+            if (progressBar == null && getView() != null) {
+                progressBar = getView().findViewById(R.id.client_list_progress);
+            }
+            if (progressBar != null && progressBar.getVisibility() == View.VISIBLE) {
+                progressBar.setVisibility(View.GONE);
+            }
+        } catch (Exception e) {
+            Log.w("ReportRegisterFragment", "Could not hide progress view: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
+    private List<ReportType> buildFormOptions() {
+        List<ReportType> options = new ArrayList<>();
+        options.add(new ReportType(ReportRegisterActivity.REPORT_TYPE_MALARIA, getString(R.string.menu_malaria)));
+        options.add(new ReportType(ReportRegisterActivity.REPORT_TYPE_NUTRITION, getString(R.string.report_nutrition)));
+        options.add(new ReportType(ReportRegisterActivity.REPORT_TYPE_TB, getString(R.string.report_tb)));
+        return options;
+    }
+
+    private void ensureReportGridConfig() {
+        if (clientsView == null) {
+            View root = getView();
+            if (root != null) {
+                androidx.recyclerview.widget.RecyclerView recyclerView = root.findViewById(org.smartregister.R.id.recycler_view);
+                if (recyclerView != null) {
+                    clientsView = recyclerView;
+                }
+            }
+        }
+
+        if (clientsView == null || getContext() == null) {
+            return;
+        }
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                int itemCount = formsAdapter == null ? 0 : formsAdapter.getItemCount();
+                if (itemCount > 0 && position == itemCount - 1 && (itemCount % 2 != 0)) {
+                    return 2;
+                }
+                return 1;
+            }
+        });
+        clientsView.setLayoutManager(gridLayoutManager);
+        clientsView.setHasFixedSize(true);
+        clientsView.setClipToPadding(false);
+
+        int horizontalPadding = (int) (getResources().getDisplayMetrics().density * 18);
+        int verticalPadding = (int) (getResources().getDisplayMetrics().density * 12);
+        clientsView.setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding);
+
+        ViewGroup.LayoutParams layoutParams = clientsView.getLayoutParams();
+        if (layoutParams instanceof RelativeLayout.LayoutParams) {
+            RelativeLayout.LayoutParams relativeLayoutParams = (RelativeLayout.LayoutParams) layoutParams;
+            relativeLayoutParams.topMargin = (int) (getResources().getDisplayMetrics().density * 24);
+            clientsView.setLayoutParams(relativeLayoutParams);
+        }
+
+        if (!reportGridSpacingApplied) {
+            int spacing = (int) (getResources().getDisplayMetrics().density * 12);
+            clientsView.addItemDecoration(new GridSpacingDecoration(spacing, spacing, spacing));
+            reportGridSpacingApplied = true;
+        }
+    }
+
+    private static class GridSpacingDecoration extends ItemDecoration {
+        private final int spanSpacing;
+        private final int topSpacing;
+        private final int bottomSpacing;
+
+        private GridSpacingDecoration(int spanSpacing, int topSpacing, int bottomSpacing) {
+            this.spanSpacing = spanSpacing;
+            this.topSpacing = topSpacing;
+            this.bottomSpacing = bottomSpacing;
+        }
+
+        @Override
+        public void getItemOffsets(android.graphics.Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            int position = parent.getChildAdapterPosition(view);
+            if (position == RecyclerView.NO_POSITION) {
+                return;
+            }
+
+            RecyclerView.Adapter<?> adapter = parent.getAdapter();
+            int itemCount = adapter == null ? 0 : adapter.getItemCount();
+            boolean isFullSpanLastItem = itemCount > 0 && position == itemCount - 1 && (itemCount % 2 != 0);
+
+            if (isFullSpanLastItem) {
+                outRect.left = spanSpacing;
+                outRect.right = spanSpacing;
+            } else if (position % 2 == 0) {
+                outRect.left = spanSpacing;
+                outRect.right = spanSpacing / 2;
+            } else {
+                outRect.left = spanSpacing / 2;
+                outRect.right = spanSpacing;
+            }
+            outRect.top = topSpacing;
+            outRect.bottom = bottomSpacing;
+        }
+    }
+}
