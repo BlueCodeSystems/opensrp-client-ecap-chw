@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_report_malaria"
+        android:enabled="true"
+        android:icon="@mipmap/sidemenu_malaria"
+        android:title="@string/menu_malaria"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_report_nutrition"
+        android:enabled="true"
+        android:icon="@drawable/ic_nutrition_24"
+        android:title="@string/report_nutrition"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_report_tb"
+        android:enabled="true"
+        android:icon="@drawable/ic_tb_24"
+        android:title="@string/report_tb"
+        app:showAsAction="ifRoom" />
+</menu>

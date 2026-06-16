@@ -748,6 +748,7 @@ public class CoreConstants {
         public static final String STOCK_USAGE_REPORT = "StockUsageItemModel usage report";
         public static final String CASE_PLANS ="Case plans";
         public static final String REPORTS = "Reports";
+        public static final String REPORT_REGISTER = "Report Register";
         public static final String UPDATES = "Updates";
         public static final String IDENTIFICATION = "Identification";
         public static final String PMTCT = "Pmtct";
@@ -990,6 +991,7 @@ public class CoreConstants {
         public static final String ALL_CLIENTS_REGISTERED_ACTIVITY = "ALL_CLIENTS";
         public static final String UPDATES_REGISTER_ACTIVITY = "UPDATES_REGISTER_ACTIVITY";
         public static final String DASHBOARD_ACTIVITY = "DASHBOARD_ACTIVITY";
+        public static final String REPORT_REGISTER_ACTIVITY = "REPORT_REGISTER_ACTIVITY";
         public static final String HTS_ACTIVITY = "HTS";
         public static final String PMTCT = "PMTCT_ACTIVITY";
 

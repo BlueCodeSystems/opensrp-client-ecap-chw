@@ -309,6 +309,10 @@
             android:name=".activity.ReportsActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
+            android:name=".activity.ReportRegisterActivity"
+            android:label="@string/all_report_register_title"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
             android:name=".activity.FragmentBaseActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
