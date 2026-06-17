@@ -13,6 +13,8 @@ import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.chw.core.dao.NavigationDao;
 import org.smartregister.chw.core.utils.CoreConstants;
 import org.smartregister.chw.fp.util.FamilyPlanningConstants;
+import org.smartregister.repository.AllSharedPreferences;
+import org.smartregister.CoreLibrary;
 import org.smartregister.family.util.AppExecutors;
 
 import java.util.Date;
@@ -119,6 +121,9 @@ public class NavigationInteractor implements NavigationContract.Interactor {
                         "WHERE (delete_status IS NULL OR delete_status <> '1')\n" +
                         "  AND (first_name IS NOT NULL OR last_name IS NOT NULL OR caregiver_name IS NOT NULL);\n";
                 return NavigationDao.getQueryCount(pmtctMotherCount);
+
+            case "report_register_total":
+                return getMonthlyReportCountForCurrentCaseworker();
 
             case CoreConstants.TABLE_NAME.FAMILY:
                 String sqlFamily = "select count(*) from ec_family where is_closed is NOT 1";
@@ -299,6 +304,36 @@ public class NavigationInteractor implements NavigationContract.Interactor {
 
             default:
                 return NavigationDao.getTableCount(tableName);
+        }
+    }
+
+    private int getMonthlyReportCountForCurrentCaseworker() {
+        String caseworkerName = getCurrentCaseworkerName();
+        String safeCaseworkerName = caseworkerName == null ? "" : caseworkerName.trim().replace("'", "''");
+        String filter = safeCaseworkerName.isEmpty() ? "" : " AND caseworker_name = '" + safeCaseworkerName + "'";
+        String sql =
+                "SELECT (" +
+                        "(SELECT COUNT(*) FROM ec_monthly_malaria WHERE (delete_status IS NULL OR delete_status <> '1')" + filter + ") + " +
+                        "(SELECT COUNT(*) FROM ec_monthly_nutrition WHERE (delete_status IS NULL OR delete_status <> '1')" + filter + ") + " +
+                        "(SELECT COUNT(*) FROM ec_monthly_tb WHERE (delete_status IS NULL OR delete_status <> '1')" + filter + ")" +
+                        ") AS c";
+        return NavigationDao.getQueryCount(sql);
+    }
+
+    private String getCurrentCaseworkerName() {
+        try {
+            AllSharedPreferences prefs = CoreLibrary.getInstance().context().allSharedPreferences();
+            if (prefs == null) {
+                return "";
+            }
+            String caseworkerName = prefs.getPreference("caseworker_name");
+            if (caseworkerName == null || caseworkerName.trim().isEmpty()) {
+                caseworkerName = prefs.getPreference("last_logged_in_username");
+            }
+            return caseworkerName == null ? "" : caseworkerName.trim();
+        } catch (Exception e) {
+            Timber.e(e);
+            return "";
         }
     }
 

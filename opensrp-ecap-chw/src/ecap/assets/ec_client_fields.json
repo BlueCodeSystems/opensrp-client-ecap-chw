@@ -39,45 +39,10 @@
           }
         },
         {
-          "column_name": "partner",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.partner"
-          }
-        },
-        {
-          "column_name": "homeaddress",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.homeaddress"
-          }
-        },
-        {
-          "column_name": "province",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.stateProvince"
-          }
-        },
-        {
-          "column_name": "district",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.countyDistrict"
-          }
-        },
-        {
           "column_name": "ward",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.ward"
-          }
-        },
-        {
-          "column_name": "landmark",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.landmark"
           }
         },
         {
@@ -88,66 +53,2829 @@
           }
         },
         {
-          "column_name": "mother_screening_date",
+          "column_name": "partner",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.mother_screening_date"
+            "field": "attributes.partner"
           }
         },
         {
-          "column_name": "screening_location_home",
+          "column_name": "delete_status",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.screening_location_home"
+            "field": "attributes.delete_status"
           }
         },
         {
-          "column_name": "caregiver_name",
+          "column_name": "caseworker_name",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.caregiver_name"
+            "field": "attributes.caseworker_name"
           }
         },
         {
-          "column_name": "caregiver_sex",
+          "column_name": "reporting_month",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.caregiver_sex"
+            "field": "attributes.reporting_month"
           }
         },
         {
-          "column_name": "caregiver_birth_date",
+          "column_name": "sec_a_q1_status",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.caregiver_birth_date"
+            "field": "attributes.sec_a_q1_status"
           }
         },
         {
-          "column_name": "caregiver_hiv_status",
+          "column_name": "q1_f_0_4",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.caregiver_hiv_status"
+            "field": "attributes.q1_f_0_4"
           }
         },
         {
-          "column_name": "active_on_treatment",
+          "column_name": "q1_f_5_15",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.active_on_treatment"
+            "field": "attributes.q1_f_5_15"
           }
         },
         {
-          "column_name": "caregiver_art_number",
+          "column_name": "q1_f_16_19",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.caregiver_art_number"
+            "field": "attributes.q1_f_16_19"
           }
         },
         {
-          "column_name": "caregiver_phone",
+          "column_name": "q1_f_20_plus",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.caregiver_phone"
+            "field": "attributes.q1_f_20_plus"
+          }
+        },
+        {
+          "column_name": "q1_f_calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_f_calhiv"
+          }
+        },
+        {
+          "column_name": "q1_f_hei",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_f_hei"
+          }
+        },
+        {
+          "column_name": "q1_f_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_f_wlhiv"
+          }
+        },
+        {
+          "column_name": "q1_f_sv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_f_sv"
+          }
+        },
+        {
+          "column_name": "q1_f_agyw",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_f_agyw"
+          }
+        },
+        {
+          "column_name": "q1_f_hiv_pos",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_f_hiv_pos"
+          }
+        },
+        {
+          "column_name": "q1_f_siblings",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_f_siblings"
+          }
+        },
+        {
+          "column_name": "q1_f_caregivers",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_f_caregivers"
+          }
+        },
+        {
+          "column_name": "q1_m_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_m_0_4"
+          }
+        },
+        {
+          "column_name": "q1_m_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_m_5_15"
+          }
+        },
+        {
+          "column_name": "q1_m_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_m_16_19"
+          }
+        },
+        {
+          "column_name": "q1_m_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_m_20_plus"
+          }
+        },
+        {
+          "column_name": "q1_m_calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_m_calhiv"
+          }
+        },
+        {
+          "column_name": "q1_m_hei",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_m_hei"
+          }
+        },
+        {
+          "column_name": "q1_m_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_m_wlhiv"
+          }
+        },
+        {
+          "column_name": "q1_m_sv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_m_sv"
+          }
+        },
+        {
+          "column_name": "q1_m_siblings",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_m_siblings"
+          }
+        },
+        {
+          "column_name": "q1_m_caregivers",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_m_caregivers"
+          }
+        },
+        {
+          "column_name": "sec_a_q2_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_a_q2_status"
+          }
+        },
+        {
+          "column_name": "q2_f_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_f_0_4"
+          }
+        },
+        {
+          "column_name": "q2_f_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_f_5_15"
+          }
+        },
+        {
+          "column_name": "q2_f_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_f_16_19"
+          }
+        },
+        {
+          "column_name": "q2_f_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_f_20_plus"
+          }
+        },
+        {
+          "column_name": "q2_f_calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_f_calhiv"
+          }
+        },
+        {
+          "column_name": "q2_f_hei",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_f_hei"
+          }
+        },
+        {
+          "column_name": "q2_f_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_f_wlhiv"
+          }
+        },
+        {
+          "column_name": "q2_f_sv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_f_sv"
+          }
+        },
+        {
+          "column_name": "q2_f_agyw",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_f_agyw"
+          }
+        },
+        {
+          "column_name": "q2_f_hiv_pos",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_f_hiv_pos"
+          }
+        },
+        {
+          "column_name": "q2_f_siblings",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_f_siblings"
+          }
+        },
+        {
+          "column_name": "q2_f_caregivers",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_f_caregivers"
+          }
+        },
+        {
+          "column_name": "q2_m_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_m_0_4"
+          }
+        },
+        {
+          "column_name": "q2_m_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_m_5_15"
+          }
+        },
+        {
+          "column_name": "q2_m_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_m_16_19"
+          }
+        },
+        {
+          "column_name": "q2_m_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_m_20_plus"
+          }
+        },
+        {
+          "column_name": "q2_m_calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_m_calhiv"
+          }
+        },
+        {
+          "column_name": "q2_m_hei",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_m_hei"
+          }
+        },
+        {
+          "column_name": "q2_m_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_m_wlhiv"
+          }
+        },
+        {
+          "column_name": "q2_m_sv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_m_sv"
+          }
+        },
+        {
+          "column_name": "q2_m_siblings",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_m_siblings"
+          }
+        },
+        {
+          "column_name": "q2_m_caregivers",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_m_caregivers"
+          }
+        },
+        {
+          "column_name": "sec_a_q3_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_a_q3_status"
+          }
+        },
+        {
+          "column_name": "q3_f_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_f_0_4"
+          }
+        },
+        {
+          "column_name": "q3_f_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_f_5_15"
+          }
+        },
+        {
+          "column_name": "q3_f_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_f_16_19"
+          }
+        },
+        {
+          "column_name": "q3_f_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_f_20_plus"
+          }
+        },
+        {
+          "column_name": "q3_f_calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_f_calhiv"
+          }
+        },
+        {
+          "column_name": "q3_f_hei",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_f_hei"
+          }
+        },
+        {
+          "column_name": "q3_f_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_f_wlhiv"
+          }
+        },
+        {
+          "column_name": "q3_f_sv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_f_sv"
+          }
+        },
+        {
+          "column_name": "q3_f_agyw",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_f_agyw"
+          }
+        },
+        {
+          "column_name": "q3_f_hiv_pos",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_f_hiv_pos"
+          }
+        },
+        {
+          "column_name": "q3_f_siblings",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_f_siblings"
+          }
+        },
+        {
+          "column_name": "q3_f_caregivers",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_f_caregivers"
+          }
+        },
+        {
+          "column_name": "q3_m_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_m_0_4"
+          }
+        },
+        {
+          "column_name": "q3_m_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_m_5_15"
+          }
+        },
+        {
+          "column_name": "q3_m_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_m_16_19"
+          }
+        },
+        {
+          "column_name": "q3_m_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_m_20_plus"
+          }
+        },
+        {
+          "column_name": "q3_m_calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_m_calhiv"
+          }
+        },
+        {
+          "column_name": "q3_m_hei",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_m_hei"
+          }
+        },
+        {
+          "column_name": "q3_m_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_m_wlhiv"
+          }
+        },
+        {
+          "column_name": "q3_m_sv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_m_sv"
+          }
+        },
+        {
+          "column_name": "q3_m_siblings",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_m_siblings"
+          }
+        },
+        {
+          "column_name": "q3_m_caregivers",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_m_caregivers"
+          }
+        },
+        {
+          "column_name": "sec_a_q4_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_a_q4_status"
+          }
+        },
+        {
+          "column_name": "q4_f_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_f_0_4"
+          }
+        },
+        {
+          "column_name": "q4_f_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_f_5_15"
+          }
+        },
+        {
+          "column_name": "q4_f_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_f_16_19"
+          }
+        },
+        {
+          "column_name": "q4_f_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_f_20_plus"
+          }
+        },
+        {
+          "column_name": "q4_f_calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_f_calhiv"
+          }
+        },
+        {
+          "column_name": "q4_f_hei",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_f_hei"
+          }
+        },
+        {
+          "column_name": "q4_f_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_f_wlhiv"
+          }
+        },
+        {
+          "column_name": "q4_f_sv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_f_sv"
+          }
+        },
+        {
+          "column_name": "q4_f_agyw",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_f_agyw"
+          }
+        },
+        {
+          "column_name": "q4_f_hiv_pos",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_f_hiv_pos"
+          }
+        },
+        {
+          "column_name": "q4_f_siblings",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_f_siblings"
+          }
+        },
+        {
+          "column_name": "q4_f_caregivers",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_f_caregivers"
+          }
+        },
+        {
+          "column_name": "q4_m_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_m_0_4"
+          }
+        },
+        {
+          "column_name": "q4_m_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_m_5_15"
+          }
+        },
+        {
+          "column_name": "q4_m_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_m_16_19"
+          }
+        },
+        {
+          "column_name": "q4_m_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_m_20_plus"
+          }
+        },
+        {
+          "column_name": "q4_m_calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_m_calhiv"
+          }
+        },
+        {
+          "column_name": "q4_m_hei",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_m_hei"
+          }
+        },
+        {
+          "column_name": "q4_m_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_m_wlhiv"
+          }
+        },
+        {
+          "column_name": "q4_m_sv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_m_sv"
+          }
+        },
+        {
+          "column_name": "q4_m_siblings",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_m_siblings"
+          }
+        },
+        {
+          "column_name": "q4_m_caregivers",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_m_caregivers"
+          }
+        },
+        {
+          "column_name": "sec_a_q5_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_a_q5_status"
+          }
+        },
+        {
+          "column_name": "q5_f_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_f_0_4"
+          }
+        },
+        {
+          "column_name": "q5_f_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_f_5_15"
+          }
+        },
+        {
+          "column_name": "q5_f_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_f_16_19"
+          }
+        },
+        {
+          "column_name": "q5_f_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_f_20_plus"
+          }
+        },
+        {
+          "column_name": "q5_f_calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_f_calhiv"
+          }
+        },
+        {
+          "column_name": "q5_f_hei",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_f_hei"
+          }
+        },
+        {
+          "column_name": "q5_f_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_f_wlhiv"
+          }
+        },
+        {
+          "column_name": "q5_f_sv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_f_sv"
+          }
+        },
+        {
+          "column_name": "q5_f_agyw",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_f_agyw"
+          }
+        },
+        {
+          "column_name": "q5_f_hiv_pos",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_f_hiv_pos"
+          }
+        },
+        {
+          "column_name": "q5_f_siblings",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_f_siblings"
+          }
+        },
+        {
+          "column_name": "q5_f_caregivers",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_f_caregivers"
+          }
+        },
+        {
+          "column_name": "q5_m_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_m_0_4"
+          }
+        },
+        {
+          "column_name": "q5_m_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_m_5_15"
+          }
+        },
+        {
+          "column_name": "q5_m_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_m_16_19"
+          }
+        },
+        {
+          "column_name": "q5_m_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_m_20_plus"
+          }
+        },
+        {
+          "column_name": "q5_m_calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_m_calhiv"
+          }
+        },
+        {
+          "column_name": "q5_m_hei",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_m_hei"
+          }
+        },
+        {
+          "column_name": "q5_m_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_m_wlhiv"
+          }
+        },
+        {
+          "column_name": "q5_m_sv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_m_sv"
+          }
+        },
+        {
+          "column_name": "q5_m_siblings",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_m_siblings"
+          }
+        },
+        {
+          "column_name": "q5_m_caregivers",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_m_caregivers"
+          }
+        },
+        {
+          "column_name": "sec_a_q6_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_a_q6_status"
+          }
+        },
+        {
+          "column_name": "q6_f_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_f_0_4"
+          }
+        },
+        {
+          "column_name": "q6_f_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_f_5_15"
+          }
+        },
+        {
+          "column_name": "q6_f_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_f_16_19"
+          }
+        },
+        {
+          "column_name": "q6_f_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_f_20_plus"
+          }
+        },
+        {
+          "column_name": "q6_f_calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_f_calhiv"
+          }
+        },
+        {
+          "column_name": "q6_f_hei",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_f_hei"
+          }
+        },
+        {
+          "column_name": "q6_f_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_f_wlhiv"
+          }
+        },
+        {
+          "column_name": "q6_f_sv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_f_sv"
+          }
+        },
+        {
+          "column_name": "q6_f_agyw",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_f_agyw"
+          }
+        },
+        {
+          "column_name": "q6_f_hiv_pos",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_f_hiv_pos"
+          }
+        },
+        {
+          "column_name": "q6_f_siblings",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_f_siblings"
+          }
+        },
+        {
+          "column_name": "q6_f_caregivers",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_f_caregivers"
+          }
+        },
+        {
+          "column_name": "q6_m_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_m_0_4"
+          }
+        },
+        {
+          "column_name": "q6_m_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_m_5_15"
+          }
+        },
+        {
+          "column_name": "q6_m_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_m_16_19"
+          }
+        },
+        {
+          "column_name": "q6_m_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_m_20_plus"
+          }
+        },
+        {
+          "column_name": "q6_m_calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_m_calhiv"
+          }
+        },
+        {
+          "column_name": "q6_m_hei",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_m_hei"
+          }
+        },
+        {
+          "column_name": "q6_m_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_m_wlhiv"
+          }
+        },
+        {
+          "column_name": "q6_m_sv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_m_sv"
+          }
+        },
+        {
+          "column_name": "q6_m_siblings",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_m_siblings"
+          }
+        },
+        {
+          "column_name": "q6_m_caregivers",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_m_caregivers"
+          }
+        },
+        {
+          "column_name": "sec_a_q7_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_a_q7_status"
+          }
+        },
+        {
+          "column_name": "q7_f_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_f_0_4"
+          }
+        },
+        {
+          "column_name": "q7_f_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_f_5_15"
+          }
+        },
+        {
+          "column_name": "q7_f_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_f_16_19"
+          }
+        },
+        {
+          "column_name": "q7_f_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_f_20_plus"
+          }
+        },
+        {
+          "column_name": "q7_f_calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_f_calhiv"
+          }
+        },
+        {
+          "column_name": "q7_f_hei",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_f_hei"
+          }
+        },
+        {
+          "column_name": "q7_f_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_f_wlhiv"
+          }
+        },
+        {
+          "column_name": "q7_f_sv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_f_sv"
+          }
+        },
+        {
+          "column_name": "q7_f_agyw",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_f_agyw"
+          }
+        },
+        {
+          "column_name": "q7_f_hiv_pos",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_f_hiv_pos"
+          }
+        },
+        {
+          "column_name": "q7_f_siblings",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_f_siblings"
+          }
+        },
+        {
+          "column_name": "q7_f_caregivers",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_f_caregivers"
+          }
+        },
+        {
+          "column_name": "q7_m_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_m_0_4"
+          }
+        },
+        {
+          "column_name": "q7_m_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_m_5_15"
+          }
+        },
+        {
+          "column_name": "q7_m_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_m_16_19"
+          }
+        },
+        {
+          "column_name": "q7_m_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_m_20_plus"
+          }
+        },
+        {
+          "column_name": "q7_m_calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_m_calhiv"
+          }
+        },
+        {
+          "column_name": "q7_m_hei",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_m_hei"
+          }
+        },
+        {
+          "column_name": "q7_m_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_m_wlhiv"
+          }
+        },
+        {
+          "column_name": "q7_m_sv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_m_sv"
+          }
+        },
+        {
+          "column_name": "q7_m_siblings",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_m_siblings"
+          }
+        },
+        {
+          "column_name": "q7_m_caregivers",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_m_caregivers"
+          }
+        },
+        {
+          "column_name": "sec_a_q8_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_a_q8_status"
+          }
+        },
+        {
+          "column_name": "q8_f_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q8_f_0_4"
+          }
+        },
+        {
+          "column_name": "q8_f_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q8_f_5_15"
+          }
+        },
+        {
+          "column_name": "q8_f_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q8_f_16_19"
+          }
+        },
+        {
+          "column_name": "q8_f_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q8_f_20_plus"
+          }
+        },
+        {
+          "column_name": "q8_f_calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q8_f_calhiv"
+          }
+        },
+        {
+          "column_name": "q8_f_hei",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q8_f_hei"
+          }
+        },
+        {
+          "column_name": "q8_f_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q8_f_wlhiv"
+          }
+        },
+        {
+          "column_name": "q8_f_sv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q8_f_sv"
+          }
+        },
+        {
+          "column_name": "q8_f_agyw",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q8_f_agyw"
+          }
+        },
+        {
+          "column_name": "q8_f_hiv_pos",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q8_f_hiv_pos"
+          }
+        },
+        {
+          "column_name": "q8_f_siblings",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q8_f_siblings"
+          }
+        },
+        {
+          "column_name": "q8_f_caregivers",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q8_f_caregivers"
+          }
+        },
+        {
+          "column_name": "q8_m_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q8_m_0_4"
+          }
+        },
+        {
+          "column_name": "q8_m_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q8_m_5_15"
+          }
+        },
+        {
+          "column_name": "q8_m_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q8_m_16_19"
+          }
+        },
+        {
+          "column_name": "q8_m_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q8_m_20_plus"
+          }
+        },
+        {
+          "column_name": "q8_m_calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q8_m_calhiv"
+          }
+        },
+        {
+          "column_name": "q8_m_hei",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q8_m_hei"
+          }
+        },
+        {
+          "column_name": "q8_m_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q8_m_wlhiv"
+          }
+        },
+        {
+          "column_name": "q8_m_sv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q8_m_sv"
+          }
+        },
+        {
+          "column_name": "q8_m_siblings",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q8_m_siblings"
+          }
+        },
+        {
+          "column_name": "q8_m_caregivers",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q8_m_caregivers"
+          }
+        },
+        {
+          "column_name": "sec_a_q9_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_a_q9_status"
+          }
+        },
+        {
+          "column_name": "q9_f_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q9_f_0_4"
+          }
+        },
+        {
+          "column_name": "q9_f_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q9_f_5_15"
+          }
+        },
+        {
+          "column_name": "q9_f_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q9_f_16_19"
+          }
+        },
+        {
+          "column_name": "q9_f_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q9_f_20_plus"
+          }
+        },
+        {
+          "column_name": "q9_f_calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q9_f_calhiv"
+          }
+        },
+        {
+          "column_name": "q9_f_hei",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q9_f_hei"
+          }
+        },
+        {
+          "column_name": "q9_f_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q9_f_wlhiv"
+          }
+        },
+        {
+          "column_name": "q9_f_sv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q9_f_sv"
+          }
+        },
+        {
+          "column_name": "q9_f_agyw",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q9_f_agyw"
+          }
+        },
+        {
+          "column_name": "q9_f_hiv_pos",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q9_f_hiv_pos"
+          }
+        },
+        {
+          "column_name": "q9_f_siblings",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q9_f_siblings"
+          }
+        },
+        {
+          "column_name": "q9_f_caregivers",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q9_f_caregivers"
+          }
+        },
+        {
+          "column_name": "q9_m_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q9_m_0_4"
+          }
+        },
+        {
+          "column_name": "q9_m_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q9_m_5_15"
+          }
+        },
+        {
+          "column_name": "q9_m_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q9_m_16_19"
+          }
+        },
+        {
+          "column_name": "q9_m_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q9_m_20_plus"
+          }
+        },
+        {
+          "column_name": "q9_m_calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q9_m_calhiv"
+          }
+        },
+        {
+          "column_name": "q9_m_hei",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q9_m_hei"
+          }
+        },
+        {
+          "column_name": "q9_m_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q9_m_wlhiv"
+          }
+        },
+        {
+          "column_name": "q9_m_sv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q9_m_sv"
+          }
+        },
+        {
+          "column_name": "q9_m_siblings",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q9_m_siblings"
+          }
+        },
+        {
+          "column_name": "q9_m_caregivers",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q9_m_caregivers"
+          }
+        },
+        {
+          "column_name": "sec_a_q10_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_a_q10_status"
+          }
+        },
+        {
+          "column_name": "q10_f_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q10_f_0_4"
+          }
+        },
+        {
+          "column_name": "q10_f_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q10_f_5_15"
+          }
+        },
+        {
+          "column_name": "q10_f_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q10_f_16_19"
+          }
+        },
+        {
+          "column_name": "q10_f_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q10_f_20_plus"
+          }
+        },
+        {
+          "column_name": "q10_f_calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q10_f_calhiv"
+          }
+        },
+        {
+          "column_name": "q10_f_hei",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q10_f_hei"
+          }
+        },
+        {
+          "column_name": "q10_f_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q10_f_wlhiv"
+          }
+        },
+        {
+          "column_name": "q10_f_sv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q10_f_sv"
+          }
+        },
+        {
+          "column_name": "q10_f_agyw",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q10_f_agyw"
+          }
+        },
+        {
+          "column_name": "q10_f_hiv_pos",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q10_f_hiv_pos"
+          }
+        },
+        {
+          "column_name": "q10_f_siblings",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q10_f_siblings"
+          }
+        },
+        {
+          "column_name": "q10_f_caregivers",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q10_f_caregivers"
+          }
+        },
+        {
+          "column_name": "q10_m_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q10_m_0_4"
+          }
+        },
+        {
+          "column_name": "q10_m_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q10_m_5_15"
+          }
+        },
+        {
+          "column_name": "q10_m_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q10_m_16_19"
+          }
+        },
+        {
+          "column_name": "q10_m_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q10_m_20_plus"
+          }
+        },
+        {
+          "column_name": "q10_m_calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q10_m_calhiv"
+          }
+        },
+        {
+          "column_name": "q10_m_hei",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q10_m_hei"
+          }
+        },
+        {
+          "column_name": "q10_m_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q10_m_wlhiv"
+          }
+        },
+        {
+          "column_name": "q10_m_sv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q10_m_sv"
+          }
+        },
+        {
+          "column_name": "q10_m_siblings",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q10_m_siblings"
+          }
+        },
+        {
+          "column_name": "q10_m_caregivers",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q10_m_caregivers"
+          }
+        },
+        {
+          "column_name": "sec_b_q1_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_b_q1_status"
+          }
+        },
+        {
+          "column_name": "sb_q1_f_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q1_f_0_4"
+          }
+        },
+        {
+          "column_name": "sb_q1_f_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q1_f_5_15"
+          }
+        },
+        {
+          "column_name": "sb_q1_f_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q1_f_16_19"
+          }
+        },
+        {
+          "column_name": "sb_q1_f_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q1_f_20_plus"
+          }
+        },
+        {
+          "column_name": "sb_q1_m_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q1_m_0_4"
+          }
+        },
+        {
+          "column_name": "sb_q1_m_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q1_m_5_15"
+          }
+        },
+        {
+          "column_name": "sb_q1_m_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q1_m_16_19"
+          }
+        },
+        {
+          "column_name": "sb_q1_m_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q1_m_20_plus"
+          }
+        },
+        {
+          "column_name": "sec_b_q2_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_b_q2_status"
+          }
+        },
+        {
+          "column_name": "sb_q2_f_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q2_f_0_4"
+          }
+        },
+        {
+          "column_name": "sb_q2_f_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q2_f_5_15"
+          }
+        },
+        {
+          "column_name": "sb_q2_f_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q2_f_16_19"
+          }
+        },
+        {
+          "column_name": "sb_q2_f_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q2_f_20_plus"
+          }
+        },
+        {
+          "column_name": "sb_q2_m_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q2_m_0_4"
+          }
+        },
+        {
+          "column_name": "sb_q2_m_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q2_m_5_15"
+          }
+        },
+        {
+          "column_name": "sb_q2_m_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q2_m_16_19"
+          }
+        },
+        {
+          "column_name": "sb_q2_m_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q2_m_20_plus"
+          }
+        },
+        {
+          "column_name": "sec_b_q3_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_b_q3_status"
+          }
+        },
+        {
+          "column_name": "sb_q3_f_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q3_f_0_4"
+          }
+        },
+        {
+          "column_name": "sb_q3_f_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q3_f_5_15"
+          }
+        },
+        {
+          "column_name": "sb_q3_f_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q3_f_16_19"
+          }
+        },
+        {
+          "column_name": "sb_q3_f_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q3_f_20_plus"
+          }
+        },
+        {
+          "column_name": "sb_q3_m_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q3_m_0_4"
+          }
+        },
+        {
+          "column_name": "sb_q3_m_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q3_m_5_15"
+          }
+        },
+        {
+          "column_name": "sb_q3_m_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q3_m_16_19"
+          }
+        },
+        {
+          "column_name": "sb_q3_m_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q3_m_20_plus"
+          }
+        },
+        {
+          "column_name": "sec_b_q4_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_b_q4_status"
+          }
+        },
+        {
+          "column_name": "sb_q4_f_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q4_f_0_4"
+          }
+        },
+        {
+          "column_name": "sb_q4_f_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q4_f_5_15"
+          }
+        },
+        {
+          "column_name": "sb_q4_f_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q4_f_16_19"
+          }
+        },
+        {
+          "column_name": "sb_q4_f_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q4_f_20_plus"
+          }
+        },
+        {
+          "column_name": "sb_q4_m_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q4_m_0_4"
+          }
+        },
+        {
+          "column_name": "sb_q4_m_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q4_m_5_15"
+          }
+        },
+        {
+          "column_name": "sb_q4_m_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q4_m_16_19"
+          }
+        },
+        {
+          "column_name": "sb_q4_m_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q4_m_20_plus"
+          }
+        },
+        {
+          "column_name": "sec_b_q5_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_b_q5_status"
+          }
+        },
+        {
+          "column_name": "sb_q5_f_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q5_f_0_4"
+          }
+        },
+        {
+          "column_name": "sb_q5_f_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q5_f_5_15"
+          }
+        },
+        {
+          "column_name": "sb_q5_f_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q5_f_16_19"
+          }
+        },
+        {
+          "column_name": "sb_q5_f_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q5_f_20_plus"
+          }
+        },
+        {
+          "column_name": "sb_q5_m_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q5_m_0_4"
+          }
+        },
+        {
+          "column_name": "sb_q5_m_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q5_m_5_15"
+          }
+        },
+        {
+          "column_name": "sb_q5_m_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q5_m_16_19"
+          }
+        },
+        {
+          "column_name": "sb_q5_m_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q5_m_20_plus"
+          }
+        },
+        {
+          "column_name": "sec_b_q6_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_b_q6_status"
+          }
+        },
+        {
+          "column_name": "sb_q6_f_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q6_f_0_4"
+          }
+        },
+        {
+          "column_name": "sb_q6_f_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q6_f_5_15"
+          }
+        },
+        {
+          "column_name": "sb_q6_f_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q6_f_16_19"
+          }
+        },
+        {
+          "column_name": "sb_q6_f_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q6_f_20_plus"
+          }
+        },
+        {
+          "column_name": "sb_q6_m_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q6_m_0_4"
+          }
+        },
+        {
+          "column_name": "sb_q6_m_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q6_m_5_15"
+          }
+        },
+        {
+          "column_name": "sb_q6_m_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q6_m_16_19"
+          }
+        },
+        {
+          "column_name": "sb_q6_m_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q6_m_20_plus"
+          }
+        },
+        {
+          "column_name": "sec_b_q7_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_b_q7_status"
+          }
+        },
+        {
+          "column_name": "sb_q7_f_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q7_f_0_4"
+          }
+        },
+        {
+          "column_name": "sb_q7_f_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q7_f_5_15"
+          }
+        },
+        {
+          "column_name": "sb_q7_f_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q7_f_16_19"
+          }
+        },
+        {
+          "column_name": "sb_q7_f_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q7_f_20_plus"
+          }
+        },
+        {
+          "column_name": "sb_q7_m_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q7_m_0_4"
+          }
+        },
+        {
+          "column_name": "sb_q7_m_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q7_m_5_15"
+          }
+        },
+        {
+          "column_name": "sb_q7_m_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q7_m_16_19"
+          }
+        },
+        {
+          "column_name": "sb_q7_m_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q7_m_20_plus"
+          }
+        },
+        {
+          "column_name": "sec_b_q8_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_b_q8_status"
+          }
+        },
+        {
+          "column_name": "sb_q8_f_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q8_f_0_4"
+          }
+        },
+        {
+          "column_name": "sb_q8_f_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q8_f_5_15"
+          }
+        },
+        {
+          "column_name": "sb_q8_f_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q8_f_16_19"
+          }
+        },
+        {
+          "column_name": "sb_q8_f_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q8_f_20_plus"
+          }
+        },
+        {
+          "column_name": "sb_q8_m_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q8_m_0_4"
+          }
+        },
+        {
+          "column_name": "sb_q8_m_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q8_m_5_15"
+          }
+        },
+        {
+          "column_name": "sb_q8_m_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q8_m_16_19"
+          }
+        },
+        {
+          "column_name": "sb_q8_m_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q8_m_20_plus"
+          }
+        },
+        {
+          "column_name": "sec_b_q9_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_b_q9_status"
+          }
+        },
+        {
+          "column_name": "sb_q9_f_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q9_f_0_4"
+          }
+        },
+        {
+          "column_name": "sb_q9_f_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q9_f_5_15"
+          }
+        },
+        {
+          "column_name": "sb_q9_f_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q9_f_16_19"
+          }
+        },
+        {
+          "column_name": "sb_q9_f_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q9_f_20_plus"
+          }
+        },
+        {
+          "column_name": "sb_q9_m_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q9_m_0_4"
+          }
+        },
+        {
+          "column_name": "sb_q9_m_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q9_m_5_15"
+          }
+        },
+        {
+          "column_name": "sb_q9_m_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q9_m_16_19"
+          }
+        },
+        {
+          "column_name": "sb_q9_m_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q9_m_20_plus"
+          }
+        },
+        {
+          "column_name": "sec_b_q10_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_b_q10_status"
+          }
+        },
+        {
+          "column_name": "sb_q10_f_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q10_f_0_4"
+          }
+        },
+        {
+          "column_name": "sb_q10_f_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q10_f_5_15"
+          }
+        },
+        {
+          "column_name": "sb_q10_f_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q10_f_16_19"
+          }
+        },
+        {
+          "column_name": "sb_q10_f_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q10_f_20_plus"
+          }
+        },
+        {
+          "column_name": "sb_q10_m_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q10_m_0_4"
+          }
+        },
+        {
+          "column_name": "sb_q10_m_5_15",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q10_m_5_15"
+          }
+        },
+        {
+          "column_name": "sb_q10_m_16_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q10_m_16_19"
+          }
+        },
+        {
+          "column_name": "sb_q10_m_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sb_q10_m_20_plus"
+          }
+        },
+        {
+          "column_name": "sec_c_q1_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_c_q1_status"
+          }
+        },
+        {
+          "column_name": "sc_q1_value",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sc_q1_value"
+          }
+        },
+        {
+          "column_name": "sec_c_q2_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_c_q2_status"
+          }
+        },
+        {
+          "column_name": "sc_q2_value",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sc_q2_value"
+          }
+        },
+        {
+          "column_name": "sec_c_q3_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_c_q3_status"
+          }
+        },
+        {
+          "column_name": "sc_q3_value",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sc_q3_value"
+          }
+        },
+        {
+          "column_name": "sec_c_q4_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_c_q4_status"
+          }
+        },
+        {
+          "column_name": "sc_q4_value",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sc_q4_value"
+          }
+        },
+        {
+          "column_name": "sec_c_q5_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_c_q5_status"
+          }
+        },
+        {
+          "column_name": "sc_q5_value",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sc_q5_value"
+          }
+        },
+        {
+          "column_name": "sec_c_q6_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_c_q6_status"
+          }
+        },
+        {
+          "column_name": "sc_q6_value",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sc_q6_value"
+          }
+        },
+        {
+          "column_name": "sec_c_q7_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_c_q7_status"
+          }
+        },
+        {
+          "column_name": "sc_q7_value",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sc_q7_value"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ec_monthly_nutrition",
+      "columns": [
+        {
+          "column_name": "last_interacted_with",
+          "type": "Event",
+          "json_mapping": {
+            "field": "version"
+          }
+        },
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "form_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.form_id"
+          }
+        },
+        {
+          "column_name": "province",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.province"
+          }
+        },
+        {
+          "column_name": "district",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.district"
+          }
+        },
+        {
+          "column_name": "ward",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.ward"
+          }
+        },
+        {
+          "column_name": "facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.facility"
+          }
+        },
+        {
+          "column_name": "partner",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.partner"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
+        },
+        {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
+          }
+        },
+        {
+          "column_name": "reporting_month",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.reporting_month"
+          }
+        },
+        {
+          "column_name": "sec_subpop_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_subpop_status"
+          }
+        },
+        {
+          "column_name": "subpop_calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.subpop_calhiv"
+          }
+        },
+        {
+          "column_name": "subpop_hei",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.subpop_hei"
+          }
+        },
+        {
+          "column_name": "subpop_cml_hiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.subpop_cml_hiv"
+          }
+        },
+        {
+          "column_name": "subpop_cpbfa",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.subpop_cpbfa"
+          }
+        },
+        {
+          "column_name": "subpop_siblings",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.subpop_siblings"
+          }
+        },
+        {
+          "column_name": "sec_hh_malnutrition_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_hh_malnutrition_status"
+          }
+        },
+        {
+          "column_name": "hh_practicing_diet_diversity",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hh_practicing_diet_diversity"
+          }
+        },
+        {
+          "column_name": "hh_practicing_exclusive_bf",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hh_practicing_exclusive_bf"
+          }
+        },
+        {
+          "column_name": "hh_practicing_complementary_feeding",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hh_practicing_complementary_feeding"
+          }
+        },
+        {
+          "column_name": "hh_wash_activities",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hh_wash_activities"
+          }
+        },
+        {
+          "column_name": "hh_visited_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hh_visited_assessment"
+          }
+        },
+        {
+          "column_name": "ppmam_identified",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.ppmam_identified"
+          }
+        },
+        {
+          "column_name": "ppmam_referred_commenced",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.ppmam_referred_commenced"
+          }
+        },
+        {
+          "column_name": "other_children_pmam",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_children_pmam"
+          }
+        },
+        {
+          "column_name": "plw_art_pmtct_nutrition_assessment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.plw_art_pmtct_nutrition_assessment"
+          }
+        },
+        {
+          "column_name": "plw_received_ifas",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.plw_received_ifas"
+          }
+        },
+        {
+          "column_name": "hh_food_insecurity_counselled",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hh_food_insecurity_counselled"
+          }
+        },
+        {
+          "column_name": "sec_mnp_vita_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_mnp_vita_status"
+          }
+        },
+        {
+          "column_name": "mnp_children_6_23_received",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.mnp_children_6_23_received"
+          }
+        },
+        {
+          "column_name": "mnp_plw_received",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.mnp_plw_received"
+          }
+        },
+        {
+          "column_name": "vita_children_6_11_months",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vita_children_6_11_months"
+          }
+        },
+        {
+          "column_name": "vita_children_12_59_months",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vita_children_12_59_months"
+          }
+        },
+        {
+          "column_name": "vita_plw_supplemented",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.vita_plw_supplemented"
+          }
+        },
+        {
+          "column_name": "deworming_children_12_59",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.deworming_children_12_59"
+          }
+        },
+        {
+          "column_name": "deworming_plw",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.deworming_plw"
+          }
+        },
+        {
+          "column_name": "sec_ecd_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_ecd_status"
+          }
+        },
+        {
+          "column_name": "ecd_centres_supported_monitoring",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.ecd_centres_supported_monitoring"
+          }
+        },
+        {
+          "column_name": "ecd_centres_with_feeding",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.ecd_centres_with_feeding"
+          }
+        },
+        {
+          "column_name": "ecd_children_enrolled",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.ecd_children_enrolled"
+          }
+        },
+        {
+          "column_name": "ecd_caregivers_trained",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.ecd_caregivers_trained"
+          }
+        },
+        {
+          "column_name": "ecd_developmental_screening",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.ecd_developmental_screening"
+          }
+        },
+        {
+          "column_name": "sec_weight_for_age_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_weight_for_age_status"
+          }
+        },
+        {
+          "column_name": "wfa_underweight",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.wfa_underweight"
+          }
+        },
+        {
+          "column_name": "wfa_overweight",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.wfa_overweight"
+          }
+        },
+        {
+          "column_name": "wfa_normal",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.wfa_normal"
+          }
+        },
+        {
+          "column_name": "sec_nutrition_assessment_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_nutrition_assessment_status"
+          }
+        },
+        {
+          "column_name": "nutrition_grade_1",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.nutrition_grade_1"
+          }
+        },
+        {
+          "column_name": "nutrition_grade_2",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.nutrition_grade_2"
+          }
+        },
+        {
+          "column_name": "nutrition_nr",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.nutrition_nr"
+          }
+        },
+        {
+          "column_name": "sec_muac_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_muac_status"
+          }
+        },
+        {
+          "column_name": "muac_red_below_11_5",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.muac_red_below_11_5"
+          }
+        },
+        {
+          "column_name": "muac_yellow_11_5_to_12_5",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.muac_yellow_11_5_to_12_5"
+          }
+        },
+        {
+          "column_name": "muac_green_12_5_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.muac_green_12_5_plus"
+          }
+        },
+        {
+          "column_name": "muac_oedema",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.muac_oedema"
+          }
+        },
+        {
+          "column_name": "sec_sti_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_sti_status"
+          }
+        },
+        {
+          "column_name": "sti_referred",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sti_referred"
+          }
+        },
+        {
+          "column_name": "sti_treated",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sti_treated"
+          }
+        },
+        {
+          "column_name": "sec_referral_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_referral_status"
+          }
+        },
+        {
+          "column_name": "referral_nutrition_to_health",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.referral_nutrition_to_health"
+          }
+        },
+        {
+          "column_name": "referral_feedback_received",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.referral_feedback_received"
+          }
+        },
+        {
+          "column_name": "referral_date_of_referral",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.referral_date_of_referral"
+          }
+        },
+        {
+          "column_name": "referral_date_of_feedback",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.referral_date_of_feedback"
+          }
+        },
+        {
+          "column_name": "referral_hiv_tb_integration",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.referral_hiv_tb_integration"
           }
         },
         {
@@ -156,129 +2884,1204 @@
           "json_mapping": {
             "field": "attributes.comment"
           }
-        },
+        }
+      ]
+    },
+    {
+      "name": "ec_monthly_tb",
+      "columns": [
         {
-          "column_name": "mother_pregnant",
-          "type": "Client",
+          "column_name": "last_interacted_with",
+          "type": "Event",
           "json_mapping": {
-            "field": "attributes.mother_pregnant"
+            "field": "version"
           }
         },
         {
-          "column_name": "mother_breastfeeding",
+          "column_name": "base_entity_id",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.mother_breastfeeding"
+            "field": "baseEntityId"
           }
         },
         {
-          "column_name": "mother_age_range",
+          "column_name": "form_id",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.mother_age_range"
+            "field": "attributes.form_id"
           }
         },
         {
-          "column_name": "mother_children_age_band",
+          "column_name": "province",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.mother_children_age_band"
+            "field": "attributes.province"
           }
         },
         {
-          "column_name": "unique_id",
+          "column_name": "district",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.unique_id"
+            "field": "attributes.district"
           }
         },
         {
-          "column_name": "relation",
+          "column_name": "ward",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.relation"
+            "field": "attributes.ward"
           }
         },
         {
-          "column_name": "first_name",
+          "column_name": "facility",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.first_name"
+            "field": "attributes.facility"
           }
         },
         {
-          "column_name": "last_name",
+          "column_name": "partner",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.last_name"
+            "field": "attributes.partner"
           }
         },
         {
-          "column_name": "adolescent_birthdate",
+          "column_name": "delete_status",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.adolescent_birthdate"
+            "field": "attributes.delete_status"
           }
         },
         {
-          "column_name": "gender",
+          "column_name": "caseworker_name",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.gender"
+            "field": "attributes.caseworker_name"
           }
         },
         {
-          "column_name": "is_hiv_positive",
+          "column_name": "reporting_month",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.is_hiv_positive"
+            "field": "attributes.reporting_month"
           }
         },
         {
-          "column_name": "is_on_hiv_treatment",
+          "column_name": "q1_status",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.is_on_hiv_treatment"
+            "field": "attributes.q1_status"
           }
         },
         {
-          "column_name": "art_number",
+          "column_name": "q1_f_lt_1",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.art_number"
+            "field": "attributes.q1_f_lt_1"
           }
         },
         {
-          "column_name": "is_biological_child_of_mother_living_with_hiv",
+          "column_name": "q1_f_1_4",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.is_biological_child_of_mother_living_with_hiv"
+            "field": "attributes.q1_f_1_4"
           }
         },
         {
-          "column_name": "case_status",
+          "column_name": "q1_f_5_9",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.case_status"
+            "field": "attributes.q1_f_5_9"
           }
         },
         {
-          "column_name": "index_check_box",
+          "column_name": "q1_f_10_14",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.index_check_box"
+            "field": "attributes.q1_f_10_14"
           }
         },
         {
-          "column_name": "subpop1",
+          "column_name": "q1_f_15_19",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.subpop1"
+            "field": "attributes.q1_f_15_19"
+          }
+        },
+        {
+          "column_name": "q1_f_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_f_20_plus"
+          }
+        },
+        {
+          "column_name": "q1_f_pc_18_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_f_pc_18_plus"
+          }
+        },
+        {
+          "column_name": "q1_f_total",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_f_total"
+          }
+        },
+        {
+          "column_name": "q1_m_lt_1",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_m_lt_1"
+          }
+        },
+        {
+          "column_name": "q1_m_1_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_m_1_4"
+          }
+        },
+        {
+          "column_name": "q1_m_5_9",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_m_5_9"
+          }
+        },
+        {
+          "column_name": "q1_m_10_14",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_m_10_14"
+          }
+        },
+        {
+          "column_name": "q1_m_15_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_m_15_19"
+          }
+        },
+        {
+          "column_name": "q1_m_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_m_20_plus"
+          }
+        },
+        {
+          "column_name": "q1_m_pc_18_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_m_pc_18_plus"
+          }
+        },
+        {
+          "column_name": "q1_m_total",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_m_total"
+          }
+        },
+        {
+          "column_name": "q1_hei",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_hei"
+          }
+        },
+        {
+          "column_name": "q1_calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_calhiv"
+          }
+        },
+        {
+          "column_name": "q1_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_wlhiv"
+          }
+        },
+        {
+          "column_name": "q1_pc_lhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_pc_lhiv"
+          }
+        },
+        {
+          "column_name": "q1_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_other"
+          }
+        },
+        {
+          "column_name": "q1_subpop_total",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q1_subpop_total"
+          }
+        },
+        {
+          "column_name": "q2_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_status"
+          }
+        },
+        {
+          "column_name": "q2_f_lt_1",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_f_lt_1"
+          }
+        },
+        {
+          "column_name": "q2_f_1_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_f_1_4"
+          }
+        },
+        {
+          "column_name": "q2_f_5_9",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_f_5_9"
+          }
+        },
+        {
+          "column_name": "q2_f_10_14",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_f_10_14"
+          }
+        },
+        {
+          "column_name": "q2_f_15_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_f_15_19"
+          }
+        },
+        {
+          "column_name": "q2_f_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_f_20_plus"
+          }
+        },
+        {
+          "column_name": "q2_f_pc_18_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_f_pc_18_plus"
+          }
+        },
+        {
+          "column_name": "q2_f_total",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_f_total"
+          }
+        },
+        {
+          "column_name": "q2_m_lt_1",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_m_lt_1"
+          }
+        },
+        {
+          "column_name": "q2_m_1_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_m_1_4"
+          }
+        },
+        {
+          "column_name": "q2_m_5_9",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_m_5_9"
+          }
+        },
+        {
+          "column_name": "q2_m_10_14",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_m_10_14"
+          }
+        },
+        {
+          "column_name": "q2_m_15_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_m_15_19"
+          }
+        },
+        {
+          "column_name": "q2_m_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_m_20_plus"
+          }
+        },
+        {
+          "column_name": "q2_m_pc_18_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_m_pc_18_plus"
+          }
+        },
+        {
+          "column_name": "q2_m_total",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_m_total"
+          }
+        },
+        {
+          "column_name": "q2_hei",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_hei"
+          }
+        },
+        {
+          "column_name": "q2_calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_calhiv"
+          }
+        },
+        {
+          "column_name": "q2_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_wlhiv"
+          }
+        },
+        {
+          "column_name": "q2_pc_lhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_pc_lhiv"
+          }
+        },
+        {
+          "column_name": "q2_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_other"
+          }
+        },
+        {
+          "column_name": "q2_subpop_total",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q2_subpop_total"
+          }
+        },
+        {
+          "column_name": "q3_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_status"
+          }
+        },
+        {
+          "column_name": "q3_f_lt_1",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_f_lt_1"
+          }
+        },
+        {
+          "column_name": "q3_f_1_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_f_1_4"
+          }
+        },
+        {
+          "column_name": "q3_f_5_9",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_f_5_9"
+          }
+        },
+        {
+          "column_name": "q3_f_10_14",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_f_10_14"
+          }
+        },
+        {
+          "column_name": "q3_f_15_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_f_15_19"
+          }
+        },
+        {
+          "column_name": "q3_f_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_f_20_plus"
+          }
+        },
+        {
+          "column_name": "q3_f_pc_18_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_f_pc_18_plus"
+          }
+        },
+        {
+          "column_name": "q3_f_total",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_f_total"
+          }
+        },
+        {
+          "column_name": "q3_m_lt_1",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_m_lt_1"
+          }
+        },
+        {
+          "column_name": "q3_m_1_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_m_1_4"
+          }
+        },
+        {
+          "column_name": "q3_m_5_9",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_m_5_9"
+          }
+        },
+        {
+          "column_name": "q3_m_10_14",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_m_10_14"
+          }
+        },
+        {
+          "column_name": "q3_m_15_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_m_15_19"
+          }
+        },
+        {
+          "column_name": "q3_m_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_m_20_plus"
+          }
+        },
+        {
+          "column_name": "q3_m_pc_18_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_m_pc_18_plus"
+          }
+        },
+        {
+          "column_name": "q3_m_total",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_m_total"
+          }
+        },
+        {
+          "column_name": "q3_hei",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_hei"
+          }
+        },
+        {
+          "column_name": "q3_calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_calhiv"
+          }
+        },
+        {
+          "column_name": "q3_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_wlhiv"
+          }
+        },
+        {
+          "column_name": "q3_pc_lhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_pc_lhiv"
+          }
+        },
+        {
+          "column_name": "q3_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_other"
+          }
+        },
+        {
+          "column_name": "q3_subpop_total",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q3_subpop_total"
+          }
+        },
+        {
+          "column_name": "q4_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_status"
+          }
+        },
+        {
+          "column_name": "q4_f_lt_1",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_f_lt_1"
+          }
+        },
+        {
+          "column_name": "q4_f_1_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_f_1_4"
+          }
+        },
+        {
+          "column_name": "q4_f_5_9",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_f_5_9"
+          }
+        },
+        {
+          "column_name": "q4_f_10_14",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_f_10_14"
+          }
+        },
+        {
+          "column_name": "q4_f_15_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_f_15_19"
+          }
+        },
+        {
+          "column_name": "q4_f_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_f_20_plus"
+          }
+        },
+        {
+          "column_name": "q4_f_pc_18_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_f_pc_18_plus"
+          }
+        },
+        {
+          "column_name": "q4_f_total",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_f_total"
+          }
+        },
+        {
+          "column_name": "q4_m_lt_1",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_m_lt_1"
+          }
+        },
+        {
+          "column_name": "q4_m_1_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_m_1_4"
+          }
+        },
+        {
+          "column_name": "q4_m_5_9",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_m_5_9"
+          }
+        },
+        {
+          "column_name": "q4_m_10_14",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_m_10_14"
+          }
+        },
+        {
+          "column_name": "q4_m_15_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_m_15_19"
+          }
+        },
+        {
+          "column_name": "q4_m_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_m_20_plus"
+          }
+        },
+        {
+          "column_name": "q4_m_pc_18_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_m_pc_18_plus"
+          }
+        },
+        {
+          "column_name": "q4_m_total",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_m_total"
+          }
+        },
+        {
+          "column_name": "q4_hei",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_hei"
+          }
+        },
+        {
+          "column_name": "q4_calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_calhiv"
+          }
+        },
+        {
+          "column_name": "q4_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_wlhiv"
+          }
+        },
+        {
+          "column_name": "q4_pc_lhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_pc_lhiv"
+          }
+        },
+        {
+          "column_name": "q4_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_other"
+          }
+        },
+        {
+          "column_name": "q4_subpop_total",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q4_subpop_total"
+          }
+        },
+        {
+          "column_name": "q5_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_status"
+          }
+        },
+        {
+          "column_name": "q5_f_lt_1",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_f_lt_1"
+          }
+        },
+        {
+          "column_name": "q5_f_1_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_f_1_4"
+          }
+        },
+        {
+          "column_name": "q5_f_5_9",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_f_5_9"
+          }
+        },
+        {
+          "column_name": "q5_f_10_14",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_f_10_14"
+          }
+        },
+        {
+          "column_name": "q5_f_15_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_f_15_19"
+          }
+        },
+        {
+          "column_name": "q5_f_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_f_20_plus"
+          }
+        },
+        {
+          "column_name": "q5_f_pc_18_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_f_pc_18_plus"
+          }
+        },
+        {
+          "column_name": "q5_f_total",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_f_total"
+          }
+        },
+        {
+          "column_name": "q5_m_lt_1",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_m_lt_1"
+          }
+        },
+        {
+          "column_name": "q5_m_1_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_m_1_4"
+          }
+        },
+        {
+          "column_name": "q5_m_5_9",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_m_5_9"
+          }
+        },
+        {
+          "column_name": "q5_m_10_14",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_m_10_14"
+          }
+        },
+        {
+          "column_name": "q5_m_15_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_m_15_19"
+          }
+        },
+        {
+          "column_name": "q5_m_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_m_20_plus"
+          }
+        },
+        {
+          "column_name": "q5_m_pc_18_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_m_pc_18_plus"
+          }
+        },
+        {
+          "column_name": "q5_m_total",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_m_total"
+          }
+        },
+        {
+          "column_name": "q5_hei",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_hei"
+          }
+        },
+        {
+          "column_name": "q5_calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_calhiv"
+          }
+        },
+        {
+          "column_name": "q5_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_wlhiv"
+          }
+        },
+        {
+          "column_name": "q5_pc_lhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_pc_lhiv"
+          }
+        },
+        {
+          "column_name": "q5_subpop_total",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q5_subpop_total"
+          }
+        },
+        {
+          "column_name": "q6_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_status"
+          }
+        },
+        {
+          "column_name": "q6_f_lt_1",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_f_lt_1"
+          }
+        },
+        {
+          "column_name": "q6_f_1_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_f_1_4"
+          }
+        },
+        {
+          "column_name": "q6_f_5_9",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_f_5_9"
+          }
+        },
+        {
+          "column_name": "q6_f_10_14",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_f_10_14"
+          }
+        },
+        {
+          "column_name": "q6_f_15_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_f_15_19"
+          }
+        },
+        {
+          "column_name": "q6_f_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_f_20_plus"
+          }
+        },
+        {
+          "column_name": "q6_f_pc_18_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_f_pc_18_plus"
+          }
+        },
+        {
+          "column_name": "q6_f_total",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_f_total"
+          }
+        },
+        {
+          "column_name": "q6_m_lt_1",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_m_lt_1"
+          }
+        },
+        {
+          "column_name": "q6_m_1_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_m_1_4"
+          }
+        },
+        {
+          "column_name": "q6_m_5_9",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_m_5_9"
+          }
+        },
+        {
+          "column_name": "q6_m_10_14",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_m_10_14"
+          }
+        },
+        {
+          "column_name": "q6_m_15_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_m_15_19"
+          }
+        },
+        {
+          "column_name": "q6_m_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_m_20_plus"
+          }
+        },
+        {
+          "column_name": "q6_m_pc_18_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_m_pc_18_plus"
+          }
+        },
+        {
+          "column_name": "q6_m_total",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_m_total"
+          }
+        },
+        {
+          "column_name": "q6_hei",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_hei"
+          }
+        },
+        {
+          "column_name": "q6_calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_calhiv"
+          }
+        },
+        {
+          "column_name": "q6_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_wlhiv"
+          }
+        },
+        {
+          "column_name": "q6_pc_lhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_pc_lhiv"
+          }
+        },
+        {
+          "column_name": "q6_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_other"
+          }
+        },
+        {
+          "column_name": "q6_subpop_total",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q6_subpop_total"
+          }
+        },
+        {
+          "column_name": "q7_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_status"
+          }
+        },
+        {
+          "column_name": "q7_f_lt_1",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_f_lt_1"
+          }
+        },
+        {
+          "column_name": "q7_f_1_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_f_1_4"
+          }
+        },
+        {
+          "column_name": "q7_f_5_9",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_f_5_9"
+          }
+        },
+        {
+          "column_name": "q7_f_10_14",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_f_10_14"
+          }
+        },
+        {
+          "column_name": "q7_f_15_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_f_15_19"
+          }
+        },
+        {
+          "column_name": "q7_f_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_f_20_plus"
+          }
+        },
+        {
+          "column_name": "q7_f_pc_18_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_f_pc_18_plus"
+          }
+        },
+        {
+          "column_name": "q7_f_total",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_f_total"
+          }
+        },
+        {
+          "column_name": "q7_m_lt_1",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_m_lt_1"
+          }
+        },
+        {
+          "column_name": "q7_m_1_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_m_1_4"
+          }
+        },
+        {
+          "column_name": "q7_m_5_9",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_m_5_9"
+          }
+        },
+        {
+          "column_name": "q7_m_10_14",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_m_10_14"
+          }
+        },
+        {
+          "column_name": "q7_m_15_19",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_m_15_19"
+          }
+        },
+        {
+          "column_name": "q7_m_20_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_m_20_plus"
+          }
+        },
+        {
+          "column_name": "q7_m_pc_18_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_m_pc_18_plus"
+          }
+        },
+        {
+          "column_name": "q7_m_total",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_m_total"
+          }
+        },
+        {
+          "column_name": "q7_hei",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_hei"
+          }
+        },
+        {
+          "column_name": "q7_calhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_calhiv"
+          }
+        },
+        {
+          "column_name": "q7_wlhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_wlhiv"
+          }
+        },
+        {
+          "column_name": "q7_pc_lhiv",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_pc_lhiv"
+          }
+        },
+        {
+          "column_name": "q7_subpop_total",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.q7_subpop_total"
           }
         }
       ]
     },
-
     {
       "name": "ec_mother_index",
       "columns": [
@@ -7018,7 +10821,6 @@
             "field": "attributes.pregnant_breastfeeding"
           }
         },
-
         {
           "column_name": "gps",
           "type": "Client",

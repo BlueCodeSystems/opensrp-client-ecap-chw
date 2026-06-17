@@ -23,24 +23,53 @@
         android:paddingEnd="20dp"
         android:paddingBottom="20dp">
 
-        <View
-            android:id="@+id/report_form_accent"
-            android:layout_width="48dp"
-            android:layout_height="6dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="16dp"
-            android:background="@color/register_malaria_bg" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/report_form_accent"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/report_open_form"
+                android:src="@drawable/ic_report_folder_24" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/report_form_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_report_count_badge"
+                android:gravity="center"
+                android:minWidth="36dp"
+                android:minHeight="28dp"
+                android:paddingStart="10dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="4dp"
+                android:text="0"
+                android:textColor="@android:color/white"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <FrameLayout
             android:id="@+id/report_form_icon_bubble"
-            android:layout_width="@dimen/dash_icon_circle"
-            android:layout_height="@dimen/dash_icon_circle"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/bg_register_icon">
 
             <ImageView
                 android:id="@+id/report_form_icon"
-                android:layout_width="@dimen/dash_icon_size"
-                android:layout_height="@dimen/dash_icon_size"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:contentDescription="@string/report_open_form" />
 
@@ -70,6 +99,16 @@
                 android:lineSpacingExtra="1dp"
                 android:textColor="@color/light_grey_text"
                 android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/report_form_last_submitted"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:textColor="@color/text_black"
+                android:textSize="12sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <ImageView
