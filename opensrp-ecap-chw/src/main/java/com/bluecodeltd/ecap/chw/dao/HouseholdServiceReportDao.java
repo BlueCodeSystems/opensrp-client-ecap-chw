@@ -1,13 +1,22 @@
 package com.bluecodeltd.ecap.chw.dao;
 
+import android.content.SharedPreferences;
+
 import com.bluecodeltd.ecap.chw.model.HouseholdServiceReportModel;
+import com.bluecodeltd.ecap.chw.application.ChwApplication;
+
+import androidx.preference.PreferenceManager;
 
 import org.smartregister.dao.AbstractDao;
+import org.smartregister.chw.core.dao.NavigationDao;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HouseholdServiceReportDao extends AbstractDao {
+    private static final String PREF_CASEWORKER_NAME = "caseworker_name";
+    private static final String PREF_LAST_USERNAME = "last_logged_in_username";
+
     public static boolean hasHouseholdServices(String householdId) {
         String sql = "SELECT * FROM ec_household_service_report " +
                 "WHERE (delete_status IS NULL OR delete_status <> '1') AND household_id = '" + householdId + "'";
@@ -15,6 +24,37 @@ public class HouseholdServiceReportDao extends AbstractDao {
         List<HouseholdServiceReportModel> values = AbstractDao.readData(sql, getServiceModelMap());
         return values != null && values.size() > 0;
     }
+
+    public static int getMonthlyReportCount(String encounterType) {
+        return getMonthlyReportCount(encounterType, getCurrentCaseworkerName());
+    }
+
+    public static int getMonthlyReportCount(String encounterType, String caseworkerName) {
+        String sql = "SELECT COUNT(*) AS c FROM " + encounterType + buildCaseworkerClause(caseworkerName);
+        return NavigationDao.getQueryCount(sql);
+    }
+
+    private static String buildCaseworkerClause(String caseworkerName) {
+        String safeCaseworkerName = sanitize(caseworkerName);
+        if (safeCaseworkerName.isEmpty()) {
+            return "";
+        }
+        return " WHERE (delete_status IS NULL OR delete_status <> '1') AND caseworker_name = '" + safeCaseworkerName + "'";
+    }
+
+    private static String sanitize(String value) {
+        return value == null ? "" : value.trim().replace("'", "''");
+    }
+
+    private static String getCurrentCaseworkerName() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ChwApplication.getInstance().getApplicationContext());
+        String caseworkerName = prefs.getString(PREF_CASEWORKER_NAME, "");
+        if (caseworkerName == null || caseworkerName.trim().isEmpty()) {
+            caseworkerName = prefs.getString(PREF_LAST_USERNAME, "");
+        }
+        return caseworkerName == null ? "" : caseworkerName.trim();
+    }
+
     public static List<HouseholdServiceReportModel> getServicesByHousehold(String householdId) {
 
         String sql = "SELECT *, strftime('%Y-%m-%d', substr(date,7,4) || '-' || substr(date,4,2) || '-' || substr(date,1,2)) as sortable_date\n" +

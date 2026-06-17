@@ -3,36 +3,46 @@ package com.bluecodeltd.ecap.chw.activity;
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 
-import android.content.SharedPreferences;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 import android.widget.TextView;
 
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
-import androidx.appcompat.widget.Toolbar;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.content.ContextCompat;
 
+import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
-import com.google.android.material.navigation.NavigationBarView;
 import com.bluecodeltd.ecap.chw.fragment.ReportRegisterFragment;
 import com.bluecodeltd.ecap.chw.listener.ChwBottomNavigationListener;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.google.android.material.navigation.NavigationBarView;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONObject;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.chw.core.presenter.BaseChwNotificationPresenter;
 import org.smartregister.client.utils.domain.Form;
+import org.smartregister.clientandeventmodel.Client;
+import org.smartregister.clientandeventmodel.Event;
+import org.smartregister.domain.db.EventClient;
+import org.smartregister.domain.tag.FormTag;
+import org.smartregister.family.util.AppExecutors;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.helper.BottomNavigationHelper;
+import org.smartregister.repository.AllSharedPreferences;
+import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
 import org.smartregister.view.activity.BaseRegisterActivity;
 import org.smartregister.view.fragment.BaseRegisterFragment;
 
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -48,6 +58,14 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
     public static final String REPORT_FORM_MALARIA = "malaria_monthly_reporting";
     public static final String REPORT_FORM_NUTRITION = "monthly_nutrition_report";
     public static final String REPORT_FORM_TB = "monthly_tb_report";
+    public static final String REPORT_FORM_ENCOUNTER_MALARIA = "Malaria Monthly Reporting";
+    public static final String REPORT_FORM_ENCOUNTER_NUTRITION = "Monthly Nutrition Report";
+    public static final String REPORT_FORM_ENCOUNTER_TB = "Monthly TB";
+    public static final String REPORT_TABLE_MALARIA = "ec_monthly_malaria";
+    public static final String REPORT_TABLE_NUTRITION = "ec_monthly_nutrition";
+    public static final String REPORT_TABLE_TB = "ec_monthly_tb";
+
+    private ReportRegisterFragment reportRegisterFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +91,8 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
             try {
                 if (menu != null) {
                     androidx.drawerlayout.widget.DrawerLayout drawer = menu.getDrawer();
-                    androidx.appcompat.graphics.drawable.DrawerArrowDrawable arrow = new androidx.appcompat.graphics.drawable.DrawerArrowDrawable(this);
+                    androidx.appcompat.graphics.drawable.DrawerArrowDrawable arrow =
+                            new androidx.appcompat.graphics.drawable.DrawerArrowDrawable(this);
                     arrow.setColor(android.graphics.Color.WHITE);
                     toolbar.setNavigationIcon(arrow);
                     toolbar.setNavigationOnClickListener(v -> {
@@ -100,7 +119,8 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
 
     @Override
     protected BaseRegisterFragment getRegisterFragment() {
-        return new ReportRegisterFragment();
+        reportRegisterFragment = new ReportRegisterFragment();
+        return reportRegisterFragment;
     }
 
     @Override
@@ -129,7 +149,25 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
 
     @Override
     protected void onActivityResultExtended(int requestCode, int resultCode, Intent data) {
-        // No-op
+        if (requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK && data != null) {
+            String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
+            if (jsonString == null) {
+                return;
+            }
+            try {
+                JSONObject jsonFormObject = new JSONObject(jsonString);
+                String encounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
+                if (isMonthlyReportEncounter(encounterType)) {
+                    boolean isEditMode = !jsonFormObject.optString(Constants.JSON_FORM_KEY.ENTITY_ID, "").isEmpty();
+                    ReportEventClient reportEventClient = processRegistration(jsonString);
+                    if (reportEventClient != null) {
+                        saveRegistration(reportEventClient, isEditMode);
+                    }
+                }
+            } catch (Exception e) {
+                timber.log.Timber.e(e);
+            }
+        }
     }
 
     @Override
@@ -196,6 +234,13 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
         return true;
     }
 
+    public boolean openReportList(String reportType) {
+        Intent intent = new Intent(this, ReportSubmissionListActivity.class);
+        intent.putExtra(EXTRA_REPORT_TYPE, reportType);
+        startActivity(intent);
+        return true;
+    }
+
     public boolean launchReportForm(String reportType) {
         String formName = getFormName(reportType);
         try {
@@ -203,9 +248,7 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
             if (form == null) {
                 return false;
             }
-            if (REPORT_TYPE_MALARIA.equals(reportType)) {
-                populateMalariaReportDefaults(form);
-            }
+            populateReportDefaults(form);
             startFormActivity(form);
             return true;
         } catch (Exception e) {
@@ -224,7 +267,7 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
         return REPORT_FORM_MALARIA;
     }
 
-    private void populateMalariaReportDefaults(JSONObject form) {
+    private void populateReportDefaults(JSONObject form) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         setStep1FieldValue(form, "province", prefs.getString("province", ""));
@@ -232,8 +275,18 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
         setStep1FieldValue(form, "ward", prefs.getString("ward", ""));
         setStep1FieldValue(form, "facility", prefs.getString("facility", ""));
         setStep1FieldValue(form, "partner", prefs.getString("partner", ""));
+        setStep1FieldValue(form, "caseworker_name", getCaseworkerName(prefs));
         setStep1FieldValue(form, "reporting_month", new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date()));
         setStep1FieldValue(form, "form_id", generateFormId(prefs));
+    }
+
+    private String getCaseworkerName(SharedPreferences prefs) {
+        String caseworkerName = prefs.getString("caseworker_name", "");
+        if (caseworkerName != null && !caseworkerName.trim().isEmpty()) {
+            return caseworkerName.trim();
+        }
+        String username = prefs.getString("last_logged_in_username", "");
+        return username == null ? "" : username.trim();
     }
 
     private String generateFormId(SharedPreferences prefs) {
@@ -255,6 +308,162 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
             field.put(org.smartregister.family.util.JsonFormUtils.VALUE, value == null ? "" : value);
         } catch (org.json.JSONException e) {
             timber.log.Timber.e(e);
+        }
+    }
+
+    private boolean isMonthlyReportEncounter(String encounterType) {
+        return REPORT_FORM_ENCOUNTER_MALARIA.equalsIgnoreCase(encounterType)
+                || REPORT_FORM_ENCOUNTER_NUTRITION.equalsIgnoreCase(encounterType)
+                || REPORT_FORM_ENCOUNTER_TB.equalsIgnoreCase(encounterType);
+    }
+
+    private String getReportTableName(String encounterType) {
+        if (REPORT_FORM_ENCOUNTER_MALARIA.equalsIgnoreCase(encounterType)) {
+            return REPORT_TABLE_MALARIA;
+        }
+        if (REPORT_FORM_ENCOUNTER_NUTRITION.equalsIgnoreCase(encounterType)) {
+            return REPORT_TABLE_NUTRITION;
+        }
+        if (REPORT_FORM_ENCOUNTER_TB.equalsIgnoreCase(encounterType)) {
+            return REPORT_TABLE_TB;
+        }
+        return null;
+    }
+
+    private ReportEventClient processRegistration(String jsonString) {
+        try {
+            JSONObject formJsonObject = new JSONObject(jsonString);
+            String encounterType = formJsonObject.getString(JsonFormConstants.ENCOUNTER_TYPE);
+            String entityId = formJsonObject.optString(Constants.JSON_FORM_KEY.ENTITY_ID);
+            if (entityId.isEmpty()) {
+                entityId = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
+            }
+            JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
+            org.json.JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
+            FormTag formTag = getFormTag();
+            String tableName = getReportTableName(encounterType);
+            if (tableName == null) {
+                return null;
+            }
+            Event event = org.smartregister.util.JsonFormUtils.createEvent(
+                    fields,
+                    metadata,
+                    formTag,
+                    entityId,
+                    encounterType,
+                    tableName
+            );
+            tagSyncMetadata(event);
+            Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+            return new ReportEventClient(event, client);
+        } catch (Exception e) {
+            timber.log.Timber.e(e);
+            return null;
+        }
+    }
+
+    private boolean saveRegistration(ReportEventClient reportEventClient, boolean isEditMode) {
+        Runnable runnable = () -> {
+            Event event = reportEventClient.getEvent();
+            Client client = reportEventClient.getClient();
+
+            if (event != null && client != null) {
+                try {
+                    ECSyncHelper ecSyncHelper = getECSyncHelper();
+                    JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
+                    JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
+
+                    if (isEditMode && existingClientJsonObject != null) {
+                        JSONObject mergedClientJsonObject = org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
+                        ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
+                    } else {
+                        ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                    }
+
+                    JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
+                    ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
+
+                    Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
+                    Date currentSyncDate = new Date(lastUpdatedAtDate);
+                    List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
+                    getClientProcessorForJava().processClient(savedEvents);
+                    getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
+
+                    runOnUiThread(() -> {
+                        if (reportRegisterFragment != null) {
+                            reportRegisterFragment.refreshReportCards();
+                        }
+                        Toast.makeText(
+                                this,
+                                getSavedToastMessage(event.getEventType()),
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    });
+                } catch (Exception e) {
+                    timber.log.Timber.e(e);
+                }
+            }
+        };
+
+        try {
+            new AppExecutors().diskIO().execute(runnable);
+            return true;
+        } catch (Exception e) {
+            timber.log.Timber.e(e);
+            return false;
+        }
+    }
+
+    private ECSyncHelper getECSyncHelper() {
+        return com.bluecodeltd.ecap.chw.application.ChwApplication.getInstance().getEcSyncHelper();
+    }
+
+    private AllSharedPreferences getAllSharedPreferences() {
+        return com.bluecodeltd.ecap.chw.application.ChwApplication.getInstance().getContext().allSharedPreferences();
+    }
+
+    private org.smartregister.sync.ClientProcessorForJava getClientProcessorForJava() {
+        return com.bluecodeltd.ecap.chw.application.ChwApplication.getInstance().getClientProcessorForJava();
+    }
+
+    private FormTag getFormTag() {
+        FormTag formTag = new FormTag();
+        AllSharedPreferences allSharedPreferences = getAllSharedPreferences();
+        formTag.providerId = allSharedPreferences.fetchRegisteredANM();
+        formTag.appVersion = BuildConfig.VERSION_CODE;
+        formTag.databaseVersion = BuildConfig.DATABASE_VERSION;
+        return formTag;
+    }
+
+    private void tagSyncMetadata(Event event) {
+        org.smartregister.chw.core.utils.CoreJsonFormUtils.tagSyncMetadata(getAllSharedPreferences(), event);
+    }
+
+    private String getSavedToastMessage(String encounterType) {
+        if (REPORT_FORM_ENCOUNTER_NUTRITION.equalsIgnoreCase(encounterType)) {
+            return getString(R.string.report_nutrition_saved);
+        }
+        if (REPORT_FORM_ENCOUNTER_TB.equalsIgnoreCase(encounterType)) {
+            return getString(R.string.report_tb_saved);
+        }
+        return getString(R.string.report_malaria_saved);
+    }
+
+    private static class ReportEventClient {
+        private final Event event;
+        private final Client client;
+
+        ReportEventClient(Event event, Client client) {
+            this.event = event;
+            this.client = client;
+        }
+
+        Event getEvent() {
+            return event;
+        }
+
+        Client getClient() {
+            return client;
         }
     }
 }

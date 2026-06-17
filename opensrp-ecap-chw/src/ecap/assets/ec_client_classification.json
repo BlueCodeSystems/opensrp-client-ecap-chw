@@ -21,6 +21,20 @@
           },
           {
             "field": "eventType",
+            "field_value": "Monthly Nutrition Report",
+            "creates_case": [
+              "ec_monthly_nutrition"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Monthly TB",
+            "creates_case": [
+              "ec_monthly_tb"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "Mother Pmtct",
             "creates_case": [
               "ec_pmtct_mother"
