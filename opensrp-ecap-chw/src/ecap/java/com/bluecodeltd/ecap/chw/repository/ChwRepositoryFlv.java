@@ -33,11 +33,10 @@ public class ChwRepositoryFlv {
     private static String appVersionCodePref = "APP_VERSION_CODE";
 
     public static void onUpgrade(Context context, SQLiteDatabase db, int oldVersion, int newVersion) {
-        Timber.w(ChwRepository.class.getName(),
-                "Upgrading database from version " + oldVersion + " to "
-                        + newVersion + ", which will destroy all old data");
+        Timber.e("CRITICAL: Upgrading database from version %d to %d", oldVersion, newVersion);
         int upgradeTo = oldVersion + 1;
         while (upgradeTo <= newVersion) {
+            Timber.e("CRITICAL: Running migration to version %d", upgradeTo);
             switch (upgradeTo) {
                 case 2:
                     upgradeToVersion2(db);
@@ -110,6 +109,27 @@ public class ChwRepositoryFlv {
                     break;
                 case 26:
                     upgradeToVersion26(db);
+                    break;
+                case 27:
+                    upgradeToVersion27(db);
+                    break;
+                case 28:
+                    upgradeToVersion28(db);
+                    break;
+                case 29:
+                    upgradeToVersion29(db);
+                    break;
+                case 30:
+                    upgradeToVersion30(db);
+                    break;
+                case 31:
+                    upgradeToVersion31(db);
+                    break;
+                case 32:
+                    upgradeToVersion32(db);
+                    break;
+                case 33:
+                    upgradeToVersion33(db);
                     break;
                 default:
                     break;
@@ -1143,6 +1163,111 @@ public class ChwRepositoryFlv {
             db.execSQL("ALTER TABLE ec_household_service_report ADD COLUMN pregnant_breastfeeding TEXT");
         } catch (Exception e) {
             Timber.e(e, "upgradeToVersion26");
+        }
+    }
+
+    private static void upgradeToVersion27(SQLiteDatabase db) {
+        try {
+            org.smartregister.util.DatabaseMigrationUtils.createAddedECTables(db,
+                    new HashSet<>(Arrays.asList("ec_monthly_malaria", "ec_monthly_tb", "ec_monthly_nutrition")),
+                    ChwApplication.getInstance().getCommonFtsObject());
+        } catch (Exception e) {
+            Timber.e(e, "upgradeToVersion27");
+        }
+    }
+
+    private static void upgradeToVersion28(SQLiteDatabase db) {
+        try {
+            // Malaria columns
+            String[] malariaColumns = {"reporting_year", "report_status", "reporting_month", "facility_name", "reporter_name", 
+                    "sa_q1_f_0_4", "sa_q1_f_5_15", "sa_q1_f_16_19", "sa_q1_f_20_plus", "sa_q1_m_0_4", "sa_q1_m_5_15", "sa_q1_m_16_19", "sa_q1_m_20_plus",
+                    "sb_q1_f_0_4", "sb_q1_f_5_15", "sb_q1_f_16_19", "sb_q1_f_20_plus", "sb_q1_m_0_4", "sb_q1_m_5_15", "sb_q1_m_16_19", "sb_q1_m_20_plus",
+                    "sc_q1", "sc_q2", "sc_q3", "sc_q4", "sc_q5", "sc_q6", "sc_q7"};
+            for (String col : malariaColumns) {
+                org.smartregister.util.DatabaseMigrationUtils.addColumnIfNotExists(db, "ec_monthly_malaria", col, "VARCHAR");
+            }
+
+            // TB columns
+            String[] tbColumns = {"reporting_year", "report_status", "reporting_month", "facility",
+                    "q1_f_lt_1", "q1_f_1_4", "q1_f_5_9", "q1_f_10_14", "q1_f_15_19", "q1_f_20_plus", "q1_f_pc_18_plus", "q1_f_total",
+                    "q1_m_lt_1", "q1_m_1_4", "q1_m_5_9", "q1_m_10_14", "q1_m_15_19", "q1_m_20_plus", "q1_m_pc_18_plus", "q1_m_total",
+                    "q1_hei", "q1_calhiv", "q1_wlhiv", "q1_pc_lhiv"};
+            for (String col : tbColumns) {
+                org.smartregister.util.DatabaseMigrationUtils.addColumnIfNotExists(db, "ec_monthly_tb", col, "VARCHAR");
+            }
+
+            // Nutrition columns
+            String[] nutritionColumns = {"reporting_year", "report_status", "reporting_month", "facility",
+                    "subpop_calhiv", "subpop_hei", "subpop_cml_hiv", "subpop_cpbfa", "subpop_siblings",
+                    "hh_practicing_diet_diversity", "hh_practicing_exclusive_bf", "hh_practicing_complementary_feeding", "hh_wash_activities", "hh_visited_assessment"};
+            for (String col : nutritionColumns) {
+                org.smartregister.util.DatabaseMigrationUtils.addColumnIfNotExists(db, "ec_monthly_nutrition", col, "VARCHAR");
+            }
+        } catch (Exception e) {
+            Timber.e(e, "upgradeToVersion28");
+        }
+    }
+
+    private static void upgradeToVersion29(SQLiteDatabase db) {
+        upgradeToVersion28(db);
+    }
+
+    private static void upgradeToVersion30(SQLiteDatabase db) {
+        upgradeToVersion28(db);
+    }
+
+    private static void upgradeToVersion31(SQLiteDatabase db) {
+        upgradeToVersion28(db);
+    }
+
+    private static void upgradeToVersion32(SQLiteDatabase db) {
+        try {
+            String[] nutritionColumns = {
+                    "ppmam_identified", "ppmam_referred_commenced", "other_children_pmam", "plw_art_pmtct_nutrition_assessment", "plw_received_ifas", "hh_food_insecurity_counselled",
+                    "mnp_children_6_23_received", "mnp_plw_received", "vita_children_6_11_months", "vita_children_12_59_months", "vita_plw_supplemented", "deworming_children_12_59", "deworming_plw",
+                    "ecd_centres_supported_monitoring", "ecd_centres_with_feeding", "ecd_children_enrolled", "ecd_caregivers_trained", "ecd_developmental_screening",
+                    "wfa_underweight", "wfa_overweight", "wfa_normal",
+                    "nutrition_grade_1", "nutrition_grade_2", "nutrition_nr",
+                    "muac_red_below_11_5", "muac_yellow_11_5_to_12_5", "muac_green_12_5_plus", "muac_oedema",
+                    "sti_referred", "sti_treated",
+                    "referral_nutrition_to_health", "referral_feedback_received", "referral_date_of_referral", "referral_date_of_feedback", "referral_hiv_tb_integration",
+                    "comment"
+            };
+            for (String col : nutritionColumns) {
+                org.smartregister.util.DatabaseMigrationUtils.addColumnIfNotExists(db, "ec_monthly_nutrition", col, "VARCHAR");
+            }
+        } catch (Exception e) {
+            Timber.e(e, "upgradeToVersion32");
+        }
+    }
+
+    private static void upgradeToVersion33(SQLiteDatabase db) {
+        try {
+            // Additional Malaria columns
+            String[] malariaColumns = {
+                    "sa_q1_f_calhiv", "sa_q1_f_hei", "sa_q1_m_calhiv", "sa_q1_m_hei",
+                    "sa_q2_f_0_4", "q2_f_5_15", "q2_f_16_19", "q2_f_20_plus", "q2_m_0_4", "q2_m_5_15", "q2_m_16_19", "q2_m_20_plus",
+                    "q3_f_0_4", "q3_f_5_15", "q3_f_16_19", "q3_f_20_plus", "q3_m_0_4", "q3_m_5_15", "q3_m_16_19", "q3_m_20_plus",
+                    "sb_q2_f_0_4", "sb_q2_f_5_15", "sb_q2_f_16_19", "sb_q2_f_20_plus", "sb_q2_m_0_4", "sb_q2_m_5_15", "sb_q2_m_16_19", "sb_q2_m_20_plus",
+                    "sb_q3_f_0_4", "sb_q3_f_5_15", "sb_q3_f_16_19", "sb_q3_f_20_plus", "sb_q3_m_0_4", "sb_q3_m_5_15", "sb_q3_m_16_19", "sb_q3_m_20_plus",
+                    "comment"
+            };
+            for (String col : malariaColumns) {
+                org.smartregister.util.DatabaseMigrationUtils.addColumnIfNotExists(db, "ec_monthly_malaria", col, "VARCHAR");
+            }
+
+            // Additional TB columns
+            String[] tbColumns = {
+                    "q1_other",
+                    "q2_f_lt_1", "q2_f_1_4", "q2_f_5_9", "q2_f_10_14", "q2_f_15_19", "q2_f_20_plus", "q2_m_lt_1", "q2_m_1_4", "q2_m_5_9", "q2_m_10_14", "q2_m_15_19", "q2_m_20_plus",
+                    "q3_f_lt_1", "q3_f_1_4", "q3_f_5_9", "q3_f_10_14", "q3_f_15_19", "q3_f_20_plus", "q3_m_lt_1", "q3_m_1_4", "q3_m_5_9", "q3_m_10_14", "q3_m_15_19", "q3_m_20_plus",
+                    "comment"
+            };
+            for (String col : tbColumns) {
+                org.smartregister.util.DatabaseMigrationUtils.addColumnIfNotExists(db, "ec_monthly_tb", col, "VARCHAR");
+            }
+        } catch (Exception e) {
+            Timber.e(e, "upgradeToVersion33");
         }
     }
 

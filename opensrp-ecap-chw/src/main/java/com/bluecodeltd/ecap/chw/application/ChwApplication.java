@@ -117,6 +117,9 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
     public static final String TAG = ChwApplication.class.getSimpleName();
     private static final String ONESIGNAL_APP_ID = "a074b7f3-c15f-4838-8fd3-6974c6adee87";
 
+    public static synchronized ChwApplication getInstance() {
+        return (ChwApplication) mInstance;
+    }
 
     public static Flavor getApplicationFlavor() {
         return flavor;

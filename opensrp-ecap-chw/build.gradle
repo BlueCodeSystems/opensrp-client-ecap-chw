@@ -77,6 +77,31 @@ android {
         }
     }
 
+    kapt {
+        javacOptions {
+            option("--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED")
+            option("--add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED")
+            option("--add-exports=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED")
+            option("--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED")
+            option("--add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED")
+            option("--add-exports=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED")
+            option("--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED")
+            option("--add-exports=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED")
+            option("--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED")
+            option("--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED")
+            option("--add-opens=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED")
+            option("--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED")
+            option("--add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED")
+            option("--add-opens=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED")
+            option("--add-opens=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED")
+            option("--add-opens=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED")
+            option("--add-opens=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED")
+            option("--add-opens=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED")
+            option("--add-opens=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED")
+            option("--add-opens=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED")
+        }
+    }
+
     defaultConfig {
         applicationId "com.bluecodeltd.chw"
         minSdk 28
@@ -326,7 +351,7 @@ android {
             buildConfigField "String[]", "ALLOWED_LOCATION_LEVELS_DEBUG", '{"Country","Province","District","Ward","Health Facility"}'
             buildConfigField "String", 'DEFAULT_LOCATION', '"Health Facility"'
             buildConfigField "String", 'DEFAULT_LOCATION_DEBUG', '"Health Facility"'
-            buildConfigField "int", "DATABASE_VERSION", '26'
+            buildConfigField "int", "DATABASE_VERSION", '33'
         }
     }
 }
