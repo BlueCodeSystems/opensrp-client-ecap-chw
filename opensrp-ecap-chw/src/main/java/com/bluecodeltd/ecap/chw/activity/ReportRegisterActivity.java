@@ -129,7 +129,19 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
 
     @Override
     protected void onActivityResultExtended(int requestCode, int resultCode, Intent data) {
-        // No-op
+        if (requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK) {
+            String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
+            if (jsonString != null) {
+                new com.bluecodeltd.ecap.chw.interactor.ReportRegisterInteractor().saveForm(jsonString, "complete");
+                refreshList();
+            }
+        }
+    }
+
+    private void refreshList() {
+        if (getRegisterFragment() instanceof ReportRegisterFragment) {
+            ((ReportRegisterFragment) getRegisterFragment()).initializeAdapter();
+        }
     }
 
     @Override
@@ -205,6 +217,10 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
             }
             if (REPORT_TYPE_MALARIA.equals(reportType)) {
                 populateMalariaReportDefaults(form);
+            } else if (REPORT_TYPE_TB.equals(reportType)) {
+                populateTbReportDefaults(form);
+            } else if (REPORT_TYPE_NUTRITION.equals(reportType)) {
+                populateNutritionReportDefaults(form);
             }
             startFormActivity(form);
             return true;
@@ -232,7 +248,31 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
         setStep1FieldValue(form, "ward", prefs.getString("ward", ""));
         setStep1FieldValue(form, "facility", prefs.getString("facility", ""));
         setStep1FieldValue(form, "partner", prefs.getString("partner", ""));
-        setStep1FieldValue(form, "reporting_month", new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date()));
+        setStep1FieldValue(form, "reporting_month", new SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(new Date()));
+        setStep1FieldValue(form, "form_id", generateFormId(prefs));
+    }
+
+    private void populateTbReportDefaults(JSONObject form) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        setStep1FieldValue(form, "province", prefs.getString("province", ""));
+        setStep1FieldValue(form, "district", prefs.getString("district", ""));
+        setStep1FieldValue(form, "ward", prefs.getString("ward", ""));
+        setStep1FieldValue(form, "facility", prefs.getString("facility", ""));
+        setStep1FieldValue(form, "partner", prefs.getString("partner", ""));
+        setStep1FieldValue(form, "reporting_month", new SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(new Date()));
+        setStep1FieldValue(form, "form_id", generateFormId(prefs));
+    }
+
+    private void populateNutritionReportDefaults(JSONObject form) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        setStep1FieldValue(form, "province", prefs.getString("province", ""));
+        setStep1FieldValue(form, "district", prefs.getString("district", ""));
+        setStep1FieldValue(form, "ward", prefs.getString("ward", ""));
+        setStep1FieldValue(form, "facility", prefs.getString("facility", ""));
+        setStep1FieldValue(form, "partner", prefs.getString("partner", ""));
+        setStep1FieldValue(form, "reporting_month", new SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(new Date()));
         setStep1FieldValue(form, "form_id", generateFormId(prefs));
     }
 

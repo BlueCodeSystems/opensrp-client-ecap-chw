@@ -163,4 +163,3 @@ public class GradModel {
         additionalFields.put(key, value);
     }
 }
-

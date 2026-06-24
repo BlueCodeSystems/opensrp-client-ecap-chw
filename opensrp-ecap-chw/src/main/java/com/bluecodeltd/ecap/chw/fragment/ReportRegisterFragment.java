@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.ReportHomeActivity;
 import com.bluecodeltd.ecap.chw.activity.ReportRegisterActivity;
 import com.bluecodeltd.ecap.chw.adapter.ReportFormOptionAdapter;
 import com.bluecodeltd.ecap.chw.contract.ReportRegisterFragmentContract;
@@ -256,9 +257,7 @@ public class ReportRegisterFragment extends BaseSafeRegisterFragment implements 
 
         if (formsAdapter == null) {
             formsAdapter = new ReportFormOptionAdapter(buildFormOptions(), reportType -> {
-                if (getActivity() instanceof ReportRegisterActivity) {
-                    ((ReportRegisterActivity) getActivity()).launchReportForm(reportType.getID());
-                }
+                ReportHomeActivity.start(getActivity(), reportType.getID());
             });
         }
         clientsView.setAdapter(formsAdapter);
