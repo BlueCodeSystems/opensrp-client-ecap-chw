@@ -316,6 +316,10 @@
             android:name=".activity.ReportHomeActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
+            android:name=".activity.ReportFormActivity"
+            android:theme="@style/ChwTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
             android:name=".activity.ReportViewActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity

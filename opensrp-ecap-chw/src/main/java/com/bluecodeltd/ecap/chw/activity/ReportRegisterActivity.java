@@ -120,7 +120,7 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
 
     @Override
     public void startFormActivity(JSONObject form) {
-        Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
+        Intent intent = new Intent(this, ReportFormActivity.class);
         Form wizardForm = new Form();
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, wizardForm);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, form.toString());
@@ -132,7 +132,8 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
         if (requestCode == JsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK) {
             String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
             if (jsonString != null) {
-                new com.bluecodeltd.ecap.chw.interactor.ReportRegisterInteractor().saveForm(jsonString, "complete");
+                boolean isDraft = data.getBooleanExtra(JsonFormConstants.SKIP_VALIDATION, false);
+                new com.bluecodeltd.ecap.chw.interactor.ReportRegisterInteractor().saveForm(jsonString, isDraft ? "draft" : "complete");
                 refreshList();
             }
         }
@@ -249,6 +250,7 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
         setStep1FieldValue(form, "facility", prefs.getString("facility", ""));
         setStep1FieldValue(form, "partner", prefs.getString("partner", ""));
         setStep1FieldValue(form, "reporting_month", new SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(new Date()));
+        setStep1FieldValue(form, "reporting_year", new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date()));
         setStep1FieldValue(form, "form_id", generateFormId(prefs));
     }
 
@@ -261,6 +263,7 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
         setStep1FieldValue(form, "facility", prefs.getString("facility", ""));
         setStep1FieldValue(form, "partner", prefs.getString("partner", ""));
         setStep1FieldValue(form, "reporting_month", new SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(new Date()));
+        setStep1FieldValue(form, "reporting_year", new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date()));
         setStep1FieldValue(form, "form_id", generateFormId(prefs));
     }
 
@@ -273,6 +276,7 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
         setStep1FieldValue(form, "facility", prefs.getString("facility", ""));
         setStep1FieldValue(form, "partner", prefs.getString("partner", ""));
         setStep1FieldValue(form, "reporting_month", new SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(new Date()));
+        setStep1FieldValue(form, "reporting_year", new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date()));
         setStep1FieldValue(form, "form_id", generateFormId(prefs));
     }
 
