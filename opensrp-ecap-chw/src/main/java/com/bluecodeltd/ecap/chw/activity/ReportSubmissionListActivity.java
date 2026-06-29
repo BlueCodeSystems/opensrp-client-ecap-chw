@@ -106,6 +106,11 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
 
         adapter = new ReportSubmissionAdapter(this, items, new ReportSubmissionAdapter.Listener() {
             @Override
+            public void onView(MonthlyReportModel item) {
+                openViewReport(item);
+            }
+
+            @Override
             public void onEdit(MonthlyReportModel item) {
                 openEditForm(item);
             }
@@ -334,6 +339,19 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
             return ReportRegisterActivity.REPORT_FORM_ENCOUNTER_TB;
         }
         return ReportRegisterActivity.REPORT_FORM_ENCOUNTER_MALARIA;
+    }
+
+    private void openViewReport(MonthlyReportModel item) {
+        Intent intent;
+        if (ReportRegisterActivity.REPORT_TYPE_NUTRITION.equals(reportType)) {
+            intent = new Intent(this, MonthlyNutritionReportViewActivity.class);
+        } else if (ReportRegisterActivity.REPORT_TYPE_TB.equals(reportType)) {
+            intent = new Intent(this, MonthlyTbReportViewActivity.class);
+        } else {
+            intent = new Intent(this, MalariaReportViewActivity.class);
+        }
+        intent.putExtra(MalariaReportViewActivity.EXTRA_BASE_ENTITY_ID, item.getBase_entity_id());
+        startActivity(intent);
     }
 
     private void openEditForm(MonthlyReportModel item) {
