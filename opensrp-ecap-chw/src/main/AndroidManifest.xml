@@ -355,6 +355,15 @@
             android:name=".activity.GuideBooksCounselingActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
+            android:name=".activity.MalariaReportViewActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
+            android:name=".activity.MonthlyNutritionReportViewActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
+            android:name=".activity.MonthlyTbReportViewActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
             android:name=".activity.TbScreeningActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
 

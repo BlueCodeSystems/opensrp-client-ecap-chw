@@ -430,6 +430,9 @@
     <string name="report_malaria_saved">Malaria report saved successfully.</string>
     <string name="report_nutrition_saved">Nutrition report saved successfully.</string>
     <string name="report_tb_saved">TB report saved successfully.</string>
+    <string name="malaria_report_title">Malaria Monthly Report - %s</string>
+    <string name="tb_report_title">Monthly TB Report - %s</string>
+    <string name="nutrition_report_title">Monthly Nutrition Report - %s</string>
     <string name="report_last_submitted_prefix">Last submitted: %1$s</string>
     <string name="report_last_submitted_not_available">No submissions yet</string>
     <string name="report_status_saved">Saved</string>

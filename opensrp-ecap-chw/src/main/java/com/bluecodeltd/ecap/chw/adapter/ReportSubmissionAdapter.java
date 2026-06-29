@@ -23,6 +23,7 @@ import java.util.Locale;
 public class ReportSubmissionAdapter extends RecyclerView.Adapter<ReportSubmissionAdapter.ViewHolder> {
 
     public interface Listener {
+        void onView(MonthlyReportModel item);
         void onEdit(MonthlyReportModel item);
         void onDelete(MonthlyReportModel item);
     }
@@ -51,8 +52,8 @@ public class ReportSubmissionAdapter extends RecyclerView.Adapter<ReportSubmissi
         holder.formId.setText(emptyDash(item.getForm_id()));
         holder.location.setText(buildLocationText(item));
         holder.lastUpdated.setText(buildLastUpdatedText(item.getLast_interacted_with()));
-        holder.itemView.setOnClickListener(v -> listener.onEdit(item));
-        holder.card.setOnClickListener(v -> listener.onEdit(item));
+        holder.itemView.setOnClickListener(v -> listener.onView(item));
+        holder.card.setOnClickListener(v -> listener.onView(item));
         holder.edit.setOnClickListener(v -> listener.onEdit(item));
         holder.delete.setOnClickListener(v -> showDeleteConfirm(item));
     }

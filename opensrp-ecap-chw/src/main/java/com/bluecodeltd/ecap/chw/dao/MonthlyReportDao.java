@@ -20,7 +20,7 @@ public class MonthlyReportDao extends AbstractDao {
     private static final String PREF_LAST_USERNAME = "last_logged_in_username";
 
     public static List<MonthlyReportModel> getReports(String tableName) {
-        String sql = "SELECT * FROM " + tableName + buildDeleteStatusClause(tableName) + buildCaseworkerClause(tableName) +
+        String sql = "SELECT * FROM " + tableName + buildWhereClause(tableName) +
                 " ORDER BY last_interacted_with DESC, rowid DESC";
         List<MonthlyReportModel> values = AbstractDao.readData(sql, getModelMap());
         if (values == null || values.isEmpty()) {
@@ -30,7 +30,7 @@ public class MonthlyReportDao extends AbstractDao {
     }
 
     public static MonthlyReportModel getLatestReport(String tableName) {
-        String sql = "SELECT * FROM " + tableName + buildDeleteStatusClause(tableName) + buildCaseworkerClause(tableName) +
+        String sql = "SELECT * FROM " + tableName + buildWhereClause(tableName) +
                 " ORDER BY last_interacted_with DESC, rowid DESC LIMIT 1";
         List<MonthlyReportModel> values = AbstractDao.readData(sql, getModelMap());
         if (values == null || values.isEmpty()) {
@@ -40,12 +40,16 @@ public class MonthlyReportDao extends AbstractDao {
     }
 
     public static int getCount(String tableName) {
-        String sql = "SELECT COUNT(*) AS c FROM " + tableName + buildDeleteStatusClause(tableName) + buildCaseworkerClause(tableName);
+        String sql = "SELECT COUNT(*) AS c FROM " + tableName + buildWhereClause(tableName);
         return org.smartregister.chw.core.dao.NavigationDao.getQueryCount(sql);
     }
 
     public static MonthlyReportModel getReport(String tableName, String baseEntityId) {
-        String sql = "SELECT * FROM " + tableName + " WHERE base_entity_id = '" + baseEntityId + "'" + buildCaseworkerClause(tableName);
+        String sql = "SELECT * FROM " + tableName + " WHERE base_entity_id = '" + baseEntityId + "'";
+        String caseworkerClause = buildCaseworkerClause(tableName);
+        if (!caseworkerClause.isEmpty()) {
+            sql += " AND " + caseworkerClause;
+        }
         List<MonthlyReportModel> values = AbstractDao.readData(sql, getModelMap());
         if (values == null || values.isEmpty()) {
             return null;
@@ -73,6 +77,30 @@ public class MonthlyReportDao extends AbstractDao {
         };
     }
 
+    private static String buildWhereClause(String tableName) {
+        List<String> conditions = new ArrayList<>();
+
+        if (hasColumn(tableName, "delete_status")) {
+            conditions.add("(delete_status IS NULL OR delete_status <> '1')");
+        }
+
+        String caseworker = buildCaseworkerClause(tableName);
+        if (!caseworker.isEmpty()) {
+            conditions.add(caseworker);
+        }
+
+        if (conditions.isEmpty()) {
+            return "";
+        }
+
+        StringBuilder sb = new StringBuilder(" WHERE ");
+        for (int i = 0; i < conditions.size(); i++) {
+            if (i > 0) sb.append(" AND ");
+            sb.append(conditions.get(i));
+        }
+        return sb.toString();
+    }
+
     private static String buildCaseworkerClause(String tableName) {
         if (!hasColumn(tableName, "caseworker_name")) {
             return "";
@@ -82,7 +110,7 @@ public class MonthlyReportDao extends AbstractDao {
         if (safeCaseworkerName.isEmpty()) {
             return "";
         }
-        return " AND caseworker_name = '" + safeCaseworkerName + "'";
+        return "caseworker_name = '" + safeCaseworkerName + "'";
     }
 
     private static String sanitize(String value) {
@@ -96,13 +124,6 @@ public class MonthlyReportDao extends AbstractDao {
             caseworkerName = prefs.getString(PREF_LAST_USERNAME, "");
         }
         return caseworkerName == null ? "" : caseworkerName.trim();
-    }
-
-    private static String buildDeleteStatusClause(String tableName) {
-        if (hasColumn(tableName, "delete_status")) {
-            return " WHERE (delete_status IS NULL OR delete_status <> '1')";
-        }
-        return "";
     }
 
     private static boolean hasColumn(String tableName, String columnName) {
