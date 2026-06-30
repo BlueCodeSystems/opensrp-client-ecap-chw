@@ -103,6 +103,9 @@
             android:name=".activity.ReportSubmissionListActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
+            android:name=".activity.MonthlyTbReportViewActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
             android:name="com.bluecodeltd.ecap.chw.activity.SignatureActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity

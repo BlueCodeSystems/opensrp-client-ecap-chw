@@ -20,7 +20,6 @@ apply plugin: 'jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
 apply from: "jacoco.gradle"
 apply plugin: 'kotlin-android'
-apply plugin: 'org.jetbrains.kotlin.kapt'
 apply plugin: 'kotlin-kapt'
 //apply plugin: 'com.google.gms.google-services'
 //apply plugin: 'com.google.firebase.crashlytics'
@@ -168,7 +167,7 @@ android {
             minifyEnabled false
             shrinkResources false
             zipAlignEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_INITIAL_BATCH_SIZE", '200'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_BATCH_SIZE", '200'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_SOURCE", '4'
@@ -501,6 +500,35 @@ dependencies {
 // Ensure Gradle test workers run on Java 17 consistently (outside android block)
 // This avoids serialization of JDK-internal reflection accessors across JVMs.
 def testToolchains = project.extensions.getByType(org.gradle.jvm.toolchain.JavaToolchainService)
+
+kapt {
+    useBuildCache = true
+    javacOptions {
+        option("-J--add-opens=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED")
+        option("-J--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED")
+        option("-J--add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED")
+        option("-J--add-opens=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED")
+        option("-J--add-opens=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED")
+        option("-J--add-opens=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED")
+        option("-J--add-opens=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED")
+        option("-J--add-opens=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED")
+        option("-J--add-opens=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED")
+        option("-J--add-opens=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED")
+        option("-J--add-opens=jdk.compiler/com.sun.tools.javac.jvm=ALL-UNNAMED")
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED")
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED")
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED")
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED")
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED")
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED")
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED")
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED")
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED")
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED")
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.jvm=ALL-UNNAMED")
+    }
+}
+
 tasks.withType(Test).configureEach { t ->
     javaLauncher.set(testToolchains.launcherFor {
         languageVersion = JavaLanguageVersion.of(17)

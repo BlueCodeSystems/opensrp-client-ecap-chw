@@ -107,7 +107,11 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
         adapter = new ReportSubmissionAdapter(this, items, new ReportSubmissionAdapter.Listener() {
             @Override
             public void onEdit(MonthlyReportModel item) {
-                openEditForm(item);
+                if (ReportRegisterActivity.REPORT_TYPE_TB.equals(reportType)) {
+                    MonthlyTbReportViewActivity.start(ReportSubmissionListActivity.this, item.getBase_entity_id());
+                } else {
+                    openEditForm(item);
+                }
             }
 
             @Override
