@@ -55,6 +55,7 @@ import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexMotherDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
+import com.bluecodeltd.ecap.chw.dao.PmtctChildDao;
 import com.bluecodeltd.ecap.chw.dao.ReferralDao;
 import com.bluecodeltd.ecap.chw.dao.NutritionAssessmentInterventionDao;
 import com.bluecodeltd.ecap.chw.dao.VCAScreeningDao;
@@ -78,6 +79,7 @@ import com.bluecodeltd.ecap.chw.model.GraduationModel;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentUnder15Model;
 import com.bluecodeltd.ecap.chw.model.IndexMotherModel;
+import com.bluecodeltd.ecap.chw.model.PmtctChildModel;
 import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
 import com.bluecodeltd.ecap.chw.model.EcClientIndexSummary;
@@ -2238,91 +2240,60 @@ public class IndexDetailsActivity extends AppCompatActivity {
                         gender = "her";
                     }
 
-                    builder.setMessage("You are about to delete this CA and all " + gender + " forms.");
+                    builder.setMessage("You are about to delete this VCA and all " + gender + " forms.");
                     builder.setNegativeButton("NO", (dialog, id) -> {
                         //  Action for 'NO' Button
                         dialog.cancel();
 
                     }).setPositiveButton("YES",((dialogInterface, i) -> {
-                        FormUtils formUtils = null;
-                        try {
-                            formUtils = new FormUtils(this);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        child.setDeleted("1");
-                        boolean motherSourceIsServiceReportVca = shouldRemoveVcaEditStep5ForServiceReportVca(child);
-                        JSONObject vcaScreeningForm;
-                        try {
-                            String vcaEditFormName = motherSourceIsServiceReportVca ? "vca_edit_from_vca_service" : "vca_edit";
-                            vcaScreeningForm = formUtils.getFormJson(vcaEditFormName);
-                        } catch (Exception e) {
-                            // Fallback: if the new form isn't available, use the legacy form with the extra step removed.
+                        Threading.io(() -> {
                             try {
-                                vcaScreeningForm = formUtils.getFormJson("vca_edit");
-                                if (motherSourceIsServiceReportVca) {
-                                    removeVcaEditStep5(vcaScreeningForm);
-                                }
-                            } catch (Exception ex) {
-                                Timber.e(ex);
-                                return;
-                            }
-                        }
-
-                        try {
-                            ObjectMapper deleteMapper = new ObjectMapper();
-                            Map<String, Object> childMap = deleteMapper.convertValue(child, Map.class);
-                            Caregiver deleteCaregiver = householdCaregiver != null ? householdCaregiver : CaregiverDao.getCaregiver(child.getHousehold_id());
-                            if (deleteCaregiver != null) {
-                                Map<String, Object> caregiverMap = deleteMapper.convertValue(deleteCaregiver, Map.class);
-                                caregiverMap.forEach((k, v) -> { if (v != null && childMap.get(k) == null) childMap.put(k, v); });
-                            }
-                            Map<String, String> childStringMap = new HashMap<>();
-                            childMap.forEach((k, v) -> { if (k != null && v != null) childStringMap.put(k, String.valueOf(v)); });
-
-                            // Fill with CHW location + caseworker from SharedPreferences only when missing
-                            try {
-                                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(IndexDetailsActivity.this);
-                                String district = childStringMap.get("district");
-                                if (TextUtils.isEmpty(district)) {
-                                    String prefDistrict = prefs.getString("district", "");
-                                    if (!TextUtils.isEmpty(prefDistrict)) childStringMap.put("district", prefDistrict);
+                                PmtctChildModel linkedHei = resolveLinkedHeiForDeletion();
+                                if (linkedHei != null) {
+                                    try {
+                                        ChildIndexEventClient heiDeleteClient = buildHeiDeleteClient(linkedHei);
+                                        if (heiDeleteClient != null) {
+                                            saveRegistration(heiDeleteClient, true, null);
+                                        }
+                                    } catch (Exception e) {
+                                        Timber.e(e);
+                                    }
                                 }
 
-                                String caseworker = childStringMap.get("caseworker_name");
-                                if (TextUtils.isEmpty(caseworker)) {
-                                    String prefCaseworker = prefs.getString("caseworker_name", "Anonymous");
-                                    if (!TextUtils.isEmpty(prefCaseworker)) childStringMap.put("caseworker_name", prefCaseworker);
+                                FormUtils formUtils = new FormUtils(this);
+                                JSONObject vcaScreeningForm = formUtils.getFormJson(resolveVcaEditFormName());
+                                try {
+                                    VcaScreeningModel vcaForDelete = indexVCA;
+
+                                    if (vcaForDelete != null) {
+                                        vcaForDelete.setDeleted("1");
+                                        CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(vcaForDelete, Map.class));
+                                        vcaScreeningForm.put("entity_id", vcaForDelete.getBase_entity_id());
+                                    } else if (child != null) {
+                                        child.setDeleted("1");
+                                        CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(child, Map.class));
+                                        vcaScreeningForm.put("entity_id", child.getBase_entity_id());
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
-                            } catch (Exception ignored) { }
 
-                            CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, childStringMap);
-
-                            vcaScreeningForm.put("entity_id", child.getBase_entity_id());
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-                        try {
-
-                            ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
-                            if (childIndexEventClient == null) {
-                                return;
+                                ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
+                                if (childIndexEventClient == null) {
+                                    return;
+                                }
+                                Runnable onComplete = () -> {
+                                    Toasty.success(IndexDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
+                                    IndexDetailsActivity.super.onBackPressed();
+                                };
+                                boolean scheduled = saveRegistration(childIndexEventClient, true, onComplete);
+                                if (!scheduled) {
+                                    onComplete.run();
+                                }
+                            } catch (Exception e) {
+                                Timber.e(e);
                             }
-                            Runnable onComplete = () -> {
-                                Toasty.success(IndexDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
-                                IndexDetailsActivity.super.onBackPressed();
-                            };
-                            boolean scheduled = saveRegistration(childIndexEventClient, true, onComplete);
-                            if (!scheduled) {
-                                onComplete.run();
-                            }
-
-
-                        } catch (Exception e) {
-                            Timber.e(e);
-                        }
+                        });
                     }));
 
                     //Creating dialog box
@@ -2335,6 +2306,68 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private PmtctChildModel resolveLinkedHeiForDeletion() {
+        if (indexVCA == null) {
+            return null;
+        }
+
+        PmtctChildModel linkedHei = null;
+        try {
+            if (!TextUtils.isEmpty(indexVCA.getUnique_id())) {
+                linkedHei = PmtctChildDao.getPMCTChild(indexVCA.getUnique_id());
+            }
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+
+        if (linkedHei != null) {
+            return linkedHei;
+        }
+
+        if (TextUtils.isEmpty(indexVCA.getHousehold_id())) {
+            return null;
+        }
+
+        try {
+            List<PmtctChildModel> heiRecords = PmtctChildDao.getPmctChildHei(indexVCA.getHousehold_id());
+            if (heiRecords != null && !heiRecords.isEmpty()) {
+                if (heiRecords.size() > 1) {
+                    Timber.w("Multiple active HEI records matched household %s during VCA delete; deleting the first record",
+                            indexVCA.getHousehold_id());
+                }
+                linkedHei = heiRecords.get(0);
+            }
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+
+        return linkedHei;
+    }
+
+    private ChildIndexEventClient buildHeiDeleteClient(PmtctChildModel hei) throws Exception {
+        if (hei == null) {
+            return null;
+        }
+
+        FormUtils formUtils = new FormUtils(this);
+        JSONObject heiForm = formUtils.getFormJson("pmct_child_hei");
+        CoreJsonFormUtils.populateJsonForm(heiForm, new ObjectMapper().convertValue(hei, Map.class));
+        heiForm.put("entity_id", hei.getBase_entity_id());
+
+        JSONObject deleteField = getFieldJSONObject(fields(heiForm, "step1"), "delete_status");
+        if (deleteField != null) {
+            deleteField.remove(JsonFormUtils.VALUE);
+            deleteField.put(JsonFormUtils.VALUE, "1");
+        }
+
+        ChildIndexEventClient heiDeleteClient = processRegistration(heiForm.toString());
+        if (heiDeleteClient == null) {
+            Timber.w("Skipping HEI delete because the pmct_child_hei form could not be processed for base_entity_id=%s",
+                    hei.getBase_entity_id());
+        }
+        return heiDeleteClient;
     }
 
     private static void removeVcaEditStep5(JSONObject form) {
@@ -2488,6 +2521,17 @@ public class IndexDetailsActivity extends AppCompatActivity {
         } catch (Exception ignored) { }
 
         return "vca_screening";
+    }
+
+    private String resolveVcaEditFormName() {
+        try {
+            String householdId = resolveHouseholdIdForSourceChecks();
+            String uniqueId = resolveUniqueIdForSourceChecks();
+            if (hasMotherSourceFromServiceReportVca(householdId, uniqueId)) {
+                return "vca_edit_from_vca_service";
+            }
+        } catch (Exception ignored) { }
+        return "vca_edit";
     }
  public void populateCaseworkerPhoneAndName(JSONObject formToBeOpened){
      SharedPreferences cp = PreferenceManager.getDefaultSharedPreferences(IndexDetailsActivity.this);

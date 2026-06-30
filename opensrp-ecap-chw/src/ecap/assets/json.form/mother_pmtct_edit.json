@@ -1309,10 +1309,9 @@
           "err": "This field is required"
         },
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "pmtct_agyw.yml"
-            }
+          "step1:male_result_of_hiv_test": {
+            "type": "string",
+            "ex": "equalTo(., \"R\")"
           }
         }
       },
