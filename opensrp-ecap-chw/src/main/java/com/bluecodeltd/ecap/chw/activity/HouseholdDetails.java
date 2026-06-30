@@ -2513,48 +2513,20 @@ public class HouseholdDetails extends AppCompatActivity {
                 return true;
 
             case "delete_record":
-                // Require user to delete children first (both CA children and PMTCT HEI) before deleting a household.
-                try {
-                    java.util.List<Child> activeChildren = IndexPersonDao.getFamilyChildren(householdId);
-                    if (activeChildren != null && !activeChildren.isEmpty()) {
-                        Toasty.warning(HouseholdDetails.this, "Delete the child(ren) before deleting the household", Toast.LENGTH_LONG, true).show();
-                        break;
-                    }
-                } catch (Exception ignored) { }
-                try {
-                    if (PmtctChildDao.hasDeletedHei(householdId)) {
-                        Toasty.warning(HouseholdDetails.this, "Delete the HEI child(ren) before deleting the household", Toast.LENGTH_LONG, true).show();
-                        break;
-                    }
-                } catch (Exception ignored) { }
-
                 builder.setMessage("You are about to delete this household and all its forms.");
                 builder.setNegativeButton("NO", (dialog, id) -> {
+                    //  Action for 'NO' Button
                     dialog.cancel();
-                }).setPositiveButton("YES", ((dialogInterface, i) -> {
-                    try {
-                        houseHoldsContainingSameId = (ArrayList) HouseholdDao.getDuplicatedHousehold(householdId);
-                        if (houseHoldsContainingSameId != null && houseHoldsContainingSameId.size() > 0) {
-                            for (int houseHoldIterator = 0; houseHoldIterator < houseHoldsContainingSameId.size(); houseHoldIterator++) {
-                                Household householdToDelete = (Household) houseHoldsContainingSameId.get(houseHoldIterator);
-                                changeHouseholdStatus(householdToDelete);
-                            }
-                        }
-                        deleteMothers(householdId);
-                        deletePmtctMother(householdId);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    Toasty.success(HouseholdDetails.this, "Deleted", Toast.LENGTH_LONG, true).show();
-                    Intent returnToHouseholdIndexActivity = new Intent(getBaseContext(), HouseholdIndexActivity.class);
-                    returnToHouseholdIndexActivity.putExtra("refresh", "true");
-                    returnToHouseholdIndexActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(returnToHouseholdIndexActivity);
-                    finish();
-                }));
+
+                }).setPositiveButton("YES",((dialogInterface, i) -> performHouseholdDeleteWithChecks()));
+
+                //Creating dialog box
                 AlertDialog alert = builder.create();
+                //Setting the title manually
                 alert.setTitle("Alert");
                 alert.show();
+
+
                 break;
 
             case "case_status":
@@ -2576,6 +2548,80 @@ public class HouseholdDetails extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void performHouseholdDeleteWithChecks() {
+        final String id = householdId;
+        if (TextUtils.isEmpty(id)) {
+            Toasty.error(this, "Missing household id", Toast.LENGTH_LONG, true).show();
+            return;
+        }
+
+        Threading.io(() -> {
+            try {
+                List<Child> activeVcas = IndexPersonDao.getFamilyChildren(id);
+                if (activeVcas != null && !activeVcas.isEmpty()) {
+                    String names = "";
+                    try {
+                        names = IndexPersonDao.returnVcaNames(id);
+                    } catch (Throwable ignored) { }
+                    final String finalNames = names;
+                    Threading.main(() -> {
+                        if (isFinishing() || isDestroyed()) return;
+                        String message = "Please delete/deregister all VCA(s) in this household first.\n\nHousehold deletion is only allowed when all children are already deleted.";
+                        if (!TextUtils.isEmpty(finalNames)) {
+                            message = message + "\n\nVCA(s):\n" + finalNames;
+                        }
+                        showDialogBox(message);
+                    });
+                    return;
+                }
+
+                // Only delete PMTCT when all HEI are already deleted.
+                try {
+                    PtctMotherModel pmtctMother = PMTCTMotherDao.getPMCTMother(id);
+                    if (pmtctMother != null) {
+                        String pmtctId = pmtctMother.getPmtct_id();
+                        String heiCount = PmtctChildDao.countMotherHei(id, pmtctId);
+                        if (heiCount != null && !"0".equals(heiCount)) {
+                            Threading.main(() -> {
+                                if (isFinishing() || isDestroyed()) return;
+                                showDialogBox("Please delete/deregister all HEI records first before deleting the household.");
+                            });
+                            return;
+                        }
+                    }
+                } catch (Exception e) {
+                    Timber.e(e);
+                    Threading.main(() -> Toasty.error(HouseholdDetails.this, "Failed to check HEI records", Toast.LENGTH_LONG, true).show());
+                    return;
+                }
+
+                List<Household> duplicatedHouseholds = HouseholdDao.getDuplicatedHousehold(id);
+                if (duplicatedHouseholds != null && !duplicatedHouseholds.isEmpty()) {
+                    for (Household householdToDelete : duplicatedHouseholds) {
+                        if (householdToDelete == null) continue;
+                        changeHouseholdStatus(householdToDelete);
+                    }
+                }
+
+                // Only delete mother index / PMTCT when all children are already deleted.
+                deleteMothers(id);
+                deletePmtctMother(id);
+
+                Threading.main(() -> {
+                    if (isFinishing() || isDestroyed()) return;
+                    Toasty.success(HouseholdDetails.this, "Deleted", Toast.LENGTH_LONG, true).show();
+                    HouseholdDetails.super.onBackPressed();
+                });
+            } catch (Exception e) {
+                Timber.e(e);
+                Threading.main(() -> {
+                    if (isFinishing() || isDestroyed()) return;
+                    Toasty.error(HouseholdDetails.this, "Failed to delete household", Toast.LENGTH_LONG, true).show();
+                });
+            }
+        });
+    }
+
     private String resolveViewIdName(int viewId) {
         try {
             return getResources().getResourceEntryName(viewId);
@@ -2593,6 +2639,12 @@ public class HouseholdDetails extends AppCompatActivity {
         house.setStatus("1");
         CoreJsonFormUtils.populateJsonForm(hhScreeningForm, new ObjectMapper().convertValue(house, Map.class));
         hhScreeningForm.put("entity_id", house.getBase_entity_id());
+        try {
+            JSONObject statusField = getFieldJSONObject(fields(hhScreeningForm, "step1"), "status");
+            if (statusField != null) {
+                statusField.put(JsonFormUtils.VALUE, "1");
+            }
+        } catch (Exception ignored) { }
         Log.d("Household JSON RESULTS", hhScreeningForm.toString());
 
         try {
@@ -2614,7 +2666,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
     public void deleteMothers(String HouseholdID) throws Exception {
         //get all Mothers
-        List<Mother> allMothers = MotherDao.getMothers(householdId);
+        List<Mother> allMothers = MotherDao.getMothers(HouseholdID);
         FormUtils formUtils = null;
         formUtils = new FormUtils(this);
         if(allMothers != null && allMothers.size() > 0)
@@ -2649,7 +2701,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
     public void deleteFamilyChildren(String HouseholdID) throws Exception {
         //get all family children
-        List<Child> allChildren = IndexPersonDao.getFamilyChildren(householdId);
+        List<Child> allChildren = IndexPersonDao.getFamilyChildren(HouseholdID);
         FormUtils formUtils = null;
         formUtils = new FormUtils(this);
         if(allChildren != null && allChildren.size() > 0)
@@ -2659,39 +2711,7 @@ public class HouseholdDetails extends AppCompatActivity {
                 Child child = allChildren.get(i);
                 child.setDeleted("1");
                 JSONObject vcaScreeningForm = formUtils.getFormJson("vca_edit");
-                try {
-                    if (shouldRemoveVcaEditStep5ForServiceReportVca(child)) {
-                        removeVcaEditStep5(vcaScreeningForm);
-                    }
-                } catch (Exception ignored) { }
-                ObjectMapper deleteMapper = new ObjectMapper();
-                Map<String, Object> childMap = deleteMapper.convertValue(child, Map.class);
-                Caregiver childCaregiver = caregiver != null ? caregiver : CaregiverDao.getCaregiver(child.getHousehold_id());
-                if (childCaregiver != null) {
-                    Map<String, Object> cgMap = deleteMapper.convertValue(childCaregiver, Map.class);
-                    cgMap.forEach((k, v) -> { if (v != null && childMap.get(k) == null) childMap.put(k, v); });
-                }
-                Map<String, String> childStringMap = new HashMap<>();
-                childMap.forEach((k, v) -> { if (k != null && v != null) childStringMap.put(k, String.valueOf(v)); });
-
-                // Fill with CHW location + caseworker from SharedPreferences only when missing
-                try {
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(HouseholdDetails.this);
-
-                    String district = childStringMap.get("district");
-                    if (android.text.TextUtils.isEmpty(district)) {
-                        String prefDistrict = prefs.getString("district", "");
-                        if (!android.text.TextUtils.isEmpty(prefDistrict)) childStringMap.put("district", prefDistrict);
-                    }
-
-                    String caseworker = childStringMap.get("caseworker_name");
-                    if (android.text.TextUtils.isEmpty(caseworker)) {
-                        String prefCaseworker = prefs.getString("caseworker_name", "Anonymous");
-                        if (!android.text.TextUtils.isEmpty(prefCaseworker)) childStringMap.put("caseworker_name", prefCaseworker);
-                    }
-                } catch (Exception ignored) { }
-
-                CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, childStringMap);
+                CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(child, Map.class));
 
                 vcaScreeningForm.put("entity_id", child.getBase_entity_id());
 
@@ -2714,91 +2734,12 @@ public class HouseholdDetails extends AppCompatActivity {
 
     }
 
-    private static void removeVcaEditStep5(JSONObject form) {
-        if (form == null) return;
-        try { form.remove("step5"); } catch (Exception ignored) { }
-        try { form.put("count", "4"); } catch (Exception ignored) { }
-        try {
-            JSONObject step4 = form.optJSONObject("step4");
-            if (step4 != null) {
-                String next = step4.optString("next", null);
-                if (next != null && "step5".equalsIgnoreCase(next.trim())) {
-                    step4.put("next", "");
-                }
-            }
-        } catch (Exception ignored) { }
-    }
-
-    private boolean shouldRemoveVcaEditStep5ForServiceReportVca(Child child) {
-        if (child == null) return false;
-        String householdId = null;
-        try { householdId = child.getHousehold_id(); } catch (Exception ignored) { }
-        String uniqueId = null;
-        try { uniqueId = child.getUnique_id(); } catch (Exception ignored) { }
-
-        return hasMotherSourceFromServiceReportVca(householdId, uniqueId);
-    }
-
-    private boolean hasMotherSourceFromServiceReportVca(String householdId, String vcaUniqueId) {
-        if (android.text.TextUtils.isEmpty(householdId) && android.text.TextUtils.isEmpty(vcaUniqueId)) return false;
-
-        try {
-            if (!android.text.TextUtils.isEmpty(householdId)) {
-                java.util.List<com.bluecodeltd.ecap.chw.model.PtctMotherModel> pmtctMothers = com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao.getPMTCTMothersByHouseholdId(householdId);
-                if (pmtctMothers != null) {
-                    for (com.bluecodeltd.ecap.chw.model.PtctMotherModel mother : pmtctMothers) {
-                        String sourceFrom = mother != null ? mother.getSource_from() : null;
-                        if (!android.text.TextUtils.isEmpty(sourceFrom) && "service_report_vca".equalsIgnoreCase(sourceFrom.trim())) return true;
-                    }
-                }
-            }
-        } catch (Exception ignored) { }
-
-        try {
-            if (!android.text.TextUtils.isEmpty(householdId)) {
-                com.bluecodeltd.ecap.chw.model.PtctMotherModel mother = com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao.getPMCTMother(householdId);
-                String sourceFrom = mother != null ? mother.getSource_from() : null;
-                if (!android.text.TextUtils.isEmpty(sourceFrom) && "service_report_vca".equalsIgnoreCase(sourceFrom.trim())) return true;
-            }
-        } catch (Exception ignored) { }
-
-        try {
-            if (!android.text.TextUtils.isEmpty(vcaUniqueId)) {
-                com.bluecodeltd.ecap.chw.model.PtctMotherModel mother = com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao.getPMCTMother(vcaUniqueId);
-                String sourceFrom = mother != null ? mother.getSource_from() : null;
-                if (!android.text.TextUtils.isEmpty(sourceFrom) && "service_report_vca".equalsIgnoreCase(sourceFrom.trim())) return true;
-            }
-        } catch (Exception ignored) { }
-
-        try {
-            if (!android.text.TextUtils.isEmpty(householdId)) {
-                java.util.List<com.bluecodeltd.ecap.chw.model.IndexMotherModel> mothers = com.bluecodeltd.ecap.chw.dao.IndexMotherDao.getIndexMothersByHouseholdId(householdId);
-                if (mothers != null) {
-                    for (com.bluecodeltd.ecap.chw.model.IndexMotherModel mother : mothers) {
-                        String sourceFrom = mother != null ? mother.getSource_from() : null;
-                        if (!android.text.TextUtils.isEmpty(sourceFrom) && "service_report_vca".equalsIgnoreCase(sourceFrom.trim())) return true;
-                    }
-                }
-            }
-        } catch (Exception ignored) { }
-
-        return false;
-    }
-
     private void deletePmtctMother(String householdId) {
         try {
             PtctMotherModel pmtctMother = PMTCTMotherDao.getPMCTMother(householdId);
             if (pmtctMother == null) {
                 return;
             }
-
-            // Safety: only allow PMTCT delete when all HEI are already deleted
-            try {
-                String heiCount = PmtctChildDao.countMotherHei(householdId, pmtctMother.getPmtct_id());
-                if (heiCount != null && !"0".equals(heiCount)) {
-                    return;
-                }
-            } catch (Exception ignored) { }
 
             pmtctMother.setDelete_status("1");
 

@@ -163,7 +163,6 @@
         "key": "sec_subpop_label",
         "type": "label",
         "text": "Section A: Children Under 5 Years by Sub-population",
-        "text_color": "#27AE60",
         "label_text_style": "bold"
       },
       {
@@ -277,7 +276,6 @@
         "key": "sec_hh_malnutrition_label",
         "type": "label",
         "text": "Section B: Household Malnutrition Prevention (YTD)",
-        "text_color": "#2980B9",
         "label_text_style": "bold",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -490,7 +488,6 @@
         "key": "sec_mnp_vita_label",
         "type": "label",
         "text": "Section C: Micronutrient & MNP Provision (MNP/VITA)",
-        "text_color": "#E67E22",
         "label_text_style": "bold",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -639,7 +636,6 @@
         "key": "sec_ecd_label",
         "type": "label",
         "text": "Section D: Early Childhood Development (YTD)",
-        "text_color": "#9B59B6",
         "label_text_style": "bold",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -756,7 +752,6 @@
         "key": "sec_weight_for_age_label",
         "type": "label",
         "text": "Section E: Weight-For-Age Assessment",
-        "text_color": "#F1C40F",
         "label_text_style": "bold",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -841,7 +836,6 @@
         "key": "sec_nutrition_assessment_label",
         "type": "label",
         "text": "Section F: Nutrition Assessment - Children Below 5 Years (YTD)",
-        "text_color": "#E74C3C",
         "label_text_style": "bold",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -926,7 +920,6 @@
         "key": "sec_muac_label",
         "type": "label",
         "text": "Section G: MUAC Measurements (Centimeters)",
-        "text_color": "#1ABC9C",
         "label_text_style": "bold",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -1027,7 +1020,6 @@
         "key": "sec_sti_label",
         "type": "label",
         "text": "Section H: STI",
-        "text_color": "#34495E",
         "label_text_style": "bold",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -1096,7 +1088,6 @@
         "key": "sec_referral_label",
         "type": "label",
         "text": "Section I: Referral / Integration (YTD)",
-        "text_color": "#7F8C8D",
         "label_text_style": "bold",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -1215,18 +1206,6 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "comment"
-      },
-      {
-        "key": "submit_button",
-        "type": "button",
-        "hint": "Submit Report",
-        "width": "300dp",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "submit_button",
-        "action": {
-          "behaviour": "finish_form"
-        }
       }
     ]
   }

@@ -188,7 +188,6 @@
         "type": "label",
         "label_text_style": "bold",
         "text": "SECTION A: for the comprehensive program",
-        "text_color": "#27AE60",
         "v_required": {
           "value": false
         },
@@ -3767,7 +3766,6 @@
         "type": "label",
         "label_text_style": "bold",
         "text": "SECTION B Other community members not in the comprehensive program",
-        "text_color": "#2980B9",
         "v_required": {
           "value": false
         },
@@ -5245,7 +5243,6 @@
         "type": "label",
         "label_text_style": "bold",
         "text": "SECTION C ADDITIONAL",
-        "text_color": "#E67E22",
         "v_required": {
           "value": false
         },

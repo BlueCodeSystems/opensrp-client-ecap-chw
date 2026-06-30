@@ -34,6 +34,7 @@ import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.Threading;
 import com.google.android.material.snackbar.Snackbar;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONObject;
 import org.smartregister.client.utils.domain.Form;
@@ -128,7 +129,7 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
 
     private void loadReports() {
         allItems.clear();
-        allItems.addAll(MonthlyReportDao.getReports(getTableName()));
+        allItems.addAll(filterVisibleReports(MonthlyReportDao.getReports(getTableName())));
         rebuildMonthFilterOptions();
         applyMonthFilter();
         updateMetaText();
@@ -388,18 +389,47 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
 
     private void deleteReport(MonthlyReportModel item) {
         try {
-            JSONObject form = new FormUtils(this).getFormJson(getFormName());
+            FormUtils formUtils = new FormUtils(this);
+            JSONObject form = formUtils.getFormJson(getFormName());
             if (form == null) {
                 return;
             }
             item.setDelete_status("1");
+            form.put("delete_status", "1");
             form.put("entity_id", item.getBase_entity_id());
-            org.smartregister.chw.core.utils.CoreJsonFormUtils.populateJsonForm(form, item.toValueMap());
-            saveFromFormJson(form.toString(), true);
+            org.smartregister.chw.core.utils.CoreJsonFormUtils.populateJsonForm(form, new ObjectMapper().convertValue(item, java.util.Map.class));
+            ReportEventClient reportEventClient = processRegistration(form.toString());
+            if (reportEventClient != null) {
+                saveRegistration(reportEventClient, true);
+            }
         } catch (Exception e) {
             timber.log.Timber.e(e);
             Snackbar.make(recyclerView, "Unable to delete report", Snackbar.LENGTH_LONG).show();
         }
+    }
+
+    private List<MonthlyReportModel> filterVisibleReports(List<MonthlyReportModel> source) {
+        List<MonthlyReportModel> visible = new ArrayList<>();
+        if (source == null || source.isEmpty()) {
+            return visible;
+        }
+        for (MonthlyReportModel item : source) {
+            if (!isSoftDeleted(item)) {
+                visible.add(item);
+            }
+        }
+        return visible;
+    }
+
+    private boolean isSoftDeleted(MonthlyReportModel item) {
+        if (item == null) {
+            return false;
+        }
+        String deleteStatus = item.getDelete_status();
+        if (deleteStatus == null || deleteStatus.trim().isEmpty()) {
+            deleteStatus = item.getAdditionalField("delete_status");
+        }
+        return "1".equals(deleteStatus == null ? null : deleteStatus.trim());
     }
 
     private void showInactiveDialog(CaseStatusModel caseStatusModel) {

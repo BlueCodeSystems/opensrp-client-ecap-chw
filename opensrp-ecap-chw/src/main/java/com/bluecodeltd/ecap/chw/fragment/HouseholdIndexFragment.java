@@ -424,7 +424,7 @@ public class HouseholdIndexFragment extends BaseSafeRegisterFragment implements 
 
     @Override
     protected String getMainCondition() {
-        return " status IS NULL AND caregiver_name IS NOT NULL";
+        return "status IS NULL AND caregiver_name IS NOT NULL";
     }
 
     @Override
