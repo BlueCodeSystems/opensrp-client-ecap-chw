@@ -19,6 +19,16 @@ apply plugin: 'maven-publish'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
+kapt {
+    javacOptions {
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED")
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED")
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED")
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED")
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED")
+    }
+}
+
 jacoco {
     toolVersion = "0.8.5"
 }

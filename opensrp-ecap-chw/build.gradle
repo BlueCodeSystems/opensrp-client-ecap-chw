@@ -22,6 +22,16 @@ apply from: "jacoco.gradle"
 apply plugin: 'kotlin-android'
 apply plugin: 'org.jetbrains.kotlin.kapt'
 apply plugin: 'kotlin-kapt'
+
+kapt {
+    javacOptions {
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED")
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED")
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED")
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED")
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED")
+    }
+}
 //apply plugin: 'com.google.gms.google-services'
 //apply plugin: 'com.google.firebase.crashlytics'
 
@@ -341,8 +351,8 @@ android {
         ecap {
             dimension = 'baseDimension'
             applicationIdSuffix ".ecap"
-            versionCode 45
-            versionName "v8.0.4"
+            versionCode 46
+            versionName "v8.0.5"
             buildConfigField "String", 'opensrp_url', '"https://opensrp.ecap.bluecodeltd.com/opensrp/"'
             buildConfigField "String", 'guidebooks_url', '"https://opensrp.s3.amazonaws.com/media/ba/"'
             buildConfigField "String", 'opensrp_url_debug', '"https://opensrp.ecap.bluecodeltd.com/opensrp/"'

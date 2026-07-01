@@ -21,14 +21,14 @@
           },
           {
             "field": "eventType",
-            "field_value": "BCAPI_Nutrition_Activities_Report",
+            "field_value": "Monthly Nutrition Report",
             "creates_case": [
               "ec_monthly_nutrition"
             ]
           },
           {
             "field": "eventType",
-            "field_value": "TB_Monthly_Reporting",
+            "field_value": "Monthly TB",
             "creates_case": [
               "ec_monthly_tb"
             ]

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:stretchColumns="1,2">
+    <TableRow android:background="@drawable/bg_table_header" android:paddingVertical="8dp">
+        <TextView android:paddingStart="12dp" android:text="Age Group" android:textStyle="bold" />
+        <TextView android:gravity="center" android:text="Female" android:textStyle="bold" />
+        <TextView android:gravity="center" android:text="Male" android:textStyle="bold" />
+    </TableRow>
+    <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+        <TextView android:paddingStart="12dp" android:text="0-4 Years" />
+        <TextView android:id="@+id/q7_f_0_4" android:gravity="center" android:text="0" />
+        <TextView android:id="@+id/q7_m_0_4" android:gravity="center" android:text="0" />
+    </TableRow>
+    <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+        <TextView android:paddingStart="12dp" android:text="5-15 Years" />
+        <TextView android:id="@+id/q7_f_5_15" android:gravity="center" android:text="0" />
+        <TextView android:id="@+id/q7_m_5_15" android:gravity="center" android:text="0" />
+    </TableRow>
+    <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+        <TextView android:paddingStart="12dp" android:text="16-19 Years" />
+        <TextView android:id="@+id/q7_f_16_19" android:gravity="center" android:text="0" />
+        <TextView android:id="@+id/q7_m_16_19" android:gravity="center" android:text="0" />
+    </TableRow>
+    <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+        <TextView android:paddingStart="12dp" android:text="20+ Years" />
+        <TextView android:id="@+id/q7_f_20_plus" android:gravity="center" android:text="0" />
+        <TextView android:id="@+id/q7_m_20_plus" android:gravity="center" android:text="0" />
+    </TableRow>
+    <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+        <TextView android:paddingStart="12dp" android:text="C/ALHIV" />
+        <TextView android:id="@+id/q7_f_calhiv" android:gravity="center" android:text="0" />
+        <TextView android:id="@+id/q7_m_calhiv" android:gravity="center" android:text="0" />
+    </TableRow>
+    <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+        <TextView android:paddingStart="12dp" android:text="HEI" />
+        <TextView android:id="@+id/q7_f_hei" android:gravity="center" android:text="0" />
+        <TextView android:id="@+id/q7_m_hei" android:gravity="center" android:text="0" />
+    </TableRow>
+    <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+        <TextView android:paddingStart="12dp" android:text="Children of WLHIV" />
+        <TextView android:id="@+id/q7_f_wlhiv" android:gravity="center" android:text="0" />
+        <TextView android:id="@+id/q7_m_wlhiv" android:gravity="center" android:text="0" />
+    </TableRow>
+    <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+        <TextView android:paddingStart="12dp" android:text="SV" />
+        <TextView android:id="@+id/q7_f_sv" android:gravity="center" android:text="0" />
+        <TextView android:id="@+id/q7_m_sv" android:gravity="center" android:text="0" />
+    </TableRow>
+    <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+        <TextView android:paddingStart="12dp" android:text="AGYW_PBFW" />
+        <TextView android:id="@+id/q7_f_agyw" android:gravity="center" android:text="0" />
+        <TextView android:gravity="center" android:text="-" />
+    </TableRow>
+    <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+        <TextView android:paddingStart="12dp" android:text="HIV+ PBFW" />
+        <TextView android:id="@+id/q7_f_hiv_pos" android:gravity="center" android:text="0" />
+        <TextView android:gravity="center" android:text="-" />
+    </TableRow>
+    <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+        <TextView android:paddingStart="12dp" android:text="Siblings" />
+        <TextView android:id="@+id/q7_f_siblings" android:gravity="center" android:text="0" />
+        <TextView android:id="@+id/q7_m_siblings" android:gravity="center" android:text="0" />
+    </TableRow>
+    <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+        <TextView android:paddingStart="12dp" android:text="Caregivers" />
+        <TextView android:id="@+id/q7_f_caregivers" android:gravity="center" android:text="0" />
+        <TextView android:id="@+id/q7_m_caregivers" android:gravity="center" android:text="0" />
+    </TableRow>
+</TableLayout>

@@ -16,7 +16,7 @@ actions:
 name: step1_art_number
 description: art_number
 priority: 1
-condition: "step1_hiv_status.contains('Known Positive') || step1_hiv_result.contains('Newly Tested HIV+')"
+condition: "step1_hiv_status.contains('Known Positive') || step1_hiv_result.contains('Newly Tested HIV+') || step1_testing_modality.contains('Index') || step1_testing_modality.contains('SNT')"
 actions:
   - "isRelevant = true"
 ---

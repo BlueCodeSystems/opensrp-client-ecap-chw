@@ -10,17 +10,18 @@ import android.widget.RelativeLayout;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
-import com.bluecodeltd.ecap.chw.activity.ReportHomeActivity;
 import com.bluecodeltd.ecap.chw.activity.ReportRegisterActivity;
 import com.bluecodeltd.ecap.chw.adapter.ReportFormOptionAdapter;
 import com.bluecodeltd.ecap.chw.contract.ReportRegisterFragmentContract;
 import com.bluecodeltd.ecap.chw.domain.ReportType;
+import com.bluecodeltd.ecap.chw.dao.HouseholdServiceReportDao;
 import com.bluecodeltd.ecap.chw.presenter.ReportRegisterFragmentPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
 
@@ -144,29 +145,6 @@ public class ReportRegisterFragment extends BaseSafeRegisterFragment implements 
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        View root = getView();
-        if (root != null) {
-            android.widget.TextView titleLabel = root.findViewById(org.smartregister.R.id.txt_title_label);
-            if (titleLabel != null) {
-                titleLabel.setVisibility(View.VISIBLE);
-                titleLabel.setText(getReportTitle());
-            }
-            Toolbar toolbar = root.findViewById(org.smartregister.R.id.register_toolbar);
-            if (toolbar != null) {
-                toolbar.setTitle("");
-            }
-        }
-        if (getActivity() instanceof AppCompatActivity) {
-            AppCompatActivity act = (AppCompatActivity) getActivity();
-            if (act.getSupportActionBar() != null) {
-                act.getSupportActionBar().setDisplayShowTitleEnabled(false);
-            }
-        }
-    }
-
-    @Override
     protected void setUpActionBar() {
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         if (activity == null) {
@@ -255,12 +233,25 @@ public class ReportRegisterFragment extends BaseSafeRegisterFragment implements 
             return;
         }
 
-        if (formsAdapter == null) {
-            formsAdapter = new ReportFormOptionAdapter(buildFormOptions(), reportType -> {
-                ReportHomeActivity.start(getActivity(), reportType.getID());
-            });
-        }
+        formsAdapter = new ReportFormOptionAdapter(buildFormOptions(), reportType -> {
+            if (getActivity() instanceof ReportRegisterActivity) {
+                ((ReportRegisterActivity) getActivity()).openReportList(reportType.getID());
+            }
+        });
         clientsView.setAdapter(formsAdapter);
+    }
+
+    public void refreshReportCards() {
+        if (getActivity() == null || clientsView == null) {
+            return;
+        }
+        initializeAdapter();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshReportCards();
     }
 
     @Override
@@ -306,11 +297,40 @@ public class ReportRegisterFragment extends BaseSafeRegisterFragment implements 
     }
 
     private List<ReportType> buildFormOptions() {
+        String caseworkerName = PreferenceManager.getDefaultSharedPreferences(requireContext())
+                .getString("caseworker_name", "");
+        if (caseworkerName == null || caseworkerName.trim().isEmpty()) {
+            caseworkerName = PreferenceManager.getDefaultSharedPreferences(requireContext())
+                    .getString("last_logged_in_username", "");
+        }
         List<ReportType> options = new ArrayList<>();
-        options.add(new ReportType(ReportRegisterActivity.REPORT_TYPE_MALARIA, getString(R.string.menu_malaria)));
-        options.add(new ReportType(ReportRegisterActivity.REPORT_TYPE_NUTRITION, getString(R.string.report_nutrition)));
-        options.add(new ReportType(ReportRegisterActivity.REPORT_TYPE_TB, getString(R.string.report_tb)));
+        options.add(new ReportType(
+                ReportRegisterActivity.REPORT_TYPE_MALARIA,
+                getString(R.string.menu_malaria),
+                HouseholdServiceReportDao.getMonthlyReportCount(ReportRegisterActivity.REPORT_TABLE_MALARIA, caseworkerName),
+                getLastSubmitted(ReportRegisterActivity.REPORT_TABLE_MALARIA, caseworkerName)
+        ));
+        options.add(new ReportType(
+                ReportRegisterActivity.REPORT_TYPE_NUTRITION,
+                getString(R.string.report_nutrition),
+                HouseholdServiceReportDao.getMonthlyReportCount(ReportRegisterActivity.REPORT_TABLE_NUTRITION, caseworkerName),
+                getLastSubmitted(ReportRegisterActivity.REPORT_TABLE_NUTRITION, caseworkerName)
+        ));
+        options.add(new ReportType(
+                ReportRegisterActivity.REPORT_TYPE_TB,
+                getString(R.string.report_tb),
+                HouseholdServiceReportDao.getMonthlyReportCount(ReportRegisterActivity.REPORT_TABLE_TB, caseworkerName),
+                getLastSubmitted(ReportRegisterActivity.REPORT_TABLE_TB, caseworkerName)
+        ));
         return options;
+    }
+
+    private String getLastSubmitted(String tableName, String caseworkerName) {
+        com.bluecodeltd.ecap.chw.model.MonthlyReportModel latest = com.bluecodeltd.ecap.chw.dao.MonthlyReportDao.getLatestReport(tableName);
+        if (latest == null) {
+            return "";
+        }
+        return latest.getLast_interacted_with();
     }
 
     private void ensureReportGridConfig() {
