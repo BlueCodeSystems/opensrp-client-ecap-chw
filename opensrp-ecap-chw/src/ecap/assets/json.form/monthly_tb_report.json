@@ -187,7 +187,6 @@
         "type": "label",
         "label_text_style": "bold",
         "text": "TB MONTHLY REPORTING FORM",
-        "text_color": "#27AE60",
         "v_required": {
           "value": false
         }
