@@ -361,7 +361,7 @@ public class IndexFragmentRegister extends BaseSafeRegisterFragment implements I
     @Override
     protected String getMainCondition() {
         //return "case_status > 0 AND is_closed = 0 ";
-        return "((deleted IS NULL OR deleted <> '1') AND first_name IS NOT NULL)";
+        return "(deleted IS NULL OR deleted != '1') AND first_name IS NOT NULL GROUP BY unique_id";
     }
     @Override
     protected String getDefaultSortQuery() {
