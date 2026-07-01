@@ -5,7 +5,7 @@
     <item
         android:id="@+id/action_report_malaria"
         android:enabled="true"
-        android:icon="@mipmap/sidemenu_malaria"
+        android:icon="@drawable/ic_malaria_24"
         android:title="@string/menu_malaria"
         app:showAsAction="ifRoom" />
 

@@ -27,7 +27,7 @@ public class NavigationMenuFlv implements NavigationMenu.Flavour {
     public HashMap<String, String> getTableMapValues() {
         HashMap<String, String> tableMap = new HashMap<>();
         tableMap.put(CoreConstants.DrawerMenu.REFERRALS, org.smartregister.chw.referral.util.Constants.Tables.REFERRAL);
-        tableMap.put(CoreConstants.DrawerMenu.REPORT_REGISTER, Constants.EcapClientTable.EC_HOUSEHOLD_SERVICE);
+        tableMap.put(CoreConstants.DrawerMenu.REPORT_REGISTER, "report_register_total");
         return tableMap;
     }
 

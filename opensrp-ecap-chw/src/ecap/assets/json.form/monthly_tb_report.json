@@ -1,30 +1,62 @@
 {
   "count": "1",
-  "encounter_type": "TB_Monthly_Reporting",
+  "encounter_type": "Monthly TB",
   "entity_id": "",
   "relational_id": "",
   "validate_on_submit": true,
   "skip_blank_steps": true,
   "show_errors_on_submit": true,
-  "confirm_close": true,
-  "clean_on_relevance_false": false,
-  "clean_on_relevant_false": false,
   "metadata": {
-    "start": { "openmrs_entity_parent": "", "openmrs_entity": "concept", "openmrs_data_type": "start", "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-    "end": { "openmrs_entity_parent": "", "openmrs_entity": "concept", "openmrs_data_type": "end", "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-    "today": { "openmrs_entity_parent": "", "openmrs_entity": "encounter", "openmrs_entity_id": "encounter_date" },
-    "deviceid": { "openmrs_entity_parent": "", "openmrs_entity": "concept", "openmrs_data_type": "deviceid", "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-    "subscriberid": { "openmrs_entity_parent": "", "openmrs_entity": "concept", "openmrs_data_type": "subscriberid", "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-    "simserial": { "openmrs_entity_parent": "", "openmrs_entity": "concept", "openmrs_data_type": "simserial", "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-    "phonenumber": { "openmrs_entity_parent": "", "openmrs_entity": "concept", "openmrs_data_type": "phonenumber", "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
     "encounter_location": "",
-    "look_up": { "entity_id": "", "value": "" }
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
   },
   "step1": {
     "title": "TB Monthly Reporting",
-    "clean_on_relevance_false": false, "clean_on_relevant_false": false,
     "fields": [
-
       {
         "key": "form_id",
         "openmrs_entity_parent": "",
@@ -43,7 +75,7 @@
       {
         "key": "facility",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "facility",
         "type": "edit_text",
         "hint": "Health Facility",
@@ -58,7 +90,7 @@
       {
         "key": "province",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "province",
         "type": "edit_text",
         "hint": "Province",
@@ -73,7 +105,7 @@
       {
         "key": "district",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "district",
         "type": "edit_text",
         "hint": "District",
@@ -88,7 +120,7 @@
       {
         "key": "ward",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "ward",
         "type": "edit_text",
         "hint": "Ward",
@@ -98,7 +130,7 @@
       {
         "key": "partner",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "partner",
         "type": "edit_text",
         "hint": "Implementing Partner",
@@ -125,209 +157,2711 @@
           "err": "Partner is Required"
         }
       },
-
-      { "key": "reporting_month", "type": "edit_text", "hint": "Reporting Month", "read_only": true, "value": "June 2024", "openmrs_entity_parent": "", "openmrs_entity": "", "openmrs_entity_id": "reporting_month" },
-      { "key": "reporting_year", "type": "hidden", "openmrs_entity_parent": "", "openmrs_entity": "", "openmrs_entity_id": "reporting_year" },
       {
-        "key": "save_draft",
-        "type": "button",
-        "hint": "Save as Draft",
-        "action": {
-          "behaviour": "finish_form"
+        "key": "caseworker_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_name",
+        "type": "hidden",
+        "hint": "",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": true,
+          "err": "Partner is Required"
         }
       },
-      { "key": "tb_report_title_label", "type": "label", "label_text_style": "bold", "text": "TB MONTHLY REPORTING FORM", "text_color": "#27AE60", "v_required": { "value": false } },
-      { "key": "q1_status", "type": "native_radio", "label": "1. Number of VCA and primary caregivers who were screened for TB symptoms in the community as part of OVC case management", "options": [ { "key": "open", "text": "Open" }, { "key": "closed", "text": "Close" } ], "v_required": { "value": "true", "err": "Required" }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q1_status" },
-      { "key": "q1_agesex_label", "type": "label", "text": "Age/Sex", "text_color": "#2ECC71", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q1_status": { "type": "string", "ex": "equalTo(., \"open\")" } } },
-      { "key": "q1_f_lt_1", "type": "edit_text", "hint": "Under 1 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q1_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q1_f_lt_1" },
-      { "key": "q1_f_1_4", "type": "edit_text", "hint": "1-4 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q1_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q1_f_1_4" },
-      { "key": "q1_f_5_9", "type": "edit_text", "hint": "5-9 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q1_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q1_f_5_9" },
-      { "key": "q1_f_10_14", "type": "edit_text", "hint": "10-14 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q1_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q1_f_10_14" },
-      { "key": "q1_f_15_19", "type": "edit_text", "hint": "15-19 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q1_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q1_f_15_19" },
-      { "key": "q1_f_20_plus", "type": "edit_text", "hint": "20 Years Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q1_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q1_f_20_plus" },
-      { "key": "q1_f_pc_18_plus", "type": "edit_text", "hint": "Primary Caregiver 18+ Years Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q1_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q1_f_pc_18_plus" },
-      { "key": "q1_f_total", "type": "edit_text", "hint": "Grand Total Female:", "label_text_style": "bold", "text_color": "#000000", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q1_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q1_f_total" },
-      { "key": "q1_m_lt_1", "type": "edit_text", "hint": "Under 1 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q1_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q1_m_lt_1" },
-      { "key": "q1_m_1_4", "type": "edit_text", "hint": "1-4 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q1_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q1_m_1_4" },
-      { "key": "q1_m_5_9", "type": "edit_text", "hint": "5-9 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q1_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q1_m_5_9" },
-      { "key": "q1_m_10_14", "type": "edit_text", "hint": "10-14 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q1_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q1_m_10_14" },
-      { "key": "q1_m_15_19", "type": "edit_text", "hint": "15-19 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q1_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q1_m_15_19" },
-      { "key": "q1_m_20_plus", "type": "edit_text", "hint": "20 Years Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q1_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q1_m_20_plus" },
-      { "key": "q1_m_pc_18_plus", "type": "edit_text", "hint": "Primary Caregiver 18+ Years Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q1_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q1_m_pc_18_plus" },
-      { "key": "q1_m_total", "type": "edit_text", "hint": "Grand Total Male:", "label_text_style": "bold", "text_color": "#000000", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q1_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q1_m_total" },
-      { "key": "q1_subpop_label", "type": "label", "text": "Sub-populations", "text_color": "#2ECC71", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q1_status": { "type": "string", "ex": "equalTo(., \"open\")" } } },
-      { "key": "q1_hei", "type": "edit_text", "hint": "HEI", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q1_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q1_hei" },
-      { "key": "q1_calhiv", "type": "edit_text", "hint": "CALHIV (0-20)", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q1_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q1_calhiv" },
-      { "key": "q1_wlhiv", "type": "edit_text", "hint": "Children of WLHIV", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q1_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q1_wlhiv" },
-      { "key": "q1_pc_lhiv", "type": "edit_text", "hint": "Primary Caregivers Living with HIV", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q1_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q1_pc_lhiv" },
-      { "key": "q1_other", "type": "edit_text", "hint": "Other", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q1_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q1_other" },
-      { "key": "q1_subpop_total", "type": "edit_text", "hint": "Grand Total:", "label_text_style": "bold", "text_color": "#000000", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q1_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q1_subpop_total" },
-
-      { "key": "q2_status", "type": "native_radio", "label": "2. Number of VCA and primary caregivers referred for TB symptoms in the community as part of OVC case management who are screen positive (Presumptive TB)", "options": [ { "key": "open", "text": "Open" }, { "key": "closed", "text": "Close" } ], "v_required": { "value": "true", "err": "Required" }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q2_status" },
-      { "key": "q2_agesex_label", "type": "label", "text": "Age/Sex", "text_color": "#2ECC71", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q2_status": { "type": "string", "ex": "equalTo(., \"open\")" } } },
-      { "key": "q2_f_lt_1", "type": "edit_text", "hint": "under 1 female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q2_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q2_f_lt_1" },
-      { "key": "q2_f_1_4", "type": "edit_text", "hint": "1-4 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q2_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q2_f_1_4" },
-      { "key": "q2_f_5_9", "type": "edit_text", "hint": "5-9 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q2_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q2_f_5_9" },
-      { "key": "q2_f_10_14", "type": "edit_text", "hint": "10-14 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q2_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q2_f_10_14" },
-      { "key": "q2_f_15_19", "type": "edit_text", "hint": "15-19 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q2_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q2_f_15_19" },
-      { "key": "q2_f_20_plus", "type": "edit_text", "hint": "20 Years Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q2_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q2_f_20_plus" },
-      { "key": "q2_f_pc_18_plus", "type": "edit_text", "hint": "Primary Caregiver 18+ Years Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q2_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q2_f_pc_18_plus" },
-      { "key": "q2_f_total", "type": "edit_text", "hint": "Grand Total Female:", "label_text_style": "bold", "text_color": "#000000", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q2_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q2_f_total" },
-      { "key": "q2_m_lt_1", "type": "edit_text", "hint": "Under 1 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q2_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q2_m_lt_1" },
-      { "key": "q2_m_1_4", "type": "edit_text", "hint": "1-4 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q2_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q2_m_1_4" },
-      { "key": "q2_m_5_9", "type": "edit_text", "hint": "5-9 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q2_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q2_m_5_9" },
-      { "key": "q2_m_10_14", "type": "edit_text", "hint": "10-14 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q2_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q2_m_10_14" },
-      { "key": "q2_m_15_19", "type": "edit_text", "hint": "15-19 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q2_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q2_m_15_19" },
-      { "key": "q2_m_20_plus", "type": "edit_text", "hint": "20 Years Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q2_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q2_m_20_plus" },
-      { "key": "q2_m_pc_18_plus", "type": "edit_text", "hint": "Primary Caregiver 18+ Years Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q2_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q2_m_pc_18_plus" },
-      { "key": "q2_m_total", "type": "edit_text", "hint": "Grand Total Male:", "label_text_style": "bold", "text_color": "#000000", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q2_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q2_m_total" },
-      { "key": "q2_subpop_label", "type": "label", "text": "Sub-populations", "text_color": "#2ECC71", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q2_status": { "type": "string", "ex": "equalTo(., \"open\")" } } },
-      { "key": "q2_hei", "type": "edit_text", "hint": "HEI", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q2_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q2_hei" },
-      { "key": "q2_calhiv", "type": "edit_text", "hint": "CALHIV (0-20)", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q2_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q2_calhiv" },
-      { "key": "q2_wlhiv", "type": "edit_text", "hint": "Children of WLHIV", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q2_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q2_wlhiv" },
-      { "key": "q2_pc_lhiv", "type": "edit_text", "hint": "Primary Caregivers Living with HIV", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q2_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q2_pc_lhiv" },
-      { "key": "q2_other", "type": "edit_text", "hint": "Other", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q2_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q2_other" },
-      { "key": "q2_subpop_total", "type": "edit_text", "hint": "Grand Total:", "label_text_style": "bold", "text_color": "#000000", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q2_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q2_subpop_total" },
-
-      { "key": "q3_status", "type": "native_radio", "label": "3. Number of VCA and primary caregivers referred for TB symptoms in the community who are screen positive (Presumptive TB) and referred to the health facility", "options": [ { "key": "open", "text": "Open" }, { "key": "closed", "text": "Close" } ], "v_required": { "value": "true", "err": "Required" }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q3_status" },
-      { "key": "q3_agesex_label", "type": "label", "text": "Age/Sex", "text_color": "#2ECC71", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q3_status": { "type": "string", "ex": "equalTo(., \"open\")" } } },
-      { "key": "q3_f_lt_1", "type": "edit_text", "hint": "Under 1 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q3_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q3_f_lt_1" },
-      { "key": "q3_f_1_4", "type": "edit_text", "hint": "1-4 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q3_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q3_f_1_4" },
-      { "key": "q3_f_5_9", "type": "edit_text", "hint": "5-9 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q3_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q3_f_5_9" },
-      { "key": "q3_f_10_14", "type": "edit_text", "hint": "10-14 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q3_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q3_f_10_14" },
-      { "key": "q3_f_15_19", "type": "edit_text", "hint": "15-19 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q3_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q3_f_15_19" },
-      { "key": "q3_f_20_plus", "type": "edit_text", "hint": "20 Years Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q3_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q3_f_20_plus" },
-      { "key": "q3_f_pc_18_plus", "type": "edit_text", "hint": "Primary Caregiver 18+ Years Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q3_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q3_f_pc_18_plus" },
-      { "key": "q3_f_total", "type": "edit_text", "hint": "Grand Total Female:", "label_text_style": "bold", "text_color": "#000000", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q3_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q3_f_total" },
-      { "key": "q3_m_lt_1", "type": "edit_text", "hint": "Under 1 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q3_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q3_m_lt_1" },
-      { "key": "q3_m_1_4", "type": "edit_text", "hint": "1-4 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q3_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q3_m_1_4" },
-      { "key": "q3_m_5_9", "type": "edit_text", "hint": "5-9 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q3_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q3_m_5_9" },
-      { "key": "q3_m_10_14", "type": "edit_text", "hint": "10-14 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q3_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q3_m_10_14" },
-      { "key": "q3_m_15_19", "type": "edit_text", "hint": "15-19 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q3_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q3_m_15_19" },
-      { "key": "q3_m_20_plus", "type": "edit_text", "hint": "20 Years Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q3_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q3_m_20_plus" },
-      { "key": "q3_m_pc_18_plus", "type": "edit_text", "hint": "Primary Caregiver 18+ Years Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q3_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q3_m_pc_18_plus" },
-      { "key": "q3_m_total", "type": "edit_text", "hint": "Grand Total Male:", "label_text_style": "bold", "text_color": "#000000", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q3_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q3_m_total" },
-      { "key": "q3_subpop_label", "type": "label", "text": "Sub-populations", "text_color": "#2ECC71", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q3_status": { "type": "string", "ex": "equalTo(., \"open\")" } } },
-      { "key": "q3_hei", "type": "edit_text", "hint": "HEI", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q3_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q3_hei" },
-      { "key": "q3_calhiv", "type": "edit_text", "hint": "CALHIV (0-20)", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q3_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q3_calhiv" },
-      { "key": "q3_wlhiv", "type": "edit_text", "hint": "Children of WLHIV", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q3_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q3_wlhiv" },
-      { "key": "q3_pc_lhiv", "type": "edit_text", "hint": "Primary Caregivers Living with HIV", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q3_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q3_pc_lhiv" },
-      { "key": "q3_other", "type": "edit_text", "hint": "Other", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q3_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q3_other" },
-      { "key": "q3_subpop_total", "type": "edit_text", "hint": "Grand Total:", "label_text_style": "bold", "text_color": "#000000", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q3_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q3_subpop_total" },
-
-      { "key": "q4_status", "type": "native_radio", "label": "4. primary caregivers found with TB symptoms (presumptive TB) during community screening, referred to the health facility who are screened for TB symptom screen (only as chest x-ray or mWRD) at the health facility", "options": [ { "key": "open", "text": "Open" }, { "key": "closed", "text": "Close" } ], "v_required": { "value": "true", "err": "Required" }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q4_status" },
-      { "key": "q4_agesex_label", "type": "label", "text": "Age/Sex", "text_color": "#2ECC71", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q4_status": { "type": "string", "ex": "equalTo(., \"open\")" } } },
-      { "key": "q4_f_lt_1", "type": "edit_text", "hint": "Under 1 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q4_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q4_f_lt_1" },
-      { "key": "q4_f_1_4", "type": "edit_text", "hint": "1-4 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q4_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q4_f_1_4" },
-      { "key": "q4_f_5_9", "type": "edit_text", "hint": "5-9 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q4_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q4_f_5_9" },
-      { "key": "q4_f_10_14", "type": "edit_text", "hint": "10-14 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q4_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q4_f_10_14" },
-      { "key": "q4_f_15_19", "type": "edit_text", "hint": "15-19 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q4_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q4_f_15_19" },
-      { "key": "q4_f_20_plus", "type": "edit_text", "hint": "20 Years Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q4_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q4_f_20_plus" },
-      { "key": "q4_f_pc_18_plus", "type": "edit_text", "hint": "Primary Caregiver 18+ Years Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q4_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q4_f_pc_18_plus" },
-      { "key": "q4_f_total", "type": "edit_text", "hint": "Grand Total Female:", "label_text_style": "bold", "text_color": "#000000", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q4_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q4_f_total" },
-      { "key": "q4_m_lt_1", "type": "edit_text", "hint": "Under 1 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q4_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q4_m_lt_1" },
-      { "key": "q4_m_1_4", "type": "edit_text", "hint": "1-4 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q4_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q4_m_1_4" },
-      { "key": "q4_m_5_9", "type": "edit_text", "hint": "5-9 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q4_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q4_m_5_9" },
-      { "key": "q4_m_10_14", "type": "edit_text", "hint": "10-14 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q4_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q4_m_10_14" },
-      { "key": "q4_m_15_19", "type": "edit_text", "hint": "15-19 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q4_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q4_m_15_19" },
-      { "key": "q4_m_20_plus", "type": "edit_text", "hint": "20 Years Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q4_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q4_m_20_plus" },
-      { "key": "q4_m_pc_18_plus", "type": "edit_text", "hint": "Primary Caregiver 18+ Years Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q4_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q4_m_pc_18_plus" },
-      { "key": "q4_m_total", "type": "edit_text", "hint": "Grand Total Male:", "label_text_style": "bold", "text_color": "#000000", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q4_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q4_m_total" },
-      { "key": "q4_subpop_label", "type": "label", "text": "Sub-populations", "text_color": "#2ECC71", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q4_status": { "type": "string", "ex": "equalTo(., \"open\")" } } },
-      { "key": "q4_hei", "type": "edit_text", "hint": "HEI", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q4_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q4_hei" },
-      { "key": "q4_calhiv", "type": "edit_text", "hint": "CALHIV (0-20)", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q4_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q4_calhiv" },
-      { "key": "q4_wlhiv", "type": "edit_text", "hint": "Children of WLHIV", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q4_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q4_wlhiv" },
-      { "key": "q4_pc_lhiv", "type": "edit_text", "hint": "Primary Caregivers Living with HIV", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q4_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q4_pc_lhiv" },
-      { "key": "q4_other", "type": "edit_text", "hint": "Other", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q4_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q4_other" },
-      { "key": "q4_subpop_total", "type": "edit_text", "hint": "Grand Total:", "label_text_style": "bold", "text_color": "#000000", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q4_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q4_subpop_total" },
-
-      { "key": "q5_status", "type": "native_radio", "label": "5. Number of VCA and primary caregivers referred from the community to the health facility, who are started on TPT", "options": [ { "key": "open", "text": "Open" }, { "key": "closed", "text": "Close" } ], "v_required": { "value": "true", "err": "Required" }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q5_status" },
-      { "key": "q5_agesex_label", "type": "label", "text": "Age/Sex", "text_color": "#2ECC71", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q5_status": { "type": "string", "ex": "equalTo(., \"open\")" } } },
-      { "key": "q5_f_lt_1", "type": "edit_text", "hint": "Under 1 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q5_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q5_f_lt_1" },
-      { "key": "q5_f_1_4", "type": "edit_text", "hint": "1-4 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q5_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q5_f_1_4" },
-      { "key": "q5_f_5_9", "type": "edit_text", "hint": "5-9 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q5_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q5_f_5_9" },
-      { "key": "q5_f_10_14", "type": "edit_text", "hint": "10-14 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q5_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q5_f_10_14" },
-      { "key": "q5_f_15_19", "type": "edit_text", "hint": "15-19 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q5_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q5_f_15_19" },
-      { "key": "q5_f_20_plus", "type": "edit_text", "hint": "20 Years Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q5_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q5_f_20_plus" },
-      { "key": "q5_f_pc_18_plus", "type": "edit_text", "hint": "Primary Caregiver 18+ Years Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q5_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q5_f_pc_18_plus" },
-      { "key": "q5_f_total", "type": "edit_text", "hint": "Grand Total Female:", "label_text_style": "bold", "text_color": "#000000", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q5_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q5_f_total" },
-      { "key": "q5_m_lt_1", "type": "edit_text", "hint": "Under 1 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q5_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q5_m_lt_1" },
-      { "key": "q5_m_1_4", "type": "edit_text", "hint": "1-4 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q5_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q5_m_1_4" },
-      { "key": "q5_m_5_9", "type": "edit_text", "hint": "5-9 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q5_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q5_m_5_9" },
-      { "key": "q5_m_10_14", "type": "edit_text", "hint": "10-14 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q5_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q5_m_10_14" },
-      { "key": "q5_m_15_19", "type": "edit_text", "hint": "15-19 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q5_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q5_m_15_19" },
-      { "key": "q5_m_20_plus", "type": "edit_text", "hint": "20 Years Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q5_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q5_m_20_plus" },
-      { "key": "q5_m_pc_18_plus", "type": "edit_text", "hint": "Primary Caregiver 18+ Years Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q5_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q5_m_pc_18_plus" },
-      { "key": "q5_m_total", "type": "edit_text", "hint": "Grand Total Male:", "label_text_style": "bold", "text_color": "#000000", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q5_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q5_m_total" },
-      { "key": "q5_subpop_label", "type": "label", "text": "Sub-populations", "text_color": "#2ECC71", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q5_status": { "type": "string", "ex": "equalTo(., \"open\")" } } },
-      { "key": "q5_hei", "type": "edit_text", "hint": "HEI", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q5_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q5_hei" },
-      { "key": "q5_calhiv", "type": "edit_text", "hint": "CALHIV (0-20)", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q5_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q5_calhiv" },
-      { "key": "q5_wlhiv", "type": "edit_text", "hint": "Children of WLHIV", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q5_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q5_wlhiv" },
-      { "key": "q5_pc_lhiv", "type": "edit_text", "hint": "Primary Caregivers Living with HIV", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q5_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q5_pc_lhiv" },
-      { "key": "q5_subpop_total", "type": "edit_text", "hint": "Grand Total:", "label_text_style": "bold", "text_color": "#000000", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q5_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q5_subpop_total" },
-
-      { "key": "q6_status", "type": "native_radio", "label": "6. Number of VCA and primary caregivers on TPT provided with adherence support", "options": [ { "key": "open", "text": "Open" }, { "key": "closed", "text": "Close" } ], "v_required": { "value": "true", "err": "Required" }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q6_status" },
-      { "key": "q6_agesex_label", "type": "label", "text": "Age/Sex", "text_color": "#2ECC71", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q6_status": { "type": "string", "ex": "equalTo(., \"open\")" } } },
-      { "key": "q6_f_lt_1", "type": "edit_text", "hint": "Under 1 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q6_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q6_f_lt_1" },
-      { "key": "q6_f_1_4", "type": "edit_text", "hint": "1-4 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q6_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q6_f_1_4" },
-      { "key": "q6_f_5_9", "type": "edit_text", "hint": "5-9 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q6_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q6_f_5_9" },
-      { "key": "q6_f_10_14", "type": "edit_text", "hint": "10-14 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q6_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q6_f_10_14" },
-      { "key": "q6_f_15_19", "type": "edit_text", "hint": "15-19 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q6_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q6_f_15_19" },
-      { "key": "q6_f_20_plus", "type": "edit_text", "hint": "20 Years Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q6_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q6_f_20_plus" },
-      { "key": "q6_f_pc_18_plus", "type": "edit_text", "hint": "Primary Caregiver 18+ Years Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q6_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q6_f_pc_18_plus" },
-      { "key": "q6_f_total", "type": "edit_text", "hint": "Grand Total Female:", "label_text_style": "bold", "text_color": "#000000", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q6_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q6_f_total" },
-      { "key": "q6_m_lt_1", "type": "edit_text", "hint": "Under 1 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q6_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q6_m_lt_1" },
-      { "key": "q6_m_1_4", "type": "edit_text", "hint": "1-4 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q6_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q6_m_1_4" },
-      { "key": "q6_m_5_9", "type": "edit_text", "hint": "5-9 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q6_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q6_m_5_9" },
-      { "key": "q6_m_10_14", "type": "edit_text", "hint": "10-14 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q6_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q6_m_10_14" },
-      { "key": "q6_m_15_19", "type": "edit_text", "hint": "15-19 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q6_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q6_m_15_19" },
-      { "key": "q6_m_20_plus", "type": "edit_text", "hint": "20 Years Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q6_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q6_m_20_plus" },
-      { "key": "q6_m_pc_18_plus", "type": "edit_text", "hint": "Primary Caregiver 18+ Years Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q6_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q6_m_pc_18_plus" },
-      { "key": "q6_m_total", "type": "edit_text", "hint": "Grand Total Male:", "label_text_style": "bold", "text_color": "#000000", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q6_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q6_m_total" },
-      { "key": "q6_subpop_label", "type": "label", "text": "Sub-populations", "text_color": "#2ECC71", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q6_status": { "type": "string", "ex": "equalTo(., \"open\")" } } },
-      { "key": "q6_hei", "type": "edit_text", "hint": "HEI", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q6_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q6_hei" },
-      { "key": "q6_calhiv", "type": "edit_text", "hint": "CALHIV (0-20)", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q6_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q6_calhiv" },
-      { "key": "q6_wlhiv", "type": "edit_text", "hint": "Children of WLHIV", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q6_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q6_wlhiv" },
-      { "key": "q6_pc_lhiv", "type": "edit_text", "hint": "Primary Caregivers Living with HIV", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q6_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q6_pc_lhiv" },
-      { "key": "q6_other", "type": "edit_text", "hint": "Other", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q6_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q6_other" },
-      { "key": "q6_subpop_total", "type": "edit_text", "hint": "Grand Total:", "label_text_style": "bold", "text_color": "#000000", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q6_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q6_subpop_total" },
-
-      { "key": "q7_status", "type": "native_radio", "label": "7. Number of VCA and primary caregivers provided with TB reminders", "options": [ { "key": "open", "text": "Open" }, { "key": "closed", "text": "Close" } ], "v_required": { "value": "true", "err": "Required" }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q7_status" },
-      { "key": "q7_agesex_label", "type": "label", "text": "Age/Sex", "text_color": "#2ECC71", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q7_status": { "type": "string", "ex": "equalTo(., \"open\")" } } },
-      { "key": "q7_f_lt_1", "type": "edit_text", "hint": "Under 1 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q7_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q7_f_lt_1" },
-      { "key": "q7_f_1_4", "type": "edit_text", "hint": "1-4 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q7_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q7_f_1_4" },
-      { "key": "q7_f_5_9", "type": "edit_text", "hint": "5-9 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q7_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q7_f_5_9" },
-      { "key": "q7_f_10_14", "type": "edit_text", "hint": "10-14 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q7_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q7_f_10_14" },
-      { "key": "q7_f_15_19", "type": "edit_text", "hint": "15-19 Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q7_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q7_f_15_19" },
-      { "key": "q7_f_20_plus", "type": "edit_text", "hint": "20 Years Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q7_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q7_f_20_plus" },
-      { "key": "q7_f_pc_18_plus", "type": "edit_text", "hint": "Primary Caregiver 18+ Years Female", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q7_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q7_f_pc_18_plus" },
-      { "key": "q7_f_total", "type": "edit_text", "hint": "Grand Total Female:", "label_text_style": "bold", "text_color": "#000000", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q7_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q7_f_total" },
-      { "key": "q7_m_lt_1", "type": "edit_text", "hint": "Under 1 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q7_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q7_m_lt_1" },
-      { "key": "q7_m_1_4", "type": "edit_text", "hint": "1-4 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q7_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q7_m_1_4" },
-      { "key": "q7_m_5_9", "type": "edit_text", "hint": "5-9 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q7_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q7_m_5_9" },
-      { "key": "q7_m_10_14", "type": "edit_text", "hint": "10-14 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q7_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q7_m_10_14" },
-      { "key": "q7_m_15_19", "type": "edit_text", "hint": "15-19 Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q7_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q7_m_15_19" },
-      { "key": "q7_m_20_plus", "type": "edit_text", "hint": "20 Years Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q7_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q7_m_20_plus" },
-      { "key": "q7_m_pc_18_plus", "type": "edit_text", "hint": "Primary Caregiver 18+ Years Male", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q7_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q7_m_pc_18_plus" },
-      { "key": "q7_m_total", "type": "edit_text", "hint": "Grand Total Male:", "label_text_style": "bold", "text_color": "#000000", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q7_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q7_m_total" },
-      { "key": "q7_subpop_label", "type": "label", "text": "Sub-populations", "text_color": "#2ECC71", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q7_status": { "type": "string", "ex": "equalTo(., \"open\")" } } },
-      { "key": "q7_hei", "type": "edit_text", "hint": "HEI", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q7_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q7_hei" },
-      { "key": "q7_calhiv", "type": "edit_text", "hint": "CALHIV (0-20)", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q7_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q7_calhiv" },
-      { "key": "q7_wlhiv", "type": "edit_text", "hint": "Children of WLHIV", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q7_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q7_wlhiv" },
-      { "key": "q7_pc_lhiv", "type": "edit_text", "hint": "Primary Caregivers Living with HIV", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q7_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q7_pc_lhiv" },
-      { "key": "q7_subpop_total", "type": "edit_text", "hint": "Grand Total:", "label_text_style": "bold", "text_color": "#000000", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "relevance": { "step1:q7_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "q7_subpop_total" },
-      { "key": "comment", "type": "edit_text", "label": "Comment / Remarks", "hint": "Comment / Remarks", "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "comment" },
       {
-        "key": "submit_button",
-        "type": "button",
-        "hint": "Submit Report",
-        "width": "300dp",
+        "key": "reporting_month",
+        "type": "edit_text",
+        "hint": "Reporting Month",
+        "read_only": true,
+        "value": "June 2024",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "action": {
-          "behaviour": "finish_form"
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "reporting_month"
+      },
+      {
+        "key": "tb_report_title_label",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "TB MONTHLY REPORTING FORM",
+        "v_required": {
+          "value": false
         }
+      },
+      {
+        "key": "q1_status",
+        "type": "native_radio",
+        "label": "1. Number of VCA and primary caregivers who were screened for TB symptoms in the community as part of OVC case management",
+        "options": [
+          {
+            "key": "open",
+            "text": "Open",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "open"
+          },
+          {
+            "key": "closed",
+            "text": "Close",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "closed"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Required"
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q1_status"
+      },
+      {
+        "key": "q1_agesex_label",
+        "type": "label",
+        "text": "Age/Sex",
+        "text_color": "#2ECC71",
+        "relevance": {
+          "step1:q1_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        }
+      },
+      {
+        "key": "q1_f_lt_1",
+        "type": "edit_text",
+        "hint": "Under 1 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q1_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q1_f_lt_1"
+      },
+      {
+        "key": "q1_f_1_4",
+        "type": "edit_text",
+        "hint": "1-4 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q1_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q1_f_1_4"
+      },
+      {
+        "key": "q1_f_5_9",
+        "type": "edit_text",
+        "hint": "5-9 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q1_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q1_f_5_9"
+      },
+      {
+        "key": "q1_f_10_14",
+        "type": "edit_text",
+        "hint": "10-14 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q1_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q1_f_10_14"
+      },
+      {
+        "key": "q1_f_15_19",
+        "type": "edit_text",
+        "hint": "15-19 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q1_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q1_f_15_19"
+      },
+      {
+        "key": "q1_f_20_plus",
+        "type": "edit_text",
+        "hint": "20 Years Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q1_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q1_f_20_plus"
+      },
+      {
+        "key": "q1_f_pc_18_plus",
+        "type": "edit_text",
+        "hint": "Primary Caregiver 18+ Years Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q1_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q1_f_pc_18_plus"
+      },
+      {
+        "key": "q1_f_total",
+        "type": "edit_text",
+        "hint": "Grand Total Female:",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q1_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q1_f_total"
+      },
+      {
+        "key": "q1_m_lt_1",
+        "type": "edit_text",
+        "hint": "Under 1 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q1_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q1_m_lt_1"
+      },
+      {
+        "key": "q1_m_1_4",
+        "type": "edit_text",
+        "hint": "1-4 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q1_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q1_m_1_4"
+      },
+      {
+        "key": "q1_m_5_9",
+        "type": "edit_text",
+        "hint": "5-9 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q1_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q1_m_5_9"
+      },
+      {
+        "key": "q1_m_10_14",
+        "type": "edit_text",
+        "hint": "10-14 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q1_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q1_m_10_14"
+      },
+      {
+        "key": "q1_m_15_19",
+        "type": "edit_text",
+        "hint": "15-19 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q1_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q1_m_15_19"
+      },
+      {
+        "key": "q1_m_20_plus",
+        "type": "edit_text",
+        "hint": "20 Years Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q1_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q1_m_20_plus"
+      },
+      {
+        "key": "q1_m_pc_18_plus",
+        "type": "edit_text",
+        "hint": "Primary Caregiver 18+ Years Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q1_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q1_m_pc_18_plus"
+      },
+      {
+        "key": "q1_m_total",
+        "type": "edit_text",
+        "hint": "Grand Total Male:",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q1_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q1_m_total"
+      },
+      {
+        "key": "q1_subpop_label",
+        "type": "label",
+        "text": "Sub-populations",
+        "text_color": "#2ECC71",
+        "relevance": {
+          "step1:q1_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        }
+      },
+      {
+        "key": "q1_hei",
+        "type": "edit_text",
+        "hint": "HEI",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q1_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q1_hei"
+      },
+      {
+        "key": "q1_calhiv",
+        "type": "edit_text",
+        "hint": "CALHIV (0-20)",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q1_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q1_calhiv"
+      },
+      {
+        "key": "q1_wlhiv",
+        "type": "edit_text",
+        "hint": "Children of WLHIV",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q1_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q1_wlhiv"
+      },
+      {
+        "key": "q1_pc_lhiv",
+        "type": "edit_text",
+        "hint": "Primary Caregivers Living with HIV",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q1_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q1_pc_lhiv"
+      },
+      {
+        "key": "q1_other",
+        "type": "edit_text",
+        "hint": "Other",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q1_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q1_other"
+      },
+      {
+        "key": "q1_subpop_total",
+        "type": "edit_text",
+        "hint": "Grand Total:",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q1_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q1_subpop_total"
+      },
+      {
+        "key": "q2_status",
+        "type": "native_radio",
+        "label": "2. Number of VCA and primary caregivers referred for TB symptoms in the community as part of OVC case management who are screen positive (Presumptive TB)",
+        "options": [
+          {
+            "key": "open",
+            "text": "Open",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "open"
+          },
+          {
+            "key": "closed",
+            "text": "Close",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "closed"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Required"
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q2_status"
+      },
+      {
+        "key": "q2_agesex_label",
+        "type": "label",
+        "text": "Age/Sex",
+        "text_color": "#2ECC71",
+        "relevance": {
+          "step1:q2_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        }
+      },
+      {
+        "key": "q2_f_lt_1",
+        "type": "edit_text",
+        "hint": "under 1 female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q2_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q2_f_lt_1"
+      },
+      {
+        "key": "q2_f_1_4",
+        "type": "edit_text",
+        "hint": "1-4 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q2_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q2_f_1_4"
+      },
+      {
+        "key": "q2_f_5_9",
+        "type": "edit_text",
+        "hint": "5-9 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q2_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q2_f_5_9"
+      },
+      {
+        "key": "q2_f_10_14",
+        "type": "edit_text",
+        "hint": "10-14 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q2_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q2_f_10_14"
+      },
+      {
+        "key": "q2_f_15_19",
+        "type": "edit_text",
+        "hint": "15-19 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q2_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q2_f_15_19"
+      },
+      {
+        "key": "q2_f_20_plus",
+        "type": "edit_text",
+        "hint": "20 Years Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q2_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q2_f_20_plus"
+      },
+      {
+        "key": "q2_f_pc_18_plus",
+        "type": "edit_text",
+        "hint": "Primary Caregiver 18+ Years Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q2_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q2_f_pc_18_plus"
+      },
+      {
+        "key": "q2_f_total",
+        "type": "edit_text",
+        "hint": "Grand Total Female:",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q2_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q2_f_total"
+      },
+      {
+        "key": "q2_m_lt_1",
+        "type": "edit_text",
+        "hint": "Under 1 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q2_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q2_m_lt_1"
+      },
+      {
+        "key": "q2_m_1_4",
+        "type": "edit_text",
+        "hint": "1-4 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q2_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q2_m_1_4"
+      },
+      {
+        "key": "q2_m_5_9",
+        "type": "edit_text",
+        "hint": "5-9 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q2_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q2_m_5_9"
+      },
+      {
+        "key": "q2_m_10_14",
+        "type": "edit_text",
+        "hint": "10-14 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q2_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q2_m_10_14"
+      },
+      {
+        "key": "q2_m_15_19",
+        "type": "edit_text",
+        "hint": "15-19 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q2_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q2_m_15_19"
+      },
+      {
+        "key": "q2_m_20_plus",
+        "type": "edit_text",
+        "hint": "20 Years Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q2_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q2_m_20_plus"
+      },
+      {
+        "key": "q2_m_pc_18_plus",
+        "type": "edit_text",
+        "hint": "Primary Caregiver 18+ Years Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q2_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q2_m_pc_18_plus"
+      },
+      {
+        "key": "q2_m_total",
+        "type": "edit_text",
+        "hint": "Grand Total Male:",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q2_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q2_m_total"
+      },
+      {
+        "key": "q2_subpop_label",
+        "type": "label",
+        "text": "Sub-populations",
+        "text_color": "#2ECC71",
+        "relevance": {
+          "step1:q2_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        }
+      },
+      {
+        "key": "q2_hei",
+        "type": "edit_text",
+        "hint": "HEI",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q2_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q2_hei"
+      },
+      {
+        "key": "q2_calhiv",
+        "type": "edit_text",
+        "hint": "CALHIV (0-20)",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q2_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q2_calhiv"
+      },
+      {
+        "key": "q2_wlhiv",
+        "type": "edit_text",
+        "hint": "Children of WLHIV",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q2_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q2_wlhiv"
+      },
+      {
+        "key": "q2_pc_lhiv",
+        "type": "edit_text",
+        "hint": "Primary Caregivers Living with HIV",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q2_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q2_pc_lhiv"
+      },
+      {
+        "key": "q2_other",
+        "type": "edit_text",
+        "hint": "Other",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q2_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q2_other"
+      },
+      {
+        "key": "q2_subpop_total",
+        "type": "edit_text",
+        "hint": "Grand Total:",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q2_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q2_subpop_total"
+      },
+      {
+        "key": "q3_status",
+        "type": "native_radio",
+        "label": "3. Number of VCA and primary caregivers referred for TB symptoms in the community who are screen positive (Presumptive TB) and referred to the health facility",
+        "options": [
+          {
+            "key": "open",
+            "text": "Open",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "open"
+          },
+          {
+            "key": "closed",
+            "text": "Close",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "closed"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Required"
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q3_status"
+      },
+      {
+        "key": "q3_agesex_label",
+        "type": "label",
+        "text": "Age/Sex",
+        "text_color": "#2ECC71",
+        "relevance": {
+          "step1:q3_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        }
+      },
+      {
+        "key": "q3_f_lt_1",
+        "type": "edit_text",
+        "hint": "Under 1 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q3_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q3_f_lt_1"
+      },
+      {
+        "key": "q3_f_1_4",
+        "type": "edit_text",
+        "hint": "1-4 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q3_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q3_f_1_4"
+      },
+      {
+        "key": "q3_f_5_9",
+        "type": "edit_text",
+        "hint": "5-9 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q3_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q3_f_5_9"
+      },
+      {
+        "key": "q3_f_10_14",
+        "type": "edit_text",
+        "hint": "10-14 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q3_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q3_f_10_14"
+      },
+      {
+        "key": "q3_f_15_19",
+        "type": "edit_text",
+        "hint": "15-19 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q3_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q3_f_15_19"
+      },
+      {
+        "key": "q3_f_20_plus",
+        "type": "edit_text",
+        "hint": "20 Years Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q3_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q3_f_20_plus"
+      },
+      {
+        "key": "q3_f_pc_18_plus",
+        "type": "edit_text",
+        "hint": "Primary Caregiver 18+ Years Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q3_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q3_f_pc_18_plus"
+      },
+      {
+        "key": "q3_f_total",
+        "type": "edit_text",
+        "hint": "Grand Total Female:",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q3_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q3_f_total"
+      },
+      {
+        "key": "q3_m_lt_1",
+        "type": "edit_text",
+        "hint": "Under 1 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q3_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q3_m_lt_1"
+      },
+      {
+        "key": "q3_m_1_4",
+        "type": "edit_text",
+        "hint": "1-4 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q3_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q3_m_1_4"
+      },
+      {
+        "key": "q3_m_5_9",
+        "type": "edit_text",
+        "hint": "5-9 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q3_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q3_m_5_9"
+      },
+      {
+        "key": "q3_m_10_14",
+        "type": "edit_text",
+        "hint": "10-14 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q3_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q3_m_10_14"
+      },
+      {
+        "key": "q3_m_15_19",
+        "type": "edit_text",
+        "hint": "15-19 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q3_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q3_m_15_19"
+      },
+      {
+        "key": "q3_m_20_plus",
+        "type": "edit_text",
+        "hint": "20 Years Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q3_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q3_m_20_plus"
+      },
+      {
+        "key": "q3_m_pc_18_plus",
+        "type": "edit_text",
+        "hint": "Primary Caregiver 18+ Years Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q3_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q3_m_pc_18_plus"
+      },
+      {
+        "key": "q3_m_total",
+        "type": "edit_text",
+        "hint": "Grand Total Male:",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q3_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q3_m_total"
+      },
+      {
+        "key": "q3_subpop_label",
+        "type": "label",
+        "text": "Sub-populations",
+        "text_color": "#2ECC71",
+        "relevance": {
+          "step1:q3_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        }
+      },
+      {
+        "key": "q3_hei",
+        "type": "edit_text",
+        "hint": "HEI",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q3_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q3_hei"
+      },
+      {
+        "key": "q3_calhiv",
+        "type": "edit_text",
+        "hint": "CALHIV (0-20)",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q3_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q3_calhiv"
+      },
+      {
+        "key": "q3_wlhiv",
+        "type": "edit_text",
+        "hint": "Children of WLHIV",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q3_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q3_wlhiv"
+      },
+      {
+        "key": "q3_pc_lhiv",
+        "type": "edit_text",
+        "hint": "Primary Caregivers Living with HIV",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q3_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q3_pc_lhiv"
+      },
+      {
+        "key": "q3_other",
+        "type": "edit_text",
+        "hint": "Other",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q3_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q3_other"
+      },
+      {
+        "key": "q3_subpop_total",
+        "type": "edit_text",
+        "hint": "Grand Total:",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q3_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q3_subpop_total"
+      },
+      {
+        "key": "q4_status",
+        "type": "native_radio",
+        "label": "4. primary caregivers found with TB symptoms (presumptive TB) during community screening, referred to the health facility who are screened for TB symptom screen (only as chest x-ray or mWRD) at the health facility",
+        "options": [
+          {
+            "key": "open",
+            "text": "Open",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "open"
+          },
+          {
+            "key": "closed",
+            "text": "Close",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "closed"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Required"
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q4_status"
+      },
+      {
+        "key": "q4_agesex_label",
+        "type": "label",
+        "text": "Age/Sex",
+        "text_color": "#2ECC71",
+        "relevance": {
+          "step1:q4_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        }
+      },
+      {
+        "key": "q4_f_lt_1",
+        "type": "edit_text",
+        "hint": "Under 1 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q4_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q4_f_lt_1"
+      },
+      {
+        "key": "q4_f_1_4",
+        "type": "edit_text",
+        "hint": "1-4 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q4_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q4_f_1_4"
+      },
+      {
+        "key": "q4_f_5_9",
+        "type": "edit_text",
+        "hint": "5-9 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q4_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q4_f_5_9"
+      },
+      {
+        "key": "q4_f_10_14",
+        "type": "edit_text",
+        "hint": "10-14 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q4_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q4_f_10_14"
+      },
+      {
+        "key": "q4_f_15_19",
+        "type": "edit_text",
+        "hint": "15-19 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q4_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q4_f_15_19"
+      },
+      {
+        "key": "q4_f_20_plus",
+        "type": "edit_text",
+        "hint": "20 Years Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q4_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q4_f_20_plus"
+      },
+      {
+        "key": "q4_f_pc_18_plus",
+        "type": "edit_text",
+        "hint": "Primary Caregiver 18+ Years Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q4_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q4_f_pc_18_plus"
+      },
+      {
+        "key": "q4_f_total",
+        "type": "edit_text",
+        "hint": "Grand Total Female:",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q4_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q4_f_total"
+      },
+      {
+        "key": "q4_m_lt_1",
+        "type": "edit_text",
+        "hint": "Under 1 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q4_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q4_m_lt_1"
+      },
+      {
+        "key": "q4_m_1_4",
+        "type": "edit_text",
+        "hint": "1-4 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q4_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q4_m_1_4"
+      },
+      {
+        "key": "q4_m_5_9",
+        "type": "edit_text",
+        "hint": "5-9 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q4_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q4_m_5_9"
+      },
+      {
+        "key": "q4_m_10_14",
+        "type": "edit_text",
+        "hint": "10-14 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q4_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q4_m_10_14"
+      },
+      {
+        "key": "q4_m_15_19",
+        "type": "edit_text",
+        "hint": "15-19 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q4_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q4_m_15_19"
+      },
+      {
+        "key": "q4_m_20_plus",
+        "type": "edit_text",
+        "hint": "20 Years Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q4_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q4_m_20_plus"
+      },
+      {
+        "key": "q4_m_pc_18_plus",
+        "type": "edit_text",
+        "hint": "Primary Caregiver 18+ Years Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q4_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q4_m_pc_18_plus"
+      },
+      {
+        "key": "q4_m_total",
+        "type": "edit_text",
+        "hint": "Grand Total Male:",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q4_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q4_m_total"
+      },
+      {
+        "key": "q4_subpop_label",
+        "type": "label",
+        "text": "Sub-populations",
+        "text_color": "#2ECC71",
+        "relevance": {
+          "step1:q4_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        }
+      },
+      {
+        "key": "q4_hei",
+        "type": "edit_text",
+        "hint": "HEI",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q4_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q4_hei"
+      },
+      {
+        "key": "q4_calhiv",
+        "type": "edit_text",
+        "hint": "CALHIV (0-20)",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q4_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q4_calhiv"
+      },
+      {
+        "key": "q4_wlhiv",
+        "type": "edit_text",
+        "hint": "Children of WLHIV",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q4_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q4_wlhiv"
+      },
+      {
+        "key": "q4_pc_lhiv",
+        "type": "edit_text",
+        "hint": "Primary Caregivers Living with HIV",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q4_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q4_pc_lhiv"
+      },
+      {
+        "key": "q4_other",
+        "type": "edit_text",
+        "hint": "Other",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q4_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q4_other"
+      },
+      {
+        "key": "q4_subpop_total",
+        "type": "edit_text",
+        "hint": "Grand Total:",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q4_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q4_subpop_total"
+      },
+      {
+        "key": "q5_status",
+        "type": "native_radio",
+        "label": "5. Number of VCA and primary caregivers referred from the community to the health facility, who are started on TPT",
+        "options": [
+          {
+            "key": "open",
+            "text": "Open",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "open"
+          },
+          {
+            "key": "closed",
+            "text": "Close",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "closed"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Required"
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q5_status"
+      },
+      {
+        "key": "q5_agesex_label",
+        "type": "label",
+        "text": "Age/Sex",
+        "text_color": "#2ECC71",
+        "relevance": {
+          "step1:q5_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        }
+      },
+      {
+        "key": "q5_f_lt_1",
+        "type": "edit_text",
+        "hint": "Under 1 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q5_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q5_f_lt_1"
+      },
+      {
+        "key": "q5_f_1_4",
+        "type": "edit_text",
+        "hint": "1-4 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q5_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q5_f_1_4"
+      },
+      {
+        "key": "q5_f_5_9",
+        "type": "edit_text",
+        "hint": "5-9 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q5_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q5_f_5_9"
+      },
+      {
+        "key": "q5_f_10_14",
+        "type": "edit_text",
+        "hint": "10-14 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q5_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q5_f_10_14"
+      },
+      {
+        "key": "q5_f_15_19",
+        "type": "edit_text",
+        "hint": "15-19 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q5_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q5_f_15_19"
+      },
+      {
+        "key": "q5_f_20_plus",
+        "type": "edit_text",
+        "hint": "20 Years Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q5_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q5_f_20_plus"
+      },
+      {
+        "key": "q5_f_pc_18_plus",
+        "type": "edit_text",
+        "hint": "Primary Caregiver 18+ Years Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q5_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q5_f_pc_18_plus"
+      },
+      {
+        "key": "q5_f_total",
+        "type": "edit_text",
+        "hint": "Grand Total Female:",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q5_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q5_f_total"
+      },
+      {
+        "key": "q5_m_lt_1",
+        "type": "edit_text",
+        "hint": "Under 1 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q5_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q5_m_lt_1"
+      },
+      {
+        "key": "q5_m_1_4",
+        "type": "edit_text",
+        "hint": "1-4 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q5_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q5_m_1_4"
+      },
+      {
+        "key": "q5_m_5_9",
+        "type": "edit_text",
+        "hint": "5-9 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q5_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q5_m_5_9"
+      },
+      {
+        "key": "q5_m_10_14",
+        "type": "edit_text",
+        "hint": "10-14 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q5_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q5_m_10_14"
+      },
+      {
+        "key": "q5_m_15_19",
+        "type": "edit_text",
+        "hint": "15-19 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q5_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q5_m_15_19"
+      },
+      {
+        "key": "q5_m_20_plus",
+        "type": "edit_text",
+        "hint": "20 Years Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q5_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q5_m_20_plus"
+      },
+      {
+        "key": "q5_m_pc_18_plus",
+        "type": "edit_text",
+        "hint": "Primary Caregiver 18+ Years Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q5_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q5_m_pc_18_plus"
+      },
+      {
+        "key": "q5_m_total",
+        "type": "edit_text",
+        "hint": "Grand Total Male:",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q5_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q5_m_total"
+      },
+      {
+        "key": "q5_subpop_label",
+        "type": "label",
+        "text": "Sub-populations",
+        "text_color": "#2ECC71",
+        "relevance": {
+          "step1:q5_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        }
+      },
+      {
+        "key": "q5_hei",
+        "type": "edit_text",
+        "hint": "HEI",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q5_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q5_hei"
+      },
+      {
+        "key": "q5_calhiv",
+        "type": "edit_text",
+        "hint": "CALHIV (0-20)",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q5_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q5_calhiv"
+      },
+      {
+        "key": "q5_wlhiv",
+        "type": "edit_text",
+        "hint": "Children of WLHIV",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q5_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q5_wlhiv"
+      },
+      {
+        "key": "q5_pc_lhiv",
+        "type": "edit_text",
+        "hint": "Primary Caregivers Living with HIV",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q5_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q5_pc_lhiv"
+      },
+      {
+        "key": "q5_subpop_total",
+        "type": "edit_text",
+        "hint": "Grand Total:",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q5_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q5_subpop_total"
+      },
+      {
+        "key": "q6_status",
+        "type": "native_radio",
+        "label": "6. Number of VCA and primary caregivers on TPT provided with adherence support",
+        "options": [
+          {
+            "key": "open",
+            "text": "Open",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "open"
+          },
+          {
+            "key": "closed",
+            "text": "Close",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "closed"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Required"
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q6_status"
+      },
+      {
+        "key": "q6_agesex_label",
+        "type": "label",
+        "text": "Age/Sex",
+        "text_color": "#2ECC71",
+        "relevance": {
+          "step1:q6_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        }
+      },
+      {
+        "key": "q6_f_lt_1",
+        "type": "edit_text",
+        "hint": "Under 1 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q6_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q6_f_lt_1"
+      },
+      {
+        "key": "q6_f_1_4",
+        "type": "edit_text",
+        "hint": "1-4 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q6_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q6_f_1_4"
+      },
+      {
+        "key": "q6_f_5_9",
+        "type": "edit_text",
+        "hint": "5-9 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q6_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q6_f_5_9"
+      },
+      {
+        "key": "q6_f_10_14",
+        "type": "edit_text",
+        "hint": "10-14 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q6_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q6_f_10_14"
+      },
+      {
+        "key": "q6_f_15_19",
+        "type": "edit_text",
+        "hint": "15-19 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q6_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q6_f_15_19"
+      },
+      {
+        "key": "q6_f_20_plus",
+        "type": "edit_text",
+        "hint": "20 Years Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q6_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q6_f_20_plus"
+      },
+      {
+        "key": "q6_f_pc_18_plus",
+        "type": "edit_text",
+        "hint": "Primary Caregiver 18+ Years Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q6_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q6_f_pc_18_plus"
+      },
+      {
+        "key": "q6_f_total",
+        "type": "edit_text",
+        "hint": "Grand Total Female:",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q6_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q6_f_total"
+      },
+      {
+        "key": "q6_m_lt_1",
+        "type": "edit_text",
+        "hint": "Under 1 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q6_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q6_m_lt_1"
+      },
+      {
+        "key": "q6_m_1_4",
+        "type": "edit_text",
+        "hint": "1-4 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q6_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q6_m_1_4"
+      },
+      {
+        "key": "q6_m_5_9",
+        "type": "edit_text",
+        "hint": "5-9 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q6_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q6_m_5_9"
+      },
+      {
+        "key": "q6_m_10_14",
+        "type": "edit_text",
+        "hint": "10-14 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q6_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q6_m_10_14"
+      },
+      {
+        "key": "q6_m_15_19",
+        "type": "edit_text",
+        "hint": "15-19 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q6_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q6_m_15_19"
+      },
+      {
+        "key": "q6_m_20_plus",
+        "type": "edit_text",
+        "hint": "20 Years Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q6_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q6_m_20_plus"
+      },
+      {
+        "key": "q6_m_pc_18_plus",
+        "type": "edit_text",
+        "hint": "Primary Caregiver 18+ Years Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q6_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q6_m_pc_18_plus"
+      },
+      {
+        "key": "q6_m_total",
+        "type": "edit_text",
+        "hint": "Grand Total Male:",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q6_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q6_m_total"
+      },
+      {
+        "key": "q6_subpop_label",
+        "type": "label",
+        "text": "Sub-populations",
+        "text_color": "#2ECC71",
+        "relevance": {
+          "step1:q6_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        }
+      },
+      {
+        "key": "q6_hei",
+        "type": "edit_text",
+        "hint": "HEI",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q6_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q6_hei"
+      },
+      {
+        "key": "q6_calhiv",
+        "type": "edit_text",
+        "hint": "CALHIV (0-20)",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q6_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q6_calhiv"
+      },
+      {
+        "key": "q6_wlhiv",
+        "type": "edit_text",
+        "hint": "Children of WLHIV",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q6_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q6_wlhiv"
+      },
+      {
+        "key": "q6_pc_lhiv",
+        "type": "edit_text",
+        "hint": "Primary Caregivers Living with HIV",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q6_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q6_pc_lhiv"
+      },
+      {
+        "key": "q6_other",
+        "type": "edit_text",
+        "hint": "Other",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q6_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q6_other"
+      },
+      {
+        "key": "q6_subpop_total",
+        "type": "edit_text",
+        "hint": "Grand Total:",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q6_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q6_subpop_total"
+      },
+      {
+        "key": "q7_status",
+        "type": "native_radio",
+        "label": "7. Number of VCA and primary caregivers provided with TB reminders",
+        "options": [
+          {
+            "key": "open",
+            "text": "Open",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "open"
+          },
+          {
+            "key": "closed",
+            "text": "Close",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "closed"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Required"
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q7_status"
+      },
+      {
+        "key": "q7_agesex_label",
+        "type": "label",
+        "text": "Age/Sex",
+        "text_color": "#2ECC71",
+        "relevance": {
+          "step1:q7_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        }
+      },
+      {
+        "key": "q7_f_lt_1",
+        "type": "edit_text",
+        "hint": "Under 1 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q7_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q7_f_lt_1"
+      },
+      {
+        "key": "q7_f_1_4",
+        "type": "edit_text",
+        "hint": "1-4 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q7_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q7_f_1_4"
+      },
+      {
+        "key": "q7_f_5_9",
+        "type": "edit_text",
+        "hint": "5-9 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q7_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q7_f_5_9"
+      },
+      {
+        "key": "q7_f_10_14",
+        "type": "edit_text",
+        "hint": "10-14 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q7_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q7_f_10_14"
+      },
+      {
+        "key": "q7_f_15_19",
+        "type": "edit_text",
+        "hint": "15-19 Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q7_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q7_f_15_19"
+      },
+      {
+        "key": "q7_f_20_plus",
+        "type": "edit_text",
+        "hint": "20 Years Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q7_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q7_f_20_plus"
+      },
+      {
+        "key": "q7_f_pc_18_plus",
+        "type": "edit_text",
+        "hint": "Primary Caregiver 18+ Years Female",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q7_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q7_f_pc_18_plus"
+      },
+      {
+        "key": "q7_f_total",
+        "type": "edit_text",
+        "hint": "Grand Total Female:",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q7_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q7_f_total"
+      },
+      {
+        "key": "q7_m_lt_1",
+        "type": "edit_text",
+        "hint": "Under 1 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q7_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q7_m_lt_1"
+      },
+      {
+        "key": "q7_m_1_4",
+        "type": "edit_text",
+        "hint": "1-4 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q7_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q7_m_1_4"
+      },
+      {
+        "key": "q7_m_5_9",
+        "type": "edit_text",
+        "hint": "5-9 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q7_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q7_m_5_9"
+      },
+      {
+        "key": "q7_m_10_14",
+        "type": "edit_text",
+        "hint": "10-14 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q7_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q7_m_10_14"
+      },
+      {
+        "key": "q7_m_15_19",
+        "type": "edit_text",
+        "hint": "15-19 Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q7_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q7_m_15_19"
+      },
+      {
+        "key": "q7_m_20_plus",
+        "type": "edit_text",
+        "hint": "20 Years Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q7_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q7_m_20_plus"
+      },
+      {
+        "key": "q7_m_pc_18_plus",
+        "type": "edit_text",
+        "hint": "Primary Caregiver 18+ Years Male",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q7_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q7_m_pc_18_plus"
+      },
+      {
+        "key": "q7_m_total",
+        "type": "edit_text",
+        "hint": "Grand Total Male:",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q7_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q7_m_total"
+      },
+      {
+        "key": "q7_subpop_label",
+        "type": "label",
+        "text": "Sub-populations",
+        "text_color": "#2ECC71",
+        "relevance": {
+          "step1:q7_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        }
+      },
+      {
+        "key": "q7_hei",
+        "type": "edit_text",
+        "hint": "HEI",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q7_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q7_hei"
+      },
+      {
+        "key": "q7_calhiv",
+        "type": "edit_text",
+        "hint": "CALHIV (0-20)",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q7_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q7_calhiv"
+      },
+      {
+        "key": "q7_wlhiv",
+        "type": "edit_text",
+        "hint": "Children of WLHIV",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q7_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q7_wlhiv"
+      },
+      {
+        "key": "q7_pc_lhiv",
+        "type": "edit_text",
+        "hint": "Primary Caregivers Living with HIV",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q7_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q7_pc_lhiv"
+      },
+      {
+        "key": "q7_subpop_total",
+        "type": "edit_text",
+        "hint": "Grand Total:",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "edit_type": "number",
+        "relevance": {
+          "step1:q7_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "q7_subpop_total"
       }
     ]
   }

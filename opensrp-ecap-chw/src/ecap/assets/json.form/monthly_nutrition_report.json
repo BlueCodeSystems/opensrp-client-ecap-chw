@@ -1,23 +1,38 @@
 {
   "count": "1",
-  "encounter_type": "BCAPI_Nutrition_Activities_Report",
+  "encounter_type": "Monthly Nutrition Report",
   "entity_id": "",
   "relational_id": "",
   "validate_on_submit": true,
   "show_errors_on_submit": true,
-  "confirm_close": true,
-  "clean_on_relevance_false": false,
-  "clean_on_relevant_false": false,
   "metadata": {
-    "start": { "openmrs_entity_parent": "", "openmrs_entity": "concept", "openmrs_data_type": "start", "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-    "end": { "openmrs_entity_parent": "", "openmrs_entity": "concept", "openmrs_data_type": "end", "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-    "today": { "openmrs_entity_parent": "", "openmrs_entity": "encounter", "openmrs_entity_id": "encounter_date" },
-    "deviceid": { "openmrs_entity_parent": "", "openmrs_entity": "concept", "openmrs_data_type": "deviceid", "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    }
   },
   "step1": {
     "title": "Nutrition Activities Report",
     "bottom_navigation": false,
-    "clean_on_relevance_false": false, "clean_on_relevant_false": false,
     "fields": [
       {
         "key": "form_id",
@@ -37,7 +52,7 @@
       {
         "key": "facility",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "facility",
         "type": "edit_text",
         "hint": "Health Facility",
@@ -52,7 +67,7 @@
       {
         "key": "province",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "province",
         "type": "edit_text",
         "hint": "Province",
@@ -67,7 +82,7 @@
       {
         "key": "district",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "district",
         "type": "edit_text",
         "hint": "District",
@@ -82,7 +97,7 @@
       {
         "key": "ward",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "ward",
         "type": "edit_text",
         "hint": "Ward",
@@ -92,7 +107,7 @@
       {
         "key": "partner",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "partner",
         "type": "edit_text",
         "hint": "Implementing Partner",
@@ -119,103 +134,1078 @@
           "err": "Partner is Required"
         }
       },
-
-      { "key": "reporting_month", "type": "edit_text", "hint": "Reporting Month", "read_only": true, "value": "June 2024", "openmrs_entity_parent": "", "openmrs_entity": "", "openmrs_entity_id": "reporting_month" },
-      { "key": "reporting_year", "type": "hidden", "value": "2024", "openmrs_entity_parent": "", "openmrs_entity": "", "openmrs_entity_id": "reporting_year" },
       {
-        "key": "save_draft",
-        "type": "button",
-        "hint": "Save as Draft",
-        "action": {
-          "behaviour": "finish_form"
+        "key": "caseworker_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_name",
+        "type": "hidden",
+        "hint": "",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true",
+        "v_required": {
+          "value": true,
+          "err": "Partner is Required"
         }
       },
-
-      { "key": "sec_subpop_label", "type": "label", "text": "Section A: Children Under 5 Years by Sub-population", "text_color": "#27AE60", "label_text_style": "bold" },
-      { "key": "sec_subpop_status", "type": "native_radio", "label": "Status", "options": [ { "key": "closed", "text": "Close" }, { "key": "open", "text": "Open" } ], "value": "closed", "v_required": { "value": "true", "err": "Required" }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "sec_subpop_status" },
-      { "key": "subpop_calhiv", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "C/ALHIV", "hint": "C/ALHIV", "relevance": { "step1:sec_subpop_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "subpop_calhiv" },
-      { "key": "subpop_hei", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "HEI", "hint": "HEI", "relevance": { "step1:sec_subpop_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "subpop_hei" },
-      { "key": "subpop_cml_hiv", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "CML+HIV", "hint": "CML+HIV", "relevance": { "step1:sec_subpop_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "subpop_cml_hiv" },
-      { "key": "subpop_cpbfa", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "CPBFA", "hint": "CPBFA", "relevance": { "step1:sec_subpop_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "subpop_cpbfa" },
-      { "key": "subpop_siblings", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Siblings", "hint": "Siblings", "relevance": { "step1:sec_subpop_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "subpop_siblings" },
-
-      { "key": "sec_hh_malnutrition_label", "type": "label", "text": "Section B: Household Malnutrition Prevention (YTD)", "text_color": "#2980B9", "label_text_style": "bold", "openmrs_entity_parent": "", "openmrs_entity": "", "openmrs_entity_id": "" },
-      { "key": "sec_hh_malnutrition_status", "type": "native_radio", "label": "Status", "options": [ { "key": "closed", "text": "Close" }, { "key": "open", "text": "Open" } ], "value": "closed", "v_required": { "value": "true", "err": "Required" }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "sec_hh_malnutrition_status" },
-      { "key": "hh_practicing_diet_diversity", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Number of Households Practicicing :Diet Diversity / Gardening", "hint": "Number of Househlods Practicing :Diet Diversity / Gardening", "relevance": { "step1:sec_hh_malnutrition_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "hh_practicing_diet_diversity" },
-      { "key": "hh_practicing_exclusive_bf", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Number of Households Practicing :Exclusive Breastfeeding", "hint": " Number of Households Practicing :Exclusive Breastfeeding", "relevance": { "step1:sec_hh_malnutrition_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "hh_practicing_exclusive_bf" },
-      { "key": "hh_practicing_complementary_feeding", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Number of Households Practicing: Complementary Feeding", "hint": "Number of Households Practicing:Complementary Feeding", "relevance": { "step1:sec_hh_malnutrition_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "hh_practicing_complementary_feeding" },
-      { "key": "hh_wash_activities", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Number of Households with WASH Activities", "hint": " Number of Households with WASH Activities", "relevance": { "step1:sec_hh_malnutrition_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "hh_wash_activities" },
-      { "key": "hh_visited_assessment", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Number of Households Visited for Household Assessment", "hint": "Number of Households Visited for Household Assessment", "relevance": { "step1:sec_hh_malnutrition_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "hh_visited_assessment" },
-      { "key": "ppmam_identified", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Number of PPMAM Identified", "hint": "Number of PPMAM Identified", "relevance": { "step1:sec_hh_malnutrition_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "ppmam_identified" },
-      { "key": "ppmam_referred_commenced", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Number of PPMAM Referred/Commenced on Supplementary Feeding", "hint": "Number of PPMAM Referred/Commenced on Supplementary Feeding", "relevance": { "step1:sec_hh_malnutrition_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "ppmam_referred_commenced" },
-      { "key": "other_children_pmam", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Number of Other Children in HH Enrolled in PMAM Programme", "hint": "Number of Other Children in HH Enrolled in PMAM Programme", "relevance": { "step1:sec_hh_malnutrition_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "other_children_pmam" },
-      { "key": "plw_art_pmtct_nutrition_assessment", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Number of PLW on ART/PMTCT with Nutritional Assessment Completed", "hint": "Number of PLW on ART/PMTCT with Nutritional Assessment Completed", "relevance": { "step1:sec_hh_malnutrition_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "plw_art_pmtct_nutrition_assessment" },
-      { "key": "plw_received_ifas", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Number of PLW Received IFAS (Iron Folic Acid Supplementation)", "hint": "Number of PLW Received IFAS (Iron Folic Acid Supplementation)", "relevance": { "step1:sec_hh_malnutrition_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "plw_received_ifas" },
-      { "key": "hh_food_insecurity_counselled", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Number of Food Insecurity Counselled", "hint": "Number of Food Insecurity Counselled", "relevance": { "step1:sec_hh_malnutrition_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "hh_food_insecurity_counselled" },
-
-      { "key": "sec_mnp_vita_label", "type": "label", "text": "Section C: Micronutrient & MNP Provision (MNP/VITA)", "text_color": "#E67E22", "label_text_style": "bold", "openmrs_entity_parent": "", "openmrs_entity": "", "openmrs_entity_id": "" },
-      { "key": "sec_mnp_vita_status", "type": "native_radio", "label": "Status", "options": [ { "key": "closed", "text": "Close" }, { "key": "open", "text": "Open" } ], "value": "closed", "v_required": { "value": "true", "err": "Required" }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "sec_mnp_vita_status" },
-      { "key": "mnp_children_6_23_received", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Number of Children 6-23 Months Received MNP", "hint": "Number of Children 6-23 Months Received MNP", "relevance": { "step1:sec_mnp_vita_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "mnp_children_6_23_received" },
-      { "key": "mnp_plw_received", "type": "edit_text", "hint": "Number of PLW Received MNP", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Number of PLW Received MNP", "relevance": { "step1:sec_mnp_vita_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "mnp_plw_received" },
-      { "key": "vita_children_6_11_months", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Number of Children Received Vitamin A (6-11 Months)", "hint": "Number of Children Received Vitamin A (6-11 Months)", "relevance": { "step1:sec_mnp_vita_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "vita_children_6_11_months" },
-      { "key": "vita_children_12_59_months", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Number of Children Received Vitamin A (12-59 Months)", "hint": "Number of Children Received Vitamin A (12-59 Months)", "relevance": { "step1:sec_mnp_vita_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "vita_children_12_59_months" },
-      { "key": "vita_plw_supplemented", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Number of PLW Supplemented with Vitamin A (Post-Partum)", "hint": "Number of PLW Supplemented with Vitamin A (Post-Partum)", "relevance": { "step1:sec_mnp_vita_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "vita_plw_supplemented" },
-      { "key": "deworming_children_12_59", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Number of Children 12-59 Months Dewormed", "hint": "Number of Children 12-59 Months Dewormed", "relevance": { "step1:sec_mnp_vita_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "deworming_children_12_59" },
-      { "key": "deworming_plw", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Number of PLW Dewormed", "hint": "Number of PLW Dewormed", "relevance": { "step1:sec_mnp_vita_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "deworming_plw" },
-
-      { "key": "sec_ecd_label", "type": "label", "text": "Section D: Early Childhood Development (YTD)", "text_color": "#9B59B6", "label_text_style": "bold", "openmrs_entity_parent": "", "openmrs_entity": "", "openmrs_entity_id": "" },
-      { "key": "sec_ecd_status", "type": "native_radio", "label": "Status", "options": [ { "key": "closed", "text": "Close" }, { "key": "open", "text": "Open" } ], "value": "closed", "v_required": { "value": "true", "err": "Required" }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "sec_ecd_status" },
-      { "key": "ecd_centres_supported_monitoring", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Number of ECD Centres Supported by Monitoring", "hint": "Number of ECD Centres Supported by Monitoring", "relevance": { "step1:sec_ecd_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "ecd_centres_supported_monitoring" },
-      { "key": "ecd_centres_with_feeding", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Number of ECD Centres with Feeding Programme", "hint": "Number of ECD Centres with Feeding Programme", "relevance": { "step1:sec_ecd_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "ecd_centres_with_feeding" },
-      { "key": "ecd_children_enrolled", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Number of Children Enrolled in ECD", "hint": "Number of Children Enrolled in ECD", "relevance": { "step1:sec_ecd_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "ecd_children_enrolled" },
-      { "key": "ecd_caregivers_trained", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Number of Caregivers Trained on Stimulation/Play", "hint": "Number of Caregivers Trained on Stimulation/Play", "relevance": { "step1:sec_ecd_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "ecd_caregivers_trained" },
-      { "key": "ecd_developmental_screening", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Number of Children with Developmental Screening Completed", "hint": "Number of Children with Developmental Screening Completed", "relevance": { "step1:sec_ecd_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "ecd_developmental_screening" },
-
-      { "key": "sec_weight_for_age_label", "type": "label", "text": "Section E: Weight-For-Age Assessment", "text_color": "#F1C40F", "label_text_style": "bold", "openmrs_entity_parent": "", "openmrs_entity": "", "openmrs_entity_id": "" },
-      { "key": "sec_weight_for_age_status", "type": "native_radio", "label": "Status", "options": [ { "key": "closed", "text": "Close" }, { "key": "open", "text": "Open" } ], "value": "closed", "v_required": { "value": "true", "err": "Required" }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "sec_weight_for_age_status" },
-      { "key": "wfa_underweight", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Weight-For-Age: Underweight", "hint": "Weight-For-Age: Underweight", "relevance": { "step1:sec_weight_for_age_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "wfa_underweight" },
-      { "key": "wfa_overweight", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Weight-For-Age: Overweight", "hint": "Weight-For-Age: Overweight", "relevance": { "step1:sec_weight_for_age_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "wfa_overweight" },
-      { "key": "wfa_normal", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Weight-For-Age: Normal", "hint": "Weight-For-Age: Normal", "relevance": { "step1:sec_weight_for_age_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "wfa_normal" },
-
-      { "key": "sec_nutrition_assessment_label", "type": "label", "text": "Section F: Nutrition Assessment - Children Below 5 Years (YTD)", "text_color": "#E74C3C", "label_text_style": "bold", "openmrs_entity_parent": "", "openmrs_entity": "", "openmrs_entity_id": "" },
-      { "key": "sec_nutrition_assessment_status", "type": "native_radio", "label": "Status", "options": [ { "key": "closed", "text": "Close" }, { "key": "open", "text": "Open" } ], "value": "closed", "v_required": { "value": "true", "err": "Required" }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "sec_nutrition_assessment_status" },
-      { "key": "nutrition_grade_1", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Nutrition Assessment: Grade 1 (Moderate Malnutrition)", "hint": "Nutrition Assessment: Grade 1 (Moderate Malnutrition)", "relevance": { "step1:sec_nutrition_assessment_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "nutrition_grade_1" },
-      { "key": "nutrition_grade_2", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Nutrition Assessment: Grade 2 (Severe Malnutrition)", "hint": "Nutrition Assessment: Grade 2 (Severe Malnutrition)", "relevance": { "step1:sec_nutrition_assessment_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "nutrition_grade_2" },
-      { "key": "nutrition_nr", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Nutrition Assessment: NR (No Result)", "hint": "Nutrition Assessment: NR (No Result)", "relevance": { "step1:sec_nutrition_assessment_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "nutrition_nr" },
-
-      { "key": "sec_muac_label", "type": "label", "text": "Section G: MUAC Measurements (Centimeters)", "text_color": "#1ABC9C", "label_text_style": "bold", "openmrs_entity_parent": "", "openmrs_entity": "", "openmrs_entity_id": "" },
-      { "key": "sec_muac_status", "type": "native_radio", "label": "Status", "options": [ { "key": "closed", "text": "Close" }, { "key": "open", "text": "Open" } ], "value": "closed", "v_required": { "value": "true", "err": "Required" }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "sec_muac_status" },
-      { "key": "muac_red_below_11_5", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "MUAC: Red (< 11.5 cm) - SAM", "hint": "MUAC: Red (< 11.5 cm) - SAM", "relevance": { "step1:sec_muac_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "muac_red_below_11_5" },
-      { "key": "muac_yellow_11_5_to_12_5", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "MUAC: Yellow (11.5 - <12.5 cm) - MAM", "hint": "MUAC: Yellow (11.5 - <12.5 cm) - MAM", "relevance": { "step1:sec_muac_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "muac_yellow_11_5_to_12_5" },
-      { "key": "muac_green_12_5_plus", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "MUAC: Green (>= 12.5 cm) - Normal", "hint": "MUAC: Green (>= 12.5 cm) - Normal", "relevance": { "step1:sec_muac_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "muac_green_12_5_plus" },
-      { "key": "muac_oedema", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "MUAC: With Oedema", "hint": "MUAC: With Oedema", "relevance": { "step1:sec_muac_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "muac_oedema" },
-
-      { "key": "sec_sti_label", "type": "label", "text": "Section H: STI", "text_color": "#34495E", "label_text_style": "bold", "openmrs_entity_parent": "", "openmrs_entity": "", "openmrs_entity_id": "" },
-      { "key": "sec_sti_status", "type": "native_radio", "label": "Status", "options": [ { "key": "closed", "text": "Close" }, { "key": "open", "text": "Open" } ], "value": "closed", "v_required": { "value": "true", "err": "Required" }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "sec_sti_status" },
-      { "key": "sti_referred", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Number of STI Cases Referred", "hint": "Number of STI Cases Referred", "relevance": { "step1:sec_sti_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "sti_referred" },
-      { "key": "sti_treated", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Number of STI Cases Treated", "hint": "Number of STI Cases Treated", "relevance": { "step1:sec_sti_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "sti_treated" },
-
-      { "key": "sec_referral_label", "type": "label", "text": "Section I: Referral / Integration (YTD)", "text_color": "#7F8C8D", "label_text_style": "bold", "openmrs_entity_parent": "", "openmrs_entity": "", "openmrs_entity_id": "" },
-      { "key": "sec_referral_status", "type": "native_radio", "label": "Status", "options": [ { "key": "closed", "text": "Close" }, { "key": "open", "text": "Open" } ], "value": "closed", "v_required": { "value": "true", "err": "Required" }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "sec_referral_status" },
-      { "key": "referral_nutrition_to_health", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Number of Referred from Nutrition to Health Facility", "hint": "Number of Referred from Nutrition to Health Facility", "relevance": { "step1:sec_referral_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "referral_nutrition_to_health" },
-      { "key": "referral_feedback_received", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Number of Referral Feedback Received", "hint": "Number of Referral Feedback Received", "relevance": { "step1:sec_referral_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "referral_feedback_received" },
-      { "key": "referral_date_of_referral", "type": "edit_text", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Date of Referral (dd/mm/yyyy)", "hint": "Date of Referral (dd/mm/yyyy)", "relevance": { "step1:sec_referral_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "referral_date_of_referral" },
-      { "key": "referral_date_of_feedback", "type": "edit_text", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Date of Feedback (dd/mm/yyyy)", "hint": "Date of Feedback (dd/mm/yyyy)", "relevance": { "step1:sec_referral_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "referral_date_of_feedback" },
-      { "key": "referral_hiv_tb_integration", "type": "edit_text", "edit_type": "number", "clean_on_relevance_false": false, "clean_on_relevant_false": false, "label": "Number of HIV/TB Integration Referrals", "hint": "Number of HIV/TB Integration Referrals", "relevance": { "step1:sec_referral_status": { "type": "string", "ex": "equalTo(., \"open\")" } }, "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "referral_hiv_tb_integration" },
-
-      { "key": "comment", "type": "edit_text", "label": "Comment / Remarks", "hint": "Comment / Remarks", "openmrs_entity_parent": "", "openmrs_entity": "person_attribute", "openmrs_entity_id": "comment" },
-
       {
-        "key": "submit_button",
-        "type": "button",
-        "hint": "Submit Report",
-        "width": "300dp",
+        "key": "reporting_month",
+        "type": "edit_text",
+        "hint": "Reporting Month",
+        "read_only": true,
+        "value": "June 2024",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "reporting_month"
+      },
+      {
+        "key": "sec_subpop_label",
+        "type": "label",
+        "text": "Section A: Children Under 5 Years by Sub-population",
+        "label_text_style": "bold"
+      },
+      {
+        "key": "sec_subpop_status",
+        "type": "native_radio",
+        "label": "Status",
+        "options": [
+          {
+            "key": "closed",
+            "text": "Close",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "closed"
+          },
+          {
+            "key": "open",
+            "text": "Open",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "open"
+          }
+        ],
+        "value": "closed",
+        "v_required": {
+          "value": "true",
+          "err": "Required"
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "sec_subpop_status"
+      },
+      {
+        "key": "subpop_calhiv",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "C/ALHIV",
+        "hint": "C/ALHIV",
+        "relevance": {
+          "step1:sec_subpop_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop_calhiv"
+      },
+      {
+        "key": "subpop_hei",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "HEI",
+        "hint": "HEI",
+        "relevance": {
+          "step1:sec_subpop_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop_hei"
+      },
+      {
+        "key": "subpop_cml_hiv",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "CML+HIV",
+        "hint": "CML+HIV",
+        "relevance": {
+          "step1:sec_subpop_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop_cml_hiv"
+      },
+      {
+        "key": "subpop_cpbfa",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "CPBFA",
+        "hint": "CPBFA",
+        "relevance": {
+          "step1:sec_subpop_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop_cpbfa"
+      },
+      {
+        "key": "subpop_siblings",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Siblings",
+        "hint": "Siblings",
+        "relevance": {
+          "step1:sec_subpop_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "subpop_siblings"
+      },
+      {
+        "key": "sec_hh_malnutrition_label",
+        "type": "label",
+        "text": "Section B: Household Malnutrition Prevention (YTD)",
+        "label_text_style": "bold",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "action": {
-          "behaviour": "finish_form"
-        }
+        "openmrs_entity_id": ""
+      },
+      {
+        "key": "sec_hh_malnutrition_status",
+        "type": "native_radio",
+        "label": "Status",
+        "options": [
+          {
+            "key": "closed",
+            "text": "Close",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "closed"
+          },
+          {
+            "key": "open",
+            "text": "Open",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "open"
+          }
+        ],
+        "value": "closed",
+        "v_required": {
+          "value": "true",
+          "err": "Required"
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "sec_hh_malnutrition_status"
+      },
+      {
+        "key": "hh_practicing_diet_diversity",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Number of Households Practicicing :Diet Diversity / Gardening",
+        "hint": "Number of Househlods Practicing :Diet Diversity / Gardening",
+        "relevance": {
+          "step1:sec_hh_malnutrition_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hh_practicing_diet_diversity"
+      },
+      {
+        "key": "hh_practicing_exclusive_bf",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Number of Households Practicing :Exclusive Breastfeeding",
+        "hint": " Number of Households Practicing :Exclusive Breastfeeding",
+        "relevance": {
+          "step1:sec_hh_malnutrition_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hh_practicing_exclusive_bf"
+      },
+      {
+        "key": "hh_practicing_complementary_feeding",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Number of Households Practicing: Complementary Feeding",
+        "hint": "Number of Households Practicing:Complementary Feeding",
+        "relevance": {
+          "step1:sec_hh_malnutrition_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hh_practicing_complementary_feeding"
+      },
+      {
+        "key": "hh_wash_activities",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Number of Households with WASH Activities",
+        "hint": " Number of Households with WASH Activities",
+        "relevance": {
+          "step1:sec_hh_malnutrition_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hh_wash_activities"
+      },
+      {
+        "key": "hh_visited_assessment",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Number of Households Visited for Household Assessment",
+        "hint": "Number of Households Visited for Household Assessment",
+        "relevance": {
+          "step1:sec_hh_malnutrition_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hh_visited_assessment"
+      },
+      {
+        "key": "ppmam_identified",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Number of PPMAM Identified",
+        "hint": "Number of PPMAM Identified",
+        "relevance": {
+          "step1:sec_hh_malnutrition_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "ppmam_identified"
+      },
+      {
+        "key": "ppmam_referred_commenced",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Number of PPMAM Referred/Commenced on Supplementary Feeding",
+        "hint": "Number of PPMAM Referred/Commenced on Supplementary Feeding",
+        "relevance": {
+          "step1:sec_hh_malnutrition_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "ppmam_referred_commenced"
+      },
+      {
+        "key": "other_children_pmam",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Number of Other Children in HH Enrolled in PMAM Programme",
+        "hint": "Number of Other Children in HH Enrolled in PMAM Programme",
+        "relevance": {
+          "step1:sec_hh_malnutrition_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_children_pmam"
+      },
+      {
+        "key": "plw_art_pmtct_nutrition_assessment",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Number of PLW on ART/PMTCT with Nutritional Assessment Completed",
+        "hint": "Number of PLW on ART/PMTCT with Nutritional Assessment Completed",
+        "relevance": {
+          "step1:sec_hh_malnutrition_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "plw_art_pmtct_nutrition_assessment"
+      },
+      {
+        "key": "plw_received_ifas",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Number of PLW Received IFAS (Iron Folic Acid Supplementation)",
+        "hint": "Number of PLW Received IFAS (Iron Folic Acid Supplementation)",
+        "relevance": {
+          "step1:sec_hh_malnutrition_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "plw_received_ifas"
+      },
+      {
+        "key": "hh_food_insecurity_counselled",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Number of Food Insecurity Counselled",
+        "hint": "Number of Food Insecurity Counselled",
+        "relevance": {
+          "step1:sec_hh_malnutrition_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hh_food_insecurity_counselled"
+      },
+      {
+        "key": "sec_mnp_vita_label",
+        "type": "label",
+        "text": "Section C: Micronutrient & MNP Provision (MNP/VITA)",
+        "label_text_style": "bold",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": ""
+      },
+      {
+        "key": "sec_mnp_vita_status",
+        "type": "native_radio",
+        "label": "Status",
+        "options": [
+          {
+            "key": "closed",
+            "text": "Close",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "closed"
+          },
+          {
+            "key": "open",
+            "text": "Open",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "open"
+          }
+        ],
+        "value": "closed",
+        "v_required": {
+          "value": "true",
+          "err": "Required"
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "sec_mnp_vita_status"
+      },
+      {
+        "key": "mnp_children_6_23_received",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Number of Children 6-23 Months Received MNP",
+        "hint": "Number of Children 6-23 Months Received MNP",
+        "relevance": {
+          "step1:sec_mnp_vita_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mnp_children_6_23_received"
+      },
+      {
+        "key": "mnp_plw_received",
+        "type": "edit_text",
+        "hint": "Number of PLW Received MNP",
+        "edit_type": "number",
+        "label": "Number of PLW Received MNP",
+        "relevance": {
+          "step1:sec_mnp_vita_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mnp_plw_received"
+      },
+      {
+        "key": "vita_children_6_11_months",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Number of Children Received Vitamin A (6-11 Months)",
+        "hint": "Number of Children Received Vitamin A (6-11 Months)",
+        "relevance": {
+          "step1:sec_mnp_vita_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vita_children_6_11_months"
+      },
+      {
+        "key": "vita_children_12_59_months",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Number of Children Received Vitamin A (12-59 Months)",
+        "hint": "Number of Children Received Vitamin A (12-59 Months)",
+        "relevance": {
+          "step1:sec_mnp_vita_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vita_children_12_59_months"
+      },
+      {
+        "key": "vita_plw_supplemented",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Number of PLW Supplemented with Vitamin A (Post-Partum)",
+        "hint": "Number of PLW Supplemented with Vitamin A (Post-Partum)",
+        "relevance": {
+          "step1:sec_mnp_vita_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "vita_plw_supplemented"
+      },
+      {
+        "key": "deworming_children_12_59",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Number of Children 12-59 Months Dewormed",
+        "hint": "Number of Children 12-59 Months Dewormed",
+        "relevance": {
+          "step1:sec_mnp_vita_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "deworming_children_12_59"
+      },
+      {
+        "key": "deworming_plw",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Number of PLW Dewormed",
+        "hint": "Number of PLW Dewormed",
+        "relevance": {
+          "step1:sec_mnp_vita_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "deworming_plw"
+      },
+      {
+        "key": "sec_ecd_label",
+        "type": "label",
+        "text": "Section D: Early Childhood Development (YTD)",
+        "label_text_style": "bold",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": ""
+      },
+      {
+        "key": "sec_ecd_status",
+        "type": "native_radio",
+        "label": "Status",
+        "options": [
+          {
+            "key": "closed",
+            "text": "Close",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "closed"
+          },
+          {
+            "key": "open",
+            "text": "Open",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "open"
+          }
+        ],
+        "value": "closed",
+        "v_required": {
+          "value": "true",
+          "err": "Required"
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "sec_ecd_status"
+      },
+      {
+        "key": "ecd_centres_supported_monitoring",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Number of ECD Centres Supported by Monitoring",
+        "hint": "Number of ECD Centres Supported by Monitoring",
+        "relevance": {
+          "step1:sec_ecd_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "ecd_centres_supported_monitoring"
+      },
+      {
+        "key": "ecd_centres_with_feeding",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Number of ECD Centres with Feeding Programme",
+        "hint": "Number of ECD Centres with Feeding Programme",
+        "relevance": {
+          "step1:sec_ecd_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "ecd_centres_with_feeding"
+      },
+      {
+        "key": "ecd_children_enrolled",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Number of Children Enrolled in ECD",
+        "hint": "Number of Children Enrolled in ECD",
+        "relevance": {
+          "step1:sec_ecd_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "ecd_children_enrolled"
+      },
+      {
+        "key": "ecd_caregivers_trained",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Number of Caregivers Trained on Stimulation/Play",
+        "hint": "Number of Caregivers Trained on Stimulation/Play",
+        "relevance": {
+          "step1:sec_ecd_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "ecd_caregivers_trained"
+      },
+      {
+        "key": "ecd_developmental_screening",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Number of Children with Developmental Screening Completed",
+        "hint": "Number of Children with Developmental Screening Completed",
+        "relevance": {
+          "step1:sec_ecd_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "ecd_developmental_screening"
+      },
+      {
+        "key": "sec_weight_for_age_label",
+        "type": "label",
+        "text": "Section E: Weight-For-Age Assessment",
+        "label_text_style": "bold",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": ""
+      },
+      {
+        "key": "sec_weight_for_age_status",
+        "type": "native_radio",
+        "label": "Status",
+        "options": [
+          {
+            "key": "closed",
+            "text": "Close",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "closed"
+          },
+          {
+            "key": "open",
+            "text": "Open",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "open"
+          }
+        ],
+        "value": "closed",
+        "v_required": {
+          "value": "true",
+          "err": "Required"
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "sec_weight_for_age_status"
+      },
+      {
+        "key": "wfa_underweight",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Weight-For-Age: Underweight",
+        "hint": "Weight-For-Age: Underweight",
+        "relevance": {
+          "step1:sec_weight_for_age_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "wfa_underweight"
+      },
+      {
+        "key": "wfa_overweight",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Weight-For-Age: Overweight",
+        "hint": "Weight-For-Age: Overweight",
+        "relevance": {
+          "step1:sec_weight_for_age_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "wfa_overweight"
+      },
+      {
+        "key": "wfa_normal",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Weight-For-Age: Normal",
+        "hint": "Weight-For-Age: Normal",
+        "relevance": {
+          "step1:sec_weight_for_age_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "wfa_normal"
+      },
+      {
+        "key": "sec_nutrition_assessment_label",
+        "type": "label",
+        "text": "Section F: Nutrition Assessment - Children Below 5 Years (YTD)",
+        "label_text_style": "bold",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": ""
+      },
+      {
+        "key": "sec_nutrition_assessment_status",
+        "type": "native_radio",
+        "label": "Status",
+        "options": [
+          {
+            "key": "closed",
+            "text": "Close",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "closed"
+          },
+          {
+            "key": "open",
+            "text": "Open",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "open"
+          }
+        ],
+        "value": "closed",
+        "v_required": {
+          "value": "true",
+          "err": "Required"
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "sec_nutrition_assessment_status"
+      },
+      {
+        "key": "nutrition_grade_1",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Nutrition Assessment: Grade 1 (Moderate Malnutrition)",
+        "hint": "Nutrition Assessment: Grade 1 (Moderate Malnutrition)",
+        "relevance": {
+          "step1:sec_nutrition_assessment_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "nutrition_grade_1"
+      },
+      {
+        "key": "nutrition_grade_2",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Nutrition Assessment: Grade 2 (Severe Malnutrition)",
+        "hint": "Nutrition Assessment: Grade 2 (Severe Malnutrition)",
+        "relevance": {
+          "step1:sec_nutrition_assessment_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "nutrition_grade_2"
+      },
+      {
+        "key": "nutrition_nr",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Nutrition Assessment: NR (No Result)",
+        "hint": "Nutrition Assessment: NR (No Result)",
+        "relevance": {
+          "step1:sec_nutrition_assessment_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "nutrition_nr"
+      },
+      {
+        "key": "sec_muac_label",
+        "type": "label",
+        "text": "Section G: MUAC Measurements (Centimeters)",
+        "label_text_style": "bold",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": ""
+      },
+      {
+        "key": "sec_muac_status",
+        "type": "native_radio",
+        "label": "Status",
+        "options": [
+          {
+            "key": "closed",
+            "text": "Close",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "closed"
+          },
+          {
+            "key": "open",
+            "text": "Open",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "open"
+          }
+        ],
+        "value": "closed",
+        "v_required": {
+          "value": "true",
+          "err": "Required"
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "sec_muac_status"
+      },
+      {
+        "key": "muac_red_below_11_5",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "MUAC: Red (< 11.5 cm) - SAM",
+        "hint": "MUAC: Red (< 11.5 cm) - SAM",
+        "relevance": {
+          "step1:sec_muac_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "muac_red_below_11_5"
+      },
+      {
+        "key": "muac_yellow_11_5_to_12_5",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "MUAC: Yellow (11.5 - <12.5 cm) - MAM",
+        "hint": "MUAC: Yellow (11.5 - <12.5 cm) - MAM",
+        "relevance": {
+          "step1:sec_muac_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "muac_yellow_11_5_to_12_5"
+      },
+      {
+        "key": "muac_green_12_5_plus",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "MUAC: Green (>= 12.5 cm) - Normal",
+        "hint": "MUAC: Green (>= 12.5 cm) - Normal",
+        "relevance": {
+          "step1:sec_muac_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "muac_green_12_5_plus"
+      },
+      {
+        "key": "muac_oedema",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "MUAC: With Oedema",
+        "hint": "MUAC: With Oedema",
+        "relevance": {
+          "step1:sec_muac_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "muac_oedema"
+      },
+      {
+        "key": "sec_sti_label",
+        "type": "label",
+        "text": "Section H: STI",
+        "label_text_style": "bold",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": ""
+      },
+      {
+        "key": "sec_sti_status",
+        "type": "native_radio",
+        "label": "Status",
+        "options": [
+          {
+            "key": "closed",
+            "text": "Close",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "closed"
+          },
+          {
+            "key": "open",
+            "text": "Open",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "open"
+          }
+        ],
+        "value": "closed",
+        "v_required": {
+          "value": "true",
+          "err": "Required"
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "sec_sti_status"
+      },
+      {
+        "key": "sti_referred",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Number of STI Cases Referred",
+        "hint": "Number of STI Cases Referred",
+        "relevance": {
+          "step1:sec_sti_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "sti_referred"
+      },
+      {
+        "key": "sti_treated",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Number of STI Cases Treated",
+        "hint": "Number of STI Cases Treated",
+        "relevance": {
+          "step1:sec_sti_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "sti_treated"
+      },
+      {
+        "key": "sec_referral_label",
+        "type": "label",
+        "text": "Section I: Referral / Integration (YTD)",
+        "label_text_style": "bold",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": ""
+      },
+      {
+        "key": "sec_referral_status",
+        "type": "native_radio",
+        "label": "Status",
+        "options": [
+          {
+            "key": "closed",
+            "text": "Close",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "closed"
+          },
+          {
+            "key": "open",
+            "text": "Open",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "open"
+          }
+        ],
+        "value": "closed",
+        "v_required": {
+          "value": "true",
+          "err": "Required"
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "sec_referral_status"
+      },
+      {
+        "key": "referral_nutrition_to_health",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Number of Referred from Nutrition to Health Facility",
+        "hint": "Number of Referred from Nutrition to Health Facility",
+        "relevance": {
+          "step1:sec_referral_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "referral_nutrition_to_health"
+      },
+      {
+        "key": "referral_feedback_received",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Number of Referral Feedback Received",
+        "hint": "Number of Referral Feedback Received",
+        "relevance": {
+          "step1:sec_referral_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "referral_feedback_received"
+      },
+      {
+        "key": "referral_date_of_referral",
+        "type": "edit_text",
+        "label": "Date of Referral (dd/mm/yyyy)",
+        "hint": "Date of Referral (dd/mm/yyyy)",
+        "relevance": {
+          "step1:sec_referral_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "referral_date_of_referral"
+      },
+      {
+        "key": "referral_date_of_feedback",
+        "type": "edit_text",
+        "label": "Date of Feedback (dd/mm/yyyy)",
+        "hint": "Date of Feedback (dd/mm/yyyy)",
+        "relevance": {
+          "step1:sec_referral_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "referral_date_of_feedback"
+      },
+      {
+        "key": "referral_hiv_tb_integration",
+        "type": "edit_text",
+        "edit_type": "number",
+        "label": "Number of HIV/TB Integration Referrals",
+        "hint": "Number of HIV/TB Integration Referrals",
+        "relevance": {
+          "step1:sec_referral_status": {
+            "type": "string",
+            "ex": "equalTo(., \"open\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "referral_hiv_tb_integration"
+      },
+      {
+        "key": "comment",
+        "type": "edit_text",
+        "label": "Comment / Remarks",
+        "hint": "Comment / Remarks",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "comment"
       }
     ]
   }
