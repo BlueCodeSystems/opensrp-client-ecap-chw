@@ -74,7 +74,7 @@ public class MonthlyReportDao extends AbstractDao {
     }
 
     private static String buildCaseworkerClause(String tableName) {
-        if (!hasColumn(tableName, "caseworker_name")) {
+        if (!hasColumn(tableName, "caseworker_name") || "ec_community_alert".equalsIgnoreCase(tableName)) {
             return "";
         }
         String caseworkerName = getCurrentCaseworkerName();
