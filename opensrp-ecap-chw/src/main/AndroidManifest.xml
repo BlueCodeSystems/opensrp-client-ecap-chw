@@ -374,6 +374,9 @@
             android:name=".activity.MonthlyTbReportViewActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
+            android:name=".activity.CommunityReportViewActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
             android:name=".activity.TbScreeningActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
 

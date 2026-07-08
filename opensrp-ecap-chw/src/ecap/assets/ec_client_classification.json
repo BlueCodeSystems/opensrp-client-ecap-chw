@@ -35,6 +35,13 @@
           },
           {
             "field": "eventType",
+            "field_value": "Community Alert Report",
+            "creates_case": [
+              "ec_community_alert"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "Mother Pmtct",
             "creates_case": [
               "ec_pmtct_mother"

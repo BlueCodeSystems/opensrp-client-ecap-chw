@@ -55,15 +55,19 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
     public static final String REPORT_TYPE_MALARIA = "malaria";
     public static final String REPORT_TYPE_NUTRITION = "nutrition";
     public static final String REPORT_TYPE_TB = "tb";
+    public static final String REPORT_TYPE_COMMUNITY = "community";
     public static final String REPORT_FORM_MALARIA = "malaria_monthly_reporting";
     public static final String REPORT_FORM_NUTRITION = "monthly_nutrition_report";
     public static final String REPORT_FORM_TB = "monthly_tb_report";
+    public static final String REPORT_FORM_COMMUNITY = "community_alert_report";
     public static final String REPORT_FORM_ENCOUNTER_MALARIA = "Malaria Monthly Reporting";
     public static final String REPORT_FORM_ENCOUNTER_NUTRITION = "Monthly Nutrition Report";
     public static final String REPORT_FORM_ENCOUNTER_TB = "Monthly TB";
+    public static final String REPORT_FORM_ENCOUNTER_COMMUNITY = "Community Alert Report";
     public static final String REPORT_TABLE_MALARIA = "ec_monthly_malaria";
     public static final String REPORT_TABLE_NUTRITION = "ec_monthly_nutrition";
     public static final String REPORT_TABLE_TB = "ec_monthly_tb";
+    public static final String REPORT_TABLE_COMMUNITY = "ec_community_alert";
 
     private ReportRegisterFragment reportRegisterFragment;
 
@@ -140,7 +144,7 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
 
     @Override
     public void startFormActivity(JSONObject form) {
-        Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
+        Intent intent = new Intent(this, ReportFormActivity.class);
         Form wizardForm = new Form();
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, wizardForm);
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, form.toString());
@@ -204,7 +208,7 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
 
     public String getSelectedReportType() {
         String reportType = getIntent() == null ? null : getIntent().getStringExtra(EXTRA_REPORT_TYPE);
-        if (REPORT_TYPE_NUTRITION.equals(reportType) || REPORT_TYPE_TB.equals(reportType)) {
+        if (REPORT_TYPE_NUTRITION.equals(reportType) || REPORT_TYPE_TB.equals(reportType) || REPORT_TYPE_COMMUNITY.equals(reportType)) {
             return reportType;
         }
         return REPORT_TYPE_MALARIA;
@@ -217,6 +221,9 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
         }
         if (REPORT_TYPE_TB.equals(selectedReportType)) {
             return R.id.action_report_tb;
+        }
+        if (REPORT_TYPE_COMMUNITY.equals(selectedReportType)) {
+            return R.id.action_report_community;
         }
         return R.id.action_report_malaria;
     }
@@ -264,6 +271,9 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
         if (REPORT_TYPE_TB.equals(reportType)) {
             return REPORT_FORM_TB;
         }
+        if (REPORT_TYPE_COMMUNITY.equals(reportType)) {
+            return REPORT_FORM_COMMUNITY;
+        }
         return REPORT_FORM_MALARIA;
     }
 
@@ -274,9 +284,12 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
         setStep1FieldValue(form, "district", prefs.getString("district", ""));
         setStep1FieldValue(form, "ward", prefs.getString("ward", ""));
         setStep1FieldValue(form, "facility", prefs.getString("facility", ""));
+        setStep1FieldValue(form, "facility_name", prefs.getString("facility", ""));
         setStep1FieldValue(form, "partner", prefs.getString("partner", ""));
         setStep1FieldValue(form, "caseworker_name", getCaseworkerName(prefs));
+        setStep1FieldValue(form, "ccw_name", getCaseworkerName(prefs));
         setStep1FieldValue(form, "reporting_month", new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date()));
+        setStep1FieldValue(form, "date_reporting", new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date()));
         setStep1FieldValue(form, "form_id", generateFormId(prefs));
     }
 
@@ -314,7 +327,8 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
     private boolean isMonthlyReportEncounter(String encounterType) {
         return REPORT_FORM_ENCOUNTER_MALARIA.equalsIgnoreCase(encounterType)
                 || REPORT_FORM_ENCOUNTER_NUTRITION.equalsIgnoreCase(encounterType)
-                || REPORT_FORM_ENCOUNTER_TB.equalsIgnoreCase(encounterType);
+                || REPORT_FORM_ENCOUNTER_TB.equalsIgnoreCase(encounterType)
+                || REPORT_FORM_ENCOUNTER_COMMUNITY.equalsIgnoreCase(encounterType);
     }
 
     private String getReportTableName(String encounterType) {
@@ -326,6 +340,9 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
         }
         if (REPORT_FORM_ENCOUNTER_TB.equalsIgnoreCase(encounterType)) {
             return REPORT_TABLE_TB;
+        }
+        if (REPORT_FORM_ENCOUNTER_COMMUNITY.equalsIgnoreCase(encounterType)) {
+            return REPORT_TABLE_COMMUNITY;
         }
         return null;
     }
@@ -340,6 +357,16 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
             }
             JSONObject metadata = formJsonObject.getJSONObject(Constants.METADATA);
             org.json.JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
+
+            for (int i = 0; i < fields.length(); i++) {
+                JSONObject field = fields.getJSONObject(i);
+                String entity = field.optString("openmrs_entity");
+                if (entity.isEmpty() || "person_attribute".equals(entity)) {
+                    field.put("openmrs_entity", "concept");
+                    field.put("openmrs_entity_id", field.optString("key"));
+                }
+            }
+
             FormTag formTag = getFormTag();
             String tableName = getReportTableName(encounterType);
             if (tableName == null) {
@@ -353,8 +380,16 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
                     encounterType,
                     tableName
             );
+            if (event != null && (event.getFormSubmissionId() == null || event.getFormSubmissionId().isEmpty())) {
+                event.setFormSubmissionId(org.smartregister.util.JsonFormUtils.generateRandomUUIDString());
+            }
             tagSyncMetadata(event);
             Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+            if (client == null) {
+                client = new Client(entityId);
+                client.setFirstName("Monthly Report");
+                client.setLastName(encounterType);
+            }
             return new ReportEventClient(event, client);
         } catch (Exception e) {
             timber.log.Timber.e(e);
@@ -393,6 +428,7 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
                         if (reportRegisterFragment != null) {
                             reportRegisterFragment.refreshReportCards();
                         }
+                        openReportView(event.getEventType(), event.getBaseEntityId());
                         Toast.makeText(
                                 this,
                                 getSavedToastMessage(event.getEventType()),
@@ -439,12 +475,33 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
         org.smartregister.chw.core.utils.CoreJsonFormUtils.tagSyncMetadata(getAllSharedPreferences(), event);
     }
 
+    private void openReportView(String encounterType, String baseEntityId) {
+        Intent intent = null;
+        if (REPORT_FORM_ENCOUNTER_COMMUNITY.equalsIgnoreCase(encounterType)) {
+            intent = new Intent(this, CommunityReportViewActivity.class);
+        } else if (REPORT_FORM_ENCOUNTER_MALARIA.equalsIgnoreCase(encounterType)) {
+            intent = new Intent(this, MalariaReportViewActivity.class);
+        } else if (REPORT_FORM_ENCOUNTER_NUTRITION.equalsIgnoreCase(encounterType)) {
+            intent = new Intent(this, MonthlyNutritionReportViewActivity.class);
+        } else if (REPORT_FORM_ENCOUNTER_TB.equalsIgnoreCase(encounterType)) {
+            intent = new Intent(this, MonthlyTbReportViewActivity.class);
+        }
+
+        if (intent != null) {
+            intent.putExtra(CommunityReportViewActivity.EXTRA_BASE_ENTITY_ID, baseEntityId);
+            startActivity(intent);
+        }
+    }
+
     private String getSavedToastMessage(String encounterType) {
         if (REPORT_FORM_ENCOUNTER_NUTRITION.equalsIgnoreCase(encounterType)) {
             return getString(R.string.report_nutrition_saved);
         }
         if (REPORT_FORM_ENCOUNTER_TB.equalsIgnoreCase(encounterType)) {
             return getString(R.string.report_tb_saved);
+        }
+        if (REPORT_FORM_ENCOUNTER_COMMUNITY.equalsIgnoreCase(encounterType)) {
+            return getString(R.string.report_community_saved);
         }
         return getString(R.string.report_malaria_saved);
     }

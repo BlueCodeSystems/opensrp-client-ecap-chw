@@ -5,4 +5,5 @@
     <string name="malaria_report_title">Relatório Mensal de Malária - %s</string>
     <string name="tb_report_title">Relatório Mensal de TB - %s</string>
     <string name="nutrition_report_title">Relatório Mensal de Nutrição - %s</string>
+    <string name="report_summary">Resumo do Relatório</string>
 </resources>

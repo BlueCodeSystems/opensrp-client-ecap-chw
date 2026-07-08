@@ -11,6 +11,8 @@ import org.smartregister.R;
 import org.smartregister.util.Cache;
 import org.smartregister.util.CacheableData;
 
+import timber.log.Timber;
+
 public class CustomFontRadioButton extends RadioButton {
 
     private Cache<Typeface> cache;
@@ -44,8 +46,15 @@ public class CustomFontRadioButton extends RadioButton {
     }
 
     public void setFontVariant(final FontVariant variant) {
-        setTypeface(cache.get(variant.name(), () -> Typeface.createFromAsset(
-                CoreLibrary.getInstance().context().applicationContext().getAssets(),
-                variant.fontFile())));
+        setTypeface(cache.get(variant.name(), () -> {
+            try {
+                return Typeface.createFromAsset(
+                        CoreLibrary.getInstance().context().applicationContext().getAssets(),
+                        variant.fontFile());
+            } catch (Exception e) {
+                Timber.e(e);
+                return Typeface.DEFAULT;
+            }
+        }));
     }
 }

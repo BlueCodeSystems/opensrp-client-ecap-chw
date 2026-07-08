@@ -140,10 +140,48 @@ public class ChwRepositoryFlv {
                 case 36:
                     upgradeToVersion36(db);
                     break;
+                case 37:
+                    upgradeToVersion37(db);
+                    break;
+                case 38:
+                    upgradeToVersion38(db);
+                    break;
                 default:
                     break;
             }
             upgradeTo++;
+        }
+    }
+
+    private static void upgradeToVersion38(SQLiteDatabase db) {
+        try {
+            db.execSQL("CREATE TABLE IF NOT EXISTS ec_community_alert (base_entity_id TEXT PRIMARY KEY)");
+
+            org.smartregister.util.DatabaseMigrationUtils.createAddedECTables(db,
+                    new HashSet<>(Arrays.asList("ec_community_alert")),
+                    ChwApplication.getInstance().getCommonFtsObject());
+
+            String[] communityColumns = {
+                    "last_interacted_with", "formSubmissionId",
+                    "form_id", "province", "district", "ward", "facility", "facility_name",
+                    "caseworker_name", "ccw_name", "ccw_phone_number", "community_name",
+                    "reporting_month", "date_reporting", "super_mentor_name", "super_mentor_contact",
+                    "illness_type", "date_event_happened", "time_event_happened", "date_event_detected",
+                    "time_event_detected", "event_location", "affected_status", "affected_female_0_4",
+                    "affected_female_5_9", "affected_female_10_17", "affected_female_18_plus",
+                    "affected_male_0_4", "affected_male_5_9", "affected_male_10_17", "affected_male_18_plus",
+                    "deaths_status", "died_female_0_4", "died_female_5_9", "died_female_10_17",
+                    "died_female_18_plus", "died_male_0_4", "died_male_5_9", "died_male_10_17",
+                    "died_male_18_plus", "animals_involved", "event_ongoing", "action_taken",
+                    "met_case_definition", "response_performed", "response_action_taken",
+                    "supervisor_name", "date_reviewed", "supervisor_signature", "workflow_status",
+                    "delete_status"
+            };
+            for (String col : communityColumns) {
+                org.smartregister.util.DatabaseMigrationUtils.addColumnIfNotExists(db, "ec_community_alert", col, "VARCHAR");
+            }
+        } catch (Exception e) {
+            Timber.e(e, "upgradeToVersion38");
         }
     }
 
@@ -196,6 +234,16 @@ public class ChwRepositoryFlv {
             }
         } catch (Exception e) {
             Timber.e(e, "upgradeToVersion36");
+        }
+    }
+
+    private static void upgradeToVersion37(SQLiteDatabase db) {
+        try {
+            org.smartregister.util.DatabaseMigrationUtils.createAddedECTables(db,
+                    new HashSet<>(Arrays.asList("ec_community_alert")),
+                    ChwApplication.getInstance().getCommonFtsObject());
+        } catch (Exception e) {
+            Timber.e(e, "upgradeToVersion37");
         }
     }
 

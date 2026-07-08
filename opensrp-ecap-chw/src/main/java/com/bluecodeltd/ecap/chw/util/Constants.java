@@ -92,6 +92,7 @@ public class Constants extends CoreConstants {
         String MALARIA_MONTHLY_REPORTING = "Malaria Monthly Reporting";
         String NUTRITION_MONTHLY_REPORTING = "BCAPI_Nutrition_Activities_Report";
         String TB_MONTHLY_REPORTING = "TB_Monthly_Reporting";
+        String COMMUNITY_ALERT_REPORT = "Community Alert Report";
     }
 
     public interface EcapClientTable {
@@ -140,6 +141,7 @@ public class Constants extends CoreConstants {
         String EC_MONTHLY_MALARIA = "ec_monthly_malaria";
         String EC_MONTHLY_NUTRITION = "ec_monthly_nutrition";
         String EC_MONTHLY_TB = "ec_monthly_tb";
+        String EC_COMMUNITY_ALERT = "ec_community_alert";
     }
     public  interface EcapConstants{
         String POP_UP_DIALOG_MESSAGE = "Continue with VCA Screening for ";
