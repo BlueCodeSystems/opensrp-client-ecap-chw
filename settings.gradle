@@ -87,7 +87,7 @@ dependencyResolutionManagement {
     }
 }
 
-include ':opensrp-ecap-chw', ':opensrp-ecap-chw-core'
+include ':opensrp-ecap-chw', ':opensrp-ecap-chw-core', ':android-job'
 
 def useLocalNativeForm = (gradle.startParameter.projectProperties['useLocalNativeForm']
         ?: System.getenv('USE_LOCAL_NATIVE_FORM'))?.toString()?.toBoolean() ?: false

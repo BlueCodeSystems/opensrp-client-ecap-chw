@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/native_form_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:background="?attr/colorPrimary"
         android:contentInsetStart="0dp"
@@ -30,8 +30,11 @@
         android:id="@+id/default_focus_view"
         android:layout_width="1dp"
         android:layout_height="1dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:importantForAutofill="no"
+        android:inputType="none"
+        tools:ignore="LabelFor" />
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/container"

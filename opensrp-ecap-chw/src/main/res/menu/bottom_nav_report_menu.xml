@@ -22,4 +22,11 @@
         android:icon="@drawable/ic_tb_24"
         android:title="@string/report_tb"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_report_community"
+        android:enabled="true"
+        android:icon="@drawable/ic_household"
+        android:title="@string/report_community"
+        app:showAsAction="ifRoom" />
 </menu>

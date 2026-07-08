@@ -359,6 +359,8 @@
 
     <string name="unauthorized_group">Ce compte n\'est pas autorisé à accéder à cet appareil</string>
     <string name="malaria_report_title">Rapport mensuel sur le paludisme - %s</string>
+    <string name="submitted_at">Soumis le %1$s</string>
     <string name="tb_report_title">Rapport mensuel sur la tuberculose - %s</string>
     <string name="nutrition_report_title">Rapport nutritionnel mensuel - %s</string>
+    <string name="report_summary">Résumé du rapport</string>
 </resources>

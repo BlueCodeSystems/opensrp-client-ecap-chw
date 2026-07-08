@@ -110,6 +110,7 @@ public class ReportRegisterInteractor {
         if (Constants.EcapEncounterType.MALARIA_MONTHLY_REPORTING.equals(encounterType)) return Constants.EcapClientTable.EC_MONTHLY_MALARIA;
         if (Constants.EcapEncounterType.TB_MONTHLY_REPORTING.equals(encounterType)) return Constants.EcapClientTable.EC_MONTHLY_TB;
         if (Constants.EcapEncounterType.NUTRITION_MONTHLY_REPORTING.equals(encounterType)) return Constants.EcapClientTable.EC_MONTHLY_NUTRITION;
+        if (Constants.EcapEncounterType.COMMUNITY_ALERT_REPORT.equals(encounterType)) return Constants.EcapClientTable.EC_COMMUNITY_ALERT;
         return "";
     }
 }

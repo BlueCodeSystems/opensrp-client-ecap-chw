@@ -134,6 +134,7 @@
     <string name="report_forms_title">Report Forms</string>
     <string name="report_open_form">Open report form</string>
     <string name="report_register_title">Service report</string>
+    <string name="report_summary">Report Summary</string>
     <string name="report_register_household_title">Household service report</string>
     <string name="report_register_caregiver_title">Caregiver service report</string>
     <string name="report_household_prefix">Household ID: %1$s</string>
@@ -371,6 +372,7 @@
     <string name="no_services_due">No services due</string>
     <string name="due_details">This family has no services due at the moment</string>
     <string name="report">Report</string>
+    <string name="submitted_at">Submitted at %1$s</string>
     <string name="job_aids">Job aids</string>
     <string name="add_family">Add family</string>
     <string name="add_index">Add index</string>
@@ -424,12 +426,16 @@
     <string name="menu_malaria">Malaria</string>
     <string name="report_nutrition">Nutrition</string>
     <string name="report_tb">TB</string>
+    <string name="report_community">Community</string>
+    <string name="report_community_title">Community Based Surveillance</string>
     <string name="report_malaria_description">View, manage, and review monthly malaria reports.</string>
     <string name="report_nutrition_description">View, manage, and review monthly nutrition reports.</string>
     <string name="report_tb_description">View, manage, and review monthly TB reports.</string>
+    <string name="report_community_description">View, manage, and review Community Based Surveillance.</string>
     <string name="report_malaria_saved">Malaria report saved successfully.</string>
     <string name="report_nutrition_saved">Nutrition report saved successfully.</string>
     <string name="report_tb_saved">TB report saved successfully.</string>
+    <string name="report_community_saved">Community report saved successfully.</string>
     <string name="malaria_report_title">Malaria Monthly Report - %s</string>
     <string name="tb_report_title">Monthly TB Report - %s</string>
     <string name="nutrition_report_title">Monthly Nutrition Report - %s</string>

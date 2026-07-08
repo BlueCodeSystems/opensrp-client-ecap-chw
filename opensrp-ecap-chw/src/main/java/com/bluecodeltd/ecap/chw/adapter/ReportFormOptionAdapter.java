@@ -65,6 +65,9 @@ public class ReportFormOptionAdapter extends RecyclerView.Adapter<ReportFormOpti
         if (ReportRegisterActivity.REPORT_TYPE_TB.equals(item.getID())) {
             return view.getContext().getString(R.string.report_tb_description);
         }
+        if (ReportRegisterActivity.REPORT_TYPE_COMMUNITY.equals(item.getID())) {
+            return view.getContext().getString(R.string.report_community_description);
+        }
         return view.getContext().getString(R.string.report_malaria_description);
     }
 
@@ -87,6 +90,12 @@ public class ReportFormOptionAdapter extends RecyclerView.Adapter<ReportFormOpti
             bubbleColor = R.color.register_tb_bg;
             iconColor = R.color.register_tb_icon;
             iconRes = R.drawable.ic_tb_24;
+        } else if (ReportRegisterActivity.REPORT_TYPE_COMMUNITY.equals(item.getID())) {
+            cardColor = R.color.register_community_bg;
+            accentColor = R.color.register_community_icon;
+            bubbleColor = R.color.register_community_bg;
+            iconColor = R.color.register_community_icon;
+            iconRes = R.drawable.ic_household;
         } else {
             cardColor = R.color.register_malaria_bg;
             accentColor = R.color.register_malaria_icon;
