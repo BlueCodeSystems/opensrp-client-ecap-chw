@@ -226,6 +226,10 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
             if (context instanceof ReportRegisterActivity) {
                 return ((ReportRegisterActivity) context).launchReportForm(ReportRegisterActivity.REPORT_TYPE_TB);
             }
+        } else if (item.getItemId() == R.id.action_report_community_alert) {
+            if (context instanceof ReportRegisterActivity) {
+                return ((ReportRegisterActivity) context).launchReportForm(ReportRegisterActivity.REPORT_TYPE_COMMUNITY_ALERT);
+            }
         }
 
         return true;

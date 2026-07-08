@@ -146,6 +146,8 @@
     <color name="register_nutrition_icon">#EF6C00</color>
     <color name="register_tb_bg">#F3E5F5</color>
     <color name="register_tb_icon">#6A1B9A</color>
+    <color name="register_community_alert_bg">#FFEBEE</color>
+    <color name="register_community_alert_icon">#C62828</color>
     <color name="register_count_text">#546E7A</color>
     <color name="register_card_bg">#FFFFFF</color>
 
