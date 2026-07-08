@@ -87,6 +87,12 @@ public class ReportFormOptionAdapter extends RecyclerView.Adapter<ReportFormOpti
             bubbleColor = R.color.register_tb_bg;
             iconColor = R.color.register_tb_icon;
             iconRes = R.drawable.ic_tb_24;
+        } else if (ReportRegisterActivity.REPORT_TYPE_COMMUNITY_ALERT.equals(item.getID())) {
+            cardColor = R.color.register_community_alert_bg;
+            accentColor = R.color.register_community_alert_icon;
+            bubbleColor = R.color.register_community_alert_bg;
+            iconColor = R.color.register_community_alert_icon;
+            iconRes = R.drawable.ic_notification;
         } else {
             cardColor = R.color.register_malaria_bg;
             accentColor = R.color.register_malaria_icon;
