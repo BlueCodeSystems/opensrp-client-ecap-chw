@@ -55,15 +55,19 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
     public static final String REPORT_TYPE_MALARIA = "malaria";
     public static final String REPORT_TYPE_NUTRITION = "nutrition";
     public static final String REPORT_TYPE_TB = "tb";
+    public static final String REPORT_TYPE_COMMUNITY_ALERT = "community_alert";
     public static final String REPORT_FORM_MALARIA = "malaria_monthly_reporting";
     public static final String REPORT_FORM_NUTRITION = "monthly_nutrition_report";
     public static final String REPORT_FORM_TB = "monthly_tb_report";
+    public static final String REPORT_FORM_COMMUNITY_ALERT = "community_alert_reporting";
     public static final String REPORT_FORM_ENCOUNTER_MALARIA = "Malaria Monthly Reporting";
     public static final String REPORT_FORM_ENCOUNTER_NUTRITION = "Monthly Nutrition Report";
     public static final String REPORT_FORM_ENCOUNTER_TB = "Monthly TB";
+    public static final String REPORT_FORM_ENCOUNTER_COMMUNITY_ALERT = "Community Alert Reporting";
     public static final String REPORT_TABLE_MALARIA = "ec_monthly_malaria";
     public static final String REPORT_TABLE_NUTRITION = "ec_monthly_nutrition";
     public static final String REPORT_TABLE_TB = "ec_monthly_tb";
+    public static final String REPORT_TABLE_COMMUNITY_ALERT = "ec_community_alert";
 
     private ReportRegisterFragment reportRegisterFragment;
 
@@ -184,7 +188,7 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
             bottomNavigationView.getMenu().clear();
             bottomNavigationView.inflateMenu(R.menu.bottom_nav_report_menu);
             bottomNavigationHelper.disableShiftMode(bottomNavigationView);
-            bottomNavigationView.setOnNavigationItemSelectedListener(new ChwBottomNavigationListener(this));
+            bottomNavigationView.setOnItemSelectedListener(new ChwBottomNavigationListener(this));
             bottomNavigationView.setItemIconTintList(
                     AppCompatResources.getColorStateList(this, R.color.bottom_navigation_icon_selector));
             bottomNavigationView.setItemTextColor(
@@ -204,10 +208,10 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
 
     public String getSelectedReportType() {
         String reportType = getIntent() == null ? null : getIntent().getStringExtra(EXTRA_REPORT_TYPE);
-        if (REPORT_TYPE_NUTRITION.equals(reportType) || REPORT_TYPE_TB.equals(reportType)) {
-            return reportType;
-        }
-        return REPORT_TYPE_MALARIA;
+        return switch (java.util.Objects.requireNonNullElse(reportType, "")) {
+            case REPORT_TYPE_NUTRITION, REPORT_TYPE_TB, REPORT_TYPE_COMMUNITY_ALERT -> reportType;
+            default -> REPORT_TYPE_MALARIA;
+        };
     }
 
     private int getSelectedBottomNavItemId() {
@@ -218,12 +222,15 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
         if (REPORT_TYPE_TB.equals(selectedReportType)) {
             return R.id.action_report_tb;
         }
+        if (REPORT_TYPE_COMMUNITY_ALERT.equals(selectedReportType)) {
+            return R.id.action_report_community_alert;
+        }
         return R.id.action_report_malaria;
     }
 
     public boolean openReportType(String reportType) {
         String selectedReportType = getSelectedReportType();
-        if (reportType.equals(selectedReportType)) {
+        if (java.util.Objects.equals(reportType, selectedReportType)) {
             return true;
         }
 
@@ -264,6 +271,9 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
         if (REPORT_TYPE_TB.equals(reportType)) {
             return REPORT_FORM_TB;
         }
+        if (REPORT_TYPE_COMMUNITY_ALERT.equals(reportType)) {
+            return REPORT_FORM_COMMUNITY_ALERT;
+        }
         return REPORT_FORM_MALARIA;
     }
 
@@ -292,10 +302,10 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
     private String generateFormId(SharedPreferences prefs) {
         String code = prefs.getString("code", "");
         int randomNumber = new Random().nextInt(100000000);
-        if (code != null && !code.trim().isEmpty()) {
+        if (!java.util.Objects.requireNonNullElse(code, "").trim().isEmpty()) {
             return code + "/" + randomNumber;
         }
-        return String.valueOf(randomNumber);
+        return randomNumber + "";
     }
 
     private void setStep1FieldValue(JSONObject form, String key, String value) {
@@ -305,7 +315,7 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
         }
         field.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
         try {
-            field.put(org.smartregister.family.util.JsonFormUtils.VALUE, value == null ? "" : value);
+            field.put(org.smartregister.family.util.JsonFormUtils.VALUE, java.util.Objects.requireNonNullElse(value, ""));
         } catch (org.json.JSONException e) {
             timber.log.Timber.e(e);
         }
@@ -314,7 +324,8 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
     private boolean isMonthlyReportEncounter(String encounterType) {
         return REPORT_FORM_ENCOUNTER_MALARIA.equalsIgnoreCase(encounterType)
                 || REPORT_FORM_ENCOUNTER_NUTRITION.equalsIgnoreCase(encounterType)
-                || REPORT_FORM_ENCOUNTER_TB.equalsIgnoreCase(encounterType);
+                || REPORT_FORM_ENCOUNTER_TB.equalsIgnoreCase(encounterType)
+                || REPORT_FORM_ENCOUNTER_COMMUNITY_ALERT.equalsIgnoreCase(encounterType);
     }
 
     private String getReportTableName(String encounterType) {
@@ -326,6 +337,9 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
         }
         if (REPORT_FORM_ENCOUNTER_TB.equalsIgnoreCase(encounterType)) {
             return REPORT_TABLE_TB;
+        }
+        if (REPORT_FORM_ENCOUNTER_COMMUNITY_ALERT.equalsIgnoreCase(encounterType)) {
+            return REPORT_TABLE_COMMUNITY_ALERT;
         }
         return null;
     }
@@ -375,6 +389,13 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
 
                     if (isEditMode && existingClientJsonObject != null) {
                         JSONObject mergedClientJsonObject = org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
+                        try {
+                            if (existingClientJsonObject.has("attributes") && newClientJsonObject.has("attributes")) {
+                                mergedClientJsonObject.put("attributes", org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject.getJSONObject("attributes"), newClientJsonObject.getJSONObject("attributes")));
+                            }
+                        } catch (Exception e) {
+                            timber.log.Timber.e(e, "Error merging attributes");
+                        }
                         ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
                     } else {
                         ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
@@ -445,6 +466,9 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
         }
         if (REPORT_FORM_ENCOUNTER_TB.equalsIgnoreCase(encounterType)) {
             return getString(R.string.report_tb_saved);
+        }
+        if (REPORT_FORM_ENCOUNTER_COMMUNITY_ALERT.equalsIgnoreCase(encounterType)) {
+            return getString(R.string.report_community_alert_saved);
         }
         return getString(R.string.report_malaria_saved);
     }
