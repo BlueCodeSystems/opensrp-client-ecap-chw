@@ -322,6 +322,12 @@ public class ReportRegisterFragment extends BaseSafeRegisterFragment implements 
                 HouseholdServiceReportDao.getMonthlyReportCount(ReportRegisterActivity.REPORT_TABLE_TB, caseworkerName),
                 getLastSubmitted(ReportRegisterActivity.REPORT_TABLE_TB, caseworkerName)
         ));
+        options.add(new ReportType(
+                ReportRegisterActivity.REPORT_TYPE_COMMUNITY_ALERT,
+                getString(R.string.report_community_alert),
+                HouseholdServiceReportDao.getMonthlyReportCount(ReportRegisterActivity.REPORT_TABLE_COMMUNITY_ALERT, caseworkerName),
+                getLastSubmitted(ReportRegisterActivity.REPORT_TABLE_COMMUNITY_ALERT, caseworkerName)
+        ));
         return options;
     }
 
