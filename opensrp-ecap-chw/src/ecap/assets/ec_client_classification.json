@@ -35,7 +35,7 @@
           },
           {
             "field": "eventType",
-            "field_value": "Community Alert Report",
+            "field_value": "Community Alert Reporting",
             "creates_case": [
               "ec_community_alert"
             ]
