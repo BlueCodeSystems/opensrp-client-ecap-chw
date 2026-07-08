@@ -11,6 +11,13 @@
           }
         },
         {
+          "column_name": "formSubmissionId",
+          "type": "Event",
+          "json_mapping": {
+            "field": "formSubmissionId"
+          }
+        },
+        {
           "column_name": "base_entity_id",
           "type": "Client",
           "json_mapping": {
@@ -2431,6 +2438,13 @@
           }
         },
         {
+          "column_name": "formSubmissionId",
+          "type": "Event",
+          "json_mapping": {
+            "field": "formSubmissionId"
+          }
+        },
+        {
           "column_name": "base_entity_id",
           "type": "Client",
           "json_mapping": {
@@ -2895,6 +2909,13 @@
           "type": "Event",
           "json_mapping": {
             "field": "version"
+          }
+        },
+        {
+          "column_name": "formSubmissionId",
+          "type": "Event",
+          "json_mapping": {
+            "field": "formSubmissionId"
           }
         },
         {
@@ -4083,6 +4104,361 @@
       ]
     },
     {
+      "name": "ec_community_alert",
+      "columns": [
+        {
+          "column_name": "last_interacted_with",
+          "type": "Event",
+          "json_mapping": {
+            "field": "version"
+          }
+        },
+        {
+          "column_name": "formSubmissionId",
+          "type": "Event",
+          "json_mapping": {
+            "field": "formSubmissionId"
+          }
+        },
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
+        },
+        {
+          "column_name": "form_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.form_id"
+          }
+        },
+        {
+          "column_name": "province",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.province"
+          }
+        },
+        {
+          "column_name": "ward",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.ward"
+          }
+        },
+        {
+          "column_name": "district",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.district"
+          }
+        },
+        {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
+          }
+        },
+        {
+          "column_name": "reporting_month",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.reporting_month"
+          }
+        },
+        {
+          "column_name": "phone_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.phone_number"
+          }
+        },
+        {
+          "column_name": "community",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.community"
+          }
+        },
+        {
+          "column_name": "facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.facility"
+          }
+        },
+        {
+          "column_name": "partner",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.partner"
+          }
+        },
+        {
+          "column_name": "date_reporting",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_reporting"
+          }
+        },
+        {
+          "column_name": "super_mentor_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.super_mentor_name"
+          }
+        },
+        {
+          "column_name": "super_mentor_contact",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.super_mentor_contact"
+          }
+        },
+        {
+          "column_name": "illness_type",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.illness_type"
+          }
+        },
+        {
+          "column_name": "event_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.event_date"
+          }
+        },
+        {
+          "column_name": "event_time",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.event_time"
+          }
+        },
+        {
+          "column_name": "detection_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.detection_date"
+          }
+        },
+        {
+          "column_name": "detection_time",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.detection_time"
+          }
+        },
+        {
+          "column_name": "location",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.location"
+          }
+        },
+        {
+          "column_name": "affected_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.affected_status"
+          }
+        },
+        {
+          "column_name": "affected_f_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.affected_f_0_4"
+          }
+        },
+        {
+          "column_name": "affected_f_5_9",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.affected_f_5_9"
+          }
+        },
+        {
+          "column_name": "affected_f_10_17",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.affected_f_10_17"
+          }
+        },
+        {
+          "column_name": "affected_f_18_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.affected_f_18_plus"
+          }
+        },
+        {
+          "column_name": "affected_m_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.affected_m_0_4"
+          }
+        },
+        {
+          "column_name": "affected_m_5_9",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.affected_m_5_9"
+          }
+        },
+        {
+          "column_name": "affected_m_10_17",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.affected_m_10_17"
+          }
+        },
+        {
+          "column_name": "affected_m_18_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.affected_m_18_plus"
+          }
+        },
+        {
+          "column_name": "dead_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dead_status"
+          }
+        },
+        {
+          "column_name": "dead_f_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dead_f_0_4"
+          }
+        },
+        {
+          "column_name": "dead_f_5_9",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dead_f_5_9"
+          }
+        },
+        {
+          "column_name": "dead_f_10_17",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dead_f_10_17"
+          }
+        },
+        {
+          "column_name": "dead_f_18_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dead_f_18_plus"
+          }
+        },
+        {
+          "column_name": "dead_m_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dead_m_0_4"
+          }
+        },
+        {
+          "column_name": "dead_m_5_9",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dead_m_5_9"
+          }
+        },
+        {
+          "column_name": "dead_m_10_17",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dead_m_10_17"
+          }
+        },
+        {
+          "column_name": "dead_m_18_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dead_m_18_plus"
+          }
+        },
+        {
+          "column_name": "animals_involved",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.animals_involved"
+          }
+        },
+        {
+          "column_name": "event_ongoing",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.event_ongoing"
+          }
+        },
+        {
+          "column_name": "action_taken",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.action_taken"
+          }
+        },
+        {
+          "column_name": "meet_case_definition",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.meet_case_definition"
+          }
+        },
+        {
+          "column_name": "response_performed",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.response_performed"
+          }
+        },
+        {
+          "column_name": "supervisor_action_taken",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.supervisor_action_taken"
+          }
+        },
+        {
+          "column_name": "supervisor_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.supervisor_name"
+          }
+        },
+        {
+          "column_name": "date_reviewed",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_reviewed"
+          }
+        },
+        {
+          "column_name": "signature",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.signature"
+          }
+        }
+      ]
+    },
+    {
       "name": "ec_mother_index",
       "columns": [
         {
@@ -4097,6 +4473,13 @@
           "type": "Event",
           "json_mapping": {
             "field": "version"
+          }
+        },
+        {
+          "column_name": "formSubmissionId",
+          "type": "Event",
+          "json_mapping": {
+            "field": "formSubmissionId"
           }
         },
         {
@@ -7522,6 +7905,13 @@
           "type": "Event",
           "json_mapping": {
             "field": "version"
+          }
+        },
+        {
+          "column_name": "formSubmissionId",
+          "type": "Event",
+          "json_mapping": {
+            "field": "formSubmissionId"
           }
         },
         {

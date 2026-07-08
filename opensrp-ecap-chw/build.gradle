@@ -21,6 +21,7 @@ apply plugin: 'com.github.kt3k.coveralls'
 apply from: "jacoco.gradle"
 apply plugin: 'kotlin-android'
 apply plugin: 'org.jetbrains.kotlin.kapt'
+apply plugin: 'kotlin-kapt'
 
 kapt {
     javacOptions {
@@ -83,31 +84,6 @@ android {
     java {
         toolchain {
             languageVersion = JavaLanguageVersion.of(17)
-        }
-    }
-
-    kapt {
-        javacOptions {
-            option("--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED")
-            option("--add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED")
-            option("--add-exports=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED")
-            option("--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED")
-            option("--add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED")
-            option("--add-exports=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED")
-            option("--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED")
-            option("--add-exports=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED")
-            option("--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED")
-            option("--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED")
-            option("--add-opens=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED")
-            option("--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED")
-            option("--add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED")
-            option("--add-opens=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED")
-            option("--add-opens=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED")
-            option("--add-opens=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED")
-            option("--add-opens=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED")
-            option("--add-opens=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED")
-            option("--add-opens=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED")
-            option("--add-opens=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED")
         }
     }
 
@@ -360,7 +336,7 @@ android {
             buildConfigField "String[]", "ALLOWED_LOCATION_LEVELS_DEBUG", '{"Country","Province","District","Ward","Health Facility"}'
             buildConfigField "String", 'DEFAULT_LOCATION', '"Health Facility"'
             buildConfigField "String", 'DEFAULT_LOCATION_DEBUG', '"Health Facility"'
-            buildConfigField "int", "DATABASE_VERSION", '38'
+            buildConfigField "int", "DATABASE_VERSION", '29'
         }
     }
 }
@@ -444,9 +420,6 @@ dependencies {
     // CircleImageView used in databinding layouts
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
-    // MaterialEditText fork on Maven Central (BlueCodeSystems)
-    implementation 'io.github.bluecodesystems:MaterialEditTextLibrary:3.1.5'
-
     // Android-SpinKit (FadingCircle) used in JobAidsActivity
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 
@@ -483,7 +456,7 @@ dependencies {
     // AndroidX Volley for networking used in app code
     implementation 'com.android.volley:volley:1.2.1'
     // Evernote Job used by app jobs (JobCreator, Job)
-    implementation project(':android-job')
+    implementation 'com.evernote:android-job:1.4.3'
     implementation 'com.github.gcacace:signature-pad:1.3.1'
     implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
     // For viewing PDFs in the app (BlueCodeSystems fork)

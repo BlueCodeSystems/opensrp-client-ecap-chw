@@ -323,10 +323,10 @@ public class ReportRegisterFragment extends BaseSafeRegisterFragment implements 
                 getLastSubmitted(ReportRegisterActivity.REPORT_TABLE_TB, caseworkerName)
         ));
         options.add(new ReportType(
-                ReportRegisterActivity.REPORT_TYPE_COMMUNITY,
-                getString(R.string.report_community),
-                HouseholdServiceReportDao.getMonthlyReportCount(ReportRegisterActivity.REPORT_TABLE_COMMUNITY, caseworkerName),
-                getLastSubmitted(ReportRegisterActivity.REPORT_TABLE_COMMUNITY, caseworkerName)
+                ReportRegisterActivity.REPORT_TYPE_COMMUNITY_ALERT,
+                getString(R.string.report_community_alert),
+                HouseholdServiceReportDao.getMonthlyReportCount(ReportRegisterActivity.REPORT_TABLE_COMMUNITY_ALERT, caseworkerName),
+                getLastSubmitted(ReportRegisterActivity.REPORT_TABLE_COMMUNITY_ALERT, caseworkerName)
         ));
         return options;
     }

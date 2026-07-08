@@ -24,9 +24,9 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_report_community"
+        android:id="@+id/action_report_community_alert"
         android:enabled="true"
-        android:icon="@drawable/ic_household"
-        android:title="@string/report_community"
+        android:icon="@drawable/ic_notification"
+        android:title="@string/report_community_alert"
         app:showAsAction="ifRoom" />
 </menu>
