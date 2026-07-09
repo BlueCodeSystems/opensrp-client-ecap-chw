@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/report_view_toolbar"
@@ -21,596 +22,237 @@
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/btn_edit_report"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/edit"
+            android:src="@drawable/ic_edit_white"
+            app:tint="@color/white" />
     </androidx.appcompat.widget.Toolbar>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/header_card"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="3dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="18dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/community_alert_logsheet_title"
-                android:textColor="@color/text_black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:gravity="center"
-                android:text="@string/community_alert_logsheet_subtitle"
-                android:textColor="@color/light_grey_text"
-                android:textSize="12sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="14dp"
-                android:layout_marginBottom="14dp"
-                android:background="#E5EAF0" />
-
-                                                <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:stretchColumns="1">
-
-                <TableRow>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/logsheet_district_label"
-                        android:textColor="@color/light_grey_text"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:id="@+id/txt_logsheet_district"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:textColor="@color/text_black"
-                        android:textSize="13sp" />
-                </TableRow>
-
-                <TableRow>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/logsheet_facility_label"
-                        android:textColor="@color/light_grey_text"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:id="@+id/txt_facility_name"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/text_black"
-                        android:textSize="13sp" />
-                </TableRow>
-
-                <TableRow>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/logsheet_community_label"
-                        android:textColor="@color/light_grey_text"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:id="@+id/txt_logsheet_community_header"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/text_black"
-                        android:textSize="13sp" />
-                </TableRow>
-
-                <TableRow>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/logsheet_month_label"
-                        android:textColor="@color/light_grey_text"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:id="@+id/txt_logsheet_month"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/text_black"
-                        android:textSize="13sp" />
-                </TableRow>
-
-                <TableRow>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/logsheet_year_label"
-                        android:textColor="@color/light_grey_text"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:id="@+id/txt_logsheet_year"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/text_black"
-                        android:textSize="13sp" />
-                </TableRow>
-
-                <TableRow>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginTop="10dp"
-                        android:text="Caseworker Name"
-                        android:textColor="@color/light_grey_text"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:id="@+id/txt_caseworker_name_summary"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/text_black"
-                        android:textSize="13sp" />
-                </TableRow>
-
-                <TableRow>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginTop="10dp"
-                        android:text="Phone number of the reporting CCW"
-                        android:textColor="@color/light_grey_text"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:id="@+id/txt_phone_number_summary"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/text_black"
-                        android:textSize="13sp" />
-                </TableRow>
-
-                <TableRow>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginTop="10dp"
-                        android:text="Implementing Partner"
-                        android:textColor="@color/light_grey_text"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:id="@+id/txt_logsheet_remarks"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/text_black"
-                        android:textSize="13sp" />
-                </TableRow>
-            </TableLayout>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="8dp">
 
-        <LinearLayout
+        <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="8dp">
+            android:layout_height="wrap_content">
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/header_card"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="2dp">
+                android:orientation="vertical"
+                android:background="#000000"
+                android:padding="1dp">
 
+                <!-- ROW 1: Title -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#4CAF50"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="Community-Based Surveillance Suspected Diseases and Public Health Events Monthly Log Sheet"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <!-- Meta Data Section -->
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:padding="4dp">
+
+                    <TableRow android:padding="2dp">
+                        <TextView android:text="District " android:textColor="#000000" android:textStyle="bold"/>
+                        <TextView android:id="@+id/txt_district" android:layout_width="150dp" android:textColor="#000000" android:background="@drawable/bottom_border_line" android:paddingLeft="4dp"/>
+                        <TextView android:text=" Facility " android:textColor="#000000" android:textStyle="bold" android:paddingLeft="8dp"/>
+                        <TextView android:id="@+id/txt_facility_name" android:layout_width="200dp" android:textColor="#000000" android:background="@drawable/bottom_border_line" android:paddingLeft="4dp"/>
+                        <TextView android:text=" Province " android:textColor="#000000" android:textStyle="bold" android:paddingLeft="8dp"/>
+                        <TextView android:id="@+id/txt_province" android:layout_width="120dp" android:textColor="#000000" android:background="@drawable/bottom_border_line" android:paddingLeft="4dp"/>
+                    </TableRow>
+
+                    <TableRow android:padding="2dp">
+                        <TextView android:text="Community: " android:textColor="#000000" android:textStyle="bold"/>
+                        <TextView android:id="@+id/txt_community" android:layout_width="150dp" android:textColor="#000000" android:background="@drawable/bottom_border_line" android:paddingLeft="4dp"/>
+                        <TextView android:text=" Month/Year " android:textColor="#000000" android:textStyle="bold" android:paddingLeft="8dp"/>
+                        <TextView android:id="@+id/txt_reporting_month" android:layout_width="100dp" android:textColor="#000000" android:background="@drawable/bottom_border_line" android:paddingLeft="4dp"/>
+                        <TextView android:text=" Ward " android:textColor="#000000" android:textStyle="bold" android:paddingLeft="8dp"/>
+                        <TextView android:id="@+id/txt_ward" android:layout_width="100dp" android:textColor="#000000" android:background="@drawable/bottom_border_line" android:paddingLeft="4dp"/>
+                    </TableRow>
+
+                    <TableRow android:padding="2dp">
+                        <TextView android:text="CCW Name " android:textColor="#000000" android:textStyle="bold"/>
+                        <TextView android:id="@+id/txt_caseworker_name" android:layout_width="150dp" android:textColor="#000000" android:background="@drawable/bottom_border_line" android:paddingLeft="4dp"/>
+                        <TextView android:text=" Phone " android:textColor="#000000" android:textStyle="bold" android:paddingLeft="8dp"/>
+                        <TextView android:id="@+id/txt_phone_number" android:layout_width="100dp" android:textColor="#000000" android:background="@drawable/bottom_border_line" android:paddingLeft="4dp"/>
+                        <TextView android:text=" Form ID " android:textColor="#000000" android:textStyle="bold" android:paddingLeft="8dp"/>
+                        <TextView android:id="@+id/txt_form_id" android:layout_width="100dp" android:textColor="#000000" android:background="@drawable/bottom_border_line" android:paddingLeft="4dp"/>
+                    </TableRow>
+
+                    <TableRow android:padding="2dp">
+                        <TextView android:text="Super Mentor " android:textColor="#000000" android:textStyle="bold"/>
+                        <TextView android:id="@+id/txt_super_mentor_name" android:layout_width="150dp" android:textColor="#000000" android:background="@drawable/bottom_border_line" android:paddingLeft="4dp"/>
+                        <TextView android:text=" SM Contact " android:textColor="#000000" android:textStyle="bold" android:paddingLeft="8dp"/>
+                        <TextView android:id="@+id/txt_super_mentor_contact" android:layout_width="100dp" android:textColor="#000000" android:background="@drawable/bottom_border_line" android:paddingLeft="4dp"/>
+                        <TextView android:text=" Date " android:textColor="#000000" android:textStyle="bold" android:paddingLeft="8dp"/>
+                        <TextView android:id="@+id/txt_date_reporting" android:layout_width="100dp" android:textColor="#000000" android:background="@drawable/bottom_border_line" android:paddingLeft="4dp"/>
+                    </TableRow>
+                </TableLayout>
+
+                <!-- Main Data Table -->
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#000000">
+
+                    <!-- Headers -->
+                    <TableRow android:background="#FFFFFF">
+                        <TextView android:layout_width="40dp" android:layout_height="match_parent" android:text="S/N" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textStyle="bold" android:textSize="10sp"/>
+                        <TextView android:layout_width="120dp" android:layout_height="match_parent" android:text="Type of illness /Condition/ Event/Alert" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textStyle="bold" android:textSize="10sp"/>
+                        <TextView android:layout_width="100dp" android:layout_height="match_parent" android:text="When did this happen (DD/MM/YYYY )" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textStyle="bold" android:textSize="10sp"/>
+                        <TextView android:layout_width="120dp" android:layout_height="match_parent" android:text="Where did this happen (Community, District)" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textStyle="bold" android:textSize="10sp"/>
+                        <TextView android:layout_width="180dp" android:layout_height="match_parent" android:text="How many have been affected" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textStyle="bold" android:textSize="10sp"/>
+                        <TextView android:layout_width="180dp" android:layout_height="match_parent" android:text="How many died" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textStyle="bold" android:textSize="10sp"/>
+                        <TextView android:layout_width="100dp" android:layout_height="match_parent" android:text="What action was taken" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textStyle="bold" android:textSize="10sp"/>
+                        <TextView android:layout_width="120dp" android:layout_height="match_parent" android:text="Was Super Mentor (Supervisor ) involved" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textStyle="bold" android:textSize="10sp"/>
+                    </TableRow>
+
+                    <!-- Data Row -->
+                    <TableRow android:background="#FFFFFF">
+                        <!-- S/N -->
+                        <TextView android:layout_width="match_parent" android:layout_height="match_parent" android:text="1" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+                        <!-- Type -->
+                        <TextView android:id="@+id/txt_illness_type" android:layout_width="match_parent" android:layout_height="match_parent" android:textColor="#000000" android:gravity="center_vertical" android:padding="4dp" android:background="@drawable/table_cell_background" android:textSize="10sp"/>
+                        <!-- When -->
+                        <TextView android:id="@+id/txt_event_date" android:layout_width="match_parent" android:layout_height="match_parent" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textSize="10sp"/>
+                        <!-- Where -->
+                        <TextView android:id="@+id/txt_location" android:layout_width="match_parent" android:layout_height="match_parent" android:textColor="#000000" android:gravity="center_vertical" android:padding="4dp" android:background="@drawable/table_cell_background" android:textSize="10sp"/>
+
+                        <!-- Affected -->
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/table_cell_background">
+                            <!-- Female -->
+                            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Female" android:textColor="#000000" android:gravity="center" android:background="#E0E0E0" android:padding="2dp" android:textStyle="bold" android:textSize="9sp"/>
+                            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="0-4 y" android:textColor="#000000" android:gravity="center" android:textSize="8sp" android:padding="1dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="5-9 y" android:textColor="#000000" android:gravity="center" android:textSize="8sp" android:padding="1dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="10-17 y" android:textColor="#000000" android:gravity="center" android:textSize="8sp" android:padding="1dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="18+ y" android:textColor="#000000" android:gravity="center" android:textSize="8sp" android:padding="1dp" android:background="@drawable/table_cell_background"/>
+                            </LinearLayout>
+                            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                                <TextView android:id="@+id/affected_f_0_4" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="#000000" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:id="@+id/affected_f_5_9" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="#000000" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:id="@+id/affected_f_10_17" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="#000000" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:id="@+id/affected_f_18_plus" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="#000000" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+                            </LinearLayout>
+                            <!-- Male -->
+                            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Male" android:textColor="#000000" android:gravity="center" android:background="#E0E0E0" android:padding="2dp" android:textStyle="bold" android:textSize="9sp"/>
+                            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="0-4 y" android:textColor="#000000" android:gravity="center" android:textSize="8sp" android:padding="1dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="5-9 y" android:textColor="#000000" android:gravity="center" android:textSize="8sp" android:padding="1dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="10-17 y" android:textColor="#000000" android:gravity="center" android:textSize="8sp" android:padding="1dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="18+ y" android:textColor="#000000" android:gravity="center" android:textSize="8sp" android:padding="1dp" android:background="@drawable/table_cell_background"/>
+                            </LinearLayout>
+                            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                                <TextView android:id="@+id/affected_m_0_4" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="#000000" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:id="@+id/affected_m_5_9" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="#000000" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:id="@+id/affected_m_10_17" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="#000000" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:id="@+id/affected_m_18_plus" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="#000000" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- Died -->
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/table_cell_background">
+                            <!-- Female -->
+                            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Female" android:textColor="#000000" android:gravity="center" android:background="#E0E0E0" android:padding="2dp" android:textStyle="bold" android:textSize="9sp"/>
+                            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="0-4 y" android:textColor="#000000" android:gravity="center" android:textSize="8sp" android:padding="1dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="5-9 y" android:textColor="#000000" android:gravity="center" android:textSize="8sp" android:padding="1dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="10-17 y" android:textColor="#000000" android:gravity="center" android:textSize="8sp" android:padding="1dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="18+ y" android:textColor="#000000" android:gravity="center" android:textSize="8sp" android:padding="1dp" android:background="@drawable/table_cell_background"/>
+                            </LinearLayout>
+                            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                                <TextView android:id="@+id/dead_f_0_4" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="#000000" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:id="@+id/dead_f_5_9" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="#000000" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:id="@+id/dead_f_10_17" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="#000000" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:id="@+id/dead_f_18_plus" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="#000000" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+                            </LinearLayout>
+                            <!-- Male -->
+                            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Male" android:textColor="#000000" android:gravity="center" android:background="#E0E0E0" android:padding="2dp" android:textStyle="bold" android:textSize="9sp"/>
+                            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="0-4 y" android:textColor="#000000" android:gravity="center" android:textSize="8sp" android:padding="1dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="5-9 y" android:textColor="#000000" android:gravity="center" android:textSize="8sp" android:padding="1dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="10-17 y" android:textColor="#000000" android:gravity="center" android:textSize="8sp" android:padding="1dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="18+ y" android:textColor="#000000" android:gravity="center" android:textSize="8sp" android:padding="1dp" android:background="@drawable/table_cell_background"/>
+                            </LinearLayout>
+                            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                                <TextView android:id="@+id/dead_m_0_4" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="#000000" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:id="@+id/dead_m_5_9" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="#000000" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:id="@+id/dead_m_10_17" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="#000000" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:id="@+id/dead_m_18_plus" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="#000000" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- Action -->
+                        <TextView android:id="@+id/txt_action_taken" android:layout_width="match_parent" android:layout_height="match_parent" android:textColor="#000000" android:gravity="center_vertical" android:padding="4dp" android:background="@drawable/table_cell_background" android:textSize="10sp"/>
+                        <!-- Supervisor -->
+                        <TextView android:id="@+id/txt_response_performed" android:layout_width="match_parent" android:layout_height="match_parent" android:textColor="#000000" android:gravity="center_vertical" android:padding="4dp" android:background="@drawable/table_cell_background" android:textSize="10sp"/>
+                    </TableRow>
+                </TableLayout>
+
+                <!-- Footer Section (Comments/Review) -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="12dp">
+                    android:background="#FFFFFF"
+                    android:padding="8dp">
 
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Comments:" android:textStyle="bold" android:textColor="#000000"/>
+                    <TextView android:id="@+id/txt_comments" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#000000" android:padding="4dp" android:background="@drawable/bottom_border_line" android:minLines="2"/>
 
+                    <View android:layout_width="match_parent" android:layout_height="16dp"/>
 
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Reviewed by: Name of Super Mentor (Supervisor):" android:textStyle="bold" android:textColor="#000000"/>
+                    <TextView android:id="@+id/txt_supervisor_name" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#000000" android:padding="4dp" android:background="@drawable/bottom_border_line"/>
 
-                    <TextView style="@style/ReportFieldLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Date of reporting the alert" />
-                    <TextView android:id="@+id/txt_date_reporting" style="@style/ReportFieldValue" android:layout_width="match_parent" android:layout_height="wrap_content" />
-
-                    <TextView style="@style/ReportFieldLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Name of Super mentor" />
-                    <TextView android:id="@+id/txt_super_mentor_name" style="@style/ReportFieldValue" android:layout_width="match_parent" android:layout_height="wrap_content" />
-
-                    <TextView style="@style/ReportFieldLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Contact details of the Super Mentor" />
-                    <TextView android:id="@+id/txt_super_mentor_contact" style="@style/ReportFieldValue" android:layout_width="match_parent" android:layout_height="wrap_content" />
-
-                    <TextView style="@style/ReportFieldLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Type of illness, condition, event, or signal" />
-                    <TextView android:id="@+id/txt_illness_type" style="@style/ReportFieldValue" android:layout_width="match_parent" android:layout_height="wrap_content" />
-
-                    <TextView style="@style/ReportFieldLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/logsheet_event_date_label" />
-                    <TextView android:id="@+id/txt_event_date" style="@style/ReportFieldValue" android:layout_width="match_parent" android:layout_height="wrap_content" />
-
-                    <TextView style="@style/ReportFieldLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Time" />
-                    <TextView android:id="@+id/txt_event_time" style="@style/ReportFieldValue" android:layout_width="match_parent" android:layout_height="wrap_content" />
-
-                    <TextView style="@style/ReportFieldLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Date when this illness, condition, or event was detected" />
-                    <TextView android:id="@+id/txt_detection_date" style="@style/ReportFieldValue" android:layout_width="match_parent" android:layout_height="wrap_content" />
-
-                    <TextView style="@style/ReportFieldLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Time" />
-                    <TextView android:id="@+id/txt_detection_time" style="@style/ReportFieldValue" android:layout_width="match_parent" android:layout_height="wrap_content" />
-
-                    <TextView style="@style/ReportFieldLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Where did this illness, condition, or event happen? (Include Community, Ward/Zone, and District)" />
-                    <TextView android:id="@+id/txt_location" style="@style/ReportFieldValue" android:layout_width="match_parent" android:layout_height="wrap_content" />
-
-                    <!-- Section B - Affected -->
-                    <LinearLayout
-                        android:id="@+id/header_sb_q1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:background="#f5f5f5"
-                        android:orientation="horizontal"
-                        android:padding="8dp">
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/logsheet_people_affected"
-                            android:textStyle="bold" />
-                        <ImageView
-                            android:id="@+id/icon_sb_q1"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/baseline_expand_more_24" />
-                    </LinearLayout>
-
-                                        <LinearLayout
-                        android:id="@+id/content_sb_q1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-                        <TextView style="@style/ReportFieldLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Status of impact details" />
-                        <TextView android:id="@+id/affected_status" style="@style/ReportFieldValue" android:layout_width="match_parent" android:layout_height="wrap_content" />
-
-                        <TableLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:shrinkColumns="1,2,3,4"
-                            android:stretchColumns="1,2,3,4">
-
-                            <TableRow>
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:padding="8dp"
-                                    android:text=""
-                                    android:textStyle="bold" />
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:padding="8dp"
-                                    android:text="0-4 y"
-                                    android:textStyle="bold" />
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:padding="8dp"
-                                    android:text="5-9y"
-                                    android:textStyle="bold" />
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:padding="8dp"
-                                    android:text="10-17y"
-                                    android:textStyle="bold" />
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:padding="8dp"
-                                    android:text="18+y"
-                                    android:textStyle="bold" />
-                            </TableRow>
-
-                            <TableRow>
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:padding="8dp"
-                                    android:text="Female"
-                                    android:textStyle="bold" />
-                                <TextView android:id="@+id/affected_f_0_4" style="@style/ReportFieldValue" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:padding="8dp" />
-                                <TextView android:id="@+id/affected_f_5_9" style="@style/ReportFieldValue" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:padding="8dp" />
-                                <TextView android:id="@+id/affected_f_10_17" style="@style/ReportFieldValue" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:padding="8dp" />
-                                <TextView android:id="@+id/affected_f_18_plus" style="@style/ReportFieldValue" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:padding="8dp" />
-                            </TableRow>
-
-                            <TableRow>
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:padding="8dp"
-                                    android:text="Male"
-                                    android:textStyle="bold" />
-                                <TextView android:id="@+id/affected_m_0_4" style="@style/ReportFieldValue" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:padding="8dp" />
-                                <TextView android:id="@+id/affected_m_5_9" style="@style/ReportFieldValue" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:padding="8dp" />
-                                <TextView android:id="@+id/affected_m_10_17" style="@style/ReportFieldValue" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:padding="8dp" />
-                                <TextView android:id="@+id/affected_m_18_plus" style="@style/ReportFieldValue" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:padding="8dp" />
-                            </TableRow>
-                        </TableLayout>
-                    </LinearLayout>
-
-                    <!-- Section B - Dead -->
-                    <LinearLayout
-                        android:id="@+id/header_sb_q2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:background="#f5f5f5"
-                        android:orientation="horizontal"
-                        android:padding="8dp">
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/logsheet_deaths"
-                            android:textStyle="bold" />
-                        <ImageView
-                            android:id="@+id/icon_sb_q2"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/baseline_expand_more_24" />
-                    </LinearLayout>
-
-                                        <LinearLayout
-                        android:id="@+id/content_sb_q2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-                        <TextView style="@style/ReportFieldLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Status of impact details" />
-                        <TextView android:id="@+id/dead_status" style="@style/ReportFieldValue" android:layout_width="match_parent" android:layout_height="wrap_content" />
-
-                        <TableLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:shrinkColumns="1,2,3,4"
-                            android:stretchColumns="1,2,3,4">
-
-                            <TableRow>
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:padding="8dp"
-                                    android:text=""
-                                    android:textStyle="bold" />
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:padding="8dp"
-                                    android:text="0-4 y"
-                                    android:textStyle="bold" />
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:padding="8dp"
-                                    android:text="5-9y"
-                                    android:textStyle="bold" />
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:padding="8dp"
-                                    android:text="10-17y"
-                                    android:textStyle="bold" />
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:padding="8dp"
-                                    android:text="18+y"
-                                    android:textStyle="bold" />
-                            </TableRow>
-
-                            <TableRow>
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:padding="8dp"
-                                    android:text="Female"
-                                    android:textStyle="bold" />
-                                <TextView android:id="@+id/dead_f_0_4" style="@style/ReportFieldValue" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:padding="8dp" />
-                                <TextView android:id="@+id/dead_f_5_9" style="@style/ReportFieldValue" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:padding="8dp" />
-                                <TextView android:id="@+id/dead_f_10_17" style="@style/ReportFieldValue" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:padding="8dp" />
-                                <TextView android:id="@+id/dead_f_18_plus" style="@style/ReportFieldValue" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:padding="8dp" />
-                            </TableRow>
-
-                            <TableRow>
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:padding="8dp"
-                                    android:text="Male"
-                                    android:textStyle="bold" />
-                                <TextView android:id="@+id/dead_m_0_4" style="@style/ReportFieldValue" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:padding="8dp" />
-                                <TextView android:id="@+id/dead_m_5_9" style="@style/ReportFieldValue" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:padding="8dp" />
-                                <TextView android:id="@+id/dead_m_10_17" style="@style/ReportFieldValue" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:padding="8dp" />
-                                <TextView android:id="@+id/dead_m_18_plus" style="@style/ReportFieldValue" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:padding="8dp" />
-                            </TableRow>
-                        </TableLayout>
-                    </LinearLayout>
-
-                    <TextView style="@style/ReportFieldLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Animals Involved" />
-                    <TextView android:id="@+id/txt_animals_involved" style="@style/ReportFieldValue" android:layout_width="match_parent" android:layout_height="wrap_content" />
-
-                    <TextView style="@style/ReportFieldLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Event Ongoing" />
-                    <TextView android:id="@+id/txt_event_ongoing" style="@style/ReportFieldValue" android:layout_width="match_parent" android:layout_height="wrap_content" />
-
-                    <TextView style="@style/ReportFieldLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="What immediate action has been taken by the CCW or community?" />
-                    <TextView android:id="@+id/txt_action_taken" style="@style/ReportFieldValue" android:layout_width="match_parent" android:layout_height="wrap_content" />
-
-                    <!-- Section C -->
-                    <LinearLayout
-                        android:id="@+id/header_sc"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:background="#f5f5f5"
-                        android:orientation="horizontal"
-                        android:padding="8dp">
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/logsheet_supervisor_review"
-                            android:textColor="#E67E22"
-                            android:textStyle="bold" />
-                        <ImageView
-                            android:id="@+id/icon_sc"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/baseline_expand_more_24" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/content_sc"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-                        <TextView style="@style/ReportFieldLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Did the event or condition meet the standardized case definition?" />
-                        <TextView android:id="@+id/txt_meet_case_definition" style="@style/ReportFieldValue" android:layout_width="match_parent" android:layout_height="wrap_content" />
-                        <TextView style="@style/ReportFieldLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Was any official response or investigation performed by the supervisor?" />
-                        <TextView android:id="@+id/txt_response_performed" style="@style/ReportFieldValue" android:layout_width="match_parent" android:layout_height="wrap_content" />
-                        <TextView style="@style/ReportFieldLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="If Yes, please describe what specific action was taken by the supervisor" />
-                        <TextView android:id="@+id/txt_supervisor_action_taken" style="@style/ReportFieldValue" android:layout_width="match_parent" android:layout_height="wrap_content" />
-                        <TextView style="@style/ReportFieldLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Name of the Super Mentor (Supervisor) conducting the review" />
-                        <TextView android:id="@+id/txt_supervisor_name" style="@style/ReportFieldValue" android:layout_width="match_parent" android:layout_height="wrap_content" />
-                        <TextView style="@style/ReportFieldLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Date when this report was reviewed by the supervisor" />
-                        <TextView android:id="@+id/txt_date_reviewed" style="@style/ReportFieldValue" android:layout_width="match_parent" android:layout_height="wrap_content" />
-                        <TextView style="@style/ReportFieldLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Signature or Full Name of the Super Mentor (Supervisor)" />
-                        <TextView android:id="@+id/txt_signature" style="@style/ReportFieldValue" android:layout_width="match_parent" android:layout_height="wrap_content" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/header_comments"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:background="#f5f5f5"
-                        android:orientation="horizontal"
-                        android:padding="8dp">
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Comments"
-                            android:textStyle="bold" />
-                        <ImageView
-                            android:id="@+id/icon_comments"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/baseline_expand_more_24" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/content_comments"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-                        <TextView
-                            android:id="@+id/txt_comments"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="8dp"
-                            android:textColor="@color/black" />
-                    </LinearLayout>
-
+                    <TableRow android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Date reviewed: " android:textStyle="bold" android:textColor="#000000"/>
+                        <TextView android:id="@+id/txt_date_reviewed" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="#000000" android:padding="4dp" android:background="@drawable/bottom_border_line"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=" Signature: " android:textStyle="bold" android:textColor="#000000" android:paddingLeft="16dp"/>
+                        <TextView android:id="@+id/txt_signature" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="#000000" android:padding="4dp" android:background="@drawable/bottom_border_line"/>
+                    </TableRow>
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
+
+                <!-- Compatibility hidden views -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+                    <View android:id="@+id/header_sb_q1" android:layout_width="0dp" android:layout_height="0dp" />
+                    <View android:id="@+id/content_sb_q1" android:layout_width="0dp" android:layout_height="0dp" />
+                    <ImageView android:id="@+id/icon_sb_q1" android:layout_width="0dp" android:layout_height="0dp" />
+                    <View android:id="@+id/header_sb_q2" android:layout_width="0dp" android:layout_height="0dp" />
+                    <View android:id="@+id/content_sb_q2" android:layout_width="0dp" android:layout_height="0dp" />
+                    <ImageView android:id="@+id/icon_sb_q2" android:layout_width="0dp" android:layout_height="0dp" />
+                    <View android:id="@+id/header_sc" android:layout_width="0dp" android:layout_height="0dp" />
+                    <View android:id="@+id/content_sc" android:layout_width="0dp" android:layout_height="0dp" />
+                    <ImageView android:id="@+id/icon_sc" android:layout_width="0dp" android:layout_height="0dp" />
+                    <View android:id="@+id/header_comments" android:layout_width="0dp" android:layout_height="0dp" />
+                    <View android:id="@+id/content_comments" android:layout_width="0dp" android:layout_height="0dp" />
+                    <ImageView android:id="@+id/icon_comments" android:layout_width="0dp" android:layout_height="0dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </HorizontalScrollView>
     </ScrollView>
 </LinearLayout>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

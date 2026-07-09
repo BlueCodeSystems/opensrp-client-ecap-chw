@@ -56,18 +56,22 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
     public static final String REPORT_TYPE_NUTRITION = "nutrition";
     public static final String REPORT_TYPE_TB = "tb";
     public static final String REPORT_TYPE_COMMUNITY_ALERT = "community_alert";
+    public static final String REPORT_TYPE_COMMUNITY = "community";
     public static final String REPORT_FORM_MALARIA = "malaria_monthly_reporting";
     public static final String REPORT_FORM_NUTRITION = "monthly_nutrition_report";
     public static final String REPORT_FORM_TB = "monthly_tb_report";
     public static final String REPORT_FORM_COMMUNITY_ALERT = "community_alert_reporting";
+    public static final String REPORT_FORM_COMMUNITY = "community_alert_report";
     public static final String REPORT_FORM_ENCOUNTER_MALARIA = "Malaria Monthly Reporting";
     public static final String REPORT_FORM_ENCOUNTER_NUTRITION = "Monthly Nutrition Report";
     public static final String REPORT_FORM_ENCOUNTER_TB = "Monthly TB";
     public static final String REPORT_FORM_ENCOUNTER_COMMUNITY_ALERT = "Community Alert Reporting";
+    public static final String REPORT_FORM_ENCOUNTER_COMMUNITY = "Community Alert Report";
     public static final String REPORT_TABLE_MALARIA = "ec_monthly_malaria";
     public static final String REPORT_TABLE_NUTRITION = "ec_monthly_nutrition";
     public static final String REPORT_TABLE_TB = "ec_monthly_tb";
     public static final String REPORT_TABLE_COMMUNITY_ALERT = "ec_community_alert";
+    public static final String REPORT_TABLE_COMMUNITY = "ec_community_alert";
 
     private ReportRegisterFragment reportRegisterFragment;
 
@@ -208,7 +212,7 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
 
     public String getSelectedReportType() {
         String reportType = getIntent() == null ? null : getIntent().getStringExtra(EXTRA_REPORT_TYPE);
-        return switch (java.util.Objects.requireNonNullElse(reportType, "")) {
+        return switch (reportType != null ? reportType : "") {
             case REPORT_TYPE_NUTRITION, REPORT_TYPE_TB, REPORT_TYPE_COMMUNITY_ALERT -> reportType;
             default -> REPORT_TYPE_MALARIA;
         };
@@ -302,7 +306,7 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
     private String generateFormId(SharedPreferences prefs) {
         String code = prefs.getString("code", "");
         int randomNumber = new Random().nextInt(100000000);
-        if (!java.util.Objects.requireNonNullElse(code, "").trim().isEmpty()) {
+        if (code != null && !code.trim().isEmpty()) {
             return code + "/" + randomNumber;
         }
         return randomNumber + "";
@@ -315,7 +319,7 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
         }
         field.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
         try {
-            field.put(org.smartregister.family.util.JsonFormUtils.VALUE, java.util.Objects.requireNonNullElse(value, ""));
+            field.put(org.smartregister.family.util.JsonFormUtils.VALUE, value != null ? value : "");
         } catch (org.json.JSONException e) {
             timber.log.Timber.e(e);
         }

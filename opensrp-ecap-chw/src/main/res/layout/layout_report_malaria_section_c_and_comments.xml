@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="SECTION C: HOUSEHOLD &amp; COMMODITIES"
+        android:textColor="#D84315"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:cardCornerRadius="8dp">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="0">
+
+            <TableRow android:background="@drawable/bg_table_header" android:paddingVertical="10dp">
+                <TextView android:text="Indicator" android:textStyle="bold" android:paddingStart="12dp"/>
+                <TextView android:text="Value" android:textStyle="bold" android:gravity="center" android:paddingEnd="12dp"/>
+            </TableRow>
+
+            <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                <TextView android:text="HH with members tested" android:paddingStart="12dp" android:paddingEnd="12dp"/>
+                <TextView android:id="@+id/sc_q1" android:gravity="center" android:textStyle="bold" android:text="0"/>
+            </TableRow>
+
+            <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                <TextView android:text="HH with members treated" android:paddingStart="12dp" android:paddingEnd="12dp"/>
+                <TextView android:id="@+id/sc_q2" android:gravity="center" android:textStyle="bold" android:text="0"/>
+            </TableRow>
+
+            <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                <TextView android:text="HH with prophylaxis" android:paddingStart="12dp" android:paddingEnd="12dp"/>
+                <TextView android:id="@+id/sc_q3" android:gravity="center" android:textStyle="bold" android:text="0"/>
+            </TableRow>
+
+            <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                <TextView android:text="People sleeping under net" android:paddingStart="12dp" android:paddingEnd="12dp"/>
+                <TextView android:id="@+id/sc_q4" android:gravity="center" android:textStyle="bold" android:text="0"/>
+            </TableRow>
+
+            <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                <TextView android:text="HH reporting at least 1 ITN" android:paddingStart="12dp" android:paddingEnd="12dp"/>
+                <TextView android:id="@+id/sc_q5" android:gravity="center" android:textStyle="bold" android:text="0"/>
+            </TableRow>
+
+            <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                <TextView android:text="Malaria RDT used" android:paddingStart="12dp" android:paddingEnd="12dp"/>
+                <TextView android:id="@+id/sc_q6" android:gravity="center" android:textStyle="bold" android:text="0"/>
+            </TableRow>
+
+            <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                <TextView android:text="Coartem distributed" android:paddingStart="12dp" android:paddingEnd="12dp"/>
+                <TextView android:id="@+id/sc_q7" android:gravity="center" android:textStyle="bold" android:text="0"/>
+            </TableRow>
+        </TableLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Comments / Remarks"
+                android:textColor="@color/text_black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_comments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No comments"
+                android:textColor="@color/text_black" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

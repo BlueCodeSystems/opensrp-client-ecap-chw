@@ -61,5 +61,11 @@
     <string name="tb_followup_edit_button">Edit follow-up</string>
     <string name="tb_followup_cancel_button">Cancel</string>
 
+    <string name="create_fresh_monthly_submission">Create fresh monthly submission</string>
+    <string name="most_recent_report">Most recent report</string>
+    <string name="edit_report">Edit report</string>
+    <string name="view_report">View report</string>
+    <string name="report_history">Report history</string>
+    <string name="no_previous_reports_found">No previous reports found</string>
 
 </resources>
