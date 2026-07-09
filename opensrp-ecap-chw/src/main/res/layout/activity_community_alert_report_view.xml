@@ -56,7 +56,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#4CAF50"
+                    android:background="#638790"
                     android:gravity="center"
                     android:padding="8dp"
                     android:text="Community-Based Surveillance Suspected Diseases and Public Health Events Monthly Log Sheet"

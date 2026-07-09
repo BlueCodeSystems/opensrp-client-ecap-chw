@@ -15,9 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.model.MonthlyReportModel;
 
-import java.util.List;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class ReportSubmissionAdapter extends RecyclerView.Adapter<ReportSubmissionAdapter.ViewHolder> {
@@ -49,7 +49,7 @@ public class ReportSubmissionAdapter extends RecyclerView.Adapter<ReportSubmissi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         MonthlyReportModel item = items.get(position);
         holder.title.setText(emptyDash(item.getReporting_month()));
-        holder.formId.setText(emptyDash(item.getForm_id()));
+        holder.formId.setText(context.getString(R.string.report_submission_form_id_prefix, emptyDash(item.getForm_id())));
         holder.location.setText(buildLocationText(item));
         holder.lastUpdated.setText(buildLastUpdatedText(item.getLast_interacted_with()));
         holder.itemView.setOnClickListener(v -> listener.onView(item));
@@ -82,7 +82,7 @@ public class ReportSubmissionAdapter extends RecyclerView.Adapter<ReportSubmissi
             return;
         }
         if (builder.length() > 0) {
-            builder.append("  •  ");
+            builder.append(" | ");
         }
         builder.append(part.trim());
     }

@@ -1,12 +1,12 @@
 package com.bluecodeltd.ecap.chw.dao;
 
-import android.database.Cursor;
 import android.content.SharedPreferences;
-
-import com.bluecodeltd.ecap.chw.model.MonthlyReportModel;
-import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import android.database.Cursor;
 
 import androidx.preference.PreferenceManager;
+
+import com.bluecodeltd.ecap.chw.application.ChwApplication;
+import com.bluecodeltd.ecap.chw.model.MonthlyReportModel;
 
 import org.smartregister.dao.AbstractDao;
 
@@ -20,7 +20,11 @@ public class MonthlyReportDao extends AbstractDao {
     private static final String PREF_LAST_USERNAME = "last_logged_in_username";
 
     public static List<MonthlyReportModel> getReports(String tableName) {
-        String sql = "SELECT * FROM " + tableName + buildMonthlyReportWhereClause(tableName) +
+        return getReports(tableName, getCurrentCaseworkerName());
+    }
+
+    public static List<MonthlyReportModel> getReports(String tableName, String caseworkerName) {
+        String sql = "SELECT * FROM " + tableName + buildMonthlyReportWhereClauseForCaseworker(tableName, caseworkerName) +
                 " ORDER BY last_interacted_with DESC, rowid DESC";
         List<MonthlyReportModel> values = AbstractDao.readData(sql, getModelMap());
         if (values == null || values.isEmpty()) {
@@ -30,7 +34,11 @@ public class MonthlyReportDao extends AbstractDao {
     }
 
     public static MonthlyReportModel getLatestReport(String tableName) {
-        String sql = "SELECT * FROM " + tableName + buildMonthlyReportWhereClause(tableName) +
+        return getLatestReport(tableName, getCurrentCaseworkerName());
+    }
+
+    public static MonthlyReportModel getLatestReport(String tableName, String caseworkerName) {
+        String sql = "SELECT * FROM " + tableName + buildMonthlyReportWhereClauseForCaseworker(tableName, caseworkerName) +
                 " ORDER BY last_interacted_with DESC, rowid DESC LIMIT 1";
         List<MonthlyReportModel> values = AbstractDao.readData(sql, getModelMap());
         if (values == null || values.isEmpty()) {
@@ -74,10 +82,13 @@ public class MonthlyReportDao extends AbstractDao {
     }
 
     private static String buildCaseworkerClause(String tableName) {
-        if (!hasColumn(tableName, "caseworker_name") || "ec_community_alert".equalsIgnoreCase(tableName)) {
+        return buildCaseworkerClause(tableName, getCurrentCaseworkerName());
+    }
+
+    private static String buildCaseworkerClause(String tableName, String caseworkerName) {
+        if (!hasColumn(tableName, "caseworker_name")) {
             return "";
         }
-        String caseworkerName = getCurrentCaseworkerName();
         String safeCaseworkerName = sanitize(caseworkerName);
         if (safeCaseworkerName.isEmpty()) {
             return "";
@@ -86,12 +97,16 @@ public class MonthlyReportDao extends AbstractDao {
     }
 
     private static String buildMonthlyReportWhereClause(String tableName, String... extraConditions) {
+        return buildMonthlyReportWhereClauseForCaseworker(tableName, getCurrentCaseworkerName(), extraConditions);
+    }
+
+    private static String buildMonthlyReportWhereClauseForCaseworker(String tableName, String caseworkerName, String... extraConditions) {
         List<String> conditions = new ArrayList<>();
         if (hasColumn(tableName, "delete_status")) {
             conditions.add("(delete_status IS NULL OR delete_status <> '1')");
         }
 
-        String caseworkerClause = buildCaseworkerClause(tableName);
+        String caseworkerClause = buildCaseworkerClause(tableName, caseworkerName);
         if (!caseworkerClause.isEmpty()) {
             conditions.add(caseworkerClause.replaceFirst("^ AND ", ""));
         }

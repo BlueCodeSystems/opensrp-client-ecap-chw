@@ -332,7 +332,7 @@ public class ReportRegisterFragment extends BaseSafeRegisterFragment implements 
     }
 
     private String getLastSubmitted(String tableName, String caseworkerName) {
-        com.bluecodeltd.ecap.chw.model.MonthlyReportModel latest = com.bluecodeltd.ecap.chw.dao.MonthlyReportDao.getLatestReport(tableName);
+        com.bluecodeltd.ecap.chw.model.MonthlyReportModel latest = com.bluecodeltd.ecap.chw.dao.MonthlyReportDao.getLatestReport(tableName, caseworkerName);
         if (latest == null) {
             return "";
         }
@@ -428,6 +428,8 @@ public class ReportRegisterFragment extends BaseSafeRegisterFragment implements 
         }
     }
 }
+
+
 
 
 
