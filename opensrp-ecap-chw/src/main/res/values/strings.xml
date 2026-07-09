@@ -437,6 +437,24 @@
     <string name="nutrition_report_title">Monthly Nutrition Report - %s</string>
     <string name="malaria_report_title">Malaria Monthly Report - %s</string>
     <string name="report_community_alert_title">Community Alert Reporting - %s</string>
+    <string name="community_alert_logsheet_title">Community Alert Reporting Form</string>
+    <string name="community_alert_logsheet_subtitle">Community alert reporting details</string>
+    <string name="logsheet_district_label">District</string>
+    <string name="logsheet_facility_label">Facility</string>
+    <string name="logsheet_community_label">Community</string>
+    <string name="logsheet_month_label">Month</string>
+    <string name="logsheet_year_label">Year</string>
+    <string name="logsheet_entry_title">Monthly Log Entry</string>
+    <string name="logsheet_date_time_header">When did this illness, condition, or event happen?</string>
+    <string name="logsheet_event_date_label">When did this illness, condition, or event happen?</string>
+    <string name="logsheet_community_header">Where did this illness, condition, or event happen? (Include Community, Ward/Zone, and District)</string>
+    <string name="logsheet_event_header">Type of illness, condition, event, or signal</string>
+    <string name="logsheet_action_header">What immediate action has been taken by the CCW or community?</string>
+    <string name="logsheet_remarks_header">Remarks</string>
+    <string name="logsheet_people_affected">How many people have been affected by this alert?</string>
+    <string name="logsheet_deaths">How many people have died?</string>
+    <string name="logsheet_supervisor_review">To be completed by the Super Mentor (Supervisor)</string>
+    <string name="logsheet_comments">Comments</string>
     <string name="report_last_submitted_prefix">Last submitted: %1$s</string>
     <string name="report_last_submitted_not_available">No submissions yet</string>
     <string name="report_status_saved">Saved</string>
@@ -506,3 +524,14 @@
     <string name="logout_text">Logout</string>
 
 </resources>
+
+
+
+
+
+
+
+
+
+
+
