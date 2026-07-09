@@ -303,7 +303,7 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
     }
 
     private String getScreenTitle() {
-        return switch (java.util.Objects.requireNonNullElse(reportType, "")) {
+        return switch (reportType != null ? reportType : "") {
             case ReportRegisterActivity.REPORT_TYPE_NUTRITION -> getString(R.string.report_nutrition);
             case ReportRegisterActivity.REPORT_TYPE_TB -> getString(R.string.report_tb);
             case ReportRegisterActivity.REPORT_TYPE_COMMUNITY_ALERT -> getString(R.string.report_community_alert);
@@ -312,7 +312,7 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
     }
 
     private String getFormName() {
-        return switch (java.util.Objects.requireNonNullElse(reportType, "")) {
+        return switch (reportType != null ? reportType : "") {
             case ReportRegisterActivity.REPORT_TYPE_NUTRITION -> ReportRegisterActivity.REPORT_FORM_NUTRITION;
             case ReportRegisterActivity.REPORT_TYPE_TB -> ReportRegisterActivity.REPORT_FORM_TB;
             case ReportRegisterActivity.REPORT_TYPE_COMMUNITY_ALERT -> ReportRegisterActivity.REPORT_FORM_COMMUNITY_ALERT;
@@ -321,7 +321,7 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
     }
 
     private String getTableName() {
-        return switch (java.util.Objects.requireNonNullElse(reportType, "")) {
+        return switch (reportType != null ? reportType : "") {
             case ReportRegisterActivity.REPORT_TYPE_NUTRITION -> ReportRegisterActivity.REPORT_TABLE_NUTRITION;
             case ReportRegisterActivity.REPORT_TYPE_TB -> ReportRegisterActivity.REPORT_TABLE_TB;
             case ReportRegisterActivity.REPORT_TYPE_COMMUNITY_ALERT -> ReportRegisterActivity.REPORT_TABLE_COMMUNITY_ALERT;
@@ -330,7 +330,7 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
     }
 
     private String getEncounterType() {
-        return switch (java.util.Objects.requireNonNullElse(reportType, "")) {
+        return switch (reportType != null ? reportType : "") {
             case ReportRegisterActivity.REPORT_TYPE_NUTRITION -> ReportRegisterActivity.REPORT_FORM_ENCOUNTER_NUTRITION;
             case ReportRegisterActivity.REPORT_TYPE_TB -> ReportRegisterActivity.REPORT_FORM_ENCOUNTER_TB;
             case ReportRegisterActivity.REPORT_TYPE_COMMUNITY_ALERT -> ReportRegisterActivity.REPORT_FORM_ENCOUNTER_COMMUNITY_ALERT;
@@ -339,7 +339,7 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
     }
 
     private void openViewReport(MonthlyReportModel item) {
-        Intent intent = switch (java.util.Objects.requireNonNullElse(reportType, "")) {
+        Intent intent = switch (reportType != null ? reportType : "") {
             case ReportRegisterActivity.REPORT_TYPE_NUTRITION -> new Intent(this, MonthlyNutritionReportViewActivity.class);
             case ReportRegisterActivity.REPORT_TYPE_TB -> new Intent(this, MonthlyTbReportViewActivity.class);
             case ReportRegisterActivity.REPORT_TYPE_COMMUNITY_ALERT -> new Intent(this, CommunityAlertReportViewActivity.class);

@@ -425,6 +425,9 @@ dependencies {
 
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.14'
 
+    // MaterialEditText fork on Maven Central (BlueCodeSystems)
+    implementation 'io.github.bluecodesystems:MaterialEditTextLibrary:3.1.5'
+
     implementation(project(":opensrp-ecap-chw-core")) {
         transitive = true
         exclude group: 'com.android.support', module: 'appcompat-v7'

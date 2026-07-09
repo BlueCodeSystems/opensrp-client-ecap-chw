@@ -363,4 +363,5 @@
     <string name="tb_report_title">Rapport mensuel sur la tuberculose - %s</string>
     <string name="nutrition_report_title">Rapport nutritionnel mensuel - %s</string>
     <string name="report_summary">Résumé du rapport</string>
+    <string name="report_community_saved">Rapport communautaire enregistré avec succès.</string>
 </resources>

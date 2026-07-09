@@ -417,4 +417,5 @@
     <string name="tb_report_title">Ripoti ya Kifua Kikuu ya Mwezi - %s</string>
     <string name="nutrition_report_title">Ripoti ya Lishe ya Mwezi - %s</string>
     <string name="report_summary">Muhtasari wa Ripoti</string>
+    <string name="report_community_saved">Ripoti ya jamii imehifadhiwa kwa mafanikio.</string>
 </resources>
