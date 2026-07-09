@@ -35,9 +35,11 @@ import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import timber.log.Timber;
@@ -291,28 +293,27 @@ public class CommunityAlertReportViewActivity extends AppCompatActivity {
         TextView title = findViewById(R.id.report_view_title);
         if (title != null) {
             String reportingMonth = java.util.Objects.requireNonNullElse(reportModel.getReporting_month(), "");
-            title.setText(getString(R.string.report_community_alert_title, reportingMonth));
+            title.setText(R.string.community_alert_logsheet_title);
         }
 
-        setText(R.id.txt_reporting_month, reportModel.getReporting_month());
-        setText(R.id.txt_facility_name, reportModel.getFacility());
-
         Map<String, String> data = reportModel.toValueMap();
+        setText(R.id.txt_logsheet_month, getReportingMonthName(reportModel.getReporting_month()));
+        setText(R.id.txt_logsheet_year, getReportingYear(reportModel.getReporting_month()));
+        setText(R.id.txt_facility_name, reportModel.getFacility());
+        setText(R.id.txt_logsheet_district, reportModel.getDistrict());
+        setText(R.id.txt_logsheet_community_header, data.get("community"));
+        setText(R.id.txt_logsheet_remarks, reportModel.getPartner());
+        setText(R.id.txt_caseworker_name_summary, reportModel.getCaseworker_name());
+        setText(R.id.txt_phone_number_summary, data.get("phone_number"));
 
-        setText(R.id.txt_form_id, reportModel.getForm_id());
-        setText(R.id.txt_province, reportModel.getProvince());
-        setText(R.id.txt_district, reportModel.getDistrict());
-        setText(R.id.txt_ward, reportModel.getWard());
-        setText(R.id.txt_caseworker_name, reportModel.getCaseworker_name());
-        setText(R.id.txt_phone_number, data.get("phone_number"));
-        setText(R.id.txt_community, data.get("community"));
-        setText(R.id.txt_date_reporting, data.get("date_reporting"));
+
+        setText(R.id.txt_date_reporting, formatDisplayDate(data.get("date_reporting")));
         setText(R.id.txt_super_mentor_name, data.get("super_mentor_name"));
         setText(R.id.txt_super_mentor_contact, data.get("super_mentor_contact"));
         setText(R.id.txt_illness_type, data.get("illness_type"));
-        setText(R.id.txt_event_date, data.get("event_date"));
+        setText(R.id.txt_event_date, formatDisplayDate(data.get("event_date")));
         setText(R.id.txt_event_time, data.get("event_time"));
-        setText(R.id.txt_detection_date, data.get("detection_date"));
+        setText(R.id.txt_detection_date, formatDisplayDate(data.get("detection_date")));
         setText(R.id.txt_detection_time, data.get("detection_time"));
         setText(R.id.txt_location, data.get("location"));
 
@@ -357,6 +358,66 @@ public class CommunityAlertReportViewActivity extends AppCompatActivity {
         }
     }
 
+    private String getReportingMonthLabel(String reportingMonth) {
+        String month = getReportingMonthName(reportingMonth);
+        String year = getReportingYear(reportingMonth);
+        if (month.isEmpty() && year.isEmpty()) {
+            return reportingMonth == null ? "0" : reportingMonth;
+        }
+        if (year.isEmpty()) {
+            return month;
+        }
+        if (month.isEmpty()) {
+            return year;
+        }
+        return month + " " + year;
+    }
+
+    private String getReportingMonthName(String reportingMonth) {
+        Date parsed = parseReportingDate(reportingMonth);
+        if (parsed == null) {
+            return "";
+        }
+        return new SimpleDateFormat("MMMM", Locale.getDefault()).format(parsed);
+    }
+
+    private String getReportingYear(String reportingMonth) {
+        Date parsed = parseReportingDate(reportingMonth);
+        if (parsed == null) {
+            return "";
+        }
+        return new SimpleDateFormat("yyyy", Locale.getDefault()).format(parsed);
+    }
+
+    private Date parseReportingDate(String reportingMonth) {
+        if (reportingMonth == null || reportingMonth.trim().isEmpty()) {
+            return null;
+        }
+        try {
+            return new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).parse(reportingMonth.trim());
+        } catch (Exception ignored) {
+            return null;
+        }
+    }
+
+    private String formatDisplayDate(String value) {
+        if (value == null || value.trim().isEmpty()) {
+            return "0";
+        }
+        String trimmed = value.trim();
+        String[] patterns = new String[] {"dd-MM-yyyy", "yyyy-MM-dd", "dd/MM/yyyy", "dd/MM/yy"};
+        for (String pattern : patterns) {
+            try {
+                Date parsed = new SimpleDateFormat(pattern, Locale.getDefault()).parse(trimmed);
+                if (parsed != null) {
+                    return new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(parsed);
+                }
+            } catch (Exception ignored) {
+            }
+        }
+        return trimmed;
+    }
+
     private void setText(int viewId, String value) {
         TextView textView = findViewById(viewId);
         if (textView != null) {
@@ -382,3 +443,19 @@ public class CommunityAlertReportViewActivity extends AppCompatActivity {
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
