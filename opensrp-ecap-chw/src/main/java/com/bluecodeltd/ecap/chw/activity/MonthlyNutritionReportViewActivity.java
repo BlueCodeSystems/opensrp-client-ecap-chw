@@ -141,8 +141,8 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
                     }
                     form.put("entity_id", reportModel.getBase_entity_id());
                     org.smartregister.chw.core.utils.CoreJsonFormUtils.populateJsonForm(form, reportModel.toValueMap());
-                    
-                    Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
+
+                    Intent intent = new Intent(this, ReportFormActivity.class);
                     Form wizardForm = new Form();
                     intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, wizardForm);
                     intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, form.toString());
@@ -196,6 +196,16 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
             }
             JSONObject metadata = formJsonObject.getJSONObject(com.bluecodeltd.ecap.chw.util.Constants.METADATA);
             org.json.JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
+
+            for (int i = 0; i < fields.length(); i++) {
+                JSONObject field = fields.getJSONObject(i);
+                String entity = field.optString("openmrs_entity");
+                if (entity.isEmpty() || "person_attribute".equals(entity)) {
+                    field.put("openmrs_entity", "concept");
+                    field.put("openmrs_entity_id", field.optString("key"));
+                }
+            }
+
             FormTag formTag = getFormTag();
             String tableName = getReportTableName(encounterType);
             if (tableName == null) {
@@ -204,6 +214,11 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
             Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId, encounterType, tableName);
             org.smartregister.chw.core.utils.CoreJsonFormUtils.tagSyncMetadata(getAllSharedPreferences(), event);
             Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+            if (client == null) {
+                client = new Client(entityId);
+                client.setFirstName("Monthly Report");
+                client.setLastName(encounterType);
+            }
             return new ReportEventClient(event, client);
         } catch (Exception e) {
             Timber.e(e);

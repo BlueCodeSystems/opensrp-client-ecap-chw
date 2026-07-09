@@ -126,7 +126,10 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(IndexRegisterActivity.this);
         String phone = sp.getString("phone", "anonymous");
 
-        notificationsList.addAll(VcaVisitationDao.getVisitsByCaseWorkerPhone(phone));
+        List<VcaVisitationModel> visits = VcaVisitationDao.getVisitsByCaseWorkerPhone(phone);
+        if (visits != null) {
+            notificationsList.addAll(visits);
+        }
         mCartItemCount = notificationsList.size();
 
     }

@@ -222,7 +222,7 @@ dependencies {
     implementation 'io.realm:realm-android-library:10.19.0'
     implementation 'androidx.multidex:multidex:2.0.1'
     // Evernote Android Job (for BaseJob, Job, JobRequest, etc.)
-    implementation 'com.evernote:android-job:1.4.3'
+    implementation project(':android-job')
     // MapLibre GL (v9 API-compatible)
     implementation 'org.maplibre.gl:android-sdk:9.6.0'
     implementation('com.github.BlueCodeSystems.kujaku:kujaku:v1.0.0') {

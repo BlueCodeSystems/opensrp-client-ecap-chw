@@ -16,7 +16,7 @@ import java.util.List;
 import net.sqlcipher.database.SQLiteDatabase;
 
 public class MonthlyReportDao extends AbstractDao {
-    private static final String PREF_CASEWORKER_NAME = "caseworker_name";
+    public static final String PREF_CASEWORKER_NAME = "caseworker_name";
     private static final String PREF_LAST_USERNAME = "last_logged_in_username";
 
     public static List<MonthlyReportModel> getReports(String tableName) {

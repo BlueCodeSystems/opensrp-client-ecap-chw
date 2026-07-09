@@ -413,6 +413,9 @@
     <string name="family_profile_title_with_firstname">Kaya ya %1$s %2$s</string>
     <string name="created">Imeumbwa: %s</string>
     <string name="malaria_report_title">Ripoti ya Malaria ya Mwezi - %s</string>
+    <string name="submitted_at">Imewasilishwa tarehe %1$s</string>
     <string name="tb_report_title">Ripoti ya Kifua Kikuu ya Mwezi - %s</string>
     <string name="nutrition_report_title">Ripoti ya Lishe ya Mwezi - %s</string>
+    <string name="report_summary">Muhtasari wa Ripoti</string>
+    <string name="report_community_saved">Ripoti ya jamii imehifadhiwa kwa mafanikio.</string>
 </resources>

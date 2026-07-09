@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_base_register" />
+
+    <!-- Static Program Metadata -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_metadata"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:stretchColumns="1">
+
+                <TableRow android:layout_marginBottom="4dp">
+                    <TextView
+                        android:paddingEnd="8dp"
+                        android:text="Province:"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/txt_province"
+                        android:text="--" />
+                </TableRow>
+
+                <TableRow android:layout_marginBottom="4dp">
+                    <TextView
+                        android:paddingEnd="8dp"
+                        android:text="District:"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/txt_district"
+                        android:text="--" />
+                </TableRow>
+
+                <TableRow android:layout_marginBottom="4dp">
+                    <TextView
+                        android:paddingEnd="8dp"
+                        android:text="Ward:"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/txt_ward"
+                        android:text="--" />
+                </TableRow>
+
+                <TableRow android:layout_marginBottom="4dp">
+                    <TextView
+                        android:paddingEnd="8dp"
+                        android:text="Facility Name:"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/txt_facility_name"
+                        android:text="--" />
+                </TableRow>
+
+                <TableRow android:layout_marginBottom="4dp">
+                    <TextView
+                        android:paddingEnd="8dp"
+                        android:text="Implementing Partner:"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/txt_partner"
+                        android:text="--" />
+                </TableRow>
+
+                <TableRow>
+                    <TextView
+                        android:paddingEnd="8dp"
+                        android:text="Reporting Period:"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/txt_reporting_month"
+                        android:text="--" />
+                </TableRow>
+            </TableLayout>
+
+            <ImageButton
+                android:id="@+id/btn_edit_report"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="16dp"
+                android:src="@drawable/edit_icon"
+                tools:ignore="ContentDescription" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/report_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp" />
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

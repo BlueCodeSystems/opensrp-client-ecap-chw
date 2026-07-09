@@ -28,6 +28,7 @@ import androidx.annotation.RestrictTo;
 import com.evernote.android.job.JobConfig;
 import com.evernote.android.job.JobProxy;
 import com.evernote.android.job.JobRequest;
+import com.evernote.android.job.PendingIntentUtil;
 import com.evernote.android.job.util.JobCat;
 import com.evernote.android.job.util.JobUtil;
 
@@ -173,7 +174,7 @@ public class JobProxy14 implements JobProxy {
 
     @Override
     public boolean isPlatformJobScheduled(JobRequest request) {
-        PendingIntent pendingIntent = getPendingIntent(request, PendingIntent.FLAG_NO_CREATE);
+        PendingIntent pendingIntent = getPendingIntent(request, PendingIntent.FLAG_NO_CREATE | PendingIntentUtil.flagImmutable());
         return pendingIntent != null;
     }
 
@@ -182,6 +183,7 @@ public class JobProxy14 implements JobProxy {
         if (!repeating) {
             flags |= PendingIntent.FLAG_ONE_SHOT;
         }
+        flags |= PendingIntentUtil.flagImmutable();
         return flags;
     }
 

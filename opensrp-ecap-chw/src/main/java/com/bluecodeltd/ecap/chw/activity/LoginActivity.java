@@ -288,8 +288,10 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
             pinLogger.resetPinLogin();
 
         if (pinLogger.isFirstAuthentication()) {
-            EditText passwordEditText = findViewById(org.smartregister.R.id.login_password_edit_text);
-            pinLogger.savePassword(passwordEditText.getText().toString());
+            EditText passwordEditText = findViewById(R.id.login_password_edit_text);
+            if (passwordEditText != null && passwordEditText.getText() != null) {
+                pinLogger.savePassword(passwordEditText.getText().toString());
+            }
         }
 
         if (pinLogger.isFirstAuthentication()) {
