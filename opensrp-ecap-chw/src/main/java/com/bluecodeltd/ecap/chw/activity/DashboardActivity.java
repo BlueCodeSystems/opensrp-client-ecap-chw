@@ -173,8 +173,8 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
                 startActivity(new Intent(DashboardActivity.this, PMTCTRegisterActivity.class)));
         }
         Bundle extras = getIntent().getExtras();
-        String username = extras.getString("username");
-        String password = extras.getString("password");
+        String username = extras != null ? extras.getString("username") : null;
+        String password = extras != null ? extras.getString("password") : null;
         // Last updated format: 01 Jan 2025, 10:30
         dtf = DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm");
         colors = new ArrayList<Integer>();

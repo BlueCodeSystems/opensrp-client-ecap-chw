@@ -136,6 +136,7 @@
     <string name="report_register_title">Service report</string>
     <string name="report_register_household_title">Household service report</string>
     <string name="report_register_caregiver_title">Caregiver service report</string>
+    <string name="report_community_title">Community report</string>
     <string name="report_household_prefix">Household ID: %1$s</string>
     <string name="report_date_prefix">Date: %1$s</string>
     <string name="report_summary_empty">No service summary recorded</string>
@@ -433,6 +434,9 @@
     <string name="report_nutrition_saved">Nutrition report saved successfully.</string>
     <string name="report_tb_saved">TB report saved successfully.</string>
     <string name="report_community_alert_saved">Community alert report saved successfully.</string>
+    <string name="report_community_saved">Community report saved successfully.</string>
+    <string name="report_summary">Report Summary</string>
+    <string name="submitted_at">Submitted at %1$s</string>
     <string name="tb_report_title">Monthly TB Report - %s</string>
     <string name="nutrition_report_title">Monthly Nutrition Report - %s</string>
     <string name="malaria_report_title">Malaria Monthly Report - %s</string>
