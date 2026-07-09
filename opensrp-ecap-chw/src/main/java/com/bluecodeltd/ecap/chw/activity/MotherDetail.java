@@ -353,6 +353,7 @@ public class MotherDetail extends AppCompatActivity {
             if (pmtctBtn != null) {
                 pmtctBtn.setVisibility(caregiverHivPositive ? View.VISIBLE : View.GONE);
             }
+
         } catch (Exception ignored) {
             caregiverHivPositive = false;
         }
@@ -1196,7 +1197,7 @@ public class MotherDetail extends AppCompatActivity {
             isFabOpen = true;
             fab.startAnimation(rotate_forward);
             mLayout.setVisibility(View.VISIBLE);
-            cLayout.setVisibility(View.VISIBLE);
+            cLayout.setVisibility(caregiverHivPositive ? View.GONE : View.VISIBLE);
 
             if (!caregiverHivPositive) {
                 if (motherAncLayout != null) motherAncLayout.setVisibility(View.VISIBLE);

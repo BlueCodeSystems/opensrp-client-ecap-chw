@@ -8,72 +8,56 @@ import java.util.List;
 
 public class GradDao extends AbstractDao {
 
-    public static GradModel getGrad(String vcaID) {
+    public static GradModel getGrad (String vcaID) {
 
         String sql = "SELECT ec_grad.*, ec_client_index.adolescent_birthdate, ec_client_index.is_hiv_positive, ec_client_index.art_number, ec_client_index.facility, ec_client_index.date_last_vl, ec_client_index.vl_last_result FROM ec_grad JOIN ec_client_index ON ec_grad.unique_id = ec_client_index.unique_id WHERE ec_grad.unique_id = '" + vcaID + "'";
 
         List<GradModel> values = AbstractDao.readData(sql, getGradModelMap());
 
-        if (values == null || values.isEmpty()) {
+        if (values.size() == 0) {
             return null;
         }
 
         return values.get(0);
     }
-
     public static boolean returnTrueForBenchmark4(String householdID) {
         String sql = "SELECT infection_correct, protect_correct, prevention_correct FROM ec_grad WHERE household_id = '" + householdID + "'";
         List<GradModel> values = AbstractDao.readData(sql, getGradModelMap());
 
-        if (values == null || values.isEmpty()) {
+        if (values.size() == 0) {
             return false;
         }
 
         for (GradModel model : values) {
-            try {
-                int infection = model.getInfection_correct() != null ? Integer.parseInt(model.getInfection_correct()) : 0;
-                int protect = model.getProtect_correct() != null ? Integer.parseInt(model.getProtect_correct()) : 0;
-                int prevention = model.getPrevention_correct() != null ? Integer.parseInt(model.getPrevention_correct()) : 0;
-
-                if (infection >= 2 && protect >= 1 && prevention >= 1) {
-                    return true;
-                }
-            } catch (NumberFormatException e) {
-                // Skip if not a number
+            if (Integer.parseInt(model.getInfection_correct()) >= 2 && Integer.parseInt(model.getProtect_correct()) >= 1 && Integer.parseInt(model.getPrevention_correct()) >= 1) {
+                return true;
             }
         }
 
         return false;
     }
-
     public static boolean areAllPositiveSuppressedChildren(String householdID) {
-        // Correct date comparison logic for dd-mm-yyyy format
-        String dateConv = "substr(visit_date,7,4)||'-'||substr(visit_date,4,2)||'-'||substr(visit_date,1,2)";
-        
-        String sql = "SELECT ec_visit.unique_id, ec_visit.indicate_vl_result, ec_visit.is_hiv_positive, ec_visit.visit_date, ec_client_index.household_id\n" +
+        String sql = "SELECT DISTINCT ec_visit.unique_id, ec_visit.indicate_vl_result, ec_visit.is_hiv_positive, ec_visit.visit_date, ec_client_index.household_id\n" +
                 "FROM ec_household_visitation_for_vca_0_20_years ec_visit\n" +
-                "JOIN (SELECT unique_id, household_id, deleted FROM ec_client_index) ec_client_index ON ec_visit.unique_id = ec_client_index.unique_id\n" +
+                "JOIN (SELECT unique_id, household_id,deleted FROM ec_client_index) ec_client_index ON ec_visit.unique_id = ec_client_index.unique_id\n" +
                 "WHERE ec_client_index.household_id = '" + householdID + "' AND ec_visit.is_hiv_positive = 'yes' AND (ec_client_index.deleted IS NULL OR ec_client_index.deleted <> 1) \n" +
-                "AND " + dateConv + " = (SELECT MAX(substr(v2.visit_date,7,4)||'-'||substr(v2.visit_date,4,2)||'-'||substr(v2.visit_date,1,2)) FROM ec_household_visitation_for_vca_0_20_years v2 WHERE v2.unique_id = ec_visit.unique_id)";
-
+                "GROUP BY ec_visit.unique_id\n" +
+                "ORDER BY ec_visit.visit_date DESC";
         AbstractDao.DataMap<Boolean> dataMap = c -> {
             String indicateVlResult = getCursorValue(c, "indicate_vl_result");
-            try {
-                if (indicateVlResult != null) {
-                    return Integer.parseInt(indicateVlResult) <= 1000;
-                }
-            } catch (NumberFormatException e) {
-                if ("LDL".equalsIgnoreCase(indicateVlResult) || "Target Not Detected".equalsIgnoreCase(indicateVlResult)) {
-                    return true;
-                }
+            String isHivPositive = getCursorValue(c, "is_hiv_positive");
+            if (indicateVlResult != null && isHivPositive != null &&
+                    Integer.parseInt(indicateVlResult) <= 1000 && "yes".equalsIgnoreCase(isHivPositive)) {
+                return true;
+            } else {
+                return false;
             }
-            return false;
         };
 
         List<Boolean> values = AbstractDao.readData(sql, dataMap);
 
         if (values == null || values.isEmpty()) {
-            return true; 
+            return false;
         }
 
         for (Boolean value : values) {
@@ -84,16 +68,21 @@ public class GradDao extends AbstractDao {
 
         return true;
     }
-
     public static boolean doTheVCAsMeetBenchMarkThree(String householdID) {
         if (householdID == null || householdID.trim().isEmpty()) {
             return false;
         }
 
+        if (householdID.contains("'") || householdID.contains(";") || householdID.contains("--")) {
+            return false;
+        }
+
         String ageFilter =
                 "date(substr(adolescent_birthdate,7,4)||'-'||substr(adolescent_birthdate,4,2)||'-'||substr(adolescent_birthdate,1,2)) <= date('now','-10 years') " +
-                        "AND date(substr(adolescent_birthdate,7,4)||'-'||substr(adolescent_birthdate,4,2)||'-'||substr(adolescent_birthdate,1,2)) > date('now','-18 years')";
+                "AND date(substr(adolescent_birthdate,7,4)||'-'||substr(adolescent_birthdate,4,2)||'-'||substr(adolescent_birthdate,1,2)) > date('now','-18 years')";
 
+        // eligible_count: non-deleted children aged 10-17 in this household
+        // qualified_count: those children whose LATEST visit (by date) has all 3 fields = yes
         String sql = "SELECT " +
                 "(SELECT COUNT(*) FROM ec_client_index " +
                 " WHERE household_id = '" + householdID + "' " +
@@ -105,6 +94,7 @@ public class GradDao extends AbstractDao {
                 " JOIN ec_client_index idx ON idx.unique_id = v.unique_id " +
                 " WHERE idx.household_id = '" + householdID + "' " +
                 " AND (idx.deleted IS NULL OR idx.deleted <> '1') " +
+                " AND (v.delete_status IS NULL OR v.delete_status <> '1') " +
                 " AND date(substr(idx.adolescent_birthdate,7,4)||'-'||substr(idx.adolescent_birthdate,4,2)||'-'||substr(idx.adolescent_birthdate,1,2)) <= date('now','-10 years') " +
                 " AND date(substr(idx.adolescent_birthdate,7,4)||'-'||substr(idx.adolescent_birthdate,4,2)||'-'||substr(idx.adolescent_birthdate,1,2)) > date('now','-18 years') " +
                 " AND LOWER(TRIM(COALESCE(v.hiv_infection,''))) = 'yes' " +
@@ -113,12 +103,13 @@ public class GradDao extends AbstractDao {
                 " AND strftime('%Y-%m-%d',substr(v.visit_date,7,4)||'-'||substr(v.visit_date,4,2)||'-'||substr(v.visit_date,1,2)) = (" +
                 "   SELECT MAX(strftime('%Y-%m-%d',substr(v2.visit_date,7,4)||'-'||substr(v2.visit_date,4,2)||'-'||substr(v2.visit_date,1,2))) " +
                 "   FROM ec_household_visitation_for_vca_0_20_years v2 " +
-                "   WHERE v2.unique_id = idx.unique_id)" +
+                "   WHERE v2.unique_id = idx.unique_id " +
+                "   AND (v2.delete_status IS NULL OR v2.delete_status <> '1'))" +
                 ") AS qualified_count";
 
         AbstractDao.DataMap<Boolean> dataMap = c1 -> {
-            int eligibleCount = getCursorIntValue(c1, "eligible_count", 0);
-            int qualifiedCount = getCursorIntValue(c1, "qualified_count", 0);
+            int eligibleCount = getCursorIntValue(c1, "eligible_count");
+            int qualifiedCount = getCursorIntValue(c1, "qualified_count");
             return eligibleCount > 0 && eligibleCount == qualifiedCount;
         };
 
@@ -126,36 +117,36 @@ public class GradDao extends AbstractDao {
 
         return values != null && !values.isEmpty() && Boolean.TRUE.equals(values.get(0));
     }
-
-
     public static boolean hasVCAInAgeRange(String householdID) {
         String sql = "SELECT COUNT(*) AS in_range_count " +
                 "FROM ec_client_index " +
                 "WHERE (strftime('%Y', 'now') - substr(adolescent_birthdate, 7, 4)) >= 10 " +
                 "AND (strftime('%Y', 'now') - substr(adolescent_birthdate, 7, 4)) <= 17 " +
-                "AND household_id = '" + householdID + "'";
-        DataMap<Integer> dataMap = c -> getCursorIntValue(c, "in_range_count", 0);
+                "AND household_id = '" + householdID + "' " +
+                "AND (deleted IS NULL OR deleted <> '1')";
+        DataMap<Integer> dataMap = c -> getCursorIntValue(c, "in_range_count");
         List<Integer> values = AbstractDao.readData(sql, dataMap);
         return values != null && !values.isEmpty() && values.get(0) != null && values.get(0) > 0;
     }
 
+    public static String bench3Answers(String householdID){
 
-    public static String bench3Answers(String householdID) {
-
-        String sql = "SELECT COUNT(*) AS childrenCount FROM ec_grad WHERE household_id = '" + householdID + "' AND CAST(correct as integer) = 1";
+        String sql = "SELECT COUNT(*) AS childrenCount FROM ec_grad g " +
+                "JOIN ec_client_index idx ON idx.unique_id = g.unique_id " +
+                "WHERE g.household_id = '" + householdID + "' " +
+                "AND CAST(g.correct as integer) = 1 " +
+                "AND (idx.deleted IS NULL OR idx.deleted <> '1')";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "childrenCount");
 
         List<String> values = AbstractDao.readData(sql, dataMap);
 
-        if (values == null || values.isEmpty())
+        if (values == null)
             return null;
 
         return values.get(0);
 
     }
-
-
     public static DataMap<GradModel> getGradModelMap() {
         return c -> {
 
@@ -183,3 +174,5 @@ public class GradDao extends AbstractDao {
     }
 
 }
+
+

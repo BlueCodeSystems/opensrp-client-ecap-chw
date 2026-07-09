@@ -59,8 +59,14 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
         CommonPersonObjectClient personObjectClient = (CommonPersonObjectClient) smartRegisterClient;
 
         String BaseEntityId = Utils.getValue(personObjectClient.getColumnmaps(), "base_entity_id", false);
-        String firstName = Utils.getValue(personObjectClient.getColumnmaps(), "first_name", true);
-        String lastName = Utils.getValue(personObjectClient.getColumnmaps(), "last_name", true);
+        String firstName = firstNonBlank(
+                Utils.getValue(personObjectClient.getColumnmaps(), "first_name", true),
+                Utils.getValue(personObjectClient.getColumnmaps(), "adolescent_first_name", true)
+        );
+        String lastName = firstNonBlank(
+                Utils.getValue(personObjectClient.getColumnmaps(), "last_name", true),
+                Utils.getValue(personObjectClient.getColumnmaps(), "adolescent_last_name", true)
+        );
         String childId = Utils.getValue(personObjectClient.getColumnmaps(), "unique_id", false);
         String gender = Utils.getValue(personObjectClient.getColumnmaps(), "gender", true);
         String household_id = Utils.getValue(personObjectClient.getColumnmaps(), "household_id", true);
