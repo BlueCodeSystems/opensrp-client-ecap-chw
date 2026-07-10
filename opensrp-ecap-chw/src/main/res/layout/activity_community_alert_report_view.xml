@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/chw_primary"
+    android:fitsSystemWindows="true">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/report_view_toolbar"
@@ -38,6 +39,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:padding="8dp">
 
         <HorizontalScrollView
@@ -56,7 +58,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#4CAF50"
+                    android:background="#97BEE6"
                     android:gravity="center"
                     android:padding="8dp"
                     android:text="Community-Based Surveillance Suspected Diseases and Public Health Events Monthly Log Sheet"

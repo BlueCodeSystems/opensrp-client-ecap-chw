@@ -339,14 +339,30 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
     }
 
     private void openViewReport(MonthlyReportModel item) {
-        Intent intent = switch (reportType != null ? reportType : "") {
-            case ReportRegisterActivity.REPORT_TYPE_NUTRITION -> new Intent(this, MonthlyNutritionReportViewActivity.class);
-            case ReportRegisterActivity.REPORT_TYPE_TB -> new Intent(this, MonthlyTbReportViewActivity.class);
-            case ReportRegisterActivity.REPORT_TYPE_COMMUNITY_ALERT -> new Intent(this, CommunityAlertReportViewActivity.class);
-            default -> new Intent(this, MalariaReportViewActivity.class);
-        };
-        intent.putExtra(MalariaReportViewActivity.EXTRA_BASE_ENTITY_ID, item.getBase_entity_id());
-        startActivity(intent);
+        if (ReportRegisterActivity.REPORT_TYPE_COMMUNITY_ALERT.equals(reportType)) {
+            androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
+            builder.setTitle("Select Orientation");
+            String[] options = {"Portrait", "Landscape"};
+            builder.setItems(options, (dialog, which) -> {
+                Intent intent = new Intent(this, CommunityAlertReportViewActivity.class);
+                intent.putExtra(CommunityAlertReportViewActivity.EXTRA_BASE_ENTITY_ID, item.getBase_entity_id());
+                if (which == 1) { // Landscape
+                    intent.putExtra("orientation", android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                } else { // Portrait
+                    intent.putExtra("orientation", android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                }
+                startActivity(intent);
+            });
+            builder.show();
+        } else {
+            Intent intent = switch (reportType != null ? reportType : "") {
+                case ReportRegisterActivity.REPORT_TYPE_NUTRITION -> new Intent(this, MonthlyNutritionReportViewActivity.class);
+                case ReportRegisterActivity.REPORT_TYPE_TB -> new Intent(this, MonthlyTbReportViewActivity.class);
+                default -> new Intent(this, MalariaReportViewActivity.class);
+            };
+            intent.putExtra(MalariaReportViewActivity.EXTRA_BASE_ENTITY_ID, item.getBase_entity_id());
+            startActivity(intent);
+        }
     }
 
     private void openEditForm(MonthlyReportModel item) {

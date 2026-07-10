@@ -315,7 +315,8 @@ public class NavigationInteractor implements NavigationContract.Interactor {
                 "SELECT (" +
                         "(SELECT COUNT(*) FROM ec_monthly_malaria WHERE (delete_status IS NULL OR delete_status <> '1')" + filter + ") + " +
                         "(SELECT COUNT(*) FROM ec_monthly_nutrition WHERE (delete_status IS NULL OR delete_status <> '1')" + filter + ") + " +
-                        "(SELECT COUNT(*) FROM ec_monthly_tb WHERE (delete_status IS NULL OR delete_status <> '1')" + filter + ")" +
+                        "(SELECT COUNT(*) FROM ec_monthly_tb WHERE (delete_status IS NULL OR delete_status <> '1')" + filter + ") + " +
+                        "(SELECT COUNT(*) FROM ec_community_alert WHERE (delete_status IS NULL OR delete_status <> '1')" + filter + ")" +
                         ") AS c";
         return NavigationDao.getQueryCount(sql);
     }
