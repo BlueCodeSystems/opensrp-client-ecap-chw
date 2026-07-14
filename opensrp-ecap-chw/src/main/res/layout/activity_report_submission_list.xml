@@ -27,7 +27,7 @@
                 android:id="@+id/report_submission_back_button"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
+                android:background="@android:color/transparent"
                 android:contentDescription="@string/back"
                 android:padding="8dp"
                 android:src="@drawable/ic_arrow_back_white_24dp"
@@ -184,5 +184,3 @@
     </FrameLayout>
 
 </LinearLayout>
-
-

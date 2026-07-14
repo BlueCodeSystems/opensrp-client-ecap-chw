@@ -64,6 +64,9 @@ public class CoreChwRepository extends Repository {
         LocationRepository.createTable(database);
 
         UniqueIdRepository.createTable(database);
+        // SettingsRepository.onUpgrade() assumes the base settings table already exists.
+        // Create it first so a fresh database can be migrated safely.
+        database.execSQL("CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT)");
         SettingsRepository.onUpgrade(database);
 
         RecurringServiceTypeRepository.createTable(database);
@@ -85,8 +88,7 @@ public class CoreChwRepository extends Repository {
         LocationTagRepository.createTable(database);
 
         ScheduleRepository.createTable(database);
-        RecurringServiceTypeRepository recurringServiceTypeRepository = ImmunizationLibrary.getInstance().recurringServiceTypeRepository();
-        IMDatabaseUtils.populateRecurringServices(context, database, recurringServiceTypeRepository);
+        initializeRecurringServices(database);
 
         WeightForHeightRepository.createTable(database);
 
@@ -105,11 +107,19 @@ public class CoreChwRepository extends Repository {
 
     }
 
+    public void initializeRecurringServices(SQLiteDatabase database) {
+        try {
+            RecurringServiceTypeRepository recurringServiceTypeRepository = ImmunizationLibrary.getInstance().recurringServiceTypeRepository();
+            IMDatabaseUtils.populateRecurringServices(context, database, recurringServiceTypeRepository);
+        } catch (IllegalStateException e) {
+            Timber.w(e, "Skipping immunization recurring service initialization because ImmunizationLibrary is not ready");
+        }
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         super.onUpgrade(db, oldVersion, newVersion);
     }
-
     @Override
     public synchronized SQLiteDatabase getWritableDatabase(String password) {
         if (writableDatabase == null || !writableDatabase.isOpen()) {
@@ -150,3 +160,4 @@ public class CoreChwRepository extends Repository {
         super.close();
     }
 }
+

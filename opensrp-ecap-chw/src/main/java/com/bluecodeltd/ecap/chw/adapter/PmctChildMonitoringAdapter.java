@@ -328,7 +328,7 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView tvVisit, tvVisitTypeHeader, tvDate, tvVisitType, tvHivTest, tvNvp, tvCtx, tvDateTested,
+        TextView tvVisit, tvVisitTypeHeader, tvDate, tvVisitType, tvDbsDueDate, tvDbsActualDate, tvDbsResult, tvHivTest, tvNvp, tvCtx, tvDateTested,
                 tvIycfCounselling, tvFeedingOption, tvHighRiskHei, tvNutritionStatus, tvMedicalComplications,
                 tvChildOedema, tvOedemaStage, tvTbSymptoms, tvTbOther, tvTbReferral, tvTbComments;
         LinearLayout headerLayout, detailsContainer;
@@ -345,6 +345,9 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
             tvVisitTypeHeader = itemView.findViewById(R.id.tv_visit_type_header);
             tvDate  = itemView.findViewById(R.id.tv_date);
             tvVisitType = itemView.findViewById(R.id.tv_visit_type);
+            tvDbsDueDate = itemView.findViewById(R.id.tv_dbs_due_date);
+            tvDbsActualDate = itemView.findViewById(R.id.tv_dbs_actual_date);
+            tvDbsResult = itemView.findViewById(R.id.tv_dbs_result);
             tvHivTest = itemView.findViewById(R.id.tv_hiv_test);
             tvNvp = itemView.findViewById(R.id.tv_nvp);
             tvCtx = itemView.findViewById(R.id.tv_ctx);
@@ -410,6 +413,9 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
 
     private void setMonitoringFields(ViewHolder holder, ChildMonitoringModel visit) {
         TextView[] views = new TextView[]{
+                holder.tvDbsDueDate,
+                holder.tvDbsActualDate,
+                holder.tvDbsResult,
                 holder.tvHivTest,
                 holder.tvNvp,
                 holder.tvCtx,
@@ -428,6 +434,9 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
         };
 
         String[] values = new String[]{
+                visit.getDbs_at_birth_due_date(),
+                visit.getDbs_at_birth_actual_date(),
+                visit.getTest_result_at_birth(),
                 visit.getHiv_test(),
                 visit.getAzt_3tc_npv(),
                 visit.getCtx(),
@@ -451,3 +460,4 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
     }
 
 }
+

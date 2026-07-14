@@ -2,6 +2,10 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Build;
+import android.view.Window;
+import android.view.WindowInsetsController;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -59,7 +63,12 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
-        toolbar.setNavigationOnClickListener(v -> finish());
+        applyLightStatusBar();
+        TextView toolbarTitle = findViewById(R.id.report_view_title);
+        if (toolbarTitle != null) {
+            toolbarTitle.setText("Monthly TB Report");
+        }
+        findViewById(R.id.report_view_back_button).setOnClickListener(v -> finish());
 
         baseEntityId = getIntent().getStringExtra(EXTRA_BASE_ENTITY_ID);
         loadReport();
@@ -68,6 +77,23 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
         setupEditButton();
     }
 
+    private void applyLightStatusBar() {
+        Window window = getWindow();
+        window.setStatusBarColor(Color.WHITE);
+        View decorView = window.getDecorView();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            WindowInsetsController controller = decorView.getWindowInsetsController();
+            if (controller != null) {
+                controller.setSystemBarsAppearance(
+                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS);
+            }
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int flags = decorView.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            decorView.setSystemUiVisibility(flags);
+        }
+    }
     private void loadReport() {
         if (baseEntityId != null) {
             reportModel = MonthlyReportDao.getReport(ReportRegisterActivity.REPORT_TABLE_TB, baseEntityId);

@@ -107,7 +107,7 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
     ProgressBar loadingDataProgressBar;
     Switch  facilityInformationSwitch;
     String phone = "";
-    private final int FORTY_FIVE_MINUTES = 3000;
+    private static final long FORTY_FIVE_MINUTES = 45L * 60L * 1000L;
     Runnable runnable;
     ArrayList<Integer> colors;
     AppUpdater appUpdater;
@@ -599,16 +599,17 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
     @Override
     protected void onResume() {
         super.onResume();
-        refreshData();
     }
 
     public void refreshData() {
-        handler.postDelayed(runnable = new Runnable() {
+        handler.removeCallbacks(runnable);
+        runnable = new Runnable() {
             public void run() {
-                handler.postDelayed(runnable, FORTY_FIVE_MINUTES);
                 loadData();
+                handler.postDelayed(runnable, FORTY_FIVE_MINUTES);
             }
-        }, FORTY_FIVE_MINUTES);
+        };
+        handler.postDelayed(runnable, FORTY_FIVE_MINUTES);
     }
     @Override
     protected void onPause() {
@@ -710,7 +711,7 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
     private void downloadEcapSops() {
         ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Downloading SOPs");
-        progressDialog.setMessage("Preparing…");
+        progressDialog.setMessage("PreparingÃ¢â‚¬Â¦");
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
         try {
