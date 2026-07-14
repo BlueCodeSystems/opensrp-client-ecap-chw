@@ -7,6 +7,9 @@ public class ChildMonitoringModel {
     private String unique_id;
     private String pediatic_care_follow_up;
     private String date;
+    private String dbs_at_birth_due_date;
+    private String dbs_at_birth_actual_date;
+    private String test_result_at_birth;
     private String hiv_test;
     private String azt_3tc_npv;
     private String ctx;
@@ -71,6 +74,30 @@ public class ChildMonitoringModel {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getDbs_at_birth_due_date() {
+        return dbs_at_birth_due_date;
+    }
+
+    public void setDbs_at_birth_due_date(String dbs_at_birth_due_date) {
+        this.dbs_at_birth_due_date = dbs_at_birth_due_date;
+    }
+
+    public String getDbs_at_birth_actual_date() {
+        return dbs_at_birth_actual_date;
+    }
+
+    public void setDbs_at_birth_actual_date(String dbs_at_birth_actual_date) {
+        this.dbs_at_birth_actual_date = dbs_at_birth_actual_date;
+    }
+
+    public String getTest_result_at_birth() {
+        return test_result_at_birth;
+    }
+
+    public void setTest_result_at_birth(String test_result_at_birth) {
+        this.test_result_at_birth = test_result_at_birth;
     }
 
     public String getHiv_test() {
@@ -273,4 +300,3 @@ public class ChildMonitoringModel {
         additionalFields.put(key, value);
     }
 }
-

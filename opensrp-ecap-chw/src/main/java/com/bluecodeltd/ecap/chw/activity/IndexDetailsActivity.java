@@ -757,7 +757,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
 
         TextView countView = visitTabCount;
-        countView.setText("…");
+        countView.setText("ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¦");
         visitTabCount.setVisibility(View.VISIBLE);
 
         final String uid = uniqueId;
@@ -786,7 +786,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
 
         TextView countView = visitTabCount;
-        countView.setText("…");
+        countView.setText("ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¦");
         visitTabCount.setVisibility(View.VISIBLE);
 
         final String uid = uniqueId;
@@ -815,7 +815,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
 
         TextView countView = visitTabCount;
-        countView.setText("…");
+        countView.setText("ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¦");
 
         final String uid = uniqueId;
         Threading.ioBestEffort(() -> {
@@ -838,7 +838,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         plansTabCount = plansTabTitleLayout.findViewById(R.id.plans_count);
 
         TextView countView = plansTabCount;
-        countView.setText("…");
+        countView.setText("ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¦");
 
         final String uid = uniqueId;
         Threading.ioBestEffort(() -> {
@@ -862,7 +862,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
 
         TextView countView = visitTabCount;
-        countView.setText("…");
+        countView.setText("ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¦");
         visitTabCount.setVisibility(View.VISIBLE);
 
         final String uid = uniqueId;
@@ -1697,35 +1697,29 @@ public class IndexDetailsActivity extends AppCompatActivity {
                             allowNonScreeningFabActionsWhenSourceIsVcaScreening;
 
             if (allowNonScreeningActions){
+                int vcaAgeYears = parseVcaAgeYears(vcaAge);
 
                 rcase_plan.setVisibility(View.VISIBLE);
                 referral.setVisibility(View.VISIBLE);
                 household_visitation_for_vca.setVisibility(View.VISIBLE);
                 childPlan.setVisibility(View.VISIBLE);
 
-
-
                 if(indexVCA.getIs_hiv_positive() != null){
                     rassessment.setVisibility(View.VISIBLE);
                 }
                 if(indexVCA.getIs_hiv_positive() != null && indexVCA.getIs_hiv_positive().equals("yes")){
                     hiv_assessment.setVisibility(View.GONE);
-                } else {
-                    if(Integer.parseInt(vcaAge) > 1){
-                        if(Integer.parseInt(vcaAge) < 15){
-                            hiv_assessment.setVisibility(View.VISIBLE);
-                        }
+                } else if (vcaAgeYears > 1) {
+                    if (vcaAgeYears < 15) {
+                        hiv_assessment.setVisibility(View.VISIBLE);
+                    }
 
-                        if(Integer.parseInt(vcaAge) >= 15){
-                            hiv_assessment2.setVisibility(View.VISIBLE);
-                        }
-
-
+                    if (vcaAgeYears >= 15) {
+                        hiv_assessment2.setVisibility(View.VISIBLE);
                     }
                 }
 
-
-                if(Integer.parseInt(vcaAge) > 18){
+                if (vcaAgeYears > 18){
                     weServicesVca.setVisibility(View.VISIBLE);
                 }
                 // Show Nutrition Assessment & Intervention only for VCA aged 5 years and below
@@ -1865,6 +1859,18 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 "service_report_vca".equalsIgnoreCase(v);
     }
 
+    private int parseVcaAgeYears(String ageValue) {
+        if (TextUtils.isEmpty(ageValue)) {
+            return -1;
+        }
+        try {
+            return Integer.parseInt(ageValue);
+        } catch (NumberFormatException e) {
+            Timber.w(e, "Unable to parse VCA age: %s", ageValue);
+            return -1;
+        }
+    }
+
     public void closeFab(){
         fab.startAnimation(rotate_backward);
         isFabOpen = false;
@@ -1896,6 +1902,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
         JSONObject formToBeOpened;
 
         formToBeOpened = formUtils.getFormJson(formName);
+
+        String householdIdForForm = resolveHouseholdIdForSourceChecks();
+
+        String uniqueIdForForm = resolveUniqueIdForSourceChecks();
         formToBeOpened.getJSONObject("step1").put("title", this.indexVCA.getFirst_name() + " " + this.indexVCA.getLast_name() + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
         formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", indexVCA.getUnique_id());
 
@@ -1917,7 +1927,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     formToBeOpened.remove(JsonFormUtils.ENCOUNTER_TYPE);
                     formToBeOpened.put(JsonFormUtils.ENCOUNTER_TYPE, "Member Sub Population");
                 }
-                GraduationModel graduationModel = GraduationDao.getGraduationStatus(child.getHousehold_id());
+                GraduationModel graduationModel = TextUtils.isEmpty(householdIdForForm) ? null : GraduationDao.getGraduationStatus(householdIdForForm);
                 if (graduationModel == null || "0".equals(graduationModel.getGraduation_status()) || graduationModel.getGraduation_status() == null) {
 
                 JSONObject graduationStatus = getFieldJSONObject(fields(formToBeOpened, "step1"), "graduation_benchmark");
@@ -2208,8 +2218,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                 case R.id.call:
                     try {
-                        String caregiverPhoneNumber = child.getCaregiver_phone();
-                        if (caregiverPhoneNumber != null && !caregiverPhoneNumber.equals("")) {
+                        String caregiverPhoneNumber = indexVCA != null ? indexVCA.getCaregiver_phone() : null;
+                        if (TextUtils.isEmpty(caregiverPhoneNumber) && child != null) {
+                            caregiverPhoneNumber = child.getCaregiver_phone();
+                        }
+                        if (!TextUtils.isEmpty(caregiverPhoneNumber)) {
                             Intent callIntent = new Intent(Intent.ACTION_DIAL);
                             callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
                             startActivity(callIntent);
@@ -2220,7 +2233,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                         Log.e("Phone Number Error", "Exception", e);
                     }
 
-                return true;
+                    return true;
             case R.id.case_status:
 
                 try {
@@ -2486,8 +2499,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     getIntent().removeExtra("fromIndex");
                     try {
                         Intent intent = new Intent(this, HouseholdDetails.class);
-                        intent.putExtra("childId", child.getUnique_id());
-                        intent.putExtra("householdId", child.getHousehold_id());
+                        intent.putExtra("childId", resolveUniqueIdForSourceChecks());
+                        intent.putExtra("householdId", resolveHouseholdIdForSourceChecks());
                         startActivity(intent);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -2911,10 +2924,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
         int months = periodBetweenDateOfBirthAndNow.getMonths();
 
         if (years == 0) {
-            if (months >= 10) return 0.5; // 10–11 months
-            else if (months >= 7) return 0.4; // 7–9 months
-            else if (months >= 4) return 0.3; // 4–6 months
-            else if (months >= 1) return 0.1; // 1–3 months
+            if (months >= 10) return 0.5; // 10ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“11 months
+            else if (months >= 7) return 0.4; // 7ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“9 months
+            else if (months >= 4) return 0.3; // 4ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“6 months
+            else if (months >= 1) return 0.1; // 1ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“3 months
             else return 0.0; // < 1 month
         } else {
             return (double) years;
@@ -2928,3 +2941,4 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
 
             
+

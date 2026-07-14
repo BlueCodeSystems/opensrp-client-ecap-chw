@@ -144,6 +144,32 @@ public class ProfileOverviewFragment extends Fragment {
 
         HashMap<String, Child> mymap = ( (IndexDetailsActivity) requireActivity()).getData();
         Child childIndex =mymap.get("Child");
+        if (childIndex == null) {
+            txtSubPopulation.setText("");
+            txtFacility.setText("N/A");
+            txtArtNumber.setText("N/A");
+            txtReferred.setText("N/A");
+            txtEnrolled.setText("N/A");
+            txtArtCheckbox.setText("N/A");
+            txtDateStartedArt.setText("N/A");
+            txtVlLastDate.setText("N/A");
+            txtVlResult.setText("N/A");
+            txtIsSuppressed.setText("Not set");
+            txtNextVl.setText("N/A");
+            txtIsMMD.setText("N/A");
+            txtMMDResult.setText("N/A");
+            txtCaregiverName.setText("Not Set");
+            txtGender.setText("N/A");
+            txtDob.setText("Not Set");
+            txtHiv.setText("Not Set");
+            txtRelation.setText("Not Set");
+            txtPhone.setText("Not Set");
+            txtEditedBy.setText("Not Set");
+            txtDateEdited.setText("Not Set");
+            txtcPhone.setText("Not Set");
+            moreSubpopBtn.setVisibility(View.GONE);
+            return view;
+        }
 
         HashMap<String, newCaregiverModel> caregiverDetails = ((IndexDetailsActivity) requireActivity()).getUpdatedCaregiverData();
         newCaregiverModel updateCaregiver = caregiverDetails.get("UpdatedCaregiver");
@@ -184,8 +210,10 @@ public class ProfileOverviewFragment extends Fragment {
 //            linearlayout_name.setVisibility(View.GONE);
 //        }
 
-        Household householdByVCA = HouseholdDao.getHouseholdByVCA(childIndex.getHousehold_id());
-        Boolean check = HouseholdDao.hasNonNullSubPopulationByVCA(childIndex.getUnique_id());
+        String householdId = childIndex.getHousehold_id();
+        Household householdByVCA = householdId != null ? HouseholdDao.getHouseholdByVCA(householdId) : null;
+        String uniqueId = childIndex.getUnique_id();
+        Boolean check = uniqueId != null ? HouseholdDao.hasNonNullSubPopulationByVCA(uniqueId) : Boolean.FALSE;
         if(check.equals(true)) {
 
 
@@ -394,8 +422,10 @@ public class ProfileOverviewFragment extends Fragment {
             boolean showMore = muacLocal != null && ("red".equals(muacLocal.getMuac()) || "yellow".equals(muacLocal.getMuac()));
             moreSubpopBtn.setVisibility(showMore ? View.VISIBLE : View.GONE);
         });
-        new ViewModelProvider(this).get(ProfileOverviewViewModel.class)
-                .refresh(childIndex.getHousehold_id(), childIndex.getUnique_id());
+        if (householdId != null && uniqueId != null) {
+            new ViewModelProvider(this).get(ProfileOverviewViewModel.class)
+                    .refresh(householdId, uniqueId);
+        }
 
         return view;
 

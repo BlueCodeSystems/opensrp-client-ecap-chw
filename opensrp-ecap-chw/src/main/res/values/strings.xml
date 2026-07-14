@@ -75,15 +75,15 @@
     <string name="deceased_brackets">(deceased)</string>
     <string name="id_with_value">ID: %1$s</string>
     <!-- Reporting labels (defaults) -->
-    <string name="children_0_24_months_upto_date_vaccinations">Children (0–23 months) up to date with vaccination schedule</string>
+    <string name="children_0_24_months_upto_date_vaccinations">Children (0Ã¢â‚¬â€œ23 months) up to date with vaccination schedule</string>
     <string name="opv_0_not_included">OPV 0 not included</string>
     <string name="pnc_indicator_4">Babies who received BCG vaccine on time (last 6 months)</string>
     <string name="pnc_indicator_4_note">On time means within four weeks of birth</string>
     <string name="pnc_indicator_5">WRA who died in the past year</string>
     <string name="pnc_indicator_10">Women up to date with PNC visits at the health facility</string>
-    <string name="deceased_children_0_11_months">Children (0–11 months) who died in the past year</string>
-    <string name="deceased_children_12_59_months">Children (12–59 months) who died in the past year</string>
-    <string name="deceased_children_12_23_months">Children (12–23 months) who died in the past year</string>
+    <string name="deceased_children_0_11_months">Children (0Ã¢â‚¬â€œ11 months) who died in the past year</string>
+    <string name="deceased_children_12_59_months">Children (12Ã¢â‚¬â€œ59 months) who died in the past year</string>
+    <string name="deceased_children_12_23_months">Children (12Ã¢â‚¬â€œ23 months) who died in the past year</string>
     <string name="maternal_deaths_slice_label">Maternal deaths</string>
     <string name="other_wra_deaths_slice_label">Other WRA deaths</string>
 
@@ -195,9 +195,9 @@
     <string name="action_taken">Action taken</string>
     <string name="graduation_requirements_pending">Complete all household visits, assessments and services before starting the graduation benchmark assessment.</string>
     <string name="pnc_health_facility_visit_within_fourty_eight_hours">PNC health facility visit - within 48 hours</string>
-    <string name="pnc_health_facility_visit_days_three_to_seven">PNC health facility visit - days 3–7</string>
-    <string name="pnc_health_facility_visit_days_eight_to_twenty_eight">PNC health facility visit - days 8–28</string>
-    <string name="pnc_health_facility_visit_days_twenty_nine_to_forty_two">PNC health facility visit - days 29–42</string>
+    <string name="pnc_health_facility_visit_days_three_to_seven">PNC health facility visit - days 3Ã¢â‚¬â€œ7</string>
+    <string name="pnc_health_facility_visit_days_eight_to_twenty_eight">PNC health facility visit - days 8Ã¢â‚¬â€œ28</string>
+    <string name="pnc_health_facility_visit_days_twenty_nine_to_forty_two">PNC health facility visit - days 29Ã¢â‚¬â€œ42</string>
 
     <!-- Additional base strings to satisfy references -->
     <string name="app_name">ECAP II</string>
@@ -214,18 +214,18 @@
     <string name="anc_home_visit_nutrition_status">Nutrition status</string>
     <string name="anc_home_visit_pregnancy_risk">Pregnancy risk</string>
     <string name="anc_home_visit_remarks_and_comments">Remarks and comments</string>
-    <string name="anc_indicator1">Women of reproductive age (10–49)</string>
+    <string name="anc_indicator1">Women of reproductive age (10Ã¢â‚¬â€œ49)</string>
     <!-- PMTCT clinical decision support: Unsuppressed VL alert -->
     <string name="pmtct_alert_unsuppressed_title">Mother with Unsuppressed Viral Load</string>
     <string name="pmtct_alert_flagged">Flagged</string>
     <string name="pmtct_alert_unsuppressed_actions_header">Recommended actions</string>
-    <string name="pmtct_alert_unsuppressed_actions_bullets">• Conduct enhanced adherence counselling
-• Case conferencing
-• Refer for further clinical management</string>
+    <string name="pmtct_alert_unsuppressed_actions_bullets">Ã¢â‚¬Â¢ Conduct enhanced adherence counselling
+Ã¢â‚¬Â¢ Case conferencing
+Ã¢â‚¬Â¢ Refer for further clinical management</string>
     <string name="pmtct_alert_unsuppressed_actions_bullets_child">
-1: • Conduct enhanced adherence counselling\n
-    • Case conferencing\n\n
-2: • Check if they are on CTX and AZT+3TC+NVP
+1: Ã¢â‚¬Â¢ Conduct enhanced adherence counselling\n
+    Ã¢â‚¬Â¢ Case conferencing\n\n
+2: Ã¢â‚¬Â¢ Check if they are on CTX and AZT+3TC+NVP
 </string>
 
 
@@ -237,7 +237,7 @@
     <string name="hei_hiv_positive_flag">HEI: HIV-positive</string>
     <string name="hei_hiv_positive_title">HEI tests HIV-positive</string>
     <string name="hei_hiv_positive_actions_header">Recommended action</string>
-    <string name="hei_hiv_positive_actions_bullets">• Link the child to treatment.</string>
+    <string name="hei_hiv_positive_actions_bullets">Ã¢â‚¬Â¢ Link the child to treatment.</string>
     <string name="icon_mother_desc">Mother</string>
     <string name="icon_child_desc">Child</string>
     <string name="anc_indicator2">Pregnant women</string>
@@ -251,11 +251,11 @@
     <string name="birth_certification">Birth certification</string>
     <string name="child_gbv_referral">GBV referral</string>
     <string name="children">Children</string>
-    <string name="children_0_5_months_exclusively_breastfeeding">Children (0–5 months) exclusively breastfeeding</string>
-    <string name="children_0_59_months_with_birth_certificate">Children (0–59 months) with birth certificate</string>
-    <string name="children_12_59_months_dewormed">Children (12–59 months) dewormed (last 6 months)</string>
-    <string name="children_6_23_months_upto_date_mnp">Children (6–23 months) up to date with MNP supplementation</string>
-    <string name="children_6_59_months_received_vitamin_A">Children (6–59 months) received vitamin A (last 6 months)</string>
+    <string name="children_0_5_months_exclusively_breastfeeding">Children (0Ã¢â‚¬â€œ5 months) exclusively breastfeeding</string>
+    <string name="children_0_59_months_with_birth_certificate">Children (0Ã¢â‚¬â€œ59 months) with birth certificate</string>
+    <string name="children_12_59_months_dewormed">Children (12Ã¢â‚¬â€œ59 months) dewormed (last 6 months)</string>
+    <string name="children_6_23_months_upto_date_mnp">Children (6Ã¢â‚¬â€œ23 months) up to date with MNP supplementation</string>
+    <string name="children_6_59_months_received_vitamin_A">Children (6Ã¢â‚¬â€œ59 months) received vitamin A (last 6 months)</string>
     <string name="client_malaria_follow_up">Client malaria follow-up</string>
     <string name="created">Created: %s</string>
     <string name="danger_signs_counselling">Danger signs counselling</string>
@@ -278,7 +278,7 @@
     <string name="mmHg">mmHg</string>
     <string name="hb_level">Hb level</string>
     <string name="ifa_received">IFA received</string>
-    <string name="indicators_udpating">Updating…</string>
+    <string name="indicators_udpating">UpdatingÃ¢â‚¬Â¦</string>
     <string name="indicators_updating_complete">Updating complete</string>
     <string name="last_visit_40_days_ago">Last visit %1$s ago</string>
     <string name="menu_all_families">All families</string>
@@ -298,13 +298,13 @@
     <string name="pnc_indicator_3">Newborns initiated breastfeeding within 1 hour (last 6 months)</string>
     <string name="quarter_three">Quarter III</string>
     <string name="quarter_two">Quarter II</string>
-    <string name="saving_dialog_title">Saving…</string>
-    <string name="saving_index">Saving index…</string>
+    <string name="saving_dialog_title">SavingÃ¢â‚¬Â¦</string>
+    <string name="saving_index">Saving indexÃ¢â‚¬Â¦</string>
     <string name="search_name_or_id">Search name or ID</string>
     <string name="sick_visit">Sick visit</string>
     <string name="tb_referral">TB referral</string>
     <string name="unique_id_text">Unique ID</string>
-    <string name="updating">Updating…</string>
+    <string name="updating">UpdatingÃ¢â‚¬Â¦</string>
     <string name="vitamin_a_number_dose">Vitamin A %s dose</string>
     <string name="open_referral_form">Open %s referral</string>
     
@@ -319,18 +319,18 @@
     <string name="birth_cert_value">Has birth certificate? %s</string>
     <string name="birth_date">Date of birth</string>
     <string name="child_under_five">Child under five</string>
-    <string name="children_0_23_months_with_birth_certificate">Children (0–23 months) with birth certificate</string>
-    <string name="children_0_23_months_without_birth__certificate">Children (0–23 months) without birth certificate</string>
-    <string name="children_0_24_months_overdue_vaccinations">Children (0–23 months) overdue vaccinations</string>
-    <string name="children_0_59_months_without_birth__certificate">Children (0–59 months) without birth certificate</string>
-    <string name="children_0_5_months_not_exclusively_breastfeeding">Children (0–5 months) not exclusively breastfeeding</string>
-    <string name="children_12_23_months_dewormed">Children (12–23 months) dewormed (last 6 months)</string>
-    <string name="children_12_23_months_not_dewormed">Children (12–23 months) not dewormed (last 6 months)</string>
-    <string name="children_12_59_months_not_dewormed">Children (12–59 months) not dewormed (last 6 months)</string>
-    <string name="children_6_23_months_not_received_vitamin_A">Children (6–23 months) not received vitamin A (last 6 months)</string>
-    <string name="children_6_23_months_overdue_mnp">Children (6–23 months) overdue MNP supplementation</string>
-    <string name="children_6_23_months_received_vitamin_A">Children (6–23 months) received vitamin A (last 6 months)</string>
-    <string name="children_6_59_months_not_received_vitamin_A">Children (6–59 months) not received vitamin A (last 6 months)</string>
+    <string name="children_0_23_months_with_birth_certificate">Children (0Ã¢â‚¬â€œ23 months) with birth certificate</string>
+    <string name="children_0_23_months_without_birth__certificate">Children (0Ã¢â‚¬â€œ23 months) without birth certificate</string>
+    <string name="children_0_24_months_overdue_vaccinations">Children (0Ã¢â‚¬â€œ23 months) overdue vaccinations</string>
+    <string name="children_0_59_months_without_birth__certificate">Children (0Ã¢â‚¬â€œ59 months) without birth certificate</string>
+    <string name="children_0_5_months_not_exclusively_breastfeeding">Children (0Ã¢â‚¬â€œ5 months) not exclusively breastfeeding</string>
+    <string name="children_12_23_months_dewormed">Children (12Ã¢â‚¬â€œ23 months) dewormed (last 6 months)</string>
+    <string name="children_12_23_months_not_dewormed">Children (12Ã¢â‚¬â€œ23 months) not dewormed (last 6 months)</string>
+    <string name="children_12_59_months_not_dewormed">Children (12Ã¢â‚¬â€œ59 months) not dewormed (last 6 months)</string>
+    <string name="children_6_23_months_not_received_vitamin_A">Children (6Ã¢â‚¬â€œ23 months) not received vitamin A (last 6 months)</string>
+    <string name="children_6_23_months_overdue_mnp">Children (6Ã¢â‚¬â€œ23 months) overdue MNP supplementation</string>
+    <string name="children_6_23_months_received_vitamin_A">Children (6Ã¢â‚¬â€œ23 months) received vitamin A (last 6 months)</string>
+    <string name="children_6_59_months_not_received_vitamin_A">Children (6Ã¢â‚¬â€œ59 months) not received vitamin A (last 6 months)</string>
     <string name="completed_on_prefix">Completed on %1$s</string>
     <string name="counseled">Counseled</string>
     <string name="device_to_device_sync">Device-to-device Sync</string>
@@ -339,7 +339,7 @@
     <string name="drc_minimum_dietary_choice_2">Minimum dietary diversity choice 2</string>
     <string name="drc_minimum_dietary_choice_3">Minimum dietary diversity choice 3</string>
     <string name="drc_minimum_dietary_choice_4">Minimum dietary diversity choice 4</string>
-    <string name="family_kit_suffix"> · Family kit</string>
+    <string name="family_kit_suffix"> Ã‚Â· Family kit</string>
     <string name="fp_post_partum">Post-partum family planning</string>
     <string name="fully_immunized_at_age">Fully immunized at age %1$s</string>
     <string name="has_birt_cert">Has birth certificate?</string>
@@ -381,7 +381,7 @@
 
     <!-- Default strings for translated resources -->
     <string name="login_title">ECAP App</string>
-    <string name="offline_login_token_expired">Offline login token expired. Please connect to the internet and log in again.</string>
+    <string name="offline_login_unavailable">Username or password could not be verified offline. Please connect to the internet and log in again.</string>
     <string name="title_family_detail">Household details</string>
     <string name="go_to_family_s_profile">Go to household profile</string>
     <string name="family_has_nothing_due">Household has no services due</string>
@@ -408,7 +408,7 @@
     <string name="action_settings">Settings</string>
     <string name="observations_illness_episodes"><![CDATA[Observations & illness episodes - <i>optional</i>]]></string>
     <string name="observations_illness_episodes_medical"><![CDATA[Observations & illness episodes]]></string>
-    <string name="interpunct">・</string>
+    <string name="interpunct">Ã£Æ’Â»</string>
     <string name="cancel">Cancel</string>
     <string name="dose_not_given">Dose not given</string>
     <string name="head_of_family">Head of household</string>
@@ -524,7 +524,7 @@
     <string name="family_profile_title_with_firstname">Household %1$s %2$s</string>
     <string name="unauthorized_group">This account is not authorized to access this device</string>
     <string name="physically_challenged">Living with a disability</string>
-    <string name="balanced_diet_content_eight" formatted="false">Less than 10% of total energy intake should come from free sugars—about 50 g (12 teaspoons) for an adult consuming 2000 calories—ideally under 5% for added health benefits.</string>
+    <string name="balanced_diet_content_eight" formatted="false">Less than 10% of total energy intake should come from free sugarsÃ¢â‚¬â€about 50 g (12 teaspoons) for an adult consuming 2000 caloriesÃ¢â‚¬â€ideally under 5% for added health benefits.</string>
     <string name="hello_world">Hello World!</string>
     <string name="csv_generated_location">CSV files have been generated. You can find them in the Downloads/%1$s folder.</string>
     

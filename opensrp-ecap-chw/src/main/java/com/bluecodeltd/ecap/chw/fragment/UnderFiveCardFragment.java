@@ -1,6 +1,7 @@
 package com.bluecodeltd.ecap.chw.fragment;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
 import com.bluecodeltd.ecap.chw.util.Threading;
 
 import com.bluecodeltd.ecap.chw.R;
@@ -38,7 +40,7 @@ public class UnderFiveCardFragment extends Fragment {
 
     View inflateView;
     TextView cardNumber,childBirthDate,weight, childFeedingOption;
-    TextView followUpVisitDate, pediaticDate, hiv_status,childMonitoringVisit;
+    TextView followUpVisitDate, pediaticDate, hiv_status, nextDbsDue, childMonitoringVisit;
     ImageView imageviewProfile;
 
     ChildMonitoringModel childMonitoring;
@@ -112,6 +114,7 @@ public class UnderFiveCardFragment extends Fragment {
         followUpVisitDate = binding.pediaticVisit;
         pediaticDate = binding.pediaticDate;
         hiv_status= binding.hivStatusRNr;
+        nextDbsDue = binding.nextDbsDue;
 //        hiv_status = inflateView.findViewById(R.id.nvp_date_start);
 //        childMonitoringVisit = inflateView.findViewById(R.id.child_monitoring_visit);
         imageviewProfile = binding.imageviewProfile;
@@ -150,6 +153,14 @@ public class UnderFiveCardFragment extends Fragment {
                     pediaticDate.setText("Not Conducted");
                     hiv_status.setText("Not Conducted");
                 }
+                if (nextDbsDue != null) {
+                    String dbsMessage = ((HeiDetailsActivity) requireActivity()).getDbsDueMessage();
+                    if (TextUtils.isEmpty(dbsMessage)) {
+                        dbsMessage = "No DBS recorded";
+                    }
+                    nextDbsDue.setText(dbsMessage);
+                    styleDbsDueBadge(dbsMessage);
+                }
             });
         });
 
@@ -159,6 +170,22 @@ public class UnderFiveCardFragment extends Fragment {
         return inflateView;
     }
 
+    private void styleDbsDueBadge(String message) {
+        if (nextDbsDue == null) {
+            return;
+        }
+        String normalized = message == null ? "" : message.trim().toLowerCase();
+        if (normalized.startsWith("dbs overdue")) {
+            nextDbsDue.setBackgroundResource(R.drawable.ripple_button_alert);
+            nextDbsDue.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.white));
+        } else if (normalized.startsWith("dbs due in")) {
+            nextDbsDue.setBackgroundResource(R.drawable.rounded_corner_due);
+            nextDbsDue.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.white));
+        } else {
+            nextDbsDue.setBackgroundResource(R.drawable.case_status_background);
+            nextDbsDue.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_black));
+        }
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

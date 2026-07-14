@@ -4,6 +4,10 @@ import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Build;
+import android.view.Window;
+import android.view.WindowInsetsController;
 import android.os.Bundle;
 import android.view.View;
 import android.app.Dialog;
@@ -90,13 +94,20 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
+        applyLightStatusBar();
 
+        TextView toolbarTitle = findViewById(R.id.report_submission_toolbar_title);
+        if (toolbarTitle != null) {
+            toolbarTitle.setText(getScreenTitle());
+        }
+        TextView toolbarSubtitle = findViewById(R.id.report_submission_toolbar_subtitle);
+        if (toolbarSubtitle != null) {
+            toolbarSubtitle.setText(getScreenSubtitle());
+        }
 
         metaText = findViewById(R.id.report_submission_meta_text);
         monthFilterSpinner = findViewById(R.id.report_submission_month_filter);
-        if (toolbar != null) {
-            toolbar.setNavigationOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
-        }
+        findViewById(R.id.report_submission_back_button).setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
 
         recyclerView = findViewById(R.id.report_submission_recycler);
         emptyView = findViewById(R.id.report_submission_empty);
@@ -235,6 +246,24 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
         }
     }
 
+    private void applyLightStatusBar() {
+        Window window = getWindow();
+        window.setStatusBarColor(Color.WHITE);
+        View decorView = window.getDecorView();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            WindowInsetsController controller = decorView.getWindowInsetsController();
+            if (controller != null) {
+                controller.setSystemBarsAppearance(
+                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS);
+            }
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int flags = decorView.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            decorView.setSystemUiVisibility(flags);
+        }
+    }
+
     private int comparePeriodDesc(String first, String second) {
         Date firstDate = parsePeriodKey(first);
         Date secondDate = parsePeriodKey(second);
@@ -309,11 +338,23 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
         };
     }
 
+    private String getScreenSubtitle() {
+        if (selectedPeriodKey == null || selectedPeriodKey.trim().isEmpty()) {
+            return getString(R.string.report_submission_toolbar_subtitle);
+        }
+        for (PeriodOption option : periodOptions) {
+            if (selectedPeriodKey.equals(option.key)) {
+                return option.label;
+            }
+        }
+        return getString(R.string.report_submission_toolbar_subtitle);
+    }
+
     private String getFormName() {
         return switch (reportType != null ? reportType : "") {
             case ReportRegisterActivity.REPORT_TYPE_NUTRITION -> ReportRegisterActivity.REPORT_FORM_NUTRITION;
             case ReportRegisterActivity.REPORT_TYPE_TB -> ReportRegisterActivity.REPORT_FORM_TB;
-            case ReportRegisterActivity.REPORT_TYPE_COMMUNITY_ALERT -> ReportRegisterActivity.REPORT_FORM_COMMUNITY_ALERT;
+            case ReportRegisterActivity.REPORT_TYPE_COMMUNITY_ALERT, ReportRegisterActivity.REPORT_TYPE_COMMUNITY -> ReportRegisterActivity.REPORT_FORM_COMMUNITY_ALERT;
             default -> ReportRegisterActivity.REPORT_FORM_MALARIA;
         };
     }
@@ -322,7 +363,7 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
         return switch (reportType != null ? reportType : "") {
             case ReportRegisterActivity.REPORT_TYPE_NUTRITION -> ReportRegisterActivity.REPORT_TABLE_NUTRITION;
             case ReportRegisterActivity.REPORT_TYPE_TB -> ReportRegisterActivity.REPORT_TABLE_TB;
-            case ReportRegisterActivity.REPORT_TYPE_COMMUNITY_ALERT -> ReportRegisterActivity.REPORT_TABLE_COMMUNITY_ALERT;
+            case ReportRegisterActivity.REPORT_TYPE_COMMUNITY_ALERT, ReportRegisterActivity.REPORT_TYPE_COMMUNITY -> ReportRegisterActivity.REPORT_TABLE_COMMUNITY_ALERT;
             default -> ReportRegisterActivity.REPORT_TABLE_MALARIA;
         };
     }
@@ -331,13 +372,13 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
         return switch (reportType != null ? reportType : "") {
             case ReportRegisterActivity.REPORT_TYPE_NUTRITION -> ReportRegisterActivity.REPORT_FORM_ENCOUNTER_NUTRITION;
             case ReportRegisterActivity.REPORT_TYPE_TB -> ReportRegisterActivity.REPORT_FORM_ENCOUNTER_TB;
-            case ReportRegisterActivity.REPORT_TYPE_COMMUNITY_ALERT -> ReportRegisterActivity.REPORT_FORM_ENCOUNTER_COMMUNITY_ALERT;
+            case ReportRegisterActivity.REPORT_TYPE_COMMUNITY_ALERT, ReportRegisterActivity.REPORT_TYPE_COMMUNITY -> ReportRegisterActivity.REPORT_FORM_ENCOUNTER_COMMUNITY_ALERT;
             default -> ReportRegisterActivity.REPORT_FORM_ENCOUNTER_MALARIA;
         };
     }
 
     private void openViewReport(MonthlyReportModel item) {
-        if (ReportRegisterActivity.REPORT_TYPE_COMMUNITY_ALERT.equals(reportType)) {
+        if (ReportRegisterActivity.REPORT_TYPE_COMMUNITY_ALERT.equals(reportType) || ReportRegisterActivity.REPORT_TYPE_COMMUNITY.equals(reportType)) {
             androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
             builder.setTitle("Select Orientation");
             String[] options = {"Portrait", "Landscape"};
