@@ -166,9 +166,9 @@ tasks.withType(Test) {
             // Ensure we resolve to the requested JitPack variants
             dependencySubstitution {
                 substitute module('io.github.bluecodesystems:android-p2p-sync') using module('com.github.BlueCodeSystems:android-p2p-sync:v0.5.0')
-                substitute module('io.github.bluecodesystems:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v7.0.3')
-                substitute module('com.github.BlueCodeSystems:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v7.0.3')
-                substitute module('org.smartregister:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v7.0.3')
+                substitute module('io.github.bluecodesystems:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v7.0.6')
+                substitute module('com.github.BlueCodeSystems:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v7.0.6')
+                substitute module('org.smartregister:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v7.0.6')
                 // Route legacy OPD coordinates to BlueCodeSystems JitPack OPD
                 substitute module('org.smartregister:opensrp-opd') using module('com.github.BlueCodeSystems:opensrp-client-opd:v1.0.3')
                 // Route legacy native-form to BlueCodeSystems native-form-new
@@ -288,8 +288,8 @@ dependencies {
     // MaterialEditText fork on Maven Central (BlueCodeSystems)
     implementation 'io.github.bluecodesystems:MaterialEditTextLibrary:3.1.5'
 //    api 'com.simprints:libsimprints:2024.10.1-SNAPSHOT'
-    // Core from JitPack (v7.0.3)
-    api('com.github.BlueCodeSystems:opensrp-client-core:v7.0.3') {
+    // Core from JitPack (v7.0.6)
+    api('com.github.BlueCodeSystems:opensrp-client-core:v7.0.6') {
         transitive = true
         exclude group: 'com.github.bmelnychuk', module: 'atv'
         exclude group: 'com.google.guava', module: 'guava'
