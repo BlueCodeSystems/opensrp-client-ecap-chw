@@ -268,8 +268,8 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
 
         reloadLanguage();
 
-        // Ensure Timber does not reference Crashlytics when the dependency/plugin is not applied
-        // This prevents NoClassDefFoundError from org.smartregister.util.CrashLyticsTree
+        // Ensure Timber uses the local safe tree when Crashlytics is not present
+        // This keeps logging independent from the external SmartRegister Crashlytics tree
         try {
             Timber.uprootAll();
             if (BuildConfig.DEBUG) {
@@ -691,3 +691,4 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
     }
 
 }
+
