@@ -179,6 +179,8 @@ public class HeiDetailsActivity extends AppCompatActivity {
     TabLayout tabLayout;
     private TabLayoutMediator tabMediator;
     private Dialog dimDialog;
+    private View fabScrim;
+    private boolean fabVisibilityInitialized = false;
 
     @SuppressLint({"RestrictedApi", "MissingInflatedId"})
     @Override
@@ -201,6 +203,8 @@ public class HeiDetailsActivity extends AppCompatActivity {
         builder = new AlertDialog.Builder(HeiDetailsActivity.this);
 
         fab = binding.fab;
+        fabScrim = binding.fabScrim;
+        fabScrim.setOnClickListener(v -> closeFab());
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
@@ -283,6 +287,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabs);
 //        updateTasksTabTitle();
         returnViewPager();
+        setupFabVisibility();
         updateOverviewTabTitle();
         updateAncTabTitle();
         updateDbsTabTitle();
@@ -389,6 +394,11 @@ public class HeiDetailsActivity extends AppCompatActivity {
 //            if(hivTestingServiceModel.getTesting_modality() != null && (hivTestingServiceModel.getTesting_modality().equals("SNT") || hivTestingServiceModel.getTesting_modality().equals("Index"))){
             addIndexClients.setVisibility(View.VISIBLE);
 //            }
+            if (fabScrim != null) {
+                fabScrim.setVisibility(View.VISIBLE);
+                fabScrim.setAlpha(0f);
+                fabScrim.animate().alpha(1f).setDuration(200).start();
+            }
 
         }
 
@@ -399,6 +409,10 @@ public class HeiDetailsActivity extends AppCompatActivity {
         isFabOpen = false;
         txtScreening.setVisibility(View.GONE);
         addIndexClients.setVisibility(View.GONE);
+        if (fabScrim != null) {
+            fabScrim.animate().alpha(0f).setDuration(200)
+                    .withEndAction(() -> fabScrim.setVisibility(View.GONE)).start();
+        }
 //        rcase_plan.setVisibility(View.GONE);
 //        referral.setVisibility(View.GONE);
 //        household_visitation_for_vca.setVisibility(View.GONE);
@@ -408,6 +422,60 @@ public class HeiDetailsActivity extends AppCompatActivity {
 //        weServicesVca.setVisibility(View.GONE);
 
 
+    }
+
+    private int safeViewPagerPosition() {
+        try {
+            return viewPager.getCurrentItem();
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    private void updateFabVisibilityForPosition(int position) {
+        if (fab == null) return;
+        if (position == 0) {
+            fab.show();
+        } else {
+            fab.hide();
+        }
+    }
+
+    private void setupFabVisibility() {
+        if (fabVisibilityInitialized || viewPager == null || fab == null) return;
+        fabVisibilityInitialized = true;
+
+        updateFabVisibilityForPosition(safeViewPagerPosition());
+
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                if (position != 0 && isFabOpen) {
+                    closeFab();
+                }
+                updateFabVisibilityForPosition(position);
+            }
+        });
+
+        if (tabLayout != null) {
+            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    if (tab.getPosition() != 0 && isFabOpen) {
+                        closeFab();
+                    }
+                    updateFabVisibilityForPosition(tab.getPosition());
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+                }
+            });
+        }
     }
 
     public HashMap<String, Child> getData() {
