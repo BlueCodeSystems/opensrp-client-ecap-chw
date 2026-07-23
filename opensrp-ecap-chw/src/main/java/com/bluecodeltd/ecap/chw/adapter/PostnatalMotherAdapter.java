@@ -20,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import android.util.SparseBooleanArray;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -59,6 +61,7 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
     Context context;
     List<PmtctMotherPostnatalModel> postnatal;
     ObjectMapper oMapper;
+    private final SparseBooleanArray expandedPositions = new SparseBooleanArray();
 
     public PostnatalMotherAdapter(Context context, List<PmtctMotherPostnatalModel> postnatal) {
         this.context = context;
@@ -105,7 +108,17 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
             }
         };
 
-        holder.headerLayout.setOnClickListener(openForm);
+        boolean expanded = expandedPositions.get(position, false);
+        holder.detailsContainer.setVisibility(expanded ? View.VISIBLE : View.GONE);
+        holder.expandMore.setVisibility(expanded ? View.GONE : View.VISIBLE);
+        holder.expandLess.setVisibility(expanded ? View.VISIBLE : View.GONE);
+        holder.headerLayout.setOnClickListener(v -> {
+            boolean next = !expandedPositions.get(position, false);
+            expandedPositions.put(position, next);
+            holder.detailsContainer.setVisibility(next ? View.VISIBLE : View.GONE);
+            holder.expandMore.setVisibility(next ? View.GONE : View.VISIBLE);
+            holder.expandLess.setVisibility(next ? View.VISIBLE : View.GONE);
+        });
         holder.editme.setOnClickListener(openForm);
         if (holder.editButton != null) {
             holder.editButton.setOnClickListener(openForm);
@@ -344,7 +357,8 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
         TextView tvDate, tvVisit, tvVisitType, tvMotherTestedHiv, tvArtInitiated, tvArtAdherence, tvVlResult,
                 tvFpCounselling, tvCondoms, tvTbSymptoms, tvTbOther, tvTbComments, tvComments, tvSummary;
         LinearLayout headerLayout;
-        ImageView editme, delete;
+        View detailsContainer;
+        ImageView editme, delete, expandMore, expandLess;
         View editButton, deleteButton;
 
         public ViewHolder(View itemView) {
@@ -372,6 +386,10 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
             delete = itemView.findViewById(R.id.delete_record);
             editButton = itemView.findViewById(R.id.edit_button);
             deleteButton = itemView.findViewById(R.id.delete_button);
+
+            detailsContainer = itemView.findViewById(R.id.details_container);
+            expandMore = itemView.findViewById(R.id.expand_more);
+            expandLess = itemView.findViewById(R.id.expand_less);
 
         }
 

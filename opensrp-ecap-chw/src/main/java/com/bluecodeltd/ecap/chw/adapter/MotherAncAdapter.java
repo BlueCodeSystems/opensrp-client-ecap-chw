@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -141,7 +143,16 @@ public class MotherAncAdapter extends RecyclerView.Adapter<MotherAncAdapter.View
         String eddDate = visit.getEdd_date();
         holder.txtEddDate.setText(eddDate != null ? eddDate : "");
 
-        holder.container.setOnClickListener(v -> openAncForm(visit));
+        View.OnClickListener toggleListener = v -> {
+            boolean expand = holder.detailsContainer.getVisibility() != View.VISIBLE;
+            holder.detailsContainer.setVisibility(expand ? View.VISIBLE : View.GONE);
+            holder.expandMore.setVisibility(expand ? View.GONE : View.VISIBLE);
+            holder.expandLess.setVisibility(expand ? View.VISIBLE : View.GONE);
+        };
+        holder.headerLayout.setOnClickListener(toggleListener);
+        holder.expandMore.setOnClickListener(toggleListener);
+        holder.expandLess.setOnClickListener(toggleListener);
+
         holder.btnEdit.setOnClickListener(v -> openAncForm(visit));
     }
 
@@ -161,6 +172,10 @@ public class MotherAncAdapter extends RecyclerView.Adapter<MotherAncAdapter.View
         TextView txtEddDate;
         View container;
         View btnEdit;
+        View headerLayout;
+        LinearLayout detailsContainer;
+        ImageView expandMore;
+        ImageView expandLess;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -174,6 +189,10 @@ public class MotherAncAdapter extends RecyclerView.Adapter<MotherAncAdapter.View
             txtLmpDate = itemView.findViewById(R.id.txtLmpDate);
             txtEddDate = itemView.findViewById(R.id.txtEddDate);
             btnEdit = itemView.findViewById(R.id.btnEdit);
+            headerLayout = itemView.findViewById(R.id.header_layout);
+            detailsContainer = itemView.findViewById(R.id.details_container);
+            expandMore = itemView.findViewById(R.id.expand_more);
+            expandLess = itemView.findViewById(R.id.expand_less);
         }
     }
 
