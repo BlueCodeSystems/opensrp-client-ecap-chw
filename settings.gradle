@@ -1,3 +1,6 @@
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.10.0'
+}
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -84,7 +87,7 @@ dependencyResolutionManagement {
     }
 }
 
-include ':opensrp-ecap-chw', ':opensrp-ecap-chw-core'
+include ':opensrp-ecap-chw', ':opensrp-ecap-chw-core', ':android-job'
 
 def useLocalNativeForm = (gradle.startParameter.projectProperties['useLocalNativeForm']
         ?: System.getenv('USE_LOCAL_NATIVE_FORM'))?.toString()?.toBoolean() ?: false

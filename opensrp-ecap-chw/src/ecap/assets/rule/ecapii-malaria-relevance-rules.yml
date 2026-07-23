@@ -1,0 +1,70 @@
+---
+name: q1_breakdown
+description: Show breakdown for Question 1
+priority: 1
+condition: "step2_q1_toggle == 'open'"
+actions:
+    - "isRelevant = true"
+---
+name: q2_breakdown
+description: Show breakdown for Question 2
+priority: 1
+condition: "step2_q2_toggle == 'open'"
+actions:
+    - "isRelevant = true"
+---
+name: q3_breakdown
+description: Show breakdown for Question 3
+priority: 1
+condition: "step2_q3_toggle == 'open'"
+actions:
+    - "isRelevant = true"
+---
+name: q4_breakdown
+description: Show breakdown for Question 4
+priority: 1
+condition: "step2_q4_toggle == 'open'"
+actions:
+    - "isRelevant = true"
+---
+name: q5_breakdown
+description: Show breakdown for Question 5
+priority: 1
+condition: "step2_q5_toggle == 'open'"
+actions:
+    - "isRelevant = true"
+---
+name: q6_breakdown
+description: Show breakdown for Question 6
+priority: 1
+condition: "step2_q6_toggle == 'open'"
+actions:
+    - "isRelevant = true"
+---
+name: q7_breakdown
+description: Show breakdown for Question 7
+priority: 1
+condition: "step2_q7_toggle == 'open'"
+actions:
+    - "isRelevant = true"
+---
+name: q8_breakdown
+description: Show breakdown for Question 8
+priority: 1
+condition: "step2_q8_toggle == 'open'"
+actions:
+    - "isRelevant = true"
+---
+name: q9_breakdown
+description: Show breakdown for Question 9
+priority: 1
+condition: "step2_q9_toggle == 'open'"
+actions:
+    - "isRelevant = true"
+---
+name: q10_breakdown
+description: Show breakdown for Question 10
+priority: 1
+condition: "step2_q10_toggle == 'open'"
+actions:
+    - "isRelevant = true"

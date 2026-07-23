@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="SECTION B: OTHER COMMUNITY MEMBERS"
+        android:textColor="#1976D2"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#BBDEFB"
+                android:padding="12dp"
+                android:text="Q1: People tested for malaria in the community"
+                android:textColor="@color/text_black"
+                android:textStyle="bold" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1,2">
+
+                <TableRow android:background="@drawable/bg_table_header" android:paddingVertical="8dp">
+                    <TextView android:text="Age Group" android:textStyle="bold" android:paddingStart="12dp"/>
+                    <TextView android:text="Female" android:textStyle="bold" android:gravity="center"/>
+                    <TextView android:text="Male" android:textStyle="bold" android:gravity="center"/>
+                </TableRow>
+
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="0-4 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q1_f_0_4" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q1_m_0_4" android:gravity="center" android:text="0"/>
+                </TableRow>
+
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="5-15 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q1_f_5_15" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q1_m_5_15" android:gravity="center" android:text="0"/>
+                </TableRow>
+
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="16-19 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q1_f_16_19" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q1_m_16_19" android:gravity="center" android:text="0"/>
+                </TableRow>
+
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="20+ Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q1_f_20_plus" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q1_m_20_plus" android:gravity="center" android:text="0"/>
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#BBDEFB"
+                android:padding="12dp"
+                android:text="Q2: People tested who were malaria positive"
+                android:textColor="@color/text_black"
+                android:textStyle="bold" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1,2">
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="0-4 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q2_f_0_4" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q2_m_0_4" android:gravity="center" android:text="0"/>
+                </TableRow>
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="5-15 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q2_f_5_15" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q2_m_5_15" android:gravity="center" android:text="0"/>
+                </TableRow>
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="16-19 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q2_f_16_19" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q2_m_16_19" android:gravity="center" android:text="0"/>
+                </TableRow>
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="20+ Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q2_f_20_plus" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q2_m_20_plus" android:gravity="center" android:text="0"/>
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#BBDEFB"
+                android:padding="12dp"
+                android:text="Q3: People who received malaria treatment"
+                android:textColor="@color/text_black"
+                android:textStyle="bold" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1,2">
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="0-4 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q3_f_0_4" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q3_m_0_4" android:gravity="center" android:text="0"/>
+                </TableRow>
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="5-15 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q3_f_5_15" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q3_m_5_15" android:gravity="center" android:text="0"/>
+                </TableRow>
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="16-19 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q3_f_16_19" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q3_m_16_19" android:gravity="center" android:text="0"/>
+                </TableRow>
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="20+ Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q3_f_20_plus" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q3_m_20_plus" android:gravity="center" android:text="0"/>
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#BBDEFB"
+                android:padding="12dp"
+                android:text="Q4: People who received malaria prophylaxis"
+                android:textColor="@color/text_black"
+                android:textStyle="bold" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1,2">
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="0-4 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q4_f_0_4" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q4_m_0_4" android:gravity="center" android:text="0"/>
+                </TableRow>
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="5-15 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q4_f_5_15" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q4_m_5_15" android:gravity="center" android:text="0"/>
+                </TableRow>
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="16-19 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q4_f_16_19" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q4_m_16_19" android:gravity="center" android:text="0"/>
+                </TableRow>
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="20+ Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q4_f_20_plus" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q4_m_20_plus" android:gravity="center" android:text="0"/>
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#BBDEFB"
+                android:padding="12dp"
+                android:text="Q5: People referred for treatment"
+                android:textColor="@color/text_black"
+                android:textStyle="bold" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1,2">
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="0-4 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q5_f_0_4" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q5_m_0_4" android:gravity="center" android:text="0"/>
+                </TableRow>
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="5-15 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q5_f_5_15" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q5_m_5_15" android:gravity="center" android:text="0"/>
+                </TableRow>
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="16-19 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q5_f_16_19" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q5_m_16_19" android:gravity="center" android:text="0"/>
+                </TableRow>
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="20+ Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q5_f_20_plus" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q5_m_20_plus" android:gravity="center" android:text="0"/>
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#BBDEFB"
+                android:padding="12dp"
+                android:text="Q6: People referred for treatment completed"
+                android:textColor="@color/text_black"
+                android:textStyle="bold" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1,2">
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="0-4 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q6_f_0_4" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q6_m_0_4" android:gravity="center" android:text="0"/>
+                </TableRow>
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="5-15 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q6_f_5_15" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q6_m_5_15" android:gravity="center" android:text="0"/>
+                </TableRow>
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="16-19 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q6_f_16_19" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q6_m_16_19" android:gravity="center" android:text="0"/>
+                </TableRow>
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="20+ Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q6_f_20_plus" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q6_m_20_plus" android:gravity="center" android:text="0"/>
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#BBDEFB"
+                android:padding="12dp"
+                android:text="Q7: People referred for malaria testing"
+                android:textColor="@color/text_black"
+                android:textStyle="bold" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1,2">
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="0-4 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q7_f_0_4" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q7_m_0_4" android:gravity="center" android:text="0"/>
+                </TableRow>
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="5-15 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q7_f_5_15" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q7_m_5_15" android:gravity="center" android:text="0"/>
+                </TableRow>
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="16-19 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q7_f_16_19" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q7_m_16_19" android:gravity="center" android:text="0"/>
+                </TableRow>
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="20+ Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q7_f_20_plus" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q7_m_20_plus" android:gravity="center" android:text="0"/>
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#BBDEFB"
+                android:padding="12dp"
+                android:text="Q8: People referred for testing completed"
+                android:textColor="@color/text_black"
+                android:textStyle="bold" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1,2">
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="0-4 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q8_f_0_4" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q8_m_0_4" android:gravity="center" android:text="0"/>
+                </TableRow>
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="5-15 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q8_f_5_15" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q8_m_5_15" android:gravity="center" android:text="0"/>
+                </TableRow>
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="16-19 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q8_f_16_19" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q8_m_16_19" android:gravity="center" android:text="0"/>
+                </TableRow>
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="20+ Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q8_f_20_plus" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q8_m_20_plus" android:gravity="center" android:text="0"/>
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#BBDEFB"
+                android:padding="12dp"
+                android:text="Q9: People who had severe malaria"
+                android:textColor="@color/text_black"
+                android:textStyle="bold" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1,2">
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="0-4 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q9_f_0_4" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q9_m_0_4" android:gravity="center" android:text="0"/>
+                </TableRow>
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="5-15 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q9_f_5_15" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q9_m_5_15" android:gravity="center" android:text="0"/>
+                </TableRow>
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="16-19 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q9_f_16_19" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q9_m_16_19" android:gravity="center" android:text="0"/>
+                </TableRow>
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="20+ Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q9_f_20_plus" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q9_m_20_plus" android:gravity="center" android:text="0"/>
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#BBDEFB"
+                android:padding="12dp"
+                android:text="Q10: Households with at least 1 member tested"
+                android:textColor="@color/text_black"
+                android:textStyle="bold" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1,2">
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="0-4 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q10_f_0_4" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q10_m_0_4" android:gravity="center" android:text="0"/>
+                </TableRow>
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="5-15 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q10_f_5_15" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q10_m_5_15" android:gravity="center" android:text="0"/>
+                </TableRow>
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="16-19 Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q10_f_16_19" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q10_m_16_19" android:gravity="center" android:text="0"/>
+                </TableRow>
+                <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="8dp">
+                    <TextView android:text="20+ Years" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/sb_q10_f_20_plus" android:gravity="center" android:text="0"/>
+                    <TextView android:id="@+id/sb_q10_m_20_plus" android:gravity="center" android:text="0"/>
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

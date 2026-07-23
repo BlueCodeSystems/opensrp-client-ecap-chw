@@ -314,6 +314,15 @@
             android:layout_below="@id/collapsing_toolbar_appbarlayout"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+        <View
+            android:id="@+id/fab_scrim"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#99000000"
+            android:visibility="gone"
+            android:clickable="true"
+            android:focusable="true" />
+
         <!-- MENU BAR (Mother & Child actions as small professional chips) -->
         <LinearLayout
             android:id="@+id/menu_bar"
@@ -337,34 +346,15 @@
                 android:onClick="onClick"
                 android:visibility="gone">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                <TextView
+                    android:id="@+id/add_mother"
+                    style="@style/MotherActionChip"
                     android:layout_toStartOf="@+id/callFab3"
-                    android:background="@drawable/bg_mother_action_chip"
-                    android:elevation="2dp"
-                    android:gravity="center_vertical"
-                    android:minWidth="80dp"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp">
-
-                    <TextView
-                        android:id="@+id/add_mother"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Edit Mother"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp" />
-                </RelativeLayout>
+                    android:text="Edit Mother" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/callFab3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
+                    style="@style/MotherActionMiniFab"
                     app:srcCompat="@drawable/baseline_mode_edit_24" />
 
             </RelativeLayout>
@@ -378,34 +368,15 @@
                 android:onClick="onClick"
                 android:visibility="gone">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                <TextView
+                    android:id="@+id/mother_anc_text"
+                    style="@style/MotherActionChip"
                     android:layout_toStartOf="@+id/mother_anc_fab"
-                    android:background="@drawable/bg_mother_action_chip"
-                    android:elevation="2dp"
-                    android:gravity="center_vertical"
-                    android:minWidth="80dp"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp">
-
-                    <TextView
-                        android:id="@+id/mother_anc_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Mother ANC"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp" />
-                </RelativeLayout>
+                    android:text="Mother ANC" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/mother_anc_fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
+                    style="@style/MotherActionMiniFab"
                     app:srcCompat="@android:drawable/ic_input_add" />
 
             </RelativeLayout>
@@ -419,34 +390,15 @@
                 android:onClick="onClick"
                 android:visibility="gone">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                <TextView
+                    android:id="@+id/mother_longitudinal_follow_up_text"
+                    style="@style/MotherActionChip"
                     android:layout_toStartOf="@+id/mother_longitudinal_follow_up_fab"
-                    android:background="@drawable/bg_mother_action_chip"
-                    android:elevation="2dp"
-                    android:gravity="center_vertical"
-                    android:minWidth="80dp"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp">
-
-                    <TextView
-                        android:id="@+id/mother_longitudinal_follow_up_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Mother Longitudinal Follow Up"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp" />
-                </RelativeLayout>
+                    android:text="Mother Longitudinal Follow Up" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/mother_longitudinal_follow_up_fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
+                    style="@style/MotherActionMiniFab"
                     app:srcCompat="@android:drawable/ic_input_add" />
 
             </RelativeLayout>
@@ -460,34 +412,15 @@
                 android:onClick="onClick"
                 android:visibility="gone">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                <TextView
+                    android:id="@+id/mother_delivery_text"
+                    style="@style/MotherActionChip"
                     android:layout_toStartOf="@+id/mother_delivery_fab"
-                    android:background="@drawable/bg_mother_action_chip"
-                    android:elevation="2dp"
-                    android:gravity="center_vertical"
-                    android:minWidth="80dp"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp">
-
-                    <TextView
-                        android:id="@+id/mother_delivery_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Mother Delivery"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp" />
-                </RelativeLayout>
+                    android:text="Mother Delivery" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/mother_delivery_fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
+                    style="@style/MotherActionMiniFab"
                     app:srcCompat="@android:drawable/ic_input_add" />
 
             </RelativeLayout>
@@ -503,34 +436,15 @@
                 android:onClick="onClick"
                 android:visibility="gone">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                <TextView
+                    android:id="@+id/add_child"
+                    style="@style/MotherActionChip"
                     android:layout_toStartOf="@+id/callFab2"
-                    android:background="@drawable/bg_child_action_chip"
-                    android:elevation="2dp"
-                    android:gravity="center_vertical"
-                    android:minWidth="80dp"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp">
-
-                    <TextView
-                        android:id="@+id/add_child"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Add Child"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp" />
-                </RelativeLayout>
+                    android:text="Add Child" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/callFab2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
+                    style="@style/MotherActionMiniFab"
                     app:srcCompat="@android:drawable/ic_input_add" />
 
             </RelativeLayout>
@@ -544,34 +458,15 @@
                 android:onClick="onClick"
                 android:visibility="gone">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                <TextView
+                    android:id="@+id/mother_postnatal_care_text"
+                    style="@style/MotherActionChip"
                     android:layout_toStartOf="@+id/mother_postnatal_care_fab"
-                    android:background="@drawable/bg_mother_action_chip"
-                    android:elevation="2dp"
-                    android:gravity="center_vertical"
-                    android:minWidth="80dp"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp">
-
-                    <TextView
-                        android:id="@+id/mother_postnatal_care_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Mother Postnatal Care"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp" />
-                </RelativeLayout>
+                    android:text="Mother Postnatal Care" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/mother_postnatal_care_fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
+                    style="@style/MotherActionMiniFab"
                     app:srcCompat="@android:drawable/ic_input_add" />
 
             </RelativeLayout>
@@ -585,34 +480,15 @@
                 android:onClick="onClick"
                 android:visibility="gone">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                <TextView
+                    android:id="@+id/mother_outcome_text"
+                    style="@style/MotherActionChip"
                     android:layout_toStartOf="@+id/mother_outcome_fab"
-                    android:background="@drawable/bg_mother_action_chip"
-                    android:elevation="2dp"
-                    android:gravity="center_vertical"
-                    android:minWidth="80dp"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp">
-
-                    <TextView
-                        android:id="@+id/mother_outcome_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Mother Outcome"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp" />
-                </RelativeLayout>
+                    android:text="Mother Outcome" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/mother_outcome_fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
+                    style="@style/MotherActionMiniFab"
                     app:srcCompat="@android:drawable/ic_input_add" />
 
             </RelativeLayout>

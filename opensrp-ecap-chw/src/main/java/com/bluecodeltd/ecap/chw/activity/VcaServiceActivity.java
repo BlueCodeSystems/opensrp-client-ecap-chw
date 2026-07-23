@@ -83,7 +83,7 @@ public class VcaServiceActivity extends AppCompatActivity {
     VCAServiceAdapter recyclerViewadapter;
     private ArrayList<VCAServiceModel> familyServiceList = new ArrayList<>();
     private LinearLayout linearLayout;
-    private TextView vcaname,hh_id;
+    private TextView vcaname,hh_id, servicesCountText;
 
     private Button hh_services_link;
     private Button addServiceReportButton;
@@ -108,18 +108,20 @@ public class VcaServiceActivity extends AppCompatActivity {
         linearLayout = binding.serviceContainer;
         vcaname = binding.caregiverName;
         hh_id = binding.hhid;
+        servicesCountText = binding.servicesCountText;
         hh_services_link = binding.hhServiceLink;
         addServiceReportButton = binding.services1;
         HouseholdLinkFromVca();
 
-        intent_vcaid = getIntent().getExtras().getString("vcaid");
-        String intent_cname = getIntent().getExtras().getString("vcaname");
-        hivstatus = getIntent().getExtras().getString("hivstatus");
-        household_id = getIntent().getExtras().getString("hh_id");
-        c_name = getIntent().getExtras().getString("vcaname");
-        signature = getIntent().getExtras().getString("signature");
+        Bundle extras = getIntent() != null ? getIntent().getExtras() : null;
+        intent_vcaid = extras != null ? extras.getString("vcaid") : null;
+        String intent_cname = extras != null ? extras.getString("vcaname") : null;
+        hivstatus = extras != null ? extras.getString("hivstatus") : null;
+        household_id = extras != null ? extras.getString("hh_id") : null;
+        c_name = extras != null ? extras.getString("vcaname") : null;
+        signature = extras != null ? extras.getString("signature") : null;
 
-        applyHouseholdServicesLinkVisibility();
+        applyHouseholdServiceReportLinkVisibilityAsync();
         evaluateAddServiceButtonState();
 
         hh_id.setText(intent_vcaid);
@@ -476,6 +478,17 @@ public class VcaServiceActivity extends AppCompatActivity {
                 if (linearLayout != null) {
                     linearLayout.setVisibility(finalUpdatedList.isEmpty() ? View.VISIBLE : View.GONE);
                 }
+                if (servicesCountText != null) {
+                    int count = familyServiceList.size();
+                    String countText = getResources().getQuantityString(R.plurals.service_reports_count, count, count);
+                    if (count > 0) {
+                        String lastDate = familyServiceList.get(0).getDate();
+                        if (lastDate != null && !lastDate.trim().isEmpty()) {
+                            countText += getString(R.string.service_reports_last_submitted, lastDate.trim());
+                        }
+                    }
+                    servicesCountText.setText(countText);
+                }
             });
         });
     }
@@ -675,11 +688,11 @@ public class VcaServiceActivity extends AppCompatActivity {
         });
     }
 
-    private void applyHouseholdServicesLinkVisibility() {
+    private void applyHouseholdServiceReportLinkVisibilityAsync() {
         if (hh_services_link == null) return;
 
-        // Default to GONE until we confirm the "source_from" context (prevents brief incorrect visibility).
-        hh_services_link.setVisibility(View.GONE);
+        // Default to visible; only hide when the household history matches the VCA report rules.
+        hh_services_link.setVisibility(View.VISIBLE);
 
         final String finalHouseholdId = household_id;
         if (TextUtils.isEmpty(finalHouseholdId)) {

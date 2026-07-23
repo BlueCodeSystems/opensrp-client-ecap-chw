@@ -98,6 +98,12 @@ public class VcaScreeningModel {
     private String gender;
     private String birthdate;
     private String index_check_box;
+    private String adult_primary_caregiver_present;
+    private String caregiver_chronically_ill;
+    private String single_woman_headed_household;
+    private String living_with_disability;
+    private String caregiver_aged_65_plus;
+    private String any_form_of_violence;
     private String case_status;
     private String date_referred;
     private String date_offered_enrollment;
@@ -912,6 +918,54 @@ public class VcaScreeningModel {
 
     public void setIndex_check_box(String index_check_box) {
         this.index_check_box = index_check_box;
+    }
+
+    public String getAdult_primary_caregiver_present() {
+        return adult_primary_caregiver_present;
+    }
+
+    public void setAdult_primary_caregiver_present(String adult_primary_caregiver_present) {
+        this.adult_primary_caregiver_present = adult_primary_caregiver_present;
+    }
+
+    public String getCaregiver_chronically_ill() {
+        return caregiver_chronically_ill;
+    }
+
+    public void setCaregiver_chronically_ill(String caregiver_chronically_ill) {
+        this.caregiver_chronically_ill = caregiver_chronically_ill;
+    }
+
+    public String getSingle_woman_headed_household() {
+        return single_woman_headed_household;
+    }
+
+    public void setSingle_woman_headed_household(String single_woman_headed_household) {
+        this.single_woman_headed_household = single_woman_headed_household;
+    }
+
+    public String getLiving_with_disability() {
+        return living_with_disability;
+    }
+
+    public void setLiving_with_disability(String living_with_disability) {
+        this.living_with_disability = living_with_disability;
+    }
+
+    public String getCaregiver_aged_65_plus() {
+        return caregiver_aged_65_plus;
+    }
+
+    public void setCaregiver_aged_65_plus(String caregiver_aged_65_plus) {
+        this.caregiver_aged_65_plus = caregiver_aged_65_plus;
+    }
+
+    public String getAny_form_of_violence() {
+        return any_form_of_violence;
+    }
+
+    public void setAny_form_of_violence(String any_form_of_violence) {
+        this.any_form_of_violence = any_form_of_violence;
     }
 
     public String getCase_status() {

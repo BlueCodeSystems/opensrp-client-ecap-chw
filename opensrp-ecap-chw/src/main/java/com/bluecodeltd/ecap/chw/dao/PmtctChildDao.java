@@ -29,7 +29,7 @@ public class PmtctChildDao extends AbstractDao {
             return "0";
         }
         String escaped = escapeSql(householdId.trim());
-        String sql = "SELECT COUNT(*) v FROM ec_pmtct_child WHERE household_id = '" + escaped + "' AND " + activeRecordClause();
+        String sql = "SELECT COUNT(*) v FROM ec_pmtct_child WHERE household_id = '" + escaped + "' AND (delete_status IS NULL OR delete_status <> '1')";
         DataMap<String> dataMap = c -> getCursorValue(c, "v");
         List<String> values = AbstractDao.readData(sql, dataMap);
         if (values == null || values.isEmpty()) {
@@ -78,7 +78,7 @@ public class PmtctChildDao extends AbstractDao {
         if (idClause == null) {
             return "0";
         }
-        String sql = "SELECT COUNT(*) v FROM ec_pmtct_child WHERE " + idClause + " AND " + activeRecordClause();
+        String sql = "SELECT COUNT(*) v FROM ec_pmtct_child WHERE " + idClause + " AND (delete_status IS NULL OR delete_status <> '1')";
         DataMap<String> dataMap = c -> getCursorValue(c, "v");
 
         List<String> values = AbstractDao.readData(sql, dataMap);

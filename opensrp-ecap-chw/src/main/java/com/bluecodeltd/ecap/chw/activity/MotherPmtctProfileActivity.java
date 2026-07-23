@@ -39,6 +39,7 @@ import com.bluecodeltd.ecap.chw.dao.IndexMotherDao;
 import com.bluecodeltd.ecap.chw.model.EcMotherIndexModel;
 import com.bluecodeltd.ecap.chw.model.IndexMotherModel;
 import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
+import com.bluecodeltd.ecap.chw.dao.PmtctMotherPostnatalDao;
 import com.bluecodeltd.ecap.chw.dao.PmctMotherAncDao;
 import com.bluecodeltd.ecap.chw.dao.PmtctChildDao;
 import com.bluecodeltd.ecap.chw.dao.PmtctDeliveryDao;
@@ -49,6 +50,7 @@ import com.bluecodeltd.ecap.chw.fragment.AncMotherPmtctFragment;
 import com.bluecodeltd.ecap.chw.fragment.PMTCTMotherOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.PmctMotherHeiFragment;
 import com.bluecodeltd.ecap.chw.fragment.PostnatalCareFragment;
+import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.PmctMotherAncModel;
 import com.bluecodeltd.ecap.chw.model.PmctMotherOutcomeModel;
@@ -110,6 +112,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
     private String refresh;
     private TextView childTabCount, motherName, txtAge;
     private FloatingActionButton fab;
+    private View fabScrim;
     CommonPersonObjectClient commonPersonObjectClient, commonMother;
     ObjectMapper oMapper;
     private RelativeLayout cLayout, mLayout,ancLayout,labourLayout,postnatalLayout;
@@ -267,6 +270,8 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
        oMapper = new ObjectMapper();
 //
         fab = binding.fabx;
+        fabScrim = binding.fabScrim;
+        fabScrim.setOnClickListener(v -> closeFab());
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
@@ -422,25 +427,38 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 //
 //        mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
 //    }
-    private void updatePostnatalTitle() {
+        private void updatePostnatalTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.pmct_titles, null);
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
         visitTabTitle.setText("POSTNATAL");
         final TextView countView = taskTabTitleLayout.findViewById(R.id.children_count);
-        countView.setText("…");
+        countView.setText("0");
         if (mTabLayout.getTabAt(1) != null) {
             mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
         }
 
-        final String cid = clientId;
         Threading.ioBestEffort(() -> {
-            String count = "0";
+            int count = 0;
             try {
-                if (!isNullOrEmpty(cid)) {
-                    count = PMTCTMotherDao.countMotherPostnatal(cid);
+                String householdId = null;
+                try {
+                    householdId = ptctMotherModel != null && !isNullOrEmpty(ptctMotherModel.getHousehold_id())
+                            ? ptctMotherModel.getHousehold_id()
+                            : resolveHouseholdId();
+                } catch (Exception ignored) { }
+
+                String idForPostnatal = householdId;
+                if (isNullOrEmpty(idForPostnatal)) {
+                    try {
+                        idForPostnatal = ptctMotherModel != null ? ptctMotherModel.getPmtct_id() : null;
+                    } catch (Exception ignored) { }
                 }
-            } catch (Exception ignored) {}
-            final String finalCount = count;
+
+                if (!isNullOrEmpty(idForPostnatal)) {
+                    count = PmtctMotherPostnatalDao.getPostnatalMother(idForPostnatal).size();
+                }
+            } catch (Exception ignored) { }
+            final String finalCount = String.valueOf(count);
             Threading.main(() -> {
                 if (isFinishing() || isDestroyed()) return;
                 countView.setText(finalCount != null ? finalCount : "0");
@@ -452,7 +470,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
         visitTabTitle.setText("HEI");
         final TextView countView = taskTabTitleLayout.findViewById(R.id.children_count);
-        countView.setText("…");
+        countView.setText("0");
         if (mTabLayout.getTabAt(2) != null) {
             mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
         }
@@ -464,13 +482,14 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
                 ? ptctMotherModel.getHousehold_id()
                 : resolveHouseholdId();
         Threading.ioBestEffort(() -> {
-            String count = "0";
+            int count = 0;
             try {
-                if (!isNullOrEmpty(primaryId) || !isNullOrEmpty(secondaryId)) {
-                    count = PmtctChildDao.countMotherHei(primaryId, secondaryId);
+                String householdId = !isNullOrEmpty(secondaryId) ? secondaryId : primaryId;
+                if (!isNullOrEmpty(householdId)) {
+                    count = PmtctChildDao.getPmctChildHeiByHouseholdId(householdId).size();
                 }
-            } catch (Exception ignored) {}
-            final String finalCount = count;
+            } catch (Exception ignored) { }
+            final String finalCount = String.valueOf(count);
             Threading.main(() -> {
                 if (isFinishing() || isDestroyed()) return;
                 countView.setText(finalCount != null ? finalCount : "0");
@@ -1071,6 +1090,12 @@ break;
                         JSONObject hhEdit = formUtils.getFormJson("hh_edit");
                         CoreJsonFormUtils.populateJsonForm(hhEdit, new ObjectMapper().convertValue(household, Map.class));
                         hhEdit.put("entity_id", household.getBase_entity_id());
+                        try {
+                            JSONObject statusField = getFieldJSONObject(fields(hhEdit, "step1"), "status");
+                            if (statusField != null) {
+                                statusField.put(JsonFormUtils.VALUE, "1");
+                            }
+                        } catch (Exception ignored) { }
                         ChildIndexEventClient ec = processRegistration(hhEdit.toString());
                         if (ec != null) {
                             saveRegistration(ec, true);
@@ -1156,7 +1181,7 @@ break;
 
     private void setupFabVisibility() {
         try {
-            fab.setVisibility(mViewPager.getCurrentItem() == 0 ? View.VISIBLE : View.GONE);
+            updateFabVisibility(mViewPager.getCurrentItem());
         } catch (Exception ignored) { }
 
         mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -1165,12 +1190,34 @@ break;
                 if (position != 0 && isFabOpen) {
                     closeFab();
                 }
-                fab.setVisibility(position == 0 ? View.VISIBLE : View.GONE);
+                updateFabVisibility(position);
             }
         });
     }
 
+    private void updateFabVisibility(int pageIndex) {
+        if (fab == null) {
+            return;
+        }
+        boolean isOverviewPage = pageIndex == 0;
+        fab.setEnabled(isOverviewPage);
+        fab.setClickable(isOverviewPage);
+        if (isOverviewPage) {
+            fab.show();
+            fab.setVisibility(View.VISIBLE);
+        } else {
+            if (isFabOpen) {
+                closeFab();
+            }
+            fab.hide();
+            fab.setVisibility(View.GONE);
+        }
+    }
+
     public void animateFAB(){
+        if (mViewPager != null && mViewPager.getCurrentItem() != 0) {
+            return;
+        }
 
         if (isFabOpen){
 
@@ -1180,6 +1227,9 @@ break;
 
             isFabOpen = true;
             fab.startAnimation(rotate_forward);
+            fabScrim.setVisibility(View.VISIBLE);
+            fabScrim.setAlpha(0f);
+            fabScrim.animate().alpha(1f).setDuration(200).start();
             mLayout.setVisibility(View.VISIBLE);
             cLayout.setVisibility(View.VISIBLE);
             ancLayout.setVisibility(View.VISIBLE);
@@ -1192,6 +1242,8 @@ break;
     public void closeFab(){
         fab.startAnimation(rotate_backward);
         isFabOpen = false;
+        fabScrim.animate().alpha(0f).setDuration(200)
+                .withEndAction(() -> fabScrim.setVisibility(View.GONE)).start();
         cLayout.setVisibility(View.GONE);
         mLayout.setVisibility(View.GONE);
         ancLayout.setVisibility(View.GONE);
@@ -1257,86 +1309,96 @@ break;
                     ? ptctMotherModel.getHousehold_id()
                     : resolveHouseholdId();
 
-            // Require user to delete children first (both CA children and PMTCT HEI) before deleting the mother.
-            try {
-                java.util.List<com.bluecodeltd.ecap.chw.model.Child> activeChildren = IndexPersonDao.getFamilyChildren(secondaryId);
-                if (activeChildren != null && !activeChildren.isEmpty()) {
-                    Toasty.warning(MotherPmtctProfileActivity.this, "Delete the child(ren) before deleting the record", Toast.LENGTH_LONG, true).show();
-                    break;
-                }
-            } catch (Exception ignored) { }
+            builder.setMessage("You are about to delete this record");
+            builder.setNegativeButton("NO", (dialog, id) -> dialog.cancel())
+                    .setPositiveButton("YES", ((dialogInterface, i) -> {
+                        Threading.io(() -> {
+                            try {
+                                String hhId = resolveHouseholdId();
+                                if (!isNullOrEmpty(hhId)) {
+                                    List<Child> activeChildren = IndexPersonDao.getFamilyChildren(hhId);
+                                    if (activeChildren != null && !activeChildren.isEmpty()) {
+                                        String names = "";
+                                        try {
+                                            names = IndexPersonDao.returnVcaNames(hhId);
+                                        } catch (Throwable ignored) { }
+                                        final String message = "Please delete/deregister all VCA(s) in this household first.\n\nVCA(s):\n" + (names != null ? names : "");
+                                        Threading.main(() -> {
+                                            if (isFinishing() || isDestroyed()) return;
+                                            new AlertDialog.Builder(MotherPmtctProfileActivity.this)
+                                                    .setTitle("Cannot delete")
+                                                    .setMessage(message)
+                                                    .setPositiveButton("OK", (d, which) -> d.dismiss())
+                                                    .show();
+                                        });
+                                        return;
+                                    }
+                                }
+                                String heiCount = isNullOrEmpty(hhId) ? "0" : String.valueOf(PmtctChildDao.getPmctChildHeiByHouseholdId(hhId).size());
+                                if (heiCount != null && !"0".equals(heiCount)) {
+                                    final String message = "Please delete/deregister all HEI records first before deleting the PMTCT record.";
+                                    Threading.main(() -> {
+                                        if (isFinishing() || isDestroyed()) return;
+                                        new AlertDialog.Builder(MotherPmtctProfileActivity.this)
+                                                .setTitle("Cannot delete")
+                                                .setMessage(message)
+                                                .setPositiveButton("OK", (d, which) -> d.dismiss())
+                                                .show();
+                                    });
+                                    return;
+                                }
 
-            Boolean checkForLinks = PmtctChildDao.hasDeletedHei(primaryId, secondaryId);
-            if (checkForLinks == false) {
+                                FormUtils formUtils;
+                                try {
+                                    formUtils = new FormUtils(this);
+                                } catch (Exception e) {
+                                    Timber.e(e);
+                                    Threading.main(() -> Toasty.error(MotherPmtctProfileActivity.this, "Failed to load form", Toast.LENGTH_LONG, true).show());
+                                    return;
+                                }
 
+                                if (ptctMotherModel == null) {
+                                    Threading.main(() -> Toasty.error(MotherPmtctProfileActivity.this, "PMTCT record not found", Toast.LENGTH_LONG, true).show());
+                                    return;
+                                }
 
-                builder.setMessage("You are about to delete this record");
-                builder.setNegativeButton("NO", (dialog, id) -> {
-                    //  Action for 'NO' Button
-                    dialog.cancel();
+                                ptctMotherModel.setDelete_status("1");
+                                JSONObject openForm = formUtils.getFormJson("mother_pmtct_edit");
+                                CoreJsonFormUtils.populateJsonForm(openForm, new ObjectMapper().convertValue(ptctMotherModel, Map.class));
+                                openForm.put("entity_id", ptctMotherModel.getBase_entity_id());
+                                try {
+                                    JSONObject del = getFieldJSONObject(fields(openForm, "step1"), "delete_status");
+                                    if (del != null) {
+                                        del.put(JsonFormUtils.VALUE, "1");
+                                    }
+                                } catch (Exception ignored) { }
 
-                }).setPositiveButton("YES", ((dialogInterface, i) -> {
-                    FormUtils formUtils = null;
-                    try {
-                        formUtils = new FormUtils(this);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    ptctMotherModel.setDelete_status("1");
-                    JSONObject openForm = formUtils.getFormJson("mother_pmtct_edit");
-                    try {
-                        CoreJsonFormUtils.populateJsonForm(openForm, new ObjectMapper().convertValue(ptctMotherModel, Map.class));
-                        openForm.put("entity_id", ptctMotherModel.getBase_entity_id());
-                        try {
-                            JSONObject del = getFieldJSONObject(fields(openForm, "step1"), "delete_status");
-                            if (del != null) {
-                                del.put(JsonFormUtils.VALUE, "1");
+                                ChildIndexEventClient childIndexEventClient = processRegistration(openForm.toString());
+                                if (childIndexEventClient == null) {
+                                    Threading.main(() -> Toasty.error(MotherPmtctProfileActivity.this, "Failed to delete record", Toast.LENGTH_LONG, true).show());
+                                    return;
+                                }
+                                saveRegistration(childIndexEventClient, true);
+
+                                String motherBaseId = ptctMotherModel != null ? ptctMotherModel.getBase_entity_id() : null;
+                                softDeleteIndexMotherAndHousehold(hhId, motherBaseId);
+
+                                Threading.main(() -> {
+                                    Toasty.success(MotherPmtctProfileActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
+                                    Intent returnToRegister = new Intent(MotherPmtctProfileActivity.this, PMTCTRegisterActivity.class);
+                                    startActivity(returnToRegister);
+                                    finish();
+                                });
+                            } catch (Exception e) {
+                                Timber.e(e);
+                                Threading.main(() -> Toasty.error(MotherPmtctProfileActivity.this, "Failed to delete record", Toast.LENGTH_LONG, true).show());
                             }
-                        } catch (Exception ignored) { }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                        });
+                    }));
 
-
-                    try {
-
-                        ChildIndexEventClient childIndexEventClient = processRegistration(openForm.toString());
-                        if (childIndexEventClient == null) {
-                            return;
-                        }
-                        saveRegistration(childIndexEventClient, true);
-
-                        // Also soft delete linked index mother + household records
-                        String hhId = (ptctMotherModel != null && !isNullOrEmpty(ptctMotherModel.getHousehold_id()))
-                                ? ptctMotherModel.getHousehold_id()
-                                : resolveHouseholdId();
-                        String motherBaseId = ptctMotherModel != null ? ptctMotherModel.getBase_entity_id() : null;
-                        softDeleteIndexMotherAndHousehold(hhId, motherBaseId);
-
-
-                    } catch (Exception e) {
-                        Timber.e(e);
-                    }
-
-
-                    Toasty.success(MotherPmtctProfileActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
-
-
-//                            super.onBackPressed();
-
-                    Intent returnToRegister = new Intent(this, PMTCTRegisterActivity.class);
-                    startActivity(returnToRegister);
-                    finish();
-                }));
-
-                //Creating dialog box
-                AlertDialog alert = builder.create();
-                //Setting the title manually
-                alert.setTitle("Alert");
-                alert.show();
-            } else{
-                Toasty.success(MotherPmtctProfileActivity.this, "Delete the HEI before deleting the record", Toast.LENGTH_LONG, true).show();
-            }
+            AlertDialog alert = builder.create();
+            alert.setTitle("Alert");
+            alert.show();
             break;
 
 

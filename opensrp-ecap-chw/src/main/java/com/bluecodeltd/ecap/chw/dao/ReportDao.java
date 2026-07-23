@@ -208,13 +208,18 @@ public class ReportDao extends AbstractDao {
     private static HashMap<String, HashMap<String, VaccineSchedule>> getVaccineSchedules(String category) {
         String fileName = category.equalsIgnoreCase("child") ? "vaccines.json" : "vaccines/child_over_5_vaccines.json";
 
-        List<VaccineGroup> vaccineGroups =
-                VaccineScheduleUtil.getVaccineGroups(CoreChwApplication.getInstance().getApplicationContext(), fileName);
+        try {
+            List<VaccineGroup> vaccineGroups =
+                    VaccineScheduleUtil.getVaccineGroups(CoreChwApplication.getInstance().getApplicationContext(), fileName);
 
-        List<org.smartregister.immunization.domain.jsonmapping.Vaccine> specialVaccines =
-                VaccinatorUtils.getSpecialVaccines(CoreChwApplication.getInstance().getApplicationContext());
+            List<org.smartregister.immunization.domain.jsonmapping.Vaccine> specialVaccines =
+                    VaccinatorUtils.getSpecialVaccines(CoreChwApplication.getInstance().getApplicationContext());
 
-        return VisitVaccineUtil.getSchedule(vaccineGroups, specialVaccines, category);
+            return VisitVaccineUtil.getSchedule(vaccineGroups, specialVaccines, category);
+        } catch (Throwable t) {
+            Timber.w(t, "Skipping vaccine schedule lookup because vaccine assets are missing or unreadable");
+            return new HashMap<>();
+        }
     }
 
 

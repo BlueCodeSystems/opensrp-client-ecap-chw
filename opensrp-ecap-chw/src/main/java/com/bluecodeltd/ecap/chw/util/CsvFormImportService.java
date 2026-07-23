@@ -175,6 +175,7 @@ public class CsvFormImportService {
         addEncounterTable("Mother Register", Constants.EcapClientTable.EC_MOTHER_INDEX);
         addEncounterTable("Mother Register From Service", Constants.EcapClientTable.EC_MOTHER_INDEX);
         addEncounterTable("Mother Pmtct", Constants.EcapClientTable.EC_MOTHER_PMTCT);
+        addEncounterTable("Enroll PMTCT Record From Mother Index", Constants.EcapClientTable.EC_MOTHER_PMTCT);
         addEncounterTable("Mother PMTCT Register From Service", Constants.EcapClientTable.EC_MOTHER_PMTCT);
         addEncounterTable("HIV Testing Service", Constants.EcapClientTable.EC_HIV_TESTING_SERVICE);
         addEncounterTable("HIV Testing Links", Constants.EcapClientTable.EC_HIV_TESTING_LINKS);

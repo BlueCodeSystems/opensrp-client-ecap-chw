@@ -149,6 +149,12 @@ public class VCAScreeningDao extends AbstractDao {
             record.setGender(getCursorValue(c, "gender"));
             record.setBirthdate(getCursorValue(c, "birthdate"));
             record.setIndex_check_box(getCursorValue(c, "index_check_box"));
+            record.setAdult_primary_caregiver_present(getCursorValue(c, "adult_primary_caregiver_present"));
+            record.setCaregiver_chronically_ill(getCursorValue(c, "caregiver_chronically_ill"));
+            record.setSingle_woman_headed_household(getCursorValue(c, "single_woman_headed_household"));
+            record.setLiving_with_disability(getCursorValue(c, "living_with_disability"));
+            record.setCaregiver_aged_65_plus(getCursorValue(c, "caregiver_aged_65_plus"));
+            record.setAny_form_of_violence(getCursorValue(c, "any_form_of_violence"));
             record.setCase_status(getCursorValue(c, "case_status"));
             record.setDate_referred(getCursorValue(c, "date_referred"));
             record.setDate_offered_enrollment(getCursorValue(c, "date_offered_enrollment"));
@@ -306,6 +312,19 @@ public class VCAScreeningDao extends AbstractDao {
             DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
+    }
+
+    public static String getPbfwStatus(String householdId) {
+        if (householdId == null || householdId.trim().isEmpty()) {
+            return null;
+        }
+        AbstractDao.DataMap<String> map = c -> getCursorValue(c, "caregiver_hiv_status");
+        List<String> result = AbstractDao.readData(
+                "SELECT caregiver_hiv_status FROM ec_mother_index WHERE household_id = '" + householdId
+                        + "' AND (caregiver_hiv_status = 'positive' OR caregiver_hiv_status = 'negative') LIMIT 1",
+                map);
+        if (result == null || result.isEmpty()) return null;
+        return result.get(0);
     }
 
 }

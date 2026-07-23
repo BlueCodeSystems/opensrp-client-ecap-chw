@@ -8,6 +8,7 @@ import static org.smartregister.chw.fp.util.FpUtil.getClientProcessorForJava;
 import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_EXTRA.STEP1;
 import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 
+import android.content.res.ColorStateList;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.ImageViewCompat;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -81,11 +83,13 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
 
     private View myStatus;
 
-    private final ImageView  visitLayout, caseplan_layout, warningIcon;
+    private final ImageView  visitLayout, caseplan_layout;
     private final TextView index_icon_layout;
     private final Button dueButton;
     private final ImageView notification;
     private final LinearLayout notification_wrapper;
+    private final View genderAvatar;
+    private final ImageView genderImage;
     JSONObject indexRegisterForm;
 
     VcaScreeningModel indexVCA;
@@ -102,20 +106,43 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
         myStatus = itemView.findViewById(R.id.mystatusx);
         visitLayout = itemView.findViewById(R.id.index_visit);
         gender_age = itemView.findViewById(R.id.gender_age);
-        warningIcon = itemView.findViewById(R.id.index_warning);
         dueButton = itemView.findViewById(R.id.due_button);
         notification = itemView.findViewById(R.id.notifications);
         notification_wrapper = itemView.findViewById(R.id.notification_wrapper);
+        genderAvatar = itemView.findViewById(R.id.gender_avatar);
+        genderImage = itemView.findViewById(R.id.gender_image);
 
 
     }
 
+    private void setupGenderAvatar(String gender) {
+        String normalized = gender != null ? gender.trim() : "";
+        int bgColorRes;
+        int iconRes;
+        if (normalized.equalsIgnoreCase("Male")) {
+            bgColorRes = R.color.stat_pill_male_bg;
+            iconRes = R.drawable.row_boy;
+        } else if (normalized.equalsIgnoreCase("Female")) {
+            bgColorRes = R.color.stat_pill_female_bg;
+            iconRes = R.drawable.row_girl;
+        } else {
+            genderAvatar.setVisibility(View.GONE);
+            return;
+        }
+        genderAvatar.setVisibility(View.VISIBLE);
+        genderAvatar.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, bgColorRes)));
+        // row_boy/row_girl are full-color illustrations (same icons used in the household member list), not tintable line icons.
+        ImageViewCompat.setImageTintList(genderImage, null);
+        genderImage.setImageResource(iconRes);
+    }
 
-    public void setupViews(String family, String village, int plans, int visits, String is_index, String status, String gender, String age, String is_screened,String vcaAge){
+
+    public void setupViews(String family, String village, int plans, int visits, boolean visitedThisMonth, String is_index, String status, String gender, String age, String vcaAge){
 
         familyNameTextView.setText(family);
         villageTextView.setText("ID : "+village);
         gender_age.setText(gender + " : " + age+" ");
+        setupGenderAvatar(gender);
 
 
 
@@ -144,16 +171,14 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
 
         if(visits > 0){
             visitLayout.setVisibility(View.VISIBLE);
+            // Green = service already recorded this calendar month; grey = has a visit history, but not this month.
+            int tintColorRes = visitedThisMonth ? R.color.status_green : R.color.stat_pill_unknown;
+            ImageViewCompat.setImageTintList(visitLayout, ColorStateList.valueOf(ContextCompat.getColor(context, tintColorRes)));
         } else {
             visitLayout.setVisibility(View.GONE);
         }
 
 
-        if(is_screened != null && is_screened.equals("true")){
-            warningIcon.setVisibility(View.GONE);
-        } else {
-            warningIcon.setVisibility(View.VISIBLE);
-        }
         // Default while loading
         dueButton.setBackgroundResource(R.drawable.due_contact);
         dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), org.smartregister.chw.core.R.color.btn_blue));
@@ -190,19 +215,19 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
                     String buttonText;
                     if ("green".equalsIgnoreCase(fColor) && fDate != null) {
                         backgroundResource = R.drawable.home_visit_due;
-                        textColorResource = org.smartregister.chw.core.R.color.colorGreen;
+                        textColorResource = android.R.color.white;
                         buttonText = "Visit Due: " + fDate;
                     } else if ("yellow".equalsIgnoreCase(fColor) && fDate != null) {
                         backgroundResource = R.drawable.home_visit_10days_less;
-                        textColorResource = R.color.pie_chart_yellow;
+                        textColorResource = R.color.text_black;
                         buttonText = "Visit Due: " + fDate;
                     } else if ("red".equalsIgnoreCase(fColor) && fDate != null) {
                         backgroundResource = R.drawable.home_visit_overdue;
-                        textColorResource = com.nerdstone.neatformcore.R.color.colorRed;
+                        textColorResource = android.R.color.white;
                         buttonText = "Visit Overdue: " + fDate;
                     } else {
                         backgroundResource = R.drawable.due_contact;
-                        textColorResource = org.smartregister.chw.core.R.color.btn_blue;
+                        textColorResource = android.R.color.white;
                         buttonText = "Conduct Visit";
                     }
                     dueButton.setBackgroundResource(backgroundResource);
@@ -211,11 +236,11 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
                 } else {
                     if (screeningFinal != null && ("0".equals(screeningFinal.getCase_status()) || "2".equals(screeningFinal.getCase_status()))) {
                         dueButton.setBackgroundResource(R.drawable.inactive_button);
-                        dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), org.smartregister.chw.core.R.color.btn_blue));
+                        dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), R.color.stat_pill_unknown));
                         dueButton.setText("Case Closed");
                     } else {
                         dueButton.setBackgroundResource(R.drawable.due_contact);
-                        dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), org.smartregister.chw.core.R.color.btn_blue));
+                        dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), android.R.color.white));
                         dueButton.setText("Conduct Visit");
                     }
                 }

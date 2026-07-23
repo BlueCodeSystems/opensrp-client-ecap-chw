@@ -14,7 +14,8 @@ data class ProfileOverviewState(
     val recentServices: List<VCAServiceModel> = emptyList(),
     val abym: AbymSubpopulationModel? = null,
     val muac: MuacModel? = null,
-    val screen: VcaScreeningModel? = null
+    val screen: VcaScreeningModel? = null,
+    val pbfwStatus: String? = null
 )
 
 class ProfileOverviewViewModel: ViewModel() {
@@ -29,7 +30,8 @@ class ProfileOverviewViewModel: ViewModel() {
                 val abym = AbymSubpopulationDao.getAbymSubpopulation(childUniqueId)
                 val muac = MuacDao.getMuac(childUniqueId)
                 val screen = VCAScreeningDao.getVcaScreening(childUniqueId)
-                _state.postValue(ProfileOverviewState(household, recent, abym, muac, screen))
+                val pbfwStatus = VCAScreeningDao.getPbfwStatus(householdId)
+                _state.postValue(ProfileOverviewState(household, recent, abym, muac, screen, pbfwStatus))
             } catch (_: Exception) {}
         }
     }

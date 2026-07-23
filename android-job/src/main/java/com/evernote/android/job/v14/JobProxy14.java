@@ -174,7 +174,7 @@ public class JobProxy14 implements JobProxy {
 
     @Override
     public boolean isPlatformJobScheduled(JobRequest request) {
-        PendingIntent pendingIntent = getPendingIntent(request, PendingIntent.FLAG_NO_CREATE);
+        PendingIntent pendingIntent = getPendingIntent(request, PendingIntent.FLAG_NO_CREATE | PendingIntentUtil.flagImmutable());
         return pendingIntent != null;
     }
 
