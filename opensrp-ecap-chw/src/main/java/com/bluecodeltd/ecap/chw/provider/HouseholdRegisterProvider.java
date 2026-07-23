@@ -63,9 +63,11 @@ public class HouseholdRegisterProvider implements RecyclerViewProvider<Household
             List<String> genderList = new ArrayList<>();
             List<String> ageList = new ArrayList<>();
             String is_screened = null;
+            String vcaCount = "0";
             try { genderList = IndexPersonDao.getGenders(householdLookupId); } catch (Exception ignored) {}
             try { ageList = IndexPersonDao.getAges(householdLookupId); } catch (Exception ignored) {}
             try { is_screened = HouseholdDao.checkIfScreened(householdLookupId); } catch (Exception ignored) {}
+            try { vcaCount = IndexPersonDao.countChildren(householdLookupId); } catch (Exception ignored) {}
 
             String caregiverName;
             if(updated_caregiver_name.isEmpty()){
@@ -78,11 +80,12 @@ public class HouseholdRegisterProvider implements RecyclerViewProvider<Household
             final List<String> fAgeList = ageList;
             final String fIsScreened = is_screened;
             final String fCaregiverName = caregiverName;
+            final String fVcaCount = vcaCount;
 
             Threading.main(() -> {
                 Object tag = householdRegisterViewHolder.itemView.getTag(R.id.tag_row_id);
                 if (!(tag instanceof String) || !rowTag.equals(tag)) return;
-                householdRegisterViewHolder.setupViews(fCaregiverName + " " + "Household", fHouseholdLookupId, baseId, fHouseholdLookupId, fGenderList, fIsScreened, fAgeList, context);
+                householdRegisterViewHolder.setupViews(fCaregiverName + " " + "Household", fHouseholdLookupId, baseId, is_closed, fHouseholdLookupId, fGenderList, fIsScreened, fAgeList, fVcaCount, context);
                 householdRegisterViewHolder.itemView.setOnClickListener(onClickListener);
                 View columns = householdRegisterViewHolder.itemView.findViewById(R.id.register_columns);
                 columns.setOnClickListener(onClickListener);
@@ -148,7 +151,7 @@ public class HouseholdRegisterProvider implements RecyclerViewProvider<Household
 
     @Override
     public HouseholdRegisterViewHolder createViewHolder(ViewGroup viewGroup) {
-        View viewHolder = inflater().inflate(R.layout.household_register_item_layout, null);
+        View viewHolder = inflater().inflate(R.layout.household_register_item_layout, viewGroup, false);
         return new HouseholdRegisterViewHolder(viewHolder);
     }
 

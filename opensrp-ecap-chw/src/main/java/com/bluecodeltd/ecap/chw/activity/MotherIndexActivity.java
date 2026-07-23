@@ -219,20 +219,15 @@ public class MotherIndexActivity extends BaseRegisterActivity implements MotherI
                             String ageRange = ageRangeField != null ? ageRangeField.optString("value", "") : "";
 
                             boolean ageRangeBlocks = "no".equalsIgnoreCase(ageRange);
-                            boolean hivNegativeNoPregNoBreast = "negative".equalsIgnoreCase(caregiverHivStatus)
-                                    && "no".equalsIgnoreCase(pregnantMother)
-                                    && "no".equalsIgnoreCase(motherBreastfeeding);
 
-                            if (ageRangeBlocks || hivNegativeNoPregNoBreast) {
+                            if (ageRangeBlocks) {
                                 Toasty.warning(this, "You can't enroll this household", Toast.LENGTH_LONG, true).show();
                                 return;
                             }
                         } catch (Exception ignored) { }
 
-                        boolean shouldUseMotherRegister = "positive".equalsIgnoreCase(caregiverHivStatus)
-                                || "yes".equalsIgnoreCase(pregnantMother)
-                                || "yes".equalsIgnoreCase(motherBreastfeeding);
-                        String encounterType = shouldUseMotherRegister ? "Mother Register" : "Mother Register Negative";
+                        boolean isPositiveCaregiver = "positive".equalsIgnoreCase(caregiverHivStatus);
+                        String encounterType = isPositiveCaregiver ? "Mother Register" : "Mother Register Negative";
                         jsonFormObject.put(JsonFormConstants.ENCOUNTER_TYPE, encounterType);
 
                         RegisterParams registerParam = new RegisterParams();
@@ -313,7 +308,7 @@ public class MotherIndexActivity extends BaseRegisterActivity implements MotherI
                     return;
                 }
 
-                pmtctForm.put(com.vijay.jsonwizard.constants.JsonFormConstants.ENCOUNTER_TYPE, "Mother PMTCT Register From Service");
+                pmtctForm.put(com.vijay.jsonwizard.constants.JsonFormConstants.ENCOUNTER_TYPE, "Enroll PMTCT Record From Mother Index");
                 pmtctForm.put("entity_id", "");
 
                 String entityId = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
@@ -327,7 +322,7 @@ public class MotherIndexActivity extends BaseRegisterActivity implements MotherI
                 formTag.databaseVersion = BuildConfig.DATABASE_VERSION;
 
                 Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
-                        "Mother PMTCT Register From Service", Constants.EcapClientTable.EC_MOTHER_PMTCT);
+                        "Enroll PMTCT Record From Mother Index", Constants.EcapClientTable.EC_MOTHER_PMTCT);
                 if (event == null) {
                     return;
                 }

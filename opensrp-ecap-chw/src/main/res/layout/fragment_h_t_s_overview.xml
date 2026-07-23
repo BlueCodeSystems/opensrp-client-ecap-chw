@@ -4,397 +4,179 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/overview_summary_row"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:background="@color/dash_bg"
+    android:fillViewport="true"
+    android:scrollbars="vertical"
+    android:fadeScrollbars="false">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="24dp">
 
-
-        <TextView
-            android:id="@+id/overview_section_header"
+        <!-- ============ TESTING DETAILS ============ -->
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/overview_header_bg"
-            android:gravity="left"
-            android:paddingLeft="@dimen/contact_drawable_padding"
-            android:paddingTop="@dimen/contact_drawable_padding"
-            android:paddingBottom="@dimen/contact_drawable_padding"
-            android:singleLine="true"
-            android:text="CLIENT DETAILS"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@color/white"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <LinearLayout
-            app:layout_constraintTop_toBottomOf="@+id/overview_section_header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/contact_small_padding"
-            android:paddingBottom="@dimen/contact_small_padding"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="2"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_weight="1"
-                    android:id="@+id/overview_section_details_left1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Health Facility"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    />
-
-
-                <TextView
-                    android:layout_weight="1"
-                    android:id="@+id/facility"
-                    android:inputType="textCapWords"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="2"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Testing Modality"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    />
-
-
-                <TextView
-                    android:layout_weight="1"
-                    android:id="@+id/testing_modality"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    />
-
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/artLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="2"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    android:layout_weight="1"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:text="ART Number" />
-                <TextView
-                    android:layout_weight="1"
-                    android:id="@+id/art_number"
-                    android:textAllCaps="true"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    />
-
-            </LinearLayout>
-
-
-
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="1dp"
+            app:cardBackgroundColor="@color/register_card_bg">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:weightSum="2"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:paddingBottom="4dp">
 
                 <TextView
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Entry Point"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    />
+                    android:id="@+id/overview_section_header"
+                    style="@style/OverviewSectionHeader"
+                    android:text="Testing Details" />
 
-                <TextView
-                    android:layout_weight="1"
-                    android:id="@+id/entry_point"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    />
+                <LinearLayout style="@style/OverviewRow">
+                    <TextView
+                        android:id="@+id/overview_section_details_left1"
+                        style="@style/OverviewRowLabel"
+                        android:text="Health Facility" />
+                    <TextView
+                        android:id="@+id/facility"
+                        style="@style/OverviewRowValue"
+                        android:inputType="textCapWords" />
+                </LinearLayout>
+
+                <include layout="@layout/overview_row_divider" />
+
+                <LinearLayout style="@style/OverviewRow">
+                    <TextView style="@style/OverviewRowLabel" android:text="Testing Modality" />
+                    <TextView android:id="@+id/testing_modality" style="@style/OverviewRowValue" />
+                </LinearLayout>
+
+                <include layout="@layout/overview_row_divider" />
+
+                <LinearLayout
+                    android:id="@+id/artLayout"
+                    style="@style/OverviewRow">
+                    <TextView style="@style/OverviewRowLabel" android:text="ART Number" />
+                    <TextView
+                        android:id="@+id/art_number"
+                        style="@style/OverviewRowValue"
+                        android:textAllCaps="true" />
+                </LinearLayout>
+
+                <include layout="@layout/overview_row_divider" />
+
+                <LinearLayout style="@style/OverviewRow">
+                    <TextView style="@style/OverviewRowLabel" android:text="Entry Point" />
+                    <TextView android:id="@+id/entry_point" style="@style/OverviewRowValue" />
+                </LinearLayout>
 
             </LinearLayout>
 
+        </androidx.cardview.widget.CardView>
 
-
-
-
-        </LinearLayout>
-
-
-        <TextView
-            android:id="@+id/overview_section_header3"
+        <!-- ============ CASE WORKER DETAILS ============ -->
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/overview_header_bg"
-            android:gravity="left"
-            android:paddingLeft="@dimen/contact_drawable_padding"
-            android:paddingTop="@dimen/contact_drawable_padding"
-            android:paddingBottom="@dimen/contact_drawable_padding"
-            android:singleLine="true"
-            android:text="CASE WORKER DETAILS AND HISTORY"
-            android:textAllCaps="true"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@color/white"
-            app:layout_constraintTop_toTopOf="parent" />
-        <LinearLayout
-            app:layout_constraintTop_toBottomOf="@+id/overview_section_header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/contact_small_padding"
-            android:paddingBottom="@dimen/contact_small_padding"
-            android:orientation="vertical">
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="1dp"
+            app:cardBackgroundColor="@color/register_card_bg">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:weightSum="2"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:paddingBottom="4dp">
 
                 <TextView
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Case Worker Name"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    />
+                    android:id="@+id/overview_section_header3"
+                    style="@style/OverviewSectionHeader"
+                    android:text="Case Worker Details" />
 
+                <LinearLayout style="@style/OverviewRow">
+                    <TextView style="@style/OverviewRowLabel" android:text="Case Worker Name" />
+                    <TextView
+                        android:id="@+id/caseworker_name"
+                        style="@style/OverviewRowValue"
+                        android:text="Not set" />
+                </LinearLayout>
 
-                <TextView
-                    android:layout_weight="1"
-                    android:id="@+id/caseworker_name"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    android:text="Not set"
-                    />
+                <include layout="@layout/overview_row_divider" />
+
+                <LinearLayout style="@style/OverviewRow">
+                    <TextView style="@style/OverviewRowLabel" android:text="Caseworker Phone" />
+                    <TextView
+                        android:id="@+id/phone"
+                        style="@style/OverviewRowValue"
+                        android:text="Not set" />
+                </LinearLayout>
+
+                <include layout="@layout/overview_row_divider" />
+
+                <LinearLayout style="@style/OverviewRow">
+                    <TextView style="@style/OverviewRowLabel" android:text="Implementing Partner" />
+                    <TextView
+                        android:id="@+id/implementing_partner"
+                        style="@style/OverviewRowValue"
+                        android:text="Not set" />
+                </LinearLayout>
 
             </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- ============ HISTORY ============ -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="1dp"
+            app:cardBackgroundColor="@color/register_card_bg">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:weightSum="2"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:paddingBottom="4dp">
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:text="Caseworker Phone"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color" />
+                    android:id="@+id/overview_section_header4"
+                    style="@style/OverviewSectionHeader"
+                    android:text="History" />
 
-                <TextView
-                    android:layout_weight="1"
-                    android:id="@+id/phone"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    android:text="Not set"
-                    />
+                <LinearLayout style="@style/OverviewRow">
+                    <TextView style="@style/OverviewRowLabel" android:text="Last Edited By" />
+                    <TextView
+                        android:id="@+id/date_edited"
+                        style="@style/OverviewRowValue"
+                        android:text="Not set" />
+                </LinearLayout>
+
+                <include layout="@layout/overview_row_divider" />
+
+                <LinearLayout style="@style/OverviewRow">
+                    <TextView style="@style/OverviewRowLabel" android:text="Date Case Created" />
+                    <TextView
+                        android:id="@+id/date_case_created"
+                        style="@style/OverviewRowValue"
+                        android:text="Not set" />
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="2"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingLeft="@dimen/contact_drawable_padding"
-                android:paddingTop="@dimen/contact_small_padding"
-                android:paddingBottom="@dimen/contact_small_padding"
-                android:text="Implementing Partner"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="@color/black_text_color" />
-
-            <TextView
-                android:layout_weight="1"
-                android:id="@+id/implementing_partner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:paddingLeft="@dimen/contact_drawable_padding"
-                android:paddingTop="@dimen/contact_small_padding"
-                android:paddingBottom="@dimen/contact_small_padding"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="@color/black_text_color"
-                android:text="Not set"
-                />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="2"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingLeft="@dimen/contact_drawable_padding"
-                android:paddingTop="@dimen/contact_small_padding"
-                android:paddingBottom="@dimen/contact_small_padding"
-                android:text="Last Edited By"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="@color/black_text_color" />
-
-            <TextView
-                android:layout_weight="1"
-                android:id="@+id/date_edited"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:paddingLeft="@dimen/contact_drawable_padding"
-                android:paddingTop="@dimen/contact_small_padding"
-                android:paddingBottom="@dimen/contact_small_padding"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="@color/black_text_color"
-                android:text="Not set"
-                />
-
-        </LinearLayout>
-
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="2"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingLeft="@dimen/contact_drawable_padding"
-                android:paddingTop="@dimen/contact_small_padding"
-                android:paddingBottom="@dimen/contact_small_padding"
-                android:text="Date Case Created"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="@color/black_text_color" />
-
-            <TextView
-                android:layout_weight="1"
-                android:id="@+id/date_case_created"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:paddingLeft="@dimen/contact_drawable_padding"
-                android:paddingTop="@dimen/contact_small_padding"
-                android:paddingBottom="@dimen/contact_small_padding"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="@color/black_text_color"
-                android:text="Not set"
-                />
-
-        </LinearLayout>
-        <LinearLayout
-            android:visibility="gone"
-            android:id="@+id/muac_warning"
-            android:orientation="horizontal"
-            android:gravity="left"
-            android:paddingLeft="@dimen/contact_drawable_padding"
-            android:paddingTop="@dimen/contact_drawable_padding"
-            android:paddingBottom="@dimen/contact_drawable_padding"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:src="@drawable/ic_icon_warning"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textSize="14dp"
-                android:textStyle="italic"
-                android:text="Please Complete Nutrition Screening Using MUAC Scores for each child in the Members Tab"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="@color/black"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 

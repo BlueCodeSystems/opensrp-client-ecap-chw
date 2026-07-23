@@ -149,6 +149,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 //    }
 
     private FloatingActionButton fab, fabHiv,fabHiv2, fabGradSub, fabGrad, fabCasePlan, fabVisitation, fabReferal,  fabAssessment;
+    private View fabScrim;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     public String childId, uniqueId, vcaAge,is_screened, is_hiv_positive, caseworkerphone;
@@ -159,6 +160,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private Caregiver householdCaregiver;
     private  VcaAssessmentModel assessmentModel;
     private TextView txtName, txtGender, txtAge, txtChildid;
+    private android.widget.ImageView profileGenderImage;
+    private View profileGenderAvatar;
+    private View profileNameLayout;
     private TabLayout mTabLayout;
     public ViewPager2 mViewPager;
     private TabLayoutMediator tabMediator;
@@ -378,6 +382,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
         }
 
         fab = binding.fab;
+        fabScrim = binding.fabScrim;
+        fabScrim.setOnClickListener(v -> closeFab());
         if (indexVCA != null && indexVCA.getCase_status() != null &&
                 ("0".equals(indexVCA.getCase_status()) || "2".equals(indexVCA.getCase_status()))) {
             fab.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
@@ -406,6 +412,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
         txtGender = binding.vcaGender;
         txtAge = binding.vcaAge;
         txtChildid = binding.childid;
+        profileGenderImage = binding.profileGenderImage;
+        profileGenderAvatar = binding.profileGenderAvatar;
+        profileNameLayout = binding.profileNameLayout;
 
         mTabLayout =  binding.tabs;
         mViewPager  = binding.viewpager;
@@ -456,27 +465,45 @@ public class IndexDetailsActivity extends AppCompatActivity {
         String birthdate = displayBirthdate != null ? checkAndConvertDateFormat(displayBirthdate) : null;
 
         if (birthdate != null && !"Invalid date format".equals(birthdate)) {
-            txtAge.setText(getAge(birthdate));
+            if (txtAge != null) {
+                txtAge.setText(getAge(birthdate));
+            }
             vcaAge = getAgeWithoutText(birthdate);
-        } else {
+        } else if (txtAge != null) {
             txtAge.setText("Not Set");
         }
 
-        try {
-            if (!TextUtils.isEmpty(full_name)) {
-                txtName.setText(full_name);
-            }
-            if (!TextUtils.isEmpty(displayGender)) {
-                txtGender.setText(displayGender.toUpperCase());
+        if (txtName != null && !TextUtils.isEmpty(full_name)) {
+            txtName.setText(full_name);
+        }
+        if (txtGender != null) {
+            txtGender.setText(!TextUtils.isEmpty(displayGender) ? displayGender.toUpperCase() : "");
+        }
+        if (profileGenderImage != null && profileGenderAvatar != null) {
+            if ("male".equalsIgnoreCase(displayGender)) {
+                profileGenderImage.setImageResource(R.drawable.row_boy);
+                profileGenderAvatar.setVisibility(View.VISIBLE);
+            } else if ("female".equalsIgnoreCase(displayGender)) {
+                profileGenderImage.setImageResource(R.drawable.row_girl);
+                profileGenderAvatar.setVisibility(View.VISIBLE);
             } else {
-                txtGender.setText("");
+                profileGenderAvatar.setVisibility(View.GONE);
             }
+        }
+        if (profileNameLayout != null) {
+            // Match the exact colors initAfterLoad() already uses for the toolbar/app bar by gender,
+            // so this section blends with them instead of introducing a third, mismatched palette.
+            if ("male".equalsIgnoreCase(displayGender)) {
+                profileNameLayout.setBackgroundColor(0xff218CC5);
+            } else {
+                profileNameLayout.setBackgroundColor(0xffDA70D6);
+            }
+        }
+        if (txtChildid != null) {
             String idForDisplay = indexVCA != null ? indexVCA.getUnique_id() : (child != null ? child.getUnique_id() : null);
             if (!TextUtils.isEmpty(idForDisplay)) {
                 txtChildid.setText("ID : " + idForDisplay);
             }
-        } catch (NullPointerException e) {
-            txtGender.setText("");
         }
 
         HashMap<String, Child> map = new HashMap<>();
@@ -1690,6 +1717,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
             isFabOpen = true;
             fab.startAnimation(rotate_forward);
             txtScreening.setVisibility(View.VISIBLE);
+            fabScrim.setVisibility(View.VISIBLE);
+            fabScrim.setAlpha(0f);
+            fabScrim.animate().alpha(1f).setDuration(200).start();
 
 
             boolean allowNonScreeningActions =
@@ -1874,6 +1904,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
     public void closeFab(){
         fab.startAnimation(rotate_backward);
         isFabOpen = false;
+        fabScrim.animate().alpha(0f).setDuration(200)
+                .withEndAction(() -> fabScrim.setVisibility(View.GONE)).start();
         txtScreening.setVisibility(View.GONE);
         rassessment.setVisibility(View.GONE);
         rcase_plan.setVisibility(View.GONE);
@@ -1958,6 +1990,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 break;
 
             case "vca_screening":
+            case "vca_edit":
             case "vca_edit_from_vca_service":
                 if(indexVCA.getIs_on_hiv_treatment() == null){
                     @NotNull Map<String, String> indexVCAMap = oMapper.convertValue(indexVCA(), Map.class);
@@ -2533,7 +2566,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             }
         } catch (Exception ignored) { }
 
-        return "vca_screening";
+        return "vca_edit";
     }
 
     private String resolveVcaEditFormName() {
@@ -2941,4 +2974,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
 
             
+
+
 

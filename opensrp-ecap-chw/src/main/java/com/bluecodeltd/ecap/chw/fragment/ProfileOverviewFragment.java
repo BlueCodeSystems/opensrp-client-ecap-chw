@@ -459,10 +459,10 @@ public class ProfileOverviewFragment extends Fragment {
         anyVisible |= setSubpopVisibility(sub8, isNoFlag(screenLocal.getIndex_check_box()));
         anyVisible |= setSubpopVisibility(sub9, isNoFlag(screenLocal.getAdult_primary_caregiver_present()));
         if ("positive".equalsIgnoreCase(pbfwStatus)) {
-            sub10.setText("C/A PBFW Positive,");
+            sub10.setText("C/A PBFW Positive");
             anyVisible |= setSubpopVisibility(sub10, true);
         } else if ("negative".equalsIgnoreCase(pbfwStatus)) {
-            sub10.setText("C/A PBFW Negative,");
+            sub10.setText("C/A PBFW Negative");
             anyVisible |= setSubpopVisibility(sub10, true);
         }
         anyVisible |= setSubpopVisibility(sub11, isYesFlag(screenLocal.getCaregiver_chronically_ill()));

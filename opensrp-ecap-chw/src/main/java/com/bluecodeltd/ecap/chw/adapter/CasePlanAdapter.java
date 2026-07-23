@@ -93,13 +93,14 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
 
         holder.txtCaseDate.setText(casePlan.getCase_plan_date());
         holder.txtCasePlanStatus.setText(casePlan.getCase_plan_status());
+        holder.statusStripe.setBackgroundColor(context.getResources().getColor(statusStripeColor(casePlan.getCase_plan_status())));
 
         final String rowTag = casePlan.getBase_entity_id() != null ? casePlan.getBase_entity_id()
                 : (casePlan.getUnique_id() != null ? casePlan.getUnique_id() : String.valueOf(position));
         holder.itemView.setTag(R.id.tag_row_id, rowTag);
 
         holder.txtVulnerabilities.setText("Loading…");
-        holder.delete.setVisibility(View.INVISIBLE);
+        setDeleteVisibility(holder, View.INVISIBLE);
         Threading.ioBestEffort(() -> {
             String vulnerabilities = null;
             try { vulnerabilities = CasePlanDao.countVulnerabilities(casePlan.getUnique_id(), casePlan.getCase_plan_date()); } catch (Exception ignored) {}
@@ -109,7 +110,7 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
                 if (!(tag instanceof String) || !rowTag.equals(tag)) return;
                 String vCount = (finalVulnerabilities == null || finalVulnerabilities.trim().isEmpty()) ? "0" : finalVulnerabilities.trim();
                 holder.txtVulnerabilities.setText(vCount + " Vulnerabilities");
-                holder.delete.setVisibility("0".equals(vCount) ? View.VISIBLE : View.INVISIBLE);
+                setDeleteVisibility(holder, "0".equals(vCount) ? View.VISIBLE : View.INVISIBLE);
             });
         });
 
@@ -152,14 +153,20 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
         };
 
         holder.linearLayout.setOnClickListener(openCasePlanListener);
-        holder.editme.setOnClickListener(v -> {
+
+        View.OnClickListener editListener = v -> {
             try {
                 openFormUsingFormUtils(context, "case_plan", casePlan);
             } catch (JSONException e) {
                 Timber.e(e);
             }
-        });
-        holder.delete.setOnClickListener(v -> {
+        };
+        holder.editme.setOnClickListener(editListener);
+        if (holder.editButton != null) {
+            holder.editButton.setOnClickListener(editListener);
+        }
+
+        View.OnClickListener deleteListener = v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setMessage("You are about to delete this VCA case plan");
             builder.setNegativeButton("NO", (dialog, id) -> {
@@ -206,10 +213,30 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
             //Setting the title manually
             alert.setTitle("Alert");
             alert.show();
-        });
+        };
+        holder.delete.setOnClickListener(deleteListener);
+        if (holder.deleteButton != null) {
+            holder.deleteButton.setOnClickListener(deleteListener);
+        }
 
 
     }
+    private void setDeleteVisibility(ViewHolder holder, int visibility) {
+        holder.delete.setVisibility(visibility);
+        if (holder.deleteButton != null) {
+            holder.deleteButton.setVisibility(visibility);
+        }
+    }
+
+    private int statusStripeColor(String status) {
+        if ("Initial".equalsIgnoreCase(status)) {
+            return R.color.pie_chart_orange;
+        } else if ("Follow Up".equalsIgnoreCase(status)) {
+            return R.color.status_green;
+        }
+        return R.color.register_vca_icon;
+    }
+
     public void refreshActivity() {
         handler.postDelayed(refreshRunnable, REFRESH_DELAY);
     }
@@ -397,6 +424,7 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
         ImageView delete, editme;
 
         LinearLayout linearLayout;
+        View statusStripe, editButton, deleteButton;
 
 
         public ViewHolder(View itemView) {
@@ -410,6 +438,9 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
             txtVulnerabilities = itemView.findViewById(R.id.vulnerabilities);
             editme = itemView.findViewById(R.id.edit_me);
             delete = itemView.findViewById(R.id.delete_record);
+            statusStripe = itemView.findViewById(R.id.status_stripe);
+            editButton = itemView.findViewById(R.id.edit_button);
+            deleteButton = itemView.findViewById(R.id.delete_button);
 
         }
 

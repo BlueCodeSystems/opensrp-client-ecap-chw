@@ -107,8 +107,11 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
 
         holder.headerLayout.setOnClickListener(openForm);
         holder.editme.setOnClickListener(openForm);
+        if (holder.editButton != null) {
+            holder.editButton.setOnClickListener(openForm);
+        }
 
-        holder.delete.setOnClickListener(v -> {
+        View.OnClickListener deleteListener = v -> {
             try {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage("You are about to delete this household graduation ");
@@ -160,7 +163,12 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
             } catch (Exception e) {
                 Timber.e(e);
             }
-        });
+        };
+        holder.delete.setOnClickListener(deleteListener);
+        if (holder.deleteButton != null) {
+            holder.deleteButton.setOnClickListener(deleteListener);
+        }
+
         String sVisit = visit.getPostnatal_care_visit();
         if (sVisit != null && holder.tvVisit != null) {
             SpannableString spannableString = new SpannableString(sVisit);
@@ -337,6 +345,7 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
                 tvFpCounselling, tvCondoms, tvTbSymptoms, tvTbOther, tvTbComments, tvComments, tvSummary;
         LinearLayout headerLayout;
         ImageView editme, delete;
+        View editButton, deleteButton;
 
         public ViewHolder(View itemView) {
 
@@ -348,14 +357,21 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
             tvSummary = itemView.findViewById(R.id.tv_summary);
             tvVisitType = itemView.findViewById(R.id.tv_visit_type);
 
+            tvMotherTestedHiv = itemView.findViewById(R.id.tv_mother_tested_hiv);
+            tvArtInitiated = itemView.findViewById(R.id.tv_art_initiated);
+            tvArtAdherence = itemView.findViewById(R.id.tv_art_adherence);
+            tvVlResult = itemView.findViewById(R.id.tv_vl_result);
             tvFpCounselling = itemView.findViewById(R.id.tv_fp_counselling);
             tvCondoms = itemView.findViewById(R.id.tv_condoms);
-
- 
+            tvTbSymptoms = itemView.findViewById(R.id.tv_tb_symptoms);
+            tvTbOther = itemView.findViewById(R.id.tv_tb_other);
+            tvTbComments = itemView.findViewById(R.id.tv_tb_comments);
             tvComments = itemView.findViewById(R.id.tv_comments);
+
             editme = itemView.findViewById(R.id.iv_edit);
             delete = itemView.findViewById(R.id.delete_record);
-
+            editButton = itemView.findViewById(R.id.edit_button);
+            deleteButton = itemView.findViewById(R.id.delete_button);
 
         }
 

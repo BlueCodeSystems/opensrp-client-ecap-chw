@@ -117,6 +117,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
     }
 
     private FloatingActionButton fab, fabHiv,fabHiv2, fabGradSub, fabGrad, fabCasePlan, fabVisitation, fabReferal,  fabAssessment;
+    private View fabScrim;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     public String clientId, uniqueId, vcaAge,is_screened, is_hiv_positive, caseworkerphone;
@@ -177,6 +178,8 @@ public class HTSDetailsActivity extends AppCompatActivity {
         NavigationMenu.getInstance(this, null, toolbar);
         
         fab = binding.fab;
+        fabScrim = binding.fabScrim;
+        fabScrim.setOnClickListener(v -> closeFab());
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
@@ -280,6 +283,9 @@ public class HTSDetailsActivity extends AppCompatActivity {
 
             isFabOpen = true;
             fab.startAnimation(rotate_forward);
+            fabScrim.setVisibility(View.VISIBLE);
+            fabScrim.setAlpha(0f);
+            fabScrim.animate().alpha(1f).setDuration(200).start();
             txtScreening.setVisibility(View.VISIBLE);
             if(hivTestingServiceModel.getTesting_modality() != null && (hivTestingServiceModel.getTesting_modality().equals("SNT") || hivTestingServiceModel.getTesting_modality().equals("Index"))){
                 addIndexClients.setVisibility(View.VISIBLE);
@@ -292,6 +298,8 @@ public class HTSDetailsActivity extends AppCompatActivity {
     public void closeFab(){
         fab.startAnimation(rotate_backward);
         isFabOpen = false;
+        fabScrim.animate().alpha(0f).setDuration(200)
+                .withEndAction(() -> fabScrim.setVisibility(View.GONE)).start();
         txtScreening.setVisibility(View.GONE);
         addIndexClients.setVisibility(View.GONE);
 //        rcase_plan.setVisibility(View.GONE);

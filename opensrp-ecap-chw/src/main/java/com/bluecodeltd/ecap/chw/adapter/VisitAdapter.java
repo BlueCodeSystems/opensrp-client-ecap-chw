@@ -124,6 +124,9 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
 
         holder.editme.setOnClickListener(v ->
                 Toast.makeText(context, "Loading case status…", Toast.LENGTH_SHORT).show());
+        if (holder.editButton != null) {
+            holder.editButton.setOnClickListener(v -> holder.editme.performClick());
+        }
 
         holder.delete.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -174,6 +177,9 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
             alert.setTitle("Alert");
             alert.show();
         });
+        if (holder.deleteButton != null) {
+            holder.deleteButton.setOnClickListener(v -> holder.delete.performClick());
+        }
 
         holder.intialHivStatus.setText("Loading…");
         holder.initialHivStatusDate.setText("");
@@ -194,8 +200,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
                 holder.exPandableView.setVisibility(View.VISIBLE);
                 holder.expMore.setVisibility(View.GONE);
                 holder.expLess.setVisibility(View.VISIBLE);
-                holder.editme.setVisibility(View.GONE);
-                holder.delete.setVisibility(View.GONE);
+                setActionButtonsVisibility(holder, View.GONE);
             }
         });
 
@@ -206,8 +211,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
                 holder.exPandableView.setVisibility(View.GONE);
                 holder.expMore.setVisibility(View.VISIBLE);
                 holder.expLess.setVisibility(View.GONE);
-                holder.editme.setVisibility(View.VISIBLE);
-                holder.delete.setVisibility(View.VISIBLE);
+                setActionButtonsVisibility(holder, View.VISIBLE);
             }
         });
 
@@ -308,6 +312,17 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
             });
         });
     }
+    private void setActionButtonsVisibility(ViewHolder holder, int visibility) {
+        holder.editme.setVisibility(visibility);
+        holder.delete.setVisibility(visibility);
+        if (holder.editButton != null) {
+            holder.editButton.setVisibility(visibility);
+        }
+        if (holder.deleteButton != null) {
+            holder.deleteButton.setVisibility(visibility);
+        }
+    }
+
     private void setImageViewFromBase64(String base64Str, ImageView imageView) {
         try {
             // Decode the Base64 string into bytes
@@ -602,6 +617,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
         LinearLayout linearLayout, exPandableView;
         ImageView expMore, expLess,editme, delete;
         ImageView signatureView;
+        View editButton, deleteButton;
 
         public ViewHolder(View itemView) {
 
@@ -619,6 +635,8 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
             updateHivStatus = itemView.findViewById(R.id.updated_hiv_status);
             updatedHivStatusDate = itemView.findViewById(R.id.updated_hiv_status_date);
             signatureView = itemView.findViewById(R.id.signature_view);
+            editButton = itemView.findViewById(R.id.edit_button);
+            deleteButton = itemView.findViewById(R.id.delete_button);
 
         }
 
