@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.util.Pair;
 
 import com.google.common.collect.Lists;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -27,7 +26,8 @@ public abstract class ChwCoreSyncIntentService extends SyncIntentService {
     }
 
     public synchronized void fetchMissingEventsRetry(final int count, List<Task> tasksWithMissingClientsEvents) {
-        Timber.i("Tasks with missing clients and/or events = %s", new Gson().toJson(tasksWithMissingClientsEvents));
+        // Avoid logging huge payloads (can trigger OOMs during String.format).
+        Timber.i("Tasks with missing clients and/or events count=%s", tasksWithMissingClientsEvents != null ? tasksWithMissingClientsEvents.size() : 0);
         List<List<Task>> tasksWithMissingClientsEventsBatches = Lists.partition(tasksWithMissingClientsEvents, 1000);
         for (List<Task> tasksList : tasksWithMissingClientsEventsBatches) {
             JSONArray baseEntityIdsArray = new JSONArray();
@@ -104,4 +104,3 @@ public abstract class ChwCoreSyncIntentService extends SyncIntentService {
     @Override
     abstract protected void onHandleIntent(Intent intent);
 }
-

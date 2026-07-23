@@ -40,6 +40,7 @@ import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.VcaScreeningModel;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -117,44 +118,15 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
             }
         });
 
-        CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(visit.getUnique_id());
+        final String rowTag = visit.getBase_entity_id() != null ? visit.getBase_entity_id()
+                : (visit.getUnique_id() != null ? visit.getUnique_id() : String.valueOf(position));
+        holder.itemView.setTag(R.id.tag_row_id, rowTag);
 
-        holder.editme.setOnClickListener(v -> {
-            try {
-                if (caseStatusModel != null && caseStatusModel.getCase_status() != null) {
-                    // Check case status
-                    if (caseStatusModel.getCase_status().equals("0") || caseStatusModel.getCase_status().equals("2")) {
-                        Dialog dialog = new Dialog(context);
-                        dialog.setContentView(R.layout.dialog_layout);
-                        dialog.show();
-
-                        TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                        String firstName = caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "Unknown";
-                        String lastName = caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "User";
-
-                        dialogMessage.setText(firstName + " " + lastName +
-                                " was either de-registered or inactive in the program");
-
-                        Button dialogButton = dialog.findViewById(R.id.dialog_button);
-                        dialogButton.setOnClickListener(va -> dialog.dismiss());
-                    } else {
-                        if (v.getId() == R.id.edit_me) {
-                            try {
-                                openFormUsingFormUtils(context, "household_visitation_for_vca_0_20_years_edit", visit);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                Toast.makeText(context, "Error opening the form. Please try again.", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-                } else {
-                    Toast.makeText(context, "Unable to retrieve case status. Please try again.", Toast.LENGTH_SHORT).show();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Toast.makeText(context, "An unexpected error occurred. Please try again.", Toast.LENGTH_SHORT).show();
-            }
-        });
+        holder.editme.setOnClickListener(v ->
+                Toast.makeText(context, "Loading case status…", Toast.LENGTH_SHORT).show());
+        if (holder.editButton != null) {
+            holder.editButton.setOnClickListener(v -> holder.editme.performClick());
+        }
 
         holder.delete.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -186,16 +158,16 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
                     if (childIndexEventClient == null) {
                         return;
                     }
-                    saveRegistration(childIndexEventClient,true);
+                    Runnable refreshTask = () -> refreshIndexProfile(visit.getUnique_id());
+                    boolean scheduled = saveRegistration(childIndexEventClient, true, refreshTask);
+                    if (!scheduled) {
+                        refreshTask.run();
+                    }
 
 
                 } catch (Exception e) {
                     Timber.e(e);
                 }
-                Intent returnToProfile = new Intent(context, IndexDetailsActivity.class);
-                returnToProfile.putExtra("Child",  visit.getUnique_id());
-                context.startActivity(returnToProfile);
-                ((Activity) context).finish();
 
             }));
 
@@ -205,24 +177,12 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
             alert.setTitle("Alert");
             alert.show();
         });
-
-        Child childModel = null;
-        try {
-            childModel = IndexPersonDao.getChildByBaseId(visit.getUnique_id());
-        } catch (Exception e) {
-            Timber.e(e);
+        if (holder.deleteButton != null) {
+            holder.deleteButton.setOnClickListener(v -> holder.delete.performClick());
         }
 
-        if (childModel == null) {
-            holder.intialHivStatus.setText("Unknown");
-            holder.initialHivStatusDate.setText("Date not set");
-        } else {
-            if (childModel.getIs_hiv_positive() != null && "yes".equalsIgnoreCase(childModel.getIs_hiv_positive())) {
-                holder.exPandableView.setVisibility(View.GONE);
-                holder.expMore.setVisibility(View.GONE);
-                holder.expLess.setVisibility(View.GONE);
-            }
-        }
+        holder.intialHivStatus.setText("Loading…");
+        holder.initialHivStatusDate.setText("");
         holder.linearLayout.setOnClickListener(v -> {
 
             if (v.getId() == R.id.itemm) {
@@ -240,8 +200,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
                 holder.exPandableView.setVisibility(View.VISIBLE);
                 holder.expMore.setVisibility(View.GONE);
                 holder.expLess.setVisibility(View.VISIBLE);
-                holder.editme.setVisibility(View.GONE);
-                holder.delete.setVisibility(View.GONE);
+                setActionButtonsVisibility(holder, View.GONE);
             }
         });
 
@@ -252,25 +211,12 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
                 holder.exPandableView.setVisibility(View.GONE);
                 holder.expMore.setVisibility(View.VISIBLE);
                 holder.expLess.setVisibility(View.GONE);
-                holder.editme.setVisibility(View.VISIBLE);
-                holder.delete.setVisibility(View.VISIBLE);
+                setActionButtonsVisibility(holder, View.VISIBLE);
             }
         });
 
 
-        if (childModel != null) {
-            String hivStatus = childModel.getIs_hiv_positive();
-            if ("yes".equalsIgnoreCase(hivStatus)) {
-                holder.intialHivStatus.setText("Positive");
-            } else if ("unknown".equalsIgnoreCase(hivStatus)) {
-                holder.intialHivStatus.setText("Unknown");
-            } else {
-                holder.intialHivStatus.setText("Negative");
-            }
-
-            holder.initialHivStatusDate.setText(childModel.getDate_screened() != null ? childModel.getDate_screened() : "Date not set");
-        }
-
+        // Update HIV status from visit immediately
         if (visit != null) {
             String visitHivStatus = visit.getIs_hiv_positive();
             if ("yes".equalsIgnoreCase(visitHivStatus)) {
@@ -280,33 +226,103 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
             } else {
                 holder.updateHivStatus.setText("Negative");
             }
-
             holder.updatedHivStatusDate.setText(visit.getVisit_date() != null ? visit.getVisit_date() : "Date not set");
         }
 
-        Household household = null;
-        if (childModel != null && childModel.getHousehold_id() != null) {
-            try {
-                household = HouseholdDao.getHousehold(childModel.getHousehold_id());
-            } catch (Exception e) {
-                Timber.e(e);
-            }
-        }
-
         String encodedSignature = visit.getSignature();
-        String encodeSignatureHousehold = household != null ? household.getSignature() : null;
-
-
-        if(encodedSignature != null && encodedSignature != "") {
+        if (encodedSignature != null && !encodedSignature.isEmpty()) {
             setImageViewFromBase64(encodedSignature, holder.signatureView);
         } else {
-            if(encodeSignatureHousehold != null && encodeSignatureHousehold != "") {
-                setImageViewFromBase64(encodeSignatureHousehold, holder.signatureView);
-            } else {
-                holder.signatureView.setVisibility(View.GONE);
+            holder.signatureView.setVisibility(View.GONE);
+        }
+
+        final String uniqueId = visit.getUnique_id();
+        Threading.ioBestEffort(() -> {
+            CaseStatusModel caseStatusModel = null;
+            Child childModel = null;
+            Household household = null;
+            try { caseStatusModel = IndexPersonDao.getCaseStatus(uniqueId); } catch (Exception ignored) {}
+            try { childModel = IndexPersonDao.getChildByBaseId(uniqueId); } catch (Exception ignored) {}
+            if (childModel != null && childModel.getHousehold_id() != null) {
+                try { household = HouseholdDao.getHousehold(childModel.getHousehold_id()); } catch (Exception ignored) {}
             }
+
+            final CaseStatusModel finalCaseStatusModel = caseStatusModel;
+            final Child finalChildModel = childModel;
+            final Household finalHousehold = household;
+
+            Threading.main(() -> {
+                Object tag = holder.itemView.getTag(R.id.tag_row_id);
+                if (!(tag instanceof String) || !rowTag.equals(tag)) return;
+
+                holder.editme.setOnClickListener(v -> {
+                    try {
+                        String status = finalCaseStatusModel != null ? finalCaseStatusModel.getCase_status() : null;
+                        if (status != null && ("0".equals(status) || "2".equals(status))) {
+                            Dialog dialog = new Dialog(context);
+                            dialog.setContentView(R.layout.dialog_layout);
+                            dialog.show();
+
+                            TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
+                            String firstName = finalCaseStatusModel != null && finalCaseStatusModel.getFirst_name() != null ? finalCaseStatusModel.getFirst_name() : "Unknown";
+                            String lastName = finalCaseStatusModel != null && finalCaseStatusModel.getLast_name() != null ? finalCaseStatusModel.getLast_name() : "User";
+                            dialogMessage.setText(firstName + " " + lastName + " was either de-registered or inactive in the program");
+
+                            Button dialogButton = dialog.findViewById(R.id.dialog_button);
+                            dialogButton.setOnClickListener(va -> dialog.dismiss());
+                        } else {
+                            try {
+                                openFormUsingFormUtils(context, "household_visitation_for_vca_0_20_years_edit", visit);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Toast.makeText(context, "Error opening the form. Please try again.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(context, "An unexpected error occurred. Please try again.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                if (finalChildModel == null) {
+                    holder.intialHivStatus.setText("Unknown");
+                    holder.initialHivStatusDate.setText("Date not set");
+                } else {
+                    String hivStatus = finalChildModel.getIs_hiv_positive();
+                    if ("yes".equalsIgnoreCase(hivStatus)) {
+                        holder.intialHivStatus.setText("Positive");
+                        holder.exPandableView.setVisibility(View.GONE);
+                        holder.expMore.setVisibility(View.GONE);
+                        holder.expLess.setVisibility(View.GONE);
+                    } else if ("unknown".equalsIgnoreCase(hivStatus)) {
+                        holder.intialHivStatus.setText("Unknown");
+                    } else {
+                        holder.intialHivStatus.setText("Negative");
+                    }
+                    holder.initialHivStatusDate.setText(finalChildModel.getDate_screened() != null ? finalChildModel.getDate_screened() : "Date not set");
+                }
+
+                if ((encodedSignature == null || encodedSignature.isEmpty()) && finalHousehold != null) {
+                    String hSig = finalHousehold.getSignature();
+                    if (hSig != null && !hSig.isEmpty()) {
+                        holder.signatureView.setVisibility(View.VISIBLE);
+                        setImageViewFromBase64(hSig, holder.signatureView);
+                    }
+                }
+            });
+        });
+    }
+    private void setActionButtonsVisibility(ViewHolder holder, int visibility) {
+        holder.editme.setVisibility(visibility);
+        holder.delete.setVisibility(visibility);
+        if (holder.editButton != null) {
+            holder.editButton.setVisibility(visibility);
+        }
+        if (holder.deleteButton != null) {
+            holder.deleteButton.setVisibility(visibility);
         }
     }
+
     private void setImageViewFromBase64(String base64Str, ImageView imageView) {
         try {
             // Decode the Base64 string into bytes
@@ -384,7 +400,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
 
         if (vAge > 5) {
             under_five.put("type", "hidden");
-            nutrition_status.put("type", "hidden");
+//            nutrition_status.put("type", "hidden");
         }
 
         JSONObject eid_test = getFieldJSONObject(fields(formToBeOpened, "step1"), "eid_test");
@@ -495,44 +511,50 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
 
         return null;
     }
-    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode, Runnable onComplete) {
 
         Runnable runnable = () -> {
 
             Event event = childIndexEventClient.getEvent();
             Client client = childIndexEventClient.getClient();
 
-            if (event != null && client != null) {
-                try {
-                    ECSyncHelper ecSyncHelper = getECSyncHelper();
+            try {
+                if (event != null && client != null) {
+                    try {
+                        ECSyncHelper ecSyncHelper = getECSyncHelper();
 
-                    JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
+                        JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
 
-                    JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
+                        JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
 
-                    if (isEditMode) {
-                        JSONObject mergedClientJsonObject =
-                                org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
-                        ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
+                        if (isEditMode) {
+                            JSONObject mergedClientJsonObject =
+                                    org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
+                            ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
 
-                    } else {
-                        ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                        } else {
+                            ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                        }
+
+                        JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
+                        ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
+
+                        Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
+                        Date currentSyncDate = new Date(lastUpdatedAtDate);
+
+                        //Get saved event for processing
+                        List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
+                        getClientProcessorForJava().processClient(savedEvents);
+                        getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
+
+
+                    } catch (Exception e) {
+                        Timber.e(e);
                     }
-
-                    JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
-                    ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
-
-                    Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
-                    Date currentSyncDate = new Date(lastUpdatedAtDate);
-
-                    //Get saved event for processing
-                    List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
-                    getClientProcessorForJava().processClient(savedEvents);
-                    getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
-
-
-                } catch (Exception e) {
-                    Timber.e(e);
+                }
+            } finally {
+                if (onComplete != null) {
+                    runOnUiThread(onComplete);
                 }
             }
 
@@ -544,8 +566,31 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
             return true;
         } catch (Exception exception) {
             Timber.e(exception);
+            if (onComplete != null) {
+                runOnUiThread(onComplete);
+            }
             return false;
         }
+    }
+
+    private void runOnUiThread(Runnable runnable) {
+        if (context instanceof Activity && runnable != null) {
+            ((Activity) context).runOnUiThread(runnable);
+        }
+    }
+
+    private void refreshIndexProfile(String uniqueId) {
+        if (!(context instanceof Activity)) {
+            return;
+        }
+        Activity activity = (Activity) context;
+        Intent intent = new Intent(context, IndexDetailsActivity.class);
+        intent.putExtra("Child", uniqueId);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        activity.finish();
+        activity.overridePendingTransition(0, 0);
+        context.startActivity(intent);
+        activity.overridePendingTransition(0, 0);
     }
     private ECSyncHelper getECSyncHelper() {
         return ChwApplication.getInstance().getEcSyncHelper();
@@ -563,6 +608,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
         LinearLayout linearLayout, exPandableView;
         ImageView expMore, expLess,editme, delete;
         ImageView signatureView;
+        View editButton, deleteButton;
 
         public ViewHolder(View itemView) {
 
@@ -580,6 +626,8 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
             updateHivStatus = itemView.findViewById(R.id.updated_hiv_status);
             updatedHivStatusDate = itemView.findViewById(R.id.updated_hiv_status_date);
             signatureView = itemView.findViewById(R.id.signature_view);
+            editButton = itemView.findViewById(R.id.edit_button);
+            deleteButton = itemView.findViewById(R.id.delete_button);
 
         }
 

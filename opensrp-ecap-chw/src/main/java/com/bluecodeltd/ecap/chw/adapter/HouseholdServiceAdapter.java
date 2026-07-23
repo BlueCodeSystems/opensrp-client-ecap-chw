@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HouseholdServiceActivity;
+import com.bluecodeltd.ecap.chw.activity.HouseholdServiceReportViewActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.util.Threading;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
@@ -147,62 +148,71 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
 //            }
 //
 //        }
-        Household household = HouseholdDao.getHousehold(service.getHousehold_id());
-
+        final String rowTag = service.getBase_entity_id() != null ? service.getBase_entity_id()
+                : (service.getHousehold_id() != null ? service.getHousehold_id() + ":" + position : String.valueOf(position));
+        holder.itemView.setTag(R.id.tag_row_id, rowTag);
 
         String encodedSignature = service.getSignature();
-        String encodeSignatureHousehold = household.getSignature();
-
-
-        if(encodedSignature != null && encodedSignature != "") {
+        if (encodedSignature != null && !encodedSignature.isEmpty()) {
             setImageViewFromBase64(encodedSignature, holder.signatureView);
         } else {
-            if(encodeSignatureHousehold != null && encodeSignatureHousehold != "") {
-                setImageViewFromBase64(encodeSignatureHousehold, holder.signatureView);
-            } else {
-                holder.signatureView.setVisibility(View.GONE);
-            }
+            holder.signatureView.setVisibility(View.GONE);
         }
-        holder.edit.setOnClickListener(v -> {
-            if (household.getHousehold_case_status() != null &&
-                    (household.getHousehold_case_status().equals("0") || household.getHousehold_case_status().equals("2"))) {
-                showDialogBox(service.getHousehold_id(), "`s has been inactive or de-registered");
-            } else {
-                try {
-                    FormUtils formUtils = new FormUtils(context);
-                    openFormUsingFormUtils(context, "service_report_household_edit", service);
-                } catch (Exception e) {
-                    e.printStackTrace();
+
+        final String hid = service.getHousehold_id();
+        Threading.ioBestEffort(() -> {
+            Household household = null;
+            try { household = HouseholdDao.getHousehold(hid); } catch (Exception ignored) {}
+            final Household finalHousehold = household;
+            Threading.main(() -> {
+                Object tag = holder.itemView.getTag(R.id.tag_row_id);
+                if (!(tag instanceof String) || !rowTag.equals(tag)) return;
+
+                if ((encodedSignature == null || encodedSignature.isEmpty()) && finalHousehold != null) {
+                    String hSig = finalHousehold.getSignature();
+                    if (hSig != null && !hSig.isEmpty()) {
+                        holder.signatureView.setVisibility(View.VISIBLE);
+                        setImageViewFromBase64(hSig, holder.signatureView);
+                    }
                 }
-            }
+            });
         });
-        holder.linearLayout.setOnClickListener(v -> {
 
-           if (household.getHousehold_case_status() != null && (household.getHousehold_case_status().equals("0") || household.getHousehold_case_status().equals("2"))) {
-                showDialogBox(service.getHousehold_id(), "`s has been inactive or de-registered");
-            } else {
-                if (v.getId() == R.id.itemm) {
-
-                    FormUtils formUtils = null;
+        View.OnClickListener openEdit = v -> Threading.io(() -> {
+            Household household = null;
+            try { household = HouseholdDao.getHousehold(hid); } catch (Exception ignored) {}
+            final Household finalHousehold = household;
+            Threading.main(() -> {
+                Object tag = holder.itemView.getTag(R.id.tag_row_id);
+                if (!(tag instanceof String) || !rowTag.equals(tag)) return;
+                String status = finalHousehold != null ? finalHousehold.getHousehold_case_status() : null;
+                if (status != null && ("0".equals(status) || "2".equals(status))) {
+                    showDialogBox(hid, "`s has been inactive or de-registered");
+                } else {
                     try {
-                        formUtils = new FormUtils(context);
+                        FormUtils formUtils = new FormUtils(context);
+                        String caregiverSex = finalHousehold != null ? finalHousehold.getCaregiver_sex() : null;
+                        openFormUsingFormUtils(context, "service_report_household_edit", service, caregiverSex);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
-
-                    try {
-                        openFormUsingFormUtils(context, "service_report_household_edit", service);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
                 }
-            }
-
+            });
         });
-        holder.delete.setOnClickListener(v -> {
+
+        holder.edit.setOnClickListener(openEdit);
+        holder.linearLayout.setOnClickListener(openEdit);
+        if (holder.editButton != null) {
+            holder.editButton.setOnClickListener(openEdit);
+        }
+        if (holder.viewButton != null) {
+            holder.viewButton.setOnClickListener(v -> {
+                Intent intent = new Intent(context, HouseholdServiceReportViewActivity.class);
+                intent.putExtra(HouseholdServiceReportViewActivity.EXTRA_BASE_ENTITY_ID, service.getBase_entity_id());
+                context.startActivity(intent);
+            });
+        }
+        View.OnClickListener deleteListener = v -> {
             try {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage("You are about to delete this household service ");
@@ -253,7 +263,11 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
             } catch (Exception e) {
                 Timber.e(e);
             }
-        });
+        };
+        holder.delete.setOnClickListener(deleteListener);
+        if (holder.deleteButton != null) {
+            holder.deleteButton.setOnClickListener(deleteListener);
+        }
 
 
     }
@@ -290,7 +304,7 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
         dialogButton.setOnClickListener(v -> dialog.dismiss());
     }
 
-    public void openFormUsingFormUtils(Context context, String formName, HouseholdServiceReportModel service) throws JSONException {
+    public void openFormUsingFormUtils(Context context, String formName, HouseholdServiceReportModel service, String caregiverSex) throws JSONException {
 
         oMapper = new ObjectMapper();
 
@@ -304,12 +318,14 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
         JSONObject formToBeOpened;
 
         formToBeOpened = formUtils.getFormJson(formName);
+        applyPregnantBreastfeedingVisibility(formToBeOpened, caregiverSex);
 
         formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).remove("read_only");
         formToBeOpened.put("entity_id", service.getBase_entity_id());
         HouseholdServiceReportModel householdReport = new HouseholdServiceReportModel();
         householdReport.setServices(service.getServices());
         householdReport.setServices_household(service.getServices_household());
+        householdReport.setPregnant_breastfeeding(service.getPregnant_breastfeeding());
 
         if (service.getHealth_services() == null && service.getServices_caregiver() != null){
             householdReport.setHealth_services(service.getServices_caregiver());
@@ -341,9 +357,62 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
         householdReport.setOther_services_household(service.getOther_services_household());
         householdReport.setDelete_status(service.getDelete_status());
         CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(householdReport, Map.class));
+        applyPregnantBreastfeedingValue(formToBeOpened, service.getPregnant_breastfeeding());
 
         startFormActivity(formToBeOpened);
 
+    }
+
+    private static boolean isFemaleCaregiver(String caregiverSex) {
+        return caregiverSex != null && caregiverSex.trim().equalsIgnoreCase("female");
+    }
+
+    private static void applyPregnantBreastfeedingVisibility(JSONObject form, String caregiverSex) {
+        if (isFemaleCaregiver(caregiverSex)) {
+            return;
+        }
+        try {
+            JSONObject step = form.getJSONObject(JsonFormConstants.STEP1);
+            JSONArray formFields = step.getJSONArray(JsonFormConstants.FIELDS);
+            for (int i = 0; i < formFields.length(); i++) {
+                JSONObject field = formFields.getJSONObject(i);
+                if ("pregnant_breastfeeding".equals(field.optString("key"))) {
+                    formFields.remove(i);
+                    break;
+                }
+            }
+        } catch (JSONException e) {
+            Timber.e(e);
+        }
+    }
+
+    private static void applyPregnantBreastfeedingValue(JSONObject form, String pregnantBreastfeeding) {
+        if (pregnantBreastfeeding == null) {
+            return;
+        }
+        try {
+            JSONObject step = form.getJSONObject(JsonFormConstants.STEP1);
+            JSONArray formFields = step.getJSONArray(JsonFormConstants.FIELDS);
+            for (int i = 0; i < formFields.length(); i++) {
+                JSONObject field = formFields.getJSONObject(i);
+                if (!"pregnant_breastfeeding".equals(field.optString("key"))) {
+                    continue;
+                }
+                JSONArray options = field.optJSONArray("options");
+                if (options == null) {
+                    break;
+                }
+                String target = pregnantBreastfeeding.trim().toLowerCase();
+                for (int j = 0; j < options.length(); j++) {
+                    JSONObject option = options.getJSONObject(j);
+                    String key = option.optString("key").trim().toLowerCase();
+                    option.put("value", key.equals(target));
+                }
+                break;
+            }
+        } catch (JSONException e) {
+            Timber.e(e);
+        }
     }
 
     public void startFormActivity(JSONObject jsonObject) {
@@ -494,6 +563,7 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
         ImageView delete, edit;
         ImageView signatureView;
         LinearLayout linearLayout;
+        View editButton, deleteButton, viewButton;
 
 
         public ViewHolder(View itemView) {
@@ -507,6 +577,9 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
             delete = itemView.findViewById(R.id.delete_record);
             signatureView = itemView.findViewById(R.id.signature_view);
             edit = itemView.findViewById(R.id.edit_me);
+            editButton = itemView.findViewById(R.id.edit_button);
+            deleteButton = itemView.findViewById(R.id.delete_button);
+            viewButton = itemView.findViewById(R.id.view_button);
 
         }
 

@@ -4,6 +4,8 @@ public class PmtctChildOutcomeModel {
     private String base_entity_id;
     private String pmtct_id;
     private String unique_id;
+    private String caregiver_name;
+    private String household_id;
     private String child_outcome;
 
 
@@ -31,6 +33,22 @@ public class PmtctChildOutcomeModel {
         this.unique_id = unique_id;
     }
 
+    public String getCaregiver_name() {
+        return caregiver_name;
+    }
+
+    public void setCaregiver_name(String caregiver_name) {
+        this.caregiver_name = caregiver_name;
+    }
+
+    public String getHousehold_id() {
+        return household_id;
+    }
+
+    public void setHousehold_id(String household_id) {
+        this.household_id = household_id;
+    }
+
     public String getChild_outcome() {
         return child_outcome;
     }
@@ -38,4 +56,21 @@ public class PmtctChildOutcomeModel {
     public void setChild_outcome(String child_outcome) {
         this.child_outcome = child_outcome;
     }
+
+    private final java.util.Map<String, String> additionalFields = new java.util.HashMap<>();
+
+    public java.util.Map<String, String> getAdditionalFields() {
+        return additionalFields;
+    }
+
+    public String getAdditionalField(String key) {
+        if (key == null) return null;
+        return additionalFields.get(key);
+    }
+
+    public void setAdditionalField(String key, String value) {
+        if (key == null) return;
+        additionalFields.put(key, value);
+    }
 }
+

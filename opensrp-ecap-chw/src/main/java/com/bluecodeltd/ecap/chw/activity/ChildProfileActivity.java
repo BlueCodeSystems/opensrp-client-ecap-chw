@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import com.bluecodeltd.ecap.chw.BuildConfig;
@@ -67,13 +69,10 @@ public class ChildProfileActivity extends CoreChildProfileActivity implements On
         setupViews();
         setUpToolbar();
         try {
-            if (android.os.Build.VERSION.SDK_INT >= 33) {
-                registerReceiver(mDateTimeChangedReceiver, sIntentFilter, RECEIVER_NOT_EXPORTED);
-            } else {
-                registerReceiver(mDateTimeChangedReceiver, sIntentFilter);
-            }
-        } catch (SecurityException se) {
-            // Ignore if platform requires explicit flags and we're not in foreground yet
+            ContextCompat.registerReceiver(this, mDateTimeChangedReceiver, sIntentFilter, ContextCompat.RECEIVER_NOT_EXPORTED);
+        } catch (Exception ignored) {
+            // Fallback (should rarely happen) to keep older devices functioning.
+            registerReceiver(mDateTimeChangedReceiver, sIntentFilter);
         }
         if (((ChwApplication) ChwApplication.getInstance()).hasReferrals()) {
             addChildReferralTypes();
@@ -188,7 +187,7 @@ public class ChildProfileActivity extends CoreChildProfileActivity implements On
         }
         return super.onOptionsItemSelected(item);
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);

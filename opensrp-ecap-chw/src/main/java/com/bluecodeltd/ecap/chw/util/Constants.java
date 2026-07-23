@@ -83,12 +83,17 @@ public class Constants extends CoreConstants {
         String VCA_ASSESSMENT = "VCA Assessment";
         String CACE_STATUS = "Case Record Status";
         String MOTHER_INDEX = "Mother Register";
+        String MOTHER_PMTCT_FROM_INDEX = "Enroll PMTCT Record From Mother Index";
         String MOTHER_PMTCT = "Mother Pmtct";
         String HOUSEHOLD_INDEX = "Household Screening";
         String IDENTIFICATION = "identification";
         String GRADUATION_ASSESSMENT = "OVC Graduation Assessment";
         String HIV_TESTING_SERVICE = "HIV Testing Service";
         String VCA_VISIT = "Household Visitation Form 0-20 years";
+        String MALARIA_MONTHLY_REPORTING = "Malaria Monthly Reporting";
+        String NUTRITION_MONTHLY_REPORTING = "BCAPI_Nutrition_Activities_Report";
+        String TB_MONTHLY_REPORTING = "TB_Monthly_Reporting";
+        String COMMUNITY_ALERT_REPORT = "Community Alert Report";
     }
 
     public interface EcapClientTable {
@@ -102,6 +107,10 @@ public class Constants extends CoreConstants {
         String EC_CAREGIVER_PLAN_DOMAIN = "ec_caregiver_case_plan_domain";
         String EC_MOTHER_INDEX = "ec_mother_index";
         String EC_MOTHER_PMTCT = "ec_pmtct_mother";
+        String EC_MOTHER_ANC = "ec_mother_anc";
+        String EC_CHILD_FINAL_OUTCOME = "ec_child_final_outcome";
+        String EC_CHILD_LONGITUDINAL_FOLLOW_UP = "ec_child_longitudinal_follow_up";
+        String EC_CHILD_POSTNATAL_CARE = "ec_child_postnatal_care";
         String EC_POPULATION = "ec_sub_population";
         String EC_CLIENT_IDENTIFICATION = "ec_client_identification";
         String EC_SERVICE_REPORT = "ec_service_report";
@@ -125,6 +134,15 @@ public class Constants extends CoreConstants {
         String EC_HIV_TESTING_LINKS="ec_hiv_testing_links";
         String EC_VCA_SERVICE_REPORT="ec_vca_service_report";
         String EC_HOUSEHOLD_SERVICE ="ec_household_service_report";
+        String EC_NUTRITION_ASSESSMENT_INTERVENTION = "ec_nutrition_assessment_intervention";
+        String EC_TB_SCREENING = "ec_tb_screening";
+        String EC_TB_SCREENING_OUTCOME = "ec_tb_screening_outcome";
+        String EC_TB_SCREENING_CAREGIVER = "ec_tb_screening_caregiver";
+        String EC_TB_SCREENING_OUTCOME_CAREGIVER = "ec_tb_screening_outcome_caregiver";
+        String EC_MONTHLY_MALARIA = "ec_monthly_malaria";
+        String EC_MONTHLY_NUTRITION = "ec_monthly_nutrition";
+        String EC_MONTHLY_TB = "ec_monthly_tb";
+        String EC_COMMUNITY_ALERT = "ec_community_alert";
     }
     public  interface EcapConstants{
         String POP_UP_DIALOG_MESSAGE = "Continue with VCA Screening for ";

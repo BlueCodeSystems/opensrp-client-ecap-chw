@@ -15,32 +15,50 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
+import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.contract.MotherIndexContract;
+import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
 import com.bluecodeltd.ecap.chw.fragment.MotherIndexFragment;
 import com.bluecodeltd.ecap.chw.listener.ChwBottomNavigationListener;
+import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.presenter.MotherIndexPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.PmtctEnrollmentUtils;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.bluecodeltd.ecap.chw.util.Utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.client.utils.domain.Form;
+import org.smartregister.clientandeventmodel.Client;
+import org.smartregister.clientandeventmodel.Event;
+import org.smartregister.domain.db.EventClient;
+import org.smartregister.domain.tag.FormTag;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.helper.BottomNavigationHelper;
 import org.smartregister.opd.pojo.RegisterParams;
 import org.smartregister.opd.utils.OpdJsonFormUtils;
 import org.smartregister.opd.utils.OpdUtils;
+import org.smartregister.repository.AllSharedPreferences;
+import org.smartregister.sync.ClientProcessorForJava;
+import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.view.activity.BaseRegisterActivity;
 import org.smartregister.view.fragment.BaseRegisterFragment;
 
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
+import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 
 import es.dmoral.toasty.Toasty;
 import timber.log.Timber;
@@ -153,7 +171,7 @@ public class MotherIndexActivity extends BaseRegisterActivity implements MotherI
 
 
             //******** POPULATE JSON FORM VCA UNIQUE ID ******//
-            JSONObject stepTwoUniqueId = getFieldJSONObject(fields(jsonObject, "step2"), "unique_id");
+            JSONObject stepTwoUniqueId = getFieldJSONObject(fields(jsonObject, "step1"), "unique_id");
             stepTwoUniqueId.put(JsonFormUtils.VALUE, uId);
 
 
@@ -163,11 +181,11 @@ public class MotherIndexActivity extends BaseRegisterActivity implements MotherI
         }
 
 
-            Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
-            Form form = new Form();
-            intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
-            intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
-            startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
+        Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
+        Form form = new Form();
+        intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
+        intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
+        startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
 
     }
 
@@ -179,14 +197,54 @@ public class MotherIndexActivity extends BaseRegisterActivity implements MotherI
             try {
                 if (json != null) {
                     JSONObject jsonFormObject = new JSONObject(json);
-                    if (Constants.EcapEncounterType.MOTHER_INDEX.equalsIgnoreCase(
-                            jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, ""))) {
+                    String rawEncounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
+                    if (Constants.EcapEncounterType.MOTHER_INDEX.equalsIgnoreCase(rawEncounterType)) {
+
+                        String caregiverHivStatus = "";
+                        String pregnantMother = "";
+                        String motherBreastfeeding = "";
+
+                        // Block enrollment based on mother age and status
+                        try {
+                            org.json.JSONArray stepOneFields = fields(jsonFormObject, STEP1);
+                            org.json.JSONObject ageRangeField = getFieldJSONObject(stepOneFields, "mother_age_range");
+                            org.json.JSONObject caregiverHivStatusField = getFieldJSONObject(stepOneFields, "caregiver_hiv_status");
+                            org.json.JSONObject pregnantMotherField = getFieldJSONObject(stepOneFields, "mother_pregnant");
+                            org.json.JSONObject motherBreastfeedingField = getFieldJSONObject(stepOneFields, "mother_breastfeeding");
+
+                            caregiverHivStatus = caregiverHivStatusField != null ? caregiverHivStatusField.optString("value", "") : "";
+                            pregnantMother = pregnantMotherField != null ? pregnantMotherField.optString("value", "") : "";
+                            motherBreastfeeding = motherBreastfeedingField != null ? motherBreastfeedingField.optString("value", "") : "";
+
+                            String ageRange = ageRangeField != null ? ageRangeField.optString("value", "") : "";
+
+                            boolean ageRangeBlocks = "no".equalsIgnoreCase(ageRange);
+
+                            if (ageRangeBlocks) {
+                                Toasty.warning(this, "You can't enroll this household", Toast.LENGTH_LONG, true).show();
+                                return;
+                            }
+                        } catch (Exception ignored) { }
+
+                        boolean isPositiveCaregiver = "positive".equalsIgnoreCase(caregiverHivStatus);
+                        String encounterType = isPositiveCaregiver ? "Mother Register" : "Mother Register Negative";
+                        jsonFormObject.put(JsonFormConstants.ENCOUNTER_TYPE, encounterType);
 
                         RegisterParams registerParam = new RegisterParams();
                         registerParam.setEditMode(false);
                         registerParam.setFormTag(OpdJsonFormUtils.formTag(OpdUtils.context().allSharedPreferences()));
 
-                        motherIndexPresenter().saveForm(json, false);
+                        motherIndexPresenter().saveForm(jsonFormObject.toString(), false);
+
+                        boolean eligibleForPmtct = "positive".equalsIgnoreCase(caregiverHivStatus)
+                                && ("yes".equalsIgnoreCase(pregnantMother) || "yes".equalsIgnoreCase(motherBreastfeeding));
+                        if (eligibleForPmtct) {
+                            JSONArray step1Fields = fields(jsonFormObject, STEP1);
+                            String householdIdForPmtct = getFieldValueFromArray(step1Fields, "household_id");
+                            if (householdIdForPmtct != null && !householdIdForPmtct.trim().isEmpty()) {
+                                maybeEnrollPmtctFromMotherIndex(step1Fields, householdIdForPmtct.trim());
+                            }
+                        }
 
                         Toasty.success(this, "Mother Saved", Toast.LENGTH_LONG, true).show();
                         finish();
@@ -235,4 +293,96 @@ public class MotherIndexActivity extends BaseRegisterActivity implements MotherI
             hideProgressDialog();
         }
     }
+
+    private void maybeEnrollPmtctFromMotherIndex(JSONArray step1Fields, String householdId) {
+        Threading.io(() -> {
+            try {
+                if (PMTCTMotherDao.hasMotherRecordByHouseholdId(householdId)) {
+                    return;
+                }
+
+                Household household = buildHouseholdFromFields(step1Fields, householdId);
+
+                JSONObject pmtctForm = PmtctEnrollmentUtils.buildMotherPmtctForm(this, household, null);
+                if (pmtctForm == null) {
+                    return;
+                }
+
+                pmtctForm.put(com.vijay.jsonwizard.constants.JsonFormConstants.ENCOUNTER_TYPE, "Enroll PMTCT Record From Mother Index");
+                pmtctForm.put("entity_id", "");
+
+                String entityId = org.smartregister.util.JsonFormUtils.generateRandomUUIDString();
+                JSONArray fields = org.smartregister.util.JsonFormUtils.fields(pmtctForm);
+                JSONObject metadata = pmtctForm.optJSONObject(Constants.METADATA);
+
+                AllSharedPreferences allSharedPreferences = ChwApplication.getInstance().getContext().allSharedPreferences();
+                FormTag formTag = new FormTag();
+                formTag.providerId = allSharedPreferences.fetchRegisteredANM();
+                formTag.appVersion = BuildConfig.VERSION_CODE;
+                formTag.databaseVersion = BuildConfig.DATABASE_VERSION;
+
+                Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                        "Enroll PMTCT Record From Mother Index", Constants.EcapClientTable.EC_MOTHER_PMTCT);
+                if (event == null) {
+                    return;
+                }
+                tagSyncMetadata(event);
+
+                Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                if (client == null) {
+                    return;
+                }
+
+                ECSyncHelper ecSyncHelper = ChwApplication.getInstance().getEcSyncHelper();
+                JSONObject newClientJson = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
+                ecSyncHelper.addClient(client.getBaseEntityId(), newClientJson);
+
+                JSONObject eventJson = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
+                ecSyncHelper.addEvent(event.getBaseEntityId(), eventJson);
+
+                Long lastUpdatedAtDate = allSharedPreferences.fetchLastUpdatedAtDate(0);
+                Date currentSyncDate = new Date(lastUpdatedAtDate);
+
+                List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
+                ChwApplication.getInstance().getClientProcessorForJava().processClient(savedEvents);
+                allSharedPreferences.saveLastUpdatedAtDate(currentSyncDate.getTime());
+
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+        });
+    }
+
+    private Household buildHouseholdFromFields(JSONArray fields, String householdId) {
+        Household h = new Household();
+        h.setHousehold_id(householdId);
+        h.setCaregiver_name(getFieldValueFromArray(fields, "caregiver_name"));
+        h.setCaregiver_birth_date(getFieldValueFromArray(fields, "caregiver_birth_date"));
+        h.setFirst_name(getFieldValueFromArray(fields, "first_name"));
+        h.setLast_name(getFieldValueFromArray(fields, "last_name"));
+        h.setProvince(getFieldValueFromArray(fields, "province"));
+        h.setDistrict(getFieldValueFromArray(fields, "district"));
+        h.setWard(getFieldValueFromArray(fields, "ward"));
+        h.setFacility(getFieldValueFromArray(fields, "facility"));
+        h.setPartner(getFieldValueFromArray(fields, "partner"));
+        h.setCaseworker_name(getFieldValueFromArray(fields, "caseworker_name"));
+        h.setHomeaddress(getFieldValueFromArray(fields, "homeaddress"));
+        h.setLandmark(getFieldValueFromArray(fields, "landmark"));
+        h.setCaregiver_phone(getFieldValueFromArray(fields, "caregiver_phone"));
+        return h;
+    }
+
+    private String getFieldValueFromArray(JSONArray fields, String key) {
+        if (fields == null || key == null) return null;
+        try {
+            for (int i = 0; i < fields.length(); i++) {
+                JSONObject field = fields.optJSONObject(i);
+                if (field != null && key.equals(field.optString("key"))) {
+                    return field.optString(JsonFormUtils.VALUE, null);
+                }
+            }
+        } catch (Exception ignored) {}
+        return null;
+    }
+
 }

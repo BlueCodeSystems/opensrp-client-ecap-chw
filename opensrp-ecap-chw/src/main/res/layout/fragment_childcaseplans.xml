@@ -11,6 +11,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:clipToPadding="false"
+        android:scrollbars="vertical"
+        android:fadeScrollbars="false"
         android:paddingBottom="@dimen/contact_drawable_padding"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

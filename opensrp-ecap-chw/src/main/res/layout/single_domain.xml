@@ -1,288 +1,244 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/register_columns"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:elevation="20dp"
-    >
+    android:layout_marginHorizontal="2dp"
+    android:layout_marginBottom="10dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="2dp"
+    app:cardUseCompatPadding="true">
 
     <LinearLayout
-        android:id="@+id/itemm"
-        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="14dp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@color/primary"
-            android:orientation="vertical">
+            android:id="@+id/itemm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:background="@drawable/bg_report_icon_circle"
+                android:contentDescription="@string/not_available"
+                android:padding="10dp"
+                android:src="@drawable/ic_warning_orange" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <org.smartregister.view.customcontrols.CustomFontTextView
+                    android:id="@+id/typex"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textAllCaps="true"
+                    android:textColor="@color/text_black"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:contentDescription="@string/not_available"
+                        android:src="@drawable/ic_calender"
+                        app:tint="@color/light_grey_text" />
+
+                    <org.smartregister.view.customcontrols.CustomFontTextView
+                        android:id="@+id/due_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColor="@color/light_grey_text"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
 
             <org.smartregister.view.customcontrols.CustomFontTextView
-                android:id="@+id/typex"
-                style="@style/CustomFontTextViewStyle.ClientList"
+                android:id="@+id/statusx"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="10dp"
-                android:gravity="center_vertical"
-                android:singleLine="true"
-                android:text="HEALTHY"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_chip_warning"
+                android:gravity="center"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="5dp"
                 android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textColor="@android:color/white"
+                android:textSize="10.5sp"
                 android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/expand_more"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="4dp"
+                android:contentDescription="@string/not_available"
+                android:padding="4dp"
+                android:src="@drawable/baseline_expand_more_24"
+                android:visibility="visible"
+                app:tint="@color/light_grey_text" />
+
+            <ImageView
+                android:id="@+id/expand_less"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="4dp"
+                android:contentDescription="@string/not_available"
+                android:padding="4dp"
+                android:src="@drawable/baseline_expand_less_24"
+                android:visibility="gone"
+                app:tint="@color/light_grey_text" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/expandable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/dash_bg"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout style="@style/OverviewRow">
+                <TextView style="@style/OverviewRowLabel" android:text="Vulnerability Identified" />
+                <TextView android:id="@+id/vulnerability" style="@style/OverviewRowValue" />
+            </LinearLayout>
+
+            <include layout="@layout/overview_row_divider" />
+
+            <LinearLayout style="@style/OverviewRow">
+                <TextView style="@style/OverviewRowLabel" android:text="Goal" />
+                <TextView android:id="@+id/goal" style="@style/OverviewRowValue" />
+            </LinearLayout>
+
+            <include layout="@layout/overview_row_divider" />
+
+            <LinearLayout style="@style/OverviewRow">
+                <TextView style="@style/OverviewRowLabel" android:text="Services by CW" />
+                <TextView android:id="@+id/services" style="@style/OverviewRowValue" />
+            </LinearLayout>
+
+            <include layout="@layout/overview_row_divider" />
+
+            <LinearLayout style="@style/OverviewRow">
+                <TextView style="@style/OverviewRowLabel" android:text="Services Referred" />
+                <TextView android:id="@+id/services_referred" style="@style/OverviewRowValue" />
+            </LinearLayout>
+
+            <include layout="@layout/overview_row_divider" />
+
+            <LinearLayout style="@style/OverviewRow">
+                <TextView style="@style/OverviewRowLabel" android:text="Institution of Referral" />
+                <TextView android:id="@+id/institution" style="@style/OverviewRowValue" />
+            </LinearLayout>
+
+            <include layout="@layout/overview_row_divider" />
+
+            <LinearLayout style="@style/OverviewRow">
+                <TextView style="@style/OverviewRowLabel" android:text="Comments" />
+                <TextView android:id="@+id/comment" style="@style/OverviewRowValue" />
+            </LinearLayout>
 
         </LinearLayout>
 
         <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@android:color/darker_gray" />
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/divider_grey" />
 
         <LinearLayout
-            android:id="@+id/qlayout"
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical">
+            android:layout_marginTop="10dp"
+            android:gravity="end|center_vertical"
+            android:orientation="horizontal">
 
-
-            <org.smartregister.view.customcontrols.CustomFontTextView
-                android:id="@+id/statusx"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="10dp"
-                style="@style/CustomFontTextViewStyle.ClientList"
+            <LinearLayout
+                android:id="@+id/edit_button"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_button_primary_outline"
                 android:gravity="center_vertical"
-                android:singleLine="true"
-                android:text="Complete"
-                android:textColor="@color/text_black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="6dp">
 
+                <ImageView
+                    android:id="@+id/edit_me"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:contentDescription="@string/edit"
+                    android:src="@drawable/ic_edit"
+                    app:tint="@color/primary" />
 
-            <org.smartregister.view.customcontrols.CustomFontTextView
-                android:id="@+id/due_date"
-                style="@style/CustomFontTextViewStyle.ClientList"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/edit"
+                    android:textColor="@color/primary"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/delete_button"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="10dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_button_alert_outline"
                 android:gravity="center_vertical"
-                android:singleLine="true"
-                android:text="Due : 12/09/2022"
-                android:textColor="@color/text_black"
-                android:textSize="14sp" />
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="6dp">
 
+                <ImageView
+                    android:id="@+id/delete_record"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:contentDescription="@string/delete"
+                    android:src="@drawable/delete_icon"
+                    app:tint="@color/pie_chart_red" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/delete"
+                    android:textColor="@color/pie_chart_red"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
-
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/edit_me"
-        android:tint="#696969"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="75dp"
-        android:layout_alignParentEnd="true"
-        android:layout_gravity="center_vertical"
-        android:src="@drawable/ic_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <ImageView
-        android:id="@+id/expand_more"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="110dp"
-        android:src="@drawable/baseline_expand_more_24"
-        android:visibility="visible" />
-
-    <ImageView
-        android:id="@+id/expand_less"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="110dp"
-        android:src="@drawable/baseline_expand_less_24" />
-    <ImageView
-        android:id="@+id/delete_record"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="20dp"
-        android:tint="#696969"
-        android:layout_centerInParent="true"
-        android:src="@drawable/delete_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <View
-        android:layout_below="@+id/itemm"
-        android:background="@android:color/darker_gray"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"/>
-
-    <LinearLayout
-        android:id="@+id/expandable"
-        android:visibility="gone"
-        android:orientation="vertical"
-        android:layout_below="@+id/itemm"
-        android:layout_margin="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:text="Vulnerability Identified"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/vulnerability"
-                android:layout_weight="1"
-                android:text="dnbvbdshbuhsjhsgdujhgolghuygghfgsduhfbsdjhnbshdvbuhygfgsbs"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:text="Goal"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/goal"
-                android:layout_weight="1"
-                android:text="yhs"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:text="Services to be provided by CW"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/services"
-                android:layout_weight="1"
-                android:text="DGHHDSGBVU JHB jyhgshgfuis fsjhisujhf sfiuhsiouho0sigK"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:text="Services to be referred"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/services_referred"
-                android:layout_weight="1"
-                android:text="yhs dgbdfbhdh"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:text="Institution of Service referral"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/institution"
-                android:layout_weight="1"
-                android:text="yhs"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:text="Comments"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/comment"
-                android:layout_weight="1"
-                android:text="yhsjhsiujhg ujhiujhoip mb"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-</RelativeLayout>
+</androidx.cardview.widget.CardView>

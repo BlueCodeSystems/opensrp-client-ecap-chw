@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/colorRed">
+    <item android:id="@android:id/mask">
+        <shape android:shape="rectangle">
+            <corners android:radius="12dp"/>
+            <solid android:color="@color/colorRed"/>
+        </shape>
+    </item>
+    <item>
+        <inset android:insetLeft="0dp" android:insetTop="0dp"
+            android:insetRight="0dp" android:insetBottom="0dp">
+            <shape android:shape="rectangle">
+                <corners android:radius="12dp"/>
+                <stroke android:width="1dp" android:color="@color/colorRed"/>
+                <solid android:color="@android:color/transparent"/>
+            </shape>
+        </inset>
+    </item>
+</ripple>

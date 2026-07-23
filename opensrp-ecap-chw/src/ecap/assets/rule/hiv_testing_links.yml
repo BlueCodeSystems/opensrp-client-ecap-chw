@@ -19,3 +19,31 @@ priority: 1
 condition: "step1_hiv_status.contains('Known Positive') || step1_hiv_result.contains('Newly Tested HIV+')"
 actions:
   - "isRelevant = true"
+---
+name: step1_instructions
+description: instructions
+priority: 1
+condition: "step1_hiv_status.contains('Known Negative') || step1_hiv_status.contains('Test Required Based on HIV risk assessment') || step1_hiv_status.contains('HIV Status Unknown')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_label_1
+description: label 1
+priority: 1
+condition: "step1_hiv_status.contains('Known Negative') || step1_hiv_status.contains('Test Required Based on HIV risk assessment') || step1_hiv_status.contains('HIV Status Unknown')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_hiv_result
+description: hiv_result
+priority: 1
+condition: "step1_hiv_status.contains('Known Negative') || step1_hiv_status.contains('Test Required Based on HIV risk assessment') || step1_hiv_status.contains('HIV Status Unknown')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_date_tested
+description: date_tested
+priority: 1
+condition: "step1_hiv_status.contains('Known Negative') || step1_hiv_status.contains('Test Required Based on HIV risk assessment') || step1_hiv_status.contains('HIV Status Unknown')"
+actions:
+  - "isRelevant = true"

@@ -14,6 +14,7 @@ import com.bluecodeltd.ecap.chw.activity.HouseholdIndexActivity;
 import com.bluecodeltd.ecap.chw.activity.IndexRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.MotherIndexActivity;
 import com.bluecodeltd.ecap.chw.activity.PMTCTRegisterActivity;
+import com.bluecodeltd.ecap.chw.activity.ReportRegisterActivity;
 
 import org.json.JSONObject;
 import org.smartregister.chw.core.listener.CoreBottomNavigationListener;
@@ -196,49 +197,7 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
                 } catch (Exception e) {
                     Timber.e(e);
                 }
-            }
-        else if ( context instanceof IndexRegisterActivity ) {
-
-                IndexRegisterActivity idRegisterActivity = (IndexRegisterActivity) context;
-
-                try {
-
-                    idRegisterActivity.startFormActivity("vca_screening",null,"");
-
-                } catch (Exception e) {
-                    Timber.e(e);
-                }
-
-            }
-            else if(context instanceof MotherIndexActivity){
-
-                MotherIndexActivity motherIndexActivity = (MotherIndexActivity) context;
-
-                try {
-                    FormUtils formUtils = new FormUtils(context);
-
-                    JSONObject indexRegisterForm;
-
-                    indexRegisterForm = formUtils.getFormJson("mother_index");
-
-                    motherIndexActivity.startFormActivity(indexRegisterForm);
-
-                } catch (Exception e) {
-                    Timber.e(e);
-                }
-            } else if(context instanceof HouseholdIndexActivity) {
-
-                HouseholdIndexActivity householdIndexActivity = (HouseholdIndexActivity) context;
-
-                try {
-
-                    householdIndexActivity.startFormActivity("hh_screening_entry",null,"");
-
-                } catch (Exception e) {
-                    Timber.e(e);
-                }
-            }
-            else if(context instanceof PMTCTRegisterActivity){
+            } else if(context instanceof PMTCTRegisterActivity){
 
                 PMTCTRegisterActivity motherIndexActivity = (PMTCTRegisterActivity) context;
 
@@ -254,6 +213,22 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
                 } catch (Exception e) {
                     Timber.e(e);
                 }
+            }
+        } else if (item.getItemId() == R.id.action_report_malaria) {
+            if (context instanceof ReportRegisterActivity) {
+                return ((ReportRegisterActivity) context).launchReportForm(ReportRegisterActivity.REPORT_TYPE_MALARIA);
+            }
+        } else if (item.getItemId() == R.id.action_report_nutrition) {
+            if (context instanceof ReportRegisterActivity) {
+                return ((ReportRegisterActivity) context).launchReportForm(ReportRegisterActivity.REPORT_TYPE_NUTRITION);
+            }
+        } else if (item.getItemId() == R.id.action_report_tb) {
+            if (context instanceof ReportRegisterActivity) {
+                return ((ReportRegisterActivity) context).launchReportForm(ReportRegisterActivity.REPORT_TYPE_TB);
+            }
+        } else if (item.getItemId() == R.id.action_report_community_alert) {
+            if (context instanceof ReportRegisterActivity) {
+                return ((ReportRegisterActivity) context).launchReportForm(ReportRegisterActivity.REPORT_TYPE_COMMUNITY_ALERT);
             }
         }
 

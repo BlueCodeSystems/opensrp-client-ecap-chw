@@ -62,8 +62,10 @@ public class ChildSafetyActionDao extends AbstractDao {
             record.setWho(getCursorValue(c,"who"));
             record.setUnique_id(getCursorValue(c,"unique_id"));
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 
 }
+

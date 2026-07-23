@@ -1,0 +1,796 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:viewBindingIgnore="true"
+    android:fitsSystemWindows="true">
+
+        <androidx.appcompat.widget.Toolbar
+        android:id="@+id/report_view_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:background="@drawable/bg_profile_header_gradient"
+        android:elevation="2dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="16dp"
+        app:titleTextColor="@android:color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/report_view_back_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/back"
+                android:padding="8dp"
+                android:src="@drawable/ic_arrow_back_white_24dp"
+                app:tint="@android:color/white" />
+
+            <TextView
+                android:id="@+id/report_view_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <!--  Sticky Header Card with Program Metadata and Edit Button -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/header_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/btn_edit_report"
+                android:stretchColumns="1">
+
+                <TableRow android:layout_marginBottom="4dp">
+                    <TextView
+                        android:paddingEnd="8dp"
+                        android:text="Reporting Period:"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/txt_reporting_month"
+                        android:text="Q1 2024" />
+                </TableRow>
+
+                <TableRow>
+                    <TextView
+                        android:paddingEnd="8dp"
+                        android:text="Facility Name:"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/txt_facility_name"
+                        android:text="Sample Clinic" />
+                </TableRow>
+            </TableLayout>
+
+            <ImageButton
+                android:id="@+id/btn_edit_report"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Edit Report"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/edit_icon"
+                app:tint="@color/chw_family_primary" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="16dp">
+
+        <!-- Single Section Container for all other questions -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Section A -->
+                <LinearLayout
+                    android:id="@+id/header_section_a"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Section A: Children Under 5 Years by Sub-population"
+                        android:textColor="@color/text_black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/icon_section_a"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/baseline_expand_more_24" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/content_section_a"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingBottom="16dp"
+                    android:visibility="gone">
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_table_row"
+                        android:stretchColumns="1">
+
+                        <TableRow
+                            android:background="@drawable/bg_table_header"
+                            android:paddingVertical="10dp">
+                            <TextView
+                                android:paddingStart="12dp"
+                                android:textColor="@color/text_black"
+                                android:text="Sub-population"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:gravity="center"
+                                android:textColor="@color/text_black"
+                                android:text="Count"
+                                android:textStyle="bold" />
+                        </TableRow>
+
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingStart="12dp" android:text="C/ALHIV" />
+                            <TextView android:id="@+id/subpop_calhiv" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingStart="12dp" android:text="HEI" />
+                            <TextView android:id="@+id/subpop_hei" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingStart="12dp" android:text="CML+HIV" />
+                            <TextView android:id="@+id/subpop_cml_hiv" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingStart="12dp" android:text="C/PBFA" />
+                            <TextView android:id="@+id/subpop_cpbfa" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingStart="12dp" android:text="Siblings" />
+                            <TextView android:id="@+id/subpop_siblings" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                    </TableLayout>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_grey" />
+
+                <!-- Section B -->
+                <LinearLayout
+                    android:id="@+id/header_section_b"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Section B: Household Malnutrition Prevention (YTD)"
+                        android:textColor="@color/text_black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/icon_section_b"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/baseline_expand_more_24" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/content_section_b"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingBottom="16dp"
+                    android:visibility="gone">
+
+                    <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:stretchColumns="0">
+                        <TableRow android:background="@drawable/bg_table_header" android:paddingVertical="10dp">
+                            <TextView android:paddingStart="12dp" android:textColor="@color/text_black" android:text="Indicator" android:textStyle="bold" />
+                            <TextView android:gravity="center" android:textColor="@color/text_black" android:text="Value" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="HH Practicing Diet Diversity" />
+                            <TextView android:id="@+id/hh_practicing_diet_diversity" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="HH Practicing Exclusive BF" />
+                            <TextView android:id="@+id/hh_practicing_exclusive_bf" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="HH Practicing Complementary Feeding" />
+                            <TextView android:id="@+id/hh_practicing_complementary_feeding" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="HH WASH Activities" />
+                            <TextView android:id="@+id/hh_wash_activities" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="HH Visited for Assessment" />
+                            <TextView android:id="@+id/hh_visited_assessment" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="PPMAM Identified" />
+                            <TextView android:id="@+id/ppmam_identified" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="PPMAM Referred/Commenced Feeding" />
+                            <TextView android:id="@+id/ppmam_referred_commenced" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="Other Children in HH in PMAM" />
+                            <TextView android:id="@+id/other_children_pmam" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="PLW on ART/PMTCT with Assessment" />
+                            <TextView android:id="@+id/plw_art_pmtct_nutrition_assessment" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="PLW Received IFAS" />
+                            <TextView android:id="@+id/plw_received_ifas" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="Food Insecurity Counselled" />
+                            <TextView android:id="@+id/hh_food_insecurity_counselled" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                    </TableLayout>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_grey" />
+
+                <!-- Section C -->
+                <LinearLayout
+                    android:id="@+id/header_section_c"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Section C: Micronutrient &amp; MNP Provision (MNP/VITA)"
+                        android:textColor="@color/text_black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/icon_section_c"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/baseline_expand_more_24" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/content_section_c"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingBottom="16dp"
+                    android:visibility="gone">
+
+                    <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:stretchColumns="0">
+                        <TableRow android:background="@drawable/bg_table_header" android:paddingVertical="10dp">
+                            <TextView android:paddingStart="12dp" android:textColor="@color/text_black" android:text="Indicator" android:textStyle="bold" />
+                            <TextView android:gravity="center" android:textColor="@color/text_black" android:text="Value" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="Children 6-23 Months Received MNP" />
+                            <TextView android:id="@+id/mnp_children_6_23_received" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="PLW Received MNP" />
+                            <TextView android:id="@+id/mnp_plw_received" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="Children Vitamin A (6-11 Months)" />
+                            <TextView android:id="@+id/vita_children_6_11_months" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="Children Vitamin A (12-59 Months)" />
+                            <TextView android:id="@+id/vita_children_12_59_months" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="PLW Vitamin A (Post-Partum)" />
+                            <TextView android:id="@+id/vita_plw_supplemented" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="Children 12-59 Months Dewormed" />
+                            <TextView android:id="@+id/deworming_children_12_59" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="PLW Dewormed" />
+                            <TextView android:id="@+id/deworming_plw" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                    </TableLayout>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_grey" />
+
+                <!-- Section D -->
+                <LinearLayout
+                    android:id="@+id/header_section_d"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Section D: Early Childhood Development (YTD)"
+                        android:textColor="@color/text_black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/icon_section_d"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/baseline_expand_more_24" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/content_section_d"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingBottom="16dp"
+                    android:visibility="gone">
+
+                    <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:stretchColumns="0">
+                        <TableRow android:background="@drawable/bg_table_header" android:paddingVertical="10dp">
+                            <TextView android:paddingStart="12dp" android:textColor="@color/text_black" android:text="Indicator" android:textStyle="bold" />
+                            <TextView android:gravity="center" android:textColor="@color/text_black" android:text="Value" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="ECD Centres Supported Monitoring" />
+                            <TextView android:id="@+id/ecd_centres_supported_monitoring" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="ECD Centres with Feeding" />
+                            <TextView android:id="@+id/ecd_centres_with_feeding" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="Children Enrolled in ECD" />
+                            <TextView android:id="@+id/ecd_children_enrolled" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="Caregivers Trained Stimulation" />
+                            <TextView android:id="@+id/ecd_caregivers_trained" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="Developmental Screening Completed" />
+                            <TextView android:id="@+id/ecd_developmental_screening" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                    </TableLayout>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_grey" />
+
+                <!-- Section E -->
+                <LinearLayout
+                    android:id="@+id/header_section_e"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Section E: Weight-For-Age Assessment"
+                        android:textColor="@color/text_black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/icon_section_e"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/baseline_expand_more_24" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/content_section_e"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingBottom="16dp"
+                    android:visibility="gone">
+
+                    <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:stretchColumns="0">
+                        <TableRow android:background="@drawable/bg_table_header" android:paddingVertical="10dp">
+                            <TextView android:paddingStart="12dp" android:textColor="@color/text_black" android:text="Category" android:textStyle="bold" />
+                            <TextView android:gravity="center" android:textColor="@color/text_black" android:text="Count" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="WFA: Underweight" />
+                            <TextView android:id="@+id/wfa_underweight" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="WFA: Overweight" />
+                            <TextView android:id="@+id/wfa_overweight" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="WFA: Normal" />
+                            <TextView android:id="@+id/wfa_normal" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                    </TableLayout>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_grey" />
+
+                <!-- Section F -->
+                <LinearLayout
+                    android:id="@+id/header_section_f"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Section F: Nutrition Assessment - Children Below 5 Years (YTD)"
+                        android:textColor="@color/text_black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/icon_section_f"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/baseline_expand_more_24" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/content_section_f"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingBottom="16dp"
+                    android:visibility="gone">
+
+                    <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:stretchColumns="0">
+                        <TableRow android:background="@drawable/bg_table_header" android:paddingVertical="10dp">
+                            <TextView android:paddingStart="12dp" android:textColor="@color/text_black" android:text="Grade" android:textStyle="bold" />
+                            <TextView android:gravity="center" android:textColor="@color/text_black" android:text="Count" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="Grade 1 (Moderate Malnutrition)" />
+                            <TextView android:id="@+id/nutrition_grade_1" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="Grade 2 (Severe Malnutrition)" />
+                            <TextView android:id="@+id/nutrition_grade_2" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="NR (No Result)" />
+                            <TextView android:id="@+id/nutrition_nr" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                    </TableLayout>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_grey" />
+
+                <!-- Section G -->
+                <LinearLayout
+                    android:id="@+id/header_section_g"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Section G: MUAC Measurements (Centimeters)"
+                        android:textColor="@color/text_black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/icon_section_g"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/baseline_expand_more_24" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/content_section_g"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingBottom="16dp"
+                    android:visibility="gone">
+
+                    <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:stretchColumns="0">
+                        <TableRow android:background="@drawable/bg_table_header" android:paddingVertical="10dp">
+                            <TextView android:paddingStart="12dp" android:textColor="@color/text_black" android:text="MUAC Category" android:textStyle="bold" />
+                            <TextView android:gravity="center" android:textColor="@color/text_black" android:text="Count" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="Red (&lt; 11.5 cm) - SAM" />
+                            <TextView android:id="@+id/muac_red_below_11_5" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="Yellow (11.5 - &lt;12.5 cm) - MAM" />
+                            <TextView android:id="@+id/muac_yellow_11_5_to_12_5" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="Green (&gt;= 12.5 cm) - Normal" />
+                            <TextView android:id="@+id/muac_green_12_5_plus" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="With Oedema" />
+                            <TextView android:id="@+id/muac_oedema" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                    </TableLayout>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_grey" />
+
+                <!-- Section H -->
+                <LinearLayout
+                    android:id="@+id/header_section_h"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Section H: STI"
+                        android:textColor="@color/text_black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/icon_section_h"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/baseline_expand_more_24" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/content_section_h"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingBottom="16dp"
+                    android:visibility="gone">
+
+                    <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:stretchColumns="0">
+                        <TableRow android:background="@drawable/bg_table_header" android:paddingVertical="10dp">
+                            <TextView android:paddingStart="12dp" android:textColor="@color/text_black" android:text="STI Indicator" android:textStyle="bold" />
+                            <TextView android:gravity="center" android:textColor="@color/text_black" android:text="Count" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="STI Cases Referred" />
+                            <TextView android:id="@+id/sti_referred" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="STI Cases Treated" />
+                            <TextView android:id="@+id/sti_treated" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                    </TableLayout>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_grey" />
+
+                <!-- Section I -->
+                <LinearLayout
+                    android:id="@+id/header_section_i"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Section I: Referral / Integration (YTD)"
+                        android:textColor="@color/text_black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/icon_section_i"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/baseline_expand_more_24" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/content_section_i"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingBottom="16dp"
+                    android:visibility="gone">
+
+                    <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:stretchColumns="0">
+                        <TableRow android:background="@drawable/bg_table_header" android:paddingVertical="10dp">
+                            <TextView android:paddingStart="12dp" android:textColor="@color/text_black" android:text="Referral Indicator" android:textStyle="bold" />
+                            <TextView android:gravity="center" android:textColor="@color/text_black" android:text="Value" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="Referred Nutrition to Health Facility" />
+                            <TextView android:id="@+id/referral_nutrition_to_health" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="Referral Feedback Received" />
+                            <TextView android:id="@+id/referral_feedback_received" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="Date of Referral" />
+                            <TextView android:id="@+id/referral_date_of_referral" android:gravity="center" android:text="-" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="Date of Feedback" />
+                            <TextView android:id="@+id/referral_date_of_feedback" android:gravity="center" android:text="-" android:textStyle="bold" />
+                        </TableRow>
+                        <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
+                            <TextView android:paddingEnd="8dp" android:paddingStart="12dp" android:text="HIV/TB Integration Referrals" />
+                            <TextView android:id="@+id/referral_hiv_tb_integration" android:gravity="center" android:text="0" android:textStyle="bold" />
+                        </TableRow>
+                    </TableLayout>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_grey" />
+
+                <!-- Comments -->
+                <LinearLayout
+                    android:id="@+id/header_section_comments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Comments / Remarks"
+                        android:textColor="@color/text_black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/icon_section_comments"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/baseline_expand_more_24" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/content_section_comments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingBottom="16dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/txt_comments"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="No comments"
+                        android:textColor="@color/text_black" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </ScrollView>
+</LinearLayout>

@@ -29,6 +29,7 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildSafetyPlanModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -86,101 +87,87 @@ public class ChildSafetyPlanAdapter  extends RecyclerView.Adapter<ChildSafetyPla
         final ChildSafetyPlanModel plan = plans.get(position);
 
         holder.setIsRecyclable(false);
-        if (plan.getInitial_date() != null){
-            holder.txtDate.setText(plan.getInitial_date());
-        }
+        holder.txtDate.setText(plan.getInitial_date() != null ? plan.getInitial_date() : "");
 
-        if (plan.getInitial_date() != null){
-            holder.numberOfAction.setText(ChildSafetyActionDao.countChildSafetyPlan(plan.getUnique_id(),plan.getInitial_date())+" Actions");
-        }
+        final String rowTag = plan.getBase_entity_id() != null ? plan.getBase_entity_id()
+                : (plan.getUnique_id() != null ? plan.getUnique_id() : String.valueOf(position));
+        holder.itemView.setTag(R.id.tag_row_id, rowTag);
 
-        Child child = null;
-        try {
-            child = IndexPersonDao.getChildByBaseId(plan.getUnique_id());
-        } catch (Exception e) {
-            Timber.e(e);
-        }
-        final Child safeChild = child;
+        holder.numberOfAction.setText("Loading…");
+        holder.delete.setVisibility(View.GONE);
+        holder.linearLayout.setOnClickListener(v ->
+                Toast.makeText(context, "Loading member details…", Toast.LENGTH_SHORT).show());
 
-        if (safeChild == null) {
-            holder.linearLayout.setOnClickListener(v ->
-                    Toast.makeText(context, "Member data incomplete", Toast.LENGTH_LONG).show());
-            holder.delete.setVisibility(View.GONE);
-            return;
-        }
+        Threading.ioBestEffort(() -> {
+            String count = null;
+            Child child = null;
+            try { count = ChildSafetyActionDao.countChildSafetyPlan(plan.getUnique_id(), plan.getInitial_date()); } catch (Exception ignored) {}
+            try { child = IndexPersonDao.getChildByBaseId(plan.getUnique_id()); } catch (Exception ignored) {}
 
-        holder.linearLayout.setOnClickListener(v -> {
+            final String finalCount = count;
+            final Child safeChild = child;
+            Threading.main(() -> {
+                Object tag = holder.itemView.getTag(R.id.tag_row_id);
+                if (!(tag instanceof String) || !rowTag.equals(tag)) return;
 
-            Intent openChildSafetyPlanActionActivity = new Intent(context, ChildSafetyPlanActions.class);
-            openChildSafetyPlanActionActivity.putExtra("vca_id",plan.getUnique_id());
-            openChildSafetyPlanActionActivity.putExtra("vca_name",safeChild.getFirst_name()+" "+safeChild.getLast_name());
-            openChildSafetyPlanActionActivity.putExtra("action_date",plan.getInitial_date());
-            context.startActivity(openChildSafetyPlanActionActivity);
-            if (context instanceof Activity) {
-                ((Activity) context).finish();
-            }
+                String c = (finalCount == null || finalCount.trim().isEmpty()) ? "0" : finalCount.trim();
+                holder.numberOfAction.setText(c + " Actions");
 
-        });
-        if(ChildSafetyActionDao.countChildSafetyPlan(plan.getUnique_id(),plan.getInitial_date()).equals("0")){
-          holder.delete.setVisibility(View.VISIBLE);
-        } else {
-            holder.delete.setVisibility(View.GONE);
-        }
-
-        holder.delete.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setMessage("You are about to delete "+safeChild.getFirst_name()+" "+safeChild.getLast_name()+" child safety plan");
-            builder.setNegativeButton("NO", (dialog, id) -> {
-                //  Action for 'NO' Button
-                dialog.cancel();
-
-            }).setPositiveButton("YES",((dialogInterface, i) -> {
-                FormUtils formUtils = null;
-                try {
-                    formUtils = new FormUtils(context);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                plan.setDelete_status("1");
-                JSONObject childSafetyPlanForm = formUtils.getFormJson("child_safety_plan");
-                try {
-                    CoreJsonFormUtils.populateJsonForm(childSafetyPlanForm, new ObjectMapper().convertValue( plan, Map.class));
-                    childSafetyPlanForm.put("entity_id", plan.getBase_entity_id());
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if (safeChild == null) {
+                    holder.linearLayout.setOnClickListener(v ->
+                            Toast.makeText(context, "Member data incomplete", Toast.LENGTH_LONG).show());
+                    holder.delete.setVisibility(View.GONE);
+                    return;
                 }
 
-                try {
-
-                    ChildIndexEventClient childIndexEventClient = processRegistration(childSafetyPlanForm.toString());
-                    if (childIndexEventClient == null) {
-                        return;
+                holder.linearLayout.setOnClickListener(v -> {
+                    Intent openChildSafetyPlanActionActivity = new Intent(context, ChildSafetyPlanActions.class);
+                    openChildSafetyPlanActionActivity.putExtra("vca_id", plan.getUnique_id());
+                    openChildSafetyPlanActionActivity.putExtra("vca_name", safeChild.getFirst_name() + " " + safeChild.getLast_name());
+                    openChildSafetyPlanActionActivity.putExtra("action_date", plan.getInitial_date());
+                    context.startActivity(openChildSafetyPlanActionActivity);
+                    if (context instanceof Activity) {
+                        ((Activity) context).finish();
                     }
-                    saveRegistration(childIndexEventClient,true);
+                });
 
+                boolean showDelete = "0".equals(c);
+                holder.delete.setVisibility(showDelete ? View.VISIBLE : View.GONE);
+                if (showDelete) {
+                    holder.delete.setOnClickListener(v -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setMessage("You are about to delete " + safeChild.getFirst_name() + " " + safeChild.getLast_name() + " child safety plan");
+                        builder.setNegativeButton("NO", (dialog, id) -> dialog.cancel())
+                                .setPositiveButton("YES", (dialogInterface, i) -> {
+                                    FormUtils formUtils = null;
+                                    try { formUtils = new FormUtils(context); } catch (Exception e) { e.printStackTrace(); }
+                                    plan.setDelete_status("1");
+                                    JSONObject childSafetyPlanForm = formUtils.getFormJson("child_safety_plan");
+                                    try {
+                                        CoreJsonFormUtils.populateJsonForm(childSafetyPlanForm, new ObjectMapper().convertValue(plan, Map.class));
+                                        childSafetyPlanForm.put("entity_id", plan.getBase_entity_id());
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
 
-                } catch (Exception e) {
-                    Timber.e(e);
+                                    try {
+                                        ChildIndexEventClient childIndexEventClient = processRegistration(childSafetyPlanForm.toString());
+                                        if (childIndexEventClient == null) return;
+                                        saveRegistration(childIndexEventClient, true);
+                                    } catch (Exception e) {
+                                        Timber.e(e);
+                                    }
+                                    callChildSafetyActivity(plan, safeChild);
+                                });
+
+                        AlertDialog alert = builder.create();
+                        alert.setTitle("Alert");
+                        alert.show();
+                    });
+                } else {
+                    holder.delete.setOnClickListener(null);
                 }
-                callChildSafetyActivity(plan,safeChild);
-
-
-//                if (context instanceof Activity) {
-//                    ((Activity) context).finish();
-//                }
-//                Intent openChildSafetyPlanActivity = new Intent(context, ChildSafetyPlanActivity.class);
-//                openChildSafetyPlanActivity.putExtra("vca_id",plan.getUnique_id());
-//                openChildSafetyPlanActivity.putExtra("vca_name",child.getFirst_name()+" "+child.getLast_name());
-//                openChildSafetyPlanActivity.putExtra("action_date",plan.getInitial_date());
-//                context.startActivity(openChildSafetyPlanActivity);
-
-            }));
-
-            //Creating dialog box
-            AlertDialog alert = builder.create();
-            //Setting the title manually
-            alert.setTitle("Alert");
-            alert.show();
+            });
         });
     }
     public void callChildSafetyActivity(ChildSafetyPlanModel plan, Child child) {

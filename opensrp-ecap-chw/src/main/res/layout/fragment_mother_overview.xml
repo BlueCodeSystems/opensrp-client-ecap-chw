@@ -4,208 +4,173 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/overview_summary_row"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:background="@color/dash_bg"
+    android:fillViewport="true"
+    android:scrollbars="vertical"
+    android:fadeScrollbars="false">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="24dp">
 
-
-        <TextView
-            android:id="@+id/overview_section_header"
+        <!-- ============ ENROLLMENT DETAILS ============ -->
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/overview_header_bg"
-            android:gravity="left"
-            android:paddingLeft="@dimen/contact_drawable_padding"
-            android:paddingTop="@dimen/contact_drawable_padding"
-            android:paddingBottom="@dimen/contact_drawable_padding"
-            android:singleLine="true"
-            android:text="Enrollment Details"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@color/white"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="1dp"
+            app:cardBackgroundColor="@color/register_card_bg">
 
-        <LinearLayout
-            app:layout_constraintTop_toBottomOf="@+id/overview_section_header"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="4dp">
+
+                <TextView
+                    android:id="@+id/overview_section_header"
+                    style="@style/OverviewSectionHeader"
+                    android:text="Enrollment Details" />
+
+                <LinearLayout style="@style/OverviewRow">
+                    <TextView style="@style/OverviewRowLabel" android:text="Household ID" />
+                    <TextView android:id="@+id/hh_id" style="@style/OverviewRowValue" />
+                </LinearLayout>
+
+                <include layout="@layout/overview_row_divider" />
+
+                <LinearLayout style="@style/OverviewRow">
+                    <TextView
+                        android:id="@+id/overview_section_details_left1"
+                        style="@style/OverviewRowLabel"
+                        android:text="Physical Address" />
+                    <TextView
+                        android:id="@+id/p_address"
+                        style="@style/OverviewRowValue"
+                        android:inputType="textCapWords" />
+                </LinearLayout>
+
+                <include layout="@layout/overview_row_divider" />
+
+                <LinearLayout style="@style/OverviewRow">
+                    <TextView style="@style/OverviewRowLabel" android:text="Phone Number" />
+                    <TextView
+                        android:id="@+id/phone"
+                        style="@style/OverviewRowValue"
+                        android:textAllCaps="false" />
+                </LinearLayout>
+
+                <include layout="@layout/overview_row_divider" />
+
+                <LinearLayout style="@style/OverviewRow">
+                    <TextView style="@style/OverviewRowLabel" android:text="Facility" />
+                    <TextView
+                        android:id="@+id/facility"
+                        style="@style/OverviewRowValue"
+                        android:textAllCaps="false" />
+                </LinearLayout>
+
+                <include layout="@layout/overview_row_divider" />
+
+                <LinearLayout style="@style/OverviewRow">
+                    <TextView style="@style/OverviewRowLabel" android:text="Screening Date" />
+                    <TextView
+                        android:id="@+id/screening_date"
+                        style="@style/OverviewRowValue"
+                        android:textAllCaps="false" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- ============ HEALTH DETAILS ============ -->
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/contact_small_padding"
-            android:paddingBottom="@dimen/contact_small_padding"
-            android:orientation="vertical">
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="1dp"
+            app:cardBackgroundColor="@color/register_card_bg">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:weightSum="2"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:paddingBottom="4dp">
 
                 <TextView
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Household ID"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    />
+                    android:id="@+id/overview_section_header2"
+                    style="@style/OverviewSectionHeader"
+                    android:text="Health Details" />
 
+                <LinearLayout style="@style/OverviewRow">
+                    <TextView style="@style/OverviewRowLabel" android:text="HIV Status" />
+                    <TextView
+                        android:id="@+id/hiv_status"
+                        style="@style/OverviewRowValue"
+                        android:textAllCaps="false" />
+                </LinearLayout>
 
-                <TextView
-                    android:layout_weight="1"
-                    android:id="@+id/hh_id"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    />
+                <include layout="@layout/overview_row_divider" />
+
+                <LinearLayout style="@style/OverviewRow">
+                    <TextView style="@style/OverviewRowLabel" android:text="Pregnant" />
+                    <TextView
+                        android:id="@+id/pregnant_status"
+                        style="@style/OverviewRowValue"
+                        android:textAllCaps="false" />
+                </LinearLayout>
+
+                <include layout="@layout/overview_row_divider" />
+
+                <LinearLayout style="@style/OverviewRow">
+                    <TextView style="@style/OverviewRowLabel" android:text="Breastfeeding" />
+                    <TextView
+                        android:id="@+id/breastfeeding_status"
+                        style="@style/OverviewRowValue"
+                        android:textAllCaps="false" />
+                </LinearLayout>
+
+                <include layout="@layout/overview_row_divider" />
+
+                <LinearLayout
+                    android:id="@+id/treatment_row"
+                    style="@style/OverviewRow">
+                    <TextView
+                        android:id="@+id/case_status_overview"
+                        style="@style/OverviewRowLabel"
+                        android:text="Active on Treatment" />
+                    <TextView
+                        android:id="@+id/treatment"
+                        style="@style/OverviewRowValue"
+                        android:inputType="textCapWords" />
+                </LinearLayout>
+
+                <include layout="@layout/overview_row_divider" />
+
+                <LinearLayout
+                    android:id="@+id/art_row"
+                    style="@style/OverviewRow">
+                    <TextView style="@style/OverviewRowLabel" android:text="ART Number" />
+                    <TextView
+                        android:id="@+id/art_number"
+                        style="@style/OverviewRowValue"
+                        android:textAllCaps="false" />
+                </LinearLayout>
 
             </LinearLayout>
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="2"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_weight="1"
-                    android:id="@+id/overview_section_details_left1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Physical Address"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    />
-
-
-                <TextView
-                    android:layout_weight="1"
-                    android:id="@+id/p_address"
-                    android:inputType="textCapWords"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="2"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Phone Number"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    />
-
-                <TextView
-                    android:layout_weight="1"
-                    android:id="@+id/phone"
-                    android:textAllCaps="false"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="2"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/case_status_overview"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    android:layout_weight="1"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:text="Active on Treatment" />
-
-                <TextView
-                    android:layout_weight="1"
-                    android:id="@+id/treatment"
-                    android:inputType="textCapWords"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="2"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    android:layout_weight="1"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:text="ART Number" />
-                <TextView
-                    android:layout_weight="1"
-                    android:id="@+id/art_number"
-                    android:textAllCaps="false"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:paddingLeft="@dimen/contact_drawable_padding"
-                    android:paddingTop="@dimen/contact_small_padding"
-                    android:paddingBottom="@dimen/contact_small_padding"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/black_text_color"
-                    />
-
-            </LinearLayout>
-
-        </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 

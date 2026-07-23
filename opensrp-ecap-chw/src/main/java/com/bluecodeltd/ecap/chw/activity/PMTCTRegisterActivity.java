@@ -84,7 +84,8 @@ public class PMTCTRegisterActivity extends BaseRegisterActivity implements Index
             toolbar.setTitle("");
             TextView titleLabel = toolbar.findViewById(org.smartregister.R.id.txt_title_label);
             if (titleLabel != null) {
-                titleLabel.setVisibility(View.GONE);
+                titleLabel.setText(R.string.pmtct_register_title);
+                titleLabel.setVisibility(View.VISIBLE);
             }
             try {
                 if (menu != null) {
@@ -104,12 +105,6 @@ public class PMTCTRegisterActivity extends BaseRegisterActivity implements Index
         if (menu != null && menu.getNavigationAdapter() != null) {
             menu.getNavigationAdapter().setSelectedView(Constants.DrawerMenu.PMTCT);
         }
-
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(PMTCTRegisterActivity.this);
-        String phone = sp.getString("phone", "anonymous");
-
-        notificationsList.addAll(VcaVisitationDao.getVisitsByCaseWorkerPhone(phone));
-        mCartItemCount = notificationsList.size();
 
     }
 
@@ -457,6 +452,14 @@ public class PMTCTRegisterActivity extends BaseRegisterActivity implements Index
     }
 
     @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, DashboardActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
     public List<String> getViewIdentifiers() {
         return null;
     }
@@ -477,7 +480,9 @@ public class PMTCTRegisterActivity extends BaseRegisterActivity implements Index
             bottomNavigationView.getMenu().removeItem(R.id.action_register_index);
             bottomNavigationView.getMenu().removeItem(R.id.action_fsw);
             bottomNavigationView.getMenu().removeItem(R.id.action_hts);
-            bottomNavigationView.getMenu().findItem(R.id.action_identifcation).setTitle( "Add Mother");
+            bottomNavigationView.getMenu().removeItem(R.id.action_identifcation);
+
+//            bottomNavigationView.getMenu().findItem(R.id.action_identifcation).setTitle( "Add Mother");
 
         }
     }

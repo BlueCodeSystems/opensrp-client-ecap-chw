@@ -1,0 +1,40 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.6.0'
+    }
+}
+
+apply plugin: 'com.android.library'
+
+group = 'com.evernote'
+version = '1.4.3'
+
+android {
+    namespace = "com.evernote.android.job"
+    compileSdkVersion 35
+    buildToolsVersion "35.0.0"
+
+    defaultConfig {
+        minSdkVersion 28
+        targetSdkVersion 35
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+}
+
+dependencies {
+    api 'androidx.core:core:1.7.0'
+    compileOnly 'androidx.work:work-runtime:2.7.1'
+    compileOnly 'com.google.android.gms:play-services-gcm:17.0.0'
+}

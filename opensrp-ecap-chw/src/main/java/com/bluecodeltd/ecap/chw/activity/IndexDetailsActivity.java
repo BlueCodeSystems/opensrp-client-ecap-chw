@@ -39,6 +39,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager2.widget.ViewPager2;
+
+import com.bluecodeltd.ecap.chw.fragment.VcaNutritionAssessmentFragment;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
@@ -50,25 +52,37 @@ import com.bluecodeltd.ecap.chw.dao.GraduationDao;
 import com.bluecodeltd.ecap.chw.dao.HivAssessmentAbove15Dao;
 import com.bluecodeltd.ecap.chw.dao.HivAssessmentUnder15Dao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
+import com.bluecodeltd.ecap.chw.dao.IndexMotherDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
+import com.bluecodeltd.ecap.chw.dao.PmtctChildDao;
 import com.bluecodeltd.ecap.chw.dao.ReferralDao;
+import com.bluecodeltd.ecap.chw.dao.NutritionAssessmentInterventionDao;
 import com.bluecodeltd.ecap.chw.dao.VCAScreeningDao;
 import com.bluecodeltd.ecap.chw.dao.VcaAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.VcaCasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.dao.WeServiceVcaDao;
+import com.bluecodeltd.ecap.chw.dao.TbScreeningDao;
+import com.bluecodeltd.ecap.chw.dao.CaregiverDao;
 import com.bluecodeltd.ecap.chw.dao.newCaregiverDao;
+import com.bluecodeltd.ecap.chw.model.Caregiver;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.ChildVisitsFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.VcaHivAssesmentFragment;
+import com.bluecodeltd.ecap.chw.fragment.VcaTbScreeningFragment;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
 import com.bluecodeltd.ecap.chw.model.GraduationModel;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentUnder15Model;
+import com.bluecodeltd.ecap.chw.model.IndexMotherModel;
+import com.bluecodeltd.ecap.chw.model.PmtctChildModel;
+import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
 import com.bluecodeltd.ecap.chw.model.ReferralModel;
+import com.bluecodeltd.ecap.chw.model.EcClientIndexSummary;
 import com.bluecodeltd.ecap.chw.model.VCAModel;
 import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.VcaCasePlanModel;
@@ -76,7 +90,9 @@ import com.bluecodeltd.ecap.chw.model.VcaScreeningModel;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.model.WeServiceVcaModel;
 import com.bluecodeltd.ecap.chw.model.newCaregiverModel;
+import com.bluecodeltd.ecap.chw.model.TbScreeningModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -133,14 +149,20 @@ public class IndexDetailsActivity extends AppCompatActivity {
 //    }
 
     private FloatingActionButton fab, fabHiv,fabHiv2, fabGradSub, fabGrad, fabCasePlan, fabVisitation, fabReferal,  fabAssessment;
+    private View fabScrim;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     public String childId, uniqueId, vcaAge,is_screened, is_hiv_positive, caseworkerphone;
-    private RelativeLayout txtScreening, rassessment, rcase_plan, referral,  household_visitation_for_vca, hiv_assessment,hiv_assessment2,childPlan,weServicesVca;
+    private String refresh;
+    private RelativeLayout txtScreening, rassessment, rcase_plan, referral,  household_visitation_for_vca, hiv_assessment,hiv_assessment2,childPlan,weServicesVca, nutrition_assessment_intervention, tb_screening;
 
     public VcaScreeningModel indexVCA;
+    private Caregiver householdCaregiver;
     private  VcaAssessmentModel assessmentModel;
     private TextView txtName, txtGender, txtAge, txtChildid;
+    private android.widget.ImageView profileGenderImage;
+    private View profileGenderAvatar;
+    private View profileNameLayout;
     private TabLayout mTabLayout;
     public ViewPager2 mViewPager;
     private TabLayoutMediator tabMediator;
@@ -163,6 +185,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
     VcaVisitationModel vcaVisitationModel;
     VcaCasePlanModel vcaCasePlanModel;
     newCaregiverModel updatedCaregiver;
+    private boolean hideHouseholdProfileButton;
+    private boolean allowNonScreeningFabActionsWhenSourceIsVcaScreening;
+    private volatile boolean sourceFromVcaScreeningResolved;
 
 
     public VCAModel client;
@@ -189,48 +214,129 @@ public class IndexDetailsActivity extends AppCompatActivity {
         builder = new AlertDialog.Builder(IndexDetailsActivity.this);
         screeningBuilder = new AlertDialog.Builder(IndexDetailsActivity.this);
 
-        childId = getIntent().getExtras().getString("Child");
-        String hhIntent = getIntent().getExtras().getString("fromHousehold");
-        if(hhIntent == null){
-            hhIntent = getIntent().getExtras().getString("fromIndex");
+        // Refresh flag (optional extra)
+        try {
+            refresh = getIntent() != null && getIntent().getExtras() != null ? getIntent().getExtras().getString("refresh") : null;
+        } catch (Exception ignored) {}
+
+        try {
+            childId = getIntent() != null && getIntent().getExtras() != null ? getIntent().getExtras().getString("Child") : null;
+            if (childId == null && getIntent() != null && getIntent().getExtras() != null) {
+                childId = getIntent().getExtras().getString("childId");
+            }
+            if (childId == null && getIntent() != null && getIntent().getExtras() != null) {
+                childId = getIntent().getExtras().getString("base_entity_id");
+            }
+        } catch (Exception ignored) {}
+
+        Bundle extras = getIntent() != null ? getIntent().getExtras() : null;
+        String hhIntent = extras != null ? extras.getString("fromHousehold") : null;
+        if(hhIntent == null && extras != null){
+            hhIntent = extras.getString("fromIndex");
         }
+        // Avoid ANRs: do SQLCipher/DAO work off the main thread.
+        loadIndexDataAsync(hhIntent);
 
-        indexVCA = VCAScreeningDao.getVcaScreening(childId);
-        child = IndexPersonDao.getChildByBaseId(childId);
-        gender = null;
+    }
 
+    private void loadIndexDataAsync(String hhIntent) {
+        final String finalChildId = childId;
+        final String finalHhIntent = hhIntent;
+        Threading.io(() -> {
+            if (TextUtils.isEmpty(finalChildId)) {
+                Threading.main(this::finish);
+                return;
+            }
 
-        if (indexVCA != null) {
-            if (indexVCA.getGender() != null) {
-                gender = indexVCA.getGender();
+            try { indexVCA = VCAScreeningDao.getVcaScreening(finalChildId); } catch (Exception ignored) { indexVCA = null; }
+            try { child = IndexPersonDao.getChildByBaseId(finalChildId); } catch (Exception ignored) { child = null; }
+
+            hideHouseholdProfileButton = false;
+            allowNonScreeningFabActionsWhenSourceIsVcaScreening = false;
+            sourceFromVcaScreeningResolved = false;
+            try {
+                String householdId = resolveHouseholdIdForSourceChecks();
+                if (!TextUtils.isEmpty(householdId)) {
+                    /* First priority: ec_pmtct_mother source_from=service_report_vca for this household_id */
+                    java.util.List<PtctMotherModel> pmtctMothers = PMTCTMotherDao.getPMTCTMothersByHouseholdId(householdId);
+                    if (pmtctMothers != null && !pmtctMothers.isEmpty()) {
+                        for (PtctMotherModel mother : pmtctMothers) {
+                            String sourceFrom = mother != null ? mother.getSource_from() : null;
+                            if (!TextUtils.isEmpty(sourceFrom) &&
+                                    ("service_report_vca".equalsIgnoreCase(sourceFrom.trim()) || "vca_service".equalsIgnoreCase(sourceFrom.trim()))) {
+                                hideHouseholdProfileButton = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!hideHouseholdProfileButton) {
+                        java.util.List<IndexMotherModel> mothers = IndexMotherDao.getIndexMothersByHouseholdId(householdId);
+                        if (mothers != null && !mothers.isEmpty()) {
+                            for (IndexMotherModel mother : mothers) {
+                                String sourceFrom = mother != null ? mother.getSource_from() : null;
+                                if (!TextUtils.isEmpty(sourceFrom) &&
+                                        ("service_report_vca".equalsIgnoreCase(sourceFrom.trim()) || "vca_service".equalsIgnoreCase(sourceFrom.trim()))) {
+                                    hideHouseholdProfileButton = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch (Exception ignored) { }
+
+            // When the household context is from vca_screening (index mother or PMTCT mother),
+            // allow opening other FAB actions (assessment, referral, etc.) even if ec_household.screened is false.
+            try {
+                String householdId = resolveHouseholdIdForSourceChecks();
+                if (!TextUtils.isEmpty(householdId)) {
+                    allowNonScreeningFabActionsWhenSourceIsVcaScreening =
+                            computeIsVcaScreeningSource(householdId, resolveUniqueIdForSourceChecks());
+                    sourceFromVcaScreeningResolved = true;
+                }
+            } catch (Exception ignored) { }
+
+            gender = indexVCA != null ? indexVCA.getGender() : null;
+            uniqueId = indexVCA != null ? indexVCA.getUnique_id() : null;
+
+            is_screened = null;
+            if (indexVCA != null) {
+                String householdId = indexVCA.getHousehold_id();
+                if (!TextUtils.isEmpty(householdId)) {
+                    try { is_screened = HouseholdDao.checkIfScreened(householdId); } catch (Exception ignored) {}
+                }
+            }
+
+            is_hiv_positive = null;
+            if (!TextUtils.isEmpty(uniqueId)) {
+                try { is_hiv_positive = VCAScreeningDao.checkStatus(uniqueId); } catch (Exception ignored) {}
+            }
+
+            try { vcaAssessmentModel = VcaAssessmentDao.getVcaAssessment(finalChildId); } catch (Exception ignored) { vcaAssessmentModel = null; }
+            try { referralModel = ReferralDao.getReferral(finalChildId); } catch (Exception ignored) { referralModel = null; }
+            try { hivRiskAssessmentAbove15Model = HivAssessmentAbove15Dao.getHivAssessmentAbove15(finalChildId); } catch (Exception ignored) { hivRiskAssessmentAbove15Model = null; }
+            try { hivRiskAssessmentUnder15Model = HivAssessmentUnder15Dao.getHivAssessmentUnder15(finalChildId); } catch (Exception ignored) { hivRiskAssessmentUnder15Model = null; }
+            try { vcaVisitationModel = VcaVisitationDao.getVcaVisitation(finalChildId); } catch (Exception ignored) { vcaVisitationModel = null; }
+            try { vcaCasePlanModel = VcaCasePlanDao.getVcaCasePlan(finalChildId); } catch (Exception ignored) { vcaCasePlanModel = null; }
+            try { weServiceVcaModel = WeServiceVcaDao.getWeServiceVca(finalChildId); } catch (Exception ignored) { weServiceVcaModel = null; }
+
+            if (indexVCA != null && !TextUtils.isEmpty(indexVCA.getHousehold_id())) {
+                try { updatedCaregiver = newCaregiverDao.getNewCaregiverById(indexVCA.getHousehold_id()); } catch (Exception ignored) { updatedCaregiver = null; }
+                try { householdCaregiver = CaregiverDao.getCaregiver(indexVCA.getHousehold_id()); } catch (Exception ignored) { householdCaregiver = null; }
             } else {
+                updatedCaregiver = null;
+                householdCaregiver = null;
             }
-            uniqueId = null;
-            if (indexVCA.getUnique_id() != null) {
-                uniqueId = indexVCA.getUnique_id();
-            } else {
-            }
-        } else {
 
-        }
+            Threading.main(() -> {
+                if (isFinishing() || isDestroyed()) return;
+                initAfterLoad(finalHhIntent);
+            });
+        });
+    }
 
-//        is_screened = HouseholdDao.checkIfScreened(indexVCA.getHousehold_id());
-        if (indexVCA != null) {
-            String householdId = indexVCA.getHousehold_id();
-            if (householdId != null) {
-                is_screened = HouseholdDao.checkIfScreened(householdId);
-            }
-        }
-
-        is_hiv_positive = null;
-
-        if (indexVCA != null && indexVCA.getUnique_id() != null ) {
-            String uniqueId = indexVCA.getUnique_id();
-            if (uniqueId != null) {
-                is_hiv_positive = VCAScreeningDao.checkStatus(uniqueId);
-            }
-        }
-
+    private void initAfterLoad(String hhIntent) {
         fabHiv = binding.hivRisk;
         fabHiv2 = binding.hivRisk2;
         fabVisitation = binding.householdVisitationForVcaFab;
@@ -238,20 +344,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         fabCasePlan =  binding.casePlanFab;
         fabAssessment = binding.fabAssessment;
 
-        vcaAssessmentModel = VcaAssessmentDao.getVcaAssessment(childId);
-        referralModel = ReferralDao.getReferral(childId);
-        hivRiskAssessmentAbove15Model = HivAssessmentAbove15Dao.getHivAssessmentAbove15(childId);
-        hivRiskAssessmentUnder15Model = HivAssessmentUnder15Dao.getHivAssessmentUnder15(childId);
-        vcaVisitationModel = VcaVisitationDao.getVcaVisitation(childId);
-        vcaCasePlanModel = VcaCasePlanDao.getVcaCasePlan(childId);
-        weServiceVcaModel = WeServiceVcaDao.getWeServiceVca(childId);
-        if (indexVCA != null && !TextUtils.isEmpty(indexVCA.getHousehold_id())) {
-            updatedCaregiver = newCaregiverDao.getNewCaregiverById(indexVCA.getHousehold_id());
-        } else {
-            updatedCaregiver = null;
-        }
-
-
+        applyHouseholdProfileButtonVisibility();
 
         oMapper = new ObjectMapper();
         clientMapper = new ObjectMapper();
@@ -288,27 +381,14 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         }
 
-
         fab = binding.fab;
+        fabScrim = binding.fabScrim;
+        fabScrim.setOnClickListener(v -> closeFab());
         if (indexVCA != null && indexVCA.getCase_status() != null &&
                 ("0".equals(indexVCA.getCase_status()) || "2".equals(indexVCA.getCase_status()))) {
             fab.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
         }
 
-//        String subpop1 = child.getSubpop1();
-//        String subpop2 = child.getSubpop2();
-//        String subpop3 = child.getSubpop3();
-//        String subpop4 = child.getSubpop4();
-//        String subpop5 = child.getSubpop5();
-//        String subpop6 = child.getSubpop6();
-//
-//        if (subpop1 != null || subpop2 != null || subpop3 != null ||
-//                subpop4 != null || subpop5 != null || subpop6 != null) {
-//            fab.setVisibility(View.VISIBLE);
-//        }
-//        else {
-//            fab.setVisibility(View.INVISIBLE);
-//        }
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
@@ -321,17 +401,20 @@ public class IndexDetailsActivity extends AppCompatActivity {
         referral = binding.referral;
         household_visitation_for_vca = binding.householdVisitationForVca;
 
-
-
         hiv_assessment = binding.hivAssessment;
         hiv_assessment2 = binding.hivAssessment2;
         childPlan = binding.childPlan;
         weServicesVca = binding.weServicesVca;
+        nutrition_assessment_intervention = binding.nutritionAssessmentIntervention;
+        tb_screening = binding.tbScreening;
 
         txtName = binding.vcaName;
         txtGender = binding.vcaGender;
         txtAge = binding.vcaAge;
         txtChildid = binding.childid;
+        profileGenderImage = binding.profileGenderImage;
+        profileGenderAvatar = binding.profileGenderAvatar;
+        profileNameLayout = binding.profileNameLayout;
 
         mTabLayout =  binding.tabs;
         mViewPager  = binding.viewpager;
@@ -345,9 +428,15 @@ public class IndexDetailsActivity extends AppCompatActivity {
         int page = getIntent().getIntExtra("tab",0);
         mViewPager.setCurrentItem(page, false);
 
-createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE);
+        createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE);
+    }
 
-
+    private void applyHouseholdProfileButtonVisibility() {
+        try {
+            View btn = findViewById(R.id.household_profile);
+            if (btn == null) return;
+            btn.setVisibility(hideHouseholdProfileButton ? View.GONE : View.VISIBLE);
+        } catch (Exception ignored) { }
     }
 
 
@@ -376,27 +465,45 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         String birthdate = displayBirthdate != null ? checkAndConvertDateFormat(displayBirthdate) : null;
 
         if (birthdate != null && !"Invalid date format".equals(birthdate)) {
-            txtAge.setText(getAge(birthdate));
+            if (txtAge != null) {
+                txtAge.setText(getAge(birthdate));
+            }
             vcaAge = getAgeWithoutText(birthdate);
-        } else {
+        } else if (txtAge != null) {
             txtAge.setText("Not Set");
         }
 
-        try {
-            if (!TextUtils.isEmpty(full_name)) {
-                txtName.setText(full_name);
-            }
-            if (!TextUtils.isEmpty(displayGender)) {
-                txtGender.setText(displayGender.toUpperCase());
+        if (txtName != null && !TextUtils.isEmpty(full_name)) {
+            txtName.setText(full_name);
+        }
+        if (txtGender != null) {
+            txtGender.setText(!TextUtils.isEmpty(displayGender) ? displayGender.toUpperCase() : "");
+        }
+        if (profileGenderImage != null && profileGenderAvatar != null) {
+            if ("male".equalsIgnoreCase(displayGender)) {
+                profileGenderImage.setImageResource(R.drawable.row_boy);
+                profileGenderAvatar.setVisibility(View.VISIBLE);
+            } else if ("female".equalsIgnoreCase(displayGender)) {
+                profileGenderImage.setImageResource(R.drawable.row_girl);
+                profileGenderAvatar.setVisibility(View.VISIBLE);
             } else {
-                txtGender.setText("");
+                profileGenderAvatar.setVisibility(View.GONE);
             }
+        }
+        if (profileNameLayout != null) {
+            // Match the exact colors initAfterLoad() already uses for the toolbar/app bar by gender,
+            // so this section blends with them instead of introducing a third, mismatched palette.
+            if ("male".equalsIgnoreCase(displayGender)) {
+                profileNameLayout.setBackgroundColor(0xff218CC5);
+            } else {
+                profileNameLayout.setBackgroundColor(0xffDA70D6);
+            }
+        }
+        if (txtChildid != null) {
             String idForDisplay = indexVCA != null ? indexVCA.getUnique_id() : (child != null ? child.getUnique_id() : null);
             if (!TextUtils.isEmpty(idForDisplay)) {
                 txtChildid.setText("ID : " + idForDisplay);
             }
-        } catch (NullPointerException e) {
-            txtGender.setText("");
         }
 
         HashMap<String, Child> map = new HashMap<>();
@@ -483,40 +590,182 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         fragments.add(new ProfileOverviewFragment());
         fragments.add(new ChildCasePlanFragment());
         fragments.add(new ChildVisitsFragment());
+        fragments.add(new VcaTbScreeningFragment());
+
 
         String hivStatus = indexVCA != null ? indexVCA.getIs_hiv_positive() : null;
         if (hivStatus != null && "no".equalsIgnoreCase(hivStatus)) {
             fragments.add(new VcaHivAssesmentFragment());
         }
 
+        // Add Nutrition Assessment fragment only for children 5 years and below
+        try {
+            String dob = indexVCA != null ? indexVCA.getAdolescent_birthdate() : null;
+            if (dob != null && !dob.trim().isEmpty()) {
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy");
+                java.util.Date d = sdf.parse(dob);
+                java.util.Calendar c = java.util.Calendar.getInstance();
+                c.setTime(d);
+                java.util.Calendar now = java.util.Calendar.getInstance();
+                int years = now.get(java.util.Calendar.YEAR) - c.get(java.util.Calendar.YEAR);
+                if (now.get(java.util.Calendar.DAY_OF_YEAR) < c.get(java.util.Calendar.DAY_OF_YEAR)) years--;
+                if (years <= 5) {
+                    fragments.add(new com.bluecodeltd.ecap.chw.fragment.VcaNutritionAssessmentFragment());
+                }
+            }
+        } catch (Exception ignored) { }
+
         com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter adapter = new com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter(this, fragments);
         mViewPager.setAdapter(adapter);
+        try { mViewPager.setNestedScrollingEnabled(true); } catch (Throwable ignored) {}
+        try { mViewPager.setOffscreenPageLimit(Math.min(5, fragments.size())); } catch (Throwable ignored) {}
         if (tabMediator != null) { try { tabMediator.detach(); } catch (Exception ignored) {} }
         tabMediator = new TabLayoutMediator(mTabLayout, mViewPager, (tab, position) -> {
             switch (position) {
-                case 0: tab.setText("OVERVIEW"); break;
-                case 1: tab.setText("CASE PLANS"); break;
-                case 2: tab.setText("VISITS"); break;
-                case 3: tab.setText("HIV ASSESSMENT"); break;
+                case 0:
+                    tab.setText("OVERVIEW");
+                    break;
+                case 1:
+                    tab.setText("CASE PLANS");
+                    break;
+                case 2:
+                    tab.setText("VISITS");
+                    break;
+                default:
+                    // For positions beyond the first three, determine label by fragment type
+                    try {
+                        androidx.fragment.app.Fragment f = fragments.get(position);
+                        if (f instanceof com.bluecodeltd.ecap.chw.fragment.VcaNutritionAssessmentFragment) {
+                            tab.setText("NUTRITION");
+                        } else if (f instanceof com.bluecodeltd.ecap.chw.fragment.VcaTbScreeningFragment) {
+                            tab.setText("TB SCREENING");
+                        } else if (f instanceof com.bluecodeltd.ecap.chw.fragment.VcaHivAssesmentFragment) {
+                            tab.setText("HIV ASSESSMENT");
+                        }
+                    } catch (Exception ignored) { }
+                    break;
             }
         });
         tabMediator.attach();
         if (fragments.size() > 3) {
-            updateHivAssessmentTabTitle();
+            // Apply custom titles like other tabs for better consistency
+            // HIV Assessment tab (if present at any index)
+            for (int i = 0; i < fragments.size(); i++) {
+                androidx.fragment.app.Fragment f = fragments.get(i);
+                if (f instanceof com.bluecodeltd.ecap.chw.fragment.VcaHivAssesmentFragment) {
+                    updateHivAssessmentTabTitleAtIndex(i);
+                    break;
+                }
+            }
+            // Nutrition tab (if present at any index)
+            for (int i = 0; i < fragments.size(); i++) {
+                androidx.fragment.app.Fragment f = fragments.get(i);
+                if (f instanceof com.bluecodeltd.ecap.chw.fragment.VcaNutritionAssessmentFragment) {
+                    updateNutritionTabTitleAtIndex(i);
+                    break;
+                }
+            }
+            // TB Screening tab (if present at any index)
+            for (int i = 0; i < fragments.size(); i++) {
+                androidx.fragment.app.Fragment f = fragments.get(i);
+                if (f instanceof com.bluecodeltd.ecap.chw.fragment.VcaTbScreeningFragment) {
+                    updateTbTabTitleAtIndex(i);
+                    break;
+                }
+            }
+        }
+
+        // One-time self-serve tip to guide scrolling and swiping
+        try {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            boolean shown = prefs.getBoolean("index_scroll_tip_shown", false);
+            if (!shown) {
+                com.google.android.material.snackbar.Snackbar.make(findViewById(R.id.viewpager),
+                        "Scroll inside tabs to see more. Swipe tabs to navigate.",
+                        com.google.android.material.snackbar.Snackbar.LENGTH_LONG)
+                        .setAction("Got it", v -> {})
+                        .show();
+                prefs.edit().putBoolean("index_scroll_tip_shown", true).apply();
+            }
+        } catch (Exception ignored) { }
+    }
+   private void updateTbTabTitleAtIndex(int index) {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
+        visitTabTitle.setText("TB SCREENING");
+        visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
+
+        int count = 0;
+        try {
+            count = com.bluecodeltd.ecap.chw.dao.TbScreeningDao.countByVcaId(uniqueId);
+        } catch (Exception ignored) { }
+        visitTabCount.setText(String.valueOf(count));
+        visitTabCount.setVisibility(View.VISIBLE);
+
+        if (mTabLayout.getTabCount() > index && mTabLayout.getTabAt(index) != null) {
+            mTabLayout.getTabAt(index).setCustomView(taskTabTitleLayout);
         }
     }
+
     private void setupFabVisibility() {
+        // Ensure initial state: show only on Overview (position 0)
+        updateFabVisibilityForPosition( safeViewPagerPosition() );
+        try {
+            TabLayout.Tab selectedTab = mTabLayout.getTabAt(mTabLayout.getSelectedTabPosition());
+            if (selectedTab != null) {
+                updateFabVisibilityForPosition(selectedTab.getPosition());
+            }
+        } catch (Exception ignored) {}
+
         mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
-                if (position == 1 || position == 2 || position == 3) {
-                    fab.setVisibility(View.GONE);
-                } else {
-                    fab.setVisibility(View.VISIBLE);
+                // Floating menu should only appear on the Overview fragment; close it when leaving
+                if (position != 0 && isFabOpen) {
+                    closeFab();
                 }
+                updateFabVisibilityForPosition(position);
             }
 
         });
+
+        // Defensive: also react to tab selections in case page callbacks are skipped
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab == null) return;
+                if (tab.getPosition() != 0 && isFabOpen) {
+                    closeFab();
+                }
+                updateFabVisibilityForPosition(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) { }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) { }
+        });
+    }
+
+    private void updateFabVisibilityForPosition(int position) {
+        try {
+            if (position == 0) {
+                fab.show();
+                fab.setVisibility(View.VISIBLE);
+            } else {
+                fab.hide();
+                fab.setVisibility(View.GONE);
+            }
+        } catch (Exception ignored) { }
+    }
+
+    private int safeViewPagerPosition() {
+        try {
+            return mViewPager.getCurrentItem();
+        } catch (Exception e) {
+            return 0;
+        }
     }
     private void updateOverviewTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
@@ -534,9 +783,57 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         visitTabTitle.setText("HIV ASSESSMENT");
         visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
 
-        visitTabCount.setVisibility(View.GONE);
+        TextView countView = visitTabCount;
+        countView.setText("ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¦");
+        visitTabCount.setVisibility(View.VISIBLE);
+
+        final String uid = uniqueId;
+        Threading.ioBestEffort(() -> {
+            int count = 0;
+            try {
+                int u15 = HivAssessmentUnder15Dao.getHivAssessment(uid).size();
+                int a15 = HivAssessmentAbove15Dao.getHivAssessment(uid).size();
+                count = u15 + a15;
+            } catch (Exception ignored) { }
+            int finalCount = count;
+            Threading.main(() -> {
+                if (isFinishing()) return;
+                countView.setText(String.valueOf(finalCount));
+            });
+        });
 
         mTabLayout.getTabAt(3).setCustomView(taskTabTitleLayout);
+    }
+
+    // Allows setting HIV tab title at a dynamic index when tab order changes
+    private void updateHivAssessmentTabTitleAtIndex(int index) {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
+        visitTabTitle.setText("HIV ASSESSMENT");
+        visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
+
+        TextView countView = visitTabCount;
+        countView.setText("ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¦");
+        visitTabCount.setVisibility(View.VISIBLE);
+
+        final String uid = uniqueId;
+        Threading.ioBestEffort(() -> {
+            int count = 0;
+            try {
+                int u15 = HivAssessmentUnder15Dao.getHivAssessment(uid).size();
+                int a15 = HivAssessmentAbove15Dao.getHivAssessment(uid).size();
+                count = u15 + a15;
+            } catch (Exception ignored) { }
+            int finalCount = count;
+            Threading.main(() -> {
+                if (isFinishing()) return;
+                countView.setText(String.valueOf(finalCount));
+            });
+        });
+
+        if (mTabLayout.getTabCount() > index && mTabLayout.getTabAt(index) != null) {
+            mTabLayout.getTabAt(index).setCustomView(taskTabTitleLayout);
+        }
     }
     private void updateVisitsTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
@@ -544,9 +841,19 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         visitTabTitle.setText(this.getString(org.smartregister.opd.R.string.visits));
         visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
 
-        int visits = VcaVisitationDao.countVisits(uniqueId);
+        TextView countView = visitTabCount;
+        countView.setText("ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¦");
 
-        visitTabCount.setText(String.valueOf(visits));
+        final String uid = uniqueId;
+        Threading.ioBestEffort(() -> {
+            int visits = 0;
+            try { visits = VcaVisitationDao.countVisits(uid); } catch (Exception ignored) { }
+            int finalVisits = visits;
+            Threading.main(() -> {
+                if (isFinishing()) return;
+                countView.setText(String.valueOf(finalVisits));
+            });
+        });
 
         mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
     }
@@ -557,11 +864,51 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         visitTabTitle.setText("CASE PLANS");
         plansTabCount = plansTabTitleLayout.findViewById(R.id.plans_count);
 
-        int plans = CasePlanDao.checkCasePlan(uniqueId);
+        TextView countView = plansTabCount;
+        countView.setText("ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¦");
 
-        plansTabCount.setText(String.valueOf(plans));
+        final String uid = uniqueId;
+        Threading.ioBestEffort(() -> {
+            int plans = 0;
+            try { plans = CasePlanDao.checkCasePlan(uid); } catch (Exception ignored) { }
+            int finalPlans = plans;
+            Threading.main(() -> {
+                if (isFinishing()) return;
+                countView.setText(String.valueOf(finalPlans));
+            });
+        });
 
         mTabLayout.getTabAt(1).setCustomView(plansTabTitleLayout);
+    }
+
+    // New: Nutrition tab custom title similar to visits tab pattern
+    private void updateNutritionTabTitleAtIndex(int index) {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
+        visitTabTitle.setText("NUTRITION");
+        visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
+
+        TextView countView = visitTabCount;
+        countView.setText("ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¦");
+        visitTabCount.setVisibility(View.VISIBLE);
+
+        final String uid = uniqueId;
+        Threading.ioBestEffort(() -> {
+            int count = 0;
+            try {
+                // Count nutrition assessments for this beneficiary
+                count = NutritionAssessmentInterventionDao.countByVcaId(uid);
+            } catch (Exception ignored) { }
+            int finalCount = count;
+            Threading.main(() -> {
+                if (isFinishing()) return;
+                countView.setText(String.valueOf(finalCount));
+            });
+        });
+
+        if (mTabLayout.getTabCount() > index && mTabLayout.getTabAt(index) != null) {
+            mTabLayout.getTabAt(index).setCustomView(taskTabTitleLayout);
+        }
     }
 
 
@@ -609,8 +956,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                         break;
                     }
                     try {
-
-                        openFormUsingFormUtils(IndexDetailsActivity.this,"vca_screening");
+                        openFormUsingFormUtils(IndexDetailsActivity.this, resolveVcaScreeningFormName());
                     } catch (JSONException e) {
                         e.printStackTrace();
                    }
@@ -631,7 +977,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                         e.printStackTrace();
                     }
                 } else {
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                    Toasty.warning(IndexDetailsActivity.this, "CA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
 
 
@@ -646,7 +992,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                         e.printStackTrace();
                     }
                 } else {
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                    Toasty.warning(IndexDetailsActivity.this, "CA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
 
                 break;
@@ -663,7 +1009,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     }
 
                 } else {
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                    Toasty.warning(IndexDetailsActivity.this, "CA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
 
 
@@ -684,7 +1030,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     startActivity(intent2);
                 }
                 else{
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                    Toasty.warning(IndexDetailsActivity.this, "CA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
                 break;
             case R.id.show_referrals:
@@ -734,6 +1080,10 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 if (!ensureIndexVcaAvailable()) {
                     break;
                 }
+                if (!isTbScreeningCompliantForVisitation()) {
+                    Toasty.warning(IndexDetailsActivity.this, "TB screening for this quarter is required before household visitation for CAs above 10 years.", Toast.LENGTH_LONG, true).show();
+                    break;
+                }
                 if(indexVCA.getDate_screened() != null) {
                     try {
 
@@ -743,7 +1093,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                         e.printStackTrace();
                     }
                 } else{
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                    Toasty.warning(IndexDetailsActivity.this, "CA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
 
 
@@ -757,7 +1107,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 if(indexVCA.getDate_screened() != null) {
                     openFormUsingFormUtils(IndexDetailsActivity.this, "hiv_risk_assessment_under_15_years");
                 } else {
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                    Toasty.warning(IndexDetailsActivity.this, "CA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
                 break;
 
@@ -768,7 +1118,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 if(indexVCA.getDate_screened() != null) {
                     openFormUsingFormUtils(IndexDetailsActivity.this, "hiv_risk_assessment_above_15_years");
                 }else{
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                    Toasty.warning(IndexDetailsActivity.this, "CA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
                 break;
 
@@ -779,7 +1129,39 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 if(indexVCA.getDate_screened() != null) {
                     openFormUsingFormUtils(IndexDetailsActivity.this, "we_services_vca");
                 }else{
-                    Toasty.warning(IndexDetailsActivity.this, "VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                    Toasty.warning(IndexDetailsActivity.this, "CA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                }
+                break;
+            case R.id.tb_screening:
+                if (!ensureIndexVcaAvailable()) { break; }
+                if(indexVCA.getDate_screened() != null) {
+                    try {
+                        long todayMillis = java.util.Calendar.getInstance().getTimeInMillis();
+                        boolean alreadyToday = TbScreeningDao.existsOnSameDateByUniqueId(indexVCA.getUnique_id(), todayMillis);
+                        if (alreadyToday) {
+                            Toasty.warning(IndexDetailsActivity.this, "TB Screening already done today", Toast.LENGTH_LONG, true).show();
+                            break;
+                        }
+                        openFormUsingFormUtils(IndexDetailsActivity.this, "tb_screening");
+                    } catch (org.json.JSONException e) { e.printStackTrace(); }
+                } else {
+                    Toasty.warning(IndexDetailsActivity.this, "CA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                }
+                break;
+            case R.id.nutrition_assessment_intervention:
+                if (!ensureIndexVcaAvailable()) {
+                    break;
+                }
+                if(indexVCA.getDate_screened() != null) {
+                    int years = 0;
+                    try { years = calculateAge(indexVCA.getAdolescent_birthdate()); } catch (Exception ignore) {}
+                    if (years <= 5) {
+                        openFormUsingFormUtils(IndexDetailsActivity.this, "nutrition_assessment_intervention");
+                    } else {
+                        Toasty.warning(IndexDetailsActivity.this, "Only for CA aged 5 years and below", Toast.LENGTH_LONG, true).show();
+                    }
+                } else{
+                    Toasty.warning(IndexDetailsActivity.this, "CA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }
                 break;
             case R.id.childPlan:
@@ -801,7 +1183,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             return true;
         }
         Toast.makeText(IndexDetailsActivity.this, "Member data incomplete", Toast.LENGTH_LONG).show();
-        Timber.w("IndexDetailsActivity action skipped: indexVCA missing for childId=%s", childId);
+        Timber.w("IndexDetailsActivity action skipped: indexCA missing for childId=%s", childId);
         return false;
     }
 
@@ -818,11 +1200,12 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
             String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
 
-            JSONObject jsonFormObject = null;
+            final JSONObject jsonFormObject;
             try {
                 jsonFormObject = new JSONObject(jsonString);
             } catch (JSONException e) {
                 e.printStackTrace();
+                return;
             }
             String encounterType = jsonFormObject.optString(JsonFormConstants.ENCOUNTER_TYPE, "");
 
@@ -849,47 +1232,48 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                         return;
                     }
 
-                    saveRegistration(childIndexEventClient, is_edit_mode);
+                    Runnable postSaveAction = () -> {
+                        switch (encounterType) {
+                            case "VCA Case Plan":
+                                try {
+                                    JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
+                                    String dateId = cpdate != null ? cpdate.optString("value") : "";
 
+                                    JSONObject cpId = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_id");
+                                    String cp_Id = cpId != null ? cpId.optString("value") : "";
 
-                    switch (encounterType) {
-                        case "VCA Case Plan":
+                                    refreshActivity();
+                                    openVcaCasplanToAddVulnarabilities(dateId, cp_Id);
+                                } catch (Exception e) {
+                                    Timber.e(e);
+                                    refreshActivity();
+                                }
+                                break;
 
-                            JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
-                            String dateId = cpdate.optString("value");
+                            case "Household Visitation Form 0-20 years":
+                            case "Member Sub Population":
+                            case "Sub Population":
+                            case "VCA Assessment":
+                            case "HIV Risk Assessment Above 15":
+                            case "HIV Risk Assessment Below 15":
+                                refreshActivity();
+                                break;
+                            case "Case Record Status":
+                                refreshActivity();
+                                Intent i = new Intent(getApplicationContext(), IndexRegisterActivity.class);
+                                startActivity(i);
+                                break;
+                            default:
+                                refreshActivity();
+                                break;
+                        }
+                        Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
+                    };
 
-                            JSONObject cpId = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_id");
-                            String cp_Id = cpId.optString("value");
-
-                            finish();
-                            startActivity(getIntent());
-                            openVcaCasplanToAddVulnarabilities(dateId, cp_Id);
-
-                            break;
-
-                        case "Household Visitation Form 0-20 years":
-                        case "Member Sub Population":
-                        case "Sub Population":
-                        case "VCA Assessment":
-                        case "HIV Risk Assessment Above 15":
-                        case "HIV Risk Assessment Below 15":
-
-                            finish();
-                            startActivity(getIntent());
-
-                            break;
-                        case "Case Record Status":
-
-                            finish();
-                            startActivity(getIntent());
-                            Intent i = new Intent(getApplicationContext(), IndexRegisterActivity.class);
-                            startActivity(i);
-
-                            break;
-
+                    boolean refreshScheduled = saveRegistration(childIndexEventClient, is_edit_mode, postSaveAction);
+                    if (!refreshScheduled) {
+                        postSaveAction.run();
                     }
-
-                    Toasty.success(IndexDetailsActivity.this, "Form Saved", Toast.LENGTH_LONG, true).show();
 
                 } catch (Exception e) {
                     Timber.e(e);
@@ -1021,6 +1405,31 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     }
                     break;
 
+                case "TB Screening":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_TB_SCREENING);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        ChildIndexEventClient out = new ChildIndexEventClient(event, client);
+                        return out;
+                    }
+                    break;
+
+                case "Nutrition Assessment and Intervention":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_NUTRITION_ASSESSMENT_INTERVENTION);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
                 case "VCA Assessment":
 
                     if (fields != null) {
@@ -1134,44 +1543,50 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         return null;
     }
 
-    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode, Runnable onComplete) {
 
         Runnable runnable = () -> {
 
             Event event = childIndexEventClient.getEvent();
             Client client = childIndexEventClient.getClient();
 
-            if (event != null && client != null) {
-                try {
-                    ECSyncHelper ecSyncHelper = getECSyncHelper();
+            try {
+                if (event != null && client != null) {
+                    try {
+                        ECSyncHelper ecSyncHelper = getECSyncHelper();
 
-                    JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
+                        JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
 
-                    JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
+                        JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
 
-                    if (isEditMode) {
-                        JSONObject mergedClientJsonObject =
-                                org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
-                        ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
+                        if (isEditMode) {
+                            JSONObject mergedClientJsonObject =
+                                    org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
+                            ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
 
-                    } else {
-                        ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                        } else {
+                            ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                        }
+
+                        JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
+                        ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
+
+                        Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
+                        Date currentSyncDate = new Date(lastUpdatedAtDate);
+
+                        //Get saved event for processing
+                        List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
+                        getClientProcessorForJava().processClient(savedEvents);
+                        getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
+
+
+                    } catch (Exception e) {
+                        Timber.e(e);
                     }
-
-                    JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
-                    ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
-
-                    Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
-                    Date currentSyncDate = new Date(lastUpdatedAtDate);
-
-                    //Get saved event for processing
-                    List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
-                    getClientProcessorForJava().processClient(savedEvents);
-                    getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
-
-
-                } catch (Exception e) {
-                    Timber.e(e);
+                }
+            } finally {
+                if (onComplete != null) {
+                    runOnUiThread(onComplete);
                 }
             }
 
@@ -1183,6 +1598,9 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             return true;
         } catch (Exception exception) {
             Timber.e(exception);
+            if (onComplete != null) {
+                runOnUiThread(onComplete);
+            }
             return false;
         }
     }
@@ -1271,6 +1689,23 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         return ChwApplication.getInstance().getClientProcessorForJava();
     }
 
+    private void refreshActivity() {
+        if (isFinishing() || isDestroyed()) {
+            return;
+        }
+        Intent intent = new Intent(getIntent());
+        intent.putExtra("refresh", "true");
+        if (childId != null && !childId.isEmpty()) {
+            intent.putExtra("Child", childId);
+            intent.putExtra("base_entity_id", childId);
+        }
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+        overridePendingTransition(0, 0);
+    }
+
     public void animateFAB(){
 
 
@@ -1282,53 +1717,195 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
             isFabOpen = true;
             fab.startAnimation(rotate_forward);
             txtScreening.setVisibility(View.VISIBLE);
+            fabScrim.setVisibility(View.VISIBLE);
+            fabScrim.setAlpha(0f);
+            fabScrim.animate().alpha(1f).setDuration(200).start();
 
 
-            if (is_screened != null && is_screened.equals("true")){
+            boolean allowNonScreeningActions =
+                    (is_screened != null && is_screened.equals("true")) ||
+                            allowNonScreeningFabActionsWhenSourceIsVcaScreening;
+
+            if (allowNonScreeningActions){
+                int vcaAgeYears = parseVcaAgeYears(vcaAge);
 
                 rcase_plan.setVisibility(View.VISIBLE);
                 referral.setVisibility(View.VISIBLE);
                 household_visitation_for_vca.setVisibility(View.VISIBLE);
                 childPlan.setVisibility(View.VISIBLE);
 
-
-
                 if(indexVCA.getIs_hiv_positive() != null){
                     rassessment.setVisibility(View.VISIBLE);
                 }
                 if(indexVCA.getIs_hiv_positive() != null && indexVCA.getIs_hiv_positive().equals("yes")){
                     hiv_assessment.setVisibility(View.GONE);
-                } else {
-                    if(Integer.parseInt(vcaAge) > 1){
-                        if(Integer.parseInt(vcaAge) < 15){
-                            hiv_assessment.setVisibility(View.VISIBLE);
-                        }
+                } else if (vcaAgeYears > 1) {
+                    if (vcaAgeYears < 15) {
+                        hiv_assessment.setVisibility(View.VISIBLE);
+                    }
 
-                        if(Integer.parseInt(vcaAge) >= 15){
-                            hiv_assessment2.setVisibility(View.VISIBLE);
-                        }
-
-
+                    if (vcaAgeYears >= 15) {
+                        hiv_assessment2.setVisibility(View.VISIBLE);
                     }
                 }
 
-
-                if(Integer.parseInt(vcaAge) > 18){
+                if (vcaAgeYears > 18){
                     weServicesVca.setVisibility(View.VISIBLE);
                 }
+                // Show Nutrition Assessment & Intervention only for VCA aged 5 years and below
+                try {
+                    int years = calculateAge(indexVCA.getAdolescent_birthdate());
+                    if (years <= 5) {
+                        nutrition_assessment_intervention.setVisibility(View.VISIBLE);
+                    }
+                    // TB screening available for all ages when screened
+                    tb_screening.setVisibility(View.VISIBLE);
+                } catch (Exception ignore) {}
             }
             else{
+                // If we haven't resolved the source_from context yet, resolve it before showing the toast.
+                if (!sourceFromVcaScreeningResolved || !allowNonScreeningFabActionsWhenSourceIsVcaScreening) {
+                    String householdId = resolveHouseholdIdForSourceChecks();
+                    if (!TextUtils.isEmpty(householdId)) {
+                        final String finalHouseholdId = householdId;
+                        final String finalUniqueId = resolveUniqueIdForSourceChecks();
+                        Threading.ioBestEffort(() -> {
+                            boolean isVcaScreening = false;
+                            try { isVcaScreening = computeIsVcaScreeningSource(finalHouseholdId, finalUniqueId); } catch (Exception ignored) { }
+                            final boolean finalIsVcaScreening = isVcaScreening;
+                            Threading.main(() -> {
+                                allowNonScreeningFabActionsWhenSourceIsVcaScreening = finalIsVcaScreening;
+                                sourceFromVcaScreeningResolved = true;
+                                if (finalIsVcaScreening && isFabOpen) {
+                                    // Re-open menu with allowed actions
+                                    closeFab();
+                                    animateFAB();
+                                } else if (!finalIsVcaScreening) {
+                                    Toasty.warning(IndexDetailsActivity.this, "CA Household Hasn't Been Screened", Toast.LENGTH_LONG, true).show();
+                                }
+                            });
+                        });
+                        return;
+                    }
+                }
 
-                Toasty.warning(IndexDetailsActivity.this, "VCA Household Hasn't Been Screened", Toast.LENGTH_LONG, true).show();
+                Toasty.warning(IndexDetailsActivity.this, "CA Household Hasn't Been Screened", Toast.LENGTH_LONG, true).show();
 
             }
         }
 
     }
 
+    private String resolveHouseholdIdForSourceChecks() {
+        try {
+            String householdId = indexVCA != null ? indexVCA.getHousehold_id() : null;
+            if (!TextUtils.isEmpty(householdId)) return householdId;
+        } catch (Exception ignored) { }
+        try {
+            String householdId = child != null ? child.getHousehold_id() : null;
+            if (!TextUtils.isEmpty(householdId)) return householdId;
+        } catch (Exception ignored) { }
+        // Fallback: resolve from client index (unique_id -> household_id mapping)
+        try {
+            String unique = null;
+            try { unique = indexVCA != null ? indexVCA.getUnique_id() : null; } catch (Exception ignored) { }
+            if (TextUtils.isEmpty(unique)) {
+                try { unique = childId; } catch (Exception ignored) { }
+            }
+            if (!TextUtils.isEmpty(unique)) {
+                EcClientIndexSummary summary = null;
+                try { summary = IndexPersonDao.getClientSummaryByUniqueId(unique); } catch (Exception ignored) { }
+                String hh = summary != null ? summary.getHouseholdId() : null;
+                if (!TextUtils.isEmpty(hh)) return hh;
+            }
+        } catch (Exception ignored) { }
+        return null;
+    }
+
+    private String resolveUniqueIdForSourceChecks() {
+        try {
+            String uid = indexVCA != null ? indexVCA.getUnique_id() : null;
+            if (!TextUtils.isEmpty(uid)) return uid;
+        } catch (Exception ignored) { }
+        try {
+            if (!TextUtils.isEmpty(childId)) return childId;
+        } catch (Exception ignored) { }
+        return null;
+    }
+
+    private boolean computeIsVcaScreeningSource(String householdId, String vcaUniqueId) {
+        if (TextUtils.isEmpty(householdId)) return false;
+        // In some datasets this context is tagged as "vca_screening" or "vca_service".
+        try {
+            java.util.List<PtctMotherModel> pmtctMothers = PMTCTMotherDao.getPMTCTMothersByHouseholdId(householdId);
+            if (pmtctMothers != null) {
+                for (PtctMotherModel mother : pmtctMothers) {
+                    String sourceFrom = mother != null ? mother.getSource_from() : null;
+                    if (isSourceFromVcaContext(sourceFrom)) {
+                        return true;
+                    }
+                }
+            }
+        } catch (Exception ignored) { }
+
+        // Flexible lookup: PMTCT mother records may be keyed by household_id or by a VCA unique_id.
+        try {
+            PtctMotherModel mother = PMTCTMotherDao.getPMCTMother(householdId);
+            String sourceFrom = mother != null ? mother.getSource_from() : null;
+            if (isSourceFromVcaContext(sourceFrom)) {
+                return true;
+            }
+        } catch (Exception ignored) { }
+        if (!TextUtils.isEmpty(vcaUniqueId)) {
+            try {
+                PtctMotherModel mother = PMTCTMotherDao.getPMCTMother(vcaUniqueId);
+                String sourceFrom = mother != null ? mother.getSource_from() : null;
+                if (isSourceFromVcaContext(sourceFrom)) {
+                    return true;
+                }
+            } catch (Exception ignored) { }
+        }
+
+        try {
+            java.util.List<IndexMotherModel> mothers = IndexMotherDao.getIndexMothersByHouseholdId(householdId);
+            if (mothers != null) {
+                for (IndexMotherModel mother : mothers) {
+                    String sourceFrom = mother != null ? mother.getSource_from() : null;
+                    if (isSourceFromVcaContext(sourceFrom)) {
+                        return true;
+                    }
+                }
+            }
+        } catch (Exception ignored) { }
+
+        return false;
+    }
+
+    private static boolean isSourceFromVcaContext(String sourceFrom) {
+        if (TextUtils.isEmpty(sourceFrom)) return false;
+        String v = sourceFrom.trim();
+        return "vca_screening".equalsIgnoreCase(v) ||
+                "vca_service".equalsIgnoreCase(v) ||
+                "service_report_vca".equalsIgnoreCase(v);
+    }
+
+    private int parseVcaAgeYears(String ageValue) {
+        if (TextUtils.isEmpty(ageValue)) {
+            return -1;
+        }
+        try {
+            return Integer.parseInt(ageValue);
+        } catch (NumberFormatException e) {
+            Timber.w(e, "Unable to parse VCA age: %s", ageValue);
+            return -1;
+        }
+    }
+
     public void closeFab(){
         fab.startAnimation(rotate_backward);
         isFabOpen = false;
+        fabScrim.animate().alpha(0f).setDuration(200)
+                .withEndAction(() -> fabScrim.setVisibility(View.GONE)).start();
         txtScreening.setVisibility(View.GONE);
         rassessment.setVisibility(View.GONE);
         rcase_plan.setVisibility(View.GONE);
@@ -1338,6 +1915,8 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         hiv_assessment2.setVisibility(View.GONE);
         childPlan.setVisibility(View.GONE);
         weServicesVca.setVisibility(View.GONE);
+        nutrition_assessment_intervention.setVisibility(View.GONE);
+        tb_screening.setVisibility(View.GONE);
 
 
     }
@@ -1355,6 +1934,10 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         JSONObject formToBeOpened;
 
         formToBeOpened = formUtils.getFormJson(formName);
+
+        String householdIdForForm = resolveHouseholdIdForSourceChecks();
+
+        String uniqueIdForForm = resolveUniqueIdForSourceChecks();
         formToBeOpened.getJSONObject("step1").put("title", this.indexVCA.getFirst_name() + " " + this.indexVCA.getLast_name() + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
         formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", indexVCA.getUnique_id());
 
@@ -1376,7 +1959,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     formToBeOpened.remove(JsonFormUtils.ENCOUNTER_TYPE);
                     formToBeOpened.put(JsonFormUtils.ENCOUNTER_TYPE, "Member Sub Population");
                 }
-                GraduationModel graduationModel = GraduationDao.getGraduationStatus(child.getHousehold_id());
+                GraduationModel graduationModel = TextUtils.isEmpty(householdIdForForm) ? null : GraduationDao.getGraduationStatus(householdIdForForm);
                 if (graduationModel == null || "0".equals(graduationModel.getGraduation_status()) || graduationModel.getGraduation_status() == null) {
 
                 JSONObject graduationStatus = getFieldJSONObject(fields(formToBeOpened, "step1"), "graduation_benchmark");
@@ -1407,6 +1990,8 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 break;
 
             case "vca_screening":
+            case "vca_edit":
+            case "vca_edit_from_vca_service":
                 if(indexVCA.getIs_on_hiv_treatment() == null){
                     @NotNull Map<String, String> indexVCAMap = oMapper.convertValue(indexVCA(), Map.class);
                     indexVCAMap.remove("date_started_art");
@@ -1475,7 +2060,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     JSONObject under_five = getFieldJSONObject(fields(formToBeOpened, "step1"), "under_five");
                     if (vAge > 5) {
                         under_five.put("type", "hidden");
-                        nutrition_status.put("type", "hidden");
+//                        nutrition_status.put("type", "hidden");
                     }
 
                     JSONObject eid_test = getFieldJSONObject(fields(formToBeOpened, "step1"), "eid_test");
@@ -1598,6 +2183,40 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 populateCaseworkerPhoneAndName(formToBeOpened);
             break;
 
+            case "nutrition_assessment_intervention":
+                // For new nutrition entries leave entity_id blank so a new one is generated on save.
+                // Edits (opened from list) will set entity_id to the existing base_entity_id in the adapter.
+                try { formToBeOpened.put("entity_id", ""); } catch (Exception ignore) {}
+                break;
+
+            case "tb_screening":
+                try { formToBeOpened.put("entity_id", this.indexVCA.getBase_entity_id()); } catch (Exception ignore) {}
+                try {
+                    // Show age-appropriate TB symptom fields
+                    Double tbAge = getAndCalculateAge(indexVCA.getAdolescent_birthdate());
+                    JSONObject lt10 = getFieldJSONObject(fields(formToBeOpened, "step1"), "tb_symptoms_child_lt10");
+                    JSONObject lt10Other = getFieldJSONObject(fields(formToBeOpened, "step1"), "tb_symptoms_child_lt10_other");
+                    JSONObject plus10 = getFieldJSONObject(fields(formToBeOpened, "step1"), "tb_symptoms_10plus");
+                    JSONObject plus10Other = getFieldJSONObject(fields(formToBeOpened, "step1"), "tb_symptoms_10plus_other");
+                    JSONObject sputumCollected = getFieldJSONObject(fields(formToBeOpened, "step1"), "sputum_collected");
+
+
+
+                    if (tbAge != null) {
+                        if (tbAge < 10.0) {
+                            // Hide 10+ fields
+                            if (plus10 != null) plus10.put("type", "hidden");
+                            if (plus10Other != null) plus10Other.put("type", "hidden");
+                            if (sputumCollected != null) sputumCollected.put("type", "hidden");
+                        } else {
+                            // Hide <10 fields
+                            if (lt10 != null) lt10.put("type", "hidden");
+                            if (lt10Other != null) lt10Other.put("type", "hidden");
+                        }
+                    }
+                } catch (Exception ignore) {}
+                break;
+
     }
 
         startFormActivity(formToBeOpened);
@@ -1622,8 +2241,11 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
                 case R.id.call:
                     try {
-                        String caregiverPhoneNumber = child.getCaregiver_phone();
-                        if (caregiverPhoneNumber != null && !caregiverPhoneNumber.equals("")) {
+                        String caregiverPhoneNumber = indexVCA != null ? indexVCA.getCaregiver_phone() : null;
+                        if (TextUtils.isEmpty(caregiverPhoneNumber) && child != null) {
+                            caregiverPhoneNumber = child.getCaregiver_phone();
+                        }
+                        if (!TextUtils.isEmpty(caregiverPhoneNumber)) {
                             Intent callIntent = new Intent(Intent.ACTION_DIAL);
                             callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
                             startActivity(callIntent);
@@ -1634,7 +2256,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                         Log.e("Phone Number Error", "Exception", e);
                     }
 
-                return true;
+                    return true;
             case R.id.case_status:
 
                 try {
@@ -1660,39 +2282,54 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                         dialog.cancel();
 
                     }).setPositiveButton("YES",((dialogInterface, i) -> {
-                        FormUtils formUtils = null;
-                        try {
-                            formUtils = new FormUtils(this);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        child.setDeleted("1");
-                            JSONObject vcaScreeningForm = formUtils.getFormJson("vca_edit");
+                        Threading.io(() -> {
                             try {
-                                CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(child, Map.class));
-                                vcaScreeningForm.put("entity_id", child.getBase_entity_id());
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                                PmtctChildModel linkedHei = resolveLinkedHeiForDeletion();
+                                if (linkedHei != null) {
+                                    try {
+                                        ChildIndexEventClient heiDeleteClient = buildHeiDeleteClient(linkedHei);
+                                        if (heiDeleteClient != null) {
+                                            saveRegistration(heiDeleteClient, true, null);
+                                        }
+                                    } catch (Exception e) {
+                                        Timber.e(e);
+                                    }
+                                }
 
+                                FormUtils formUtils = new FormUtils(this);
+                                JSONObject vcaScreeningForm = formUtils.getFormJson(resolveVcaEditFormName());
+                                try {
+                                    VcaScreeningModel vcaForDelete = indexVCA;
 
-                            try {
+                                    if (vcaForDelete != null) {
+                                        vcaForDelete.setDeleted("1");
+                                        CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(vcaForDelete, Map.class));
+                                        vcaScreeningForm.put("entity_id", vcaForDelete.getBase_entity_id());
+                                    } else if (child != null) {
+                                        child.setDeleted("1");
+                                        CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(child, Map.class));
+                                        vcaScreeningForm.put("entity_id", child.getBase_entity_id());
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
 
                                 ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
                                 if (childIndexEventClient == null) {
                                     return;
                                 }
-                                saveRegistration(childIndexEventClient,true);
-
-
+                                Runnable onComplete = () -> {
+                                    Toasty.success(IndexDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
+                                    IndexDetailsActivity.super.onBackPressed();
+                                };
+                                boolean scheduled = saveRegistration(childIndexEventClient, true, onComplete);
+                                if (!scheduled) {
+                                    onComplete.run();
+                                }
                             } catch (Exception e) {
                                 Timber.e(e);
                             }
-
-
-
-                        Toasty.success(IndexDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
-                        super.onBackPressed();
+                        });
                     }));
 
                     //Creating dialog box
@@ -1705,6 +2342,145 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private PmtctChildModel resolveLinkedHeiForDeletion() {
+        if (indexVCA == null) {
+            return null;
+        }
+
+        PmtctChildModel linkedHei = null;
+        try {
+            if (!TextUtils.isEmpty(indexVCA.getUnique_id())) {
+                linkedHei = PmtctChildDao.getPMCTChild(indexVCA.getUnique_id());
+            }
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+
+        if (linkedHei != null) {
+            return linkedHei;
+        }
+
+        if (TextUtils.isEmpty(indexVCA.getHousehold_id())) {
+            return null;
+        }
+
+        try {
+            List<PmtctChildModel> heiRecords = PmtctChildDao.getPmctChildHei(indexVCA.getHousehold_id());
+            if (heiRecords != null && !heiRecords.isEmpty()) {
+                if (heiRecords.size() > 1) {
+                    Timber.w("Multiple active HEI records matched household %s during VCA delete; deleting the first record",
+                            indexVCA.getHousehold_id());
+                }
+                linkedHei = heiRecords.get(0);
+            }
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+
+        return linkedHei;
+    }
+
+    private ChildIndexEventClient buildHeiDeleteClient(PmtctChildModel hei) throws Exception {
+        if (hei == null) {
+            return null;
+        }
+
+        FormUtils formUtils = new FormUtils(this);
+        JSONObject heiForm = formUtils.getFormJson("pmct_child_hei");
+        CoreJsonFormUtils.populateJsonForm(heiForm, new ObjectMapper().convertValue(hei, Map.class));
+        heiForm.put("entity_id", hei.getBase_entity_id());
+
+        JSONObject deleteField = getFieldJSONObject(fields(heiForm, "step1"), "delete_status");
+        if (deleteField != null) {
+            deleteField.remove(JsonFormUtils.VALUE);
+            deleteField.put(JsonFormUtils.VALUE, "1");
+        }
+
+        ChildIndexEventClient heiDeleteClient = processRegistration(heiForm.toString());
+        if (heiDeleteClient == null) {
+            Timber.w("Skipping HEI delete because the pmct_child_hei form could not be processed for base_entity_id=%s",
+                    hei.getBase_entity_id());
+        }
+        return heiDeleteClient;
+    }
+
+    private static void removeVcaEditStep5(JSONObject form) {
+        if (form == null) return;
+        try { form.remove("step5"); } catch (Exception ignored) { }
+        try { form.put("count", "4"); } catch (Exception ignored) { }
+        try {
+            JSONObject step4 = form.optJSONObject("step4");
+            if (step4 != null) {
+                String next = step4.optString("next", null);
+                if (next != null && "step5".equalsIgnoreCase(next.trim())) {
+                    step4.put("next", "");
+                }
+            }
+        } catch (Exception ignored) { }
+    }
+
+    private boolean shouldRemoveVcaEditStep5ForServiceReportVca(Child child) {
+        if (child == null) return false;
+        String householdId = null;
+        try { householdId = child.getHousehold_id(); } catch (Exception ignored) { }
+        if (TextUtils.isEmpty(householdId)) {
+            try { householdId = resolveHouseholdIdForSourceChecks(); } catch (Exception ignored) { }
+        }
+        String uniqueId = null;
+        try { uniqueId = child.getUnique_id(); } catch (Exception ignored) { }
+        if (TextUtils.isEmpty(uniqueId)) {
+            try { uniqueId = resolveUniqueIdForSourceChecks(); } catch (Exception ignored) { }
+        }
+
+        return hasMotherSourceFromServiceReportVca(householdId, uniqueId);
+    }
+
+    private boolean hasMotherSourceFromServiceReportVca(String householdId, String vcaUniqueId) {
+        if (TextUtils.isEmpty(householdId) && TextUtils.isEmpty(vcaUniqueId)) return false;
+
+        try {
+            if (!TextUtils.isEmpty(householdId)) {
+                java.util.List<PtctMotherModel> pmtctMothers = PMTCTMotherDao.getPMTCTMothersByHouseholdId(householdId);
+                if (pmtctMothers != null) {
+                    for (PtctMotherModel mother : pmtctMothers) {
+                        String sourceFrom = mother != null ? mother.getSource_from() : null;
+                        if (!TextUtils.isEmpty(sourceFrom) && "service_report_vca".equalsIgnoreCase(sourceFrom.trim())) return true;
+                    }
+                }
+            }
+        } catch (Exception ignored) { }
+
+        try {
+            if (!TextUtils.isEmpty(householdId)) {
+                PtctMotherModel mother = PMTCTMotherDao.getPMCTMother(householdId);
+                String sourceFrom = mother != null ? mother.getSource_from() : null;
+                if (!TextUtils.isEmpty(sourceFrom) && "service_report_vca".equalsIgnoreCase(sourceFrom.trim())) return true;
+            }
+        } catch (Exception ignored) { }
+
+        try {
+            if (!TextUtils.isEmpty(vcaUniqueId)) {
+                PtctMotherModel mother = PMTCTMotherDao.getPMCTMother(vcaUniqueId);
+                String sourceFrom = mother != null ? mother.getSource_from() : null;
+                if (!TextUtils.isEmpty(sourceFrom) && "service_report_vca".equalsIgnoreCase(sourceFrom.trim())) return true;
+            }
+        } catch (Exception ignored) { }
+
+        try {
+            if (!TextUtils.isEmpty(householdId)) {
+                java.util.List<IndexMotherModel> mothers = IndexMotherDao.getIndexMothersByHouseholdId(householdId);
+                if (mothers != null) {
+                    for (IndexMotherModel mother : mothers) {
+                        String sourceFrom = mother != null ? mother.getSource_from() : null;
+                        if (!TextUtils.isEmpty(sourceFrom) && "service_report_vca".equalsIgnoreCase(sourceFrom.trim())) return true;
+                    }
+                }
+            }
+        } catch (Exception ignored) { }
+
+        return false;
     }
 
 
@@ -1728,7 +2504,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                 }).setPositiveButton(Constants.EcapConstants.PROCEED, ((dialogInterface, i) -> {
                     getIntent().removeExtra("fromHousehold");
                     try {
-                        openFormUsingFormUtils(IndexDetailsActivity.this, "vca_screening");
+                        openFormUsingFormUtils(IndexDetailsActivity.this, resolveVcaScreeningFormName());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -1746,8 +2522,8 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
                     getIntent().removeExtra("fromIndex");
                     try {
                         Intent intent = new Intent(this, HouseholdDetails.class);
-                        intent.putExtra("childId", child.getUnique_id());
-                        intent.putExtra("householdId", child.getHousehold_id());
+                        intent.putExtra("childId", resolveUniqueIdForSourceChecks());
+                        intent.putExtra("householdId", resolveHouseholdIdForSourceChecks());
                         startActivity(intent);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -1760,6 +2536,39 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 
 
  }
+
+    private String resolveVcaScreeningFormName() {
+        try {
+            String householdId = null;
+            try { householdId = child != null ? child.getHousehold_id() : null; } catch (Exception ignored) { }
+            if (TextUtils.isEmpty(householdId)) {
+                try { householdId = resolveHouseholdIdForSourceChecks(); } catch (Exception ignored) { }
+            }
+
+            String uniqueId = null;
+            try { uniqueId = child != null ? child.getUnique_id() : null; } catch (Exception ignored) { }
+            if (TextUtils.isEmpty(uniqueId)) {
+                try { uniqueId = resolveUniqueIdForSourceChecks(); } catch (Exception ignored) { }
+            }
+
+            if (hasMotherSourceFromServiceReportVca(householdId, uniqueId)) {
+                return "vca_edit_from_vca_service";
+            }
+        } catch (Exception ignored) { }
+
+        return "vca_edit";
+    }
+
+    private String resolveVcaEditFormName() {
+        try {
+            String householdId = resolveHouseholdIdForSourceChecks();
+            String uniqueId = resolveUniqueIdForSourceChecks();
+            if (hasMotherSourceFromServiceReportVca(householdId, uniqueId)) {
+                return "vca_edit_from_vca_service";
+            }
+        } catch (Exception ignored) { }
+        return "vca_edit";
+    }
  public void populateCaseworkerPhoneAndName(JSONObject formToBeOpened){
      SharedPreferences cp = PreferenceManager.getDefaultSharedPreferences(IndexDetailsActivity.this);
      caseworkerphone = cp.getString("phone", "Anonymous");
@@ -1814,7 +2623,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         //Creating dialog box
         AlertDialog alert = builder.create();
         //Setting the title manually
-        alert.setTitle("VCA Screening");
+        alert.setTitle("CA Screening");
         alert.show();
     }
     public Object indexVCA() {
@@ -1833,6 +2642,33 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         screeningModel.setWard(indexVCA.getWard());
         screeningModel.setFacility(indexVCA.getFacility());
         screeningModel.setPartner(indexVCA.getPartner());
+
+        // Fill from CHW context (SharedPreferences) only when missing on the client record.
+        try {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(IndexDetailsActivity.this);
+
+            if (TextUtils.isEmpty(screeningModel.getProvince())) {
+                String province = prefs.getString("province", "");
+                if (!TextUtils.isEmpty(province)) {
+                    screeningModel.setProvince(province);
+                }
+            }
+
+            if (TextUtils.isEmpty(screeningModel.getDistrict())) {
+                String district = prefs.getString("district", "");
+                if (!TextUtils.isEmpty(district)) {
+                    screeningModel.setDistrict(district);
+                }
+            }
+
+            if (TextUtils.isEmpty(screeningModel.getCaseworker_name())) {
+                String caseworkerName = prefs.getString("caseworker_name", "Anonymous");
+                if (!TextUtils.isEmpty(caseworkerName)) {
+                    screeningModel.setCaseworker_name(caseworkerName);
+                }
+            }
+        } catch (Exception ignored) { }
+
         screeningModel.setAdolescent_first_name(indexVCA.getAdolescent_first_name());
         screeningModel.setAdolescent_last_name(indexVCA.getAdolescent_last_name());
         screeningModel.setAdolescent_birthdate(indexVCA.getAdolescent_birthdate());
@@ -1920,7 +2756,7 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         screeningModel.setGender(indexVCA.getGender());
         screeningModel.setBirthdate(indexVCA.getBirthdate());
         screeningModel.setIndex_check_box(indexVCA.getIndex_check_box());
-        screeningModel.setCase_status(indexVCA.getCase_status());
+        screeningModel.setCase_status("1");
         screeningModel.setDate_referred(indexVCA.getDate_referred());
         screeningModel.setDate_offered_enrollment(indexVCA.getDate_offered_enrollment());
         screeningModel.setAcceptance(indexVCA.getAcceptance());
@@ -1934,18 +2770,19 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
 //        screeningModel.setDate_next_vl(indexVCA.getDate_next_vl());
         screeningModel.setChild_mmd(indexVCA.getChild_mmd());
         screeningModel.setLevel_mmd(indexVCA.getLevel_mmd());
-        screeningModel.setCaregiver_name(indexVCA.getCaregiver_name());
-        screeningModel.setCaregiver_nrc(indexVCA.getCaregiver_nrc());
-        screeningModel.setCaregiver_sex(indexVCA.getCaregiver_sex());
-        screeningModel.setCaregiver_birth_date(indexVCA.getCaregiver_birth_date());
-        screeningModel.setCaregiver_hiv_status(indexVCA.getCaregiver_hiv_status());
-        screeningModel.setRelation(indexVCA.getRelation());
-        screeningModel.setCaregiver_phone(indexVCA.getCaregiver_phone());
+        screeningModel.setCaregiver_name(indexVCA.getCaregiver_name() != null ? indexVCA.getCaregiver_name() : (householdCaregiver != null ? householdCaregiver.getCaregiver_name() : null));
+        screeningModel.setCaregiver_nrc(indexVCA.getCaregiver_nrc() != null ? indexVCA.getCaregiver_nrc() : (householdCaregiver != null ? householdCaregiver.getCaregiver_nrc() : null));
+        screeningModel.setCaregiver_sex(indexVCA.getCaregiver_sex() != null ? indexVCA.getCaregiver_sex() : (householdCaregiver != null ? householdCaregiver.getCaregiver_sex() : null));
+        screeningModel.setCaregiver_birth_date(indexVCA.getCaregiver_birth_date() != null ? indexVCA.getCaregiver_birth_date() : (householdCaregiver != null ? householdCaregiver.getCaregiver_birth_date() : null));
+        screeningModel.setCaregiver_hiv_status(indexVCA.getCaregiver_hiv_status() != null ? indexVCA.getCaregiver_hiv_status() : (householdCaregiver != null ? householdCaregiver.getCaregiver_hiv_status() : null));
+        screeningModel.setRelation(indexVCA.getRelation() != null ? indexVCA.getRelation() : (householdCaregiver != null ? householdCaregiver.getRelation() : null));
+        screeningModel.setCaregiver_phone(indexVCA.getCaregiver_phone() != null ? indexVCA.getCaregiver_phone() : (householdCaregiver != null ? householdCaregiver.getCaregiver_phone() : null));
         screeningModel.setDe_registration_date(indexVCA.getDe_registration_date());
         screeningModel.setReason(indexVCA.getReason());
         screeningModel.setTransfer_reason(indexVCA.getTransfer_reason());
         screeningModel.setOther_reason(indexVCA.getOther_reason());
         screeningModel.setExited_graduation_reason(indexVCA.getExited_graduation_reason());
+        screeningModel.setDate_of_death(indexVCA.getDate_of_death());
         screeningModel.setAbym_years(indexVCA.getAbym_years());
         screeningModel.setAbym_sexually_active(indexVCA.getAbym_sexually_active());
         screeningModel.setAbym_preventions(indexVCA.getAbym_preventions());
@@ -1966,6 +2803,140 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         screeningModel.setName_ovc(indexVCA.getName_ovc());
         return screeningModel;
     }
+
+    private boolean isTbScreeningCompliantForVisitation() {
+        Integer ageYears = getCurrentAgeYears();
+        if (ageYears != null && ageYears > 10) {
+            String vcaId = indexVCA != null ? indexVCA.getUnique_id() : null;
+            return hasTbScreeningInCurrentQuarter(vcaId);
+        }
+        return true;
+    }
+
+    private Integer getCurrentAgeYears() {
+        String birthdate = getVcaBirthdate();
+        if (TextUtils.isEmpty(birthdate)) {
+            return null;
+        }
+        String normalized = normalizeBirthdate(birthdate);
+        if (normalized == null) {
+            return null;
+        }
+        try {
+            LocalDate dob = LocalDate.parse(normalized, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            return Period.between(dob, LocalDate.now()).getYears();
+        } catch (Exception e) {
+            Timber.e(e);
+            return null;
+        }
+    }
+
+    private String getVcaBirthdate() {
+        if (indexVCA != null && !TextUtils.isEmpty(indexVCA.getAdolescent_birthdate())) {
+            return indexVCA.getAdolescent_birthdate();
+        }
+        if (indexVCA != null && !TextUtils.isEmpty(indexVCA.getBirthdate())) {
+            return indexVCA.getBirthdate();
+        }
+        if (child != null && !TextUtils.isEmpty(child.getAdolescent_birthdate())) {
+            return child.getAdolescent_birthdate();
+        }
+        return null;
+    }
+
+    private String normalizeBirthdate(String birthdate) {
+        String trimmed = birthdate != null ? birthdate.trim() : null;
+        if (TextUtils.isEmpty(trimmed)) {
+            return null;
+        }
+        if (trimmed.matches("\\d{2}-\\d{2}-\\d{4}")) {
+            return trimmed;
+        }
+        String[] patterns = new String[]{"dd MMM yyyy", "yyyy-MM-dd", "dd/MM/yyyy"};
+        for (String pattern : patterns) {
+            try {
+                LocalDate parsed = LocalDate.parse(trimmed, DateTimeFormatter.ofPattern(pattern, Locale.ENGLISH));
+                return parsed.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            } catch (DateTimeParseException ignored) { }
+        }
+        return null;
+    }
+
+    private boolean hasTbScreeningInCurrentQuarter(String vcaId) {
+        if (TextUtils.isEmpty(vcaId)) {
+            return true;
+        }
+
+        List<TbScreeningModel> screenings = TbScreeningDao.listByVcaId(vcaId);
+        if (screenings == null || screenings.isEmpty()) {
+            return false;
+        }
+
+        Calendar quarterStart = Calendar.getInstance();
+        int currentMonth = quarterStart.get(Calendar.MONTH);
+        int startMonth = currentMonth - (currentMonth % 3);
+        quarterStart.set(Calendar.MONTH, startMonth);
+        quarterStart.set(Calendar.DAY_OF_MONTH, 1);
+        quarterStart.set(Calendar.HOUR_OF_DAY, 0);
+        quarterStart.set(Calendar.MINUTE, 0);
+        quarterStart.set(Calendar.SECOND, 0);
+        quarterStart.set(Calendar.MILLISECOND, 0);
+
+        for (TbScreeningModel screening : screenings) {
+            Date screeningDate = resolveScreeningDate(screening);
+            if (screeningDate != null && !screeningDate.before(quarterStart.getTime())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private Date resolveScreeningDate(TbScreeningModel screening) {
+        if (screening == null) return null;
+
+        Date fromTimestamp = parseTimestamp(screening.getLast_interacted_with());
+        if (fromTimestamp != null) return fromTimestamp;
+
+        Date fromStringTs = parseDayMonthYear(screening.getLast_interacted_with());
+        if (fromStringTs != null) return fromStringTs;
+
+        Date followUp = parseDayMonthYear(screening.getFollowup_date());
+        if (followUp != null) return followUp;
+
+        Date facilityDate = parseDayMonthYear(screening.getDate_screened_at_facility());
+        if (facilityDate != null) return facilityDate;
+
+        Date treatmentFollowUp = parseDayMonthYear(screening.getTreatment_followup_date());
+        if (treatmentFollowUp != null) return treatmentFollowUp;
+
+        return null;
+    }
+
+    private Date parseTimestamp(String timestamp) {
+        if (TextUtils.isEmpty(timestamp)) return null;
+        try {
+            long value = Long.parseLong(timestamp);
+            if (timestamp.length() <= 10) {
+                value *= 1000;
+            }
+            return new Date(value);
+        } catch (NumberFormatException e) {
+            Timber.e(e);
+            return null;
+        }
+    }
+
+    private Date parseDayMonthYear(String dateString) {
+        if (TextUtils.isEmpty(dateString)) return null;
+        String[] patterns = new String[]{"dd-MM-yyyy", "dd/MM/yyyy", "yyyy-MM-dd"};
+        for (String pattern : patterns) {
+            try {
+                return new SimpleDateFormat(pattern, Locale.ENGLISH).parse(dateString);
+            } catch (ParseException ignored) { }
+        }
+        return null;
+    }
+
     private double getAndCalculateAge(String birthdate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
@@ -1976,13 +2947,23 @@ createDialogForScreening(hhIntent,Constants.EcapConstants.POP_UP_DIALOG_MESSAGE)
         int months = periodBetweenDateOfBirthAndNow.getMonths();
 
         if (years == 0) {
-            if (months >= 10) return 0.5; // 10–11 months
-            else if (months >= 7) return 0.4; // 7–9 months
-            else if (months >= 4) return 0.3; // 4–6 months
-            else if (months >= 1) return 0.1; // 1–3 months
+            if (months >= 10) return 0.5; // 10ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“11 months
+            else if (months >= 7) return 0.4; // 7ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“9 months
+            else if (months >= 4) return 0.3; // 4ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“6 months
+            else if (months >= 1) return 0.1; // 1ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“3 months
             else return 0.0; // < 1 month
         } else {
             return (double) years;
         }
     }
 }
+
+
+
+
+
+
+            
+
+
+

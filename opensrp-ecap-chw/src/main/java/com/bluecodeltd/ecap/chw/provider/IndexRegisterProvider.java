@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
-import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.bluecodeltd.ecap.chw.view_holder.IndexRegisterViewHolder;
 
 import org.smartregister.chw.core.holders.FooterViewHolder;
@@ -33,9 +33,13 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
-import com.bluecodeltd.ecap.chw.util.Threading;
 
 public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegisterViewHolder> {
+
+    private static final String TAG = "IndexRegisterProvider";
+    private static final String AGE_NOT_SET = "Age Not Set";
+    private static final DateTimeFormatter DISPLAY_DOB_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-uuuu");
+    private static final DateTimeFormatter LEGACY_DOB_FORMATTER = DateTimeFormatter.ofPattern("dd MMM uuuu", Locale.ENGLISH);
 
     private final Context context;
     private View.OnClickListener onClickListener;
@@ -54,52 +58,80 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
         CommonPersonObjectClient personObjectClient = (CommonPersonObjectClient) smartRegisterClient;
 
         String BaseEntityId = Utils.getValue(personObjectClient.getColumnmaps(), "base_entity_id", false);
-        String firstName = Utils.getValue(personObjectClient.getColumnmaps(), "first_name", true);
-        String lastName = Utils.getValue(personObjectClient.getColumnmaps(), "last_name", true);
+        String firstName = firstNonBlank(
+                Utils.getValue(personObjectClient.getColumnmaps(), "first_name", true),
+                Utils.getValue(personObjectClient.getColumnmaps(), "adolescent_first_name", true)
+        );
+        String lastName = firstNonBlank(
+                Utils.getValue(personObjectClient.getColumnmaps(), "last_name", true),
+                Utils.getValue(personObjectClient.getColumnmaps(), "adolescent_last_name", true)
+        );
         String childId = Utils.getValue(personObjectClient.getColumnmaps(), "unique_id", false);
         String gender = Utils.getValue(personObjectClient.getColumnmaps(), "gender", true);
         String household_id = Utils.getValue(personObjectClient.getColumnmaps(), "household_id", true);
+        String childLookupId = firstNonBlank(childId, BaseEntityId, household_id);
         String birthdate = checkAndConvertDateFormat(Utils.getValue(personObjectClient.getColumnmaps(), "adolescent_birthdate", true));
         String age = getAge(birthdate);
         String vcaAge = getVcaAge(birthdate);
 
         // Load per-row details asynchronously to avoid UI jank
-        final String rowTag = childId;
-        indexRegisterViewHolder.itemView.setTag(rowTag);
-        Threading.io(() -> {
+        final String rowTag = firstNonBlank(childLookupId, String.valueOf(cursor != null ? cursor.getPosition() : 0));
+        indexRegisterViewHolder.itemView.setTag(R.id.tag_row_id, rowTag);
+        Threading.ioBestEffort(() -> {
             int plans = 0;
             int visits = 0;
+            boolean visitedThisMonth = false;
             String is_index = null;
             String status = null;
-            String is_screened = null;
-            try { plans = CasePlanDao.checkCasePlan(childId); } catch (Exception ignored) {}
-            try { visits = VcaVisitationDao.countVisits(childId); } catch (Exception ignored) {}
+            try { plans = CasePlanDao.checkCasePlan(childLookupId); } catch (Exception ignored) {}
+            try { visits = VcaVisitationDao.countVisits(childLookupId); } catch (Exception ignored) {}
+            try { visitedThisMonth = VcaVisitationDao.hasVisitThisMonth(childLookupId); } catch (Exception ignored) {}
             try { is_index = IndexPersonDao.checkIndexPerson(BaseEntityId); } catch (Exception ignored) {}
             try { status = IndexPersonDao.getIndexStatus(BaseEntityId); } catch (Exception ignored) {}
-            try { is_screened = HouseholdDao.checkIfScreened(household_id); } catch (Exception ignored) {}
 
             final int fPlans = plans;
             final int fVisits = visits;
+            final boolean fVisitedThisMonth = visitedThisMonth;
             final String fIsIndex = is_index;
             final String fStatus = status;
-            final String fIsScreened = is_screened;
             Threading.main(() -> {
-                Object tag = indexRegisterViewHolder.itemView.getTag();
+                Object tag = indexRegisterViewHolder.itemView.getTag(R.id.tag_row_id);
                 if (!(tag instanceof String) || !rowTag.equals(tag)) return;
-                indexRegisterViewHolder.setupViews(firstName +" "+lastName, childId, fPlans, fVisits, fIsIndex, fStatus, gender, age, fIsScreened, vcaAge);
+                indexRegisterViewHolder.setupViews(firstName +" "+lastName, childLookupId, fPlans, fVisits, fVisitedThisMonth, fIsIndex, fStatus, gender, age, vcaAge);
                 indexRegisterViewHolder.itemView.setOnClickListener(onClickListener);
-                indexRegisterViewHolder.itemView.findViewById(R.id.index_warning).setOnClickListener(onClickListener);
+                // Click handlers expect the client on the clicked view's default tag.
                 indexRegisterViewHolder.itemView.setTag(smartRegisterClient);
             });
         });
 
     }
 
+    private String firstNonBlank(String... values) {
+        if (values == null) {
+            return "";
+        }
+        for (String value : values) {
+            if (value == null) {
+                continue;
+            }
+            String trimmed = value.trim();
+            if (!trimmed.isEmpty()) {
+                return trimmed;
+            }
+        }
+        return "";
+    }
+
 
     private String getVcaAge(String birthdate){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
-        LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
+        LocalDate localDateBirthdate = parseBirthdate(birthdate);
+        if (localDateBirthdate == null) {
+            return AGE_NOT_SET;
+        }
         LocalDate today =LocalDate.now();
+        if (localDateBirthdate.isAfter(today)) {
+            return AGE_NOT_SET;
+        }
         Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
         if(periodBetweenDateOfBirthAndNow.getYears() >0)
         {
@@ -126,13 +158,18 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
         else if(periodBetweenDateOfBirthAndNow.getYears() == 0 && periodBetweenDateOfBirthAndNow.getMonths() ==0){
             return periodBetweenDateOfBirthAndNow.getDays() +" Days Old";
         }
-        else return "Age Not Set";
+        else return AGE_NOT_SET;
     }
 
     private String getAge(String birthdate) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
-        LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
+        LocalDate localDateBirthdate = parseBirthdate(birthdate);
+        if (localDateBirthdate == null) {
+            return AGE_NOT_SET;
+        }
         LocalDate today = LocalDate.now();
+        if (localDateBirthdate.isAfter(today)) {
+            return AGE_NOT_SET;
+        }
         Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
 
         int years = periodBetweenDateOfBirthAndNow.getYears();
@@ -142,18 +179,38 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
     }
 
     private String checkAndConvertDateFormat(String date){
-        if (date.matches("\\d{2}-\\d{2}-\\d{4}")) {
-            return date;
-        } else {
-            DateTimeFormatter oldFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH);
-            DateTimeFormatter newFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-            try {
-                LocalDate localDate = LocalDate.parse(date, oldFormatter);
-                return localDate.format(newFormatter);
-            } catch (DateTimeParseException e) {
-                Log.e("TAG", "Invalid date format: " + e.getMessage());
-                return "Invalid date format";
-            }
+        if (date == null) {
+            return null;
+        }
+        String trimmed = date.trim();
+        if (trimmed.isEmpty()) {
+            return null;
+        }
+        if (trimmed.matches("\\d{2}-\\d{2}-\\d{4}")) {
+            return trimmed;
+        }
+        try {
+            LocalDate localDate = LocalDate.parse(trimmed, LEGACY_DOB_FORMATTER);
+            return localDate.format(DISPLAY_DOB_FORMATTER);
+        } catch (DateTimeParseException e) {
+            Log.w(TAG, "Invalid birthdate format: " + trimmed, e);
+            return null;
+        }
+    }
+
+    private LocalDate parseBirthdate(String birthdate) {
+        if (birthdate == null) {
+            return null;
+        }
+        String trimmed = birthdate.trim();
+        if (trimmed.isEmpty()) {
+            return null;
+        }
+        try {
+            return LocalDate.parse(trimmed, DISPLAY_DOB_FORMATTER);
+        } catch (DateTimeParseException e) {
+            Log.w(TAG, "Unable to parse birthdate: " + trimmed, e);
+            return null;
         }
     }
 
@@ -193,7 +250,7 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
 
     @Override
     public IndexRegisterViewHolder createViewHolder(ViewGroup viewGroup) {
-        View viewHolder = inflater().inflate(R.layout.index_register_item_layout, null);
+        View viewHolder = inflater().inflate(R.layout.index_register_item_layout, viewGroup, false);
         return new IndexRegisterViewHolder(viewHolder, context);
     }
 

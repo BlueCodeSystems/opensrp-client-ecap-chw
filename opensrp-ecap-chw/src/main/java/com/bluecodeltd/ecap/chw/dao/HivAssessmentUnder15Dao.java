@@ -77,8 +77,11 @@ public class HivAssessmentUnder15Dao extends AbstractDao {
             record.setQuestion(getCursorValue(c,"Question"));
             record.setDate_edited(getCursorValue(c,"date_edited"));
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 
 }
+
+

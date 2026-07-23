@@ -10,9 +10,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +27,7 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.PmctMotherAncModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -98,8 +96,7 @@ public class AncMotherAdapter extends RecyclerView.Adapter<AncMotherAdapter.View
                 holder.exPandableView.setVisibility(View.VISIBLE);
                 holder.expMore.setVisibility(View.GONE);
                 holder.expLess.setVisibility(View.VISIBLE);
-                holder.editme.setVisibility(View.GONE);
-                holder.delete.setVisibility(View.GONE);
+                setEditDeleteVisibility(holder, View.GONE);
             }
         });
 
@@ -110,8 +107,7 @@ public class AncMotherAdapter extends RecyclerView.Adapter<AncMotherAdapter.View
                 holder.exPandableView.setVisibility(View.GONE);
                 holder.expMore.setVisibility(View.VISIBLE);
                 holder.expLess.setVisibility(View.GONE);
-                holder.editme.setVisibility(View.VISIBLE);
-                holder.delete.setVisibility(View.VISIBLE);
+                setEditDeleteVisibility(holder, View.VISIBLE);
             }
         });
 
@@ -152,23 +148,23 @@ public class AncMotherAdapter extends RecyclerView.Adapter<AncMotherAdapter.View
         });
 
 
-        holder.editme.setOnClickListener(v -> {
+        View.OnClickListener editListener = v -> {
 
-            if (v.getId() == R.id.edit_me) {
+            try {
 
-                try {
+                openFormUsingFormUtils(context, "anc_details", visit);
 
-                    openFormUsingFormUtils(context, "anc_details", visit);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
 
+        };
+        holder.editme.setOnClickListener(editListener);
+        if (holder.editButton != null) {
+            holder.editButton.setOnClickListener(editListener);
+        }
 
-        });
-        holder.delete.setOnClickListener(v -> {
+        View.OnClickListener deleteListener = v -> {
             try {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage("You are about to delete this household graduation ");
@@ -220,15 +216,16 @@ public class AncMotherAdapter extends RecyclerView.Adapter<AncMotherAdapter.View
             } catch (Exception e) {
                 Timber.e(e);
             }
-        });
+        };
+        holder.delete.setOnClickListener(deleteListener);
+        if (holder.deleteButton != null) {
+            holder.deleteButton.setOnClickListener(deleteListener);
+        }
         String sVisit = visit.getGestation_age_in_weeks();
-        if(sVisit != null){
-
-            SpannableString spannableString = new SpannableString(sVisit);
-            spannableString.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, sVisit.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-            holder.txtVisit.setText("Gestation Age: "+ spannableString);
-        } else{
+        if (sVisit != null) {
+            holder.txtVisit.setVisibility(View.VISIBLE);
+            holder.txtVisit.setText("GA: " + sVisit + "w");
+        } else {
             holder.txtVisit.setVisibility(View.GONE);
         }
 
@@ -241,8 +238,17 @@ public class AncMotherAdapter extends RecyclerView.Adapter<AncMotherAdapter.View
         dialog.show();
 
         TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-        Household house = HouseholdDao.getHousehold(householdId);
-        dialogMessage.setText(house.getCaregiver_name() + message);
+        dialogMessage.setText("Loading...");
+        final String hid = householdId;
+        Threading.io(() -> {
+            Household house = null;
+            try { house = HouseholdDao.getHousehold(hid); } catch (Exception ignored) {}
+            final Household finalHouse = house;
+            Threading.main(() -> {
+                String name = (finalHouse != null && finalHouse.getCaregiver_name() != null) ? finalHouse.getCaregiver_name() : "Household";
+                dialogMessage.setText(name + message);
+            });
+        });
 
         android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
         dialogButton.setOnClickListener(v -> dialog.dismiss());
@@ -387,12 +393,24 @@ public class AncMotherAdapter extends RecyclerView.Adapter<AncMotherAdapter.View
         return postnatal.size();
     }
 
+    private void setEditDeleteVisibility(ViewHolder holder, int visibility) {
+        holder.editme.setVisibility(visibility);
+        holder.delete.setVisibility(visibility);
+        if (holder.editButton != null) {
+            holder.editButton.setVisibility(visibility);
+        }
+        if (holder.deleteButton != null) {
+            holder.deleteButton.setVisibility(visibility);
+        }
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView txtDate,intialHivStatus,initialHivStatusDate,updateHivStatus,updatedHivStatusDate,txtVisit;
 
         LinearLayout linearLayout, exPandableView;
         ImageView expMore, expLess,editme,delete;
+        View editButton, deleteButton;
 
         public ViewHolder(View itemView) {
 
@@ -402,6 +420,8 @@ public class AncMotherAdapter extends RecyclerView.Adapter<AncMotherAdapter.View
             txtDate  = itemView.findViewById(R.id.date);
             editme = itemView.findViewById(R.id.edit_me);
             delete = itemView.findViewById(R.id.delete_record);
+            editButton = itemView.findViewById(R.id.edit_button);
+            deleteButton = itemView.findViewById(R.id.delete_button);
             exPandableView = itemView.findViewById(R.id.expandable);
             expLess = itemView.findViewById(R.id.expand_less);
             expMore = itemView.findViewById(R.id.expand_more);

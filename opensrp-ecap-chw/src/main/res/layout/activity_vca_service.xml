@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     tools:context=".activity.HouseholdDetails"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="@color/dash_bg">
 
     <LinearLayout
         android:id="@+id/activity_main"
@@ -18,22 +18,22 @@
             android:id="@+id/collapsing_toolbar_appbarlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#696969">
+            android:background="@drawable/bg_vca_header">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/collapsing_toolbar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:contentScrim="@color/customAppThemeBlue"
+                app:contentScrim="@color/register_vca_icon"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbarx"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="#696969"
-                    app:theme="@style/ThemeOverlay.AppCompat.Light"
+                    android:background="@android:color/transparent"
+                    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                     app:layout_collapseMode="pin" />
 
                 <LinearLayout
@@ -41,7 +41,7 @@
                     android:id="@+id/profile_name_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#696969"
+                    android:background="@android:color/transparent"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
                     app:layout_collapseMode="parallax"
@@ -56,7 +56,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="15dp"
                         android:paddingStart="0dp"
-                        android:text="VCA : Bertha Mwansa"
+                        android:text="CA : Bertha Mwansa"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/activity_title_size" />
 
@@ -98,6 +98,20 @@
 
                     </LinearLayout>
 
+                    <TextView
+                        android:id="@+id/services_count_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/bg_header_stat_pill"
+                        android:paddingHorizontal="14dp"
+                        android:paddingVertical="6dp"
+                        android:text="0 Service Reports"
+                        android:textColor="@android:color/white"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -107,36 +121,55 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <RelativeLayout
-            android:layout_below="@+id/collapsing_toolbar_appbarlayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="@color/dash_bg">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/hhrecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingHorizontal="6dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="16dp" />
 
             <LinearLayout
                 android:id="@+id/service_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:gravity="center_horizontal"
                 android:orientation="vertical"
+                android:paddingHorizontal="32dp"
                 android:visibility="visible">
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
                     android:layout_gravity="center_horizontal"
+                    android:alpha="0.9"
                     android:src="@drawable/not_done" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:gravity="center_horizontal"
-                    android:text="No Service Reports have been added"
-                    android:textSize="20dp" />
+                    android:text="No service reports yet"
+                    android:textColor="@color/text_black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center_horizontal"
+                    android:text="Tap “Add Service Report” below to log the first one"
+                    android:textColor="@color/light_grey_text"
+                    android:textSize="13sp" />
 
             </LinearLayout>
 
@@ -146,20 +179,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="10dp">
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp">
 
             <com.rey.material.widget.Button
                 android:id="@+id/hh_service_link"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_margin="10dp"
-                android:background="#218CC5"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_button_vca_outline"
                 android:onClick="onClick"
-                android:padding="8dp"
+                android:paddingVertical="12dp"
                 android:text="View Household Services"
                 android:textAllCaps="false"
-                android:textColor="@android:color/white"
+                android:textColor="@color/register_vca_icon"
+                android:textSize="13sp"
+                android:textStyle="bold"
                 android:visibility="visible"
                 app:rd_enable="true"
                 app:rd_rippleType="wave" />
@@ -169,13 +205,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_margin="10dp"
-                android:background="#218CC5"
+                android:background="@drawable/ripple_button_vca_primary"
                 android:onClick="onClick"
-                android:padding="8dp"
-                android:text="Add Service Report"
+                android:paddingVertical="12dp"
+                android:text="+  Add Service Report"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
+                android:textSize="13sp"
+                android:textStyle="bold"
                 android:visibility="visible"
                 app:rd_enable="true"
                 app:rd_rippleType="wave" />

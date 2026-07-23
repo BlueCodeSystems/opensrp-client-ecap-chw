@@ -124,8 +124,11 @@ public class VcaAssessmentDao extends AbstractDao {
             record.setDate_started_art(getCursorValue(c, "date_started_art"));
             record.setArt_health_facility(getCursorValue(c, "art_health_facility"));
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 
 }
+
+

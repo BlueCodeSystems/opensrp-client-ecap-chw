@@ -1,15 +1,20 @@
 package com.bluecodeltd.ecap.chw.view_holder;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Typeface;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
@@ -27,9 +32,14 @@ import com.bluecodeltd.ecap.chw.util.Threading;
 
 public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
 
+    // Caps the member-icon row so it can never grow wide enough to push the chevron off-screen.
+    private static final int MAX_VISIBLE_MEMBER_ICONS = 3;
+
     private TextView familyNameTextView;
 
     private TextView villageTextView;
+
+    private TextView vcaCountBadge;
 
     private ImageView homeIcon;
     private Boolean isGraduated;
@@ -41,13 +51,16 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
         super(itemView);
         familyNameTextView = itemView.findViewById(R.id.familyNameTextView);
         villageTextView = itemView.findViewById(R.id.villageTextView);
+        vcaCountBadge = itemView.findViewById(R.id.vca_count_badge);
         hLayout = itemView.findViewById(R.id.child_wrapper);
         homeIcon = itemView.findViewById(R.id.home_icon);
     }
 
-    public void setupViews(String family, String householdId, String isClosed, String village, List<String> genderList, String screened, List<String> birthdateList, Context context){
+    public void setupViews(String family, String householdId, String baseId, String isClosed, String village, List<String> genderList, String screened, List<String> birthdateList, String vcaCount, Context context){
         familyNameTextView.setText(family);
         villageTextView.setText(village);
+        villageTextView.setTag(householdId);
+        setupVcaCountBadge(vcaCount, context);
 
         // Set a baseline icon quickly; async refine below
         if ("true".equals(screened)) {
@@ -58,16 +71,23 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
         homeIcon.clearColorFilter();
         homeIcon.setTag(householdId);
 
-        Threading.io(() -> {
+        Threading.ioBestEffort(() -> {
             try {
                 GraduationModel graduationModel = GraduationDao.getGraduationStatus(householdId);
-                Household householdByBase = HouseholdDao.getHouseholdByBaseId(isClosed);
+                Household householdByBase = HouseholdDao.getHouseholdByBaseId(baseId);
                 String householdStatus = (householdByBase != null) ? householdByBase.getStatus() : null;
                 Household house = HouseholdDao.getHousehold(householdId);
 
                 Threading.main(() -> {
                     if (!householdId.equals(homeIcon.getTag())) return; // view recycled
                     try {
+                        if (house != null && householdId.equals(villageTextView.getTag())) {
+                            String realVillage = firstNonBlank(house.getVillage(), house.getLandmark(), village);
+                            if (!realVillage.isEmpty()) {
+                                villageTextView.setText(realVillage);
+                            }
+                        }
+
                         if (graduationModel != null && "1".equals(graduationModel.getGraduation_status())) {
                             homeIcon.setImageResource(R.mipmap.graduation);
                             return;
@@ -111,40 +131,107 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
         hLayout.removeAllViews();
 
         if( isClosed!=null && isClosed.equals("0")){
-            for(int i=0; i < genderList.size(); i++) {
+            int avatarSizePx = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 36, context.getResources().getDisplayMetrics()));
+            int iconSizePx = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, context.getResources().getDisplayMetrics()));
+            int avatarMarginPx = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, context.getResources().getDisplayMetrics()));
+
+            // Cap visible avatars so a large household can never push the chevron off-screen.
+            int visibleCount = Math.min(genderList.size(), MAX_VISIBLE_MEMBER_ICONS);
+
+            for(int i=0; i < visibleCount; i++) {
 
                 String myage = getAgeWithoutText(birthdateList.get(i));
                 int age = Integer.parseInt(myage);
 
+                // Same avatar-circle treatment as home_icon: a tinted circular backdrop behind the member icon.
+                FrameLayout avatar = new FrameLayout(context);
+                LinearLayout.LayoutParams avatarParams = new LinearLayout.LayoutParams(avatarSizePx, avatarSizePx);
+                avatarParams.gravity = Gravity.CENTER;
+                avatarParams.setMarginStart(avatarMarginPx);
+                avatar.setLayoutParams(avatarParams);
+                avatar.setBackgroundResource(R.drawable.circle_light_grey);
+
                 ImageView image = new ImageView(context);
-
-                LinearLayout.LayoutParams params =  new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-                params.gravity = Gravity.CENTER;
-                params.width = 40;
-                params.height = 40;
-                image.setLayoutParams(params);
+                FrameLayout.LayoutParams imageParams = new FrameLayout.LayoutParams(iconSizePx, iconSizePx);
+                imageParams.gravity = Gravity.CENTER;
+                image.setLayoutParams(imageParams);
+                image.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
                 if (genderList.get(i).equals("male") && age < 20){
 
                     image.setImageResource(R.drawable.row_boy);
+                    ViewCompat.setBackgroundTintList(avatar, ColorStateList.valueOf(ContextCompat.getColor(context, R.color.stat_pill_male_bg)));
 
                 } else if(genderList.get(i).equals("female") && age < 20) {
 
                     image.setImageResource(R.drawable.row_girl);
+                    ViewCompat.setBackgroundTintList(avatar, ColorStateList.valueOf(ContextCompat.getColor(context, R.color.stat_pill_female_bg)));
 
                 } else {
                     image.setImageResource(R.drawable.ic_person_black_24dp);
                     image.setColorFilter(ContextCompat.getColor(context, R.color.client_list_header_dark_grey));
+                    ViewCompat.setBackgroundTintList(avatar, ColorStateList.valueOf(ContextCompat.getColor(context, R.color.light_grey)));
                 }
 
-                hLayout.addView(image);
+                avatar.addView(image);
+                hLayout.addView(avatar);
 
+            }
+
+            int remaining = genderList.size() - visibleCount;
+            if (remaining > 0) {
+                FrameLayout overflow = new FrameLayout(context);
+                LinearLayout.LayoutParams overflowParams = new LinearLayout.LayoutParams(avatarSizePx, avatarSizePx);
+                overflowParams.gravity = Gravity.CENTER;
+                overflowParams.setMarginStart(avatarMarginPx);
+                overflow.setLayoutParams(overflowParams);
+                overflow.setBackgroundResource(R.drawable.circle_light_grey);
+                ViewCompat.setBackgroundTintList(overflow, ColorStateList.valueOf(ContextCompat.getColor(context, R.color.stat_pill_unknown_bg)));
+
+                TextView overflowText = new TextView(context);
+                FrameLayout.LayoutParams textParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+                textParams.gravity = Gravity.CENTER;
+                overflowText.setLayoutParams(textParams);
+                overflowText.setText("+" + remaining);
+                overflowText.setTextColor(ContextCompat.getColor(context, R.color.stat_pill_unknown));
+                overflowText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
+                overflowText.setTypeface(overflowText.getTypeface(), Typeface.BOLD);
+
+                overflow.addView(overflowText);
+                hLayout.addView(overflow);
             }
         }
 
 
     }
+
+    private String firstNonBlank(String... values) {
+        if (values == null) {
+            return "";
+        }
+        for (String value : values) {
+            if (value == null) {
+                continue;
+            }
+            String trimmed = value.trim();
+            if (!trimmed.isEmpty()) {
+                return trimmed;
+            }
+        }
+        return "";
+    }
+
+    private void setupVcaCountBadge(String vcaCount, Context context) {
+        if (vcaCountBadge == null) {
+            return;
+        }
+        int count = 0;
+        try { count = Integer.parseInt(vcaCount); } catch (Exception ignored) {}
+
+        vcaCountBadge.setText(count == 1 ? "1 CA" : count + " CAs");
+        vcaCountBadge.setTextColor(ContextCompat.getColor(context, count > 0 ? R.color.kpi_children : R.color.stat_pill_unknown));
+    }
+
 public boolean checkGraduationStatus(String householdId){
     GraduationBenchmarkModel model = HouseholdDao.getGraduationStatus(householdId);
 

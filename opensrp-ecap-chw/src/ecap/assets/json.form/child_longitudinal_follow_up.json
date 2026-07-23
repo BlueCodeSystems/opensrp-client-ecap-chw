@@ -1,0 +1,312 @@
+{
+  "count": "1",
+  "encounter_type": "Infant Longitudinal Follow-up",
+  "entity_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": ""
+  },
+  "step1": {
+    "title": "Infant Longitudinal Follow-up",
+    "display_back_button": "true",
+    "fields": [
+      {
+        "key": "household_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_id",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "Household ID",
+        "edit_type": "name"
+      },
+      {
+        "key": "unique_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "unique_id",
+        "type": "edit_text",
+        "read_only": "true",
+        "hint": "CA ID",
+        "edit_type": "name"
+      },
+      {
+        "key": "infant_date_of_visit",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "infant_date_of_visit",
+        "type": "date_picker",
+        "hint": "Date of Visit",
+        "look_up": "true",
+        "expanded": false,
+        "min_date": "01-01-1900",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Please enter date of visit"
+        }
+      },
+      {
+        "key": "infant_age",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "infant_age",
+        "type": "spinner",
+        "hint": "Infant Age",
+        "keys": [
+        "Birth",
+        "6 Days",
+        "6 Weeks",
+        "2 Months",
+        "3 Months",
+        "4 Months",
+        "5 Months",
+        "6 Months",
+        "7 Months",
+        "8 Months",
+        "9 Months",
+        "10 Months",
+        "11 Months",
+        "12 Months",
+        "13 Months",
+        "14 Months",
+        "15 Months",
+        "16 Months",
+        "17 Months",
+        "18 Months",
+        "19 Months",
+        "20 Months",
+        "21 Months",
+        "22 Months",
+        "23 Months",
+        "24 Months"
+      ],
+        "values": [
+          "Birth",
+          "6 Days",
+          "6 Weeks",
+          "2 Months",
+          "3 Months",
+          "4 Months",
+          "5 Months",
+          "6 Months",
+          "7 Months",
+          "8 Months",
+          "9 Months",
+          "10 Months",
+          "11 Months",
+          "12 Months",
+          "13 Months",
+          "14 Months",
+          "15 Months",
+          "16 Months",
+          "17 Months",
+          "18 Months",
+          "19 Months",
+          "20 Months",
+          "21 Months",
+          "22 Months",
+          "23 Months",
+          "24 Months"
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Please enter infant age"
+        }
+      },
+      {
+        "key": "infant_vaccinations_given",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "infant_vaccinations_given",
+        "type": "native_radio",
+        "label": "Vaccinations given for this visit",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "child_longitudinal_follow_up_relevance.yml"
+            }
+          }
+        },
+        "v_required": {
+          "value": false,
+          "err": "Please indicate if vaccinations were given"
+        }
+      },
+      {
+        "key": "infant_muac_reading",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "infant_muac_reading",
+        "type": "edit_text",
+        "hint": "MUAC Reading",
+        "edit_type": "decimal",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "child_longitudinal_follow_up_relevance.yml"
+            }
+          }
+        },
+        "v_required": {
+          "value": false,
+          "err": "Please enter MUAC reading if applicable"
+        }
+      },
+      {
+        "key": "infant_oedema_present",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "infant_oedema_present",
+        "type": "native_radio",
+        "label": "Oedema present",
+        "options": [
+          { "key": "no_oedema", "text": "1.No Oedema" },
+          { "key": "mild_oedema", "text": "2.Mild Oedema (both feet and ankles)" },
+          { "key": "moderate_oedema", "text": "3.Moderate Oedema (both feet + lower legs and hands)" },
+          { "key": "severe_oedema", "text": "4.Severe Oedema (including face/abdomen)" },
+          { "key": "not_assessed", "text": "5.No assessment was done" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate oedema status"
+        }
+      },
+      {
+        "key": "infant_breastfeeding_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "infant_breastfeeding_status",
+        "type": "native_radio",
+        "label": "Infant Breastfeeding",
+        "options": [
+          { "key": "exclusive_breastfeeding", "text": "1. Exclusive Breast Feeding" },
+          { "key": "mixed_feeding", "text": "2. Mixed Feeding" },
+          { "key": "non_breastfeeding", "text": "3. Non-breastfeeding" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate breastfeeding status"
+        }
+      },
+      {
+        "key": "infant_vitamin_a_given",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "infant_vitamin_a_given",
+        "type": "native_radio",
+        "label": "Vitamin A given",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "child_longitudinal_follow_up_relevance.yml"
+            }
+          }
+        },
+        "v_required": {
+          "value": false,
+          "err": "Please indicate if Vitamin A was given"
+        }
+      },
+      {
+        "key": "infant_growth_monitoring_done",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "infant_growth_monitoring_done",
+        "type": "native_radio",
+        "label": "Growth monitoring done",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "v_required": {
+          "value": false,
+          "err": "Please indicate if growth monitoring was done"
+        }
+      },
+      {
+        "key": "infant_deworming_given",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "infant_deworming_given",
+        "type": "native_radio",
+        "label": "De-worming given",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "child_longitudinal_follow_up_relevance.yml"
+            }
+          }
+        },
+        "v_required": {
+          "value": false,
+          "err": "Please indicate if de-worming was given"
+        }
+      },
+      {
+        "key": "infant_followup_comments",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "infant_followup_comments",
+        "type": "edit_text",
+        "hint": "Comments / Notes",
+        "v_required": {
+          "value": false,
+          "err": "Please enter comments"
+        }
+      }
+    ]
+  }
+}

@@ -159,14 +159,14 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "Phone_Number",
         "type": "edit_text",
-        "hint": " Phone number",
+        "hint": "Phone number",
         "v_numeric": {
           "value": "true",
-          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
+          "err": "Number must begin with 077,076,055,056,057,095, 096, or 097 and must be a total of 10 digits in length"
         },
         "v_regex": {
-          "value": "(09[5-7][0-9]{7})|\\s*",
-          "err": "Number must begin with 095, 096, or 097 and must be a total of 10 digits in length"
+          "value": "((07||09||05)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,055,056,057,095, 096, or 097 and must be a total of 10 digits in length"
         } },
       {
         "key": "viral_load",
@@ -245,7 +245,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Ward  only takes letters"
+          "err": "Ward only takes letters"
         }
       },
       {
@@ -258,7 +258,7 @@
         "edit_type": "name",
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Village/Compound  only takes letters"
+          "err": "Village/Compound only takes letters"
         }
       },
       {

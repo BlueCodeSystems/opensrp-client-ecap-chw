@@ -7,14 +7,12 @@ import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,10 +23,8 @@ import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.CasePlan;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
-import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
-import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -114,14 +110,17 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
         if(casePlan.getStatus().equals(("C"))){
 
             holder.txtStatus.setText("Complete");
+            holder.txtStatus.setBackgroundResource(R.drawable.bg_chip_success);
 
         } else if(casePlan.getStatus().equals(("P"))) {
 
             holder.txtStatus.setText("In Progress");
+            holder.txtStatus.setBackgroundResource(R.drawable.bg_chip_warning);
 
         } else if(casePlan.getStatus().equals(("D"))) {
 
             holder.txtStatus.setText("Delayed");
+            holder.txtStatus.setBackgroundResource(R.drawable.bg_chip_danger);
 
         }
 
@@ -147,43 +146,26 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
             }
         });
 
-        CaseStatusModel caseStatusModel = IndexPersonDao.getCaseStatus(casePlan.getUnique_id());
+        final String rowTag = casePlan.getBase_entity_id() != null ? casePlan.getBase_entity_id()
+                : (casePlan.getUnique_id() != null ? casePlan.getUnique_id() : String.valueOf(position));
+        holder.itemView.setTag(R.id.tag_row_id, rowTag);
 
-    holder.editme.setOnClickListener(v -> {
-                String status = null;
-                try { status = caseStatusModel != null ? caseStatusModel.getCase_status() : null; } catch (Exception ignored) {}
-                if (status != null && (status.equals("0") || status.equals("2"))) {
-                    Dialog dialog = new Dialog(context);
-                    dialog.setContentView(R.layout.dialog_layout);
-                    dialog.show();
-
-                    TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-                    String first = caseStatusModel != null && caseStatusModel.getFirst_name() != null ? caseStatusModel.getFirst_name() : "This beneficiary";
-                    String last = caseStatusModel != null && caseStatusModel.getLast_name() != null ? caseStatusModel.getLast_name() : "";
-                    dialogMessage.setText(first + (last.isEmpty()? "":(" "+last)) + " was either de-registered or inactive in the program");
-
-                    Button dialogButton = dialog.findViewById(R.id.dialog_button);
-                    dialogButton.setOnClickListener(va -> dialog.dismiss());
-
+                View.OnClickListener editListener = v -> {
+            try {
+                if (context instanceof CasePlan) {
+                    openFormUsingFormUtils(context, "domain", casePlan);
                 } else {
-                    if (v.getId() == R.id.edit_me) {
-
-                        try {
-                            if (context instanceof CasePlan) {
-                                openFormUsingFormUtils(context, "domain", casePlan);
-                            } else {
-                                openFormUsingFormUtils(context, "caregiver_domain", casePlan);
-                            }
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
+                    openFormUsingFormUtils(context, "caregiver_domain", casePlan);
                 }
-
-    });
-    holder.delete.setOnClickListener(v -> {
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        };
+        holder.editme.setOnClickListener(editListener);
+        if (holder.editButton != null) {
+            holder.editButton.setOnClickListener(editListener);
+        }
+        View.OnClickListener deleteListener = v -> {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage("You are about to delete this vulnerability");
         builder.setNegativeButton("NO", (dialog, id) -> {
@@ -212,10 +194,15 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
                 if (childIndexEventClient == null) {
                     return;
                 }
-                saveRegistration(childIndexEventClient,true);
-
-                if (onDataUpdateListener != null) {
-                    onDataUpdateListener.onDataUpdate();
+                Runnable onComplete = () -> {
+                    if (onDataUpdateListener != null) {
+                        onDataUpdateListener.onDataUpdate();
+                    }
+                    refreshIndexProfile(casePlan.getUnique_id());
+                };
+                boolean scheduled = saveRegistration(childIndexEventClient, true, onComplete);
+                if (!scheduled) {
+                    onComplete.run();
                 }
 
 
@@ -232,7 +219,11 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
         //Setting the title manually
         alert.setTitle("Alert");
         alert.show();
-    });
+    };
+        holder.delete.setOnClickListener(deleteListener);
+        if (holder.deleteButton != null) {
+            holder.deleteButton.setOnClickListener(deleteListener);
+        }
 
         holder.expLess.setOnClickListener(v -> {
 
@@ -258,6 +249,25 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
 //            activity.recreate();
 //        }
 //    };
+    private void runOnUiThread(Runnable runnable) {
+        if (context instanceof Activity && runnable != null) {
+            ((Activity) context).runOnUiThread(runnable);
+        }
+    }
+
+    private void refreshIndexProfile(String uniqueId) {
+        if (!(context instanceof Activity)) {
+            return;
+        }
+        Activity activity = (Activity) context;
+        Intent intent = new Intent(context, IndexDetailsActivity.class);
+        intent.putExtra("Child", uniqueId);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        activity.finish();
+        activity.overridePendingTransition(0, 0);
+        context.startActivity(intent);
+        activity.overridePendingTransition(0, 0);
+    }
     public void callActivity(CasePlanModel casePlan) {
         Intent openActivity = new Intent(context, CasePlan.class);
         openActivity.putExtra("childId",  casePlan.getUnique_id());
@@ -363,47 +373,49 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
 
         return null;
     }
-    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode, Runnable onComplete) {
 
         Runnable runnable = () -> {
 
             Event event = childIndexEventClient.getEvent();
             Client client = childIndexEventClient.getClient();
 
-            if (event != null && client != null) {
-                try {
-                    ECSyncHelper ecSyncHelper = getECSyncHelper();
+            try {
+                if (event != null && client != null) {
+                    try {
+                        ECSyncHelper ecSyncHelper = getECSyncHelper();
 
-                    JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
+                        JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
 
-                    JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
+                        JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
 
-                    if (isEditMode) {
-                        JSONObject mergedClientJsonObject =
-                                org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
-                        ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
+                        if (isEditMode && existingClientJsonObject != null) {
+                            JSONObject mergedClientJsonObject =
+                                    org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
+                            ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
 
-                    } else {
-                        ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                        } else {
+                            ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                        }
+
+                        JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
+                        ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
+
+                        Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
+                        Date currentSyncDate = new Date(lastUpdatedAtDate);
+
+                        //Get saved event for processing
+                        List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
+                        getClientProcessorForJava().processClient(savedEvents);
+                        getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
+
+                    } catch (Exception e) {
+                        Timber.e(e);
                     }
-
-                    JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
-                    ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
-
-                    Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
-                    Date currentSyncDate = new Date(lastUpdatedAtDate);
-
-                    //Get saved event for processing
-                    List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
-                    getClientProcessorForJava().processClient(savedEvents);
-                    getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
-
-                    if (onDataUpdateListener != null) {
-                        onDataUpdateListener.onDataUpdate();
-                    }
-
-                } catch (Exception e) {
-                    Timber.e(e);
+                }
+            } finally {
+                if (onComplete != null) {
+                    runOnUiThread(onComplete);
                 }
             }
 
@@ -415,6 +427,9 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
             return true;
         } catch (Exception exception) {
             Timber.e(exception);
+            if (onComplete != null) {
+                runOnUiThread(onComplete);
+            }
             return false;
         }
     }
@@ -435,6 +450,7 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
         LinearLayout linearLayout, exPandableView;
 
         ImageView expMore, expLess, editme, delete;
+        View editButton, deleteButton;
 
         public ViewHolder(View itemView) {
 
@@ -455,6 +471,8 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
             txtStatus = itemView.findViewById(R.id.statusx);
             txtComment = itemView.findViewById(R.id.comment);
             delete = itemView.findViewById(R.id.delete_record);
+            editButton = itemView.findViewById(R.id.edit_button);
+            deleteButton = itemView.findViewById(R.id.delete_button);
 
 
         }
@@ -467,3 +485,5 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
     }
 
 }
+
+

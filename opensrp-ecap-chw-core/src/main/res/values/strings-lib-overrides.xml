@@ -6,7 +6,7 @@
     <string name="family_head">Family head</string>
     <string name="go_to_family_s_profile">Go to family profile</string>
     <string name="head_of_family">Head of family</string>
-    <string name="last_visit_40_days_ago">Last visit 40 days ago</string>
+    <string name="last_visit_40_days_ago">Last visit %1$s ago</string>
     <string name="medical_history">Medical history</string>
     <string name="no">No</string>
     <string name="not_visiting_this_month">Not visiting this month</string>

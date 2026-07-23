@@ -205,6 +205,28 @@ public class HouseholdDao extends AbstractDao {
             return false;
         }
     }
+    public static String countMaleCaregivers() {
+        try {
+            String sql = "SELECT COUNT(DISTINCT household_id) AS v FROM ec_household WHERE LOWER(caregiver_sex) = 'male' AND screened = 'true' AND (status IS NULL OR status != '1')";
+            AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
+            List<String> values = AbstractDao.readData(sql, dataMap);
+            return (values != null && !values.isEmpty()) ? values.get(0) : "0";
+        } catch (Exception e) {
+            return "0";
+        }
+    }
+
+    public static String countFemaleCaregivers() {
+        try {
+            String sql = "SELECT COUNT(DISTINCT household_id) AS v FROM ec_household WHERE LOWER(caregiver_sex) = 'female' AND screened = 'true' AND (status IS NULL OR status != '1')";
+            AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
+            List<String> values = AbstractDao.readData(sql, dataMap);
+            return (values != null && !values.isEmpty()) ? values.get(0) : "0";
+        } catch (Exception e) {
+            return "0";
+        }
+    }
+
     public static String countNumberoFHouseholds () {
         try {
             String sql = "SELECT count(DISTINCT household_id ) AS houses FROM ec_household WHERE screened = 'true' AND (status IS NULL OR status != '1')";
@@ -277,7 +299,14 @@ public class HouseholdDao extends AbstractDao {
     public static Household getHousehold (String householdID) {
 
        // String sql = "SELECT ec_household.*, ec_household.village AS adolescent_village, ec_household.base_entity_id AS bid FROM ec_household  WHERE ec_household.household_id = '" + householdID + "' ";
-        String sql = "SELECT *,A.* FROM (SELECT ec_household.*, ec_household.village AS adolescent_village, ec_household.base_entity_id AS bid FROM ec_household WHERE household_id = '" + householdID + "') AS A LEFT JOIN (SELECT * FROM ec_client_index WHERE household_id = '" + householdID + "' AND (deleted IS NULL OR deleted != '1') AND (ec_client_index.index_check_box = '1' OR index_check_box = 'yes')) AS B ON A.household_id = B.household_id";
+        String sql = "SELECT A.*, " +
+                "B.first_name AS index_first_name, " +
+                "B.last_name AS index_last_name, " +
+                "B.gender AS index_gender, " +
+                "B.adolescent_birthdate AS index_adolescent_birthdate " +
+                "FROM (SELECT ec_household.*, ec_household.village AS adolescent_village, ec_household.base_entity_id AS bid FROM ec_household WHERE household_id = '" + householdID + "') AS A " +
+                "LEFT JOIN (SELECT * FROM ec_client_index WHERE household_id = '" + householdID + "' AND (deleted IS NULL OR deleted != '1') AND (ec_client_index.index_check_box = '1' OR index_check_box = 'yes') ORDER BY id DESC LIMIT 1) AS B " +
+                "ON A.household_id = B.household_id";
 
                 List<Household> values = AbstractDao.readData(sql, getHouseholdMap());
         if (values == null || values.size() == 0)
@@ -409,6 +438,7 @@ public class HouseholdDao extends AbstractDao {
             record.setOther_health_services(getCursorValue(c,"other_health_services"));
 
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
@@ -458,6 +488,7 @@ public class HouseholdDao extends AbstractDao {
             record.setCase_plan_id(getCursorValue(c,"case_plan_id"));
 
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
@@ -470,10 +501,10 @@ public class HouseholdDao extends AbstractDao {
             record.setSignature(getCursorValue(c, "signature"));
             //household_case_status
             record.setHousehold_case_status(getCursorValue(c, "household_case_status"));
-            record.setFirst_name(getCursorValue(c, "first_name"));
-            record.setLast_name(getCursorValue(c, "last_name"));
-            record.setGender(getCursorValue(c, "gender"));
-            record.setAdolescent_birthdate(getCursorValue(c, "adolescent_birthdate"));
+            record.setFirst_name(preferNonEmpty(getCursorValue(c, "index_first_name"), getCursorValue(c, "first_name")));
+            record.setLast_name(preferNonEmpty(getCursorValue(c, "index_last_name"), getCursorValue(c, "last_name")));
+            record.setGender(preferNonEmpty(getCursorValue(c, "index_gender"), getCursorValue(c, "gender")));
+            record.setAdolescent_birthdate(preferNonEmpty(getCursorValue(c, "index_adolescent_birthdate"), getCursorValue(c, "adolescent_birthdate")));
             record.setSubpop1(getCursorValue(c, "subpop1"));
             record.setSubpop2(getCursorValue(c, "subpop2"));
             record.setSubpop3(getCursorValue(c, "subpop3"));
@@ -481,6 +512,7 @@ public class HouseholdDao extends AbstractDao {
             record.setSubpop5(getCursorValue(c, "subpop5"));
             record.setSubpop(getCursorValue(c, "subpop"));
             record.setCaregiver_name(getCursorValue(c, "caregiver_name"));
+            record.setCaregiver_nrc(getCursorValue(c, "caregiver_nrc"));
             record.setCaregiver_sex(getCursorValue(c, "caregiver_sex"));
             record.setCaregiver_birth_date(getCursorValue(c, "caregiver_birth_date"));
             record.setPhysical_address(getCursorValue(c, "physical_address"));
@@ -503,6 +535,7 @@ public class HouseholdDao extends AbstractDao {
             record.setLandmark(getCursorValue(c, "landmark"));
             record.setMother_screening_date(getCursorValue(c, "mother_screening_date"));
             record.setScreening_date(getCursorValue(c, "screening_date"));
+            record.setScreening_location(getCursorValue(c, "screening_location"));
             record.setScreening_location_home(getCursorValue(c, "screening_location_home"));
             record.setViolence_six_months(getCursorValue(c, "violence_six_months"));
             record.setChildren_violence_six_months(getCursorValue(c, "children_violence_six_months"));
@@ -545,6 +578,8 @@ public class HouseholdDao extends AbstractDao {
             record.setAt_risk_reasons(getCursorValue(c, "at_risk_reasons"));
             record.setReason_for_hiv_risk(getCursorValue(c, "reason_for_hiv_risk"));
             record.setConsent_check_box(getCursorValue(c, "consent_check_box"));
+            record.setIndex_check_box(getCursorValue(c, "index_check_box"));
+            record.setDate_approved(getCursorValue(c, "date_approved"));
             record.setCaregiver_phone(getCursorValue(c, "caregiver_phone"));
             record.setWard(getCursorValue(c, "ward"));
             record.setProvince(getCursorValue(c, "province"));
@@ -554,6 +589,7 @@ public class HouseholdDao extends AbstractDao {
             record.setStatus(getCursorValue(c, "status"));
             record.setCase_status(getCursorValue(c,"case_status"));
             record.setDe_registration_date(getCursorValue(c,"de_registration_date"));
+            record.setDate_of_death(getCursorValue(c,"date_of_death"));
             record.setTransfer_reason(getCursorValue(c,"transfer_reason"));
             record.setOther_de_registration_reason(getCursorValue(c,"other_de_registration_reason"));
             record.setDe_registration_reason(getCursorValue(c,"de_registration_reason"));
@@ -577,10 +613,21 @@ public class HouseholdDao extends AbstractDao {
             record.setChange_caregiver_date(getCursorValue(c,"change_caregiver_date"));
             record.setLocation_moved_to(getCursorValue(c,"location_moved_to"));
             record.setHousehold_receiving_facility(getCursorValue(c,"household_receiving_facility"));
-            record.setOvc_name(getCursorValue(c,"ovc_name"));
+            record.setName_ovc(getCursorValue(c,"name_ovc"));
             record.setUser_select_hiv(getCursorValue(c,"user_select_hiv"));
+            record.setGraduation_benchmark(getCursorValue(c, "graduation_benchmark"));
+            record.setExited_graduation_reason(getCursorValue(c, "exited_graduation_reason"));
+            record.setOther_reason(getCursorValue(c, "other_reason"));
+
+
+
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
+    }
+
+    private static String preferNonEmpty(String preferred, String fallback) {
+        return preferred != null && !preferred.trim().isEmpty() ? preferred : fallback;
     }
     public static DataMap<HouseholdCSVModel> getHouseholdCSVMap() {
         return c -> {
@@ -684,6 +731,7 @@ public class HouseholdDao extends AbstractDao {
             record.setDistrict_moved_to(getCursorValue(c, "district_moved_to"));
 
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
@@ -817,3 +865,5 @@ public class HouseholdDao extends AbstractDao {
 
 
 }
+
+

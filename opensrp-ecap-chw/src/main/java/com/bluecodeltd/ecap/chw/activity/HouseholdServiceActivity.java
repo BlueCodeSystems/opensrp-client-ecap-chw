@@ -28,6 +28,7 @@ import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.HouseholdServiceReportDao;
+import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
 import com.bluecodeltd.ecap.chw.dao.newCaregiverDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.GraduationBenchmarkModel;
@@ -35,6 +36,7 @@ import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.HouseholdServiceReportModel;
 import com.bluecodeltd.ecap.chw.model.newCaregiverModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.PmtctEnrollmentUtils;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONArray;
@@ -70,7 +72,7 @@ public class HouseholdServiceActivity extends AppCompatActivity {
     HouseholdServiceAdapter recyclerViewadapter;
     private ArrayList<HouseholdServiceReportModel> familyServiceList = new ArrayList<>();
     private LinearLayout linearLayout;
-    private TextView cname, hh_id,updatedCaregiverName;
+    private TextView cname, hh_id,updatedCaregiverName, servicesCountText;
 
     private Toolbar toolbar;
     String intent_householdId;
@@ -95,6 +97,7 @@ public class HouseholdServiceActivity extends AppCompatActivity {
         cname = binding.caregiverName;
         hh_id = binding.hhid;
         updatedCaregiverName = binding.updatedCaregiverName;
+        servicesCountText = binding.servicesCountText;
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -157,6 +160,17 @@ public class HouseholdServiceActivity extends AppCompatActivity {
                     linearLayout.setVisibility(View.VISIBLE);
                 }
                 if (progress != null) progress.setVisibility(View.GONE);
+                if (servicesCountText != null) {
+                    int count = familyServiceList.size();
+                    String countText = getResources().getQuantityString(R.plurals.service_reports_count, count, count);
+                    if (count > 0) {
+                        String lastDate = familyServiceList.get(0).getDate();
+                        if (lastDate != null && !lastDate.trim().isEmpty()) {
+                            countText += getString(R.string.service_reports_last_submitted, lastDate.trim());
+                        }
+                    }
+                    servicesCountText.setText(countText);
+                }
             });
         });
     }
@@ -197,6 +211,7 @@ public class HouseholdServiceActivity extends AppCompatActivity {
                             try {
                                 FormUtils formUtils = new FormUtils(this);
                                 JSONObject indexRegisterForm = formUtils.getFormJson("service_report_household");
+                                applyPregnantBreastfeedingVisibility(indexRegisterForm, finalHouseBg.getCaregiver_sex());
                                 JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "household_id");
                                 cId.put("value",hh_id.getText().toString());
                                 JSONObject hivStatus = getFieldJSONObject(fields(indexRegisterForm, STEP1), "is_hiv_positive");
@@ -238,6 +253,31 @@ public class HouseholdServiceActivity extends AppCompatActivity {
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
         startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
 
+    }
+
+    private static boolean isFemaleCaregiver(String caregiverSex) {
+        return caregiverSex != null && caregiverSex.trim().equalsIgnoreCase("female");
+    }
+
+    private static void applyPregnantBreastfeedingVisibility(JSONObject form, String caregiverSex) {
+        if (isFemaleCaregiver(caregiverSex)) {
+            return;
+        }
+        try {
+            JSONArray formFields = fields(form, STEP1);
+            if (formFields == null) {
+                return;
+            }
+            for (int i = 0; i < formFields.length(); i++) {
+                JSONObject field = formFields.getJSONObject(i);
+                if ("pregnant_breastfeeding".equals(field.optString("key"))) {
+                    formFields.remove(i);
+                    break;
+                }
+            }
+        } catch (JSONException e) {
+            Timber.e(e);
+        }
     }
 
     @Override
@@ -343,12 +383,64 @@ public class HouseholdServiceActivity extends AppCompatActivity {
                     }
                     break;
 
+                case "Mother Pmtct":
+
+                    if (fields != null) {
+                        PmtctEnrollmentUtils.alignPmtctIdWithHouseholdId(fields);
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_MOTHER_PMTCT);
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
+
             }
         } catch (JSONException e) {
             Timber.e(e);
         }
 
         return null;
+    }
+
+    private void maybeEnrollPmtctMother(JSONObject serviceForm) {
+        if (serviceForm == null || !PmtctEnrollmentUtils.isEligible(serviceForm)) {
+            return;
+        }
+        if (intent_householdId == null || intent_householdId.trim().isEmpty()) {
+            return;
+        }
+
+        Threading.io(() -> {
+            try {
+                if (PMTCTMotherDao.hasMotherRecord(intent_householdId)) {
+                    return;
+                }
+                Household household = HouseholdDao.getHousehold(intent_householdId);
+                if (household == null) {
+                    return;
+                }
+                if (household.getHousehold_id() == null || household.getHousehold_id().trim().isEmpty()) {
+                    household.setHousehold_id(intent_householdId);
+                }
+                if (household.getHousehold_id() == null || household.getHousehold_id().trim().isEmpty()) {
+                    return;
+                }
+                String serviceDate = PmtctEnrollmentUtils.resolveServiceDate(serviceForm);
+                JSONObject pmtctForm = PmtctEnrollmentUtils.buildMotherPmtctForm(this, household, serviceDate);
+                if (pmtctForm == null) {
+                    return;
+                }
+                ChildIndexEventClient childIndexEventClient = processRegistration(pmtctForm.toString());
+                if (childIndexEventClient == null) {
+                    return;
+                }
+                saveRegistration(childIndexEventClient, false, "Mother Pmtct");
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+        });
     }
 
     public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode,String encounterType) {

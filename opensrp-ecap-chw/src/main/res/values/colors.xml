@@ -44,6 +44,124 @@
     <color name="me_page_line_separator">#E0E0E0</color>
     <color name="progress_orange">#FFA726</color>
 
-    
+
+
+    <!-- Brand / primary (warm clinical green) -->
+    <color name="motherPrimary">#2E7D32</color>        <!-- App bar, header -->
+    <color name="motherPrimaryDark">#1B5E20</color>    <!-- Status bar / scrim -->
+    <color name="motherAccent">#FFB6A6</color>         <!-- Soft blush accent -->
+
+    <!-- Backgrounds -->
+    <color name="profileBackgroundTint">#F4FBF6</color>   <!-- Screen background tint -->
+    <color name="profileCardBackground">#FFFFFF</color>   <!-- Mother card -->
+    <color name="chipBackground">#FFF7F2</color>          <!-- Small action chips -->
+    <color name="chipBorder">#F3C7B9</color>              <!-- Chip border -->
+
+    <!-- Text -->
+    <color name="textPrimary">#263238</color>
+    <color name="textSecondary">#607D8B</color>
+
+    <color name="status_green">#2E7D32</color>        <!-- Material Green 700 -->
+    <color name="status_green_dark">#1B5E20</color>
+
+
+    <color name="mother_avatar_bg">#EAF3F1</color>
+    <color name="mother_hair">#1B1B1B</color>
+    <color name="mother_skin_tone">#9A5A32</color>
+    <color name="mother_top">@color/btn_blue</color>   <!-- or any primary color -->
+    <color name="mother_accent">#FFC107</color>
+
+
+    <color name="kpi_children">#2E7D32</color>     <!-- green -->
+    <color name="kpi_children_bg">#E8F5E9</color>
+    <color name="kpi_households">#1565C0</color>   <!-- blue -->
+    <color name="kpi_due">#C62828</color>          <!-- red (alert) -->
+
+    <color name="light_grey_text">#757575</color>
+    <color name="text_black">#212121</color>
+    <color name="divider_grey">#E0E0E0</color>
+
+    <!-- Dashboard redesign -->
+    <color name="dash_bg">#F5F7FA</color>
+
+    <!-- Card: Children/Adolescents (teal gradient) -->
+    <color name="card_children_start">#0097A7</color>
+    <color name="card_children_end">#00BCD4</color>
+
+    <!-- Card: Households (indigo gradient) -->
+    <color name="card_households_start">#303F9F</color>
+    <color name="card_households_end">#5C6BC0</color>
+
+    <!-- Card: Due visits (warm red/orange gradient) -->
+    <color name="card_due_start">#D32F2F</color>
+    <color name="card_due_end">#EF5350</color>
+
+    <!-- Card: Due visits low (amber) -->
+    <color name="card_due_low_start">#F9A825</color>
+    <color name="card_due_low_end">#FDD835</color>
+
+    <!-- Chart card -->
+    <color name="chart_card_bg">#FFFFFF</color>
+
+    <!-- Bar chart palette -->
+    <color name="bar_calhiv">#0097A7</color>
+    <color name="bar_hei">#26C6DA</color>
+    <color name="bar_cwlhiv">#5C6BC0</color>
+    <color name="bar_cassv">#AB47BC</color>
+
+    <!-- Header gradient -->
+    <color name="dash_header_start">#1565C0</color>
+    <color name="dash_header_end">#1976D2</color>
+
+    <!-- Card text on dark backgrounds -->
+    <color name="card_text_primary">#FFFFFF</color>
+    <color name="card_text_secondary">#CCFFFFFF</color>
+    <color name="card_text_tertiary">#99FFFFFF</color>
+
+    <!-- Stat pills -->
+    <color name="stat_pill_male">#1976D2</color>
+    <color name="stat_pill_male_bg">#E3F2FD</color>
+    <color name="stat_pill_female">#C2185B</color>
+    <color name="stat_pill_female_bg">#FCE4EC</color>
+    <color name="stat_pill_unknown">#616161</color>
+    <color name="stat_pill_unknown_bg">#EEEEEE</color>
+    <color name="stat_pill_hiv">#E65100</color>
+    <color name="stat_pill_hiv_bg">#FFF3E0</color>
+
+    <!-- Quick action cards -->
+    <color name="quick_action_bg">#FFFFFF</color>
+    <color name="quick_action_icon_tint">#546E7A</color>
+
+    <!-- Register list icons & backgrounds -->
+    <color name="register_vca_bg">#E0F7FA</color>
+    <color name="register_vca_icon">#0097A7</color>
+    <color name="register_vca_header">#006064</color>
+    <color name="register_vca_header_light">#B2EBF2</color>
+    <color name="register_household_bg">#E8EAF6</color>
+    <color name="register_household_icon">#303F9F</color>
+    <color name="register_mother_bg">#E8F5E9</color>
+    <color name="register_mother_icon">#2E7D32</color>
+    <color name="register_hts_bg">#E3F2FD</color>
+    <color name="register_hts_icon">#1565C0</color>
+    <color name="register_pmtct_bg">#FCE4EC</color>
+    <color name="register_pmtct_icon">#D81B60</color>
+    <color name="register_pmtct_header">#AD1457</color>
+    <color name="register_pmtct_header_light">#F8BBD0</color>
+    <color name="register_pmtct_accent_light">#EC407A</color>
+    <color name="register_hei_header">#E91E63</color>
+    <color name="register_hei_gradient_start">#F06292</color>
+    <color name="register_malaria_bg">#E0F7FA</color>
+    <color name="register_malaria_icon">#00838F</color>
+    <color name="register_nutrition_bg">#FFF3E0</color>
+    <color name="register_nutrition_icon">#EF6C00</color>
+    <color name="register_tb_bg">#F3E5F5</color>
+    <color name="register_tb_icon">#6A1B9A</color>
+    <color name="register_community_alert_bg">#FFEBEE</color>
+    <color name="register_community_alert_icon">#C62828</color>
+    <color name="register_count_text">#546E7A</color>
+    <color name="register_card_bg">#FFFFFF</color>
+    <color name="register_report_bg">#EEF2FF</color>
+    <color name="register_report_icon">#4338CA</color>
+
 </resources>
 

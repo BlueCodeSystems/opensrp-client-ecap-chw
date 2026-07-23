@@ -17,7 +17,8 @@ public class PmctMotherAncDao extends AbstractDao {
         }
 
 
-        String sql = "SELECT * FROM ec_pmtct_mother_anc WHERE pmtct_id = '" + pmtctID + "' ";
+        // We now key strictly on household_id to fetch ANC rows.
+        String sql = "SELECT * FROM ec_pmtct_mother_anc WHERE household_id = '" + pmtctID + "' ";
 
         List<PmctMotherAncModel> values = AbstractDao.readData(sql, getPmctMotherAncModelMap());
 
@@ -30,7 +31,7 @@ public class PmctMotherAncDao extends AbstractDao {
 
     public static List<PmctMotherAncModel> getPostnatalAncMother(String pmtctID) {
 
-        String sql = "SELECT * FROM ec_pmtct_mother_anc WHERE pmtct_id = '" + pmtctID + "' ";
+        String sql = "SELECT * FROM ec_pmtct_mother_anc WHERE household_id = '" + pmtctID + "' ";
 
         List<PmctMotherAncModel> values = AbstractDao.readData(sql, getPmctMotherAncModelMap());
         if (values == null || values.size() == 0)
@@ -42,7 +43,7 @@ public class PmctMotherAncDao extends AbstractDao {
 
     public static String countMotherAnc (String pmtctID){
 
-        String sql = "SELECT COUNT(*) v FROM ec_pmtct_mother_anc WHERE pmtct_id = '" + pmtctID + "' ";
+        String sql = "SELECT COUNT(*) v FROM ec_pmtct_mother_anc WHERE household_id = '" + pmtctID + "' ";
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
 
         List<String> values = AbstractDao.readData(sql, dataMap);
@@ -61,6 +62,8 @@ public class PmctMotherAncDao extends AbstractDao {
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setRelational_id(getCursorValue(c, "relational_id"));
             record.setPmtct_id(getCursorValue(c, "pmtct_id"));
+            record.setHousehold_id(getCursorValue(c, "household_id"));
+            record.setCaregiver_name(getCursorValue(c, "caregiver_name"));
             record.setDate_of_st_contact(getCursorValue(c, "date_of_st_contact"));
             record.setGestation_age_in_weeks(getCursorValue(c, "gestation_age_in_weeks"));
             record.setHiv_tested(getCursorValue(c, "hiv_tested"));
@@ -84,8 +87,11 @@ public class PmctMotherAncDao extends AbstractDao {
             record.setSyphilis_result(getCursorValue(c, "syphilis_result"));
             record.setDelete_status(getCursorValue(c, "delete_status"));
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 
 }
+
+

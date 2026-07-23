@@ -1,10 +1,14 @@
 package com.bluecodeltd.ecap.chw.activity;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.ClipData;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -38,6 +42,7 @@ import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.model.CaregiverVisitationModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.presenter.GenerateCSVPresenter;
+import com.bluecodeltd.ecap.chw.util.CsvFormImportService;
 import com.github.javiersantos.appupdater.AppUpdater;
 import com.bluecodeltd.ecap.chw.util.UpdateManager;
 import com.github.mikephil.charting.charts.BarChart;
@@ -62,15 +67,18 @@ import org.smartregister.chw.core.custom_views.NavigationMenu;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 import com.bluecodeltd.ecap.chw.util.Threading;
+import com.bluecodeltd.ecap.chw.util.PublicGoogleDriveFolderDownloader;
 
 public class DashboardActivity extends AppCompatActivity  implements GenerateCSVContract.View {
     private com.bluecodeltd.ecap.chw.databinding.ActivityDashboardBinding binding;
@@ -89,7 +97,8 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
     private static final int MAX_Y_VALUE = 50;
     private static final int MIN_Y_VALUE = 5;
     private static final String SET_LABEL = "Sub populations";
-    private static final String[] SUBPOPS = { "CALHIV", " HEI", " CWLHIV", "AGYW", "C/ASSV", "FSW"};
+    // Displayed subpopulations: AGYW and FSW removed
+    private static final String[] SUBPOPS = { "CALHIV", "HEI", "CWLHIV", "C/ASSV"};
     private BarChart chart;
     Handler handler = new Handler();
     List<Child> allChildren;
@@ -98,11 +107,15 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
     ProgressBar loadingDataProgressBar;
     Switch  facilityInformationSwitch;
     String phone = "";
-    private final int FORTY_FIVE_MINUTES = 3000;
+    private static final long FORTY_FIVE_MINUTES = 45L * 60L * 1000L;
     Runnable runnable;
     ArrayList<Integer> colors;
     AppUpdater appUpdater;
     private DashboardViewModel dashboardViewModel;
+    private static final int REQUEST_CODE_IMPORT_CSV = 49011;
+    private static final String ECAP_SOPS_FOLDER_ID = "1ojVjohWcR1S4RlHCHvyiA0jPSofiVQKo";
+    private static final String ECAP_SOPS_TARGET_DIR = "ECAP II SOPs";
+    private static final String ECAP_SOPS_FOLDER_URL = "https://drive.google.com/drive/folders/" + ECAP_SOPS_FOLDER_ID + "?usp=drive_link";
     // Background execution centralized via Threading
 
     @Override
@@ -133,10 +146,37 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
         loadingDataProgressBar = binding.dashProgressbar;
         facilityInformationSwitch = binding.informationSwitch;
         allHouseHoldsCount = binding.allHouseholdsNumber;
+        // Card taps: open respective registers
+        if (binding.cardView1 != null) {
+            binding.cardView1.setOnClickListener(v -> {
+                Intent intent = new Intent(DashboardActivity.this, IndexRegisterActivity.class);
+                startActivity(intent);
+            });
+        }
+        if (binding.cardView2 != null) {
+            binding.cardView2.setOnClickListener(v -> {
+                Intent intent = new Intent(DashboardActivity.this, HouseholdIndexActivity.class);
+                startActivity(intent);
+            });
+        }
+        // Register row click listeners (Other Registers)
+        if (binding.registerRowMother != null) {
+            binding.registerRowMother.setOnClickListener(v ->
+                startActivity(new Intent(DashboardActivity.this, MotherIndexActivity.class)));
+        }
+        if (binding.registerRowHts != null) {
+            binding.registerRowHts.setOnClickListener(v ->
+                startActivity(new Intent(DashboardActivity.this, HivTestingServiceActivity.class)));
+        }
+        if (binding.registerRowPmtct != null) {
+            binding.registerRowPmtct.setOnClickListener(v ->
+                startActivity(new Intent(DashboardActivity.this, PMTCTRegisterActivity.class)));
+        }
         Bundle extras = getIntent().getExtras();
-        String username = extras.getString("username");
-        String password = extras.getString("password");
-        dtf = DateTimeFormatter.ofPattern("HH:mm");
+        String username = extras != null ? extras.getString("username") : null;
+        String password = extras != null ? extras.getString("password") : null;
+        // Last updated format: 01 Jan 2025, 10:30
+        dtf = DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm");
         colors = new ArrayList<Integer>();
 
         appUpdater = new AppUpdater(DashboardActivity.this);
@@ -147,25 +187,59 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
         dashboardViewModel.getState().observe(this, state -> {
             if (state == null) return;
             try {
-                allDueVisits.setText(String.valueOf(state.getVisitsDue()));
-                if (state.getVisitsDue() > 0) allDueVisits.setTextColor(Color.RED);
+                int visits = state.getVisitsDue();
+                allDueVisits.setText(String.valueOf(visits));
+                // Color code due card: 0 = grey, 1-5 amber, >5 red
+                int bgColor;
+                int fgColor;
+                if (visits == 0) {
+                    bgColor = Color.parseColor("#E5E7EB"); // light grey
+                    fgColor = Color.parseColor("#374151"); // dark grey text/icon
+                } else if (visits > 5) {
+                    bgColor = Color.parseColor("#EF4444");
+                    fgColor = Color.WHITE;
+                } else {
+                    bgColor = Color.parseColor("#F1BA0B");
+                    fgColor = Color.WHITE;
+                }
+                if (dueCardview != null) dueCardview.setCardBackgroundColor(bgColor);
+                allDueVisits.setTextColor(fgColor);
+                try { binding.iconDueVisits.setColorFilter(fgColor, PorterDuff.Mode.SRC_IN); } catch (Exception ignored) {}
+                try { binding.dueVisitsView.setTextColor(fgColor); } catch (Exception ignored) {}
                 BarData data = dataForBarchart(state.getSubpops());
                 configureChartAppearance();
                 prepareChartData(data);
                 allHouseHoldsCount = binding.allHouseholdsNumber;
                 allHouseHoldsCount.setText(state.getHouseholdsCount() != null ? state.getHouseholdsCount() : "0");
                 allVcasCount.setText(state.getVcasCount());
-                if (state.getLastUpdated() != null) lastUpdated.setText(String.valueOf(dtf.format(state.getLastUpdated())));
-                loadingDataProgressBar.setVisibility(View.INVISIBLE);
-            } catch (Exception ignored) {}
+                boolean hasChartData = hasChartData(state.getSubpops());
+                binding.fragmentVerticalbarchartChart.setVisibility(hasChartData ? View.VISIBLE : View.INVISIBLE);
+                binding.chartEmptyState.setVisibility(hasChartData ? View.GONE : View.VISIBLE);
+                // Gender breakdown in Children card
+                binding.cardMaleCount.setText(state.getMaleCount());
+                binding.cardFemaleCount.setText(state.getFemaleCount());
+                // Gender breakdown in Households card (caregivers)
+                binding.cardCaregiverMaleCount.setText(state.getCaregiverMaleCount() != null ? state.getCaregiverMaleCount() : "0");
+                binding.cardCaregiverFemaleCount.setText(state.getCaregiverFemaleCount() != null ? state.getCaregiverFemaleCount() : "0");
+                // Register counts (Other Registers)
+                binding.registerMotherCount.setText(state.getMothersCount());
+                binding.registerHtsCount.setText(state.getHtsCount());
+                binding.registerPmtctCount.setText(state.getPmtctCount());
+                if (state.getLastUpdated() != null) {
+                    lastUpdated.setText(dtf.format(state.getLastUpdated()));
+                }
+            } catch (Exception ignored) {
+            } finally {
+                setChartLoading(false);
+            }
         });
 
-        colors.add(Color.parseColor("#9B51E0"));
-        colors.add(Color.parseColor("#E84AE0"));
-        colors.add(Color.parseColor("#BF51E0"));
-        colors.add(Color.parseColor("#D338A0"));
-        colors.add(Color.parseColor("#DA617E"));
-        colors.add(Color.parseColor("#FBA1B7")  );
+        // Vibrant palette matching the new card gradients
+        colors.clear();
+        colors.add(Color.parseColor("#0097A7")); // CALHIV  (teal)
+        colors.add(Color.parseColor("#26C6DA")); // HEI     (cyan)
+        colors.add(Color.parseColor("#5C6BC0")); // CWLHIV  (indigo)
+        colors.add(Color.parseColor("#AB47BC")); // C/ASSV  (purple)
         if (username != null && password != null) {
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(DashboardActivity.this);
             String code = sp.getString("code", "0000");
@@ -181,10 +255,7 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(DashboardActivity.this);
         String facility = sp.getString("facility", "anonymous");
         phone = sp.getString("phone", "anonymous");
-
-
-
-        loadingDataProgressBar.setVisibility(View.VISIBLE);
+        setChartLoading(true);
         // Kick off initial async load and schedule periodic refreshes
         loadData();
         refreshData();
@@ -193,13 +264,11 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (facilityInformationSwitch.isChecked()){
-                    loadingDataProgressBar.setVisibility(View.VISIBLE);
                     loadCaseworkerData();
                     handler.removeCallbacks(runnable);
-                    loadingDataProgressBar.setVisibility(View.INVISIBLE);
                 } else{
-                    refreshData();
                     loadData();
+                    refreshData();
 
                 }
             }
@@ -219,15 +288,21 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
     private BarData dataForBarchart(ArrayList<Integer> subpops)
     {
         ArrayList<BarEntry> values = new ArrayList<>();
-        for (int i = 0; i < subpops.size(); i++) {
-            float x = i;
-            float y = subpops.get(i);
-            //new Util .randomFloatBetween(MIN_Y_VALUE, MAX_Y_VALUE);
-            values.add(new BarEntry(x, y));
+        // Only include indices: 0=CALHIV, 1=HEI, 2=CWLHIV, 4=C/ASSV (skip 3=AGYW, 5=FSW)
+        int[] include = new int[]{0, 1, 2, 4};
+        int xIndex = 0;
+        if (subpops == null) subpops = new ArrayList<>();
+        for (int idx : include) {
+            float y = 0f;
+            if (idx >= 0 && idx < subpops.size()) {
+                Integer v = subpops.get(idx);
+                y = (v != null) ? v : 0f;
+            }
+            values.add(new BarEntry(xIndex, y));
+            xIndex++;
         }
         BarDataSet set1 = new BarDataSet(values, SET_LABEL);
         ArrayList<IBarDataSet> dataSets = new ArrayList<>();
-        set1.setColors(colors);
         set1.setColors(colors);
         dataSets.add(set1);
 
@@ -269,7 +344,6 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
         xAxis.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                //return SUBPOPS[(int) value];
                 return "";
             }
         });
@@ -279,22 +353,13 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
 
         l.getEntries();
 
-        // l.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
-
         l.setYEntrySpace(10f);
-        LegendEntry l1=new LegendEntry("CALHIV",Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#9B51E0"));
-        LegendEntry l2=new LegendEntry("HEI", Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#E84AE0"));
-        LegendEntry l3=new LegendEntry("CWLHIV",Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#BF51E0"));
-        LegendEntry l4=new LegendEntry("AGYW", Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#D338A0"));
-        LegendEntry l5=new LegendEntry("C/ASSV",Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#DA617E"));
-        LegendEntry l6=new LegendEntry("FSW", Legend.LegendForm.CIRCLE,10f,2f,null,Color.parseColor("#FBA1B7"));
-        l.setCustom(new LegendEntry[]{l1,l2,l3,l4,l5,l6});
-        // l.setWordWrapEnabled(true);
 
-        // LegendEntry l1=new LegendEntry("Male",Legend.LegendForm.CIRCLE,10f,2f,null,Color.YELLOW);
-        // LegendEntry l2=new LegendEntry("Female", Legend.LegendForm.CIRCLE,10f,2f,null,Color.RED);
-
-        //  l.setCustom(new LegendEntry[]{l1,l2});
+        LegendEntry l1 = new LegendEntry("CALHIV",  Legend.LegendForm.CIRCLE, 10f, 2f, null, Color.parseColor("#0097A7"));
+        LegendEntry l2 = new LegendEntry("HEI",     Legend.LegendForm.CIRCLE, 10f, 2f, null, Color.parseColor("#26C6DA"));
+        LegendEntry l3 = new LegendEntry("CWLHIV",  Legend.LegendForm.CIRCLE, 10f, 2f, null, Color.parseColor("#5C6BC0"));
+        LegendEntry l5 = new LegendEntry("C/ASSV",  Legend.LegendForm.CIRCLE, 10f, 2f, null, Color.parseColor("#AB47BC"));
+        l.setCustom(new LegendEntry[]{l1, l2, l3, l5});
 
         l.setEnabled(true);
 
@@ -314,6 +379,28 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
         data.setValueTextSize(12f);
         chart.setData(data);
         chart.invalidate();
+    }
+
+    private boolean hasChartData(ArrayList<Integer> subpops) {
+        if (subpops == null || subpops.isEmpty()) {
+            return false;
+        }
+        int[] include = new int[]{0, 1, 2, 4};
+        for (int idx : include) {
+            if (idx >= 0 && idx < subpops.size()) {
+                Integer value = subpops.get(idx);
+                if (value != null && value > 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private void setChartLoading(boolean isLoading) {
+        if (loadingDataProgressBar != null) {
+            loadingDataProgressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+        }
     }
 
     private int getDueVisits(List<CaregiverVisitationModel> visitDates) {
@@ -429,7 +516,9 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
 
 
     public void loadData() {
-        loadingDataProgressBar.setVisibility(View.VISIBLE);
+        setChartLoading(true);
+        binding.chartEmptyState.setVisibility(View.GONE);
+        binding.fragmentVerticalbarchartChart.setVisibility(View.VISIBLE);
         // Delegate to ViewModel (all-CHW view)
         dashboardViewModel.refresh(null);
         // AppUpdater is started in onCreate
@@ -461,6 +550,7 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
                         String partner = jObj.getString("partner");
                         String phone = jObj.getString("phone");
                         String district = jObj.getString("district");
+                        String ward = jObj.optString("ward", "");
                         String facility = jObj.getString("facility");
                         String email = jObj.getString("email");
                         String nrc = jObj.getString("nrc");
@@ -479,13 +569,13 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
                         edit.putString("partner", partner);
                         edit.putString("phone", phone);
                         edit.putString("district", district);
+                        edit.putString("ward", ward);
                         edit.putString("facility", facility);
                         edit.putString("email", email);
                         edit.putString("nrc", nrc);
 
                         edit.commit();
-                        finish();
-                        startActivity(getIntent());
+                        recreate();
 
                     } catch (JSONException e){
                         e.printStackTrace();
@@ -509,16 +599,17 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
     @Override
     protected void onResume() {
         super.onResume();
-        refreshData();
     }
 
     public void refreshData() {
-        handler.postDelayed(runnable = new Runnable() {
+        handler.removeCallbacks(runnable);
+        runnable = new Runnable() {
             public void run() {
-                handler.postDelayed(runnable, FORTY_FIVE_MINUTES);
                 loadData();
+                handler.postDelayed(runnable, FORTY_FIVE_MINUTES);
             }
-        }, FORTY_FIVE_MINUTES);
+        };
+        handler.postDelayed(runnable, FORTY_FIVE_MINUTES);
     }
     @Override
     protected void onPause() {
@@ -577,7 +668,9 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
     }
 
     public void loadCaseworkerData(){
-        loadingDataProgressBar.setVisibility(View.VISIBLE);
+        setChartLoading(true);
+        binding.chartEmptyState.setVisibility(View.GONE);
+        binding.fragmentVerticalbarchartChart.setVisibility(View.VISIBLE);
         // Delegate to ViewModel (filtered by caseworker phone)
         dashboardViewModel.refresh(phone);
     }
@@ -602,8 +695,74 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
                         showCustomDialog(DashboardActivity.this,
                                 getString(R.string.csv_generated_location, getString(R.string.app_name))));
                 break;
+            case R.id.import_csv:
+                openCsvPicker();
+                break;
+            case R.id.download_ecap_sops:
+                downloadEcapSops();
+                break;
+            case R.id.view_ecap_sops:
+                openEcapSops();
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void downloadEcapSops() {
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Downloading SOPs");
+        progressDialog.setMessage("PreparingÃ¢â‚¬Â¦");
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        try {
+            progressDialog.show();
+        } catch (Exception ignored) {
+        }
+
+        // Android 14: use MediaStore Downloads + RELATIVE_PATH to automatically create Downloads/ECAP II SOPs.
+        PublicGoogleDriveFolderDownloader.downloadPublicFolderToPublicDownloads(
+                this,
+                ECAP_SOPS_FOLDER_ID,
+                ECAP_SOPS_TARGET_DIR,
+                new PublicGoogleDriveFolderDownloader.Callback() {
+                    @Override
+                    public void onProgress(int downloaded, int total) {
+                        try {
+                            progressDialog.setIndeterminate(false);
+                            progressDialog.setMax(Math.max(total, 1));
+                            progressDialog.setProgress(downloaded);
+                            progressDialog.setMessage("Downloading " + downloaded + " / " + total);
+                        } catch (Exception ignored) {
+                        }
+                    }
+
+                    @Override
+                    public void onSuccess(java.io.File targetDir, int downloaded) {
+                        try { progressDialog.dismiss(); } catch (Exception ignored) {}
+                        showCustomDialog(DashboardActivity.this,
+                                "Downloaded " + downloaded + " file(s) to:\nDownloads/" + ECAP_SOPS_TARGET_DIR);
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        try { progressDialog.dismiss(); } catch (Exception ignored) {}
+                        String msg = "Download failed: " + (t != null ? String.valueOf(t.getMessage()) : "Unknown error") +
+                                "\n\nIf Drive asks for permission, request access in your browser and try again.";
+                        showCustomDialog(DashboardActivity.this, msg, () -> {
+                            try {
+                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(ECAP_SOPS_FOLDER_URL)));
+                            } catch (Exception ignored) { }
+                        });
+                    }
+                }
+        );
+    }
+
+    private void openEcapSops() {
+        Intent i = new Intent(this, SopDocumentsActivity.class);
+        i.putExtra(SopDocumentsActivity.EXTRA_TITLE, "ECAP II SOPs");
+        // Default relative path in activity is Downloads/ECAP II SOPs/
+        startActivity(i);
     }
 
     @Override
@@ -629,6 +788,10 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
 
 
     public void showCustomDialog(Context context, String message) {
+        showCustomDialog(context, message, null);
+    }
+
+    public void showCustomDialog(Context context, String message, Runnable onDismiss) {
 
         Dialog dialog = new Dialog(context);
 
@@ -639,11 +802,168 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
         messageTextView.setText(message);
 
         Button okButton = dialog.findViewById(R.id.dialog_ok_button);
-        okButton.setOnClickListener(v -> dialog.dismiss());
+        okButton.setOnClickListener(v -> {
+            dialog.dismiss();
+            if (onDismiss != null) {
+                onDismiss.run();
+            }
+        });
 
         dialog.show();
+        if (dialog.getWindow() != null) {
+            int width = (int) (context.getResources().getDisplayMetrics().widthPixels * 0.95f);
+            int height = (int) (context.getResources().getDisplayMetrics().heightPixels * 0.8f);
+            dialog.getWindow().setLayout(width, height);
+        }
     }
 
+    private void openCsvPicker() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"text/csv", "text/comma-separated-values", "application/vnd.ms-excel"});
+        startActivityForResult(intent, REQUEST_CODE_IMPORT_CSV);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK || data == null) return;
+
+        if (requestCode != REQUEST_CODE_IMPORT_CSV) {
+            return;
+        }
+
+        List<Uri> csvUris = extractCsvUris(data);
+        if (csvUris.isEmpty()) {
+            showCustomDialog(this, "No CSV file selected.");
+            return;
+        }
+
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setIndeterminate(false);
+        progressDialog.setMax(100);
+        progressDialog.setProgress(0);
+        progressDialog.setMessage("Preparing import...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        Threading.io(() -> {
+            final int[] lastPercent = {-1};
+            Map<Uri, Integer> perFileRows = new LinkedHashMap<>();
+            int totalRowsAllFiles = 0;
+            for (Uri uri : csvUris) {
+                int rows = CsvFormImportService.getDataRowCount(DashboardActivity.this, uri);
+                int normalizedRows = Math.max(1, rows);
+                perFileRows.put(uri, normalizedRows);
+                totalRowsAllFiles += normalizedRows;
+            }
+            final int overallTotalRows = totalRowsAllFiles;
+
+            int importedAll = 0;
+            int skippedAll = 0;
+            int failedAll = 0;
+            int processedRowsAll = 0;
+            List<String> perFileSummary = new ArrayList<>();
+
+            for (int fileIndex = 0; fileIndex < csvUris.size(); fileIndex++) {
+                Uri csvUri = csvUris.get(fileIndex);
+                int currentFileIndex = fileIndex + 1;
+                int totalFiles = csvUris.size();
+                int rowsForCurrentFile = perFileRows.get(csvUri);
+                int processedBeforeFile = processedRowsAll;
+
+                CsvFormImportService.ImportSummary summary = CsvFormImportService.importFromCsvUri(
+                        DashboardActivity.this,
+                        csvUri,
+                        (processedRows, totalRows, importedRows, skippedRows, failedRows) -> {
+                            int currentFileTotal = totalRows > 0 ? totalRows : rowsForCurrentFile;
+                            int globalProcessedRows = Math.min(overallTotalRows, processedBeforeFile + Math.min(processedRows, currentFileTotal));
+
+                            // Keep row-processing phase below 100%; finalization jumps to 100 when all files complete.
+                            int percent = overallTotalRows > 0
+                                    ? Math.min(95, (globalProcessedRows * 95) / overallTotalRows)
+                                    : 95;
+                            if (percent == lastPercent[0]) {
+                                return;
+                            }
+                            lastPercent[0] = percent;
+                            Threading.main(() -> {
+                                progressDialog.setProgress(percent);
+                                String status = "Importing file " + currentFileIndex + "/" + totalFiles + ": " + percent + "%"
+                                        + "\nRows " + globalProcessedRows + "/" + overallTotalRows
+                                        + "\nImported " + importedRows + ", Skipped " + skippedRows + ", Failed " + failedRows;
+                                progressDialog.setMessage(status);
+                            });
+                        }
+                );
+
+                importedAll += summary.importedRows;
+                skippedAll += summary.skippedRows;
+                failedAll += summary.failedRows;
+                processedRowsAll += rowsForCurrentFile;
+
+                String fileLabel = summary.fileName != null ? summary.fileName : ("File " + currentFileIndex);
+                String status;
+                if (summary.timedOutDuringProcessing) {
+                    status = "TIMEOUT";
+                } else if (summary.hasFileFailure()) {
+                    status = "FAILED";
+                } else {
+                    status = "OK";
+                }
+                perFileSummary.add(fileLabel + " [" + status + "]: Imported " + summary.importedRows
+                        + ", Skipped " + summary.skippedRows
+                        + ", Failed " + summary.failedRows);
+            }
+
+            StringBuilder finalMessage = new StringBuilder();
+            finalMessage.append("CSV import finished for ").append(csvUris.size()).append(" file(s).")
+                    .append("\nImported: ").append(importedAll)
+                    .append(", Skipped: ").append(skippedAll)
+                    .append(", Failed: ").append(failedAll);
+
+            if (!perFileSummary.isEmpty()) {
+                finalMessage.append("\n\nPer-file summary:");
+                for (String line : perFileSummary) {
+                    finalMessage.append("\n- ").append(line);
+                }
+            }
+
+            String finalSummaryText = finalMessage.toString();
+            Threading.main(() -> {
+                progressDialog.setProgress(100);
+                progressDialog.setMessage("Finalizing: 100%");
+                progressDialog.dismiss();
+                showCustomDialog(DashboardActivity.this, finalSummaryText, this::loadData);
+            });
+        });
+    }
+
+    private List<Uri> extractCsvUris(Intent data) {
+        List<Uri> uris = new ArrayList<>();
+        Uri singleUri = data.getData();
+        if (singleUri != null) {
+            uris.add(singleUri);
+        }
+
+        ClipData clipData = data.getClipData();
+        if (clipData != null) {
+            for (int i = 0; i < clipData.getItemCount(); i++) {
+                ClipData.Item item = clipData.getItemAt(i);
+                if (item == null) {
+                    continue;
+                }
+                Uri uri = item.getUri();
+                if (uri != null && !uris.contains(uri)) {
+                    uris.add(uri);
+                }
+            }
+        }
+        return uris;
+    }
 
 
 

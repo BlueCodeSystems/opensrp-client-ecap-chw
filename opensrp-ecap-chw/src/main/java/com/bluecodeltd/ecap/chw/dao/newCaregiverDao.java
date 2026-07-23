@@ -41,7 +41,10 @@ public class newCaregiverDao extends AbstractDao {
             record.setReason_for_updating_caregiver(getCursorValue(c,"reason_for_updating_caregiver"));
 
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 }
+
+

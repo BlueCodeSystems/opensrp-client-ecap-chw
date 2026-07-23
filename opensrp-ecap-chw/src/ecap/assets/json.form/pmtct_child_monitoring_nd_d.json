@@ -71,7 +71,7 @@
         "openmrs_entity_id": "pmtct_id",
         "type": "hidden",
         "read_only": "true",
-        "hint": "ECAPII Comprehensive Program ID",
+        "hint": "ECAP PLUS Comprehensive Program ID",
         "edit_type": "name"
       },
       {

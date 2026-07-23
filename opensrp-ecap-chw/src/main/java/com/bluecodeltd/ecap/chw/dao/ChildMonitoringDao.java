@@ -19,6 +19,18 @@ public class ChildMonitoringDao  extends AbstractDao {
         return values;
 
     }
+
+    public static List<ChildMonitoringModel> getPmctChildMonitoringListDBS(String uniqueID) {
+
+        String sql = "SELECT * FROM ec_pmtct_child_monitoring WHERE pediatic_care_follow_up IN ('6 weeks','6 months','9 months','12 months','18 months','24 months') AND  unique_id = '" + uniqueID + "' ";
+
+        List<ChildMonitoringModel> values = AbstractDao.readData(sql, getChildMonitoringModelMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
+    }
     public static ChildMonitoringModel getPMCTChildMonitoring(String uniqueID) {
 
         String sql = "SELECT * FROM ec_pmtct_child_monitoring WHERE unique_id = '" + uniqueID + "' ";
@@ -35,6 +47,20 @@ public class ChildMonitoringDao  extends AbstractDao {
     public static String countChildMonitoring (String uniqueId){
 
         String sql = "SELECT COUNT(*) v FROM ec_pmtct_child_monitoring WHERE unique_id = '" + uniqueId + "' ";
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values == null || values.size() == 0)
+            return "0";
+
+        return values.get(0);
+
+    }
+
+    public static String countDBSChildMonitoring (String uniqueId){
+
+        String sql = "SELECT COUNT(*) v FROM ec_pmtct_child_monitoring WHERE pediatic_care_follow_up IN ('6 weeks','6 months','9 months','12 months','18 months','24 months') AND  unique_id = '" + uniqueId + "' ";
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
 
         List<String> values = AbstractDao.readData(sql, dataMap);
@@ -69,6 +95,9 @@ public class ChildMonitoringDao  extends AbstractDao {
             record.setUnique_id(getCursorValue(c, "unique_id"));
             record.setPediatic_care_follow_up(getCursorValue(c, "pediatic_care_follow_up"));
             record.setDate(getCursorValue(c, "date"));
+            record.setDbs_at_birth_due_date(getCursorValue(c, "dbs_at_birth_due_date"));
+            record.setDbs_at_birth_actual_date(getCursorValue(c, "dbs_at_birth_actual_date"));
+            record.setTest_result_at_birth(getCursorValue(c, "test_result_at_birth"));
             record.setHiv_test(getCursorValue(c, "hiv_test"));
             record.setAzt_3tc_npv(getCursorValue(c, "azt_3tc_npv"));
             record.setCtx(getCursorValue(c, "ctx"));
@@ -76,6 +105,7 @@ public class ChildMonitoringDao  extends AbstractDao {
             record.setIycf_counselling(getCursorValue(c, "iycf_counselling"));
             record.setInfant_feeding_options(getCursorValue(c, "infant_feeding_options"));
             record.setHigh_risk_hei(getCursorValue(c, "high_risk_hei"));
+
             record.setHiv_test_outcome(getCursorValue(c, "hiv_test_outcome"));
             record.setAzt_3tc_npv_outcome(getCursorValue(c, "azt_3tc_npv_outcome"));
             record.setCtx_outcome(getCursorValue(c, "ctx_outcome"));
@@ -83,8 +113,20 @@ public class ChildMonitoringDao  extends AbstractDao {
             record.setIycf_counselling_outcome(getCursorValue(c, "iycf_counselling_outcome"));
             record.setInfant_feeding_options_outcome(getCursorValue(c, "infant_feeding_options_outcome"));
             record.setHigh_risk_hei_outcome(getCursorValue(c, "high_risk_hei_outcome"));
-            record.setDeleted_status(getCursorValue(c,"delete_status"));
 
+
+            record.setNutrition_status(getCursorValue(c, "nutrition_status"));
+            record.setMedical_complications(getCursorValue(c, "medical_complications"));
+            record.setChild_oedema(getCursorValue(c, "child_oedema"));
+            record.setOedema_stage(getCursorValue(c, "oedema_stage"));
+            record.setTb_screening_symptoms(getCursorValue(c, "tb_screening_symptoms"));
+            record.setOther_tb_symptom(getCursorValue(c, "other_tb_symptom"));
+            record.setTb_referral(getCursorValue(c, "tb_referral"));
+            record.setComments_tb(getCursorValue(c, "comments_tb"));
+
+            record.setDeleted_status(getCursorValue(c, "deleted_status"));
+
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }

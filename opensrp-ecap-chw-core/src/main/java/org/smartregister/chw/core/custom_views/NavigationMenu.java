@@ -156,7 +156,10 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
                     rl.addView(current);
                 }
             } else {
-                rootView = current;
+                // The current content view is already a DrawerLayout (e.g., activity_base).
+                // Ensure rootView points to the NavigationView inside the DrawerLayout so that
+                // its LayoutParams are DrawerLayout.LayoutParams and not FrameLayout.LayoutParams.
+                rootView = activity.findViewById(R.id.nav_view);
             }
         }
     }

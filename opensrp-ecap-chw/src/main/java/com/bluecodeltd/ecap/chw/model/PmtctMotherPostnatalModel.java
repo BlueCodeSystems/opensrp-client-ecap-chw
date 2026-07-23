@@ -4,6 +4,9 @@ public class PmtctMotherPostnatalModel {
     private String base_entity_id;
     private String relational_id;
     private String pmtct_id;
+    private String caregiver_name;
+    private String male_result_of_hiv_test;
+    private String household_id;
     private String date_of_st_post_natal_care;
     private String mother_tested_for_hiv;
     private String postnatal_care_visit;
@@ -13,6 +16,9 @@ public class PmtctMotherPostnatalModel {
     private String family_planning_counselling;
     private String number_of_condoms_distributed;
     private String comments_at_postnatal_care_visit;
+    private String tb_screening_symptoms_10plus;
+    private String other_tb_symptom_10plus;
+    private String comments_tb_10plus;
     private String delete_status;
 
     // Getters and Setters
@@ -38,6 +44,22 @@ public class PmtctMotherPostnatalModel {
 
     public void setPmtct_id(String pmtct_id) {
         this.pmtct_id = pmtct_id;
+    }
+
+    public String getCaregiver_name() {
+        return caregiver_name;
+    }
+
+    public void setCaregiver_name(String caregiver_name) {
+        this.caregiver_name = caregiver_name;
+    }
+
+    public String getHousehold_id() {
+        return household_id;
+    }
+
+    public void setHousehold_id(String household_id) {
+        this.household_id = household_id;
     }
 
     public String getDate_of_st_post_natal_care() {
@@ -112,6 +134,30 @@ public class PmtctMotherPostnatalModel {
         this.comments_at_postnatal_care_visit = comments_at_postnatal_care_visit;
     }
 
+    public String getTb_screening_symptoms_10plus() {
+        return tb_screening_symptoms_10plus;
+    }
+
+    public void setTb_screening_symptoms_10plus(String tb_screening_symptoms_10plus) {
+        this.tb_screening_symptoms_10plus = tb_screening_symptoms_10plus;
+    }
+
+    public String getOther_tb_symptom_10plus() {
+        return other_tb_symptom_10plus;
+    }
+
+    public void setOther_tb_symptom_10plus(String other_tb_symptom_10plus) {
+        this.other_tb_symptom_10plus = other_tb_symptom_10plus;
+    }
+
+    public String getComments_tb_10plus() {
+        return comments_tb_10plus;
+    }
+
+    public void setComments_tb_10plus(String comments_tb_10plus) {
+        this.comments_tb_10plus = comments_tb_10plus;
+    }
+
     public String getDelete_status() {
         return delete_status;
     }
@@ -119,4 +165,29 @@ public class PmtctMotherPostnatalModel {
     public void setDelete_status(String delete_status) {
         this.delete_status = delete_status;
     }
+
+    private final java.util.Map<String, String> additionalFields = new java.util.HashMap<>();
+
+    public java.util.Map<String, String> getAdditionalFields() {
+        return additionalFields;
+    }
+
+    public String getAdditionalField(String key) {
+        if (key == null) return null;
+        return additionalFields.get(key);
+    }
+
+    public void setAdditionalField(String key, String value) {
+        if (key == null) return;
+        additionalFields.put(key, value);
+    }
+
+    public String getMale_result_of_hiv_test() {
+        return male_result_of_hiv_test;
+    }
+
+    public void setMale_result_of_hiv_test(String male_result_of_hiv_test) {
+        this.male_result_of_hiv_test = male_result_of_hiv_test;
+    }
 }
+

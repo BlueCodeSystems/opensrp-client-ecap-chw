@@ -241,6 +241,14 @@ public class Child implements Serializable {
     @Expose
     private String other_reason;
 
+    @SerializedName("graduation_benchmark")
+    @Expose
+    private String graduation_benchmark;
+
+    @SerializedName("ovc_name")
+    @Expose
+    private String ovc_name;
+
     @SerializedName("base_entity_id")
     @Expose
     private String base_entity_id;
@@ -1166,6 +1174,22 @@ public class Child implements Serializable {
         return other_reason;
     }
 
+    public String getGraduation_benchmark() {
+        return graduation_benchmark;
+    }
+
+    public void setGraduation_benchmark(String graduation_benchmark) {
+        this.graduation_benchmark = graduation_benchmark;
+    }
+
+    public String getOvc_name() {
+        return ovc_name;
+    }
+
+    public void setOvc_name(String ovc_name) {
+        this.ovc_name = ovc_name;
+    }
+
     public String getCaseworker_name() {
         return caseworker_name;
     }
@@ -1189,4 +1213,21 @@ public class Child implements Serializable {
     public void setCase_plan_id(String case_plan_id) {
         this.case_plan_id = case_plan_id;
     }
+
+    private final java.util.Map<String, String> additionalFields = new java.util.HashMap<>();
+
+    public java.util.Map<String, String> getAdditionalFields() {
+        return additionalFields;
+    }
+
+    public String getAdditionalField(String key) {
+        if (key == null) return null;
+        return additionalFields.get(key);
+    }
+
+    public void setAdditionalField(String key, String value) {
+        if (key == null) return;
+        additionalFields.put(key, value);
+    }
 }
+
