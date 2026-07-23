@@ -29,15 +29,13 @@ public class IndexRegisterFragmentPresenter implements IndexRegisterFragmentCont
 
     @Override
     public void initializeQueries(String s) {
-        android.util.Log.d("IndexRegisterPresenter","initializeQueries invoked");
         String children = Constants.EcapClientTable.EC_CLIENT_INDEX;
 
-        // Provide base queries only; the fragment's mainCondition and sort will be applied by BaseRegisterFragment
-        String countSelect = "SELECT COUNT(*) FROM " + children + " ";
-        String mainSelect = "SELECT *, COALESCE(ec_client_index.id,ec_client_index.unique_id,'') AS _id, ec_client_index.relationalid AS relational_id, ec_client_index.facility AS residence, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index ";
+        String notDeleted = "(deleted IS NULL OR TRIM(CAST(deleted AS TEXT)) = '' OR TRIM(CAST(deleted AS TEXT)) = '0')";
+        String countSelect = "SELECT COUNT(*) FROM " + children + " WHERE " + notDeleted;
+        String mainSelect = "SELECT *, ec_client_index.id as _id, ec_client_index.relationalid AS relational_id, ec_client_index.facility AS residence, first_name AS adolescent_first_name,last_name As adolescent_last_name, gender as adolescent_gender FROM ec_client_index WHERE " + notDeleted;
 
         getView().initializeQueryParams(Constants.EcapClientTable.EC_CLIENT_INDEX, countSelect, mainSelect);
-        android.util.Log.d("IndexRegisterPresenter","initializeQueryParams set for table: "+children);
         getView().initializeAdapter();
         getView().countExecute();
         getView().filterandSortInInitializeQueries();

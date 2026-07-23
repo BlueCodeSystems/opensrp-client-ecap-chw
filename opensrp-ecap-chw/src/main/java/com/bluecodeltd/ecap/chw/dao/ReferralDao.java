@@ -161,9 +161,11 @@ public class ReferralDao extends AbstractDao {
 
 
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 
 
 }
+

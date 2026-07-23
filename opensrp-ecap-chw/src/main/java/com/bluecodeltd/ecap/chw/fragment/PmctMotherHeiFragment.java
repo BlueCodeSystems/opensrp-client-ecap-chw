@@ -18,6 +18,7 @@ import com.bluecodeltd.ecap.chw.adapter.PmctMotherHeiAdapter;
 import com.bluecodeltd.ecap.chw.dao.PmtctChildDao;
 import com.bluecodeltd.ecap.chw.model.PmtctChildModel;
 import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,53 +81,58 @@ public class PmctMotherHeiFragment extends Fragment {
 
         vieww = inflater.inflate(R.layout.fragment_pmct_mother_hei, container, false);
 
-        HashMap<String, PtctMotherModel> mymap = ((MotherPmtctProfileActivity) requireActivity()).getClientDetails();
-
-// Initialize motherDetails as null.
-        PtctMotherModel motherDetails = null;
-
-        String pmtctId = null;
-
-
-        if (mymap != null) {
-            motherDetails = mymap.get("client");
-
-            if (motherDetails != null) {
-                pmtctId = motherDetails.getPmtct_id();
-
-                if (pmtctId == null || pmtctId.isEmpty()) {
-                }
-            } else {
-
-            }
-        } else {
-
-        }
-
-
         recyclerView = vieww.findViewById(R.id.visitrecyclerView);
         linearLayout = vieww.findViewById(R.id.visit_container);
-
-        pmtctChild.clear();
-
-        pmtctChild.addAll(PmtctChildDao.getPmctChildHei(pmtctId));
 
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        childAdapter = new PmctMotherHeiAdapter(pmtctChild,getContext());
-        recyclerView.setAdapter(childAdapter);
-        childAdapter.notifyDataSetChanged();
-
-        if (childAdapter.getItemCount() > 0){
-
-            linearLayout.setVisibility(View.GONE);
-        }
+        refreshViews();
 
 
         return vieww;
 
+    }
+
+    public void refreshViews() {
+        if (!isAdded() || getActivity() == null || recyclerView == null || linearLayout == null) return;
+
+        HashMap<String, PtctMotherModel> mymap = ((MotherPmtctProfileActivity) requireActivity()).getClientDetails();
+
+        PtctMotherModel motherDetails = null;
+        String householdId = null;
+
+        if (mymap != null) {
+            motherDetails = mymap.get("client");
+            if (motherDetails != null) {
+                householdId = motherDetails.getHousehold_id();
+            }
+        }
+
+        final String finalHouseholdId = householdId;
+        Threading.ioBestEffort(() -> {
+            final ArrayList<PmtctChildModel> items = new ArrayList<>();
+            try {
+                items.addAll(PmtctChildDao.getPmctChildHeiByHouseholdId(finalHouseholdId));
+            } catch (Exception ignored) {}
+
+            Threading.main(() -> {
+                if (!isAdded() || getActivity() == null || recyclerView == null || linearLayout == null) return;
+
+                pmtctChild.clear();
+                pmtctChild.addAll(items);
+
+                if (childAdapter == null) {
+                    childAdapter = new PmctMotherHeiAdapter(pmtctChild, getContext());
+                    recyclerView.setAdapter(childAdapter);
+                } else {
+                    childAdapter.notifyDataSetChanged();
+                }
+
+                linearLayout.setVisibility(childAdapter.getItemCount() > 0 ? View.GONE : View.VISIBLE);
+            });
+        });
     }
 
 }

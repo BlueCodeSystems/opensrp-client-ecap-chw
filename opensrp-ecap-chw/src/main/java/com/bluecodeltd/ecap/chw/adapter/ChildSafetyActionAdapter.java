@@ -27,6 +27,7 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildSafetyActionModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -91,13 +92,63 @@ public class ChildSafetyActionAdapter extends RecyclerView.Adapter<ChildSafetyAc
         holder.txtWho.setText(plan.getWho());
         holder.txtActionDate.setText("Date Created : " + plan.getInitial_date());
 
-        Child child = null;
-        try {
-            child = IndexPersonDao.getChildByBaseId(plan.getUnique_id());
-        } catch (Exception e) {
-            Timber.e(e);
-        }
-        final Child safeChild = child;
+        final String rowTag = plan.getBase_entity_id() != null ? plan.getBase_entity_id()
+                : (plan.getUnique_id() != null ? plan.getUnique_id() : String.valueOf(position));
+        holder.itemView.setTag(R.id.tag_row_id, rowTag);
+
+        holder.delete.setOnClickListener(v ->
+                Toast.makeText(context, "Loading member details…", Toast.LENGTH_SHORT).show());
+
+        final String uniqueId = plan.getUnique_id();
+        Threading.ioBestEffort(() -> {
+            Child child = null;
+            try { child = IndexPersonDao.getChildByBaseId(uniqueId); } catch (Exception ignored) {}
+            final Child safeChild = child;
+            Threading.main(() -> {
+                Object tag = holder.itemView.getTag(R.id.tag_row_id);
+                if (!(tag instanceof String) || !rowTag.equals(tag)) return;
+                holder.delete.setOnClickListener(v -> {
+                    if (safeChild == null) {
+                        Toast.makeText(context, "Member data incomplete", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setMessage("You are about to delete " + safeChild.getFirst_name() + " " + safeChild.getLast_name() + " child safety plan");
+                    builder.setNegativeButton("NO", (dialog, id) -> dialog.cancel())
+                            .setPositiveButton("YES", (dialogInterface, i) -> {
+                                FormUtils formUtils = null;
+                                try {
+                                    formUtils = new FormUtils(context);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                plan.setDelete_status("1");
+                                JSONObject childSafetyPlanForm = formUtils.getFormJson("child_safety_action");
+                                try {
+                                    CoreJsonFormUtils.populateJsonForm(childSafetyPlanForm, new ObjectMapper().convertValue(plan, Map.class));
+                                    childSafetyPlanForm.put("entity_id", plan.getBase_entity_id());
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                try {
+                                    ChildIndexEventClient childIndexEventClient = processRegistration(childSafetyPlanForm.toString());
+                                    if (childIndexEventClient == null) {
+                                        return;
+                                    }
+                                    saveRegistration(childIndexEventClient, true);
+                                } catch (Exception e) {
+                                    Timber.e(e);
+                                }
+                                callChildActionActivity(plan, safeChild);
+                            });
+
+                    AlertDialog alert = builder.create();
+                    alert.setTitle("Alert");
+                    alert.show();
+                });
+            });
+        });
         holder.linearLayout.setOnClickListener(v -> {
 
             if (v.getId() == R.id.itemm) {
@@ -148,56 +199,7 @@ public class ChildSafetyActionAdapter extends RecyclerView.Adapter<ChildSafetyAc
             }
         });
 
-        holder.delete.setOnClickListener(v -> {
-            if (safeChild == null) {
-                Toast.makeText(context, "Member data incomplete", Toast.LENGTH_LONG).show();
-                return;
-            }
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setMessage("You are about to delete "+safeChild.getFirst_name()+" "+safeChild.getLast_name()+" child safety plan");
-            builder.setNegativeButton("NO", (dialog, id) -> {
-                //  Action for 'NO' Button
-                dialog.cancel();
-
-            }).setPositiveButton("YES",((dialogInterface, i) -> {
-                FormUtils formUtils = null;
-                try {
-                    formUtils = new FormUtils(context);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                plan.setDelete_status("1");
-                JSONObject childSafetyPlanForm = formUtils.getFormJson("child_safety_action");
-                try {
-                    CoreJsonFormUtils.populateJsonForm(childSafetyPlanForm, new ObjectMapper().convertValue( plan, Map.class));
-                    childSafetyPlanForm.put("entity_id", plan.getBase_entity_id());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                try {
-
-                    ChildIndexEventClient childIndexEventClient = processRegistration(childSafetyPlanForm.toString());
-                    if (childIndexEventClient == null) {
-                        return;
-                    }
-                    saveRegistration(childIndexEventClient,true);
-
-
-                } catch (Exception e) {
-                    Timber.e(e);
-                }
-                callChildActionActivity(plan,safeChild);
-
-
-            }));
-
-            //Creating dialog box
-            AlertDialog alert = builder.create();
-            //Setting the title manually
-            alert.setTitle("Alert");
-            alert.show();
-        });
+        // delete click set asynchronously above
     }
     public void callChildActionActivity(ChildSafetyActionModel plan, Child child) {
         if (child == null) {

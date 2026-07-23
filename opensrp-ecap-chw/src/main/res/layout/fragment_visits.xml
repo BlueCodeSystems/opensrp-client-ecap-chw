@@ -34,7 +34,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/family_imagex"
                 android:gravity="center_horizontal"
-                android:text="HIV Management of HIV+ VCAs"
+                android:text="HIV Management of HIV+ CAs"
                 android:textColor="@android:color/black" />
 
             <org.smartregister.view.customcontrols.CustomFontTextView

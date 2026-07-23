@@ -150,9 +150,12 @@ public class CaregiverVisitationDao extends AbstractDao {
             record.setSignature(getCursorValue(c, "signature"));
 
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 
 
 }
+
+

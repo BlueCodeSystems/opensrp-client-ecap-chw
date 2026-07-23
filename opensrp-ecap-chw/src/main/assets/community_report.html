@@ -1,0 +1,303 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>CBS Monthly Logsheet</title>
+  <style type="text/css">
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      margin: 10px;
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 2px solid #000;
+    }
+    th, td {
+      border: 1.5px solid #000;
+      padding: 4px 5px;
+      vertical-align: middle;
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      color: #000;
+    }
+    .header-green {
+      background-color: #70AD47;
+      color: #000;
+      font-weight: bold;
+      font-size: 12px;
+      text-align: center;
+      padding: 8px 5px;
+    }
+    .meta-row {
+      font-weight: bold;
+      font-size: 11px;
+      padding: 6px 5px;
+    }
+    .col-header {
+      font-weight: bold;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 10.5px;
+    }
+    .sub-header {
+      text-align: center;
+      font-size: 10px;
+      font-weight: bold;
+    }
+    .age-header {
+      text-align: center;
+      font-size: 9.5px;
+    }
+    .data-cell {
+      height: 22px;
+      min-width: 30px;
+      text-align: center;
+    }
+    .sn-col     { width: 5%; }
+    .type-col   { width: 15%; }
+    .when-col   { width: 12%; }
+    .where-col  { width: 14%; }
+    .age-col    { width: 3.5%; }
+    .action-col { width: 9%; }
+    .mentor-col { width: 10%; }
+    .footer-row td {
+      border: none;
+      font-size: 11px;
+      padding-top: 8px;
+    }
+    .value-field {
+      border-bottom: 1px solid #000;
+      min-width: 50px;
+      display: inline-block;
+      padding: 0 5px;
+      font-weight: normal;
+    }
+  </style>
+</head>
+<body>
+
+<table>
+
+  <!-- ROW 1: Title -->
+  <tr>
+    <td colspan="14" class="header-green">
+      Community-Based Surveillance Suspected Diseases and Public Health Events Monthly Log Sheet
+    </td>
+  </tr>
+
+  <!-- ROW 2: District / Facility -->
+  <tr>
+    <td colspan="14" class="meta-row">
+      District <span class="value-field" id="district"></span>&#160;&#160;Facility <span class="value-field" id="facility"></span>
+    </td>
+  </tr>
+
+  <!-- ROW 3: Community / Month / Year -->
+  <tr>
+    <td colspan="14" class="meta-row">
+      Community: <span class="value-field" id="community"></span>&#160;&#160;Month <span class="value-field" id="month"></span>&#160;&#160;Year <span class="value-field" id="year"></span>
+    </td>
+  </tr>
+
+  <!-- ROW 4: Column Headers -->
+  <tr>
+    <td class="col-header sn-col">S/N</td>
+    <td class="col-header type-col">Type of illness /Condition/ Event/Alert</td>
+    <td class="col-header when-col">When did this happen (DD/MM/YYY)</td>
+    <td class="col-header where-col">Where did this happen (Community, District)</td>
+    <td colspan="4" class="col-header">How many have been affected</td>
+    <td colspan="4" class="col-header">How many died</td>
+    <td class="col-header action-col">What action was taken</td>
+    <td class="col-header mentor-col">Was Super Mentor (Supervisor) involved</td>
+  </tr>
+
+  <!-- ==================== DATA ROW 1 ==================== -->
+
+  <!-- Female header row -->
+  <tr>
+    <td rowspan="6" class="sn-col data-cell">1</td>
+    <td rowspan="6" class="type-col data-cell"><span id="type_1"></span></td>
+    <td rowspan="6" class="when-col data-cell"><span id="when_1"></span></td>
+    <td rowspan="6" class="where-col data-cell"><span id="where_1"></span></td>
+    <td colspan="4" class="sub-header">Female</td>
+    <td colspan="4" class="sub-header">Female</td>
+    <td rowspan="6" class="action-col data-cell"><span id="action_1"></span></td>
+    <td rowspan="6" class="mentor-col data-cell"><span id="mentor_1"></span></td>
+  </tr>
+  <!-- Female age labels -->
+  <tr>
+    <td class="age-header age-col">0-4 y</td>
+    <td class="age-header age-col">5-9y</td>
+    <td class="age-header age-col">10-17y</td>
+    <td class="age-header age-col">18+y</td>
+    <td class="age-header age-col">0-4 y</td>
+    <td class="age-header age-col">5-9y</td>
+    <td class="age-header age-col">10-17y</td>
+    <td class="age-header age-col">18+y</td>
+  </tr>
+  <!-- Female data cells -->
+  <tr>
+    <td class="data-cell age-col"><span id="af04_1"></span></td>
+    <td class="data-cell age-col"><span id="af59_1"></span></td>
+    <td class="data-cell age-col"><span id="af1017_1"></span></td>
+    <td class="data-cell age-col"><span id="af18plus_1"></span></td>
+    <td class="data-cell age-col"><span id="df04_1"></span></td>
+    <td class="data-cell age-col"><span id="df59_1"></span></td>
+    <td class="data-cell age-col"><span id="df1017_1"></span></td>
+    <td class="data-cell age-col"><span id="df18plus_1"></span></td>
+  </tr>
+  <!-- Male header row -->
+  <tr>
+    <td colspan="4" class="sub-header">Male</td>
+    <td colspan="4" class="sub-header">Male</td>
+  </tr>
+  <!-- Male age labels -->
+  <tr>
+    <td class="age-header age-col">0-4 y</td>
+    <td class="age-header age-col">5-9y</td>
+    <td class="age-header age-col">10-17y</td>
+    <td class="age-header age-col">18+y</td>
+    <td class="age-header age-col">0-4 y</td>
+    <td class="age-header age-col">5-9y</td>
+    <td class="age-header age-col">10-17y</td>
+    <td class="age-header age-col">18+y</td>
+  </tr>
+  <!-- Male data cells -->
+  <tr>
+    <td class="data-cell age-col"><span id="am04_1"></span></td>
+    <td class="data-cell age-col"><span id="am59_1"></span></td>
+    <td class="data-cell age-col"><span id="am1017_1"></span></td>
+    <td class="data-cell age-col"><span id="am18plus_1"></span></td>
+    <td class="data-cell age-col"><span id="dm04_1"></span></td>
+    <td class="data-cell age-col"><span id="dm59_1"></span></td>
+    <td class="data-cell age-col"><span id="dm1017_1"></span></td>
+    <td class="data-cell age-col"><span id="dm18plus_1"></span></td>
+  </tr>
+
+  <!-- ==================== DATA ROW 2 ==================== -->
+  <tr>
+    <td rowspan="6" class="sn-col data-cell">2</td>
+    <td rowspan="6" class="type-col data-cell"></td>
+    <td rowspan="6" class="when-col data-cell"></td>
+    <td rowspan="6" class="where-col data-cell"></td>
+    <td colspan="4" class="sub-header">Female</td>
+    <td colspan="4" class="sub-header">Female</td>
+    <td rowspan="6" class="action-col data-cell"></td>
+    <td rowspan="6" class="mentor-col data-cell"></td>
+  </tr>
+  <tr>
+    <td class="age-header age-col">0-4 y</td>
+    <td class="age-header age-col">5-9y</td>
+    <td class="age-header age-col">10-17y</td>
+    <td class="age-header age-col">18+y</td>
+    <td class="age-header age-col">0-4 y</td>
+    <td class="age-header age-col">5-9y</td>
+    <td class="age-header age-col">10-17y</td>
+    <td class="age-header age-col">18+y</td>
+  </tr>
+  <tr>
+    <td class="data-cell age-col"></td>
+    <td class="data-cell age-col"></td>
+    <td class="data-cell age-col"></td>
+    <td class="data-cell age-col"></td>
+    <td class="data-cell age-col"></td>
+    <td class="data-cell age-col"></td>
+    <td class="data-cell age-col"></td>
+    <td class="data-cell age-col"></td>
+  </tr>
+  <tr>
+    <td colspan="4" class="sub-header">Male</td>
+    <td colspan="4" class="sub-header">Male</td>
+  </tr>
+  <tr>
+    <td class="age-header age-col">0-4 y</td>
+    <td class="age-header age-col">5-9y</td>
+    <td class="age-header age-col">10-17y</td>
+    <td class="age-header age-col">18+y</td>
+    <td class="age-header age-col">0-4 y</td>
+    <td class="age-header age-col">5-9y</td>
+    <td class="age-header age-col">10-17y</td>
+    <td class="age-header age-col">18+y</td>
+  </tr>
+  <tr>
+    <td class="data-cell age-col"></td>
+    <td class="data-cell age-col"></td>
+    <td class="data-cell age-col"></td>
+    <td class="data-cell age-col"></td>
+    <td class="data-cell age-col"></td>
+    <td class="data-cell age-col"></td>
+    <td class="data-cell age-col"></td>
+    <td class="data-cell age-col"></td>
+  </tr>
+
+  <!-- ==================== DATA ROW 3 ==================== -->
+  <tr>
+    <td rowspan="6" class="sn-col data-cell">3</td>
+    <td rowspan="6" class="type-col data-cell"></td>
+    <td rowspan="6" class="when-col data-cell"></td>
+    <td rowspan="6" class="where-col data-cell"></td>
+    <td colspan="4" class="sub-header">Female</td>
+    <td colspan="4" class="sub-header">Female</td>
+    <td rowspan="6" class="action-col data-cell"></td>
+    <td rowspan="6" class="mentor-col data-cell"></td>
+  </tr>
+  <tr>
+    <td class="age-header age-col">0-4 y</td>
+    <td class="age-header age-col">5-9y</td>
+    <td class="age-header age-col">10-17y</td>
+    <td class="age-header age-col">18+y</td>
+    <td class="age-header age-col">0-4 y</td>
+    <td class="age-header age-col">5-9y</td>
+    <td class="age-header age-col">10-17y</td>
+    <td class="age-header age-col">18+y</td>
+  </tr>
+  <tr>
+    <td class="data-cell age-col"></td>
+    <td class="data-cell age-col"></td>
+    <td class="data-cell age-col"></td>
+    <td class="data-cell age-col"></td>
+    <td class="data-cell age-col"></td>
+    <td class="data-cell age-col"></td>
+    <td class="data-cell age-col"></td>
+    <td class="data-cell age-col"></td>
+  </tr>
+  <tr>
+    <td colspan="4" class="sub-header">Male</td>
+    <td colspan="4" class="sub-header">Male</td>
+  </tr>
+  <tr>
+    <td class="age-header age-col">0-4 y</td>
+    <td class="age-header age-col">5-9y</td>
+    <td class="age-header age-col">10-17y</td>
+    <td class="age-header age-col">18+y</td>
+    <td class="age-header age-col">0-4 y</td>
+    <td class="age-header age-col">5-9y</td>
+    <td class="age-header age-col">10-17y</td>
+    <td class="age-header age-col">18+y</td>
+  </tr>
+  <tr>
+    <td class="data-cell age-col"></td>
+    <td class="data-cell age-col"></td>
+    <td class="data-cell age-col"></td>
+    <td class="data-cell age-col"></td>
+    <td class="data-cell age-col"></td>
+    <td class="data-cell age-col"></td>
+    <td class="data-cell age-col"></td>
+    <td class="data-cell age-col"></td>
+  </tr>
+
+  <!-- Footer / Signature Row -->
+  <tr class="footer-row">
+    <td colspan="14" style="border: none; padding-top: 10px; font-size: 11px;">
+      Reviewed by: Name of Super Mentor (Supervisor): <span class="value-field" id="supervisor"></span><br />
+      Signature:.................................. Date: <span class="value-field" id="date_reviewed"></span>
+    </td>
+  </tr>
+
+</table>
+
+</body>
+</html>

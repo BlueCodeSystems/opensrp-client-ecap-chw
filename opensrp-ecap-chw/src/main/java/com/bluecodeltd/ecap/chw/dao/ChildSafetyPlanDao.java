@@ -35,8 +35,11 @@ public class ChildSafetyPlanDao extends AbstractDao {
             record.setSafety_plans(getCursorValue(c, "safety_plans"));
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 
 }
+
+

@@ -14,38 +14,58 @@
     <string-array name="form_names_array">
         <item>Select Form</item>
         <item>Consent form</item>
-        <item>VCA index screening form</item>
+        <item>CA index screening form</item>
         <item>Household screening form</item>
-        <item>VCA case plan form</item>
-        <item>VCA assessment form</item>
+        <item>CA case plan form</item>
+        <item>CA assessment form</item>
         <item>Household enrollment form</item>
         <item>Referral form</item>
     </string-array>
     <string-array name="index_register_dialog_options">
-        <item>VCA Sub Population Screening</item>
+        <item>CA Sub Population Screening</item>
         <item>Index Mother Register</item>
         <item>Female Sex Worker Screening</item>
     </string-array>
     <!--Ecap Strings -->
     <string name="all_households"> Household Register</string>
-    <string name="all_Vcas"> VCAs</string>
+    <string name="all_Vcas"> CAs</string>
     <string name="all_benefeciaries"> Case Plans</string>
-    <string name="facility_ovc_register" translatable="false"> VCA Register</string>
+    <string name="facility_ovc_register" translatable="false"> CA Register</string>
+    <string name="menu_child_clients">CA Register</string>
     <string name="mother_index_register">Mother Index Register</string>
     <string name="household_index_register">Household Register</string>
     <string name="all_indexes"> Indexes</string>
     <string name="all_case_plans"> Case plans</string>
     <string name="return_to_household">Return to household</string>
-    <string name="add_index">VCA Screening</string>
+    <string name="add_index">CA Screening</string>
     <string name="add_hts">Add HTS</string>
     <string name="saving_index">Saving Index Person</string>
-    <string name="all_index_title">VCA Register</string>
+    <string name="all_index_title">CA Register</string>
     <string name="hts_services">HTS Services</string>
-    <string name="pmtct_services">PMTCT Services</string>
+    <string name="pmtct_services">PMTCT Profile</string>
     <string name="all_mother_title">Mother Register</string>
     <string name="all_households_title">Household Register</string>
     <string name="referrals">Referrals</string>
     <string name="hts">HTS Register</string>
     <string name="pmtct_register">PMTCT Register</string>
+
+
+
+    <string name="tb_followup_edit_icon_cd">Edit TB follow-up</string>
+    <string name="tb_followup_title">TB follow-up</string>
+    <string name="tb_followup_subtitle">Review and update follow-up details</string>
+    <string name="tb_followup_ca_id_label">CA ID</string>
+    <string name="tb_followup_date_label">Date of follow-up</string>
+    <string name="tb_followup_referral_label">Referral completed</string>
+    <string name="tb_followup_diagnosis_default">Diagnosis: Not recorded</string>
+    <string name="tb_followup_edit_button">Edit follow-up</string>
+    <string name="tb_followup_cancel_button">Cancel</string>
+
+    <string name="create_fresh_monthly_submission">Create fresh monthly submission</string>
+    <string name="most_recent_report">Most recent report</string>
+    <string name="edit_report">Edit report</string>
+    <string name="view_report">View report</string>
+    <string name="report_history">Report history</string>
+    <string name="no_previous_reports_found">No previous reports found</string>
 
 </resources>

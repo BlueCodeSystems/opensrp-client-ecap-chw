@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 
+import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ItemAdapter;
 import com.bluecodeltd.ecap.chw.api.ItemApi;
@@ -91,7 +92,8 @@ public class FlagActivity extends AppCompatActivity {
 
         builder.baseUrl(Config.BASEURL);
         builder.addConverterFactory(GsonConverterFactory.create());
-        builder.client(getUnsafeOkHttpClient());
+        // Never ship "trust-all" TLS in release builds.
+        builder.client(BuildConfig.DEBUG ? getUnsafeOkHttpClient() : new OkHttpClient());
         Retrofit retrofit = builder.build();
 
         ItemApi api = retrofit.create(ItemApi.class);

@@ -92,7 +92,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:singleLine="true"
-                    android:text="VCA Case Plan"
+                    android:text="CA Case Plan"
                     android:textColor="@color/text_black"
                     android:textSize="14sp" />
 

@@ -24,7 +24,10 @@ public class PersonDao extends AbstractDao {
         DataMap<Person> dataMap = c -> {
             Date dob = null;
             try {
-                dob = getDobDateFormat().parse(c.getString(c.getColumnIndex("dob")));
+                String dobString = getCursorValue(c, "dob");
+                if (dobString != null) {
+                    dob = getDobDateFormat().parse(dobString);
+                }
             } catch (ParseException e) {
                 Timber.e(e);
             }
@@ -58,7 +61,10 @@ public class PersonDao extends AbstractDao {
         DataMap<PncBaby> dataMap = c -> {
             Date dob = null;
             try {
-                dob = getDobDateFormat().parse(c.getString(c.getColumnIndex("dob")));
+                String dobString = getCursorValue(c, "dob");
+                if (dobString != null) {
+                    dob = getDobDateFormat().parse(dobString);
+                }
             } catch (ParseException e) {
                 Timber.e(e);
             }

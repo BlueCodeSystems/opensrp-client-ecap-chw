@@ -17,22 +17,17 @@
         android:contentInsetEnd="0dp"
         android:contentInsetRight="0dp"
         android:minHeight="?attr/actionBarSize"
-        android:theme="@style/FamilyTheme.DarkAppBarOverlay"
-        app:contentInsetEnd="0dp"
-        app:contentInsetLeft="0dp"
-        app:contentInsetRight="0dp"
-        app:contentInsetStart="0dp"
-        app:contentInsetStartWithNavigation="0dp"
-        app:theme="@style/AppTheme.DarkToolbar" />
-        app:contentInsetStart="0dp"
-        app:contentInsetEnd="0dp"
-        app:contentInsetLeft="0dp"
-        app:contentInsetRight="0dp"
-        app:contentInsetStartWithNavigation="0dp"
+	        android:theme="@style/FamilyTheme.DarkAppBarOverlay"
+	        app:contentInsetEnd="0dp"
+	        app:contentInsetLeft="0dp"
+	        app:contentInsetRight="0dp"
+	        app:contentInsetStart="0dp"
+	        app:contentInsetStartWithNavigation="0dp"
+	        app:theme="@style/AppTheme.DarkToolbar" />
 
-    <EditText
-        android:id="@+id/default_focus_view"
-        android:layout_width="1dp"
+	    <EditText
+	        android:id="@+id/default_focus_view"
+	        android:layout_width="1dp"
         android:layout_height="1dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true" />
@@ -43,4 +38,3 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/tb_top" />
 </RelativeLayout>
-

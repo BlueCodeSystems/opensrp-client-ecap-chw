@@ -1,0 +1,14 @@
+---
+name: step1_enroll_mother_index_info
+description: enroll mother index toast relevance
+priority: 1
+condition: "step1_is_hiv_positive.contains('negative') && step1_pregnant_breastfeeding.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_enroll_pmtct_info
+description: enroll pmtct toast relevance
+priority: 1
+condition: "step1_is_hiv_positive.contains('positive') && step1_pregnant_breastfeeding.contains('yes')"
+actions:
+  - "isRelevant = true"

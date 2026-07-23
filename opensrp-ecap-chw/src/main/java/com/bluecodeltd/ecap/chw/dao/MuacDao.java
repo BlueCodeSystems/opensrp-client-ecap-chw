@@ -49,7 +49,10 @@ public class MuacDao extends AbstractDao {
             record.setUnique_id(getCursorValue(c, "unique_id"));
             record.setMuac(getCursorValue(c, "muac"));
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 }
+
+

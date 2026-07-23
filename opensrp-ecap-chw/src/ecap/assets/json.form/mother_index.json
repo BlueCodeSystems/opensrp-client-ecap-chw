@@ -1,5 +1,5 @@
-{
-  "count": "2",
+﻿{
+  "count": "1",
   "encounter_type": "Mother Register",
   "entity_id": "",
   "metadata": {
@@ -47,7 +47,7 @@
     "encounter_location": ""
   },
   "step1": {
-    "next": "step2",
+
     "title": "Mothers Details",
     "display_back_button": "true",
     "fields": [
@@ -77,6 +77,13 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_closed",
+        "type": "hidden"
+      },
+      {
+        "key": "source_from",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "source_from",
         "type": "hidden"
       },
       {
@@ -120,8 +127,7 @@
         "type": "edit_text",
         "hint": "Health Facility",
         "read_only": "true",
-        "edit_type": "name",
-        "look_up": "true"
+        "edit_type": "name"
       },
       {
         "key": "partner",
@@ -178,8 +184,8 @@
           "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
         },
         "v_regex": {
-          "value": "((07||09)[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+          "value": "((07||09||05)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,055,056,057,095, 096, or 097 and must be a total of 10 digits in length"
         }
       },
       {
@@ -191,7 +197,7 @@
         "hint": "Date referred to OVC program for tracing",
         "look_up": "true",
         "expanded": false,
-        "min_date": "01-01-1900",
+        "min_date": "01-01-2021",
         "max_date": "today",
         "v_required": {
           "value": true,
@@ -237,7 +243,7 @@
           "label": "Age"
         },
         "min_date": "today-100y",
-        "max_date": "today",
+        "max_date": "today-10y",
         "v_required": {
           "value": true,
           "err": "This field is required"
@@ -249,15 +255,21 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "caregiver_hiv_status",
         "type": "native_radio",
-        "label": "Mothers' HIV Status",
-        "read_only": true,
-        "value": "positive",
+        "label": "Is mother HIV+.",
         "options": [
           {
             "key": "positive",
-            "text": "HIV+"
+            "text": "Yes"
+          },
+          {
+            "key": "negative",
+            "text": "No"
           }
-        ]
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This is a required field"
+        }
       },
       {
         "key": "active_on_treatment",
@@ -265,7 +277,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "active_on_treatment",
         "type": "native_radio",
-        "label": "Is mother active on treatment?",
+        "label": "Is mother active on treatment.",
         "options": [
           {
             "key": "yes",
@@ -275,7 +287,13 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "step1:caregiver_hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"positive\")"
+          }
+        }
       },
       {
         "key": "caregiver_art_number",
@@ -293,19 +311,126 @@
         }
       },
       {
-        "key": "comment",
-        "type": "edit_text",
+        "key": "mother_pregnant",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "comment",
-        "hint": "Add a comment"
-      }
-    ]
-  },
-  "step2": {
-    "title": "Index - Biological Child",
-    "display_back_button": "true",
-    "fields": [
+        "openmrs_entity_id": "mother_pregnant",
+        "type": "native_radio",
+        "label": "Is mother pregnant.",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "mother_breastfeeding",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mother_breastfeeding",
+        "type": "native_radio",
+        "label": "Is mother breastfeeding.",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "mother_age_range",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mother_age_range",
+        "type": "native_radio",
+        "label": "Is mother between 10-25 years of age.",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "mother_index_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "mother_children_age_band",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "mother_children_age_band",
+        "label": "Check if mother has children and their age band",
+        "type": "check_box",
+        "exclusive": [
+          "n_a"
+        ],
+        "options": [
+          {
+            "key": "0_15_months",
+            "text": "0 - 15 Months"
+          },
+          {
+            "key": "16_24_months",
+            "text": "16 - 24 Months"
+          },
+          {
+            "key": "above_24_months",
+            "text": "Above 24 Months"
+          },
+          {
+            "key": "n_a",
+            "text": "N/A"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "You are required to select at least one option. Select 'N/A' if not applicable."
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "mother_index_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "mother_toaster_1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "mother_toaster_1",
+        "type": "toaster_notes",
+        "text_color": "#000000",
+        "text": "Do not enroll this household",
+        "label_text_style": "bold",
+        "toaster_info_text": "Do not enroll this household",
+        "toaster_info_title": "Introduction",
+        "toaster_type": "warning",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "mother_index_toast.yml"
+            }
+          }
+        }
+      },
       {
         "key": "unique_id",
         "openmrs_entity_parent": "",
@@ -313,8 +438,15 @@
         "openmrs_entity_id": "unique_id",
         "type": "edit_text",
         "read_only": "true",
-        "hint": "VCA ID",
-        "edit_type": "name"
+        "hint": "Children/Adolescent (VCA) ID",
+        "edit_type": "name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "test.yml"
+            }
+          }
+        }
       },
       {
         "key": "relation",
@@ -325,7 +457,14 @@
         "hint": "Relationship to Child",
         "edit_type": "name",
         "read_only": "true",
-        "value": "Parent"
+        "value": "Parent",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "test.yml"
+            }
+          }
+        }
       },
       {
         "key": "first_name",
@@ -333,12 +472,19 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "first_name",
         "type": "edit_text",
-        "hint": "Child's first name ",
+        "hint": "Child's first name",
         "edit_type": "name",
         "look_up": "true",
         "v_required": {
           "value": true,
           "err": "Please enter First Name"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "test.yml"
+            }
+          }
         }
       },
       {
@@ -347,12 +493,19 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "last_name",
         "type": "edit_text",
-        "hint": "Child's last name ",
+        "hint": "Child's last name",
         "edit_type": "name",
         "look_up": "true",
         "v_required": {
           "value": true,
           "err": "Please enter last name"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "test.yml"
+            }
+          }
         },
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
@@ -370,6 +523,13 @@
         "max_date": "today",
         "duration": {
           "label": "Age"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "test.yml"
+            }
+          }
         },
         "v_required": {
           "value": true,
@@ -396,6 +556,13 @@
         "v_required": {
           "value": true,
           "err": "Please Select Gender"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "test.yml"
+            }
+          }
         }
       },
       {
@@ -406,7 +573,7 @@
         "type": "native_radio",
         "label_text_style": "bold",
         "text_color": "#000000",
-        "label": "Was the child tested for HIV?",
+        "label": "Was the child tested for HIV.",
         "options": [
           {
             "key": "yes",
@@ -422,7 +589,14 @@
             "openmrs_entity_id": "No",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "test.yml"
+            }
+          }
+        }
       },
       {
         "key": "is_hiv_positive",
@@ -450,9 +624,10 @@
           "err": "This field is required"
         },
         "relevance": {
-          "step2:user_select_hiv": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "test.yml"
+            }
           }
         }
       },
@@ -462,7 +637,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "is_on_hiv_treatment",
         "type": "native_radio",
-        "label": "Is the Child/Adolescent currently on HIV treatment?",
+        "label": "Is the Child/Adolescent currently on HIV treatment.",
         "options": [
           {
             "key": "yes",
@@ -474,9 +649,10 @@
           }
         ],
         "relevance": {
-          "step2:is_hiv_positive": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "test.yml"
+            }
           }
         }
       },
@@ -489,9 +665,10 @@
         "edit_type": "name",
         "hint": "ART Number",
         "relevance": {
-          "step2:is_on_hiv_treatment": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "mother_index_relevance.yml"
+            }
           }
         }
       },
@@ -503,7 +680,7 @@
         "type": "native_radio",
         "value":"yes",
         "read_only": "true",
-        "label": "Is the Child/Adolescent a biological child of a mother living with HIV?",
+        "label": "Is the Child/Adolescent a biological child of a mother living with HIV.",
         "options": [
           {
             "key": "yes",
@@ -513,7 +690,14 @@
             "key": "no",
             "text": "No"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "test.yml"
+            }
+          }
+        }
       },
       {
         "key": "case_status",
@@ -537,7 +721,14 @@
             "key": "0",
             "text": "Closed"
           }
-        ]
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "test.yml"
+            }
+          }
+        }
       },
       {
         "key": "index_check_box",
@@ -545,7 +736,14 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "index_check_box",
         "type": "hidden",
-        "value": "1"
+        "value": "1",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "mother_index_relevance.yml"
+            }
+          }
+        }
       },
       {
         "key": "subpop1",
@@ -560,37 +758,10 @@
             }
           }
         }
-      },
-      {
-        "key": "subpop1_toast",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop1_toast",
-        "value": "true",
-        "type": "toaster_notes",
-        "text": "This VCA has been enrolled into the Sub Population : Children/Adolescents Living with HIV (C/ALHIV)",
-        "toaster_type": "info",
-        "toaster_info_text": "Children/Adolescents Living with HIV (C/ALHIV)",
-        "toaster_info_title": "Sub Population",
-        "relevance": {
-          "step2:is_hiv_positive": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-      {
-        "key": "subpop3_toast",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "subpop3",
-        "value": "true",
-        "type": "toaster_notes",
-        "text": "This VCA will be enrolled into the Sub Population : Children of Women Living with HIV (C/WLHIV)",
-        "toaster_type": "info",
-        "toaster_info_text": "Children of Women Living with HIV (C/WLHIV)",
-        "toaster_info_title": "Sub Population"
       }
+
     ]
   }
 }
+
+

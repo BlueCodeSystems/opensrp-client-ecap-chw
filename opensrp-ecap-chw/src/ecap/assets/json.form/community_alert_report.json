@@ -1,0 +1,625 @@
+{
+  "count": "1",
+  "encounter_type": "Community Alert Report",
+  "entity_id": "",
+  "relational_id": "",
+  "metadata": {
+    "start": "start",
+    "end": "end",
+    "today": "today",
+    "deviceid": "deviceid",
+    "subscriberid": "subscriberid",
+    "simserial": "simserial",
+    "phonenumber": "phonenumber",
+    "encounter_location": "encounter_location"
+  },
+  "step1": {
+    "title": "Community Alert Report - CCW",
+    "fields": [
+      {
+        "key": "instructions_label",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "label",
+        "text": "Send this form immediately to your supervisor or nearby health facility",
+        "text_color": "#FFBF00",
+        "text_size": "16sp",
+        "text_style": "bold"
+      },
+      {
+        "key": "form_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "form_id",
+        "type": "edit_text",
+        "hint": "Form ID",
+        "v_required": {
+          "value": true,
+          "err": "Please enter the Form ID"
+        }
+      },
+      {
+        "key": "province",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "province",
+        "type": "edit_text",
+        "hint": "Province",
+        "v_required": {
+          "value": true,
+          "err": "Please enter the province"
+        }
+      },
+      {
+        "key": "district",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "district",
+        "type": "edit_text",
+        "hint": "District",
+        "v_required": {
+          "value": true,
+          "err": "Please enter the district"
+        }
+      },
+      {
+        "key": "ward",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "ward",
+        "type": "edit_text",
+        "hint": "Ward",
+        "v_required": {
+          "value": true,
+          "err": "Please enter the ward"
+        }
+      },
+
+      {
+        "key": "facility_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "facility_name",
+        "type": "edit_text",
+        "hint": "Facility",
+        "v_required": {
+          "value": true,
+          "err": "Please enter the facility name"
+        }
+      },
+      {
+        "key": "ccw_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "ccw_name",
+        "type": "edit_text",
+        "hint": "Name of CCW reporting",
+        "v_required": {
+          "value": true,
+          "err": "Please enter your name"
+        }
+      },
+      {
+        "key": "caseworker_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_name",
+        "type": "hidden",
+        "value": ""
+      },
+      {
+        "key": "facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "facility",
+        "type": "hidden",
+        "value": ""
+      },
+      {
+        "key": "partner",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "partner",
+        "type": "hidden",
+        "value": ""
+      },
+      {
+        "key": "delete_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "delete_status",
+        "type": "hidden",
+        "value": "0"
+      },
+      {
+        "key": "ccw_phone_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "ccw_phone_number",
+        "type": "edit_text",
+        "hint": "Phone number",
+        "edit_type": "number",
+        "v_required": {
+          "value": true,
+          "err": "Please enter your phone number"
+        },
+        "v_numeric": {
+          "value": true,
+          "err": "Enter a valid phone number"
+        }
+      },
+      {
+        "key": "community_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "community_name",
+        "type": "edit_text",
+        "hint": "Community",
+        "v_required": {
+          "value": true,
+          "err": "Please enter the community name"
+        }
+      },
+
+      {
+        "key": "reporting_month",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "reporting_month",
+        "type": "hidden",
+        "value": ""
+      },
+      {
+        "key": "date_reporting",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_reporting",
+        "type": "date_picker",
+        "hint": "Date reporting (day, month, year)",
+        "date_format": "dd-MM-yyyy",
+        "v_required": {
+          "value": true,
+          "err": "Please select the reporting date"
+        }
+      },
+      {
+        "key": "super_mentor_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "super_mentor_name",
+        "type": "edit_text",
+        "hint": "Name of Super Mentor",
+        "v_required": {
+          "value": true,
+          "err": "Please enter the super mentor name"
+        }
+      },
+      {
+        "key": "super_mentor_contact",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "super_mentor_contact",
+        "type": "edit_text",
+        "hint": "Contact details of Super Mentor",
+        "edit_type": "number",
+        "v_required": {
+          "value": true,
+          "err": "Please enter contact details"
+        }
+      },
+      {
+        "key": "section_a_label",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "label",
+        "text": "Section A: CCW Report",
+        "text_color": "#000000",
+        "text_size": "18sp",
+        "text_style": "bold"
+      },
+      {
+        "key": "illness_type",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "illness_type",
+        "type": "edit_text",
+        "hint": "1. Type of illness/Condition/Event/Signal (please describe)",
+        "edit_type": "text_multi_line",
+        "v_required": {
+          "value": true,
+          "err": "Please describe the event"
+        }
+      },
+      {
+        "key": "date_event_happened",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_event_happened",
+        "type": "date_picker",
+        "hint": "2. When did this happen (Date)",
+        "v_required": {
+          "value": true,
+          "err": "Please select the date the event happened"
+        }
+      },
+      {
+        "key": "time_event_happened",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "time_event_happened",
+        "type": "time_picker",
+        "hint": "Time",
+        "v_required": {
+          "value": true,
+          "err": "Please select the time"
+        }
+      },
+      {
+        "key": "date_event_detected",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_event_detected",
+        "type": "date_picker",
+        "hint": "3. Date this was detected (Date)",
+        "v_required": {
+          "value": true,
+          "err": "Please select the date detected"
+        }
+      },
+      {
+        "key": "time_event_detected",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "time_event_detected",
+        "type": "time_picker",
+        "hint": "Time",
+        "v_required": {
+          "value": true,
+          "err": "Please select the time"
+        }
+      },
+      {
+        "key": "event_location",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "event_location",
+        "type": "edit_text",
+        "hint": "4. Where did this happen (Community, Ward/Zone/District)",
+        "v_required": {
+          "value": true,
+          "err": "Please enter the event location"
+        }
+      },
+      {
+        "key": "affected_status",
+        "type": "native_radio",
+        "label": "5. How many people have been affected?",
+        "options": [
+          { "key": "open", "text": "Open" },
+          { "key": "closed", "text": "Closed" }
+        ],
+        "v_required": { "value": true, "err": "Required" },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "affected_status"
+      },
+      {
+        "key": "affected_female_0_4",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "affected_female_0_4",
+        "type": "edit_text",
+        "hint": "Female 0-4 Yrs",
+        "edit_type": "number",
+        "relevance": { "step1:affected_status": { "type": "string", "ex": "equalTo(., \"open\")" } }
+      },
+      {
+        "key": "affected_female_5_9",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "affected_female_5_9",
+        "type": "edit_text",
+        "hint": "Female 5-9 Yrs",
+        "edit_type": "number",
+        "relevance": { "step1:affected_status": { "type": "string", "ex": "equalTo(., \"open\")" } }
+      },
+      {
+        "key": "affected_female_10_17",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "affected_female_10_17",
+        "type": "edit_text",
+        "hint": "Female 10-17 Yrs",
+        "edit_type": "number",
+        "relevance": { "step1:affected_status": { "type": "string", "ex": "equalTo(., \"open\")" } }
+      },
+      {
+        "key": "affected_female_18_plus",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "affected_female_18_plus",
+        "type": "edit_text",
+        "hint": "Female 18+ Yrs",
+        "edit_type": "number",
+        "relevance": { "step1:affected_status": { "type": "string", "ex": "equalTo(., \"open\")" } }
+      },
+      {
+        "key": "affected_male_0_4",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "affected_male_0_4",
+        "type": "edit_text",
+        "hint": "Male 0-4 Yrs",
+        "edit_type": "number",
+        "relevance": { "step1:affected_status": { "type": "string", "ex": "equalTo(., \"open\")" } }
+      },
+      {
+        "key": "affected_male_5_9",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "affected_male_5_9",
+        "type": "edit_text",
+        "hint": "Male 5-9 Yrs",
+        "edit_type": "number",
+        "relevance": { "step1:affected_status": { "type": "string", "ex": "equalTo(., \"open\")" } }
+      },
+      {
+        "key": "affected_male_10_17",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "affected_male_10_17",
+        "type": "edit_text",
+        "hint": "Male 10-17 Yrs",
+        "edit_type": "number",
+        "relevance": { "step1:affected_status": { "type": "string", "ex": "equalTo(., \"open\")" } }
+      },
+      {
+        "key": "affected_male_18_plus",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "affected_male_18_plus",
+        "type": "edit_text",
+        "hint": "Male 18+ Yrs",
+        "edit_type": "number",
+        "relevance": { "step1:affected_status": { "type": "string", "ex": "equalTo(., \"open\")" } }
+      },
+      {
+        "key": "deaths_status",
+        "type": "native_radio",
+        "label": "6. Has anyone died? If yes, how many",
+        "options": [
+          { "key": "open", "text": "Open" },
+          { "key": "closed", "text": "Closed" }
+        ],
+        "v_required": { "value": true, "err": "Required" },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "deaths_status"
+      },
+      {
+        "key": "died_female_0_4",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "died_female_0_4",
+        "type": "edit_text",
+        "hint": "Female 0-4 Yrs",
+        "edit_type": "number",
+        "relevance": { "step1:deaths_status": { "type": "string", "ex": "equalTo(., \"open\")" } }
+      },
+      {
+        "key": "died_female_5_9",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "died_female_5_9",
+        "type": "edit_text",
+        "hint": "Female 5-9 Yrs",
+        "edit_type": "number",
+        "relevance": { "step1:deaths_status": { "type": "string", "ex": "equalTo(., \"open\")" } }
+      },
+      {
+        "key": "died_female_10_17",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "died_female_10_17",
+        "type": "edit_text",
+        "hint": "Female 10-17 Yrs",
+        "edit_type": "number",
+        "relevance": { "step1:deaths_status": { "type": "string", "ex": "equalTo(., \"open\")" } }
+      },
+      {
+        "key": "died_female_18_plus",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "died_female_18_plus",
+        "type": "edit_text",
+        "hint": "Female 18+ Yrs",
+        "edit_type": "number",
+        "relevance": { "step1:deaths_status": { "type": "string", "ex": "equalTo(., \"open\")" } }
+      },
+      {
+        "key": "died_male_0_4",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "died_male_0_4",
+        "type": "edit_text",
+        "hint": "Male 0-4 Yrs",
+        "edit_type": "number",
+        "relevance": { "step1:deaths_status": { "type": "string", "ex": "equalTo(., \"open\")" } }
+      },
+      {
+        "key": "died_male_5_9",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "died_male_5_9",
+        "type": "edit_text",
+        "hint": "Male 5-9 Yrs",
+        "edit_type": "number",
+        "relevance": { "step1:deaths_status": { "type": "string", "ex": "equalTo(., \"open\")" } }
+      },
+      {
+        "key": "died_male_10_17",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "died_male_10_17",
+        "type": "edit_text",
+        "hint": "Male 10-17 Yrs",
+        "edit_type": "number",
+        "relevance": { "step1:deaths_status": { "type": "string", "ex": "equalTo(., \"open\")" } }
+      },
+      {
+        "key": "died_male_18_plus",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "died_male_18_plus",
+        "type": "edit_text",
+        "hint": "Male 18+ Yrs",
+        "edit_type": "number",
+        "relevance": { "step1:deaths_status": { "type": "string", "ex": "equalTo(., \"open\")" } }
+      },
+      {
+        "key": "animals_involved",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "animals_involved",
+        "type": "native_radio",
+        "label": "7. Are there sick or dead animals involved?",
+        "label_text_style": "bold",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ]
+      },
+      {
+        "key": "event_ongoing",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "event_ongoing",
+        "type": "native_radio",
+        "label": "8. Is the event ongoing as at the time of this report?",
+        "label_text_style": "bold",
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ]
+      },
+      {
+        "key": "action_taken",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "action_taken",
+        "type": "edit_text",
+        "hint": "9. What action has been taken?",
+        "edit_type": "text_multi_line",
+        "v_required": {
+          "value": true,
+          "err": "Please enter the action taken"
+        }
+      },
+      {
+        "key": "section_b_label",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "label",
+        "text": "Section B: Supervisor Review",
+        "text_color": "#000000",
+        "text_size": "18sp",
+        "text_style": "bold"
+      },
+      {
+        "key": "met_case_definition",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "met_case_definition",
+        "type": "native_radio",
+        "label": "1. Did the event meet the case definition?",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        },
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ]
+      },
+      {
+        "key": "response_performed",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "response_performed",
+        "type": "native_radio",
+        "label": "2. Was any response performed?",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        },
+        "options": [
+          { "key": "yes", "text": "Yes" },
+          { "key": "no", "text": "No" }
+        ]
+      },
+      {
+        "key": "response_action_taken",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "response_action_taken",
+        "type": "edit_text",
+        "hint": "If yes, what action was taken?",
+        "edit_type": "text_multi_line",
+        "relevance": {
+          "step1:response_performed": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "supervisor_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "supervisor_name",
+        "type": "edit_text",
+        "hint": "3. Name of Super Mentor (Supervisor)",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
+      },
+      {
+        "key": "date_reviewed",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_reviewed",
+        "type": "date_picker",
+        "hint": "4. Date reviewed",
+        "date_format": "dd-MM-yyyy",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
+      },
+      {
+        "key": "supervisor_signature",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "supervisor_signature",
+        "type": "edit_text",
+        "hint": "5. Signature (type full name)",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        }
+      },
+      {
+        "key": "workflow_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "workflow_status",
+        "type": "hidden",
+        "value": ""
+      }
+    ]
+  }
+}

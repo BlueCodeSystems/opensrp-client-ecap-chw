@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.MotherPmtctProfileActivity;
 import com.bluecodeltd.ecap.chw.adapter.PostnatalMotherAdapter;
-import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
 import com.bluecodeltd.ecap.chw.dao.PmtctMotherPostnatalDao;
 import com.bluecodeltd.ecap.chw.model.PmtctMotherPostnatalModel;
 import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
@@ -83,6 +82,7 @@ public class PostnatalCareFragment extends Fragment {
 // Initialize motherDetails as null.
         PtctMotherModel motherDetails = null;
 
+        String householdId = null;
         String pmtctId = null;
 
 
@@ -90,9 +90,10 @@ public class PostnatalCareFragment extends Fragment {
             motherDetails = mymap.get("client");
 
             if (motherDetails != null) {
+                householdId = motherDetails.getHousehold_id();
                 pmtctId = motherDetails.getPmtct_id();
-
                 if (pmtctId == null || pmtctId.isEmpty()) {
+                    pmtctId = householdId;
                 }
             } else {
 
@@ -107,7 +108,11 @@ public class PostnatalCareFragment extends Fragment {
 
         assessmentList.clear();
 
-        assessmentList.addAll(PmtctMotherPostnatalDao.getPostnatalMother(pmtctId));
+        String idForPostnatal = householdId;
+        if (idForPostnatal == null || idForPostnatal.isEmpty()) {
+            idForPostnatal = pmtctId;
+        }
+        assessmentList.addAll(PmtctMotherPostnatalDao.getPostnatalMother(idForPostnatal));
 
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);

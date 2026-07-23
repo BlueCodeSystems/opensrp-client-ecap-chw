@@ -17,6 +17,7 @@ data class HouseholdDetailsState(
     val caregiverHivAssessmentModel: CaregiverHivAssessmentModel? = null,
     val graduationModel: GraduationModel? = null,
     val updatedCaregiver: newCaregiverModel? = null,
+    val caregiver: Caregiver? = null,
     val house: Household? = null,
     val countFemales: String? = null,
     val countMales: String? = null,
@@ -39,6 +40,7 @@ class HouseholdDetailsViewModel : ViewModel() {
                 val hivAssessment = CaregiverHivAssessmentDao.getCaregiverHivAssessment(householdId)
                 val grad = GraduationDao.getGraduation(householdId)
                 val updated = newCaregiverDao.getNewCaregiverById(householdId)
+                val caregiver = CaregiverDao.getCaregiver(householdId)
                 val house = HouseholdDao.getHousehold(householdId)
                 val females = IndexPersonDao.countFemales(householdId)
                 val males = IndexPersonDao.countMales(householdId)
@@ -55,6 +57,7 @@ class HouseholdDetailsViewModel : ViewModel() {
                         caregiverHivAssessmentModel = hivAssessment,
                         graduationModel = grad,
                         updatedCaregiver = updated,
+                        caregiver = caregiver,
                         house = house,
                         countFemales = females,
                         countMales = males,
@@ -68,4 +71,3 @@ class HouseholdDetailsViewModel : ViewModel() {
         }
     }
 }
-

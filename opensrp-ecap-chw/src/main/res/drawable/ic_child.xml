@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Simple alias wrapper so code/layout can reference ic_child -->
+    <item android:drawable="@drawable/ic_children" />
+</layer-list>
+

@@ -30,6 +30,7 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.PmtctMotherPostnatalModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -67,7 +68,7 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
     @NonNull
     @Override
     public PostnatalMotherAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.mother_postnatal_list, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.pmtct_mother_postnatal, parent, false);
         PostnatalMotherAdapter.ViewHolder viewHolder = new PostnatalMotherAdapter.ViewHolder(v);
         return viewHolder;
     }
@@ -79,96 +80,38 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
 
         holder.setIsRecyclable(false);
 
-        holder.txtDate.setText(visit.getDate_of_st_post_natal_care());
+        setText(holder.tvDate, valueOrNA(visit.getDate_of_st_post_natal_care()));
+        setText(holder.tvVisitType, valueOrNA(visit.getPostnatal_care_visit()));
+        setText(holder.tvVisit, "Postnatal Visit");
+        setText(holder.tvMotherTestedHiv, valueOrNA(visit.getMother_tested_for_hiv()));
+        setText(holder.tvArtInitiated, valueOrNA(visit.getArt_initiated()));
+        setText(holder.tvArtAdherence, valueOrNA(visit.getArt_adherence_counselling_support()));
+        setText(holder.tvVlResult, valueOrNA(visit.getVl_result()));
+        setText(holder.tvFpCounselling, valueOrNA(visit.getFamily_planning_counselling()));
+        setText(holder.tvCondoms, valueOrNA(visit.getNumber_of_condoms_distributed()));
+        setText(holder.tvTbSymptoms, valueOrNA(visit.getTb_screening_symptoms_10plus()));
+        setText(holder.tvTbOther, valueOrNA(visit.getOther_tb_symptom_10plus()));
+        setText(holder.tvTbComments, valueOrNA(visit.getComments_tb_10plus()));
+        setText(holder.tvComments, valueOrNA(visit.getComments_at_postnatal_care_visit()));
 
-        holder.linearLayout.setOnClickListener(v -> {
+        String summaryText = "Visit: " + valueOrNA(visit.getPostnatal_care_visit()) + " | HIV test: " + valueOrNA(visit.getMother_tested_for_hiv());
+        setText(holder.tvSummary, summaryText);
 
-            if (v.getId() == R.id.itemm) {
-
-                holder.exPandableView.setVisibility(View.VISIBLE);
-                holder.expMore.setVisibility(View.GONE);
-                holder.expLess.setVisibility(View.VISIBLE);
+        View.OnClickListener openForm = v -> {
+            try {
+                openFormUsingFormUtils(context, "postnatal_care", visit);
+            } catch (JSONException e) {
+                Timber.e(e);
             }
-        });
+        };
 
-        holder.expMore.setOnClickListener(v -> {
+        holder.headerLayout.setOnClickListener(openForm);
+        holder.editme.setOnClickListener(openForm);
+        if (holder.editButton != null) {
+            holder.editButton.setOnClickListener(openForm);
+        }
 
-            if (v.getId() == R.id.expand_more) {
-
-                holder.exPandableView.setVisibility(View.VISIBLE);
-                holder.expMore.setVisibility(View.GONE);
-                holder.expLess.setVisibility(View.VISIBLE);
-                holder.editme.setVisibility(View.GONE);
-                holder.delete.setVisibility(View.GONE);
-            }
-        });
-
-        holder.expLess.setOnClickListener(v -> {
-
-            if (v.getId() == R.id.expand_less) {
-
-                holder.exPandableView.setVisibility(View.GONE);
-                holder.expMore.setVisibility(View.VISIBLE);
-                holder.expLess.setVisibility(View.GONE);
-                holder.editme.setVisibility(View.VISIBLE);
-                holder.delete.setVisibility(View.VISIBLE);
-            }
-        });
-
-
-//        if(householdModel.getCaregiver_hiv_status() != null && householdModel.getCaregiver_hiv_status().equals("positive")){
-//            holder.intialHivStatus.setText("Positive");
-//        } else if(householdModel.getCaregiver_hiv_status().equals("unknown")) {
-//            holder.intialHivStatus.setText("Unknown");
-//        } else {
-//            holder.intialHivStatus.setText("Negative");
-//        }
-//        holder.initialHivStatusDate.setText(householdModel.getScreening_date());
-
-//        if(visit.getHiv_status() != null && visit.getHiv_status().equals("positive")){
-//            holder.updateHivStatus.setText("Positive");
-//        } else if (visit.getHiv_status().equals("unknown")) {
-//            holder.updateHivStatus.setText("Unknown");
-//
-//        } else {
-//            holder.updateHivStatus.setText("Negative");
-//        }
-//        holder.updatedHivStatusDate.setText(visit.getDate_assessment());
-
-
-        holder.linearLayout.setOnClickListener(v -> {
-
-            if (v.getId() == R.id.itemm) {
-
-                try {
-
-                    openFormUsingFormUtils(context, "postnatal_care", visit);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-
-
-        holder.editme.setOnClickListener(v -> {
-
-                if (v.getId() == R.id.edit_me) {
-
-                    try {
-
-                        openFormUsingFormUtils(context, "postnatal_care", visit);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-
-        });
-        holder.delete.setOnClickListener(v -> {
+        View.OnClickListener deleteListener = v -> {
             try {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage("You are about to delete this household graduation ");
@@ -220,16 +163,17 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
             } catch (Exception e) {
                 Timber.e(e);
             }
-        });
-        String sVisit = visit.getPostnatal_care_visit();
-        if(sVisit != null){
+        };
+        holder.delete.setOnClickListener(deleteListener);
+        if (holder.deleteButton != null) {
+            holder.deleteButton.setOnClickListener(deleteListener);
+        }
 
+        String sVisit = visit.getPostnatal_care_visit();
+        if (sVisit != null && holder.tvVisit != null) {
             SpannableString spannableString = new SpannableString(sVisit);
             spannableString.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, sVisit.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-            holder.txtVisit.setText("Visit at: "+ spannableString);
-        } else{
-            holder.txtVisit.setVisibility(View.GONE);
+            holder.tvVisit.setText(spannableString);
         }
 
 
@@ -240,8 +184,17 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
         dialog.show();
 
         TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-        Household house = HouseholdDao.getHousehold(householdId);
-        dialogMessage.setText(house.getCaregiver_name() + message);
+        dialogMessage.setText("Loading...");
+        final String hid = householdId;
+        Threading.io(() -> {
+            Household house = null;
+            try { house = HouseholdDao.getHousehold(hid); } catch (Exception ignored) {}
+            final Household finalHouse = house;
+            Threading.main(() -> {
+                String name = (finalHouse != null && finalHouse.getCaregiver_name() != null) ? finalHouse.getCaregiver_name() : "Household";
+                dialogMessage.setText(name + message);
+            });
+        });
 
         android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
         dialogButton.setOnClickListener(v -> dialog.dismiss());
@@ -388,28 +341,37 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView txtDate,intialHivStatus,initialHivStatusDate,updateHivStatus,updatedHivStatusDate,txtVisit;
-
-        LinearLayout linearLayout, exPandableView;
-        ImageView expMore, expLess,editme,delete;
+        TextView tvDate, tvVisit, tvVisitType, tvMotherTestedHiv, tvArtInitiated, tvArtAdherence, tvVlResult,
+                tvFpCounselling, tvCondoms, tvTbSymptoms, tvTbOther, tvTbComments, tvComments, tvSummary;
+        LinearLayout headerLayout;
+        ImageView editme, delete;
+        View editButton, deleteButton;
 
         public ViewHolder(View itemView) {
 
             super(itemView);
 
-            linearLayout = itemView.findViewById(R.id.itemm);
-            txtDate  = itemView.findViewById(R.id.date);
-            editme = itemView.findViewById(R.id.edit_me);
-            delete = itemView.findViewById(R.id.delete_record);
-            exPandableView = itemView.findViewById(R.id.expandable);
-            expLess = itemView.findViewById(R.id.expand_less);
-            expMore = itemView.findViewById(R.id.expand_more);
-            intialHivStatus =  itemView.findViewById(R.id.initial_hiv_status);
-            initialHivStatusDate  = itemView.findViewById(R.id.initial_hiv_status_date);
-            updateHivStatus = itemView.findViewById(R.id.updated_hiv_status);
-            updatedHivStatusDate = itemView.findViewById(R.id.updated_hiv_status_date);
-            txtVisit = itemView.findViewById(R.id.visit);
+            headerLayout = itemView.findViewById(R.id.header_layout);
+            tvVisit = itemView.findViewById(R.id.tv_visit);
+            tvDate  = itemView.findViewById(R.id.tv_date);
+            tvSummary = itemView.findViewById(R.id.tv_summary);
+            tvVisitType = itemView.findViewById(R.id.tv_visit_type);
 
+            tvMotherTestedHiv = itemView.findViewById(R.id.tv_mother_tested_hiv);
+            tvArtInitiated = itemView.findViewById(R.id.tv_art_initiated);
+            tvArtAdherence = itemView.findViewById(R.id.tv_art_adherence);
+            tvVlResult = itemView.findViewById(R.id.tv_vl_result);
+            tvFpCounselling = itemView.findViewById(R.id.tv_fp_counselling);
+            tvCondoms = itemView.findViewById(R.id.tv_condoms);
+            tvTbSymptoms = itemView.findViewById(R.id.tv_tb_symptoms);
+            tvTbOther = itemView.findViewById(R.id.tv_tb_other);
+            tvTbComments = itemView.findViewById(R.id.tv_tb_comments);
+            tvComments = itemView.findViewById(R.id.tv_comments);
+
+            editme = itemView.findViewById(R.id.iv_edit);
+            delete = itemView.findViewById(R.id.delete_record);
+            editButton = itemView.findViewById(R.id.edit_button);
+            deleteButton = itemView.findViewById(R.id.delete_button);
 
         }
 
@@ -417,6 +379,16 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
         @Override
         public void onClick(View v) {
 
+        }
+    }
+
+    private String valueOrNA(String value) {
+        return value == null || value.trim().isEmpty() ? "N/A" : value;
+    }
+
+    private void setText(TextView view, String value) {
+        if (view != null) {
+            view.setText(value);
         }
     }
 }

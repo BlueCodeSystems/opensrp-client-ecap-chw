@@ -10,9 +10,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.StyleSpan;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +30,7 @@ import com.bluecodeltd.ecap.chw.model.ChildMonitoringModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.PmtctChildModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -65,6 +64,7 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
     Context context;
     List<ChildMonitoringModel> postnatal;
     ObjectMapper oMapper;
+    private final SparseBooleanArray expandedPositions = new SparseBooleanArray();
 
     public PmctChildMonitoringAdapter(Context context, List<ChildMonitoringModel> postnatal) {
         this.context = context;
@@ -85,94 +85,34 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
 
         holder.setIsRecyclable(false);
 
-        holder.txtDate.setText(visit.getDate());
+        setText(holder.tvVisit, "Child monitoring visit");
+        setText(holder.tvDate, valueOrNA(visit.getDate()));
+        setText(holder.tvVisitTypeHeader, "Visit: " + valueOrNA(visit.getPediatic_care_follow_up()));
+        setText(holder.tvVisitType, valueOrNA(visit.getPediatic_care_follow_up()));
+        setMonitoringFields(holder, visit);
 
-        holder.linearLayout.setOnClickListener(v -> {
-
-            if (v.getId() == R.id.itemm) {
-
-                holder.exPandableView.setVisibility(View.VISIBLE);
-                holder.expMore.setVisibility(View.GONE);
-                holder.expLess.setVisibility(View.VISIBLE);
+        View.OnClickListener openForm = v -> {
+            try {
+                openFormUsingFormUtils(context, "pmtct_child_monitoring", visit);
+            } catch (JSONException e) {
+                Timber.e(e);
             }
+        };
+
+        boolean expanded = expandedPositions.get(position, false);
+        holder.detailsContainer.setVisibility(expanded ? View.VISIBLE : View.GONE);
+        holder.expandIcon.setRotation(expanded ? 180f : 0f);
+        holder.headerLayout.setOnClickListener(v -> {
+            boolean next = !expandedPositions.get(position, false);
+            expandedPositions.put(position, next);
+            holder.detailsContainer.setVisibility(next ? View.VISIBLE : View.GONE);
+            holder.expandIcon.animate().rotation(next ? 180f : 0f).setDuration(150).start();
         });
-
-        holder.expMore.setOnClickListener(v -> {
-
-            if (v.getId() == R.id.expand_more) {
-
-                holder.exPandableView.setVisibility(View.VISIBLE);
-                holder.expMore.setVisibility(View.GONE);
-                holder.expLess.setVisibility(View.VISIBLE);
-                holder.editme.setVisibility(View.GONE);
-                holder.delete.setVisibility(View.GONE);
-            }
-        });
-
-        holder.expLess.setOnClickListener(v -> {
-
-            if (v.getId() == R.id.expand_less) {
-
-                holder.exPandableView.setVisibility(View.GONE);
-                holder.expMore.setVisibility(View.VISIBLE);
-                holder.expLess.setVisibility(View.GONE);
-                holder.editme.setVisibility(View.VISIBLE);
-                holder.delete.setVisibility(View.VISIBLE);
-            }
-        });
-
-
-//        if(householdModel.getCaregiver_hiv_status() != null && householdModel.getCaregiver_hiv_status().equals("positive")){
-//            holder.intialHivStatus.setText("Positive");
-//        } else if(householdModel.getCaregiver_hiv_status().equals("unknown")) {
-//            holder.intialHivStatus.setText("Unknown");
-//        } else {
-//            holder.intialHivStatus.setText("Negative");
-//        }
-//        holder.initialHivStatusDate.setText(householdModel.getScreening_date());
-
-//        if(visit.getHiv_status() != null && visit.getHiv_status().equals("positive")){
-//            holder.updateHivStatus.setText("Positive");
-//        } else if (visit.getHiv_status().equals("unknown")) {
-//            holder.updateHivStatus.setText("Unknown");
-//
-//        } else {
-//            holder.updateHivStatus.setText("Negative");
-//        }
-//        holder.updatedHivStatusDate.setText(visit.getDate_assessment());
-
-
-        holder.linearLayout.setOnClickListener(v -> {
-
-            if (v.getId() == R.id.itemm) {
-
-                try {
-
-                    openFormUsingFormUtils(context, "mother_pmtct_monitoring", visit);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-
-
-        holder.editme.setOnClickListener(v -> {
-
-            if (v.getId() == R.id.edit_me) {
-
-                    HashMap<String, PmtctChildModel> mymap = ((HeiDetailsActivity) context).getClientDetails();
-                    PmtctChildModel pmtctChildModel = null;
-                    if (mymap != null) {
-                        pmtctChildModel = mymap.get("client");
-                        checkAgeAndOpenForm(context,visit, pmtctChildModel.getInfants_date_of_birth());
-                    }
-            }
-
-
-        });
-        holder.delete.setOnClickListener(v -> {
+        holder.editme.setOnClickListener(openForm);
+        if (holder.editButton != null) {
+            holder.editButton.setOnClickListener(openForm);
+        }
+        View.OnClickListener deleteListener = v -> {
             try {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage("You are about to delete this household graduation ");
@@ -188,7 +128,7 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
                         e.printStackTrace();
                     }
                     visit.setDeleted_status("1");
-                    JSONObject vcaScreeningForm = formUtils.getFormJson("postnatal_care");
+                    JSONObject vcaScreeningForm = formUtils.getFormJson("pmtct_child_monitoring");
                     try {
                         CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(visit, Map.class));
                         vcaScreeningForm.put("entity_id", visit .getBase_entity_id());
@@ -224,17 +164,10 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
             } catch (Exception e) {
                 Timber.e(e);
             }
-        });
-        String sVisit = visit.getDate();
-        if(sVisit != null){
-
-            SpannableString spannableString = new SpannableString(sVisit);
-            spannableString.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, sVisit.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-//            holder.txtVisit.setText("Visit at: "+ spannableString);
-            holder.txtVisit.setVisibility(View.GONE);
-        } else{
-            holder.txtVisit.setVisibility(View.GONE);
+        };
+        holder.delete.setOnClickListener(deleteListener);
+        if (holder.deleteButton != null) {
+            holder.deleteButton.setOnClickListener(deleteListener);
         }
 
 
@@ -245,8 +178,17 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
         dialog.show();
 
         TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-        Household house = HouseholdDao.getHousehold(householdId);
-        dialogMessage.setText(house.getCaregiver_name() + message);
+        dialogMessage.setText("Loading...");
+        final String hid = householdId;
+        Threading.io(() -> {
+            Household house = null;
+            try { house = HouseholdDao.getHousehold(hid); } catch (Exception ignored) {}
+            final Household finalHouse = house;
+            Threading.main(() -> {
+                String name = (finalHouse != null && finalHouse.getCaregiver_name() != null) ? finalHouse.getCaregiver_name() : "Household";
+                dialogMessage.setText(name + message);
+            });
+        });
 
         android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
         dialogButton.setOnClickListener(v -> dialog.dismiss());
@@ -393,27 +335,46 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView txtDate,intialHivStatus,initialHivStatusDate,updateHivStatus,updatedHivStatusDate,txtVisit;
-
-        LinearLayout linearLayout, exPandableView;
-        ImageView expMore, expLess,editme,delete;
+        TextView tvVisit, tvVisitTypeHeader, tvDate, tvVisitType, tvDbsDueDate, tvDbsActualDate, tvDbsResult, tvHivTest, tvNvp, tvCtx, tvDateTested,
+                tvIycfCounselling, tvFeedingOption, tvHighRiskHei, tvNutritionStatus, tvMedicalComplications,
+                tvChildOedema, tvOedemaStage, tvTbSymptoms, tvTbOther, tvTbReferral, tvTbComments;
+        LinearLayout headerLayout, detailsContainer;
+        ImageView editme, delete, expandIcon;
+        View editButton, deleteButton;
 
         public ViewHolder(View itemView) {
 
             super(itemView);
 
-            linearLayout = itemView.findViewById(R.id.itemm);
-            txtDate  = itemView.findViewById(R.id.date);
+            headerLayout = itemView.findViewById(R.id.header_layout);
+            detailsContainer = itemView.findViewById(R.id.details_container);
+            expandIcon = itemView.findViewById(R.id.expand_icon);
+            tvVisit = itemView.findViewById(R.id.tv_visit);
+            tvVisitTypeHeader = itemView.findViewById(R.id.tv_visit_type_header);
+            tvDate  = itemView.findViewById(R.id.tv_date);
+            tvVisitType = itemView.findViewById(R.id.tv_visit_type);
+            tvDbsDueDate = itemView.findViewById(R.id.tv_dbs_due_date);
+            tvDbsActualDate = itemView.findViewById(R.id.tv_dbs_actual_date);
+            tvDbsResult = itemView.findViewById(R.id.tv_dbs_result);
+            tvHivTest = itemView.findViewById(R.id.tv_hiv_test);
+            tvNvp = itemView.findViewById(R.id.tv_nvp);
+            tvCtx = itemView.findViewById(R.id.tv_ctx);
+            tvDateTested = itemView.findViewById(R.id.tv_date_tested);
+            tvIycfCounselling = itemView.findViewById(R.id.tv_iycf_counselling);
+            tvFeedingOption = itemView.findViewById(R.id.tv_feeding_option);
+            tvHighRiskHei = itemView.findViewById(R.id.tv_high_risk_hei);
+            tvNutritionStatus = itemView.findViewById(R.id.tv_nutrition_status);
+            tvMedicalComplications = itemView.findViewById(R.id.tv_medical_complications);
+            tvChildOedema = itemView.findViewById(R.id.tv_child_oedema);
+            tvOedemaStage = itemView.findViewById(R.id.tv_oedema_stage);
+            tvTbSymptoms = itemView.findViewById(R.id.tv_tb_symptoms);
+            tvTbOther = itemView.findViewById(R.id.tv_tb_other);
+            tvTbReferral = itemView.findViewById(R.id.tb_referral);
+            tvTbComments = itemView.findViewById(R.id.tv_tb_comments);
             editme = itemView.findViewById(R.id.edit_me);
             delete = itemView.findViewById(R.id.delete_record);
-            exPandableView = itemView.findViewById(R.id.expandable);
-            expLess = itemView.findViewById(R.id.expand_less);
-            expMore = itemView.findViewById(R.id.expand_more);
-            intialHivStatus =  itemView.findViewById(R.id.initial_hiv_status);
-            initialHivStatusDate  = itemView.findViewById(R.id.initial_hiv_status_date);
-            updateHivStatus = itemView.findViewById(R.id.updated_hiv_status);
-            updatedHivStatusDate = itemView.findViewById(R.id.updated_hiv_status_date);
-            txtVisit = itemView.findViewById(R.id.visit);
+            editButton = itemView.findViewById(R.id.edit_button);
+            deleteButton = itemView.findViewById(R.id.delete_button);
 
 
         }
@@ -441,13 +402,72 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
             }
 
             if (ageInYears > 1) {
-                openFormUsingFormUtils(context, "pmtct_child_monitoring_nr_r", visit);
+                openFormUsingFormUtils(context, "pmtct_child_monitoring", visit);
             } else {
-                openFormUsingFormUtils(context, "pmtct_child_monitoring_nd_d", visit);
+                openFormUsingFormUtils(context, "pmtct_child_monitoring", visit);
             }
         } catch (ParseException | JSONException e) {
             e.printStackTrace();
         }
     }
 
+    private String valueOrNA(String value) {
+        return value == null || value.trim().isEmpty() ? "N/A" : value;
+    }
+
+    private void setText(TextView view, String value) {
+        if (view != null) {
+            view.setText(value);
+        }
+    }
+
+    private void setMonitoringFields(ViewHolder holder, ChildMonitoringModel visit) {
+        TextView[] views = new TextView[]{
+                holder.tvDbsDueDate,
+                holder.tvDbsActualDate,
+                holder.tvDbsResult,
+                holder.tvHivTest,
+                holder.tvNvp,
+                holder.tvCtx,
+                holder.tvDateTested,
+                holder.tvIycfCounselling,
+                holder.tvFeedingOption,
+                holder.tvHighRiskHei,
+                holder.tvNutritionStatus,
+                holder.tvMedicalComplications,
+                holder.tvChildOedema,
+                holder.tvOedemaStage,
+                holder.tvTbSymptoms,
+                holder.tvTbOther,
+                holder.tvTbReferral,
+                holder.tvTbComments
+        };
+
+        String[] values = new String[]{
+                visit.getDbs_at_birth_due_date(),
+                visit.getDbs_at_birth_actual_date(),
+                visit.getTest_result_at_birth(),
+                visit.getHiv_test(),
+                visit.getAzt_3tc_npv(),
+                visit.getCtx(),
+                visit.getDate_tested(),
+                visit.getIycf_counselling(),
+                visit.getInfant_feeding_options(),
+                visit.getHigh_risk_hei(),
+                visit.getNutrition_status(),
+                visit.getMedical_complications(),
+                visit.getChild_oedema(),
+                visit.getOedema_stage(),
+                visit.getTb_screening_symptoms(),
+                visit.getOther_tb_symptom(),
+                visit.getTb_referral(),
+                visit.getComments_tb()
+        };
+
+        for (int i = 0; i < views.length; i++) {
+            setText(views[i], valueOrNA(values[i]));
+        }
+    }
+
 }
+

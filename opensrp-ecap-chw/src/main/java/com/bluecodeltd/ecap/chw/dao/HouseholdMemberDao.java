@@ -35,7 +35,10 @@ public class HouseholdMemberDao extends AbstractDao {
             record.setGender(getCursorValue(c, "gender"));
             record.setIs_hiv_positive(getCursorValue(c, "is_hiv_positive"));
             record.setIs_biological(getCursorValue(c, "is_biological"));
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 }
+
+

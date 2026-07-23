@@ -26,6 +26,7 @@ import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONArray;
@@ -74,8 +75,6 @@ public class NotificationActivity extends AppCompatActivity {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(NotificationActivity.this);
         String phone = sp.getString("phone", "anonymous");
 
-        notificationsList.addAll(VcaVisitationDao.getVisitsByCaseWorkerPhone(phone));
-
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(NotificationActivity.this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
@@ -84,10 +83,23 @@ public class NotificationActivity extends AppCompatActivity {
         recyclerView.setAdapter(recyclerViewadapter);
         try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
 
-        if (recyclerViewadapter.getItemCount() > 0){
+        linearLayout.setVisibility(View.VISIBLE);
 
-            linearLayout.setVisibility(View.GONE);
-        }
+        Threading.io(() -> {
+            List<VcaVisitationModel> results = new ArrayList<>();
+            try { results = VcaVisitationDao.getVisitsByCaseWorkerPhone(phone); } catch (Exception ignored) {}
+            List<VcaVisitationModel> finalResults = results == null ? new ArrayList<>() : results;
+            Threading.main(() -> {
+                notificationsList.clear();
+                notificationsList.addAll(finalResults);
+                try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
+                if (recyclerViewadapter != null && recyclerViewadapter.getItemCount() > 0){
+                    linearLayout.setVisibility(View.GONE);
+                } else {
+                    linearLayout.setVisibility(View.VISIBLE);
+                }
+            });
+        });
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -74,21 +74,66 @@
         "type": "hidden"
       },
       {
-        "key": "pmtct_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "pmtct_id",
-        "type": "hidden",
-        "read_only": "true",
-        "hint": "ECAPII Comprehensive Program ID",
-        "edit_type": "name"
-      },
-      {
         "key": "unique_id",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "unique_id",
         "type": "hidden"
+      },
+      {
+        "key": "province",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "province",
+        "type": "edit_text",
+        "hint": "Province",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true"
+      },
+      {
+        "key": "district",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "district",
+        "type": "edit_text",
+        "hint": "District",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true"
+      },
+      {
+        "key": "ward",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "ward",
+        "type": "edit_text",
+        "hint": "Ward",
+        "read_only": "false",
+        "edit_type": "name",
+        "look_up": "true"
+      },
+      {
+        "key": "facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "facility",
+        "type": "edit_text",
+        "hint": "Health Facility",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true"
+      },
+      {
+        "key": "partner",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "partner",
+        "type": "edit_text",
+        "hint": "Implementing Partner",
+        "read_only": "true",
+        "edit_type": "name",
+        "look_up": "true"
       },
       {
         "key": "infant_first_name",
@@ -227,7 +272,14 @@
         "openmrs_entity_id": "under_five_clinic_card",
         "type": "edit_text",
         "hint": "Under 5 Card Number"
-
+      },
+      {
+        "key": "under_five_clinic_card",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "under_five_clinic_card",
+        "type": "edit_text",
+        "hint": "DBS at Birth"
       },
       {
         "key": "spacer",
@@ -255,8 +307,8 @@
         "hint": "DBS at Birth (Due Date)",
         "look_up": "true",
         "expanded": false,
-        "min_date": "today",
-        "max_date": "today + 100y",
+        "min_date": "today - 100y",
+        "max_date": "today",
         "v_required": {
           "value": true,
           "err": "Please enter the date"
@@ -271,14 +323,13 @@
         "hint": "DBS at Birth (Actual Date)",
         "look_up": "true",
         "expanded": false,
-        "min_date": "01-01-1900",
+        "min_date": "today - 100y",
         "max_date": "today",
         "v_required": {
           "value": true,
           "err": "Please enter the date"
         }
       },
-
       {
         "key": "test_result_at_birth",
         "openmrs_entity_parent": "",
@@ -329,7 +380,6 @@
         "toaster_type": "info",
         "text": "Prophylaxis at birth"
       },
-
       {
         "key": "azt_3tc_npv",
         "openmrs_entity_parent": "",
@@ -370,6 +420,23 @@
             "ex": "equalTo(., \"yes\")"
           }
         }
+      },
+      {
+        "key": "pmtct_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pmtct_id",
+        "type": "hidden"
+      },
+      {
+        "key": "household_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "household_id",
+        "type": "hidden",
+        "read_only": "true",
+        "hint": "SM Number",
+        "edit_type": "name"
       },
       {
         "key": "delete_status",

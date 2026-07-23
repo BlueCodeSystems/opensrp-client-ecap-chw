@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.HouseholdServiceReportViewActivity;
 import com.bluecodeltd.ecap.chw.activity.HouseholdServicesOnlyActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
@@ -140,13 +141,29 @@ public class HouseholdServicesOnlyAdapter extends RecyclerView.Adapter<Household
                         if (v.getId() == R.id.itemm) {
                             FormUtils formUtils = null;
                             try { formUtils = new FormUtils(context); } catch (Exception e) { e.printStackTrace(); }
-                            try { openFormUsingFormUtils(context, "service_report_household", service); } catch (JSONException e) { e.printStackTrace(); }
+                            String caregiverSex = finalHouse != null ? finalHouse.getCaregiver_sex() : null;
+                            try { openFormUsingFormUtils(context, "service_report_household", service, caregiverSex); } catch (JSONException e) { e.printStackTrace(); }
                         }
                     }
                 });
             });
         });
-        holder.delete.setOnClickListener(v -> {
+        View.OnClickListener editListener = v -> holder.linearLayout.performClick();
+        if (holder.edit != null) {
+            holder.edit.setOnClickListener(editListener);
+        }
+        if (holder.editButton != null) {
+            holder.editButton.setOnClickListener(editListener);
+        }
+        if (holder.viewButton != null) {
+            holder.viewButton.setOnClickListener(v -> {
+                Intent intent = new Intent(context, HouseholdServiceReportViewActivity.class);
+                intent.putExtra(HouseholdServiceReportViewActivity.EXTRA_BASE_ENTITY_ID, service.getBase_entity_id());
+                context.startActivity(intent);
+            });
+        }
+
+        View.OnClickListener deleteListener = v -> {
             try {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage("You are about to delete this household service ");
@@ -195,7 +212,11 @@ public class HouseholdServicesOnlyAdapter extends RecyclerView.Adapter<Household
             } catch (Exception e) {
                 Timber.e(e);
             }
-        });
+        };
+        holder.delete.setOnClickListener(deleteListener);
+        if (holder.deleteButton != null) {
+            holder.deleteButton.setOnClickListener(deleteListener);
+        }
 
 
     }
@@ -233,7 +254,7 @@ public class HouseholdServicesOnlyAdapter extends RecyclerView.Adapter<Household
 
     }
 
-    public void openFormUsingFormUtils(Context context, String formName, HouseholdServiceReportModel service) throws JSONException {
+    public void openFormUsingFormUtils(Context context, String formName, HouseholdServiceReportModel service, String caregiverSex) throws JSONException {
 
         oMapper = new ObjectMapper();
 
@@ -247,6 +268,7 @@ public class HouseholdServicesOnlyAdapter extends RecyclerView.Adapter<Household
         JSONObject formToBeOpened;
 
         formToBeOpened = formUtils.getFormJson(formName);
+        applyPregnantBreastfeedingVisibility(formToBeOpened, caregiverSex);
 
         formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).remove("read_only");
         formToBeOpened.put("entity_id", service.getBase_entity_id());
@@ -286,6 +308,29 @@ public class HouseholdServicesOnlyAdapter extends RecyclerView.Adapter<Household
 
         startFormActivity(formToBeOpened);
 
+    }
+
+    private static boolean isFemaleCaregiver(String caregiverSex) {
+        return caregiverSex != null && caregiverSex.trim().equalsIgnoreCase("female");
+    }
+
+    private static void applyPregnantBreastfeedingVisibility(JSONObject form, String caregiverSex) {
+        if (isFemaleCaregiver(caregiverSex)) {
+            return;
+        }
+        try {
+            JSONObject step = form.getJSONObject(JsonFormConstants.STEP1);
+            JSONArray formFields = step.getJSONArray(JsonFormConstants.FIELDS);
+            for (int i = 0; i < formFields.length(); i++) {
+                JSONObject field = formFields.getJSONObject(i);
+                if ("pregnant_breastfeeding".equals(field.optString(JsonFormConstants.KEY))) {
+                    formFields.remove(i);
+                    break;
+                }
+            }
+        } catch (JSONException e) {
+            Timber.e(e);
+        }
     }
 
     public void startFormActivity(JSONObject jsonObject) {
@@ -408,8 +453,9 @@ public class HouseholdServicesOnlyAdapter extends RecyclerView.Adapter<Household
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView txtDate,txtserviceType, txtServices ;
-        ImageView delete;
+        ImageView delete, edit;
         LinearLayout linearLayout;
+        View deleteButton, editButton, viewButton;
 
 
         public ViewHolder(View itemView) {
@@ -421,6 +467,10 @@ public class HouseholdServicesOnlyAdapter extends RecyclerView.Adapter<Household
             txtserviceType = itemView.findViewById(R.id.service);
             txtServices = itemView.findViewById(R.id.services);
             delete = itemView.findViewById(R.id.delete_record);
+            edit = itemView.findViewById(R.id.edit_me);
+            deleteButton = itemView.findViewById(R.id.delete_button);
+            editButton = itemView.findViewById(R.id.edit_button);
+            viewButton = itemView.findViewById(R.id.view_button);
 
         }
 

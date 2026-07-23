@@ -1,34 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/register_columns"
-        android:layout_width="wrap_content"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/register_columns"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="1dp"
+    app:cardBackgroundColor="@color/register_card_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
-        android:background="@color/white">
+        android:orientation="vertical">
 
-
+        <!-- Main row -->
         <LinearLayout
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp"
-            android:orientation="horizontal"
             android:id="@+id/itemm"
             android:layout_width="match_parent"
-            android:layout_height="100dp">
+            android:layout_height="wrap_content"
+            android:minHeight="76dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
+            <!-- Left status strip: color driven by IndexRegisterViewHolder (case status) -->
             <View
                 android:id="@+id/mystatusx"
-                android:layout_width="5dp"
+                android:layout_width="6dp"
                 android:layout_height="match_parent"
-                />
+                android:minHeight="76dp"
+                android:background="@color/register_vca_icon" />
 
+            <!-- Child avatar: row_boy / row_girl, same icons used in the household member list -->
+            <FrameLayout
+                android:id="@+id/gender_avatar"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/circle_light_grey"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/gender_image"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/row_boy"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="@string/icon_child_desc" />
+            </FrameLayout>
+
+            <!-- Center: text content; the only flexible-width column, so this row can never overflow the screen -->
             <LinearLayout
-                android:layout_marginLeft="20dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:paddingStart="12dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp">
 
                 <org.smartregister.view.customcontrols.CustomFontTextView
                     android:id="@+id/familyNameTextView"
@@ -36,173 +76,147 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
-                    android:layout_marginTop="10dp"
-                    android:singleLine="true"
-                    android:text="Patient Name"
-                    android:textColor="@color/text_black"
-                    android:textSize="18sp" />
+                    android:ellipsize="end"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    tools:text="Patient Name" />
 
                 <org.smartregister.view.customcontrols.CustomFontTextView
                     android:id="@+id/gender_age"
                     style="@style/CustomFontTextViewStyle.ClientList.Light"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Female : 3 Years Old"
-                    android:textColor="@color/light_grey_text"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:layout_marginTop="3dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="12sp"
+                    tools:text="Female : 3 Years Old" />
 
                 <org.smartregister.view.customcontrols.CustomFontTextView
                     android:id="@+id/villageTextView"
                     style="@style/CustomFontTextViewStyle.ClientList.Light"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Lavington #445"
-                    android:textColor="@color/light_grey_text"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:layout_marginTop="2dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:drawableStart="@drawable/ic_household"
+                    android:drawablePadding="4dp"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="11sp"
+                    tools:text="ID : Lavington #445" />
 
+                <!-- Visit CTA: a compact pill, not a full-width bar. This column is width-capped
+                     (layout_weight="1"), so a wrap_content Button here is automatically
+                     constrained to the available space and can never overflow the card. -->
+                <LinearLayout
+                    android:id="@+id/due_button_wrapper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp">
+
+                    <Button
+                        android:id="@+id/due_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minHeight="0dp"
+                        android:minWidth="0dp"
+                        android:maxWidth="180dp"
+                        android:background="@drawable/due_contact"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:text="Conduct Visit"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/white"
+                        android:textSize="10.5sp"
+                        android:textStyle="bold"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:hapticFeedbackEnabled="true" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:id="@+id/case_plan_wrapper"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/grey_left_border"
-            android:paddingBottom="@dimen/register_list_top_bottom_padding"
-            android:paddingEnd="@dimen/register_list_item_padding"
-            android:paddingLeft="@dimen/register_list_item_padding"
-            android:paddingRight="@dimen/register_list_item_padding"
-            android:paddingStart="@dimen/register_list_item_padding"
-            android:paddingTop="@dimen/register_list_top_bottom_padding">
-
-
-
-            <TextView
-                android:id="@+id/index_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginRight="2dp"
-                android:background="@drawable/rounded_corner_index"
-                android:padding="8dp"
-                android:text="Index"
-                android:textColor="@color/dark_grey_text"
-                android:textSize="12dp"
-              />
-
-            <ImageView
-                android:onClick="onClick"
-                android:visibility="visible"
-                android:id="@+id/index_warning"
-                android:src="@drawable/ic_icon_warning"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginRight="2dp"
-                />
-
-
-            <ImageView
-                android:visibility="gone"
-                android:id="@+id/index_visit"
-                android:src="@drawable/activityrow_visited"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginRight="5dp"
-                />
-
-            <ImageView
-                android:visibility="visible"
-                android:tint="@color/light_grey_text"
-                android:id="@+id/index_case_plan"
-                android:src="@drawable/ic_baseline_content_paste_24"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginRight="5dp"
-                />
-
+            <!-- Right: small status chips/icons, stacked vertically like ptcmt_register_item_layout's action_cluster -->
             <LinearLayout
-                android:id="@+id/notification_wrapper"
-                android:background="@drawable/grey_left_border"
-                android:visibility="gone"
-                android:paddingLeft="@dimen/register_list_item_padding"
-                android:paddingTop="@dimen/register_list_top_bottom_padding"
-                android:paddingRight="@dimen/register_list_item_padding"
-                android:paddingBottom="@dimen/register_list_top_bottom_padding"
-                android:layout_width="90dp"
-                android:layout_height="@dimen/register_list_item_height"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:paddingStart="@dimen/register_list_item_padding"
-                android:paddingEnd="@dimen/register_list_item_padding"
-                android:layout_alignParentEnd="true">
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="4dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    android:id="@+id/index_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_corner_index"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:text="Index"
+                    android:textColor="@color/dark_grey_text"
+                    android:textSize="10sp"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <!-- Monthly service/visit: green once a visit is recorded for the current month, grey otherwise -->
                 <ImageView
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textSize="@dimen/register_list_due_size"
-                    android:typeface="normal"
-                    android:textColor="@color/grey"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:tint="#00fff6"
-                    android:id="@+id/notifications"
-                    android:src="@drawable/ic_notification"
-                    android:background="@drawable/notification_icon"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="true"
-                    android:hapticFeedbackEnabled="true"
-                    android:textAllCaps="false"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/due_button_wrapper"
-                android:background="@drawable/grey_left_border"
-                android:paddingLeft="@dimen/register_list_item_padding"
-                android:paddingTop="@dimen/register_list_top_bottom_padding"
-                android:paddingRight="@dimen/register_list_item_padding"
-                android:paddingBottom="@dimen/register_list_top_bottom_padding"
-                android:layout_width="@dimen/register_list_item_width"
-                android:layout_height="@dimen/register_list_item_height"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:paddingStart="@dimen/register_list_item_padding"
-                android:paddingEnd="@dimen/register_list_item_padding"
-                android:layout_alignParentEnd="true">
-                <Button
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textSize="@dimen/register_list_due_size"
-                    android:typeface="normal"
-                    android:textColor="@color/grey"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:id="@+id/due_button"
-                    android:background="@drawable/due_contact"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="true"
-                    android:text="Home Visit"
-                    android:hapticFeedbackEnabled="true"
-                    android:textAllCaps="false"
-                    />
+                    android:id="@+id/index_visit"
+                    android:visibility="gone"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/ic_service_calendar"
+                    android:tint="@color/stat_pill_unknown"
+                    android:contentDescription="@string/icon_service_visit_desc" />
+
+                <!-- Case plan on file: fixed indigo, not month-dependent -->
+                <ImageView
+                    android:id="@+id/index_case_plan"
+                    android:tint="@color/register_household_icon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/ic_case_plan"
+                    android:contentDescription="@string/icon_case_plan_desc" />
+
             </LinearLayout>
 
+            <!-- Chevron -->
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_chevron_right"
+                android:contentDescription="@null" />
 
         </LinearLayout>
 
-    </RelativeLayout>
+        <!-- Notification bell: dead feature (popup menu code is commented out upstream), kept only so
+             IndexRegisterViewHolder's unconditional findViewById/setOnClickListener don't NPE -->
+        <LinearLayout
+            android:id="@+id/notification_wrapper"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/notifications"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:src="@drawable/ic_notification"
+                android:contentDescription="@null" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

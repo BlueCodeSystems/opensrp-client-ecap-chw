@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- TODO: review Swahili translations -->
+    <string name="appbar_scrolling_view_behavior">Kisogezi cha AppBar</string>
+    <string name="edit">Hariri</string>
+    <string name="family_has_nothing_due">Familia haina kitu kinachostahili</string>
+    <string name="family_head">Mkuu wa familia</string>
+    <string name="go_to_family_s_profile">Fungua wasifu wa familia</string>
+    <string name="head_of_family">Mkuu wa familia</string>
+    <string name="last_visit_40_days_ago">Ziara ya mwisho ilikuwa %1$s iliyopita</string>
+    <string name="medical_history">Historia ya kitabibu</string>
+    <string name="no">Hapana</string>
+    <string name="not_visiting_this_month">Hakutakuwa na ziara mwezi huu</string>
+    <string name="primary_care_giver">Mlezi mkuu</string>
+    <string name="return_to_family_profile">Rudi kwenye wasifu wa familia</string>
+    <string name="save">Hifadhi</string>
+    <string name="str_next">IJAYO &gt;&gt;&gt;</string>
+    <string name="str_previous">&lt;&lt;&lt; ILIYOPITA</string>
+    <string name="submit">Wasilisha</string>
+    <string name="undo">Futa</string>
+    <string name="upcoming_services">Huduma zijazo</string>
+    <string name="view_medical_history">Angalia historia ya kitabibu</string>
+    <string name="view_upcoming_services">Angalia huduma zijazo</string>
+    <string name="visit_not_done_btn_child_profile">Ziara haijafanywa</string>
+    <string name="vitamin_a">Vitamin A</string>
+    <string name="yes">Ndiyo</string>
+    <string name="peer_to_peer_activity_title">Peer-to-peer</string>
+    <string name="back_to_referrals">Rudi kwenye rufaa</string>
+    <string name="abbrv_years">miaka</string>
+    <string name="loading">Inapakia...</string>
+    <string name="please_wait_message">Tafadhali subiri...</string>
+    <string name="next">Ifuatayo</string>
+    <string name="back">Rudi</string>
+</resources>

@@ -50,8 +50,11 @@ public class WeServiceVcaDao extends AbstractDao {
             record.setSold_items(getCursorValue(c, "sold_items"));
             record.setOther_sold_item(getCursorValue(c, "other_sold_item"));
 
+            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }
 
 }
+
+
