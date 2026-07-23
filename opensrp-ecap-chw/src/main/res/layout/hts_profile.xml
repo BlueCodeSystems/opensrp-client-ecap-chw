@@ -229,6 +229,15 @@
 
 
 
+        <View
+            android:id="@+id/fab_scrim"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#99000000"
+            android:visibility="gone"
+            android:clickable="true"
+            android:focusable="true" />
+
         <LinearLayout
             android:id="@+id/menu_bar"
             android:layout_width="wrap_content"
@@ -250,40 +259,14 @@
                 android:orientation="horizontal"
                 android:visibility="gone">
 
-                <RelativeLayout
-                    android:background="#666666"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
+                <TextView
+                    style="@style/HtsActionChip"
                     android:layout_toLeftOf="@+id/callFabx"
-                    android:elevation="2dp"
-                    android:gravity="center"
-                    android:minWidth="50dp"
-                    android:padding="10dp">
-
-
-                    <TextView
-                        android:background="#666666"
-                        android:textColor="@android:color/white"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:text="Edit details"
-                        android:gravity="center"
-                        android:textStyle="italic"
-                        android:visibility="visible" />
-
-                </RelativeLayout>
-
+                    android:text="Edit details" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/callFabx"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
+                    style="@style/HtsActionMiniFab"
                     app:srcCompat="@drawable/baseline_mode_edit_24" />
 
             </RelativeLayout>
@@ -298,42 +281,16 @@
                 android:orientation="horizontal"
                 android:visibility="gone">
 
-                <RelativeLayout
-                    android:background="#666666"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
+                <TextView
+                    android:id="@+id/CallTextViewHint"
+                    style="@style/HtsActionChip"
                     android:layout_toLeftOf="@+id/fabAssessment"
-                    android:elevation="2dp"
-                    android:gravity="center"
-                    android:minWidth="50dp"
-                    android:padding="10dp">
-
-
-                    <TextView
-                        android:background="#666666"
-                        android:textColor="@android:color/white"
-                        android:id="@+id/CallTextViewHint"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:text="Add Contact"
-                        android:textStyle="italic"
-                        android:visibility="visible" />
-
-
-                </RelativeLayout>
-
+                    android:text="Add Contact" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fabAssessment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
-                    app:srcCompat="@android:drawable/ic_input_add"  />
+                    style="@style/HtsActionMiniFab"
+                    app:srcCompat="@android:drawable/ic_input_add" />
 
             </RelativeLayout>
 
@@ -489,44 +446,6 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/we_services_vca"
-                android:onClick="onClick"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_toLeftOf="@+id/we_service"
-                    android:background="#666666"
-                    android:textColor="@android:color/white"
-                    android:elevation="2dp"
-                    android:gravity="center"
-                    android:minWidth="50dp"
-                    android:padding="10dp"
-                    android:text="WE Services"
-                    android:textStyle="italic"
-                    />
-
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/we_service"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
-                    app:srcCompat="@drawable/baseline_mode_edit_24" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
                 android:id="@+id/hiv_assessment2"
                 android:onClick="onClick"
                 android:layout_width="match_parent"
@@ -564,43 +483,6 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/childPlan"
-                android:onClick="onClick"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_toLeftOf="@+id/child_plan_form"
-                    android:background="#666666"
-                    android:textColor="@android:color/white"
-                    android:elevation="2dp"
-                    android:gravity="center"
-                    android:minWidth="50dp"
-                    android:padding="10dp"
-                    android:text="Child Safety Plan"
-                    android:textStyle="italic"
-                    />
-
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/child_plan_form"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
-                    app:srcCompat="@android:drawable/ic_input_add"  />
-
-            </RelativeLayout>
         </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

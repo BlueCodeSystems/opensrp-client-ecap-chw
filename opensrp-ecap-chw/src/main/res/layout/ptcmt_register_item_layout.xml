@@ -52,8 +52,8 @@
                     android:layout_width="22dp"
                     android:layout_height="22dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_mother"
-                    android:tint="@color/white"
+                    android:src="@drawable/ic_mother_child"
+                    app:tint="@color/white"
                     android:scaleType="fitCenter"
                     android:contentDescription="@string/icon_mother_desc" />
             </FrameLayout>
@@ -196,7 +196,7 @@
                     android:layout_height="18dp"
                     android:layout_marginTop="4dp"
                     android:contentDescription="@null"
-                    android:src="@drawable/ic_baseline_content_paste_24"
+                    android:src="@drawable/ic_clipboard_heart"
                     android:visibility="gone"
                     app:tint="@color/light_grey_text" />
 
@@ -229,6 +229,14 @@
             android:paddingBottom="5dp"
             android:orientation="horizontal"
             android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/ic_shield_cross"
+                android:contentDescription="@null"
+                app:tint="@color/register_pmtct_icon" />
 
             <TextView
                 android:id="@+id/enrolled_date_label"

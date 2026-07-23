@@ -1,6 +1,7 @@
 package com.bluecodeltd.ecap.chw.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.preference.PreferenceManager;
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
@@ -49,6 +51,7 @@ import timber.log.Timber;
 public class LoginActivity extends BaseLoginActivity implements BaseLoginContract.View {
     public static final String TAG = BaseLoginActivity.class.getCanonicalName();
     private static final String WFH_CSV_PARSED = "WEIGHT_FOR_HEIGHT_CSV_PARSED";
+    private static final String PREF_LAST_USERNAME = "last_logged_in_username";
 
     private PinLogger pinLogger = PinLoginUtil.getPinLogger();
     TextView txtUsername, txtPassword;
@@ -248,6 +251,7 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
 
     @Override
     public void goToHome(boolean remote) {
+        saveLoggedInUsername();
         if (remote) {
             Utils.startAsyncTask(new SaveTeamLocationsTask(), (Object) null);
         }
@@ -260,6 +264,13 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
         }
 
         finish();
+    }
+
+    private void saveLoggedInUsername() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String username = txtUsername != null ? txtUsername.getText().toString().trim() : "";
+        prefs.edit().putString(PREF_LAST_USERNAME, username).apply();
+        prefs.edit().putString("caseworker_name", username).apply();
     }
 
 
@@ -277,8 +288,10 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
             pinLogger.resetPinLogin();
 
         if (pinLogger.isFirstAuthentication()) {
-            EditText passwordEditText = findViewById(org.smartregister.R.id.login_password_edit_text);
-            pinLogger.savePassword(passwordEditText.getText().toString());
+            EditText passwordEditText = findViewById(R.id.login_password_edit_text);
+            if (passwordEditText != null && passwordEditText.getText() != null) {
+                pinLogger.savePassword(passwordEditText.getText().toString());
+            }
         }
 
         if (pinLogger.isFirstAuthentication()) {

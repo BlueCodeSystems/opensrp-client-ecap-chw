@@ -51,14 +51,12 @@ public class ProfileOverviewFragment extends Fragment {
     LinearLayout myview2,linearlayout_name,linearlayout_gender,linearlayout_dob,linearlayout_status,linearlayout_relation,linearlayout_phone,subPopLayout1,subPopLayout2,abymSubpopulation;
     ImageButton imgBtn;
     TextView abymTxt,disabledTxt,agedTxt,illnessTxt,childHeadTxt,notChildHeadTx,femaleHeadedTxt,survivorTxt;
-    TextView txtArtNumber, sub1, sub2, sub3, sub4, sub5, sub6,otherSub,otherMemberSub, txtSubPopulation,txtReferred, txtFacility,txtEditedBy,txtDateEdited,
+    TextView txtArtNumber, sub1, sub2, sub3, sub4, sub5, sub6, sub7, sub8, sub9, sub10, sub11, sub12, sub13, sub14, sub15, sub16, otherSub,otherMemberSub, txtSubPopulation,txtReferred, txtFacility,txtEditedBy,txtDateEdited,
             txtEnrolled, txtArtCheckbox, txtDateStartedArt, txtVlLastDate, txtVlResult, txtIsSuppressed, txtNextVl, txtIsMMD, txtMMDResult,
             txtCaregiverName, txtGender, txtDob, txtHiv, txtRelation, txtPhone,txtcPhone,txtSchool,recent_vl_result,recent_mmd_level,
             new_caregiver_name, overview_section_header3,overview_section_header5,overview_section_details_left, new_caregiver_gender, new_caregiver_dob, new_hiv_status, new_child_relation, new_caregiver_phone;
 
     AbymSubpopulationModel abym;
-
-    LinearLayout abymSub,siblingSubPop;
 
     MuacModel muacModel;
     VcaScreeningModel childScreeningModel;
@@ -82,8 +80,16 @@ public class ProfileOverviewFragment extends Fragment {
         sub4 = binding.subpop4;
         sub5 = binding.subpop5;
         sub6 = binding.subpop6;
-        abymSub = binding.abymSub;
-        siblingSubPop = binding.siblingSubPop;
+        sub7 = binding.subpop7;
+        sub8 = binding.subpop8;
+        sub9 = binding.subpop9;
+        sub10 = binding.subpop10;
+        sub11 = binding.subpop11;
+        sub12 = binding.subpop12;
+        sub13 = binding.subpop13;
+        sub14 = binding.subpop14;
+        sub15 = binding.subpop15;
+        sub16 = binding.subpop16;
         txtSubPopulation = binding.subPopulation;
         subPopLayout1 = binding.subPopLayout1;
         subPopLayout2 = binding.subPopLayout2;
@@ -138,6 +144,32 @@ public class ProfileOverviewFragment extends Fragment {
 
         HashMap<String, Child> mymap = ( (IndexDetailsActivity) requireActivity()).getData();
         Child childIndex =mymap.get("Child");
+        if (childIndex == null) {
+            txtSubPopulation.setText("");
+            txtFacility.setText("N/A");
+            txtArtNumber.setText("N/A");
+            txtReferred.setText("N/A");
+            txtEnrolled.setText("N/A");
+            txtArtCheckbox.setText("N/A");
+            txtDateStartedArt.setText("N/A");
+            txtVlLastDate.setText("N/A");
+            txtVlResult.setText("N/A");
+            txtIsSuppressed.setText("Not set");
+            txtNextVl.setText("N/A");
+            txtIsMMD.setText("N/A");
+            txtMMDResult.setText("N/A");
+            txtCaregiverName.setText("Not Set");
+            txtGender.setText("N/A");
+            txtDob.setText("Not Set");
+            txtHiv.setText("Not Set");
+            txtRelation.setText("Not Set");
+            txtPhone.setText("Not Set");
+            txtEditedBy.setText("Not Set");
+            txtDateEdited.setText("Not Set");
+            txtcPhone.setText("Not Set");
+            moreSubpopBtn.setVisibility(View.GONE);
+            return view;
+        }
 
         HashMap<String, newCaregiverModel> caregiverDetails = ((IndexDetailsActivity) requireActivity()).getUpdatedCaregiverData();
         newCaregiverModel updateCaregiver = caregiverDetails.get("UpdatedCaregiver");
@@ -178,8 +210,10 @@ public class ProfileOverviewFragment extends Fragment {
 //            linearlayout_name.setVisibility(View.GONE);
 //        }
 
-        Household householdByVCA = HouseholdDao.getHouseholdByVCA(childIndex.getHousehold_id());
-        Boolean check = HouseholdDao.hasNonNullSubPopulationByVCA(childIndex.getUnique_id());
+        String householdId = childIndex.getHousehold_id();
+        Household householdByVCA = householdId != null ? HouseholdDao.getHouseholdByVCA(householdId) : null;
+        String uniqueId = childIndex.getUnique_id();
+        Boolean check = uniqueId != null ? HouseholdDao.hasNonNullSubPopulationByVCA(uniqueId) : Boolean.FALSE;
         if(check.equals(true)) {
 
 
@@ -210,26 +244,6 @@ public class ProfileOverviewFragment extends Fragment {
         } else {
             myview.setVisibility(View.GONE);
         }
-
-        if(Objects.equals(subpop1, "true")){
-            sub1.setVisibility(View.VISIBLE);
-        }
-
-        if (Objects.equals(subpop2, "true")){
-            sub2.setVisibility(View.VISIBLE);
-        }
-
-        if (Objects.equals(subpop3, "true")){
-            sub3.setVisibility(View.VISIBLE);
-        }
-
-        if (Objects.equals(subpop5, "true")){
-            sub5.setVisibility(View.VISIBLE);
-        }
-
-
-
-
 
         if (childIndex.getArt_number() != null){
             txtArtNumber.setText(childIndex.getArt_number());
@@ -346,20 +360,6 @@ public class ProfileOverviewFragment extends Fragment {
         txtcPhone.setText(childIndex.getPhone() != null ? childIndex.getPhone() : "Not Set");
 
 
-        // ABYM/MUAC values set after async fetch
-
-//        HouseholdMemberModel memberModel = HouseholdMemberDao.getMember(childIndex.getUnique_id());
-//        if(memberModel != null && "sibling".equals(memberModel.getMember_type())){
-//            siblingSubPop.setVisibility(View.VISIBLE);
-//        } else {
-//            siblingSubPop.setVisibility(View.GONE);
-//        }
-
-        // Sibling subpop set after async fetch
-
-
-
-
         // Button visibility set after async fetch
 
         moreSubpopBtn.setOnClickListener(new View.OnClickListener() {
@@ -381,15 +381,15 @@ public class ProfileOverviewFragment extends Fragment {
             VcaScreeningModel screenLocal = st.getScreen();
 
             if (household != null && household.getSub_population() != null) {
-                subPopLayout1.setVisibility(View.GONE);
                 subPopLayout2.setVisibility(View.VISIBLE);
                 String mapped = keysToValues(household.getSub_population());
                 txtSubPopulation.setText(mapped != null ? mapped : "");
             } else {
-                subPopLayout1.setVisibility(View.VISIBLE);
                 subPopLayout2.setVisibility(View.GONE);
                 txtSubPopulation.setText("");
             }
+
+            updateOverviewSubpops(screenLocal, muacLocal, st.getPbfwStatus());
 
             String viralLoadResult = null;
             if (recentServices != null && !recentServices.isEmpty()) {
@@ -419,30 +419,13 @@ public class ProfileOverviewFragment extends Fragment {
                 txtNextVl.setText(childIndex.getDate_next_vl() != null ? childIndex.getDate_next_vl() : "N/A");
             }
 
-            if (!"female".equals(childIndex.getGender()) && abymLocal != null && "yes".equals(abymLocal.getAbym_years())) {
-                abymSub.setVisibility(View.VISIBLE);
-            } else {
-                abymSub.setVisibility(View.GONE);
-            }
-
-            if (household != null) {
-                String mappedValues = keysToValues(household.getSub_population());
-                String indexCheck = screenLocal != null && screenLocal.getIndex_check_box() != null ? screenLocal.getIndex_check_box().toLowerCase() : "";
-                boolean isIndex = indexCheck.equals("yes") || indexCheck.equals("1");
-                if (mappedValues != null && mappedValues.contains("SIBS/INDEX FAMILY") && !isIndex) {
-                    siblingSubPop.setVisibility(View.VISIBLE);
-                } else {
-                    siblingSubPop.setVisibility(View.GONE);
-                }
-            } else {
-                siblingSubPop.setVisibility(View.GONE);
-            }
-
             boolean showMore = muacLocal != null && ("red".equals(muacLocal.getMuac()) || "yellow".equals(muacLocal.getMuac()));
             moreSubpopBtn.setVisibility(showMore ? View.VISIBLE : View.GONE);
         });
-        new ViewModelProvider(this).get(ProfileOverviewViewModel.class)
-                .refresh(childIndex.getHousehold_id(), childIndex.getUnique_id());
+        if (householdId != null && uniqueId != null) {
+            new ViewModelProvider(this).get(ProfileOverviewViewModel.class)
+                    .refresh(householdId, uniqueId);
+        }
 
         return view;
 
@@ -454,10 +437,85 @@ public class ProfileOverviewFragment extends Fragment {
         binding = null;
     }
 
+    private void updateOverviewSubpops(VcaScreeningModel screenLocal, MuacModel muacLocal, String pbfwStatus) {
+        if (screenLocal == null) {
+            hideOverviewSubpops();
+            subPopLayout1.setVisibility(View.GONE);
+            return;
+        }
+
+        hideOverviewSubpops();
+
+        String gender = screenLocal.getGender();
+        boolean anyVisible = false;
+
+        anyVisible |= setSubpopVisibility(sub1, isYesFlag(screenLocal.getIs_hiv_positive()));
+        anyVisible |= setSubpopVisibility(sub2, isYesFlag(screenLocal.getPositive_mother()));
+        anyVisible |= setSubpopVisibility(sub3, isYesFlag(screenLocal.getIs_biological_child_of_mother_living_with_hiv()));
+        anyVisible |= setSubpopVisibility(sub4, isYesFlag(screenLocal.getAgyw_sexually_active()) && "female".equalsIgnoreCase(gender));
+        anyVisible |= setSubpopVisibility(sub5, isYesFlag(screenLocal.getChild_ever_experienced_sexual_violence()));
+        anyVisible |= setSubpopVisibility(sub6, isYesFlag(screenLocal.getIs_the_child_caregiver_an_fsw()));
+        anyVisible |= setSubpopVisibility(sub7, isYesFlag(screenLocal.getAbym_years()) && isYesFlag(screenLocal.getAbym_sexually_active()) && "male".equalsIgnoreCase(gender));
+        anyVisible |= setSubpopVisibility(sub8, isNoFlag(screenLocal.getIndex_check_box()));
+        anyVisible |= setSubpopVisibility(sub9, isNoFlag(screenLocal.getAdult_primary_caregiver_present()));
+        if ("positive".equalsIgnoreCase(pbfwStatus)) {
+            sub10.setText("C/A PBFW Positive");
+            anyVisible |= setSubpopVisibility(sub10, true);
+        } else if ("negative".equalsIgnoreCase(pbfwStatus)) {
+            sub10.setText("C/A PBFW Negative");
+            anyVisible |= setSubpopVisibility(sub10, true);
+        }
+        anyVisible |= setSubpopVisibility(sub11, isYesFlag(screenLocal.getCaregiver_chronically_ill()));
+        anyVisible |= setSubpopVisibility(sub12, isYesFlag(screenLocal.getSingle_woman_headed_household()));
+        anyVisible |= setSubpopVisibility(sub13, isYesFlag(screenLocal.getLiving_with_disability()));
+        anyVisible |= setSubpopVisibility(sub14, isYesFlag(screenLocal.getCaregiver_aged_65_plus()));
+        anyVisible |= setSubpopVisibility(sub15, muacLocal != null && ("red".equalsIgnoreCase(muacLocal.getMuac()) || "yellow".equalsIgnoreCase(muacLocal.getMuac())));
+        anyVisible |= setSubpopVisibility(sub16, isYesFlag(screenLocal.getAny_form_of_violence()));
+        subPopLayout1.setVisibility(anyVisible ? View.VISIBLE : View.GONE);
+    }
+
+    private void hideOverviewSubpops() {
+        setSubpopVisibility(sub1, false);
+        setSubpopVisibility(sub2, false);
+        setSubpopVisibility(sub3, false);
+        setSubpopVisibility(sub4, false);
+        setSubpopVisibility(sub5, false);
+        setSubpopVisibility(sub6, false);
+        setSubpopVisibility(sub7, false);
+        setSubpopVisibility(sub8, false);
+        setSubpopVisibility(sub9, false);
+        setSubpopVisibility(sub10, false);
+        setSubpopVisibility(sub11, false);
+        setSubpopVisibility(sub12, false);
+        setSubpopVisibility(sub13, false);
+        setSubpopVisibility(sub14, false);
+        setSubpopVisibility(sub15, false);
+        setSubpopVisibility(sub16, false);
+    }
+
+    private boolean setSubpopVisibility(TextView textView, boolean visible) {
+        if (textView != null) {
+            textView.setVisibility(visible ? View.VISIBLE : View.GONE);
+        }
+        return visible;
+    }
+
 
     private boolean isYes(String value) {
         return value != null && value.equals("yes");
     }
+    private boolean isYesFlag(String value) {
+        if (TextUtils.isEmpty(value)) return false;
+        String v = value.trim().toLowerCase(Locale.ENGLISH);
+        return "yes".equals(v) || "1".equals(v) || "true".equals(v);
+    }
+
+    private boolean isNoFlag(String value) {
+        if (TextUtils.isEmpty(value)) return false;
+        String v = value.trim().toLowerCase(Locale.ENGLISH);
+        return "no".equals(v) || "0".equals(v) || "false".equals(v);
+    }
+
     public String keysToValues(String keys) {
         if (keys == null || keys.trim().isEmpty()) {
             return "";

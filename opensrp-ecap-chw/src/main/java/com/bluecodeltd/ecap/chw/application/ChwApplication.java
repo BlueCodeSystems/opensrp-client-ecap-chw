@@ -27,6 +27,7 @@ import com.bluecodeltd.ecap.chw.activity.IndexRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.LoginActivity;
 import com.bluecodeltd.ecap.chw.activity.MotherIndexActivity;
 import com.bluecodeltd.ecap.chw.activity.PMTCTRegisterActivity;
+import com.bluecodeltd.ecap.chw.activity.ReportRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.ReferralRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.UpdatesRegisterActivity;
 import com.bluecodeltd.ecap.chw.configs.AllClientsRegisterRowOptions;
@@ -116,6 +117,9 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
     public static final String TAG = ChwApplication.class.getSimpleName();
     private static final String ONESIGNAL_APP_ID = "a074b7f3-c15f-4838-8fd3-6974c6adee87";
 
+    public static synchronized ChwApplication getInstance() {
+        return (ChwApplication) mInstance;
+    }
 
     public static Flavor getApplicationFlavor() {
         return flavor;
@@ -264,8 +268,8 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
 
         reloadLanguage();
 
-        // Ensure Timber does not reference Crashlytics when the dependency/plugin is not applied
-        // This prevents NoClassDefFoundError from org.smartregister.util.CrashLyticsTree
+        // Ensure Timber uses the local safe tree when Crashlytics is not present
+        // This keeps logging independent from the external SmartRegister Crashlytics tree
         try {
             Timber.uprootAll();
             if (BuildConfig.DEBUG) {
@@ -423,6 +427,7 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.BENEFICIARIES_REGISTER_ACTIVITY, BeneficiariesRegisterActivity.class);
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.IDENTIFICATION_REGISTER_ACTIVITY, IdentificationRegisterActivity.class);
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.DASHBOARD_ACTIVITY, DashboardActivity.class);
+        registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.REPORT_REGISTER_ACTIVITY, ReportRegisterActivity.class);
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.HTS_ACTIVITY, HivTestingServiceActivity.class);
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.PMTCT, PMTCTRegisterActivity.class);
         if (BuildConfig.USE_UNIFIED_REFERRAL_APPROACH) {
@@ -686,3 +691,4 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
     }
 
 }
+

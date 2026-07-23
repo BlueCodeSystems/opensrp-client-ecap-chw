@@ -109,7 +109,10 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
             holder.expandIcon.animate().rotation(next ? 180f : 0f).setDuration(150).start();
         });
         holder.editme.setOnClickListener(openForm);
-        holder.delete.setOnClickListener(v -> {
+        if (holder.editButton != null) {
+            holder.editButton.setOnClickListener(openForm);
+        }
+        View.OnClickListener deleteListener = v -> {
             try {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage("You are about to delete this household graduation ");
@@ -161,7 +164,11 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
             } catch (Exception e) {
                 Timber.e(e);
             }
-        });
+        };
+        holder.delete.setOnClickListener(deleteListener);
+        if (holder.deleteButton != null) {
+            holder.deleteButton.setOnClickListener(deleteListener);
+        }
 
 
     }
@@ -328,11 +335,12 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView tvVisit, tvVisitTypeHeader, tvDate, tvVisitType, tvHivTest, tvNvp, tvCtx, tvDateTested,
+        TextView tvVisit, tvVisitTypeHeader, tvDate, tvVisitType, tvDbsDueDate, tvDbsActualDate, tvDbsResult, tvHivTest, tvNvp, tvCtx, tvDateTested,
                 tvIycfCounselling, tvFeedingOption, tvHighRiskHei, tvNutritionStatus, tvMedicalComplications,
                 tvChildOedema, tvOedemaStage, tvTbSymptoms, tvTbOther, tvTbReferral, tvTbComments;
         LinearLayout headerLayout, detailsContainer;
         ImageView editme, delete, expandIcon;
+        View editButton, deleteButton;
 
         public ViewHolder(View itemView) {
 
@@ -345,6 +353,9 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
             tvVisitTypeHeader = itemView.findViewById(R.id.tv_visit_type_header);
             tvDate  = itemView.findViewById(R.id.tv_date);
             tvVisitType = itemView.findViewById(R.id.tv_visit_type);
+            tvDbsDueDate = itemView.findViewById(R.id.tv_dbs_due_date);
+            tvDbsActualDate = itemView.findViewById(R.id.tv_dbs_actual_date);
+            tvDbsResult = itemView.findViewById(R.id.tv_dbs_result);
             tvHivTest = itemView.findViewById(R.id.tv_hiv_test);
             tvNvp = itemView.findViewById(R.id.tv_nvp);
             tvCtx = itemView.findViewById(R.id.tv_ctx);
@@ -362,6 +373,8 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
             tvTbComments = itemView.findViewById(R.id.tv_tb_comments);
             editme = itemView.findViewById(R.id.edit_me);
             delete = itemView.findViewById(R.id.delete_record);
+            editButton = itemView.findViewById(R.id.edit_button);
+            deleteButton = itemView.findViewById(R.id.delete_button);
 
 
         }
@@ -410,6 +423,9 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
 
     private void setMonitoringFields(ViewHolder holder, ChildMonitoringModel visit) {
         TextView[] views = new TextView[]{
+                holder.tvDbsDueDate,
+                holder.tvDbsActualDate,
+                holder.tvDbsResult,
                 holder.tvHivTest,
                 holder.tvNvp,
                 holder.tvCtx,
@@ -428,6 +444,9 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
         };
 
         String[] values = new String[]{
+                visit.getDbs_at_birth_due_date(),
+                visit.getDbs_at_birth_actual_date(),
+                visit.getTest_result_at_birth(),
                 visit.getHiv_test(),
                 visit.getAzt_3tc_npv(),
                 visit.getCtx(),
@@ -451,3 +470,4 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
     }
 
 }
+

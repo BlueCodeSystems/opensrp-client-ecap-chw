@@ -307,7 +307,15 @@ public class UserService {
         if (keyStore != null && userName != null) {
             try {
                 KeyStore.PrivateKeyEntry privateKeyEntry = getUserKeyPair(userName);
-                return decryptString(privateKeyEntry, allSharedPreferences.getPassphrase(CoreLibrary.getInstance().getSyncConfiguration().getEncryptionParam().name(), userName));
+                if (privateKeyEntry == null) {
+                    Timber.w("No keystore entry found for user %s while decrypting passphrase", userName);
+                    return null;
+                }
+                String encryptedPassphrase = allSharedPreferences.getPassphrase(CoreLibrary.getInstance().getSyncConfiguration().getEncryptionParam().name(), userName);
+                if (encryptedPassphrase == null) {
+                    return null;
+                }
+                return decryptString(privateKeyEntry, encryptedPassphrase);
             } catch (Exception e) {
                 Timber.e(e);
             }
@@ -765,6 +773,10 @@ public class UserService {
      */
     @VisibleForTesting
     protected byte[] decryptString(KeyStore.PrivateKeyEntry privateKeyEntry, String cipherText) throws Exception {
+
+        if (privateKeyEntry == null || cipherText == null) {
+            return null;
+        }
 
         Cipher output;
         if (Build.VERSION.SDK_INT >= 23) {

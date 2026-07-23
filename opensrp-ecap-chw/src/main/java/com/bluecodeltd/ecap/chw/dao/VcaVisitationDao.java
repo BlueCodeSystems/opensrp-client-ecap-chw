@@ -22,6 +22,27 @@ public class VcaVisitationDao extends AbstractDao {
         return Integer.parseInt(values.get(0));
 
     }
+
+    /**
+     * Whether a visit/service has been recorded for this child within the current calendar month.
+     * visit_date is stored as dd-MM-yyyy, so month/year are compared via substring rather than a full date parse.
+     */
+    public static boolean hasVisitThisMonth(String childID) {
+        String sql = "SELECT COUNT(*) AS cnt FROM ec_household_visitation_for_vca_0_20_years " +
+                "WHERE unique_id = '" + childID + "' " +
+                "AND (delete_status IS NULL OR delete_status <> '1') " +
+                "AND substr(visit_date,4,2) = strftime('%m','now') " +
+                "AND substr(visit_date,7,4) = strftime('%Y','now')";
+
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "cnt");
+
+        try {
+            List<String> values = AbstractDao.readData(sql, dataMap);
+            return values != null && !values.isEmpty() && Integer.parseInt(values.get(0)) > 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
     public static boolean getNutritionStatusForAgeFiveAndBelowByHousehold(String householdID) {
         String sql = "WITH RankedVisits AS (\n" +
                 "    SELECT \n" +

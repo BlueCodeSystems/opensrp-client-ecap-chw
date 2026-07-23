@@ -11,6 +11,8 @@ import org.smartregister.R;
 import org.smartregister.util.Cache;
 import org.smartregister.util.CacheableData;
 
+import timber.log.Timber;
+
 public class CustomFontTextView extends TextView {
 
     private Cache<Typeface> cache;
@@ -47,10 +49,14 @@ public class CustomFontTextView extends TextView {
         setTypeface(cache.get(variant.name(), new CacheableData<Typeface>() {
             @Override
             public Typeface fetch() {
-                return Typeface.createFromAsset(
-                        CoreLibrary.getInstance().context().applicationContext().getAssets(),
-                        variant.fontFile());
-
+                try {
+                    return Typeface.createFromAsset(
+                            CoreLibrary.getInstance().context().applicationContext().getAssets(),
+                            variant.fontFile());
+                } catch (Exception e) {
+                    Timber.e(e);
+                    return Typeface.DEFAULT;
+                }
             }
         }));
     }

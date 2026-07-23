@@ -75,15 +75,15 @@
     <string name="deceased_brackets">(deceased)</string>
     <string name="id_with_value">ID: %1$s</string>
     <!-- Reporting labels (defaults) -->
-    <string name="children_0_24_months_upto_date_vaccinations">Children (0–23 months) up to date with vaccination schedule</string>
+    <string name="children_0_24_months_upto_date_vaccinations">Children (0Ã¢â‚¬â€œ23 months) up to date with vaccination schedule</string>
     <string name="opv_0_not_included">OPV 0 not included</string>
     <string name="pnc_indicator_4">Babies who received BCG vaccine on time (last 6 months)</string>
     <string name="pnc_indicator_4_note">On time means within four weeks of birth</string>
     <string name="pnc_indicator_5">WRA who died in the past year</string>
     <string name="pnc_indicator_10">Women up to date with PNC visits at the health facility</string>
-    <string name="deceased_children_0_11_months">Children (0–11 months) who died in the past year</string>
-    <string name="deceased_children_12_59_months">Children (12–59 months) who died in the past year</string>
-    <string name="deceased_children_12_23_months">Children (12–23 months) who died in the past year</string>
+    <string name="deceased_children_0_11_months">Children (0Ã¢â‚¬â€œ11 months) who died in the past year</string>
+    <string name="deceased_children_12_59_months">Children (12Ã¢â‚¬â€œ59 months) who died in the past year</string>
+    <string name="deceased_children_12_23_months">Children (12Ã¢â‚¬â€œ23 months) who died in the past year</string>
     <string name="maternal_deaths_slice_label">Maternal deaths</string>
     <string name="other_wra_deaths_slice_label">Other WRA deaths</string>
 
@@ -129,6 +129,19 @@
     <string name="doses_needed">Doses needed</string>
     <string name="select_cha">Select CHA</string>
     <string name="community_activity">Community activity</string>
+    <string name="all_report_register_title">Service Reports</string>
+    <string name="report_register_menu_title">Reports</string>
+    <string name="report_forms_title">Report Forms</string>
+    <string name="report_open_form">Open report form</string>
+    <string name="report_register_title">Service report</string>
+    <string name="report_register_subtitle">Monthly reports dashboard</string>
+    <string name="report_register_household_title">Household service report</string>
+    <string name="report_register_caregiver_title">Caregiver service report</string>
+    <string name="report_community_title">Community report</string>
+    <string name="report_household_prefix">Household ID: %1$s</string>
+    <string name="report_date_prefix">Date: %1$s</string>
+    <string name="report_summary_empty">No service summary recorded</string>
+    <string name="report_household_missing">This report has no household ID</string>
     <string name="opv_0">OPV 0</string>
     <string name="bcg">BCG</string>
     <string name="health_facility_visit_num">Health facility visit {0}</string>
@@ -182,9 +195,9 @@
     <string name="action_taken">Action taken</string>
     <string name="graduation_requirements_pending">Complete all household visits, assessments and services before starting the graduation benchmark assessment.</string>
     <string name="pnc_health_facility_visit_within_fourty_eight_hours">PNC health facility visit - within 48 hours</string>
-    <string name="pnc_health_facility_visit_days_three_to_seven">PNC health facility visit - days 3–7</string>
-    <string name="pnc_health_facility_visit_days_eight_to_twenty_eight">PNC health facility visit - days 8–28</string>
-    <string name="pnc_health_facility_visit_days_twenty_nine_to_forty_two">PNC health facility visit - days 29–42</string>
+    <string name="pnc_health_facility_visit_days_three_to_seven">PNC health facility visit - days 3Ã¢â‚¬â€œ7</string>
+    <string name="pnc_health_facility_visit_days_eight_to_twenty_eight">PNC health facility visit - days 8Ã¢â‚¬â€œ28</string>
+    <string name="pnc_health_facility_visit_days_twenty_nine_to_forty_two">PNC health facility visit - days 29Ã¢â‚¬â€œ42</string>
 
     <!-- Additional base strings to satisfy references -->
     <string name="app_name">ECAP II</string>
@@ -201,18 +214,18 @@
     <string name="anc_home_visit_nutrition_status">Nutrition status</string>
     <string name="anc_home_visit_pregnancy_risk">Pregnancy risk</string>
     <string name="anc_home_visit_remarks_and_comments">Remarks and comments</string>
-    <string name="anc_indicator1">Women of reproductive age (10–49)</string>
+    <string name="anc_indicator1">Women of reproductive age (10Ã¢â‚¬â€œ49)</string>
     <!-- PMTCT clinical decision support: Unsuppressed VL alert -->
     <string name="pmtct_alert_unsuppressed_title">Mother with Unsuppressed Viral Load</string>
     <string name="pmtct_alert_flagged">Flagged</string>
     <string name="pmtct_alert_unsuppressed_actions_header">Recommended actions</string>
-    <string name="pmtct_alert_unsuppressed_actions_bullets">• Conduct enhanced adherence counselling
-• Case conferencing
-• Refer for further clinical management</string>
+    <string name="pmtct_alert_unsuppressed_actions_bullets">Ã¢â‚¬Â¢ Conduct enhanced adherence counselling
+Ã¢â‚¬Â¢ Case conferencing
+Ã¢â‚¬Â¢ Refer for further clinical management</string>
     <string name="pmtct_alert_unsuppressed_actions_bullets_child">
-1: • Conduct enhanced adherence counselling\n
-    • Case conferencing\n\n
-2: • Check if they are on CTX and AZT+3TC+NVP
+1: Ã¢â‚¬Â¢ Conduct enhanced adherence counselling\n
+    Ã¢â‚¬Â¢ Case conferencing\n\n
+2: Ã¢â‚¬Â¢ Check if they are on CTX and AZT+3TC+NVP
 </string>
 
 
@@ -224,9 +237,14 @@
     <string name="hei_hiv_positive_flag">HEI: HIV-positive</string>
     <string name="hei_hiv_positive_title">HEI tests HIV-positive</string>
     <string name="hei_hiv_positive_actions_header">Recommended action</string>
-    <string name="hei_hiv_positive_actions_bullets">• Link the child to treatment.</string>
+    <string name="hei_hiv_positive_actions_bullets">Ã¢â‚¬Â¢ Link the child to treatment.</string>
     <string name="icon_mother_desc">Mother</string>
     <string name="icon_child_desc">Child</string>
+    <string name="icon_shield_droplet_desc">Protective health monitoring with blood-based testing</string>
+    <string name="icon_household_desc">Household status</string>
+    <string name="icon_report_desc">Report</string>
+    <string name="icon_service_visit_desc">Monthly service visit status</string>
+    <string name="icon_case_plan_desc">Case plan on file</string>
     <string name="anc_indicator2">Pregnant women</string>
     <string name="anc_indicator3">Pregnant women up to date with ANC home visits</string>
     <string name="anc_indicator4">Pregnant women up to date with ANC facility visits</string>
@@ -238,11 +256,11 @@
     <string name="birth_certification">Birth certification</string>
     <string name="child_gbv_referral">GBV referral</string>
     <string name="children">Children</string>
-    <string name="children_0_5_months_exclusively_breastfeeding">Children (0–5 months) exclusively breastfeeding</string>
-    <string name="children_0_59_months_with_birth_certificate">Children (0–59 months) with birth certificate</string>
-    <string name="children_12_59_months_dewormed">Children (12–59 months) dewormed (last 6 months)</string>
-    <string name="children_6_23_months_upto_date_mnp">Children (6–23 months) up to date with MNP supplementation</string>
-    <string name="children_6_59_months_received_vitamin_A">Children (6–59 months) received vitamin A (last 6 months)</string>
+    <string name="children_0_5_months_exclusively_breastfeeding">Children (0Ã¢â‚¬â€œ5 months) exclusively breastfeeding</string>
+    <string name="children_0_59_months_with_birth_certificate">Children (0Ã¢â‚¬â€œ59 months) with birth certificate</string>
+    <string name="children_12_59_months_dewormed">Children (12Ã¢â‚¬â€œ59 months) dewormed (last 6 months)</string>
+    <string name="children_6_23_months_upto_date_mnp">Children (6Ã¢â‚¬â€œ23 months) up to date with MNP supplementation</string>
+    <string name="children_6_59_months_received_vitamin_A">Children (6Ã¢â‚¬â€œ59 months) received vitamin A (last 6 months)</string>
     <string name="client_malaria_follow_up">Client malaria follow-up</string>
     <string name="created">Created: %s</string>
     <string name="danger_signs_counselling">Danger signs counselling</string>
@@ -265,7 +283,7 @@
     <string name="mmHg">mmHg</string>
     <string name="hb_level">Hb level</string>
     <string name="ifa_received">IFA received</string>
-    <string name="indicators_udpating">Updating…</string>
+    <string name="indicators_udpating">UpdatingÃ¢â‚¬Â¦</string>
     <string name="indicators_updating_complete">Updating complete</string>
     <string name="last_visit_40_days_ago">Last visit %1$s ago</string>
     <string name="menu_all_families">All families</string>
@@ -285,13 +303,13 @@
     <string name="pnc_indicator_3">Newborns initiated breastfeeding within 1 hour (last 6 months)</string>
     <string name="quarter_three">Quarter III</string>
     <string name="quarter_two">Quarter II</string>
-    <string name="saving_dialog_title">Saving…</string>
-    <string name="saving_index">Saving index…</string>
+    <string name="saving_dialog_title">SavingÃ¢â‚¬Â¦</string>
+    <string name="saving_index">Saving indexÃ¢â‚¬Â¦</string>
     <string name="search_name_or_id">Search name or ID</string>
     <string name="sick_visit">Sick visit</string>
     <string name="tb_referral">TB referral</string>
     <string name="unique_id_text">Unique ID</string>
-    <string name="updating">Updating…</string>
+    <string name="updating">UpdatingÃ¢â‚¬Â¦</string>
     <string name="vitamin_a_number_dose">Vitamin A %s dose</string>
     <string name="open_referral_form">Open %s referral</string>
     
@@ -306,18 +324,18 @@
     <string name="birth_cert_value">Has birth certificate? %s</string>
     <string name="birth_date">Date of birth</string>
     <string name="child_under_five">Child under five</string>
-    <string name="children_0_23_months_with_birth_certificate">Children (0–23 months) with birth certificate</string>
-    <string name="children_0_23_months_without_birth__certificate">Children (0–23 months) without birth certificate</string>
-    <string name="children_0_24_months_overdue_vaccinations">Children (0–23 months) overdue vaccinations</string>
-    <string name="children_0_59_months_without_birth__certificate">Children (0–59 months) without birth certificate</string>
-    <string name="children_0_5_months_not_exclusively_breastfeeding">Children (0–5 months) not exclusively breastfeeding</string>
-    <string name="children_12_23_months_dewormed">Children (12–23 months) dewormed (last 6 months)</string>
-    <string name="children_12_23_months_not_dewormed">Children (12–23 months) not dewormed (last 6 months)</string>
-    <string name="children_12_59_months_not_dewormed">Children (12–59 months) not dewormed (last 6 months)</string>
-    <string name="children_6_23_months_not_received_vitamin_A">Children (6–23 months) not received vitamin A (last 6 months)</string>
-    <string name="children_6_23_months_overdue_mnp">Children (6–23 months) overdue MNP supplementation</string>
-    <string name="children_6_23_months_received_vitamin_A">Children (6–23 months) received vitamin A (last 6 months)</string>
-    <string name="children_6_59_months_not_received_vitamin_A">Children (6–59 months) not received vitamin A (last 6 months)</string>
+    <string name="children_0_23_months_with_birth_certificate">Children (0Ã¢â‚¬â€œ23 months) with birth certificate</string>
+    <string name="children_0_23_months_without_birth__certificate">Children (0Ã¢â‚¬â€œ23 months) without birth certificate</string>
+    <string name="children_0_24_months_overdue_vaccinations">Children (0Ã¢â‚¬â€œ23 months) overdue vaccinations</string>
+    <string name="children_0_59_months_without_birth__certificate">Children (0Ã¢â‚¬â€œ59 months) without birth certificate</string>
+    <string name="children_0_5_months_not_exclusively_breastfeeding">Children (0Ã¢â‚¬â€œ5 months) not exclusively breastfeeding</string>
+    <string name="children_12_23_months_dewormed">Children (12Ã¢â‚¬â€œ23 months) dewormed (last 6 months)</string>
+    <string name="children_12_23_months_not_dewormed">Children (12Ã¢â‚¬â€œ23 months) not dewormed (last 6 months)</string>
+    <string name="children_12_59_months_not_dewormed">Children (12Ã¢â‚¬â€œ59 months) not dewormed (last 6 months)</string>
+    <string name="children_6_23_months_not_received_vitamin_A">Children (6Ã¢â‚¬â€œ23 months) not received vitamin A (last 6 months)</string>
+    <string name="children_6_23_months_overdue_mnp">Children (6Ã¢â‚¬â€œ23 months) overdue MNP supplementation</string>
+    <string name="children_6_23_months_received_vitamin_A">Children (6Ã¢â‚¬â€œ23 months) received vitamin A (last 6 months)</string>
+    <string name="children_6_59_months_not_received_vitamin_A">Children (6Ã¢â‚¬â€œ59 months) not received vitamin A (last 6 months)</string>
     <string name="completed_on_prefix">Completed on %1$s</string>
     <string name="counseled">Counseled</string>
     <string name="device_to_device_sync">Device-to-device Sync</string>
@@ -326,7 +344,7 @@
     <string name="drc_minimum_dietary_choice_2">Minimum dietary diversity choice 2</string>
     <string name="drc_minimum_dietary_choice_3">Minimum dietary diversity choice 3</string>
     <string name="drc_minimum_dietary_choice_4">Minimum dietary diversity choice 4</string>
-    <string name="family_kit_suffix"> · Family kit</string>
+    <string name="family_kit_suffix"> Ã‚Â· Family kit</string>
     <string name="fp_post_partum">Post-partum family planning</string>
     <string name="fully_immunized_at_age">Fully immunized at age %1$s</string>
     <string name="has_birt_cert">Has birth certificate?</string>
@@ -368,7 +386,7 @@
 
     <!-- Default strings for translated resources -->
     <string name="login_title">ECAP App</string>
-    <string name="offline_login_token_expired">Offline login token expired. Please connect to the internet and log in again.</string>
+    <string name="offline_login_unavailable">Username or password could not be verified offline. Please connect to the internet and log in again.</string>
     <string name="title_family_detail">Household details</string>
     <string name="go_to_family_s_profile">Go to household profile</string>
     <string name="family_has_nothing_due">Household has no services due</string>
@@ -383,6 +401,8 @@
     <string name="not_visiting_this_month">Not visiting this month</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="not_available">N/A</string>
+    <string name="delete_report_prompt">Delete this submitted report?</string>
     <string name="expand">Expand</string>
     <string name="empty_state_image">Empty state image</string>
     <string name="visit_not_done_btn_child_profile">Visit not done</string>
@@ -393,7 +413,7 @@
     <string name="action_settings">Settings</string>
     <string name="observations_illness_episodes"><![CDATA[Observations & illness episodes - <i>optional</i>]]></string>
     <string name="observations_illness_episodes_medical"><![CDATA[Observations & illness episodes]]></string>
-    <string name="interpunct">・</string>
+    <string name="interpunct">Ã£Æ’Â»</string>
     <string name="cancel">Cancel</string>
     <string name="dose_not_given">Dose not given</string>
     <string name="head_of_family">Head of household</string>
@@ -409,6 +429,117 @@
     <string name="menu_child">Child</string>
     <string name="menu_child_clients">VCA Register</string>
     <string name="menu_malaria">Malaria</string>
+    <string name="report_nutrition">Nutrition</string>
+    <string name="report_tb">TB</string>
+    <string name="report_community_alert">Community Alert</string>
+    <string name="report_malaria_description">View, manage, and review monthly malaria reports.</string>
+    <string name="report_nutrition_description">View, manage, and review monthly nutrition reports.</string>
+    <string name="report_tb_description">View, manage, and review monthly TB reports.</string>
+    <string name="report_community_alert_description">View, manage, and review community alert reports.</string>
+    <string name="report_malaria_saved">Malaria report saved successfully.</string>
+    <string name="report_nutrition_saved">Nutrition report saved successfully.</string>
+    <string name="report_tb_saved">TB report saved successfully.</string>
+    <string name="report_community_alert_saved">Community alert report saved successfully.</string>
+    <string name="report_community_saved">Community report saved successfully.</string>
+    <string name="report_summary">Report Summary</string>
+    <string name="submitted_at">Submitted at %1$s</string>
+    <string name="tb_report_title">Monthly TB Report - %s</string>
+    <string name="nutrition_report_title">Monthly Nutrition Report - %s</string>
+    <string name="malaria_report_title">Malaria Monthly Report - %s</string>
+    <string name="report_community_alert_title">Community Alert Reporting - %s</string>
+    <string name="community_alert_logsheet_title">Community Alert Reporting Form</string>
+    <string name="community_alert_logsheet_subtitle">Community alert reporting details</string>
+    <string name="logsheet_district_label">District</string>
+    <string name="logsheet_facility_label">Facility</string>
+    <string name="logsheet_community_label">Community</string>
+    <string name="logsheet_month_label">Month</string>
+    <string name="logsheet_year_label">Year</string>
+    <string name="logsheet_entry_title">Monthly Log Entry</string>
+    <string name="logsheet_date_time_header">When did this illness, condition, or event happen?</string>
+    <string name="logsheet_event_date_label">When did this illness, condition, or event happen?</string>
+    <string name="logsheet_community_header">Where did this illness, condition, or event happen? (Include Community, Ward/Zone, and District)</string>
+    <string name="logsheet_event_header">Type of illness, condition, event, or signal</string>
+    <string name="logsheet_action_header">What immediate action has been taken by the CCW or community?</string>
+    <string name="logsheet_remarks_header">Remarks</string>
+    <string name="logsheet_people_affected">How many people have been affected by this alert?</string>
+    <string name="logsheet_deaths">How many people have died?</string>
+    <string name="logsheet_supervisor_review">To be completed by the Super Mentor (Supervisor)</string>
+    <string name="logsheet_comments">Comments</string>
+    <string name="report_last_submitted_prefix">Last submitted: %1$s</string>
+        <string name="report_last_submitted_not_available">No submissions yet</string>
+    <string name="report_status_saved">Saved</string>
+    <string name="report_submission_header_caption">Review, edit, or remove saved monthly submissions</string>
+    <string name="report_submission_meta">Showing %1$d reports</string>
+    <string name="report_submission_meta_filtered">Showing %1$d of %2$d reports</string>
+    <string name="report_submission_form_id_prefix">Form ID: %1$s</string>
+    <string name="report_submission_last_updated_prefix">Last updated: %1$s</string>
+        <string name="report_submission_last_updated_not_available">Last updated: N/A</string>
+    <string name="report_submission_month_filter_label">Filter by month and year</string>
+    <string name="report_submission_month_all">All periods</string>
+    <string name="report_submission_toolbar_subtitle">Monthly submissions register</string>
+    <string name="follow_up_visitation">Follow-up Visitation</string>
+    <string name="household_visit">Household Visit</string>
+    <string name="case_plan_label">Case Plan</string>
+    <string name="bullet_separator">•</string>
+    <string name="view">View</string>
+    <string name="household_service_report_title">Household Service Report</string>
+    <string name="vca_service_report_title">VCA Service Report</string>
+    <string name="report_details">Report Details</string>
+    <string name="date_of_service">Date of Service</string>
+    <string name="services_for">Services For</string>
+    <string name="location">Location</string>
+    <string name="health_services">Health Services</string>
+    <string name="services_provided">Services Provided</string>
+    <string name="services_provided_header">Services Provided</string>
+    <string name="school_services">School Services</string>
+    <string name="safety_services">Safety Services</string>
+    <string name="stability_services">Stability Services</string>
+    <string name="household_level_services">Household-Level Services</string>
+    <string name="hiv_art_details">HIV &amp; ART Details</string>
+    <string name="hiv_status">HIV Status</string>
+    <string name="pregnant_breastfeeding">Pregnant/Breastfeeding</string>
+    <string name="art_clinic">ART Clinic</string>
+    <string name="last_vl_test">Last VL Test</string>
+    <string name="last_vl_result">Last VL Result</string>
+    <string name="next_vl_test">Next VL Test</string>
+    <string name="on_mmd">On MMD</string>
+    <string name="mmd_level">MMD Level</string>
+    <string name="signature">Signature</string>
+    <string name="no_signature_captured">No signature captured</string>
+    <string name="service_reports_submitted">Service Reports Submitted</string>
+    <plurals name="service_reports_count">
+        <item quantity="one">%d Service Report</item>
+        <item quantity="other">%d Service Reports</item>
+    </plurals>
+    <string name="service_reports_last_submitted"> • Last: %1$s</string>
+    <string name="show_details">Show Details</string>
+    <string name="contact_details">Contact Details</string>
+    <string name="date_linked">Date Linked</string>
+    <string name="ecap_id">ECAPII ID</string>
+    <string name="sub_population">Sub Population</string>
+    <string name="relationship">Relationship</string>
+    <string name="current_address">Current Address</string>
+    <string name="landmark">Landmark</string>
+    <string name="phone">Phone</string>
+    <string name="hiv_status_header">HIV Status</string>
+    <string name="current_hiv_status">Current HIV Status</string>
+    <string name="date_tested">Date Tested</string>
+    <string name="hiv_testing_results">HIV Testing Results</string>
+    <string name="art_details">ART Details</string>
+    <string name="art_number">ART Number</string>
+    <string name="date_enrolled_on_art">Date Enrolled on ART</string>
+    <string name="date_initiated_on_art">Date Initiated on ART</string>
+    <string name="notes">Notes</string>
+    <string name="comment">Comment</string>
+    <string name="case_worker_name">Case Worker Name</string>
+    <string name="checked_by">Checked By</string>
+    <string name="initial_hiv_status">Initial HIV Status</string>
+    <string name="initial_hiv_status_date">Date of Initial Status</string>
+    <string name="updated_hiv_status">Updated HIV Status</string>
+    <string name="updated_hiv_status_date">Date of Updated Status</string>
+    <string name="report_submission_empty_title">No reports yet</string>
+    <string name="report_submission_empty_message">Submitted reports will appear here once they are created.</string>
+    <string name="report_submission_empty_filtered_message">No reports match the selected filter.</string>
     <string name="january">January</string>
     <string name="february">February</string>
     <string name="march">March</string>
@@ -458,7 +589,7 @@
     <string name="family_profile_title_with_firstname">Household %1$s %2$s</string>
     <string name="unauthorized_group">This account is not authorized to access this device</string>
     <string name="physically_challenged">Living with a disability</string>
-    <string name="balanced_diet_content_eight" formatted="false">Less than 10% of total energy intake should come from free sugars—about 50 g (12 teaspoons) for an adult consuming 2000 calories—ideally under 5% for added health benefits.</string>
+    <string name="balanced_diet_content_eight" formatted="false">Less than 10% of total energy intake should come from free sugarsÃ¢â‚¬â€about 50 g (12 teaspoons) for an adult consuming 2000 caloriesÃ¢â‚¬â€ideally under 5% for added health benefits.</string>
     <string name="hello_world">Hello World!</string>
     <string name="csv_generated_location">CSV files have been generated. You can find them in the Downloads/%1$s folder.</string>
     
@@ -469,3 +600,14 @@
     <string name="logout_text">Logout</string>
 
 </resources>
+
+
+
+
+
+
+
+
+
+
+

@@ -48,11 +48,12 @@ public class LoginInteractor extends BaseLoginInteractor implements BaseLoginCon
             boolean isLocalLogin;
 
             if (!hasNetwork) {
-                if (refreshTokenExpired) {
+                boolean hasLocalAccount = getSharedPreferences().isRegisteredANM(userName);
+                if (refreshTokenExpired || !hasLocalAccount) {
                     loginView.getAppCompatActivity().runOnUiThread(() -> {
                         loginView.showProgress(false);
                         loginView.enableLoginButton(true);
-                        loginView.showErrorDialog(getApplicationContext().getString(R.string.offline_login_token_expired));
+                        loginView.showErrorDialog(getApplicationContext().getString(R.string.offline_login_unavailable));
                     });
                     SecurityHelper.clearArray(password);
                     return;

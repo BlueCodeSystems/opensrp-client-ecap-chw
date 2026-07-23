@@ -947,6 +947,12 @@ public class Context {
         if (MapOfCommonRepository == null) {
             MapOfCommonRepository = new HashMap<String, CommonRepository>();
         }
+        if (bindtypes == null) {
+            assignbindtypes();
+        }
+        if (bindtypes == null) {
+            bindtypes = new ArrayList<CommonRepositoryInformationHolder>();
+        }
         if (MapOfCommonRepository.get(tablename) == null) {
             for (CommonRepositoryInformationHolder bindType : bindtypes) {
                 if (bindType.getBindtypename().equalsIgnoreCase(tablename)) {
@@ -963,7 +969,16 @@ public class Context {
                     }
                 }
             }
-
+            if (MapOfCommonRepository.get(tablename) == null) {
+                Timber.w("Creating fallback common repository for missing bindtype: %s", tablename);
+                if (commonFtsObject != null && commonFtsObject.containsTable(tablename)) {
+                    MapOfCommonRepository.put(tablename,
+                            new CommonRepository(commonFtsObject, tablename, new ColumnDetails[0]));
+                } else {
+                    MapOfCommonRepository.put(tablename,
+                            new CommonRepository(tablename, new ColumnDetails[0]));
+                }
+            }
         }
         return MapOfCommonRepository.get(tablename);
     }
@@ -1238,3 +1253,4 @@ public class Context {
 
     ///////////////////////////////////////////////////////////////////////////////
 }
+

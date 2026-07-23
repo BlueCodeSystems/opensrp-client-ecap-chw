@@ -1,276 +1,222 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/register_columns"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:elevation="20dp"
-    >
-    <TextView
-        android:id="@+id/visit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="200dp"
-        android:text="Gestation Age: 6 weeks"
-        />
-    <ImageView
-        android:id="@+id/expand_more"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="110dp"
-        android:src="@drawable/baseline_expand_more_24"
-        android:visibility="gone" />
+    android:layout_marginHorizontal="2dp"
+    android:layout_marginBottom="10dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="2dp"
+    app:cardUseCompatPadding="true">
 
-    <ImageView
-        android:id="@+id/expand_less"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="110dp"
-        android:src="@drawable/baseline_expand_less_24" />
-    <ImageView
-        android:layout_alignParentEnd="true"
-        android:id="@+id/edit_me"
-        android:tint="#696969"
-        android:layout_marginRight="70dp"
-        android:layout_centerInParent="true"
-        android:src="@drawable/ic_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <ImageView
-        android:id="@+id/delete_record"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="20dp"
-        android:tint="#696969"
-        android:layout_centerInParent="true"
-        android:src="@drawable/delete_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        />
     <LinearLayout
-        android:id="@+id/itemm"
-        android:background="@color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="70dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:orientation="horizontal">
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@android:color/darker_gray" />
-
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="14dp">
 
         <LinearLayout
-            android:id="@+id/qlayout"
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
+            android:id="@+id/itemm"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <org.smartregister.view.customcontrols.CustomFontTextView
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="10dp"
-                style="@style/CustomFontTextViewStyle.ClientList"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:singleLine="true"
-                android:text="ANC Date :"
-                android:textColor="@color/text_black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+            <ImageView
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:background="@drawable/bg_pmtct_icon_circle"
+                android:contentDescription="@string/not_available"
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_calender"
+                app:tint="@color/register_pmtct_icon" />
 
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <org.smartregister.view.customcontrols.CustomFontTextView
-                android:id="@+id/date"
-                android:layout_marginRight="10dp"
-                style="@style/CustomFontTextViewStyle.ClientList"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:singleLine="true"
-                android:text="22-09-2022"
-                android:textColor="@color/text_black"
-                android:textSize="18sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
+                    <org.smartregister.view.customcontrols.CustomFontTextView
+                        android:id="@+id/date"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColor="@color/text_black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
 
+                    <TextView
+                        android:id="@+id/visit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_report_chip"
+                        android:gravity="center"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="4dp"
+                        android:textColor="@color/register_pmtct_icon"
+                        android:textSize="10.5sp"
+                        android:textStyle="bold" />
 
+                </LinearLayout>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/anc_visit"
+                    android:textColor="@color/light_grey_text"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/expand_more"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="8dp"
+                android:contentDescription="@string/not_available"
+                android:padding="4dp"
+                android:src="@drawable/baseline_expand_more_24"
+                android:visibility="visible"
+                app:tint="@color/light_grey_text" />
+
+            <ImageView
+                android:id="@+id/expand_less"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="8dp"
+                android:contentDescription="@string/not_available"
+                android:padding="4dp"
+                android:src="@drawable/baseline_expand_less_24"
+                android:visibility="gone"
+                app:tint="@color/light_grey_text" />
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/expandable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/dash_bg"
+            android:orientation="vertical"
+            android:visibility="gone">
 
+            <LinearLayout style="@style/OverviewRow">
+                <TextView style="@style/OverviewRowLabel" android:text="@string/initial_hiv_status" />
+                <TextView android:id="@+id/initial_hiv_status" style="@style/OverviewRowValue" />
+            </LinearLayout>
 
+            <include layout="@layout/overview_row_divider" />
+
+            <LinearLayout style="@style/OverviewRow">
+                <TextView style="@style/OverviewRowLabel" android:text="@string/initial_hiv_status_date" />
+                <TextView android:id="@+id/initial_hiv_status_date" style="@style/OverviewRowValue" />
+            </LinearLayout>
+
+            <include layout="@layout/overview_row_divider" />
+
+            <LinearLayout style="@style/OverviewRow">
+                <TextView style="@style/OverviewRowLabel" android:text="@string/updated_hiv_status" />
+                <TextView android:id="@+id/updated_hiv_status" style="@style/OverviewRowValue" />
+            </LinearLayout>
+
+            <include layout="@layout/overview_row_divider" />
+
+            <LinearLayout style="@style/OverviewRow">
+                <TextView style="@style/OverviewRowLabel" android:text="@string/updated_hiv_status_date" />
+                <TextView android:id="@+id/updated_hiv_status_date" style="@style/OverviewRowValue" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/divider_grey" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="end|center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/edit_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_button_primary_outline"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="6dp">
+
+                <ImageView
+                    android:id="@+id/edit_me"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:contentDescription="@string/edit"
+                    android:src="@drawable/ic_edit"
+                    app:tint="@color/primary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/edit"
+                    android:textColor="@color/primary"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/delete_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_button_alert_outline"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="6dp">
+
+                <ImageView
+                    android:id="@+id/delete_record"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:contentDescription="@string/delete"
+                    android:src="@drawable/delete_icon"
+                    app:tint="@color/pie_chart_red" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/delete"
+                    android:textColor="@color/pie_chart_red"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
 
-
-
-    <View
-        android:layout_below="@+id/itemm"
-        android:background="@android:color/darker_gray"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"/>
-    <LinearLayout
-        android:id="@+id/expandable"
-        android:visibility="gone"
-        android:orientation="vertical"
-        android:layout_below="@+id/itemm"
-        android:layout_margin="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:text="Initial HIV status"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/initial_hiv_status"
-                android:layout_weight="1"
-                android:text="dnbvbdshbuhsjhsgdujhgolghuygghfgsduhfbsdjhnbshdvbuhygfgsbs"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:text="Date of initial Hiv status"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/initial_hiv_status_date"
-                android:layout_weight="1"
-                android:text="yhs"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:text="Updated HIV status"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/updated_hiv_status"
-                android:layout_weight="1"
-                android:text="DGHHDSGBVU JHB jyhgshgfuis fsjhisujhf sfiuhsiouho0sigK"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:text="Date of updated HIV status"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/updated_hiv_status_date"
-                android:layout_weight="1"
-                android:text="yhs dgbdfbhdh"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <!--        <LinearLayout-->
-        <!--            android:layout_marginTop="5dp"-->
-        <!--            android:weightSum="2"-->
-        <!--            android:orientation="horizontal"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content">-->
-
-        <!--            <TextView-->
-        <!--                android:layout_weight="1"-->
-        <!--                android:textStyle="bold"-->
-        <!--                android:text="Institution of Service referral"-->
-        <!--                android:layout_width="0dip"-->
-        <!--                android:layout_height="wrap_content"/>-->
-
-        <!--            <TextView-->
-        <!--                android:id="@+id/institution"-->
-        <!--                android:layout_weight="1"-->
-        <!--                android:text="yhs"-->
-        <!--                android:layout_width="0dip"-->
-        <!--                android:layout_height="wrap_content"/>-->
-
-        <!--        </LinearLayout>-->
-
-        <!--        <LinearLayout-->
-        <!--            android:layout_marginTop="5dp"-->
-        <!--            android:weightSum="2"-->
-        <!--            android:orientation="horizontal"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content">-->
-
-        <!--            <TextView-->
-        <!--                android:layout_weight="1"-->
-        <!--                android:textStyle="bold"-->
-        <!--                android:text="Comments"-->
-        <!--                android:layout_width="0dip"-->
-        <!--                android:layout_height="wrap_content"/>-->
-
-        <!--            <TextView-->
-        <!--                android:id="@+id/comment"-->
-        <!--                android:layout_weight="1"-->
-        <!--                android:text="yhsjhsiujhg ujhiujhoip mb"-->
-        <!--                android:layout_width="0dip"-->
-        <!--                android:layout_height="wrap_content"/>-->
-
-        <!--        </LinearLayout>-->
-
-
-    </LinearLayout>
-
-
-</RelativeLayout>
+</androidx.cardview.widget.CardView>

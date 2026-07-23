@@ -170,7 +170,7 @@ public class MotherRegisterProvider implements RecyclerViewProvider<MotherRegist
 
     @Override
     public MotherRegisterViewHolder createViewHolder(ViewGroup viewGroup) {
-        View viewHolder = inflater().inflate(R.layout.mother_layout, null);
+        View viewHolder = inflater().inflate(R.layout.mother_layout, viewGroup, false);
         return new MotherRegisterViewHolder(viewHolder);
     }
 

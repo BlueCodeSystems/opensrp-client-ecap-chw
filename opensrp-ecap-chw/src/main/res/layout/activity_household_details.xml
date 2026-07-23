@@ -183,6 +183,15 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
+        <View
+            android:id="@+id/fab_scrim"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#99000000"
+            android:visibility="gone"
+            android:clickable="true"
+            android:focusable="true" />
+
         <LinearLayout
             android:id="@+id/menu_bar"
             android:layout_width="wrap_content"
@@ -194,7 +203,6 @@
             android:orientation="vertical"
             android:visibility="visible">
 
-
             <RelativeLayout
                 android:id="@+id/child_form"
                 android:onClick="onClick"
@@ -205,41 +213,16 @@
                 android:orientation="horizontal"
                 android:visibility="gone">
 
-                <RelativeLayout
-                    android:layout_width="230dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
+                <TextView
+                    android:id="@+id/CallTextViewHint2"
+                    style="@style/HouseholdActionChip"
                     android:layout_toLeftOf="@+id/callFab2"
-                    android:background="#666666"
-                    android:elevation="2dp"
-                    android:gravity="center"
-                    android:minWidth="50dp"
-                    android:padding="10dp">
-
-
-                    <TextView
-                        android:id="@+id/CallTextViewHint2"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:text="Add Family Member"
-                        android:textColor="@color/white"
-                        android:textStyle="italic"
-                        android:visibility="visible"
-                        android:gravity="center"/>
-
-                </RelativeLayout>
-
+                    android:text="Add Family Member" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/callFab2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
-                    app:srcCompat="@android:drawable/ic_input_add"  />
+                    style="@style/HouseholdActionMiniFab"
+                    app:srcCompat="@android:drawable/ic_input_add" />
 
             </RelativeLayout>
 
@@ -253,43 +236,18 @@
                 android:orientation="horizontal"
                 android:visibility="gone">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
+                <TextView
+                    android:id="@+id/CallTextViewHint1"
+                    style="@style/HouseholdActionChip"
                     android:layout_toLeftOf="@+id/callFab1"
-                    android:background="#666666"
-                    android:elevation="2dp"
-                    android:gravity="center"
-                    android:minWidth="50dp"
-                    android:padding="10dp">
-
-
-                    <TextView
-                        android:id="@+id/CallTextViewHint1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:text="Household Screening"
-                        android:textColor="@color/white"
-                        android:textStyle="italic"
-                        android:visibility="visible" />
-
-                </RelativeLayout>
-
+                    android:text="Household Screening" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/callFab1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
-                    app:srcCompat="@drawable/baseline_mode_edit_24"  />
+                    style="@style/HouseholdActionMiniFab"
+                    app:srcCompat="@android:drawable/ic_input_add" />
 
             </RelativeLayout>
-
 
             <RelativeLayout
                 android:id="@+id/cassessment"
@@ -301,40 +259,16 @@
                 android:orientation="horizontal"
                 android:visibility="gone">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
+                <TextView
+                    android:id="@+id/CallTextViewHint"
+                    style="@style/HouseholdActionChip"
                     android:layout_toLeftOf="@+id/callFab"
-                    android:background="#666666"
-                    android:elevation="2dp"
-                    android:gravity="center"
-                    android:minWidth="50dp"
-                    android:padding="10dp">
-
-
-                    <TextView
-                        android:id="@+id/CallTextViewHint"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:text="Caregiver Vulnerability Assessment"
-                        android:textColor="@color/white"
-                        android:textStyle="italic"
-                        android:visibility="visible" />
-
-                </RelativeLayout>
-
+                    android:text="Caregiver Vulnerability Assessment" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/callFab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
-                    app:srcCompat="@drawable/baseline_mode_edit_24" />
+                    style="@style/HouseholdActionMiniFab"
+                    app:srcCompat="@android:drawable/ic_input_add" />
 
             </RelativeLayout>
 
@@ -349,31 +283,17 @@
                 android:visibility="gone">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
+                    style="@style/HouseholdActionChip"
                     android:layout_toLeftOf="@+id/case_plan_fab"
-                    android:background="#666666"
-                    android:elevation="2dp"
-                    android:gravity="center"
-                    android:minWidth="50dp"
-                    android:padding="10dp"
-                    android:text="Caregiver Case Plan"
-                    android:textStyle="italic"
-                    android:textColor="@color/white" />
-
+                    android:text="Caregiver Case Plan" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/case_plan_fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
+                    style="@style/HouseholdActionMiniFab"
                     app:srcCompat="@android:drawable/ic_input_add" />
 
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/h_referral"
                 android:onClick="onClick"
@@ -385,28 +305,13 @@
                 android:visibility="gone">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
+                    style="@style/HouseholdActionChip"
                     android:layout_toLeftOf="@+id/referral_fab"
-                    android:background="#666666"
-                    android:elevation="2dp"
-                    android:gravity="center"
-                    android:minWidth="50dp"
-                    android:padding="10dp"
-                    android:text="Caregiver Referral"
-                    android:textStyle="italic"
-                    android:textColor="@color/white" />
-
+                    android:text="Caregiver Referral" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/referral_fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
+                    style="@style/HouseholdActionMiniFab"
                     app:srcCompat="@android:drawable/ic_input_add" />
 
             </RelativeLayout>
@@ -422,28 +327,13 @@
                 android:visibility="gone">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
+                    style="@style/HouseholdActionChip"
                     android:layout_toLeftOf="@+id/household_visitation_caregiver_fab"
-                    android:background="#666666"
-                    android:elevation="2dp"
-                    android:gravity="center"
-                    android:minWidth="50dp"
-                    android:padding="10dp"
-                    android:text="Quarterly Re-assessment Form"
-                    android:textStyle="italic"
-                    android:textColor="@color/white" />
-
+                    android:text="Quarterly Re-assessment Form" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/household_visitation_caregiver_fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
+                    style="@style/HouseholdActionMiniFab"
                     app:srcCompat="@android:drawable/ic_input_add" />
 
             </RelativeLayout>
@@ -459,28 +349,13 @@
                 android:visibility="gone">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
+                    style="@style/HouseholdActionChip"
                     android:layout_toLeftOf="@+id/tb_screening_caregiver_fab"
-                    android:background="#666666"
-                    android:elevation="2dp"
-                    android:gravity="center"
-                    android:minWidth="50dp"
-                    android:padding="10dp"
-                    android:text="TB Screening - Caregiver"
-                    android:textStyle="italic"
-                    android:textColor="@color/white" />
-
+                    android:text="TB Screening - Caregiver" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/tb_screening_caregiver_fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
+                    style="@style/HouseholdActionMiniFab"
                     app:srcCompat="@android:drawable/ic_input_add" />
 
             </RelativeLayout>
@@ -496,31 +371,17 @@
                 android:visibility="gone">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
+                    style="@style/HouseholdActionChip"
                     android:layout_toLeftOf="@+id/hiv_assessment_caregiver_fab"
-                    android:background="#666666"
-                    android:elevation="2dp"
-                    android:gravity="center"
-                    android:minWidth="50dp"
-                    android:padding="10dp"
-                    android:text="HIV Assessment For Caregiver"
-                    android:textStyle="italic"
-                    android:textColor="@color/white" />
-
+                    android:text="HIV Assessment For Caregiver" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/hiv_assessment_caregiver_fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
+                    style="@style/HouseholdActionMiniFab"
                     app:srcCompat="@android:drawable/ic_input_add" />
 
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/graduation"
                 android:onClick="onClick"
@@ -532,30 +393,14 @@
                 android:visibility="gone">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
+                    style="@style/HouseholdActionChip"
                     android:layout_toLeftOf="@+id/grad_fab"
-                    android:background="#666666"
-                    android:textColor="@android:color/white"
-                    android:elevation="2dp"
-                    android:gravity="center"
-                    android:minWidth="50dp"
-                    android:padding="10dp"
-                    android:text="Graduation Benchmark Assessment"
-                    android:textStyle="italic"
-                    />
-
+                    android:text="Graduation Benchmark Assessment" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/grad_fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
-                    app:srcCompat="@drawable/baseline_mode_edit_24"  />
+                    style="@style/HouseholdActionMiniFab"
+                    app:srcCompat="@android:drawable/ic_input_add" />
 
             </RelativeLayout>
 
@@ -570,30 +415,14 @@
                 android:visibility="gone">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
+                    style="@style/HouseholdActionChip"
                     android:layout_toLeftOf="@+id/we_service_caregiver_fab"
-                    android:background="#666666"
-                    android:textColor="@android:color/white"
-                    android:elevation="2dp"
-                    android:gravity="center"
-                    android:minWidth="50dp"
-                    android:padding="10dp"
-                    android:text="WE Services - Caregiver"
-                    android:textStyle="italic"
-                    />
-
+                    android:text="WE Services - Caregiver" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/we_service_caregiver_fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
-                    app:srcCompat="@drawable/baseline_mode_edit_24"  />
+                    style="@style/HouseholdActionMiniFab"
+                    app:srcCompat="@android:drawable/ic_input_add" />
 
             </RelativeLayout>
 
@@ -608,33 +437,16 @@
                 android:visibility="gone">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
+                    style="@style/HouseholdActionChip"
                     android:layout_toLeftOf="@+id/we_service_vca_fab"
-                    android:background="#666666"
-                    android:textColor="@android:color/white"
-                    android:elevation="2dp"
-                    android:gravity="center"
-                    android:minWidth="50dp"
-                    android:padding="10dp"
-                    android:text="WE Services - CA"
-                    android:textStyle="italic"
-                    />
-
+                    android:text="WE Services - CA" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/we_service_vca_fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
-                    app:srcCompat="@drawable/baseline_mode_edit_24"  />
+                    style="@style/HouseholdActionMiniFab"
+                    app:srcCompat="@android:drawable/ic_input_add" />
 
             </RelativeLayout>
-
 
         </LinearLayout>
 

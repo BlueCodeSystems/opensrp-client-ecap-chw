@@ -155,8 +155,7 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
                 holder.exPandableView.setVisibility(View.VISIBLE);
                 holder.expMore.setVisibility(View.GONE);
                 holder.expLess.setVisibility(View.VISIBLE);
-                holder.editme.setVisibility(View.GONE);
-                holder.delete.setVisibility(View.GONE);
+                setActionButtonsVisibility(holder, View.GONE);
             }
         });
 
@@ -167,8 +166,7 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
                 holder.exPandableView.setVisibility(View.GONE);
                 holder.expMore.setVisibility(View.VISIBLE);
                 holder.expLess.setVisibility(View.GONE);
-                holder.editme.setVisibility(View.VISIBLE);
-                holder.delete.setVisibility(View.VISIBLE);
+                setActionButtonsVisibility(holder, View.VISIBLE);
             }
         });
 
@@ -221,6 +219,9 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
                 }
             });
         }));
+        if (holder.editButton != null) {
+            holder.editButton.setOnClickListener(v -> holder.editme.performClick());
+        }
         holder.delete.setOnClickListener(v -> {
             try {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -274,8 +275,23 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
                 Timber.e(e);
             }
         });
+        if (holder.deleteButton != null) {
+            holder.deleteButton.setOnClickListener(v -> holder.delete.performClick());
+        }
 
     }
+
+    private void setActionButtonsVisibility(ViewHolder holder, int visibility) {
+        holder.editme.setVisibility(visibility);
+        holder.delete.setVisibility(visibility);
+        if (holder.editButton != null) {
+            holder.editButton.setVisibility(visibility);
+        }
+        if (holder.deleteButton != null) {
+            holder.deleteButton.setVisibility(visibility);
+        }
+    }
+
     public void showDialogBox(String householdId,String message){
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_layout);
@@ -463,6 +479,7 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
         LinearLayout linearLayout, exPandableView;
         ImageView expMore, expLess,editme,delete;
         ImageView signatureView;
+        View editButton, deleteButton;
 
         public ViewHolder(View itemView) {
 
@@ -480,6 +497,8 @@ public class CaregiverVisitAdapter extends RecyclerView.Adapter<CaregiverVisitAd
             updateHivStatus = itemView.findViewById(R.id.updated_hiv_status);
             updatedHivStatusDate = itemView.findViewById(R.id.updated_hiv_status_date);
             signatureView = itemView.findViewById(R.id.signature_view);
+            editButton = itemView.findViewById(R.id.edit_button);
+            deleteButton = itemView.findViewById(R.id.delete_button);
 
 
         }

@@ -58,7 +58,9 @@ import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.model.MotherDeliveryModel;
 import com.bluecodeltd.ecap.chw.model.MotherOutcomeModel;
 import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
+import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -115,6 +117,7 @@ public class MotherDetail extends AppCompatActivity {
     private String refresh;
     private TextView childTabCount, motherName, txtAge;
     private FloatingActionButton fab;
+    private View fabScrim;
     CommonPersonObjectClient commonPersonObjectClient, commonMother;
     ObjectMapper oMapper;
     private RelativeLayout cLayout, mLayout,
@@ -295,6 +298,8 @@ public class MotherDetail extends AppCompatActivity {
         oMapper = new ObjectMapper();
 
         fab = binding.fabx;
+        fabScrim = binding.fabScrim;
+        fabScrim.setOnClickListener(v -> closeFab());
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
@@ -351,6 +356,7 @@ public class MotherDetail extends AppCompatActivity {
             if (pmtctBtn != null) {
                 pmtctBtn.setVisibility(caregiverHivPositive ? View.VISIBLE : View.GONE);
             }
+
         } catch (Exception ignored) {
             caregiverHivPositive = false;
         }
@@ -1193,8 +1199,11 @@ public class MotherDetail extends AppCompatActivity {
 
             isFabOpen = true;
             fab.startAnimation(rotate_forward);
+            fabScrim.setVisibility(View.VISIBLE);
+            fabScrim.setAlpha(0f);
+            fabScrim.animate().alpha(1f).setDuration(200).start();
             mLayout.setVisibility(View.VISIBLE);
-            cLayout.setVisibility(View.VISIBLE);
+            cLayout.setVisibility(caregiverHivPositive ? View.GONE : View.VISIBLE);
 
             if (!caregiverHivPositive) {
                 if (motherAncLayout != null) motherAncLayout.setVisibility(View.VISIBLE);
@@ -1282,6 +1291,8 @@ public class MotherDetail extends AppCompatActivity {
     public void closeFab(){
         fab.startAnimation(rotate_backward);
         isFabOpen = false;
+        fabScrim.animate().alpha(0f).setDuration(200)
+                .withEndAction(() -> fabScrim.setVisibility(View.GONE)).start();
         cLayout.setVisibility(View.GONE);
         mLayout.setVisibility(View.GONE);
         if (motherAncLayout != null) motherAncLayout.setVisibility(View.GONE);
@@ -1303,136 +1314,162 @@ public class MotherDetail extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.delete_record) {
-            // Require user to delete all related children first before deleting a mother record.
-            try {
-                String hhId = commonPersonObjectClient != null && commonPersonObjectClient.getColumnmaps() != null
-                        ? commonPersonObjectClient.getColumnmaps().get("household_id") : null;
-                if (hhId != null && !hhId.trim().isEmpty()) {
-                    java.util.List<com.bluecodeltd.ecap.chw.model.Child> activeChildren = IndexPersonDao.getFamilyChildren(hhId);
-                    if (activeChildren != null && !activeChildren.isEmpty()) {
-                        Toasty.warning(MotherDetail.this, "Delete the child(ren) before deleting the mother", Toast.LENGTH_LONG, true).show();
-                        return true;
-                    }
-                    if (PmtctChildDao.hasDeletedHei(hhId)) {
-                        Toasty.warning(MotherDetail.this, "Delete the HEI child(ren) before deleting the mother", Toast.LENGTH_LONG, true).show();
-                        return true;
-                    }
-                }
-            } catch (Exception ignored) { }
-
-            deleteBuilder.setMessage("You are about to delete this mother and all her forms.");
-            deleteBuilder.setNegativeButton("NO", (dialog, id) -> dialog.cancel());
-            deleteBuilder.setPositiveButton("YES", (dialogInterface, i) -> {
-                try {
-                    performCascadeDeleteFromMotherProfile();
-                } catch (Exception e) {
-                    Timber.e(e);
-                }
-                Toasty.success(MotherDetail.this, "Deleted", Toast.LENGTH_LONG, true).show();
-                Intent returnToMotherIndex = new Intent(MotherDetail.this, MotherIndexActivity.class);
-                returnToMotherIndex.putExtra("refresh", "true");
-                returnToMotherIndex.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(returnToMotherIndex);
+        switch (resolveViewIdName(item.getItemId())) {
+            case "refresh":
                 finish();
-            });
-            AlertDialog alert = deleteBuilder.create();
-            alert.setTitle("Alert");
-            alert.show();
-            return true;
+                startActivity(getIntent());
+                return true;
+            case "delete_record":
+                new AlertDialog.Builder(MotherDetail.this)
+                        .setTitle("Alert")
+                        .setMessage("You are about to delete this record")
+                        .setNegativeButton("NO", (dialog, id) -> dialog.cancel())
+                        .setPositiveButton("YES", (dialog, id) -> performCascadeDeleteFromMotherProfile())
+                        .show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
-    private void performCascadeDeleteFromMotherProfile() throws Exception {
-        String hhId = commonPersonObjectClient != null && commonPersonObjectClient.getColumnmaps() != null
-                ? commonPersonObjectClient.getColumnmaps().get("household_id") : null;
-        String baseEntityId = commonPersonObjectClient != null && commonPersonObjectClient.getColumnmaps() != null
-                ? commonPersonObjectClient.getColumnmaps().get("base_entity_id") : null;
+    private String resolveViewIdName(int viewId) {
+        try {
+            return getResources().getResourceEntryName(viewId);
+        } catch (Exception e) {
+            return "";
+        }
+    }
 
-        if (hhId == null || hhId.trim().isEmpty()) {
+    private void performCascadeDeleteFromMotherProfile() {
+        final String hhId;
+        try {
+            hhId = commonPersonObjectClient != null ? commonPersonObjectClient.getColumnmaps().get("household_id") : null;
+        } catch (Exception e) {
+            Timber.e(e);
+            Toasty.error(MotherDetail.this, "Household record not found", Toast.LENGTH_LONG, true).show();
             return;
         }
 
-        // Only delete when all children/HEI are already deleted
-        try {
-            java.util.List<com.bluecodeltd.ecap.chw.model.Child> activeChildren = IndexPersonDao.getFamilyChildren(hhId);
-            if (activeChildren != null && !activeChildren.isEmpty()) {
-                return;
-            }
-        } catch (Exception ignored) { }
+        if (hhId == null || hhId.trim().isEmpty()) {
+            Toasty.error(MotherDetail.this, "Household record not found", Toast.LENGTH_LONG, true).show();
+            return;
+        }
 
-        PtctMotherModel pmtctMother = null;
-        try {
-            pmtctMother = PMTCTMotherDao.getPMCTMother(hhId);
-        } catch (Exception ignored) { }
-        if (pmtctMother != null) {
+        Threading.io(() -> {
             try {
-                String heiCount = PmtctChildDao.countMotherHei(hhId, pmtctMother.getPmtct_id());
-                if (heiCount != null && !"0".equals(heiCount)) {
+                List<Child> activeChildren = IndexPersonDao.getFamilyChildren(hhId);
+                if (activeChildren != null && !activeChildren.isEmpty()) {
+                    String names = "";
+                    try {
+                        names = IndexPersonDao.returnVcaNames(hhId);
+                    } catch (Throwable ignored) { }
+                    final String message = "Please delete/deregister all VCA(s) in this household first.\n\nVCA(s):\n" + (names != null ? names : "");
+                    Threading.main(() -> new AlertDialog.Builder(MotherDetail.this)
+                            .setTitle("Cannot delete")
+                            .setMessage(message)
+                            .setPositiveButton("OK", (d, which) -> d.dismiss())
+                            .show());
                     return;
                 }
-            } catch (Exception ignored) { }
-        }
 
-        FormUtils formUtils = new FormUtils(this);
-
-        // Delete mother index via OpenSRP edit form/event
-        try {
-            IndexMotherModel mother = !android.text.TextUtils.isEmpty(baseEntityId)
-                    ? IndexMotherDao.getIndexMotherByBaseEntityId(baseEntityId)
-                    : IndexMotherDao.getIndexMotherByHouseholdId(hhId);
-            if (mother != null) {
-                mother.setDeleted("1");
-                JSONObject motherForm = formUtils.getFormJson("mother_index_edit");
-                CoreJsonFormUtils.populateJsonForm(motherForm, new ObjectMapper().convertValue(mother, Map.class));
-                motherForm.put("entity_id", mother.getBase_entity_id() != null ? mother.getBase_entity_id() : baseEntityId);
-                ChildIndexEventClient ec = processRegistration(motherForm.toString());
-                if (ec != null) {
-                    saveRegistration(ec, true, null);
-                }
-            }
-        } catch (Exception e) {
-            Timber.e(e);
-        }
-
-        // Delete PMTCT mother via OpenSRP edit form/event (only if present)
-        try {
-            if (pmtctMother != null) {
-                pmtctMother.setDelete_status("1");
-                JSONObject pmtctForm = formUtils.getFormJson("mother_pmtct_edit");
-                CoreJsonFormUtils.populateJsonForm(pmtctForm, new ObjectMapper().convertValue(pmtctMother, Map.class));
-                pmtctForm.put("entity_id", pmtctMother.getBase_entity_id());
+                PtctMotherModel pmtctMother = null;
                 try {
-                    JSONObject del = getFieldJSONObject(fields(pmtctForm, STEP1), "delete_status");
-                    if (del != null) {
-                        del.put(JsonFormUtils.VALUE, "1");
+                    pmtctMother = PMTCTMotherDao.getPMCTMother(hhId);
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+                if (pmtctMother != null) {
+                    String heiCount = PmtctChildDao.countMotherHei(hhId, pmtctMother.getPmtct_id());
+                    if (heiCount != null && !"0".equals(heiCount)) {
+                        final String message = "Please delete/deregister all HEI records first before deleting the record.";
+                        Threading.main(() -> new AlertDialog.Builder(MotherDetail.this)
+                                .setTitle("Cannot delete")
+                                .setMessage(message)
+                                .setPositiveButton("OK", (d, which) -> d.dismiss())
+                                .show());
+                        return;
                     }
-                } catch (Exception ignored) { }
-                ChildIndexEventClient ec = processRegistration(pmtctForm.toString());
-                if (ec != null) {
-                    saveRegistration(ec, true, null);
                 }
-            }
-        } catch (Exception e) {
-            Timber.e(e);
-        }
 
-        // Delete household via OpenSRP edit form/event
-        try {
-            Household household = HouseholdDao.getHousehold(hhId);
-            if (household != null && household.getBase_entity_id() != null && !household.getBase_entity_id().trim().isEmpty()) {
-                household.setStatus("1");
-                JSONObject hhForm = formUtils.getFormJson("hh_edit");
-                CoreJsonFormUtils.populateJsonForm(hhForm, new ObjectMapper().convertValue(household, Map.class));
-                hhForm.put("entity_id", household.getBase_entity_id());
-                ChildIndexEventClient ec = processRegistration(hhForm.toString());
-                if (ec != null) {
-                    saveRegistration(ec, true, null);
+                FormUtils formUtils = new FormUtils(MotherDetail.this);
+
+                try {
+                    String motherBaseId = commonPersonObjectClient != null ? commonPersonObjectClient.getColumnmaps().get("base_entity_id") : null;
+                    if (motherIndex != null) {
+                        motherIndex.setDeleted("1");
+                        JSONObject motherForm = formUtils.getFormJson("mother_index_edit");
+                        CoreJsonFormUtils.populateJsonForm(motherForm, new ObjectMapper().convertValue(motherIndex, Map.class));
+                        motherForm.put("entity_id", motherIndex.getBase_entity_id() != null ? motherIndex.getBase_entity_id() : motherBaseId);
+                        ChildIndexEventClient motherEventClient = processRegistration(motherForm.toString());
+                        if (motherEventClient != null) {
+                            saveRegistration(motherEventClient, true, null);
+                        }
+                    }
+                } catch (Exception e) {
+                    Timber.e(e);
                 }
+
+                try {
+                    if (pmtctMother != null) {
+                        pmtctMother.setDelete_status("1");
+                        JSONObject pmtctForm = formUtils.getFormJson("mother_pmtct_edit");
+                        CoreJsonFormUtils.populateJsonForm(pmtctForm, new ObjectMapper().convertValue(pmtctMother, Map.class));
+                        pmtctForm.put("entity_id", pmtctMother.getBase_entity_id());
+                        try {
+                            JSONObject del = getFieldJSONObject(fields(pmtctForm, "step1"), "delete_status");
+                            if (del != null) {
+                                del.put(JsonFormUtils.VALUE, "1");
+                            }
+                        } catch (Exception ignored) { }
+                        ChildIndexEventClient pmtctEventClient = processRegistration(pmtctForm.toString());
+                        if (pmtctEventClient != null) {
+                            saveRegistration(pmtctEventClient, true, null);
+                        }
+                    }
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+
+                try {
+                    Household household = HouseholdDao.getHousehold(hhId);
+                    if (household != null && household.getBase_entity_id() != null && !household.getBase_entity_id().trim().isEmpty()) {
+                        household.setStatus("1");
+                        JSONObject hhForm = formUtils.getFormJson("hh_edit");
+                        CoreJsonFormUtils.populateJsonForm(hhForm, new ObjectMapper().convertValue(household, Map.class));
+                        hhForm.put("entity_id", household.getBase_entity_id());
+                        try {
+                            JSONObject statusField = getFieldJSONObject(fields(hhForm, "step1"), "status");
+                            if (statusField != null) {
+                                statusField.put(JsonFormUtils.VALUE, "1");
+                            }
+                        } catch (Exception ignored) { }
+                        ChildIndexEventClient hhEventClient = processRegistration(hhForm.toString());
+                        if (hhEventClient != null) {
+                            saveRegistration(hhEventClient, true, () -> {
+                                Toasty.success(MotherDetail.this, "Deleted", Toast.LENGTH_LONG, true).show();
+                                goToMotherRegister();
+                            });
+                            return;
+                        }
+                    }
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+
+                Threading.main(() -> {
+                    Toasty.success(MotherDetail.this, "Deleted", Toast.LENGTH_LONG, true).show();
+                    goToMotherRegister();
+                });
+            } catch (Exception e) {
+                Timber.e(e);
+                Threading.main(() -> Toasty.error(MotherDetail.this, "Failed to delete record", Toast.LENGTH_LONG, true).show());
             }
-        } catch (Exception e) {
-            Timber.e(e);
-        }
+        });
+    }
+
+    private void goToMotherRegister() {
+        Intent returnToRegister = new Intent(MotherDetail.this, MotherIndexActivity.class);
+        startActivity(returnToRegister);
+        finish();
     }
 }

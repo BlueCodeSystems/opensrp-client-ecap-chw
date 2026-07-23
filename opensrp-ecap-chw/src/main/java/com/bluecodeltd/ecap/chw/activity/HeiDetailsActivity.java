@@ -39,6 +39,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager2.widget.ViewPager2;
+
+import com.bluecodeltd.ecap.chw.dao.ChildMonitoringDao;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
@@ -47,7 +49,8 @@ import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.adapter.ViewPagerAdapterFragment;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
-import com.bluecodeltd.ecap.chw.dao.ChildMonitoringDao;
+import com.bluecodeltd.ecap.chw.dao.HouseholdServiceReportDao;
+
 import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
 import com.bluecodeltd.ecap.chw.dao.PmtctChildDao;
 import com.bluecodeltd.ecap.chw.dao.PmtctChildOutcomeDao;
@@ -55,12 +58,14 @@ import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.ChildVisitsFragment;
+import com.bluecodeltd.ecap.chw.fragment.PmctChildDbsMonitoringFragment;
 import com.bluecodeltd.ecap.chw.fragment.PmctChildMonitoringFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.UnderFiveCardFragment;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.ChildMonitoringModel;
 import com.bluecodeltd.ecap.chw.model.ChildRegisterModel;
+import com.bluecodeltd.ecap.chw.model.HouseholdServiceReportModel;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentAbove15Model;
 import com.bluecodeltd.ecap.chw.model.HivRiskAssessmentUnder15Model;
 import com.bluecodeltd.ecap.chw.model.PmtctChildModel;
@@ -108,6 +113,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -199,11 +205,6 @@ public class HeiDetailsActivity extends AppCompatActivity {
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
         rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
-        fabHiv = binding.hivRisk;
-        fabHiv2 = binding.hivRisk2;
-        fabVisitation = binding.householdVisitationForVcaFab;
-        fabReferal = binding.referToFacilityFab;
-        fabCasePlan =  binding.casePlanFab;
         fabAssessment = binding.fabAssessment;
         txtScreening = binding.vcaScreening;
         addIndexClients = binding.assessment;
@@ -219,7 +220,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
         }
         if (pmtctChild == null) {
             Toasty.warning(HeiDetailsActivity.this, "Infant record not found", Toast.LENGTH_LONG, true).show();
-                finish();
+            finish();
             return;
         }
         childMonitoring = ChildMonitoringDao.getPMCTChildMonitoring(clientId);
@@ -233,10 +234,10 @@ public class HeiDetailsActivity extends AppCompatActivity {
         ageSpacer = binding.ageSpacer;
 //        try {
 //            if(hivTestingServiceModel.getTesting_modality() !=null && hivTestingServiceModel.getTesting_modality().equals("Other Community")){
-                txtAge.setVisibility(View.GONE);
-                txtGender.setVisibility(View.GONE);
-                genderSpacer.setVisibility(View.GONE);
-                ageSpacer.setVisibility(View.GONE);
+        txtAge.setVisibility(View.GONE);
+        txtGender.setVisibility(View.GONE);
+        genderSpacer.setVisibility(View.GONE);
+        ageSpacer.setVisibility(View.GONE);
 //            }
 //        } catch (NullPointerException e) {
 //            Log.e("YourActivityName", "NullPointerException", e);
@@ -284,9 +285,11 @@ public class HeiDetailsActivity extends AppCompatActivity {
         returnViewPager();
         updateOverviewTabTitle();
         updateAncTabTitle();
+        updateDbsTabTitle();
 
 
         updateMotherProfileButton();
+        refreshProfileFlags();
     }
 
     private void setupToolbarBackNavigation() {
@@ -384,7 +387,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
             fab.startAnimation(rotate_forward);
             txtScreening.setVisibility(View.VISIBLE);
 //            if(hivTestingServiceModel.getTesting_modality() != null && (hivTestingServiceModel.getTesting_modality().equals("SNT") || hivTestingServiceModel.getTesting_modality().equals("Index"))){
-                addIndexClients.setVisibility(View.VISIBLE);
+            addIndexClients.setVisibility(View.VISIBLE);
 //            }
 
         }
@@ -563,6 +566,10 @@ public class HeiDetailsActivity extends AppCompatActivity {
 
 
             case R.id.assessment:
+                if (shouldBlockMonitoringService()) {
+                    Toasty.warning(HeiDetailsActivity.this, "Add the 24-month final outcome test result before adding another service.", Toast.LENGTH_LONG, true).show();
+                    break;
+                }
                 try {
                     openFormUsingFormUtils(HeiDetailsActivity.this,"pmtct_child_monitoring");
                 } catch (Exception e) {
@@ -1064,6 +1071,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
                 CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(pmtctChild, Map.class));
                 populateCaseworkerPhoneAndName(formToBeOpened);
                 populateProgramInfoFromSharedPreferences(formToBeOpened);
+                populateLatestMotherVl(formToBeOpened);
                 JSONObject dateEdited = getFieldJSONObject(fields(formToBeOpened, "step1"),"date_edited");
                 if (dateEdited  != null) {
                     dateEdited.remove(JsonFormUtils.VALUE);
@@ -1079,8 +1087,8 @@ public class HeiDetailsActivity extends AppCompatActivity {
                 modifiedChildModel.setUnique_id(pmtctChild.getUnique_id());
                 modifiedChildModel.setPmtct_id(pmtctChild.getPmtct_id());
 //                if(childMonitoring == null){
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(modifiedChildModel, Map.class));
-                    populateHivStatus(formToBeOpened,pmtctChild.getInfants_date_of_birth());
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(modifiedChildModel, Map.class));
+                populateHivStatus(formToBeOpened,pmtctChild.getInfants_date_of_birth());
 
 
                 break;
@@ -1100,6 +1108,293 @@ public class HeiDetailsActivity extends AppCompatActivity {
         }
 
         startFormActivity(formToBeOpened);
+    }
+    private void refreshProfileFlags() {
+        updateMotherVlFlag();
+    }
+
+    private void updateMotherVlFlag() {
+        View alert = findViewById(R.id.hei_unsuppressed_alert);
+        MotherVlSummary summary = resolveLatestMotherVlSummary();
+        boolean unsuppressed = summary != null && summary.unsuppressed;
+
+        if (alert != null) {
+            if (unsuppressed) {
+                alert.setVisibility(View.VISIBLE);
+                TextView title = alert.findViewById(R.id.tv_title);
+                TextView actions = alert.findViewById(R.id.tv_actions_list);
+                TextView chip = alert.findViewById(R.id.chip_flagged);
+                if (title != null) {
+                    title.setText("Mother latest VL is unsuppressed");
+                }
+                if (chip != null) {
+                    chip.setText("FLAGGED");
+                }
+                if (actions != null) {
+                    String result = TextUtils.isEmpty(summary.result) ? "Unknown" : summary.result;
+                    String date = TextUtils.isEmpty(summary.date) ? "Unknown date" : summary.date;
+                    actions.setText("Latest VL: " + result + " on " + date + "\nReview adherence and repeat testing.");
+                }
+            } else {
+                alert.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    private boolean shouldBlockMonitoringService() {
+        return isFinalOutcomeDue();
+    }
+
+    private boolean isFinalOutcomeDue() {
+        int ageMonths = getChildAgeInMonths();
+        if (ageMonths < 24) {
+            return false;
+        }
+        return childOutcomeModel == null || TextUtils.isEmpty(childOutcomeModel.getChild_outcome());
+    }
+
+    private String buildUpcomingDbsDueMessage() {
+        List<ChildMonitoringModel> dbsVisits = getDbsMonitoringVisits();
+        if (dbsVisits.isEmpty()) {
+            return null;
+        }
+
+        LocalDate firstMonitoringDate = parseMonitoringDate(dbsVisits.get(0).getDate());
+        if (firstMonitoringDate == null) {
+            return null;
+        }
+
+        LocalDate dueDate = resolveNextDbsDueDate(firstMonitoringDate, dbsVisits.size());
+        if (dueDate == null) {
+            return null;
+        }
+
+        long daysUntilDue = ChronoUnit.DAYS.between(LocalDate.now(), dueDate);
+        String fullDate = dueDate.format(DateTimeFormatter.ofPattern("EEEE, dd MMM yyyy"));
+        if (daysUntilDue <= 0) {
+            return "DBS overdue since " + fullDate;
+        }
+        if (daysUntilDue <= 14) {
+            return "DBS due in " + daysUntilDue + " days (" + fullDate + ")";
+        }
+        if (daysUntilDue <= 30) {
+            long weeks = Math.max(1, (long) Math.ceil(daysUntilDue / 7.0));
+            return "DBS due in " + weeks + " weeks (" + fullDate + ")";
+        }
+        return "DBS due on " + fullDate;
+    }
+
+    private LocalDate resolveNextDbsDueDate(LocalDate firstMonitoringDate, int completedDbsVisits) {
+        switch (completedDbsVisits) {
+            case 1:
+                return firstMonitoringDate.plusMonths(6);
+            case 2:
+                return firstMonitoringDate.plusMonths(9);
+            case 3:
+                return firstMonitoringDate.plusMonths(12);
+            case 4:
+                return firstMonitoringDate.plusMonths(18);
+            case 5:
+                return firstMonitoringDate.plusMonths(24);
+            default:
+                return null;
+        }
+    }
+
+    private LocalDate parseMonitoringDate(String dateValue) {
+        return parseChildDate(dateValue);
+    }
+
+    private List<ChildMonitoringModel> getDbsMonitoringVisits() {
+        List<ChildMonitoringModel> visits = ChildMonitoringDao.getPmctChildMonitoringListDBS(pmtctChild.getUnique_id());
+        if (visits == null || visits.isEmpty()) {
+            return new ArrayList<>();
+        }
+        visits.sort((left, right) -> {
+            LocalDate leftDate = parseMonitoringDate(left.getDate());
+            LocalDate rightDate = parseMonitoringDate(right.getDate());
+            if (leftDate == null && rightDate == null) return 0;
+            if (leftDate == null) return 1;
+            if (rightDate == null) return -1;
+            return leftDate.compareTo(rightDate);
+        });
+        return visits;
+    }
+
+    private LocalDate parseChildBirthDate() {
+        if (pmtctChild == null || TextUtils.isEmpty(pmtctChild.getInfants_date_of_birth())) {
+            return null;
+        }
+        return parseChildDate(pmtctChild.getInfants_date_of_birth());
+    }
+
+    private LocalDate parseChildDate(String dateValue) {
+        if (TextUtils.isEmpty(dateValue)) {
+            return null;
+        }
+        List<DateTimeFormatter> formatters = new ArrayList<>();
+        formatters.add(DateTimeFormatter.ofPattern("dd-MM-u"));
+        formatters.add(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        formatters.add(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        for (DateTimeFormatter formatter : formatters) {
+            try {
+                return LocalDate.parse(dateValue.trim(), formatter);
+            } catch (Exception ignored) {
+            }
+        }
+        return null;
+    }
+
+    private int getChildAgeInMonths() {
+        LocalDate birthDate = parseChildBirthDate();
+        if (birthDate == null) {
+            return 0;
+        }
+        Period period = Period.between(birthDate, LocalDate.now());
+        return period.getYears() * 12 + period.getMonths();
+    }
+
+    private int safeParseInt(String value) {
+        if (TextUtils.isEmpty(value)) {
+            return 0;
+        }
+        try {
+            return Integer.parseInt(value.trim());
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    private String getNextDbsDueLabel() {
+        String message = buildUpcomingDbsDueMessage();
+        return TextUtils.isEmpty(message) ? "" : message;
+    }
+
+    public String getDbsDueMessage() {
+        return getNextDbsDueLabel();
+    }
+
+    private void populateLatestMotherVl(JSONObject formToBeOpened) {
+        MotherVlSummary summary = resolveLatestMotherVlSummary();
+        if (summary == null) {
+            return;
+        }
+        setFormFieldValue(formToBeOpened, "date_last_vl", summary.date);
+        setFormFieldValue(formToBeOpened, "vl_last_result", summary.result);
+    }
+
+    private MotherVlSummary resolveLatestMotherVlSummary() {
+        String householdId = null;
+        if (pmtctChild != null) {
+            householdId = pmtctChild.getHousehold_id();
+            if (TextUtils.isEmpty(householdId)) {
+                try {
+                    PtctMotherModel mother = PMTCTMotherDao.getPMCTMother(pmtctChild.getPmtct_id());
+                    if (mother != null) {
+                        householdId = mother.getHousehold_id();
+                    }
+                } catch (Exception ignored) {
+                }
+            }
+        }
+
+        if (!TextUtils.isEmpty(householdId)) {
+            try {
+                HouseholdServiceReportModel latestService = HouseholdServiceReportDao.getLatestVLSummaryByHousehold(householdId);
+                if (latestService != null && !TextUtils.isEmpty(latestService.getVl_last_result())) {
+                    return buildMotherVlSummary(latestService.getDate(), latestService.getVl_last_result());
+                }
+            } catch (Exception ignored) {
+            }
+        }
+
+        try {
+            if (pmtctChild != null && !TextUtils.isEmpty(pmtctChild.getPmtct_id())) {
+                PtctMotherModel mother = PMTCTMotherDao.getPMCTMother(pmtctChild.getPmtct_id());
+                if (mother != null) {
+                    return buildMotherVlSummaryFromMother(mother);
+                }
+            }
+        } catch (Exception ignored) {
+        }
+
+        return null;
+    }
+
+    private MotherVlSummary buildMotherVlSummary(String date, String result) {
+        MotherVlSummary summary = new MotherVlSummary();
+        summary.date = date;
+        summary.result = result;
+        summary.unsuppressed = isUnsuppressedVl(result);
+        return summary;
+    }
+
+    private MotherVlSummary buildMotherVlSummaryFromMother(PtctMotherModel mother) {
+        String result = firstNonEmpty(mother == null ? null : mother.getVl_result_3rd_trimester(),
+                mother == null ? null : mother.getVl_result_2nd_trimester(),
+                mother == null ? null : mother.getVl_result_1st_trimester());
+        String date = firstNonEmpty(mother == null ? null : mother.getAgyw_date_1st_visit(),
+                mother == null ? null : mother.getDate_1st_visit(),
+                mother == null ? null : mother.getDate_enrolled_pmtct());
+        MotherVlSummary summary = new MotherVlSummary();
+        summary.date = date;
+        summary.result = result;
+        summary.unsuppressed = isUnsuppressedVl(result)
+                || isYes(mother == null ? null : mother.getUnsuppressed_vl_1st())
+                || isYes(mother == null ? null : mother.getUnsuppressed_vl_2nd())
+                || isYes(mother == null ? null : mother.getUnsuppressed_vl_3rd());
+        return summary;
+    }
+
+    private boolean isUnsuppressedVl(String value) {
+        if (TextUtils.isEmpty(value)) {
+            return false;
+        }
+        String normalized = value.trim().toLowerCase(Locale.US);
+        if ("unsuppressed".equals(normalized) || "yes".equals(normalized) || "positive".equals(normalized)) {
+            return true;
+        }
+        try {
+            return Integer.parseInt(normalized) >= 1000;
+        } catch (Exception ignored) {
+            return false;
+        }
+    }
+
+    private boolean isYes(String value) {
+        return value != null && "yes".equalsIgnoreCase(value.trim());
+    }
+
+    private String firstNonEmpty(String... values) {
+        if (values == null) {
+            return null;
+        }
+        for (String value : values) {
+            if (!TextUtils.isEmpty(value)) {
+                return value;
+            }
+        }
+        return null;
+    }
+
+    private void setFormFieldValue(JSONObject formToBeOpened, String key, String value) {
+        if (TextUtils.isEmpty(value)) {
+            return;
+        }
+        try {
+            JSONObject field = getFieldJSONObject(fields(formToBeOpened, "step1"), key);
+            if (field != null) {
+                field.put(JsonFormUtils.VALUE, value);
+            }
+        } catch (JSONException e) {
+            Timber.e(e);
+        }
+    }
+
+    private static class MotherVlSummary {
+        String date;
+        String result;
+        boolean unsuppressed;
     }
     private String getFormattedDate() {
         LocalDate today = LocalDate.now();
@@ -1140,59 +1435,59 @@ public class HeiDetailsActivity extends AppCompatActivity {
 
             case R.id.delete_record:
 
-                    builder.setMessage("You are about to delete this record");
-                    builder.setNegativeButton("NO", (dialog, id) -> {
-                        //  Action for 'NO' Button
-                        dialog.cancel();
+                builder.setMessage("You are about to delete this record");
+                builder.setNegativeButton("NO", (dialog, id) -> {
+                    //  Action for 'NO' Button
+                    dialog.cancel();
 
-                    }).setPositiveButton("YES", ((dialogInterface, i) -> {
-                        FormUtils formUtils = null;
-                        try {
-                            formUtils = new FormUtils(this);
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                }).setPositiveButton("YES", ((dialogInterface, i) -> {
+                    FormUtils formUtils = null;
+                    try {
+                        formUtils = new FormUtils(this);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    pmtctChild.setDelete_status("1");
+                    JSONObject openForm = formUtils.getFormJson("pmct_child_hei");
+                    try {
+                        CoreJsonFormUtils.populateJsonForm(openForm, new ObjectMapper().convertValue(pmtctChild, Map.class));
+                        openForm.put("entity_id", pmtctChild.getBase_entity_id());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    try {
+
+                        ChildIndexEventClient childIndexEventClient = processRegistration(openForm.toString());
+                        if (childIndexEventClient == null) {
+                            return;
                         }
-                        pmtctChild.setDelete_status("1");
-                        JSONObject openForm = formUtils.getFormJson("pmct_child_hei");
-                        try {
-                            CoreJsonFormUtils.populateJsonForm(openForm, new ObjectMapper().convertValue(pmtctChild, Map.class));
-                            openForm.put("entity_id", pmtctChild.getBase_entity_id());
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-                        try {
-
-                            ChildIndexEventClient childIndexEventClient = processRegistration(openForm.toString());
-                            if (childIndexEventClient == null) {
-                                return;
-                            }
-                            Runnable onComplete = () -> {
-                                Toasty.success(HeiDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
-                                Intent intent = new Intent(this, MotherPmtctProfileActivity.class);
-                                intent.putExtra("client_id",  pmtctChild.getPmtct_id());
-                                startActivity(intent);
-                                this.finish();
-                            };
-                            boolean scheduled = saveRegistration(childIndexEventClient, true, onComplete);
-                            if (!scheduled) {
-                                onComplete.run();
-                            }
-
-
-                        } catch (Exception e) {
-                            Timber.e(e);
+                        Runnable onComplete = () -> {
+                            Toasty.success(HeiDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
+                            Intent intent = new Intent(this, MotherPmtctProfileActivity.class);
+                            intent.putExtra("client_id",  pmtctChild.getPmtct_id());
+                            startActivity(intent);
+                            this.finish();
+                        };
+                        boolean scheduled = saveRegistration(childIndexEventClient, true, onComplete);
+                        if (!scheduled) {
+                            onComplete.run();
                         }
 
 
-                    }));
+                    } catch (Exception e) {
+                        Timber.e(e);
+                    }
 
-                    //Creating dialog box
-                    AlertDialog alert = builder.create();
-                    //Setting the title manually
-                    alert.setTitle("Alert");
-                    alert.show();
+
+                }));
+
+                //Creating dialog box
+                AlertDialog alert = builder.create();
+                //Setting the title manually
+                alert.setTitle("Alert");
+                alert.show();
 
                 break;
 
@@ -1342,6 +1637,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new UnderFiveCardFragment());
         fragments.add(new PmctChildMonitoringFragment());
+        fragments.add(new PmctChildDbsMonitoringFragment());
 
         com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter adapter = new com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter(this, fragments);
         viewPager.setAdapter(adapter);
@@ -1350,6 +1646,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
         tabMediator = new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             if (position == 0) tab.setText("Overview");
             else if (position == 1) tab.setText("Monitoring");
+            else if (position == 2) tab.setText("DBS MONITORING");
         });
         tabMediator.attach();
     }
@@ -1374,6 +1671,18 @@ public class HeiDetailsActivity extends AppCompatActivity {
         childTabCount.setText(countANC);
 
         tabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
+    }
+
+    private void updateDbsTabTitle() {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.pmct_titles, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
+        visitTabTitle.setText("DBS MONITORING");
+        childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
+
+
+        String countANC = ChildMonitoringDao.countDBSChildMonitoring(pmtctChild.getUnique_id());
+        childTabCount.setText(countANC);
+        tabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
     }
 
     public HashMap<String, PmtctChildModel> getClientDetails() {
@@ -1406,5 +1715,10 @@ public class HeiDetailsActivity extends AppCompatActivity {
 
     }
 }
+
+
+
+
+
 
 

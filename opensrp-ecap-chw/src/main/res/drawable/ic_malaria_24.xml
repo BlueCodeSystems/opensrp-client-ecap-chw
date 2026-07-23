@@ -1,0 +1,37 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="40dp"
+    android:height="40dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Mosquito body -->
+    <path
+        android:fillColor="#696969"
+        android:pathData="M12,7.5C13.2,7.5 14.1,8.5 14.1,9.8C14.1,11.1 13.2,12.1 12,12.1C10.8,12.1 9.9,11.1 9.9,9.8C9.9,8.5 10.8,7.5 12,7.5Z"/>
+
+    <!-- Wings -->
+    <path
+        android:fillColor="#696969"
+        android:pathData="M10.8,8.4C9.5,7.4 8.2,7.2 7.5,7.8C7,8.3 7.6,9.4 9,9.9L10.5,10.4Z"/>
+    <path
+        android:fillColor="#696969"
+        android:pathData="M13.2,8.4C14.5,7.4 15.8,7.2 16.5,7.8C17,8.3 16.4,9.4 15,9.9L13.5,10.4Z"/>
+
+    <!-- Proboscis -->
+    <path
+        android:fillColor="#696969"
+        android:pathData="M11.8,11.8H12.2L12,15Z"/>
+
+    <!-- Legs -->
+    <path
+        android:fillColor="#696969"
+        android:pathData="M10.5,12.8L8.3,14.3L7.9,13.8L10.1,12.3Z"/>
+    <path
+        android:fillColor="#696969"
+        android:pathData="M13.5,12.8L15.7,14.3L16.1,13.8L13.9,12.3Z"/>
+
+    <!-- Body line -->
+    <path
+        android:fillColor="#696969"
+        android:pathData="M11.55,11.9H12.45V17.8H11.55Z"/>
+</vector>

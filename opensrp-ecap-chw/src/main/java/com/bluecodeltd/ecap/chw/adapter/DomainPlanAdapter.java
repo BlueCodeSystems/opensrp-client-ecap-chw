@@ -110,14 +110,17 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
         if(casePlan.getStatus().equals(("C"))){
 
             holder.txtStatus.setText("Complete");
+            holder.txtStatus.setBackgroundResource(R.drawable.bg_chip_success);
 
         } else if(casePlan.getStatus().equals(("P"))) {
 
             holder.txtStatus.setText("In Progress");
+            holder.txtStatus.setBackgroundResource(R.drawable.bg_chip_warning);
 
         } else if(casePlan.getStatus().equals(("D"))) {
 
             holder.txtStatus.setText("Delayed");
+            holder.txtStatus.setBackgroundResource(R.drawable.bg_chip_danger);
 
         }
 
@@ -147,7 +150,7 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
                 : (casePlan.getUnique_id() != null ? casePlan.getUnique_id() : String.valueOf(position));
         holder.itemView.setTag(R.id.tag_row_id, rowTag);
 
-                holder.editme.setOnClickListener(v -> {
+                View.OnClickListener editListener = v -> {
             try {
                 if (context instanceof CasePlan) {
                     openFormUsingFormUtils(context, "domain", casePlan);
@@ -157,8 +160,12 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        });
-        holder.delete.setOnClickListener(v -> {
+        };
+        holder.editme.setOnClickListener(editListener);
+        if (holder.editButton != null) {
+            holder.editButton.setOnClickListener(editListener);
+        }
+        View.OnClickListener deleteListener = v -> {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage("You are about to delete this vulnerability");
         builder.setNegativeButton("NO", (dialog, id) -> {
@@ -212,7 +219,11 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
         //Setting the title manually
         alert.setTitle("Alert");
         alert.show();
-    });
+    };
+        holder.delete.setOnClickListener(deleteListener);
+        if (holder.deleteButton != null) {
+            holder.deleteButton.setOnClickListener(deleteListener);
+        }
 
         holder.expLess.setOnClickListener(v -> {
 
@@ -439,6 +450,7 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
         LinearLayout linearLayout, exPandableView;
 
         ImageView expMore, expLess, editme, delete;
+        View editButton, deleteButton;
 
         public ViewHolder(View itemView) {
 
@@ -459,6 +471,8 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
             txtStatus = itemView.findViewById(R.id.statusx);
             txtComment = itemView.findViewById(R.id.comment);
             delete = itemView.findViewById(R.id.delete_record);
+            editButton = itemView.findViewById(R.id.edit_button);
+            deleteButton = itemView.findViewById(R.id.delete_button);
 
 
         }

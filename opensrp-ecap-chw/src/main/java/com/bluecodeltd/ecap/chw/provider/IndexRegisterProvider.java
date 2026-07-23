@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
-import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.util.Threading;
@@ -59,8 +58,14 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
         CommonPersonObjectClient personObjectClient = (CommonPersonObjectClient) smartRegisterClient;
 
         String BaseEntityId = Utils.getValue(personObjectClient.getColumnmaps(), "base_entity_id", false);
-        String firstName = Utils.getValue(personObjectClient.getColumnmaps(), "first_name", true);
-        String lastName = Utils.getValue(personObjectClient.getColumnmaps(), "last_name", true);
+        String firstName = firstNonBlank(
+                Utils.getValue(personObjectClient.getColumnmaps(), "first_name", true),
+                Utils.getValue(personObjectClient.getColumnmaps(), "adolescent_first_name", true)
+        );
+        String lastName = firstNonBlank(
+                Utils.getValue(personObjectClient.getColumnmaps(), "last_name", true),
+                Utils.getValue(personObjectClient.getColumnmaps(), "adolescent_last_name", true)
+        );
         String childId = Utils.getValue(personObjectClient.getColumnmaps(), "unique_id", false);
         String gender = Utils.getValue(personObjectClient.getColumnmaps(), "gender", true);
         String household_id = Utils.getValue(personObjectClient.getColumnmaps(), "household_id", true);
@@ -75,30 +80,27 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
         Threading.ioBestEffort(() -> {
             int plans = 0;
             int visits = 0;
+            boolean visitedThisMonth = false;
             String is_index = null;
             String status = null;
-            String is_screened = null;
             try { plans = CasePlanDao.checkCasePlan(childLookupId); } catch (Exception ignored) {}
             try { visits = VcaVisitationDao.countVisits(childLookupId); } catch (Exception ignored) {}
+            try { visitedThisMonth = VcaVisitationDao.hasVisitThisMonth(childLookupId); } catch (Exception ignored) {}
             try { is_index = IndexPersonDao.checkIndexPerson(BaseEntityId); } catch (Exception ignored) {}
             try { status = IndexPersonDao.getIndexStatus(BaseEntityId); } catch (Exception ignored) {}
-            try { is_screened = HouseholdDao.checkIfScreened(household_id); } catch (Exception ignored) {}
 
             final int fPlans = plans;
             final int fVisits = visits;
+            final boolean fVisitedThisMonth = visitedThisMonth;
             final String fIsIndex = is_index;
             final String fStatus = status;
-            final String fIsScreened = is_screened;
             Threading.main(() -> {
                 Object tag = indexRegisterViewHolder.itemView.getTag(R.id.tag_row_id);
                 if (!(tag instanceof String) || !rowTag.equals(tag)) return;
-                indexRegisterViewHolder.setupViews(firstName +" "+lastName, childLookupId, fPlans, fVisits, fIsIndex, fStatus, gender, age, fIsScreened, vcaAge);
+                indexRegisterViewHolder.setupViews(firstName +" "+lastName, childLookupId, fPlans, fVisits, fVisitedThisMonth, fIsIndex, fStatus, gender, age, vcaAge);
                 indexRegisterViewHolder.itemView.setOnClickListener(onClickListener);
-                View warning = indexRegisterViewHolder.itemView.findViewById(R.id.index_warning);
-                warning.setOnClickListener(onClickListener);
                 // Click handlers expect the client on the clicked view's default tag.
                 indexRegisterViewHolder.itemView.setTag(smartRegisterClient);
-                warning.setTag(smartRegisterClient);
             });
         });
 
@@ -248,7 +250,7 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
 
     @Override
     public IndexRegisterViewHolder createViewHolder(ViewGroup viewGroup) {
-        View viewHolder = inflater().inflate(R.layout.index_register_item_layout, null);
+        View viewHolder = inflater().inflate(R.layout.index_register_item_layout, viewGroup, false);
         return new IndexRegisterViewHolder(viewHolder, context);
     }
 

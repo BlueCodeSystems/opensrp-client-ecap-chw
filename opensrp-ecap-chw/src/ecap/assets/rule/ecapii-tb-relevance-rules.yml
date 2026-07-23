@@ -1,0 +1,105 @@
+---
+name: step1_previous_tb_treatment_year
+description: Year of previous TB treatment
+priority: 1
+condition: "step1_previous_tb_treatment == 'yes'"
+actions:
+    - "isRelevant = true"
+---
+name: step1_previous_tb_duration_months
+description: Duration of previous TB treatment
+priority: 1
+condition: "step1_previous_tb_treatment == 'yes'"
+actions:
+    - "isRelevant = true"
+---
+name: step1_tb_contact_year
+description: Year of close TB contact
+priority: 1
+condition: "step1_history_tb_contact == 'yes'"
+actions:
+    - "isRelevant = true"
+---
+name: step2_symptoms_under_10
+description: Symptoms for children below 10
+priority: 1
+condition: "step1_vca_age != '' && step1_vca_age < 10"
+actions:
+    - "isRelevant = true"
+---
+name: step2_symptoms_under_10_other
+description: Other symptoms for children below 10
+priority: 1
+condition: "step1_vca_age != '' && step1_vca_age < 10"
+actions:
+    - "isRelevant = true"
+---
+name: step2_symptoms_10_plus
+description: Symptoms for individuals 10+
+priority: 1
+condition: "step1_vca_age != '' && step1_vca_age >= 10"
+actions:
+    - "isRelevant = true"
+---
+name: step2_symptoms_10_plus_other
+description: Other symptoms for individuals 10+
+priority: 1
+condition: "step1_vca_age != '' && step1_vca_age >= 10"
+actions:
+    - "isRelevant = true"
+---
+name: step2_positive_warning
+description: Positive warning
+priority: 1
+condition: "step2_tb_screening_result == 'positive'"
+actions:
+    - "isRelevant = true"
+---
+name: step2_negative_warning
+description: Negative warning
+priority: 1
+condition: "step2_tb_screening_result == 'negative'"
+actions:
+    - "isRelevant = true"
+---
+name: step2_referred_to_facility
+description: Referred to health facility
+priority: 1
+condition: "step2_tb_screening_result == 'positive'"
+actions:
+    - "isRelevant = true"
+---
+name: step3
+description: Step 3 Relevance
+priority: 1
+condition: "step2_tb_screening_result == 'positive'"
+actions:
+    - "isRelevant = true"
+---
+name: step3_date_screened_facility
+description: Date screened at facility
+priority: 1
+condition: "step3_completed_referral == 'yes'"
+actions:
+    - "isRelevant = true"
+---
+name: step3_initiated_tb_treatment
+description: Initiated on TB treatment
+priority: 1
+condition: "step3_tb_diagnosis == 'clinically_diagnosed' || step3_tb_diagnosis == 'bacteriologically_confirmed'"
+actions:
+    - "isRelevant = true"
+---
+name: step3_initiated_tpt
+description: Initiated on TPT
+priority: 1
+condition: "step3_tb_diagnosis == 'no_tb_diagnosis'"
+actions:
+    - "isRelevant = true"
+---
+name: step4
+description: Step 4 Relevance
+priority: 1
+condition: "step3_initiated_tb_treatment == 'yes'"
+actions:
+    - "isRelevant = true"

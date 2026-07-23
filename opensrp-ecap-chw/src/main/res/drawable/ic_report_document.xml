@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Document outline -->
+    <path
+        android:name="document_outline"
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="@android:color/white"
+        android:strokeWidth="1.6"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M7,4
+                          L15,4
+                          A2,2 0 0 1 17,6
+                          L17,18
+                          A2,2 0 0 1 15,20
+                          L7,20
+                          A2,2 0 0 1 5,18
+                          L5,6
+                          A2,2 0 0 1 7,4
+                          Z" />
+
+    <!-- Header text lines -->
+    <path
+        android:name="header_line_1"
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="@android:color/white"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round"
+        android:pathData="M8,8.2 L14,8.2" />
+
+    <path
+        android:name="header_line_2"
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="@android:color/white"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round"
+        android:pathData="M8,10.7 L14,10.7" />
+
+    <!-- Mini ascending bar chart: frames this as a data report, not just a note -->
+    <path
+        android:name="report_bar_1"
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="@android:color/white"
+        android:strokeWidth="1.6"
+        android:strokeLineCap="round"
+        android:pathData="M8,17 L8,14.7" />
+
+    <path
+        android:name="report_bar_2"
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="@android:color/white"
+        android:strokeWidth="1.6"
+        android:strokeLineCap="round"
+        android:pathData="M11,17 L11,13.2" />
+
+    <path
+        android:name="report_bar_3"
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="@android:color/white"
+        android:strokeWidth="1.6"
+        android:strokeLineCap="round"
+        android:pathData="M14,17 L14,15.5" />
+
+</vector>

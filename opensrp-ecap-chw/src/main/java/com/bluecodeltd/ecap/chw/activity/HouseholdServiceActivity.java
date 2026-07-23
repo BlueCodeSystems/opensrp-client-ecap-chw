@@ -72,7 +72,7 @@ public class HouseholdServiceActivity extends AppCompatActivity {
     HouseholdServiceAdapter recyclerViewadapter;
     private ArrayList<HouseholdServiceReportModel> familyServiceList = new ArrayList<>();
     private LinearLayout linearLayout;
-    private TextView cname, hh_id,updatedCaregiverName;
+    private TextView cname, hh_id,updatedCaregiverName, servicesCountText;
 
     private Toolbar toolbar;
     String intent_householdId;
@@ -97,6 +97,7 @@ public class HouseholdServiceActivity extends AppCompatActivity {
         cname = binding.caregiverName;
         hh_id = binding.hhid;
         updatedCaregiverName = binding.updatedCaregiverName;
+        servicesCountText = binding.servicesCountText;
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -159,6 +160,17 @@ public class HouseholdServiceActivity extends AppCompatActivity {
                     linearLayout.setVisibility(View.VISIBLE);
                 }
                 if (progress != null) progress.setVisibility(View.GONE);
+                if (servicesCountText != null) {
+                    int count = familyServiceList.size();
+                    String countText = getResources().getQuantityString(R.plurals.service_reports_count, count, count);
+                    if (count > 0) {
+                        String lastDate = familyServiceList.get(0).getDate();
+                        if (lastDate != null && !lastDate.trim().isEmpty()) {
+                            countText += getString(R.string.service_reports_last_submitted, lastDate.trim());
+                        }
+                    }
+                    servicesCountText.setText(countText);
+                }
             });
         });
     }

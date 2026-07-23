@@ -111,6 +111,15 @@ public class ChwRepositoryFlv {
                 case 26:
                     upgradeToVersion26(db);
                     break;
+                case 27:
+                    upgradeToVersion27(db);
+                    break;
+                case 28:
+                    upgradeToVersion28(db);
+                    break;
+                case 29:
+                    upgradeToVersion29(db);
+                    break;
                 default:
                     break;
             }
@@ -1143,6 +1152,74 @@ public class ChwRepositoryFlv {
             db.execSQL("ALTER TABLE ec_household_service_report ADD COLUMN pregnant_breastfeeding TEXT");
         } catch (Exception e) {
             Timber.e(e, "upgradeToVersion26");
+        }
+    }
+
+    private static void upgradeToVersion27(SQLiteDatabase db) {
+        // Handled in version 28
+    }
+
+    private static void upgradeToVersion28(SQLiteDatabase db) {
+        // Handled in version 29
+    }
+
+    private static void upgradeToVersion29(SQLiteDatabase db) {
+        try {
+            String sqlCreateTableCommunityAlert = "CREATE TABLE IF NOT EXISTS ec_community_alert (" +
+                    "base_entity_id TEXT, " +
+                    "last_interacted_with TEXT, " +
+                    "delete_status TEXT, " +
+                    "reporting_month TEXT, " +
+                    "form_id TEXT, " +
+                    "province TEXT, " +
+                    "ward TEXT, " +
+                    "district TEXT, " +
+                    "partner TEXT, " +
+                    "facility TEXT, " +
+                    "formSubmissionId TEXT, " +
+                    "caseworker_name TEXT, " +
+                    "phone_number TEXT, " +
+                    "community TEXT, " +
+                    "date_reporting TEXT, " +
+                    "super_mentor_name TEXT, " +
+                    "super_mentor_contact TEXT, " +
+                    "illness_type TEXT, " +
+                    "event_date TEXT, " +
+                    "event_time TEXT, " +
+                    "detection_date TEXT, " +
+                    "detection_time TEXT, " +
+                    "location TEXT, " +
+                    "affected_status TEXT, " +
+                    "affected_f_0_4 TEXT, " +
+                    "affected_f_5_9 TEXT, " +
+                    "affected_f_10_17 TEXT, " +
+                    "affected_f_18_plus TEXT, " +
+                    "affected_m_0_4 TEXT, " +
+                    "affected_m_5_9 TEXT, " +
+                    "affected_m_10_17 TEXT, " +
+                    "affected_m_18_plus TEXT, " +
+                    "dead_status TEXT, " +
+                    "dead_f_0_4 TEXT, " +
+                    "dead_f_5_9 TEXT, " +
+                    "dead_f_10_17 TEXT, " +
+                    "dead_f_18_plus TEXT, " +
+                    "dead_m_0_4 TEXT, " +
+                    "dead_m_5_9 TEXT, " +
+                    "dead_m_10_17 TEXT, " +
+                    "dead_m_18_plus TEXT, " +
+                    "animals_involved TEXT, " +
+                    "event_ongoing TEXT, " +
+                    "action_taken TEXT, " +
+                    "meet_case_definition TEXT, " +
+                    "response_performed TEXT, " +
+                    "supervisor_action_taken TEXT, " +
+                    "supervisor_name TEXT, " +
+                    "date_reviewed TEXT, " +
+                    "signature TEXT" +
+                    ")";
+            db.execSQL(sqlCreateTableCommunityAlert);
+        } catch (Exception e) {
+            Timber.e(e, "upgradeToVersion29");
         }
     }
 

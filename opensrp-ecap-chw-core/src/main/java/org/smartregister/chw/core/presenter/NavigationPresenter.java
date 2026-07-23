@@ -57,6 +57,7 @@ public class NavigationPresenter implements NavigationContract.Presenter {
         tableMap.put(CoreConstants.DrawerMenu.UPDATES, CoreConstants.TABLE_NAME.NOTIFICATION_UPDATE);
         tableMap.put(CoreConstants.DrawerMenu.HTS, CoreConstants.TABLE_NAME.EC_HIV_TESTING_SERVICE);
         tableMap.put(CoreConstants.DrawerMenu.PMTCT, CoreConstants.TABLE_NAME.EC_MOTHER_PMTCT);
+        tableMap.put(CoreConstants.DrawerMenu.REPORT_REGISTER, "report_register_total");
     }
 
     public HashMap<String, String> getTableMap() {

@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.HouseholdServiceReportViewActivity;
 import com.bluecodeltd.ecap.chw.activity.HouseholdServicesOnlyActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
@@ -147,7 +148,22 @@ public class HouseholdServicesOnlyAdapter extends RecyclerView.Adapter<Household
                 });
             });
         });
-        holder.delete.setOnClickListener(v -> {
+        View.OnClickListener editListener = v -> holder.linearLayout.performClick();
+        if (holder.edit != null) {
+            holder.edit.setOnClickListener(editListener);
+        }
+        if (holder.editButton != null) {
+            holder.editButton.setOnClickListener(editListener);
+        }
+        if (holder.viewButton != null) {
+            holder.viewButton.setOnClickListener(v -> {
+                Intent intent = new Intent(context, HouseholdServiceReportViewActivity.class);
+                intent.putExtra(HouseholdServiceReportViewActivity.EXTRA_BASE_ENTITY_ID, service.getBase_entity_id());
+                context.startActivity(intent);
+            });
+        }
+
+        View.OnClickListener deleteListener = v -> {
             try {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage("You are about to delete this household service ");
@@ -196,7 +212,11 @@ public class HouseholdServicesOnlyAdapter extends RecyclerView.Adapter<Household
             } catch (Exception e) {
                 Timber.e(e);
             }
-        });
+        };
+        holder.delete.setOnClickListener(deleteListener);
+        if (holder.deleteButton != null) {
+            holder.deleteButton.setOnClickListener(deleteListener);
+        }
 
 
     }
@@ -433,8 +453,9 @@ public class HouseholdServicesOnlyAdapter extends RecyclerView.Adapter<Household
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView txtDate,txtserviceType, txtServices ;
-        ImageView delete;
+        ImageView delete, edit;
         LinearLayout linearLayout;
+        View deleteButton, editButton, viewButton;
 
 
         public ViewHolder(View itemView) {
@@ -446,6 +467,10 @@ public class HouseholdServicesOnlyAdapter extends RecyclerView.Adapter<Household
             txtserviceType = itemView.findViewById(R.id.service);
             txtServices = itemView.findViewById(R.id.services);
             delete = itemView.findViewById(R.id.delete_record);
+            edit = itemView.findViewById(R.id.edit_me);
+            deleteButton = itemView.findViewById(R.id.delete_button);
+            editButton = itemView.findViewById(R.id.edit_button);
+            viewButton = itemView.findViewById(R.id.view_button);
 
         }
 
