@@ -1,145 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/register_columns"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
-    android:background="@android:color/white">
+    android:layout_marginHorizontal="2dp"
+    android:layout_marginBottom="10dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="2dp"
+    app:cardUseCompatPadding="true">
 
-    <!-- MAIN ROW: color strip + child icon + main info -->
     <LinearLayout
-        android:id="@+id/itemm"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
 
-        <!-- Left color strip for status/category -->
-        <View
-            android:id="@+id/mycolor"
-            android:layout_width="4dp"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimary" />
-
-        <!-- Child icon (0–18; use your vector from before) -->
-        <ImageView
-            android:id="@+id/child_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:src="@drawable/ic_children"
-            android:scaleType="centerCrop" />
-
-        <!-- Text block: name, age/gender, caregiver -->
+        <!-- HEADER: status stripe + child icon + name/age/caregiver -->
         <LinearLayout
-            android:layout_width="0dp"
+            android:id="@+id/itemm"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-            <!-- Child full name (first_name + last_name) -->
-            <org.smartregister.view.customcontrols.CustomFontTextView
-                android:id="@+id/child_name"
-                style="@style/CustomFontTextViewStyle.ClientList"
+            <!-- Status stripe (color set dynamically in code: green/red/orange/grey) -->
+            <View
+                android:id="@+id/mycolor"
+                android:layout_width="4dp"
+                android:layout_height="32dp"
+                android:background="@color/register_mother_icon" />
+
+            <!-- Child avatar: gender icon set dynamically in code (boy/girl/unknown) -->
+            <ImageView
+                android:id="@+id/child_icon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/bg_mother_icon_circle"
+                android:contentDescription="@string/not_available"
+                android:padding="4dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_child_unknown_gender" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <!-- Name row + index chip -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <org.smartregister.view.customcontrols.CustomFontTextView
+                        android:id="@+id/child_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="Child Name"
+                        android:textColor="@color/text_black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <!-- Index tracing status chip -->
+                    <TextView
+                        android:id="@+id/index_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:background="@drawable/bg_chip_primary"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="3dp"
+                        android:text="Index"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/white"
+                        android:textSize="9.5sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Age + gender line -->
+                <org.smartregister.view.customcontrols.CustomFontTextView
+                    android:id="@+id/child_age_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="5 years • Female"
+                    android:textColor="@color/light_grey_text"
+                    android:textSize="12.5sp" />
+
+                <!-- Caregiver / mother name -->
+                <org.smartregister.view.customcontrols.CustomFontTextView
+                    android:id="@+id/caregiver_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Mother: Hope Chanda"
+                    android:textColor="@color/light_grey_text"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/divider_grey" />
+
+        <!-- ACTIONS: MUAC (optional) + Open profile -->
+        <LinearLayout
+            android:id="@+id/actions_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="end|center_vertical"
+            android:orientation="horizontal">
+
+            <!-- MUAC button: icon set dynamically via setCompoundDrawablesWithIntrinsicBounds -->
+            <com.rey.material.widget.Button
+                android:id="@+id/muac"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:text="Child Name"
-                android:textColor="@color/text_black"
-                android:textSize="16sp" />
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_button_alert_outline"
+                android:drawablePadding="6dp"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="6dp"
+                android:text="MUAC"
+                android:textAllCaps="false"
+                android:textColor="@color/pie_chart_red"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
 
-            <!-- Age + gender line (from adolescent_birthdate / myage + gender) -->
-            <org.smartregister.view.customcontrols.CustomFontTextView
-                android:id="@+id/child_age_gender"
-                style="@style/CustomFontTextViewStyle.ClientList.Light"
+            <!-- Open child profile -->
+            <com.rey.material.widget.Button
+                android:id="@+id/btn_open_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="5 years • Female"
-                android:textColor="@color/light_grey_text"
-                android:textSize="13sp" />
-
-            <!-- Caregiver / mother name (caregiver_name) -->
-            <org.smartregister.view.customcontrols.CustomFontTextView
-                android:id="@+id/caregiver_name"
-                style="@style/CustomFontTextViewStyle.ClientList.Light"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="Mother: Hope Chanda"
-                android:textColor="@color/light_grey_text"
-                android:textSize="12sp" />
+                android:background="@drawable/bg_button_primary_outline"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="6dp"
+                android:text="Profile"
+                android:textAllCaps="false"
+                android:textColor="@color/primary"
+                android:textSize="11sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
     </LinearLayout>
 
-    <!-- Divider under the item -->
-    <View
-        android:layout_below="@id/itemm"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray" />
-
-    <!-- RIGHT-SIDE ACTIONS: Index chip + MUAC (optional) + Profile -->
-    <LinearLayout
-        android:id="@+id/actions_row"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="12dp"
-        android:orientation="horizontal">
-
-        <!-- Index chip (child comes from index tracing) -->
-        <TextView
-            android:id="@+id/index_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="6dp"
-            android:background="@drawable/rounded_corner_index"
-            android:paddingLeft="10dp"
-            android:paddingTop="4dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="4dp"
-            android:text="Index"
-            android:textColor="@color/dark_grey_text"
-            android:textSize="11sp" />
-
-        <!-- MUAC button (if you use it later; hidden by default) -->
-        <com.rey.material.widget.Button
-            android:id="@+id/muac"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_marginEnd="6dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:background="@drawable/btn_bg"
-            android:text="MUAC"
-            android:textAllCaps="false"
-            android:textColor="#696969"
-            android:textSize="12sp"
-            android:visibility="gone" />
-
-        <!-- Profile main action -->
-        <com.rey.material.widget.Button
-            android:id="@+id/btn_open_profile"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:background="@drawable/btn_bg"
-            android:text="Profile"
-            android:textAllCaps="false"
-            android:textColor="#696969"
-            android:textSize="12sp" />
-    </LinearLayout>
-
-</RelativeLayout>
+</androidx.cardview.widget.CardView>
