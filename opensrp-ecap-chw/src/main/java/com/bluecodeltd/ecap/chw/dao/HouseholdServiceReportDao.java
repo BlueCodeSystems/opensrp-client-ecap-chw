@@ -156,6 +156,17 @@ public class HouseholdServiceReportDao extends AbstractDao {
         }
     }
 
+    public static HouseholdServiceReportModel getServiceReportByEntityId(String baseEntityId) {
+
+        String sql = "SELECT * FROM ec_household_service_report WHERE base_entity_id = '" + baseEntityId + "' LIMIT 1";
+
+        List<HouseholdServiceReportModel> values = AbstractDao.readData(sql, getServiceModelMap());
+        if (values == null || values.isEmpty()) {
+            return null;
+        }
+        return values.get(0);
+    }
+
     public static AbstractDao.DataMap<HouseholdServiceReportModel> getServiceModelMap() {
         return c -> {
 

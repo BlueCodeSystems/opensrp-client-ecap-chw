@@ -117,6 +117,7 @@ public class MotherDetail extends AppCompatActivity {
     private String refresh;
     private TextView childTabCount, motherName, txtAge;
     private FloatingActionButton fab;
+    private View fabScrim;
     CommonPersonObjectClient commonPersonObjectClient, commonMother;
     ObjectMapper oMapper;
     private RelativeLayout cLayout, mLayout,
@@ -297,6 +298,8 @@ public class MotherDetail extends AppCompatActivity {
         oMapper = new ObjectMapper();
 
         fab = binding.fabx;
+        fabScrim = binding.fabScrim;
+        fabScrim.setOnClickListener(v -> closeFab());
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
@@ -1196,6 +1199,9 @@ public class MotherDetail extends AppCompatActivity {
 
             isFabOpen = true;
             fab.startAnimation(rotate_forward);
+            fabScrim.setVisibility(View.VISIBLE);
+            fabScrim.setAlpha(0f);
+            fabScrim.animate().alpha(1f).setDuration(200).start();
             mLayout.setVisibility(View.VISIBLE);
             cLayout.setVisibility(caregiverHivPositive ? View.GONE : View.VISIBLE);
 
@@ -1285,6 +1291,8 @@ public class MotherDetail extends AppCompatActivity {
     public void closeFab(){
         fab.startAnimation(rotate_backward);
         isFabOpen = false;
+        fabScrim.animate().alpha(0f).setDuration(200)
+                .withEndAction(() -> fabScrim.setVisibility(View.GONE)).start();
         cLayout.setVisibility(View.GONE);
         mLayout.setVisibility(View.GONE);
         if (motherAncLayout != null) motherAncLayout.setVisibility(View.GONE);

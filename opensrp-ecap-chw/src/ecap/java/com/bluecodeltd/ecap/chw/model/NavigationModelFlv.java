@@ -26,8 +26,8 @@ public class NavigationModelFlv implements NavigationModel.Flavor {
             NavigationOption reportsNavigationOption = new NavigationOption(org.smartregister.family.R.mipmap.ic_home, org.smartregister.family.R.mipmap.ic_home_active, R.string.reports, Constants.DrawerMenu.REPORTS, 0);
             NavigationOption refNavigationOption = new NavigationOption(org.smartregister.chw.core.R.mipmap.sidemenu_referrals, org.smartregister.chw.core.R.mipmap.sidemenu_referrals_active, R.string.hts, Constants.DrawerMenu.HTS, 0);
             NavigationOption pmtctNavigationOption = new NavigationOption(R.mipmap.sidemenu_pnc, R.mipmap.sidemenu_pnc_active, R.string.pmtct_register, Constants.DrawerMenu.PMTCT, 0);
-//              NavigationOption reportRegisterNavigationOption = new NavigationOption(org.smartregister.chw.core.R.drawable.sidemenu_service_activity, org.smartregister.chw.core.R.drawable.sidemenu_service_activity, R.string.report_register_menu_title, Constants.DrawerMenu.REPORT_REGISTER, 0);
-            navigationOptions.addAll(Arrays.asList(reportsNavigationOption, indexesNavigationOption, motherNavigationOption, allFamiliesNavigationOption, refNavigationOption, pmtctNavigationOption));
+            NavigationOption reportRegisterNavigationOption = new NavigationOption(org.smartregister.chw.core.R.drawable.sidemenu_service_activity, org.smartregister.chw.core.R.drawable.sidemenu_service_activity, R.string.report_register_menu_title, Constants.DrawerMenu.REPORT_REGISTER, 0);
+            navigationOptions.addAll(Arrays.asList(reportsNavigationOption, indexesNavigationOption, motherNavigationOption, allFamiliesNavigationOption, refNavigationOption, pmtctNavigationOption,reportRegisterNavigationOption));
         }
 
         return navigationOptions;

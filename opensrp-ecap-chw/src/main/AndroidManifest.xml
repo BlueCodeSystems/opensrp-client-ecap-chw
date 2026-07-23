@@ -362,6 +362,12 @@
             android:name=".activity.MalariaReportViewActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
+            android:name=".activity.HouseholdServiceReportViewActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
+            android:name=".activity.VcaServiceReportViewActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
             android:name=".activity.MonthlyNutritionReportViewActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity

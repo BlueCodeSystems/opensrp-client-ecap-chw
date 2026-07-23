@@ -205,11 +205,6 @@ public class HeiDetailsActivity extends AppCompatActivity {
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
         rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
-        fabHiv = binding.hivRisk;
-        fabHiv2 = binding.hivRisk2;
-        fabVisitation = binding.householdVisitationForVcaFab;
-        fabReferal = binding.referToFacilityFab;
-        fabCasePlan =  binding.casePlanFab;
         fabAssessment = binding.fabAssessment;
         txtScreening = binding.vcaScreening;
         addIndexClients = binding.assessment;
@@ -1115,48 +1110,13 @@ public class HeiDetailsActivity extends AppCompatActivity {
         startFormActivity(formToBeOpened);
     }
     private void refreshProfileFlags() {
-        updateDbsDueFlag();
-        updateFinalOutcomeFlag();
         updateMotherVlFlag();
     }
 
-    private void updateDbsDueFlag() {
-        Button flag = findViewById(R.id.hei_dbs_due_flag);
-        if (flag == null) return;
-        String message = buildUpcomingDbsDueMessage();
-        if (TextUtils.isEmpty(message)) {
-            flag.setVisibility(View.GONE);
-            return;
-        }
-        flag.setText(message);
-        flag.setVisibility(View.VISIBLE);
-    }
-
-    private void updateFinalOutcomeFlag() {
-        Button flag = findViewById(R.id.hei_outcome_due_flag);
-        if (flag == null) return;
-        if (!isFinalOutcomeDue()) {
-            flag.setVisibility(View.GONE);
-            return;
-        }
-        flag.setText("24m outcome due");
-        flag.setVisibility(View.VISIBLE);
-    }
-
     private void updateMotherVlFlag() {
-        Button flag = findViewById(R.id.hei_mother_vl_flag);
         View alert = findViewById(R.id.hei_unsuppressed_alert);
         MotherVlSummary summary = resolveLatestMotherVlSummary();
         boolean unsuppressed = summary != null && summary.unsuppressed;
-
-        if (flag != null) {
-            if (unsuppressed) {
-                flag.setText("Mother VL unsuppressed");
-                flag.setVisibility(View.VISIBLE);
-            } else {
-                flag.setVisibility(View.GONE);
-            }
-        }
 
         if (alert != null) {
             if (unsuppressed) {

@@ -109,7 +109,10 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
             holder.expandIcon.animate().rotation(next ? 180f : 0f).setDuration(150).start();
         });
         holder.editme.setOnClickListener(openForm);
-        holder.delete.setOnClickListener(v -> {
+        if (holder.editButton != null) {
+            holder.editButton.setOnClickListener(openForm);
+        }
+        View.OnClickListener deleteListener = v -> {
             try {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage("You are about to delete this household graduation ");
@@ -161,7 +164,11 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
             } catch (Exception e) {
                 Timber.e(e);
             }
-        });
+        };
+        holder.delete.setOnClickListener(deleteListener);
+        if (holder.deleteButton != null) {
+            holder.deleteButton.setOnClickListener(deleteListener);
+        }
 
 
     }
@@ -333,6 +340,7 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
                 tvChildOedema, tvOedemaStage, tvTbSymptoms, tvTbOther, tvTbReferral, tvTbComments;
         LinearLayout headerLayout, detailsContainer;
         ImageView editme, delete, expandIcon;
+        View editButton, deleteButton;
 
         public ViewHolder(View itemView) {
 
@@ -365,6 +373,8 @@ public class PmctChildMonitoringAdapter extends RecyclerView.Adapter<PmctChildMo
             tvTbComments = itemView.findViewById(R.id.tv_tb_comments);
             editme = itemView.findViewById(R.id.edit_me);
             delete = itemView.findViewById(R.id.delete_record);
+            editButton = itemView.findViewById(R.id.edit_button);
+            deleteButton = itemView.findViewById(R.id.delete_button);
 
 
         }

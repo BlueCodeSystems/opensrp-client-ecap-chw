@@ -133,6 +133,17 @@ public class VCAServiceReportDao extends AbstractDao {
 
 
 
+    public static VCAServiceModel getServiceReportByEntityId(String baseEntityId) {
+
+        String sql = "SELECT * FROM ec_vca_service_report WHERE base_entity_id = '" + baseEntityId + "' LIMIT 1";
+
+        List<VCAServiceModel> values = AbstractDao.readData(sql, getServiceModelMap());
+        if (values == null || values.isEmpty()) {
+            return null;
+        }
+        return values.get(0);
+    }
+
     public static DataMap<VCAServiceModel> getServiceModelMap() {
         return c -> {
 

@@ -381,22 +381,7 @@ public class IndexFragmentRegister extends BaseSafeRegisterFragment implements I
     @Override
     protected void onViewClicked(View view) {
 
-        if(view.getId() == R.id.index_warning){
-
-            builder.setMessage("\u2022  Household has not been Screened");
-            builder.setNegativeButton("OK", (dialog, id) -> {
-                //  Action for 'NO' Button
-                dialog.cancel();
-
-            });
-
-            //Creating dialog box
-            AlertDialog alert = builder.create();
-            //Setting the title manually
-            alert.setTitle("Alert");
-            alert.show();
-
-        } else if (view.getId() == R.id.register_columns){
+        if (view.getId() == R.id.register_columns){
 
             CommonPersonObjectClient client = ViewTagUtils.getTaggedClient(view);
             if (client == null) return;
