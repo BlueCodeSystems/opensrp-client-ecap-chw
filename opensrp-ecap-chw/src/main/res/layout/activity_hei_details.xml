@@ -245,7 +245,14 @@
             android:layout_below="@+id/collapsing_toolbar_appbarlayout"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-
+        <View
+            android:id="@+id/fab_scrim"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#99000000"
+            android:visibility="gone"
+            android:clickable="true"
+            android:focusable="true" />
 
         <LinearLayout
             android:id="@+id/menu_bar"
