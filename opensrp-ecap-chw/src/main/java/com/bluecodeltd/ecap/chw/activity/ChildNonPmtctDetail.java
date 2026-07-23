@@ -29,6 +29,7 @@ import com.bluecodeltd.ecap.chw.dao.EcMotherIndexDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildFinalOutcomeFragment;
 import com.bluecodeltd.ecap.chw.fragment.ChildLongitudinalFragment;
+import com.bluecodeltd.ecap.chw.fragment.ChildOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.ChildPostnatalFragment;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.util.Constants;
@@ -103,7 +104,9 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
     private ViewPager2 viewPager;
     private TabLayoutMediator tabMediator;
     private FloatingActionButton fab;
+    private View fabScrim;
     private boolean isFabOpen = false;
+    private boolean fabVisibilityInitialized = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -137,6 +140,10 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
         fab = findViewById(R.id.fabx);
+        fabScrim = findViewById(R.id.fab_scrim);
+        if (fabScrim != null) {
+            fabScrim.setOnClickListener(v -> closeFabMenu());
+        }
 
         childNameView = findViewById(R.id.child_name);
         childAgeView = findViewById(R.id.child_age);
@@ -150,6 +157,7 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
         bindChildHeader();
 
         setupViewPager();
+        setupFabVisibility();
     }
 
     public static void start(Activity activity, String baseEntityId, String householdId, String uniqueId) {
@@ -190,6 +198,11 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
             if (childPostnatalLayout != null) {
                 childPostnatalLayout.setVisibility(View.VISIBLE);
             }
+            if (fabScrim != null) {
+                fabScrim.setVisibility(View.VISIBLE);
+                fabScrim.setAlpha(0f);
+                fabScrim.animate().alpha(1f).setDuration(200).start();
+            }
         }
     }
 
@@ -225,6 +238,64 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
         if (childPostnatalLayout != null) {
             childPostnatalLayout.setVisibility(View.GONE);
         }
+        if (fabScrim != null) {
+            fabScrim.animate().alpha(0f).setDuration(200)
+                    .withEndAction(() -> fabScrim.setVisibility(View.GONE)).start();
+        }
+    }
+
+    private int safeViewPagerPosition() {
+        try {
+            return viewPager.getCurrentItem();
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    private void updateFabVisibilityForPosition(int position) {
+        if (fab == null) return;
+        if (position == 0) {
+            fab.show();
+        } else {
+            fab.hide();
+        }
+    }
+
+    private void setupFabVisibility() {
+        if (fabVisibilityInitialized || viewPager == null || fab == null) return;
+        fabVisibilityInitialized = true;
+
+        updateFabVisibilityForPosition(safeViewPagerPosition());
+
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                if (position != 0 && isFabOpen) {
+                    closeFabMenu();
+                }
+                updateFabVisibilityForPosition(position);
+            }
+        });
+
+        if (tabLayout != null) {
+            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    if (tab.getPosition() != 0 && isFabOpen) {
+                        closeFabMenu();
+                    }
+                    updateFabVisibilityForPosition(tab.getPosition());
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+                }
+            });
+        }
     }
 
     private void updateLongitudinalTabTitle() {
@@ -243,8 +314,8 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
             } catch (Exception ignored) { }
             countView.setText(String.valueOf(count));
 
-            if (tabLayout.getTabCount() > 0 && tabLayout.getTabAt(0) != null) {
-                tabLayout.getTabAt(0).setCustomView(layout);
+            if (tabLayout.getTabCount() > 1 && tabLayout.getTabAt(1) != null) {
+                tabLayout.getTabAt(1).setCustomView(layout);
             }
         } catch (Exception ignored) { }
     }
@@ -265,8 +336,8 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
             } catch (Exception ignored) { }
             countView.setText(String.valueOf(count));
 
-            if (tabLayout.getTabCount() > 1 && tabLayout.getTabAt(1) != null) {
-                tabLayout.getTabAt(1).setCustomView(layout);
+            if (tabLayout.getTabCount() > 2 && tabLayout.getTabAt(2) != null) {
+                tabLayout.getTabAt(2).setCustomView(layout);
             }
         } catch (Exception ignored) { }
     }
@@ -275,6 +346,7 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
         if (viewPager.getAdapter() != null) return;
 
         java.util.List<androidx.fragment.app.Fragment> fragments = new java.util.ArrayList<>();
+        fragments.add(new ChildOverviewFragment());
         fragments.add(new ChildLongitudinalFragment());
         fragments.add(new ChildPostnatalFragment());
         fragments.add(new ChildFinalOutcomeFragment());
@@ -289,9 +361,10 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
         }
 
         tabMediator = new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
-            if (position == 0) tab.setText("Longitudinal");
-            else if (position == 1) tab.setText("Postnatal");
-            else if (position == 2) tab.setText("Outcome");
+            if (position == 0) tab.setText("Overview");
+            else if (position == 1) tab.setText("Longitudinal");
+            else if (position == 2) tab.setText("Postnatal");
+            else if (position == 3) tab.setText("Outcome");
         });
         tabMediator.attach();
 
@@ -430,9 +503,15 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
             childStatusView.setText(statusLabel);
         }
 
-        // Avatar icon (same icon for all genders)
+        // Avatar icon: gender-based, matching the Mother Index Children tab
         if (childAvatarView != null) {
-            childAvatarView.setImageResource(R.drawable.ic_child);
+            if ("Male".equalsIgnoreCase(genderValue)) {
+                childAvatarView.setImageResource(org.smartregister.family.R.mipmap.ic_boy_child);
+            } else if ("Female".equalsIgnoreCase(genderValue)) {
+                childAvatarView.setImageResource(org.smartregister.family.R.mipmap.ic_girl_child);
+            } else {
+                childAvatarView.setImageResource(org.smartregister.chw.core.R.drawable.ic_child_unknown_gender);
+            }
             childAvatarView.clearColorFilter();
         }
     }
@@ -533,6 +612,16 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
 
     public String getUniqueId() {
         return uniqueId;
+    }
+
+    public Child getCurrentChild() {
+        return currentChild;
+    }
+
+    public void setViewPagerPosition(int position) {
+        if (viewPager != null) {
+            viewPager.setCurrentItem(position, true);
+        }
     }
 
     @Override
