@@ -40,6 +40,13 @@
         android:usesCleartextTraffic="true"
         android:largeHeap="true"
         tools:replace="android:theme">
+        <service
+            android:name=".push.FlagsFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
         <activity
             android:name=".activity.HeiDetailsActivity"
             android:exported="false"
@@ -47,7 +54,9 @@
 
         <activity
             android:name=".activity.FlagActivity"
-            android:exported="false" />
+            android:label="@string/pmp_flags"
+            android:exported="false"
+            android:theme="@style/ChwTheme.NoActionBar" />
 
         <activity
             android:name=".activity.SopDocumentsActivity"
