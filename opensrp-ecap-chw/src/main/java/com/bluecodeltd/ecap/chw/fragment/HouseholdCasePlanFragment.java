@@ -43,8 +43,8 @@ public class HouseholdCasePlanFragment extends Fragment {
         binding = com.bluecodeltd.ecap.chw.databinding.FragmentHouseholdcaseplansBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        String householdId = ( (HouseholdDetails) requireActivity()).house.getHousehold_id();
         Household house = ( (HouseholdDetails) requireActivity()).house;
+        String householdId = house != null ? house.getHousehold_id() : null;
         recyclerView = binding.householdRecycler;
         linearLayout = binding.householdVisitContainer;
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
@@ -69,7 +69,13 @@ public class HouseholdCasePlanFragment extends Fragment {
             }
             if (progress != null) progress.setVisibility(View.GONE);
         });
-        vm.refresh(householdId);
+        if (householdId != null) {
+            vm.refresh(householdId);
+        } else {
+            // No household resolved; show the empty state instead of crashing.
+            if (progress != null) progress.setVisibility(View.GONE);
+            if (linearLayout != null) linearLayout.setVisibility(View.VISIBLE);
+        }
 
 
         return view;

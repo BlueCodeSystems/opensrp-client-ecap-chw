@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:baselineAligned="false"
+    android:gravity="top"
+    android:paddingVertical="3dp">
+
+    <TextView
+        android:id="@+id/field_label"
+        android:layout_width="104dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/light_grey_text"
+        android:textSize="12sp"
+        tools:text="Household ID" />
+
+    <TextView
+        android:id="@+id/field_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@color/text_black"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        tools:text="HH-12345" />
+</LinearLayout>
