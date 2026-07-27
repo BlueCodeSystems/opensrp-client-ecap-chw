@@ -9,7 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,10 +22,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.NotificationsAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
-import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
-import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.DueVisitsHelper;
+import com.bluecodeltd.ecap.chw.util.StatusBarUtils;
 import com.bluecodeltd.ecap.chw.util.Threading;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -53,8 +53,8 @@ public class NotificationActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     RecyclerView.Adapter recyclerViewadapter;
-    private ArrayList<VcaVisitationModel> notificationsList = new ArrayList<>();
-    private LinearLayout linearLayout;
+    private ArrayList<DueVisitsHelper.DueVisit> notificationsList = new ArrayList<>();
+    private RelativeLayout linearLayout;
 
 
     private Toolbar toolbar;
@@ -63,10 +63,11 @@ public class NotificationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
+        StatusBarUtils.applyLightStatusBar(this);
 
         toolbar = findViewById(R.id.toolbarnotifications);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Final HIV Status Visits");
+        getSupportActionBar().setTitle("Due Visits");
         NavigationMenu.getInstance(this, null, toolbar);
 
         recyclerView = findViewById(R.id.myrecyclerView);
@@ -86,9 +87,9 @@ public class NotificationActivity extends AppCompatActivity {
         linearLayout.setVisibility(View.VISIBLE);
 
         Threading.io(() -> {
-            List<VcaVisitationModel> results = new ArrayList<>();
-            try { results = VcaVisitationDao.getVisitsByCaseWorkerPhone(phone); } catch (Exception ignored) {}
-            List<VcaVisitationModel> finalResults = results == null ? new ArrayList<>() : results;
+            List<DueVisitsHelper.DueVisit> results = new ArrayList<>();
+            try { results = DueVisitsHelper.filterDue(DueVisitsHelper.getDueVisits(phone)); } catch (Exception ignored) {}
+            List<DueVisitsHelper.DueVisit> finalResults = results == null ? new ArrayList<>() : results;
             Threading.main(() -> {
                 notificationsList.clear();
                 notificationsList.addAll(finalResults);

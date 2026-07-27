@@ -31,8 +31,9 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
-            <!-- Left accent strip -->
+            <!-- Left accent strip: color is driven by household status in HouseholdRegisterViewHolder -->
             <View
+                android:id="@+id/status_strip"
                 android:layout_width="6dp"
                 android:layout_height="match_parent"
                 android:minHeight="76dp"
@@ -89,7 +90,7 @@
                     android:ellipsize="end"
                     android:textColor="@color/textSecondary"
                     android:textSize="12sp"
-                    tools:text="Lavington #445" />
+                    tools:text="HH-1042 • Near the borehole" />
 
             </LinearLayout>
 

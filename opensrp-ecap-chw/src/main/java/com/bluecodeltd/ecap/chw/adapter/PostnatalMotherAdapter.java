@@ -284,6 +284,18 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
                         return new ChildIndexEventClient(event, client);
                     }
                     break;
+
+                case "Mother Pmtct Postnatal":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_pmtct_mother_postnatal");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
             }
         } catch (JSONException e) {
             Timber.e(e);
