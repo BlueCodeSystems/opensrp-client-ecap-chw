@@ -85,7 +85,7 @@ public class HouseholdRegisterProvider implements RecyclerViewProvider<Household
             Threading.main(() -> {
                 Object tag = householdRegisterViewHolder.itemView.getTag(R.id.tag_row_id);
                 if (!(tag instanceof String) || !rowTag.equals(tag)) return;
-                householdRegisterViewHolder.setupViews(fCaregiverName + " " + "Household", fHouseholdLookupId, baseId, is_closed, fHouseholdLookupId, fGenderList, fIsScreened, fAgeList, fVcaCount, context);
+                householdRegisterViewHolder.setupViews(fCaregiverName + " " + "Household", fHouseholdLookupId, baseId, is_closed, fGenderList, fIsScreened, fAgeList, fVcaCount, context);
                 householdRegisterViewHolder.itemView.setOnClickListener(onClickListener);
                 View columns = householdRegisterViewHolder.itemView.findViewById(R.id.register_columns);
                 columns.setOnClickListener(onClickListener);

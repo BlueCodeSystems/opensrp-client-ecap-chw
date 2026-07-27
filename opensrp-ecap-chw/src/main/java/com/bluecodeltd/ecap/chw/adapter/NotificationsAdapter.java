@@ -11,22 +11,21 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
-import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.DueVisitsHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -45,7 +44,6 @@ import org.smartregister.util.FormUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -56,11 +54,11 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 
 
     Context context;
-    List<VcaVisitationModel> visits;
+    List<DueVisitsHelper.DueVisit> visits;
     ObjectMapper oMapper;
 
 
-    public NotificationsAdapter(List<VcaVisitationModel> visits, Context context){
+    public NotificationsAdapter(List<DueVisitsHelper.DueVisit> visits, Context context){
 
         super();
 
@@ -82,7 +80,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
     @Override
     public void onBindViewHolder(NotificationsAdapter.ViewHolder holder, final int position) {
 
-        final VcaVisitationModel visit = visits.get(position);
+        final DueVisitsHelper.DueVisit visit = visits.get(position);
 
 //        holder.setIsRecyclable(false);
 
@@ -128,55 +126,14 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 
         });
 
-        String inputDate = visit.getBirthdate().substring(0, 5);
-        String yearPart = "-" + String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
-        String newDate = inputDate.concat(yearPart);
+        holder.txtName.setText(visit.name);
+        holder.txtVisitDate.setText(visit.visitDate);
 
-        Date birthday = null;
-        try {
-            birthday = new SimpleDateFormat("dd-mm-yyyy").parse(newDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        Date lastvisit = null;
-        try {
-            lastvisit = new SimpleDateFormat("dd-mm-yyyy").parse(visit.getVisit_date());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        try{
-
-            Boolean checkDue = compareDates(birthday, lastvisit);
-
-            if(checkDue){
-
-                holder.txtName.setText(visit.getFirst_name() + " " + visit.getLast_name());
-                holder.txtBirthdate.setText(visit.getBirthdate());
-                holder.txtVisitDate.setText(visit.getVisit_date());
-
-            }
-
-        } catch (NullPointerException e) {
-
-            Log.e("datenullexeption", e.getMessage());
-        }
+        boolean overdue = "red".equalsIgnoreCase(visit.statusColor);
+        holder.statusPill.setBackgroundResource(overdue ? R.drawable.bg_chip_danger : R.drawable.bg_chip_warning);
+        holder.statusPill.setText(overdue ? "Overdue" : "Due Soon");
+        holder.statusStripe.setBackgroundColor(ContextCompat.getColor(context, overdue ? R.color.pie_chart_red : R.color.pie_chart_orange));
     }
-
-    public Boolean compareDates(Date date1, Date date2)
-    {
-
-        if(date1.after(date2)){
-         // show notification
-            return true;
-        }
-
-        return false;
-
-    }
-
-
 
     @Override
     public int getItemCount() {
@@ -184,7 +141,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         return visits.size();
     }
 
-    public void openFormUsingFormUtils(Context context, String formName,VcaVisitationModel visit) throws JSONException {
+    public void openFormUsingFormUtils(Context context, String formName, DueVisitsHelper.DueVisit visit) throws JSONException {
 
         oMapper = new ObjectMapper();
 
@@ -212,7 +169,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         if ( vcaId != null) {
             vcaId.remove(JsonFormUtils.VALUE);
             try {
-                vcaId.put(JsonFormUtils.VALUE, visit.getUnique_id());
+                vcaId.put(JsonFormUtils.VALUE, visit.uniqueId);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -221,7 +178,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         if ( vcaAge != null) {
             vcaAge.remove(JsonFormUtils.VALUE);
             try {
-                vcaAge.put(JsonFormUtils.VALUE, calculateAge(visit.getBirthdate()));
+                vcaAge.put(JsonFormUtils.VALUE, calculateAge(visit.birthdate));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -384,10 +341,11 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView txtName, txtBirthdate, txtVisitDate;
+        TextView txtName, txtVisitDate, statusPill;
 
         LinearLayout linearLayout;
-        RelativeLayout register_columns;
+        View register_columns;
+        View statusStripe;
 
         public ViewHolder(View itemView) {
 
@@ -395,8 +353,9 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 
             linearLayout = itemView.findViewById(R.id.itemm);
             txtName  = itemView.findViewById(R.id.name);
-            txtBirthdate = itemView.findViewById(R.id.birthdate);
             txtVisitDate = itemView.findViewById(R.id.visit_date);
+            statusPill = itemView.findViewById(R.id.index_icon);
+            statusStripe = itemView.findViewById(R.id.status_stripe);
             register_columns = itemView.findViewById(R.id.register_columns);
 
         }

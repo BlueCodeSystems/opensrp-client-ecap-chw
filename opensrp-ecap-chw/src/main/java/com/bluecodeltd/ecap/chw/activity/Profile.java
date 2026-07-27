@@ -7,43 +7,32 @@ import androidx.preference.PreferenceManager;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowInsetsController;
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.util.StatusBarUtils;
 
 public class Profile extends AppCompatActivity {
 
     private TextView txtName, txtCode, txtProvince, txtDistrict, txtFacility, txtPartner, txtNrc, txtPhone, txtEmail;
+    private TextView txtAvatarInitials;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        StatusBarUtils.applyLightStatusBar(this);
 
-        Toolbar toolbar = findViewById(R.id.collapsing_toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(true);
-                actionBar.setDisplayShowTitleEnabled(false);
-                final Drawable upArrow = getResources().getDrawable(R.drawable.ic_arrow_back_white_24dp);
-                upArrow.setColorFilter(getResources().getColor(org.smartregister.R.color.text_blue), PorterDuff.Mode.SRC_ATOP);
-                actionBar.setHomeAsUpIndicator(upArrow);
-            }
-            toolbar.setNavigationOnClickListener(v -> onBackPressed());
-            TextView tvTitle = findViewById(R.id.tvTitle);
-            if (tvTitle != null) tvTitle.setText("ECAP II Caseworker Profile");
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("My Profile");
         }
 
-        applyLightStatusBar();
-
+        txtAvatarInitials = findViewById(R.id.avatar_initials);
         txtName = findViewById(R.id.name);
         txtCode = findViewById(R.id.code);
         txtProvince = findViewById(R.id.province);
@@ -66,6 +55,7 @@ public class Profile extends AppCompatActivity {
         String email = sp.getString("email", "anonymous");
         String nrc = sp.getString("nrc", "anonymous");
 
+        txtAvatarInitials.setText(initialsOf(name));
         txtName.setText(name);
         txtCode.setText(code);
         txtProvince.setText(province);
@@ -78,22 +68,26 @@ public class Profile extends AppCompatActivity {
 
     }
 
-    // Status bar padding no longer required now that toolbar occupies the top.
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
 
-    private void applyLightStatusBar() {
-        Window window = getWindow();
-        View decorView = window.getDecorView();
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            WindowInsetsController controller = decorView.getWindowInsetsController();
-            if (controller != null) {
-                controller.setSystemBarsAppearance(
-                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
-                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS);
-            }
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            int flags = decorView.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-            decorView.setSystemUiVisibility(flags);
+    private static String initialsOf(String name) {
+        if (TextUtils.isEmpty(name)) {
+            return "?";
         }
+        String[] parts = name.trim().split("\\s+");
+        StringBuilder initials = new StringBuilder();
+        for (String part : parts) {
+            if (!part.isEmpty()) {
+                initials.append(Character.toUpperCase(part.charAt(0)));
+            }
+            if (initials.length() == 2) {
+                break;
+            }
+        }
+        return initials.length() > 0 ? initials.toString() : "?";
     }
 }

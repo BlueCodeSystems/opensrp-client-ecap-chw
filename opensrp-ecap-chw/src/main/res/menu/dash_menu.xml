@@ -16,6 +16,10 @@
         android:id="@+id/import_csv"
         android:title="Import CSV"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/report_a_problem"
+        android:title="Report a Problem"
+        app:showAsAction="never"/>
 
     <item
         android:id="@+id/download_ecap_sops"

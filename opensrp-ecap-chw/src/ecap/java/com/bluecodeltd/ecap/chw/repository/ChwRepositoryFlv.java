@@ -353,6 +353,12 @@ public class ChwRepositoryFlv {
                     "number_of_condoms_distributed_at_18_months TEXT, " +
                     "comments_at_postnatal_care_visit_18 TEXT, " +
                     "mothers_outcome TEXT, " +
+                    "art_initiated TEXT, " +
+                    "art_adherence_counselling_support TEXT, " +
+                    "vl_result TEXT, " +
+                    "family_planning_counselling TEXT, " +
+                    "number_of_condoms_distributed TEXT, " +
+                    "comments_at_postnatal_care_visit TEXT, " +
                     "delete_status TEXT)";
 
             db.execSQL(sqlCreatePostnatal);

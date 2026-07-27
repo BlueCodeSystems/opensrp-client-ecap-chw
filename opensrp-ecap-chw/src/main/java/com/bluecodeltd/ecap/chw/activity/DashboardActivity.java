@@ -698,6 +698,9 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
             case R.id.import_csv:
                 openCsvPicker();
                 break;
+            case R.id.report_a_problem:
+                startActivity(new Intent(DashboardActivity.this, ReportProblemActivity.class));
+                break;
             case R.id.download_ecap_sops:
                 downloadEcapSops();
                 break;
