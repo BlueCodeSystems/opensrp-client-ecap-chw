@@ -39,7 +39,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 
 public class ProfileOverviewFragment extends Fragment {
@@ -48,10 +47,10 @@ public class ProfileOverviewFragment extends Fragment {
 
     RelativeLayout myview;
     Button moreSubpopBtn;
-    LinearLayout myview2,linearlayout_name,linearlayout_gender,linearlayout_dob,linearlayout_status,linearlayout_relation,linearlayout_phone,subPopLayout1,subPopLayout2,abymSubpopulation;
+    LinearLayout myview2,linearlayout_name,linearlayout_gender,linearlayout_dob,linearlayout_status,linearlayout_relation,linearlayout_phone,subPopLayout1,abymSubpopulation;
     ImageButton imgBtn;
     TextView abymTxt,disabledTxt,agedTxt,illnessTxt,childHeadTxt,notChildHeadTx,femaleHeadedTxt,survivorTxt;
-    TextView txtArtNumber, sub1, sub2, sub3, sub4, sub5, sub6, sub7, sub8, sub9, sub10, sub11, sub12, sub13, sub14, sub15, sub16, otherSub,otherMemberSub, txtSubPopulation,txtReferred, txtFacility,txtEditedBy,txtDateEdited,
+    TextView txtArtNumber, sub1, sub2, sub3, sub4, sub5, sub6, sub7, sub8, sub9, sub10, sub11, sub12, sub13, sub14, sub15, sub16, otherSub,otherMemberSub,txtReferred, txtFacility,txtEditedBy,txtDateEdited,
             txtEnrolled, txtArtCheckbox, txtDateStartedArt, txtVlLastDate, txtVlResult, txtIsSuppressed, txtNextVl, txtIsMMD, txtMMDResult,
             txtCaregiverName, txtGender, txtDob, txtHiv, txtRelation, txtPhone,txtcPhone,txtSchool,recent_vl_result,recent_mmd_level,
             new_caregiver_name, overview_section_header3,overview_section_header5,overview_section_details_left, new_caregiver_gender, new_caregiver_dob, new_hiv_status, new_child_relation, new_caregiver_phone;
@@ -90,9 +89,7 @@ public class ProfileOverviewFragment extends Fragment {
         sub14 = binding.subpop14;
         sub15 = binding.subpop15;
         sub16 = binding.subpop16;
-        txtSubPopulation = binding.subPopulation;
         subPopLayout1 = binding.subPopLayout1;
-        subPopLayout2 = binding.subPopLayout2;
         myview = binding.myview;
         txtReferred = binding.referred;
         txtEnrolled = binding.enrolled;
@@ -145,7 +142,6 @@ public class ProfileOverviewFragment extends Fragment {
         HashMap<String, Child> mymap = ( (IndexDetailsActivity) requireActivity()).getData();
         Child childIndex =mymap.get("Child");
         if (childIndex == null) {
-            txtSubPopulation.setText("");
             txtFacility.setText("N/A");
             txtArtNumber.setText("N/A");
             txtReferred.setText("N/A");
@@ -374,19 +370,18 @@ public class ProfileOverviewFragment extends Fragment {
         ProfileOverviewViewModel vm = new ViewModelProvider(this).get(ProfileOverviewViewModel.class);
         vm.getState().observe(getViewLifecycleOwner(), st -> {
             if (!isAdded() || st == null) return;
-            Household household = st.getHousehold();
             List<VCAServiceModel> recentServices = st.getRecentServices();
             AbymSubpopulationModel abymLocal = st.getAbym();
             MuacModel muacLocal = st.getMuac();
             VcaScreeningModel screenLocal = st.getScreen();
+            Household household = st.getHousehold();
 
-            if (household != null && household.getSub_population() != null) {
-                subPopLayout2.setVisibility(View.VISIBLE);
-                String mapped = keysToValues(household.getSub_population());
-                txtSubPopulation.setText(mapped != null ? mapped : "");
+            if (household != null && household.getCaseworker_name() != null) {
+                txtEditedBy.setText(household.getCaseworker_name());
+            } else if (childIndex.getCaseworker_name() != null) {
+                txtEditedBy.setText(childIndex.getCaseworker_name());
             } else {
-                subPopLayout2.setVisibility(View.GONE);
-                txtSubPopulation.setText("");
+                txtEditedBy.setText("Not Set");
             }
 
             updateOverviewSubpops(screenLocal, muacLocal, st.getPbfwStatus());
@@ -514,33 +509,6 @@ public class ProfileOverviewFragment extends Fragment {
         if (TextUtils.isEmpty(value)) return false;
         String v = value.trim().toLowerCase(Locale.ENGLISH);
         return "no".equals(v) || "0".equals(v) || "false".equals(v);
-    }
-
-    public String keysToValues(String keys) {
-        if (keys == null || keys.trim().isEmpty()) {
-            return "";
-        }
-        Map<String, String> keyValues = new HashMap<>();
-        keyValues.put("subpop1", "C/ALHIV");
-        keyValues.put("subpop2", "HEI");
-        keyValues.put("subpop3", "C/WLHIV");
-        keyValues.put("subpop4", "AGYW");
-        keyValues.put("subpop5", "S/SV");
-        keyValues.put("subpop", "C/FSWs");
-        keyValues.put("PBFW", "PBFW");
-        keyValues.put("Siblings of the Index and other family members", "SIBS/INDEX FAMILY");
-        StringBuilder values = new StringBuilder();
-        String[] keysArray = keys.replace("[", "").replace("]", "").replace("\"", "").split(",");
-        for (String key : keysArray) {
-            String value = keyValues.get(key.trim());
-            if (value != null) {
-                if (values.length() > 0) {
-                    values.append(", ");
-                }
-                values.append(value);
-            }
-        }
-        return values.toString();
     }
 
 }
