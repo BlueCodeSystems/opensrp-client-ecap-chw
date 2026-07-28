@@ -1563,7 +1563,15 @@ public class HouseholdDetails extends AppCompatActivity {
                 is_edit_mode = true;
             }
 
-            if(EncounterType.equals("Household Screening") || EncounterType.equals("Hiv Assessment For Caregiver") || EncounterType.equals("Referral") || EncounterType.equals("Household Visitation For Caregiver")) {
+            boolean isHouseholdScreening = EncounterType.equals("Household Screening") || EncounterType.equals("Household Screening Edit");
+            boolean signatureMissing = false;
+            if (isHouseholdScreening) {
+                JSONObject signatureField = getFieldJSONObject(fields(jsonFormObject, STEP2), "signature");
+                String existingSignature = signatureField != null ? signatureField.optString("value", "") : "";
+                signatureMissing = existingSignature == null || existingSignature.trim().isEmpty();
+            }
+
+            if((isHouseholdScreening && signatureMissing) || EncounterType.equals("Hiv Assessment For Caregiver") || EncounterType.equals("Referral") || EncounterType.equals("Household Visitation For Caregiver")) {
                 Intent openSignatureIntent = new Intent(this, SignatureActivity.class);
                 openSignatureIntent.putExtra("jsonForm", jsonFormObject.toString());
                 openSignatureIntent.putExtra("householdId",householdId);
