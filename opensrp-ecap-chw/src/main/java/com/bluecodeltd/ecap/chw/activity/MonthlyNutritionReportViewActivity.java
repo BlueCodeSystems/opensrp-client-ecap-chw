@@ -306,13 +306,6 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
         setText(R.id.hh_practicing_exclusive_bf, data.get("hh_practicing_exclusive_bf"));
         setText(R.id.hh_practicing_complementary_feeding, data.get("hh_practicing_complementary_feeding"));
         setText(R.id.hh_wash_activities, data.get("hh_wash_activities"));
-        setText(R.id.hh_visited_assessment, data.get("hh_visited_assessment"));
-        setText(R.id.ppmam_identified, data.get("ppmam_identified"));
-        setText(R.id.ppmam_referred_commenced, data.get("ppmam_referred_commenced"));
-        setText(R.id.other_children_pmam, data.get("other_children_pmam"));
-        setText(R.id.plw_art_pmtct_nutrition_assessment, data.get("plw_art_pmtct_nutrition_assessment"));
-        setText(R.id.plw_received_ifas, data.get("plw_received_ifas"));
-        setText(R.id.hh_food_insecurity_counselled, data.get("hh_food_insecurity_counselled"));
 
         // Section C
         setText(R.id.mnp_children_6_23_received, data.get("mnp_children_6_23_received"));
@@ -321,14 +314,12 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
         setText(R.id.vita_children_12_59_months, data.get("vita_children_12_59_months"));
         setText(R.id.vita_plw_supplemented, data.get("vita_plw_supplemented"));
         setText(R.id.deworming_children_12_59, data.get("deworming_children_12_59"));
-        setText(R.id.deworming_plw, data.get("deworming_plw"));
 
         // Section D
         setText(R.id.ecd_centres_supported_monitoring, data.get("ecd_centres_supported_monitoring"));
         setText(R.id.ecd_centres_with_feeding, data.get("ecd_centres_with_feeding"));
         setText(R.id.ecd_children_enrolled, data.get("ecd_children_enrolled"));
         setText(R.id.ecd_caregivers_trained, data.get("ecd_caregivers_trained"));
-        setText(R.id.ecd_developmental_screening, data.get("ecd_developmental_screening"));
 
         // Section E
         setText(R.id.wfa_underweight, data.get("wfa_underweight"));
@@ -338,13 +329,13 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
         // Section F
         setText(R.id.nutrition_grade_1, data.get("nutrition_grade_1"));
         setText(R.id.nutrition_grade_2, data.get("nutrition_grade_2"));
+        setText(R.id.nutrition_grade_3, data.get("nutrition_grade_3"));
         setText(R.id.nutrition_nr, data.get("nutrition_nr"));
 
         // Section G
         setText(R.id.muac_red_below_11_5, data.get("muac_red_below_11_5"));
         setText(R.id.muac_yellow_11_5_to_12_5, data.get("muac_yellow_11_5_to_12_5"));
         setText(R.id.muac_green_12_5_plus, data.get("muac_green_12_5_plus"));
-        setText(R.id.muac_oedema, data.get("muac_oedema"));
 
         // Section H
         setText(R.id.sti_referred, data.get("sti_referred"));
@@ -353,9 +344,6 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
         // Section I
         setText(R.id.referral_nutrition_to_health, data.get("referral_nutrition_to_health"));
         setText(R.id.referral_feedback_received, data.get("referral_feedback_received"));
-        setText(R.id.referral_date_of_referral, data.get("referral_date_of_referral"));
-        setText(R.id.referral_date_of_feedback, data.get("referral_date_of_feedback"));
-        setText(R.id.referral_hiv_tb_integration, data.get("referral_hiv_tb_integration"));
 
         TextView commentsView = findViewById(R.id.txt_comments);
         if (commentsView != null) {

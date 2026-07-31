@@ -1,0 +1,17 @@
+- [x] Remove radio buttons in Section C of `malaria_monthly_reporting.json`
+    - [x] Question 1
+    - [x] Question 2
+    - [x] Question 3
+    - [x] Question 4
+    - [x] Question 5
+    - [x] Question 6
+    - [x] Question 7
+- [x] Update input fields in Section C to be always visible and required
+    - [x] Question 1
+    - [x] Question 2
+    - [x] Question 3
+    - [x] Question 4
+    - [x] Question 5
+    - [x] Question 6
+    - [x] Question 7
+- [x] Verify changes in the form JSON
