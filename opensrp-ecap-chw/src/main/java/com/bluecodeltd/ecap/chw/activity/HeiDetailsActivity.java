@@ -55,6 +55,7 @@ import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.ChildCasePlanFragment;
 import com.bluecodeltd.ecap.chw.fragment.ChildVisitsFragment;
+import com.bluecodeltd.ecap.chw.fragment.PmctChildDbsMonitoringFragment;
 import com.bluecodeltd.ecap.chw.fragment.PmctChildMonitoringFragment;
 import com.bluecodeltd.ecap.chw.fragment.ProfileOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.UnderFiveCardFragment;
@@ -284,6 +285,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
         returnViewPager();
         updateOverviewTabTitle();
         updateAncTabTitle();
+        updateDbsTabTitle();
 
 
         updateMotherProfileButton();
@@ -1342,6 +1344,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new UnderFiveCardFragment());
         fragments.add(new PmctChildMonitoringFragment());
+        fragments.add(new PmctChildDbsMonitoringFragment());
 
         com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter adapter = new com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter(this, fragments);
         viewPager.setAdapter(adapter);
@@ -1350,6 +1353,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
         tabMediator = new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             if (position == 0) tab.setText("Overview");
             else if (position == 1) tab.setText("Monitoring");
+            else if (position == 2) tab.setText("DBS MONITORING");
         });
         tabMediator.attach();
     }
@@ -1374,6 +1378,18 @@ public class HeiDetailsActivity extends AppCompatActivity {
         childTabCount.setText(countANC);
 
         tabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
+    }
+
+    private void updateDbsTabTitle() {
+        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.pmct_titles, null);
+        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
+        visitTabTitle.setText("DBS MONITORING");
+        TextView dbsTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
+
+        String countDBS = ChildMonitoringDao.countChildMonitoring(pmtctChild.getUnique_id());
+        dbsTabCount.setText(countDBS);
+
+        tabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
     }
 
     public HashMap<String, PmtctChildModel> getClientDetails() {

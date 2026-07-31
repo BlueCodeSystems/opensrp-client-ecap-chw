@@ -19,6 +19,18 @@ public class ChildMonitoringDao  extends AbstractDao {
         return values;
 
     }
+
+    public static List<ChildMonitoringModel> getPmctChildMonitoringListDBS(String uniqueID) {
+
+        String sql = "SELECT * FROM ec_pmtct_child_monitoring WHERE pediatic_care_follow_up IN ('6 weeks','6 months','9 months') AND  unique_id = '" + uniqueID + "' ";
+
+        List<ChildMonitoringModel> values = AbstractDao.readData(sql, getChildMonitoringModelMap());
+        if (values == null || values.size() == 0)
+            return new ArrayList<>();
+
+        return values;
+
+    }
     public static ChildMonitoringModel getPMCTChildMonitoring(String uniqueID) {
 
         String sql = "SELECT * FROM ec_pmtct_child_monitoring WHERE unique_id = '" + uniqueID + "' ";
