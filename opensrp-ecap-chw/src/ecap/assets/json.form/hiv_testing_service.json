@@ -1,191 +1,205 @@
 {
-  "count": 1,
-  "encounter_type": "HIV Testing Service",
-  "entity_id": "",
-  "metadata": {
-    "start": {
-      "openmrs_entity_parent": "",
-      "openmrs_entity": "concept",
-      "openmrs_data_type": "start",
-      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+  "count":1,
+  "encounter_type":"HIV Testing Service",
+  "entity_id":"",
+  "metadata":{
+    "start":{
+      "openmrs_entity_parent":"",
+      "openmrs_entity":"concept",
+      "openmrs_data_type":"start",
+      "openmrs_entity_id":"163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     },
-    "end": {
-      "openmrs_entity_parent": "",
-      "openmrs_entity": "concept",
-      "openmrs_data_type": "end",
-      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    "end":{
+      "openmrs_entity_parent":"",
+      "openmrs_entity":"concept",
+      "openmrs_data_type":"end",
+      "openmrs_entity_id":"163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     },
-    "today": {
-      "openmrs_entity_parent": "",
-      "openmrs_entity": "encounter",
-      "openmrs_entity_id": "encounter_date"
+    "today":{
+      "openmrs_entity_parent":"",
+      "openmrs_entity":"encounter",
+      "openmrs_entity_id":"encounter_date"
     },
-    "deviceid": {
-      "openmrs_entity_parent": "",
-      "openmrs_entity": "concept",
-      "openmrs_data_type": "deviceid",
-      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    "deviceid":{
+      "openmrs_entity_parent":"",
+      "openmrs_entity":"concept",
+      "openmrs_data_type":"deviceid",
+      "openmrs_entity_id":"163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     },
-    "subscriberid": {
-      "openmrs_entity_parent": "",
-      "openmrs_entity": "concept",
-      "openmrs_data_type": "subscriberid",
-      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    "subscriberid":{
+      "openmrs_entity_parent":"",
+      "openmrs_entity":"concept",
+      "openmrs_data_type":"subscriberid",
+      "openmrs_entity_id":"163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     },
-    "simserial": {
-      "openmrs_entity_parent": "",
-      "openmrs_entity": "concept",
-      "openmrs_data_type": "simserial",
-      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    "simserial":{
+      "openmrs_entity_parent":"",
+      "openmrs_entity":"concept",
+      "openmrs_data_type":"simserial",
+      "openmrs_entity_id":"163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     },
-    "phonenumber": {
-      "openmrs_entity_parent": "",
-      "openmrs_entity": "concept",
-      "openmrs_data_type": "phonenumber",
-      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    "phonenumber":{
+      "openmrs_entity_parent":"",
+      "openmrs_entity":"concept",
+      "openmrs_data_type":"phonenumber",
+      "openmrs_entity_id":"163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     },
-    "encounter_location": "",
-    "look_up": {
-      "entity_id": "",
-      "value": ""
+    "encounter_location":"",
+    "look_up":{
+      "entity_id":"",
+      "value":""
     }
   },
-  "step1": {
-    "title": "",
-    "fields": [
+  "step1":{
+    "title":"HTS Case Record",
+    "fields":[
       {
-        "key": "date_client_created",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_created",
-        "type": "edit_text",
-        "read_only": "true",
-        "hint": "Date Case Record Created",
-        "edit_type": "number"
-      },
-      {
-        "key": "caseworker_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "caseworker_name",
-        "type": "edit_text",
-        "hint": "Edited By",
-        "read_only": "true",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Name of Person can  only contain letters"
-        }
-      },
-      {
-        "key": "phone",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "phone",
-        "type": "edit_text",
-        "hint": "Caseworker Phone",
-        "edit_type": "number",
-        "read_only": true,
-        "v_numeric": {
-          "value": false,
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
+        "key":"date_client_created",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"date_created",
+        "type":"date_picker",
+        "hint":"Date Case Record (17-06-2026)",
+        "label":"Date Case Record",
+        "description":"The date when the record is being created",
+        "expanded":false,
+        "min_date":"today-1y",
+        "max_date":"today",
+        "v_required":{
+          "value":"true",
+          "err":"Please enter the date"
         },
-        "v_regex": {
-          "value": "((07||09)[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 077,076,095, 096, or 097 and must be a total of 10 digits in length"
-        }
+        "read_only":true,
+        "value":"today",
+        "notes":"Autofilled to pick date"
       },
       {
-        "key": "implementing_partner",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "implementing_partner",
-        "type": "edit_text",
-        "hint": "Implementing Partner",
-        "read_only": "true",
-        "edit_type": "name",
-        "look_up": "false",
-        "v_required": {
-          "value": "true",
-          "err": "Partners is Required"
-        }
-      },
-      {
-        "key": "facility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "facility",
-        "hint": "Facility",
-        "type": "spinner",
-        "openmrs_data_type": "",
-        "value": false,
-        "values": [],
-        "keys": [],
-        "v_required": {
-          "value": true,
-          "err": "Facility is Required"
+        "key":"caseworker_name",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"caseworker_name",
+        "type":"edit_text",
+        "hint":"Enter case worker name",
+        "label":"Edited By",
+        "description":"Name of the case worker",
+        "v_required":{
+          "value":"true",
+          "err":"Please enter the case worker name"
         },
-        "relevance": {
-          "step1:facility_within_ward_question": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
+        "read_only":true,
+        "notes":"Auto-filled based on logged-in user"
+      },
+      {
+        "key":"phone",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"phone",
+        "type":"edit_text",
+        "hint":"Enter Phone Number",
+        "label":"Caseworker Phone",
+        "description":"The phone number of the logged-in case worker",
+        "edit_type":"number",
+        "v_required":{
+          "value":"true",
+          "err":"Please enter the phone number"
         },
-        "read_only": "false",
-        "edit_type": "name",
-        "look_up": "true"
+        "v_numeric":{
+          "value":"true",
+          "err":"Please enter a valid phone number"
+        },
+        "read_only":true,
+        "notes":"Auto-filled from profile"
       },
       {
-        "key": "district",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "countyDistrict",
-        "type": "edit_text",
-        "hint": "District",
-        "read_only": "true",
-        "edit_type": "name",
-        "look_up": "false",
-        "v_required": {
-          "value": "true",
-          "err": "District is Required"
-        }
+        "key":"implementing_partner",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"implementing_partner",
+        "type":"edit_text",
+        "hint":"PCZ",
+        "label":"Implementing Partner",
+        "description":"Name of the implementing partner",
+        "v_required":{
+          "value":"true",
+          "err":"Please enter the implementing partner"
+        },
+        "read_only":true,
+        "notes":"Auto-filled from profile"
       },
       {
-        "key": "province",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "stateProvince",
-        "type": "edit_text",
-        "hint": "Province",
-        "read_only": "true",
-        "edit_type": "name",
-        "look_up": "true",
-        "v_required": {
-          "value": "true",
-          "err": "Province is Required"
-        }
+        "key":"province",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"stateProvince",
+        "type":"edit_text",
+        "hint":"Enter Province",
+        "label":"Province",
+        "description":"Name of the province where HTS was conducted",
+        "v_required":{
+          "value":"true",
+          "err":"Please enter the province"
+        },
+        "read_only":true,
+        "notes":"Auto-filled"
       },
       {
-        "key": "client_number",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "client_number",
-        "type": "edit_text",
-        "read_only": "true",
-        "hint": "Client Number",
-        "edit_type": "number",
-        "v_required": {
-          "value": "true",
-          "err": "Client number is Required"
-        }
+        "key":"district",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"countyDistrict",
+        "type":"edit_text",
+        "hint":"Enter District",
+        "label":"District",
+        "description":"Name of the district where HTS was conducted",
+        "v_required":{
+          "value":"true",
+          "err":"Please enter the district"
+        },
+        "read_only":true,
+        "notes":"Auto-filled"
       },
       {
-        "key": "testing_modality",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "testing_modality",
-        "type": "native_radio",
-        "label": "Testing Modality (SNT/Index/Other Community)",
+        "key":"facility",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"facility",
+        "type":"edit_text",
+        "hint":"Enter Facility",
+        "label":"Facility",
+        "description":"Name of facility where HTS was conducted",
+        "v_required":{
+          "value":"true",
+          "err":"Please enter the facility"
+        },
+        "read_only":true,
+        "notes":"Auto-filled"
+      },
+      {
+        "key":"client_number",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"client_number",
+        "type":"edit_text",
+        "hint":"Enter Client Number",
+        "label":"Client Number",
+        "description":"Clients unique number",
+        "edit_type":"number",
+        "v_required":{
+          "value":"true",
+          "err":"Client number is required"
+        },
+        "read_only":true,
+        "notes":"Auto-generated"
+      },
+      {
+        "key":"testing_modality",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"testing_modality",
+        "type":"spinner",
+        "hint":"Select Testing Modality",
+        "label":"Testing Modality",
+        "description":"Indicate Index if Index Testing, SNS if social network strategy or 'Other Community' if testing is in the community but does not fall under Index or SNS",
         "options": [
           {
             "key": "SNT",
@@ -196,86 +210,142 @@
             "text": "Index"
           },
           {
-            "key": "Other Community",
+            "key": "Other community",
             "text": "Other Community"
           }
         ],
-        "v_required": {
-          "value": "true",
-          "err": "Testing modality is Required"
+        "v_required":{
+          "value":"true",
+          "err":"Please select a testing modality"
         }
       },
       {
-        "key": "first_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "first_name",
-        "type": "edit_text",
-        "hint": "First Name",
-        "read_only": "false",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "First name can only contain letters"
-        },
-        "v_required": {
-          "value": "true",
-          "err": "Enter first name"
-        }
-      },
-      {
-        "key": "middle_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "middle_name",
-        "type": "edit_text",
-        "hint": "Middle Name",
-        "read_only": "false",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Middle name can only contain letters"
-        }
-      },
-      {
-        "key": "last_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "last_name",
-        "type": "edit_text",
-        "hint": "Last Name",
-        "read_only": "false",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Last name can only contain letters"
-        },
-        "v_required": {
-          "value": "true",
-          "err": "Enter last name"
-        }
-      },
-
-      {
-        "key": "gender",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "gender",
-        "type": "native_radio",
-        "label": "Sex",
-        "options": [
+        "key":"type_of_index",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"type_of_index",
+        "type":"check_box",
+        "hint":"HTS-POS",
+        "label":"Type of Index",
+        "description":"The index type of client",
+        "options":[
           {
-            "key": "male",
-            "text": "Male"
+            "key":"HTS-POS",
+            "text":"HTS-POS"
           },
           {
-            "key": "female",
-            "text": "Female"
+            "key":"New Client",
+            "text":"New Client"
+          },
+          {
+            "key":"Experience",
+            "text":"Experience"
+          },
+          {
+            "key":"Trans-In",
+            "text":"Trans-In"
+          },
+          {
+            "key":"High Viral Load",
+            "text":"High Viral Load"
+          },
+          {
+            "key":"KYCHS",
+            "text":"KYCHS"
+          },
+          {
+            "key":"NO PNS",
+            "text":"NO PNS"
           }
         ],
-        "v_required": {
-          "value": "true",
-          "err": "Gender is Required"
+        "v_required":{
+          "value":"true",
+          "err":"Please select the type of index"
+        },
+        "relevance":{
+          "step1:testing_modality":{
+            "type":"string",
+            "ex":"equalTo(., \"Index\")"
+          }
+        }
+      },
+      {
+        "key":"first_name",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"first_name",
+        "type":"edit_text",
+        "hint":"Enter First Name",
+        "label":"First Name",
+        "description":"Case's first name",
+        "edit_type":"name",
+        "v_required":{
+          "value":"true",
+          "err":"Please enter the first name"
+        },
+        "v_regex":{
+          "value":"[A-Za-z\\s\\.\\-]*",
+          "err":"Please enter a valid name"
+        }
+      },
+      {
+        "key":"middle_name",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"middle_name",
+        "type":"edit_text",
+        "hint":"Enter Middle Name",
+        "label":"Middle Name",
+        "description":"Case's middle name",
+        "edit_type":"name",
+        "v_required":{
+          "value":"false"
+        },
+        "v_regex":{
+          "value":"[A-Za-z\\s\\.\\-]*",
+          "err":"Please enter a valid name"
+        }
+      },
+      {
+        "key":"last_name",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"last_name",
+        "type":"edit_text",
+        "hint":"Enter Last Name",
+        "label":"Last Name",
+        "description":"Case's last name",
+        "edit_type":"name",
+        "v_required":{
+          "value":"false"
+        },
+        "v_regex":{
+          "value":"[A-Za-z\\s\\.\\-]*",
+          "err":"Please enter a valid name"
+        }
+      },
+      {
+        "key":"gender",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"gender",
+        "type":"native_radio",
+        "hint":"Select Sex",
+        "label":"Sex",
+        "description":"Case's sex",
+        "options":[
+          {
+            "key":"male",
+            "text":"Male"
+          },
+          {
+            "key":"female",
+            "text":"Female"
+          }
+        ],
+        "v_required":{
+          "value":"true",
+          "err":"Please select the sex"
         }
       },
       {
@@ -284,7 +354,9 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "birthdate",
         "type": "date_picker",
-        "hint": "DOB",
+        "hint":"Date of Birth",
+        "label":"Date of Birth",
+        "description":"Case's DOB",
         "expanded": false,
         "duration": {
           "label": "Age"
@@ -297,170 +369,152 @@
         }
       },
       {
-        "key": "entry_point",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "entry_point",
-        "type": "edit_text",
-        "hint": "Entry Point",
-        "read_only": "false",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Entry point can  only contain letters"
+        "key":"art_number",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"art_number",
+        "type":"edit_text",
+        "hint":"ART Number",
+        "label":"ART Number",
+        "description":"Case's ART Number",
+        "v_required":{
+          "value":"true",
+          "err":"Please enter the ART number"
         },
-        "v_required": {
-          "value": "true",
-          "err": "Please enter the entry point"
-        }
-      },
-      {
-        "key": "address",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "address",
-        "type": "edit_text",
-        "hint": "Address",
-        "read_only": "false",
-        "relevance": {
-          "step1:testing_modality": {
-            "type": "string",
-            "ex": "equalTo(., \"Other Community\")"
+        "relevance":{
+          "step1:testing_modality":{
+            "type":"string",
+            "ex":"regex(., \"Index|SNT\")"
           }
-        }
-      },
-      {
-        "key": "landmark",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "landmark",
-        "type": "edit_text",
-        "hint": "Landmark",
-        "read_only": "false",
-        "relevance": {
-          "step1:testing_modality": {
-            "type": "string",
-            "ex": "equalTo(., \"Other Community\")"
-          }
-        }
-      },
-      {
-        "key": "contact_phone",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "contact_phone",
-        "type": "edit_text",
-        "hint": "Phone Number",
-        "read_only": "false",
-        "edit_type": "number",
-        "v_regex": {
-          "value": "((07||09||05)[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 077,076,055,056,057,095, 096, or 097 and must be a total of 10 digits in length"
         },
-        "relevance": {
-          "step1:testing_modality": {
-            "type": "string",
-            "ex": "equalTo(., \"Other Community\")"
-          }
+        "skip_logic_note":"Only show when testing modality selected is Index/SNS"
+      },
+      {
+        "key":"ecap_id",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"ecap_id",
+        "type":"edit_text",
+        "hint":"LST/002/03033",
+        "label":"ECAP III ID",
+        "description":"ECAP III ID for cases that are on the comprehensive care program",
+        "v_required":{
+          "value":"false"
         }
       },
       {
-        "key": "ecap_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "ecap_id",
-        "type": "edit_text",
-        "hint": " ECAP II (If Applicable)",
-        "read_only": "false",
-        "relevance": {
-          "step1:testing_modality": {
-            "type": "string",
-            "ex": "equalTo(., \"Other Community\")"
+        "key":"entry_point",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"entry_point",
+        "type":"spinner",
+        "hint":"Select Entry Point",
+        "label":"Entry Point",
+        "description":"Enter where Index contact or SNS Network Member or individual being tested is coming from e.g. Community or Chimwemwe or WE/ME groups",
+        "options":[
+          {
+            "key":"Chimwemwe Preventive Program",
+            "text":"Chimwemwe Preventive Program"
+          },
+          {
+            "key":"WE/ME groups",
+            "text":"WE/ME groups"
+          },
+          {
+            "key":"Community",
+            "text":"Community"
+          },
+          {
+            "key":"other-specify",
+            "text":"Other-specify"
           }
-        }
-      },
-      {
-        "key": "sub_population",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "sub_population",
-        "type": "check_box",
-        "label": "Sub Population :",
-        "exclusive": [
-          "not applicable"
         ],
-        "options": [
-          {
-            "key": "subpop1",
-            "text": "Children/Adolescents Living with HIV (C/ALHIV)"
-          },
-          {
-            "key": "subpop2",
-            "text": "HIV Exposed Infants (HEIs)"
-          },
-          {
-            "key": "subpop3",
-            "text": "Children of Women Living with HIV"
-          },
-          {
-            "key": "subpop5",
-            "text": "Survivors of Sexual Violence"
-          },
-          {
-            "key": "Siblings of the Index and other family members",
-            "text": "Siblings of the Index/Other family members"
-
-          },
-          {
-            "key": "HIV Negative PBFW",
-            "text": "HIV Negative PBFW"
-
-          },
-          {
-            "key": "Children of PBFW",
-            "text": "Children of PBFW"
-
-          },
-          {
-            "key": "HIV Positive PBFW",
-            "text": "HIV Positive PBFW"
-          }
-        ,
-          {
-            "key": "Caregiver-General",
-            "text": "Caregiver-General"
-
-          },
-          {
-            "key": "Caregiver-WLHIV",
-            "text": "Caregiver-WLHIV"
-          },
-          {
-            "key": "not applicable",
-            "text": "Not Applicable"
-          }
-
-        ],
-        "v_required": {
-          "value": true,
-          "err": "You are required to select at least ONE option here."
+        "v_required":{
+          "value":"true",
+          "err":"Please select the entry point"
         }
       },
       {
-        "key": "hiv_status",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "hiv_status",
-        "type": "native_radio",
-        "label": "Current HIV Status",
-        "options": [
+        "key":"sub_population",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"sub_population",
+        "type":"check_box",
+        "hint":"HIV Positive DDI",
+        "label":"Sub population",
+        "description":"Case's Subpopulation",
+        "options":[
           {
-            "key": "Known Negative",
-            "text": "Known Negative"
+            "key":"Children/Adolescents Living with HIV (CALHIV)",
+            "text":"Children/Adolescents Living with HIV (CALHIV)"
           },
           {
-            "key": "Known Positive",
-            "text": "Known Positive"
+            "key":"HIV Exposed Infants(HEI)",
+            "text":"HIV Exposed Infants(HEI)"
+          },
+          {
+            "key":"Children of Women Living with HIV",
+            "text":"Children of Women Living with HIV"
+          },
+          {
+            "key":"Survivors of Sexual Violence",
+            "text":"Survivors of Sexual Violence"
+          },
+          {
+            "key":"Siblings of Index/Other family members",
+            "text":"Siblings of Index/Other family members"
+          },
+          {
+            "key":"HIV Negative PBFW",
+            "text":"HIV Negative PBFW"
+          },
+          {
+            "key":"HIV Positive PBFW",
+            "text":"HIV Positive PBFW"
+          },
+          {
+            "key":"Children of HIV Negative PBFW",
+            "text":"Children of HIV Negative PBFW"
+          },
+          {
+            "key":"Children of HIV Positive PBFW",
+            "text":"Children of HIV Positive PBFW"
+          },
+          {
+            "key":"Caregiver-General",
+            "text":"Caregiver-General"
+          },
+          {
+            "key":"Caregiver-WLHIV",
+            "text":"Caregiver-WLHIV"
+          },
+          {
+            "key":"Not Applicable",
+            "text":"Not Applicable"
+          }
+        ],
+        "v_required":{
+          "value":"true",
+          "err":"Please select the subpopulation"
+        }
+      },
+      {
+        "key":"hiv_status",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"hiv_status",
+        "type":"native_radio",
+        "hint":"Select Previous HIV Test Result",
+        "label":"Previous HIV Test Result",
+        "description":"Results of a previous HIV test that was conducted",
+        "options":[
+          {
+            "key":"HIV Positive",
+            "text":"HIV Positive"
+          },
+          {
+            "key":"HIV Negative",
+            "text":"HIV Negative"
           },
           {
             "key": "Test Not required based on HIV Risk Assessment",
@@ -475,249 +529,357 @@
             "text": "Status Unknown"
           }
         ],
-        "v_required": {
-          "value": true,
-          "err": "This field is Required"
-        }
-      },
-      {
-        "key": "instructions",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "instructions",
-        "type": "toaster_notes",
-        "text": "Conduct HTS",
-        "text_color": "#000000",
-        "label_text_style": "bold",
-        "toaster_info_text": "",
-        "toaster_info_title": "Introduction",
-        "toaster_type": "info",
-        "relevance": {
-          "step1:hiv_status": {
-            "type": "string",
-            "ex": "equalTo(., \"Status Unknown\")"
+        "v_required":{
+          "value":"true",
+          "err":"Please select the previous HIV test result"
+        },
+        "relevance":{
+          "step1:testing_modality":{
+            "type":"string",
+            "ex":"equalTo(., \"Other community\")"
           }
         }
       },
       {
-        "key": "label 1",
-        "type": "label",
-        "text": "New HIV Status",
-        "label_text_style": "bold",
-        "relevance": {
-          "step1:hiv_status": {
-            "type": "string",
-            "ex": "equalTo(., \"Status Unknown\")"
-          }
-        }
-      },
-      {
-        "key": "date_tested",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_tested",
-        "type": "date_picker",
-        "hint": "Date tested",
-        "look_up": "true",
-        "expanded": false,
-        "min_date": "01-01-1900",
-        "max_date": "today",
-
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hiv_testing_service_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "hiv_result",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "hiv_result",
-        "type": "native_radio",
-        "label": "HIV Result (HIV+/HIV-)",
-        "options": [
+        "key":"last_test",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"last_test",
+        "type":"native_radio",
+        "hint":"Select Duration",
+        "label":"When was the last test Conducted",
+        "description":"The duration since the last test was conducted",
+        "options":[
           {
-            "key": "Newly Tested HIV-",
-            "text": "Newly Tested HIV-"
+            "key":"Less than 3 months since previous HIV test",
+            "text":"Less than 3 months since previous HIV test"          },
+          {
+            "key":"More than 3 months since previous HIV test",
+            "text":"More than 3 months since previous HIV test"          }
+        ],
+        "v_required":{
+          "value":"true",
+          "err":"Please select the duration"
+        },
+        "relevance":{
+          "step1:hiv_status":{
+            "type":"string",
+            "ex":"equalTo(., \"HIV Negative\")"
+          }
+        }
+      },
+      {
+        "key":"hiv_risk_assessment",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"hiv_risk_assessment",
+        "type":"native_radio",
+        "hint":"Select",
+        "label":"HIV Risk Assessment",
+        "description":"Was an HIV Risk Assessment conducted?",
+        "options":[
+          {
+            "key":"Yes",
+            "text":"Yes"          },
+          {
+            "key":"No",
+            "text":"No"          }
+        ],
+        "v_required":{
+          "value":"true",
+          "err":"Please select whether HIV risk assessment was conducted"
+        },
+        "relevance":{
+          "step1:hiv_status":{
+            "type":"string",
+            "ex":"regex(., \"HIV Negative|Status Unknown\")"
+          }
+        }
+      },
+      {
+        "key":"hiv_test_required",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"hiv_test_required",
+        "type":"native_radio",
+        "hint":"Select",
+        "label":"Is an HIV test required",
+        "description":"Based on the HIV risk assessment, is an HIV test required",
+        "options":[
+          {
+            "key":"Yes",
+            "text":"Yes"
           },
           {
-            "key": "Newly Tested HIV+",
-            "text": "Newly Tested HIV+"
+            "key":"No",
+            "text":"No"
           }
         ],
-        "v_required": {
-          "value": true,
-          "err": "This field is Required"
+        "v_required":{
+          "value":"true",
+          "err":"Please select whether HIV test is required"
         },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hiv_testing_service_relevance.yml"
-            }
+        "relevance":{
+          "step1:hiv_risk_assessment":{
+            "type":"string",
+            "ex":"equalTo(., \"Yes\")"
           }
         }
       },
       {
-        "key": "test_done_hf",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "test_done_hf",
-        "type": "native_radio",
-        "label": "If HIV+, confirmatory test done at HF? ",
-        "options": [
+        "key":"address",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"address",
+        "type":"edit_text",
+        "hint":"Enter home address",
+        "label":"Address (Community/Compound)",
+        "description":"The individuals Home address",
+        "v_required":{
+          "value":"false"
+        },
+        "relevance":{
+          "step1:testing_modality":{
+            "type":"string",
+            "ex":"equalTo(., \"Other community\")"
+          }
+        }
+      },
+      {
+        "key":"contact_phone",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"contact_phone",
+        "type":"edit_text",
+        "hint":"Enter Phone Number",
+        "label":"Phone Number",
+        "description":"The individuals contact number",
+        "edit_type":"phone",
+        "v_required":{
+          "value":"false"
+        },
+        "v_numeric":{
+          "value":"true",
+          "err":"Please enter a valid phone number"
+        },
+        "relevance":{
+          "step1:testing_modality":{
+            "type":"string",
+            "ex":"equalTo(., \"Other community\")"
+          }
+        }
+      },
+      {
+        "key":"label 1",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"label 1",
+        "type":"label",
+        "text":"New Status",
+        "label_text_style":"bold",
+        "relevance":{
+          "step1:testing_modality":{
+            "type":"string",
+            "ex":"equalTo(., \"Other community\")"
+          }
+        }
+      },
+      {
+        "key":"date_tested",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"date_tested",
+        "type":"date_picker",
+        "hint":"Select date tested",
+        "label":"Date Tested",
+        "description":"Date when the test was conducted",
+        "expanded":false,
+        "max_date":"today",
+        "v_required":{
+          "value":"true",
+          "err":"Please enter the date tested"
+        },
+        "relevance":{
+          "step1:testing_modality":{
+            "type":"string",
+            "ex":"equalTo(., \"Other community\")"
+          }
+        }
+      },
+      {
+        "key":"hiv_result",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"hiv_result",
+        "type":"native_radio",
+        "hint":"Select HIV Result",
+        "label":"HIV Result",
+        "description":"Result of the HIV Test",
+        "options":[
           {
-            "key": "Yes",
-            "text": "Yes"
+            "key":"HIV Positive",
+            "text":"HIV Positive"          },
+          {
+            "key":"HIV Negative",
+            "text":"HIV Negative"
+          }
+        ],
+        "v_required":{
+          "value":"true",
+          "err":"Please select the HIV result"
+        }
+      },
+      {
+        "key":"test_done_hf",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"test_done_hf",
+        "type":"native_radio",
+        "hint":"Select",
+        "label":"Confirmatory test done at Health Facility",
+        "description":"Was a confirmatory test done?",
+        "options":[
+          {
+            "key":"Yes",
+            "text":"Yes"
           },
           {
-            "key": "No",
-            "text": "No"
-          }
+            "key":"No",
+            "text":"No"          }
         ],
-        "v_required": {
-          "value": true,
-          "err": "This field is Required"
+        "v_required":{
+          "value":"true",
+          "err":"Please select whether confirmatory test was done"
         },
-        "relevance": {
-          "step1:hiv_result": {
-            "type": "string",
-            "ex": "equalTo(., \"Newly Tested HIV+\")"
+        "relevance":{
+          "step1:hiv_result":{
+            "type":"string",
+            "ex":"equalTo(., \"HIV Positive\")"
           }
         }
       },
       {
-        "key": "hiv_recent_test",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "hiv_recent_test",
-        "type": "native_radio",
-        "label": "HIV Recent Testing Result",
-        "options": [
-          {
-            "key": "Recent",
-            "text": "Recent"
-          },
-          {
-            "key": "LT",
-            "text": "LT"
-          }
-        ],
-        "v_required": {
-          "value": false,
-          "err": "This field is Required"
+        "key":"art_number",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"art_number",
+        "type":"edit_text",
+        "hint":"Enter ART Number",
+        "label":"ART Number (Positive Individual)",
+        "description":"Positive individual's ART Number",
+        "v_required":{
+          "value":"false"
         },
-        "relevance": {
-          "step1:hiv_result": {
-            "type": "string",
-            "ex": "equalTo(., \"Newly Tested HIV+\")"
+        "relevance":{
+          "step1:hiv_result":{
+            "type":"string",
+            "ex":"equalTo(., \"HIV Positive\")"
           }
         }
       },
       {
-        "key": "art_number",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "art_number",
-        "type": "edit_text",
-        "hint": "ART Number",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hiv_testing_service_relevance.yml"
-            }
-          }
+        "key":"art_date",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"art_date",
+        "type":"date_picker",
+        "hint":"Select date enrolled on ART",
+        "label":"Date Enrolled on ART",
+        "description":"The date that the positive individual was enrolled on ART",
+        "expanded":false,
+        "max_date":"today",
+        "v_required":{
+          "value":"false"
         },
-        "v_required": {
-          "value": "false",
-          "err": "ART number is Required"
-        }
-      },
-      {
-        "key": "art_date",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "art_date",
-        "type": "date_picker",
-        "hint": "Date Enrolled on ART",
-        "look_up": "true",
-        "expanded": false,
-        "min_date": "01-01-1900",
-        "max_date": "today",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hiv_testing_service_relevance.yml"
-            }
+        "relevance":{
+          "step1:hiv_result":{
+            "type":"string",
+            "ex":"equalTo(., \"HIV Positive\")"
           }
         }
       },
       {
-        "key": "art_date_initiated",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "art_date_initiated",
-        "type": "date_picker",
-        "hint": "Date Initiated on ART",
-        "look_up": "true",
-        "expanded": false,
-        "min_date": "01-01-1900",
-        "max_date": "today",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hiv_testing_service_relevance.yml"
-            }
+        "key":"art_date_initiated",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"art_date_initiated",
+        "type":"date_picker",
+        "hint":"Select date initiated on ART",
+        "label":"Date Initiated on ART",
+        "description":"The date that the positive individual was initiated on ART",
+        "expanded":false,
+        "max_date":"today",
+        "v_required":{
+          "value":"false"
+        },
+        "relevance":{
+          "step1:hiv_result":{
+            "type":"string",
+            "ex":"equalTo(., \"HIV Positive\")"
           }
         }
       },
       {
-        "key": "comment",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "comment",
-        "type": "edit_text",
-        "hint": "Comments",
-        "relevance": {
-          "step1:testing_modality": {
-            "type": "string",
-            "ex": "equalTo(., \"Other Community\")"
+        "key":"comment",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"comment",
+        "type":"edit_text",
+        "hint":"Enter any comments",
+        "label":"Comments",
+        "description":"Any comments",
+        "edit_type":"text",
+        "v_required":{
+          "value":"false"
+        },
+        "relevance":{
+          "step1:testing_modality":{
+            "type":"string",
+            "ex":"equalTo(., \"Other community\")"
           }
         }
       },
       {
-        "key": "checked_by",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "checked_by",
-        "type": "edit_text",
-        "hint": "Checked by",
-        "relevance": {
-          "step1:testing_modality": {
-            "type": "string",
-            "ex": "equalTo(., \"Other Community\")"
+        "key":"checked_by",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"checked_by",
+        "type":"edit_text",
+        "hint":"Enter case worker name",
+        "label":"Case Worker Name",
+        "description":"The name of the Caseworker",
+        "v_required":{
+          "value":"true",
+          "err":"Please enter the case worker name"
+        },
+        "read_only":true,
+        "relevance":{
+          "step1:testing_modality":{
+            "type":"string",
+            "ex":"equalTo(., \"Other community\")"
           }
         }
       },
       {
-        "key": "date_edited",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_edited",
-        "type": "hidden",
-        "read_only": "true",
-        "hint": "Date edited",
-        "edit_type": "number"
-      },
-      {
-        "key": "delete_status",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "delete_status",
-        "type": "hidden",
-        "hint": ""
+        "key":"signature",
+        "openmrs_entity_parent":"",
+        "openmrs_entity":"person_attribute",
+        "openmrs_entity_id":"signature",
+        "type":"edit_text",
+        "edit_type":"name",
+        "hint":"Signature",
+        "label":"Signature",
+        "description":"Case Worker conducting HTS's signature",
+        "v_required":{
+          "value":"true",
+          "err":"Please provide signature"
+        },
+        "relevance":{
+          "step1:testing_modality":{
+            "type":"string",
+            "ex":"equalTo(., \"Other community\")"
+          }
+        }
       }
     ]
   }
