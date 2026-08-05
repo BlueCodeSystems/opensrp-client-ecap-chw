@@ -1022,7 +1022,28 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "referral_feedback_received"
       },
-
+      {
+        "key": "sec_malnutrition_label",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Section L: Cured For Malnutrition",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": ""
+      },
+      {
+        "key": "sec_malnutrition_status",
+        "type": "edit_text",
+        "hint": "Enter Number",
+        "edit_type": "number",
+        "v_required": {
+          "value": "true",
+          "err": "Required"
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "sec_malnutrition_status"
+      },
       {
         "key": "comment",
         "type": "edit_text",
