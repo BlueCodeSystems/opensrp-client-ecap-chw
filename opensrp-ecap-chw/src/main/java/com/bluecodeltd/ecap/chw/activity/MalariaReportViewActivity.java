@@ -315,56 +315,38 @@ public class MalariaReportViewActivity extends AppCompatActivity {
 
         Map<String, String> data = reportModel.toValueMap();
 
-        // Section A - Q1
-        setText(R.id.q1_f_0_4, data.get("q1_f_0_4"));
-        setText(R.id.q1_m_0_4, data.get("q1_m_0_4"));
-        setText(R.id.q1_f_5_15, data.get("q1_f_5_15"));
-        setText(R.id.q1_m_5_15, data.get("q1_m_5_15"));
-        setText(R.id.q1_f_16_19, data.get("q1_f_16_19"));
-        setText(R.id.q1_m_16_19, data.get("q1_m_16_19"));
-        setText(R.id.q1_f_20_plus, data.get("q1_f_20_plus"));
-        setText(R.id.q1_m_20_plus, data.get("q1_m_20_plus"));
-        setText(R.id.q1_f_calhiv, data.get("q1_f_calhiv"));
-        setText(R.id.q1_m_calhiv, data.get("q1_m_calhiv"));
-        setText(R.id.q1_f_hei, data.get("q1_f_hei"));
-        setText(R.id.q1_m_hei, data.get("q1_m_hei"));
-        setText(R.id.q1_f_wlhiv, data.get("q1_f_wlhiv"));
-        setText(R.id.q1_m_wlhiv, data.get("q1_m_wlhiv"));
-        setText(R.id.q1_f_sv, data.get("q1_f_sv"));
-        setText(R.id.q1_m_sv, data.get("q1_m_sv"));
-        setText(R.id.q1_f_agyw, data.get("q1_f_agyw"));
-        setText(R.id.q1_f_hiv_pos, data.get("q1_f_hiv_pos"));
-        setText(R.id.q1_f_siblings, data.get("q1_f_siblings"));
-        setText(R.id.q1_m_siblings, data.get("q1_m_siblings"));
-        setText(R.id.q1_f_caregivers, data.get("q1_f_caregivers"));
-        setText(R.id.q1_m_caregivers, data.get("q1_m_caregivers"));
+        // Section A (Q1-Q10)
+        String[] qPrefixes = {"q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10"};
+        String[] qSuffixes = {
+                "_f_0_4", "_m_0_4", "_f_5_15", "_m_5_15", "_f_16_19", "_m_16_19", "_f_20_plus", "_m_20_plus",
+                "_f_calhiv", "_m_calhiv", "_f_hei", "_m_hei", "_f_wlhiv", "_m_wlhiv", "_f_sv", "_m_sv",
+                "_f_agyw", "_f_hiv_pos", "_f_siblings", "_m_siblings", "_f_caregivers", "_m_caregivers"
+        };
 
-        // Q2
-        setText(R.id.q2_f_0_4, data.get("q2_f_0_4"));
-        setText(R.id.q2_m_0_4, data.get("q2_m_0_4"));
-        setText(R.id.q2_f_5_15, data.get("q2_f_5_15"));
-        setText(R.id.q2_m_5_15, data.get("q2_m_5_15"));
-        setText(R.id.q2_f_16_19, data.get("q2_f_16_19"));
-        setText(R.id.q2_m_16_19, data.get("q2_m_16_19"));
-        setText(R.id.q2_f_20_plus, data.get("q2_f_20_plus"));
-        setText(R.id.q2_m_20_plus, data.get("q2_m_20_plus"));
-        setText(R.id.q2_f_calhiv, data.get("q2_f_calhiv"));
-        setText(R.id.q2_m_calhiv, data.get("q2_m_calhiv"));
-        setText(R.id.q2_f_hei, data.get("q2_f_hei"));
-        setText(R.id.q2_m_hei, data.get("q2_m_hei"));
-        setText(R.id.q2_f_wlhiv, data.get("q2_f_wlhiv"));
-        setText(R.id.q2_m_wlhiv, data.get("q2_m_wlhiv"));
-        setText(R.id.q2_f_sv, data.get("q2_f_sv"));
-        setText(R.id.q2_m_sv, data.get("q2_m_sv"));
-        setText(R.id.q2_f_agyw, data.get("q2_f_agyw"));
-        setText(R.id.q2_f_hiv_pos, data.get("q2_f_hiv_pos"));
-        setText(R.id.q2_f_siblings, data.get("q2_f_siblings"));
-        setText(R.id.q2_m_siblings, data.get("q2_m_siblings"));
-        setText(R.id.q2_f_caregivers, data.get("q2_f_caregivers"));
-        setText(R.id.q2_m_caregivers, data.get("q2_m_caregivers"));
+        for (String prefix : qPrefixes) {
+            for (String suffix : qSuffixes) {
+                String key = prefix + suffix;
+                int viewId = getResources().getIdentifier(key, "id", getPackageName());
+                if (viewId != 0) {
+                    setText(viewId, data.get(key));
+                }
+            }
+        }
 
-        // ... Populating other questions omitted for brevity in this response, 
-        // but follow the same pattern as above for Q3-Q10, SB Q1-Q10, and Section C.
+        // Section B (SB Q1-Q10)
+        String[] sbPrefixes = {"sb_q1", "sb_q2", "sb_q3", "sb_q4", "sb_q5", "sb_q6", "sb_q7", "sb_q8", "sb_q9", "sb_q10"};
+        String[] sbSuffixes = {"_f_0_4", "_m_0_4", "_f_5_15", "_m_5_15", "_f_16_19", "_m_16_19", "_f_20_plus", "_m_20_plus"};
+
+        for (String prefix : sbPrefixes) {
+            for (String suffix : sbSuffixes) {
+                String key = prefix + suffix;
+                int viewId = getResources().getIdentifier(key, "id", getPackageName());
+                if (viewId != 0) {
+                    setText(viewId, data.get(key));
+                }
+            }
+        }
+
 
         setText(R.id.sc_q1, data.get("sc_q1_value"));
         setText(R.id.sc_q2, data.get("sc_q2_value"));

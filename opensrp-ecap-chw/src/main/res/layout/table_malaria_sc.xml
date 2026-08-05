@@ -20,7 +20,7 @@
         <TextView android:id="@+id/sc_q3" android:gravity="center" android:text="0" android:textStyle="bold" />
     </TableRow>
     <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
-        <TextView android:paddingStart="12dp" android:text="People sleeping under net" />
+        <TextView android:paddingStart="12dp" android:text="Dihydroartemisinin-Piperaquine" />
         <TextView android:id="@+id/sc_q4" android:gravity="center" android:text="0" android:textStyle="bold" />
     </TableRow>
     <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
