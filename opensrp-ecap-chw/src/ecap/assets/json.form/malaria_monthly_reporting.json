@@ -55,6 +55,7 @@
     }
   },
   "step1": {
+    "label_text_style": "bold",
     "title": "Section A",
     "next": "step2",
     "fields": [
@@ -198,6 +199,7 @@
       {
         "key": "sec_a_q1_status",
         "type": "native_radio",
+        "label_text_style": "bold",
         "label": "1. Number of people tested for malaria in the community by an ECAPII CCW",
         "options": [
           {
@@ -554,6 +556,7 @@
       {
         "key": "sec_a_q2_status",
         "type": "native_radio",
+        "label_text_style": "bold",
         "label": "2. Number of people tested who were malaria positive",
         "options": [
           {
@@ -910,6 +913,7 @@
       {
         "key": "sec_a_q3_status",
         "type": "native_radio",
+        "label_text_style": "bold",
         "label": "3. Number of people who received malaria treatment (Malaria Drugs)",
         "options": [
           {
@@ -1266,6 +1270,7 @@
       {
         "key": "sec_a_q4_status",
         "type": "native_radio",
+        "label_text_style": "bold",
         "label": "4. Number of people who received malaria prophylaxis",
         "options": [
           {
@@ -1978,6 +1983,7 @@
       {
         "key": "sec_a_q6_status",
         "type": "native_radio",
+        "label_text_style": "bold",
         "label": "6. Number of people referred for treatment who completed the referral.",
         "options": [
           {
@@ -2334,6 +2340,7 @@
       {
         "key": "sec_a_q7_status",
         "type": "native_radio",
+        "label_text_style": "bold",
         "label": "7. Number of people referred for malaria testing.",
         "options": [
           {
@@ -2690,6 +2697,7 @@
       {
         "key": "sec_a_q8_status",
         "type": "native_radio",
+        "label_text_style": "bold",
         "label": "8. Number of people referred for malaria testing who completed the referral.",
         "options": [
           {
@@ -3046,6 +3054,7 @@
       {
         "key": "sec_a_q9_status",
         "type": "native_radio",
+        "label_text_style": "bold",
         "label": "9. Number of people who had severe malaria.",
         "options": [
           {
@@ -3402,7 +3411,8 @@
       {
         "key": "sec_a_q10_status",
         "type": "native_radio",
-        "label": "10. Number of Households with at least 1 member tested for malaria.",
+        "label_text_style": "bold",
+        "label": "10. Total number of people that reported sleeping under a mosquito net.",
         "options": [
           {
             "key": "open",
@@ -3776,6 +3786,7 @@
       {
         "key": "sec_b_q1_status",
         "type": "native_radio",
+        "label_text_style": "bold",
         "label": "1. Number of people tested for malaria in the community by an ECAPII CCW.",
         "options": [
           {
@@ -3922,6 +3933,7 @@
       {
         "key": "sec_b_q2_status",
         "type": "native_radio",
+        "label_text_style": "bold",
         "label": "2. Number of people tested who were malaria positive.",
         "options": [
           {
@@ -4068,6 +4080,7 @@
       {
         "key": "sec_b_q3_status",
         "type": "native_radio",
+        "label_text_style": "bold",
         "label": "3. Number of people who received malaria treatment (Malaria Drugs).",
         "options": [
           {
@@ -4214,6 +4227,7 @@
       {
         "key": "sec_b_q4_status",
         "type": "native_radio",
+        "label_text_style": "bold",
         "label": "4. Number of people who received malaria prophylaxis.",
         "options": [
           {
@@ -4360,6 +4374,7 @@
       {
         "key": "sec_b_q5_status",
         "type": "native_radio",
+        "label_text_style": "bold",
         "label": "5. Number of people referred for treatment.",
         "options": [
           {
@@ -4506,6 +4521,7 @@
       {
         "key": "sec_b_q6_status",
         "type": "native_radio",
+        "label_text_style": "bold",
         "label": "6. Number of people referred for treatment who completed the referral.",
         "options": [
           {
@@ -4652,6 +4668,7 @@
       {
         "key": "sec_b_q7_status",
         "type": "native_radio",
+        "label_text_style": "bold",
         "label": "7. Number of people referred for malaria testing.",
         "options": [
           {
@@ -4798,6 +4815,7 @@
       {
         "key": "sec_b_q8_status",
         "type": "native_radio",
+        "label_text_style": "bold",
         "label": "8. Number of people referred for malaria testing who completed the referral.",
         "options": [
           {
@@ -4944,6 +4962,7 @@
       {
         "key": "sec_b_q9_status",
         "type": "native_radio",
+        "label_text_style": "bold",
         "label": "9. Number of people who had severe malaria.",
         "options": [
           {
@@ -5090,7 +5109,8 @@
       {
         "key": "sec_b_q10_status",
         "type": "native_radio",
-        "label": "10. Number of Households with at least 1 member tested for malaria.",
+        "label_text_style": "bold",
+        "label": "10. Total number of people that reported sleeping under a mosquito net.",
         "options": [
           {
             "key": "open",
@@ -5251,287 +5271,154 @@
         "openmrs_entity_id": ""
       },
       {
-        "key": "sec_c_q1_status",
-        "type": "native_radio",
-        "label": "1. Number Households with at least 1 member Tested for malaria by an ECAPII CCW in the reporting period",
-        "options": [
-          {
-            "key": "open",
-            "text": "Open",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "open"
-          },
-          {
-            "key": "closed",
-            "text": "Close",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "closed"
-          }
-        ],
-        "v_required": {
-          "value": "true",
-          "err": "Required"
-        },
+        "key": "sec_c_q1_label",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "1. Number Households with at least 1 member Tested for malaria by an ECAPII CCW in the reporting period",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "sec_c_q1_status"
+        "openmrs_entity": "",
+        "openmrs_entity_id": ""
       },
       {
         "key": "sc_q1_value",
         "type": "edit_text",
         "hint": "Enter Number",
         "edit_type": "number",
-        "relevance": {
-          "step3:sec_c_q1_status": {
-            "type": "string",
-            "ex": "equalTo(., \"open\")"
-          }
+        "v_required": {
+          "value": "true",
+          "err": "Required"
         },
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "sc_q1_value"
       },
       {
-        "key": "sec_c_q2_status",
-        "type": "native_radio",
-        "label": "2. Households with at least 1 member who received treatment (Malaria Drugs) from an ECAPII CCW in a community",
-        "options": [
-          {
-            "key": "open",
-            "text": "Open",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "open"
-          },
-          {
-            "key": "closed",
-            "text": "Close",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "closed"
-          }
-        ],
-        "v_required": {
-          "value": "true",
-          "err": "Required"
-        },
+        "key": "sec_c_q2_label",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "2. Households with at least 1 member who received treatment (Malaria Drugs) from an ECAPII CCW in a community",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "sec_c_q2_status"
+        "openmrs_entity": "",
+        "openmrs_entity_id": ""
       },
       {
         "key": "sc_q2_value",
         "type": "edit_text",
         "hint": "Enter Number",
         "edit_type": "number",
-        "relevance": {
-          "step3:sec_c_q2_status": {
-            "type": "string",
-            "ex": "equalTo(., \"open\")"
-          }
+        "v_required": {
+          "value": "true",
+          "err": "Required"
         },
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "sc_q2_value"
       },
       {
-        "key": "sec_c_q3_status",
-        "type": "native_radio",
-        "label": "3. reporting having at least 1 member who received malaria prophylaxis from an ECAPII CCW",
-        "options": [
-          {
-            "key": "open",
-            "text": "Open",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "open"
-          },
-          {
-            "key": "closed",
-            "text": "Close",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "closed"
-          }
-        ],
-        "v_required": {
-          "value": "true",
-          "err": "Required"
-        },
+        "key": "sec_c_q3_label",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "3. Reporting having at least 1 member who received malaria prophylaxis from an ECAPII CCW",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "sec_c_q3_status"
+        "openmrs_entity": "",
+        "openmrs_entity_id": ""
       },
       {
         "key": "sc_q3_value",
         "type": "edit_text",
         "hint": "Enter Number",
         "edit_type": "number",
-        "relevance": {
-          "step3:sec_c_q3_status": {
-            "type": "string",
-            "ex": "equalTo(., \"open\")"
-          }
+        "v_required": {
+          "value": "true",
+          "err": "Required"
         },
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "sc_q3_value"
       },
       {
-        "key": "sec_c_q4_status",
-        "type": "native_radio",
-        "label": "4. Total number of people that reported sleeping under a mosquito net.",
-        "options": [
-          {
-            "key": "open",
-            "text": "Open",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "open"
-          },
-          {
-            "key": "closed",
-            "text": "Close",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "closed"
-          }
-        ],
-        "v_required": {
-          "value": "true",
-          "err": "Required"
-        },
+        "key": "sec_c_q4_label",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "4. Quantity of Dihydroartemisinin-Piperaquine distributed by the ECAPII CCWs in a community setting.",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "sec_c_q4_status"
+        "openmrs_entity": "",
+        "openmrs_entity_id": ""
       },
       {
         "key": "sc_q4_value",
         "type": "edit_text",
         "hint": "Enter Number",
         "edit_type": "number",
-        "relevance": {
-          "step3:sec_c_q4_status": {
-            "type": "string",
-            "ex": "equalTo(., \"open\")"
-          }
+        "v_required": {
+          "value": "true",
+          "err": "Required"
         },
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "sc_q4_value"
       },
       {
-        "key": "sec_c_q5_status",
-        "type": "native_radio",
-        "label": "5. Number of HH reporting having at least 1 ITN",
-        "options": [
-          {
-            "key": "open",
-            "text": "Open",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "open"
-          },
-          {
-            "key": "closed",
-            "text": "Close",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "closed"
-          }
-        ],
-        "v_required": {
-          "value": "true",
-          "err": "Required"
-        },
+        "key": "sec_c_q5_label",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "5. Number of HouseHolds reporting having at least 1 ITN",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "sec_c_q5_status"
+        "openmrs_entity": "",
+        "openmrs_entity_id": ""
       },
       {
         "key": "sc_q5_value",
         "type": "edit_text",
         "hint": "Enter Number",
         "edit_type": "number",
-        "relevance": {
-          "step3:sec_c_q5_status": {
-            "type": "string",
-            "ex": "equalTo(., \"open\")"
-          }
+        "v_required": {
+          "value": "true",
+          "err": "Required"
         },
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "sc_q5_value"
       },
       {
-        "key": "sec_c_q6_status",
-        "type": "native_radio",
-        "label": "6. Quantities of Malaria RDT used by ECAPII CCW",
-        "options": [
-          {
-            "key": "open",
-            "text": "Open",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "open"
-          },
-          {
-            "key": "closed",
-            "text": "Close",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "closed"
-          }
-        ],
-        "v_required": {
-          "value": "true",
-          "err": "Required"
-        },
+        "key": "sec_c_q6_label",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "6. Quantities of Malaria RDT used by ECAPII CCW",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "sec_c_q6_status"
+        "openmrs_entity": "",
+        "openmrs_entity_id": ""
       },
       {
         "key": "sc_q6_value",
         "type": "edit_text",
         "hint": "Enter Number",
         "edit_type": "number",
-        "relevance": {
-          "step3:sec_c_q6_status": {
-            "type": "string",
-            "ex": "equalTo(., \"open\")"
-          }
-        },
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "sc_q6_value"
-      },
-      {
-        "key": "sec_c_q7_status",
-        "type": "native_radio",
-        "label": "7. Quantity of Coartem distributed by the ECAPII CCWs in a community setting",
-        "options": [
-          {
-            "key": "open",
-            "text": "Open",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "open"
-          },
-          {
-            "key": "closed",
-            "text": "Close",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "closed"
-          }
-        ],
         "v_required": {
           "value": "true",
           "err": "Required"
         },
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "sec_c_q7_status"
+        "openmrs_entity_id": "sc_q6_value"
+      },
+      {
+        "key": "sec_c_q7_label",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "7. Quantity of Coartem distributed by the ECAPII CCWs in a community setting",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": ""
       },
       {
         "key": "sc_q7_value",
         "type": "edit_text",
         "hint": "Enter Number",
         "edit_type": "number",
-        "relevance": {
-          "step3:sec_c_q7_status": {
-            "type": "string",
-            "ex": "equalTo(., \"open\")"
-          }
+        "v_required": {
+          "value": "true",
+          "err": "Required"
         },
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
