@@ -120,10 +120,22 @@ public class ChwRepositoryFlv {
                 case 29:
                     upgradeToVersion29(db);
                     break;
+                case 30:
+                    upgradeToVersion30(db);
+                    break;
                 default:
                     break;
             }
             upgradeTo++;
+        }
+    }
+
+
+    private static void upgradeToVersion30(SQLiteDatabase db) {
+        try {
+            db.execSQL("ALTER TABLE ec_monthly_nutrition ADD COLUMN nutrition_grade_3 TEXT");
+        } catch (Exception e) {
+            Timber.e(e, "upgradeToVersion30 ");
         }
     }
 
