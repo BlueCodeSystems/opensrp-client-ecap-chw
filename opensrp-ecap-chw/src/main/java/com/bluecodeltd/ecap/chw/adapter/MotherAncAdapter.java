@@ -53,10 +53,19 @@ public class MotherAncAdapter extends RecyclerView.Adapter<MotherAncAdapter.View
     private final Context context;
     private final List<MotherAncModel> items;
     private ObjectMapper mapper;
+    private OnDeleteListener onDeleteListener;
+
+    public interface OnDeleteListener {
+        void onDelete(MotherAncModel visit);
+    }
 
     public MotherAncAdapter(Context context, List<MotherAncModel> items) {
         this.context = context;
         this.items = items != null ? new ArrayList<>(items) : new ArrayList<>();
+    }
+
+    public void setOnDeleteListener(OnDeleteListener listener) {
+        this.onDeleteListener = listener;
     }
 
     public void setItems(List<MotherAncModel> data) {
@@ -154,6 +163,11 @@ public class MotherAncAdapter extends RecyclerView.Adapter<MotherAncAdapter.View
         holder.expandLess.setOnClickListener(toggleListener);
 
         holder.btnEdit.setOnClickListener(v -> openAncForm(visit));
+        holder.btnDelete.setOnClickListener(v -> {
+            if (onDeleteListener != null) {
+                onDeleteListener.onDelete(visit);
+            }
+        });
     }
 
     @Override
@@ -172,6 +186,7 @@ public class MotherAncAdapter extends RecyclerView.Adapter<MotherAncAdapter.View
         TextView txtEddDate;
         View container;
         View btnEdit;
+        View btnDelete;
         View headerLayout;
         LinearLayout detailsContainer;
         ImageView expandMore;
@@ -189,6 +204,7 @@ public class MotherAncAdapter extends RecyclerView.Adapter<MotherAncAdapter.View
             txtLmpDate = itemView.findViewById(R.id.txtLmpDate);
             txtEddDate = itemView.findViewById(R.id.txtEddDate);
             btnEdit = itemView.findViewById(R.id.btnEdit);
+            btnDelete = itemView.findViewById(R.id.btnDelete);
             headerLayout = itemView.findViewById(R.id.header_layout);
             detailsContainer = itemView.findViewById(R.id.details_container);
             expandMore = itemView.findViewById(R.id.expand_more);

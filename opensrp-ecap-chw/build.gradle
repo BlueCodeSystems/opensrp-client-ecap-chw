@@ -338,7 +338,7 @@ android {
             buildConfigField "String[]", "ALLOWED_LOCATION_LEVELS_DEBUG", '{"Country","Province","District","Ward","Health Facility"}'
             buildConfigField "String", 'DEFAULT_LOCATION', '"Health Facility"'
             buildConfigField "String", 'DEFAULT_LOCATION_DEBUG', '"Health Facility"'
-            buildConfigField "int", "DATABASE_VERSION", '29'
+            buildConfigField "int", "DATABASE_VERSION", '30'
         }
     }
 }
@@ -358,8 +358,8 @@ configurations.all {
     resolutionStrategy {
         dependencySubstitution {
             substitute module('io.github.bluecodesystems:android-p2p-sync') using module('com.github.BlueCodeSystems:android-p2p-sync:v0.5.0')
-            substitute module('io.github.bluecodesystems:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v8.0.3-beta')
-            substitute module('org.smartregister:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v8.0.3-beta')
+            substitute module('io.github.bluecodesystems:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v8.0.5-beta')
+            substitute module('org.smartregister:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v8.0.5-beta')
             substitute module('org.jeasy:easy-rules-core') using module('org.jeasy:easy-rules-core:3.4.0')
             substitute module('org.jeasy:easy-rules-support') using module('org.jeasy:easy-rules-support:3.4.0')
             substitute module('org.jeasy:easy-rules-mvel') using module('org.jeasy:easy-rules-mvel:3.4.0')

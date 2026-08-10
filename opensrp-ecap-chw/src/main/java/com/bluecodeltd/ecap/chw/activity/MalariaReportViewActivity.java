@@ -356,56 +356,17 @@ public class MalariaReportViewActivity extends AppCompatActivity {
 
         Map<String, String> data = reportModel.toValueMap();
 
-        // Section A - Q1
-        setText(R.id.q1_f_0_4, data.get("q1_f_0_4"));
-        setText(R.id.q1_m_0_4, data.get("q1_m_0_4"));
-        setText(R.id.q1_f_5_15, data.get("q1_f_5_15"));
-        setText(R.id.q1_m_5_15, data.get("q1_m_5_15"));
-        setText(R.id.q1_f_16_19, data.get("q1_f_16_19"));
-        setText(R.id.q1_m_16_19, data.get("q1_m_16_19"));
-        setText(R.id.q1_f_20_plus, data.get("q1_f_20_plus"));
-        setText(R.id.q1_m_20_plus, data.get("q1_m_20_plus"));
-        setText(R.id.q1_f_calhiv, data.get("q1_f_calhiv"));
-        setText(R.id.q1_m_calhiv, data.get("q1_m_calhiv"));
-        setText(R.id.q1_f_hei, data.get("q1_f_hei"));
-        setText(R.id.q1_m_hei, data.get("q1_m_hei"));
-        setText(R.id.q1_f_wlhiv, data.get("q1_f_wlhiv"));
-        setText(R.id.q1_m_wlhiv, data.get("q1_m_wlhiv"));
-        setText(R.id.q1_f_sv, data.get("q1_f_sv"));
-        setText(R.id.q1_m_sv, data.get("q1_m_sv"));
-        setText(R.id.q1_f_agyw, data.get("q1_f_agyw"));
-        setText(R.id.q1_f_hiv_pos, data.get("q1_f_hiv_pos"));
-        setText(R.id.q1_f_siblings, data.get("q1_f_siblings"));
-        setText(R.id.q1_m_siblings, data.get("q1_m_siblings"));
-        setText(R.id.q1_f_caregivers, data.get("q1_f_caregivers"));
-        setText(R.id.q1_m_caregivers, data.get("q1_m_caregivers"));
+        // Section A - Q1-Q10 (each question has the same 22 age/sub-population fields)
+        for (int q = 1; q <= 10; q++) {
+            populateSectionAQuestion(data, q);
+            setStatusTextByName("status_q" + q, data.get("sec_a_q" + q + "_status"));
+        }
 
-        // Q2
-        setText(R.id.q2_f_0_4, data.get("q2_f_0_4"));
-        setText(R.id.q2_m_0_4, data.get("q2_m_0_4"));
-        setText(R.id.q2_f_5_15, data.get("q2_f_5_15"));
-        setText(R.id.q2_m_5_15, data.get("q2_m_5_15"));
-        setText(R.id.q2_f_16_19, data.get("q2_f_16_19"));
-        setText(R.id.q2_m_16_19, data.get("q2_m_16_19"));
-        setText(R.id.q2_f_20_plus, data.get("q2_f_20_plus"));
-        setText(R.id.q2_m_20_plus, data.get("q2_m_20_plus"));
-        setText(R.id.q2_f_calhiv, data.get("q2_f_calhiv"));
-        setText(R.id.q2_m_calhiv, data.get("q2_m_calhiv"));
-        setText(R.id.q2_f_hei, data.get("q2_f_hei"));
-        setText(R.id.q2_m_hei, data.get("q2_m_hei"));
-        setText(R.id.q2_f_wlhiv, data.get("q2_f_wlhiv"));
-        setText(R.id.q2_m_wlhiv, data.get("q2_m_wlhiv"));
-        setText(R.id.q2_f_sv, data.get("q2_f_sv"));
-        setText(R.id.q2_m_sv, data.get("q2_m_sv"));
-        setText(R.id.q2_f_agyw, data.get("q2_f_agyw"));
-        setText(R.id.q2_f_hiv_pos, data.get("q2_f_hiv_pos"));
-        setText(R.id.q2_f_siblings, data.get("q2_f_siblings"));
-        setText(R.id.q2_m_siblings, data.get("q2_m_siblings"));
-        setText(R.id.q2_f_caregivers, data.get("q2_f_caregivers"));
-        setText(R.id.q2_m_caregivers, data.get("q2_m_caregivers"));
-
-        // ... Populating other questions omitted for brevity in this response, 
-        // but follow the same pattern as above for Q3-Q10, SB Q1-Q10, and Section C.
+        // Section B - Q1-Q10 (each question has the same 8 age fields)
+        for (int q = 1; q <= 10; q++) {
+            populateSectionBQuestion(data, q);
+            setStatusTextByName("status_sb_q" + q, data.get("sec_b_q" + q + "_status"));
+        }
 
         setText(R.id.sc_q1, data.get("sc_q1_value"));
         setText(R.id.sc_q2, data.get("sc_q2_value"));
@@ -414,11 +375,59 @@ public class MalariaReportViewActivity extends AppCompatActivity {
         setText(R.id.sc_q5, data.get("sc_q5_value"));
         setText(R.id.sc_q6, data.get("sc_q6_value"));
         setText(R.id.sc_q7, data.get("sc_q7_value"));
+        for (int q = 1; q <= 7; q++) {
+            setStatusTextByName("sc_q" + q + "_status", data.get("sec_c_q" + q + "_status"));
+        }
 
         TextView commentsView = findViewById(R.id.txt_comments);
         if (commentsView != null) {
             String comment = data.get("comments");
             commentsView.setText(comment != null && !comment.isEmpty() ? comment : "No comments");
+        }
+    }
+
+    private static final String[] SECTION_A_FIELD_SUFFIXES = {
+            "f_0_4", "m_0_4", "f_5_15", "m_5_15", "f_16_19", "m_16_19", "f_20_plus", "m_20_plus",
+            "f_calhiv", "m_calhiv", "f_hei", "m_hei", "f_wlhiv", "m_wlhiv", "f_sv", "m_sv",
+            "f_agyw", "f_hiv_pos", "f_siblings", "m_siblings", "f_caregivers", "m_caregivers"
+    };
+
+    private static final String[] SECTION_B_FIELD_SUFFIXES = {
+            "f_0_4", "m_0_4", "f_5_15", "m_5_15", "f_16_19", "m_16_19", "f_20_plus", "m_20_plus"
+    };
+
+    private void populateSectionAQuestion(Map<String, String> data, int questionNumber) {
+        for (String suffix : SECTION_A_FIELD_SUFFIXES) {
+            String key = "q" + questionNumber + "_" + suffix;
+            setTextByName(key, data.get(key));
+        }
+    }
+
+    private void populateSectionBQuestion(Map<String, String> data, int questionNumber) {
+        for (String suffix : SECTION_B_FIELD_SUFFIXES) {
+            String key = "sb_q" + questionNumber + "_" + suffix;
+            setTextByName(key, data.get(key));
+        }
+    }
+
+    private void setTextByName(String idName, String value) {
+        int viewId = getResources().getIdentifier(idName, "id", getPackageName());
+        if (viewId != 0) {
+            setText(viewId, value);
+        }
+    }
+
+    private void setStatusTextByName(String idName, String value) {
+        int viewId = getResources().getIdentifier(idName, "id", getPackageName());
+        if (viewId == 0) return;
+        TextView textView = findViewById(viewId);
+        if (textView == null) return;
+        if ("open".equalsIgnoreCase(value)) {
+            textView.setText("Open");
+        } else if ("closed".equalsIgnoreCase(value)) {
+            textView.setText("Closed");
+        } else {
+            textView.setText("");
         }
     }
 

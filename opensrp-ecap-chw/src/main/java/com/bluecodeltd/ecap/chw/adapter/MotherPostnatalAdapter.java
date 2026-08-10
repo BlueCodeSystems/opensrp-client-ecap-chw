@@ -40,10 +40,19 @@ public class MotherPostnatalAdapter extends RecyclerView.Adapter<MotherPostnatal
     private final List<MotherPostnatalCareModel> items;
     private ObjectMapper oMapper;
     private final SparseBooleanArray expandedPositions = new SparseBooleanArray();
+    private OnDeleteListener onDeleteListener;
+
+    public interface OnDeleteListener {
+        void onDelete(MotherPostnatalCareModel visit);
+    }
 
     public MotherPostnatalAdapter(Context context, List<MotherPostnatalCareModel> items) {
         this.context = context;
         this.items = items != null ? new ArrayList<>(items) : new ArrayList<>();
+    }
+
+    public void setOnDeleteListener(OnDeleteListener listener) {
+        this.onDeleteListener = listener;
     }
 
     public void setItems(List<MotherPostnatalCareModel> data) {
@@ -133,6 +142,11 @@ public class MotherPostnatalAdapter extends RecyclerView.Adapter<MotherPostnatal
         holder.expandLess.setOnClickListener(toggleListener);
 
         holder.btnEdit.setOnClickListener(v -> openForm(visit));
+        holder.btnDelete.setOnClickListener(v -> {
+            if (onDeleteListener != null) {
+                onDeleteListener.onDelete(visit);
+            }
+        });
     }
 
     @Override
@@ -157,6 +171,7 @@ public class MotherPostnatalAdapter extends RecyclerView.Adapter<MotherPostnatal
         ImageView expandMore;
         ImageView expandLess;
         View btnEdit;
+        View btnDelete;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -176,6 +191,7 @@ public class MotherPostnatalAdapter extends RecyclerView.Adapter<MotherPostnatal
              txtPncStiScreening = itemView.findViewById(R.id.pnc_sti_screening);
              txtPncComments = itemView.findViewById(R.id.pnc_comments);
             btnEdit = itemView.findViewById(R.id.edit_me);
+            btnDelete = itemView.findViewById(R.id.delete_me);
         }
     }
 

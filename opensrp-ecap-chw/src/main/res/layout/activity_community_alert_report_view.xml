@@ -141,10 +141,13 @@
                         <TextView android:layout_width="120dp" android:layout_height="match_parent" android:text="Type of illness /Condition/ Event/Alert" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textStyle="bold" android:textSize="10sp"/>
                         <TextView android:layout_width="100dp" android:layout_height="match_parent" android:text="When did this happen (DD/MM/YYYY )" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textStyle="bold" android:textSize="10sp"/>
                         <TextView android:layout_width="120dp" android:layout_height="match_parent" android:text="Where did this happen (Community, District)" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textStyle="bold" android:textSize="10sp"/>
+                        <TextView android:layout_width="140dp" android:layout_height="match_parent" android:text="Disease Selected" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textStyle="bold" android:textSize="10sp"/>
+                        <TextView android:layout_width="150dp" android:layout_height="match_parent" android:text="Suspected Cases" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textStyle="bold" android:textSize="10sp"/>
                         <TextView android:layout_width="180dp" android:layout_height="match_parent" android:text="How many have been affected" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textStyle="bold" android:textSize="10sp"/>
                         <TextView android:layout_width="180dp" android:layout_height="match_parent" android:text="How many died" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textStyle="bold" android:textSize="10sp"/>
                         <TextView android:layout_width="100dp" android:layout_height="match_parent" android:text="What action was taken" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textStyle="bold" android:textSize="10sp"/>
                         <TextView android:layout_width="120dp" android:layout_height="match_parent" android:text="Was Super Mentor (Supervisor ) involved" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textStyle="bold" android:textSize="10sp"/>
+                        <TextView android:layout_width="140dp" android:layout_height="match_parent" android:text="Was CBS Focal point supervisor part of the response" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textStyle="bold" android:textSize="10sp"/>
                     </TableRow>
 
                     <!-- Data Row -->
@@ -157,6 +160,40 @@
                         <TextView android:id="@+id/txt_event_date" android:layout_width="match_parent" android:layout_height="match_parent" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textSize="10sp"/>
                         <!-- Where -->
                         <TextView android:id="@+id/txt_location" android:layout_width="match_parent" android:layout_height="match_parent" android:textColor="#000000" android:gravity="center_vertical" android:padding="4dp" android:background="@drawable/table_cell_background" android:textSize="10sp"/>
+
+                        <!-- Disease Selected -->
+                        <TextView android:id="@+id/txt_disease_selected" android:layout_width="match_parent" android:layout_height="match_parent" android:textColor="#000000" android:gravity="center_vertical" android:padding="4dp" android:background="@drawable/table_cell_background" android:textSize="10sp"/>
+
+                        <!-- Suspected Cases (exact age bands: 0-4Yrs, 5-14Yrs, >=15Yrs) -->
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/table_cell_background">
+                            <!-- Female -->
+                            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Female" android:textColor="#000000" android:gravity="center" android:background="#E0E0E0" android:padding="2dp" android:textStyle="bold" android:textSize="9sp"/>
+                            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="0-4Yrs" android:textColor="#000000" android:gravity="center" android:textSize="8sp" android:padding="1dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="5-14Yrs" android:textColor="#000000" android:gravity="center" android:textSize="8sp" android:padding="1dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="≥ 15Yrs" android:textColor="#000000" android:gravity="center" android:textSize="8sp" android:padding="1dp" android:background="@drawable/table_cell_background"/>
+                            </LinearLayout>
+                            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                                <TextView android:id="@+id/case_f_0_4" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="#000000" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:id="@+id/case_f_5_14" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="#000000" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:id="@+id/case_f_15_plus" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="#000000" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+                            </LinearLayout>
+                            <!-- Male -->
+                            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Male" android:textColor="#000000" android:gravity="center" android:background="#E0E0E0" android:padding="2dp" android:textStyle="bold" android:textSize="9sp"/>
+                            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="0-4Yrs" android:textColor="#000000" android:gravity="center" android:textSize="8sp" android:padding="1dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="5-14Yrs" android:textColor="#000000" android:gravity="center" android:textSize="8sp" android:padding="1dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="≥ 15Yrs" android:textColor="#000000" android:gravity="center" android:textSize="8sp" android:padding="1dp" android:background="@drawable/table_cell_background"/>
+                            </LinearLayout>
+                            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                                <TextView android:id="@+id/case_m_0_4" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="#000000" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:id="@+id/case_m_5_14" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="#000000" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+                                <TextView android:id="@+id/case_m_15_plus" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="#000000" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+                            </LinearLayout>
+                            <!-- Total -->
+                            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Total" android:textColor="#000000" android:gravity="center" android:background="#E0E0E0" android:padding="2dp" android:textStyle="bold" android:textSize="9sp"/>
+                            <TextView android:id="@+id/case_total" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#000000" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+                        </LinearLayout>
 
                         <!-- Affected -->
                         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/table_cell_background">
@@ -226,6 +263,11 @@
                         <TextView android:id="@+id/txt_action_taken" android:layout_width="match_parent" android:layout_height="match_parent" android:textColor="#000000" android:gravity="center_vertical" android:padding="4dp" android:background="@drawable/table_cell_background" android:textSize="10sp"/>
                         <!-- Supervisor -->
                         <TextView android:id="@+id/txt_response_performed" android:layout_width="match_parent" android:layout_height="match_parent" android:textColor="#000000" android:gravity="center_vertical" android:padding="4dp" android:background="@drawable/table_cell_background" android:textSize="10sp"/>
+                        <!-- CBS Supervisor part of response -->
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:background="@drawable/table_cell_background" android:padding="4dp">
+                            <TextView android:id="@+id/txt_cbs_supervisor_part_of_response" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#000000" android:gravity="center" android:textSize="10sp"/>
+                            <TextView android:id="@+id/txt_cbs_supervisor_action_taken" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#000000" android:gravity="center_vertical" android:textSize="9sp"/>
+                        </LinearLayout>
                     </TableRow>
                 </TableLayout>
 

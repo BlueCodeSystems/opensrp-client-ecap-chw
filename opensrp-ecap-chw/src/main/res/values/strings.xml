@@ -431,11 +431,11 @@
     <string name="menu_malaria">Malaria</string>
     <string name="report_nutrition">Nutrition</string>
     <string name="report_tb">TB</string>
-    <string name="report_community_alert">Community Alert</string>
+    <string name="report_community_alert">Community Based Surveillance</string>
     <string name="report_malaria_description">View, manage, and review monthly malaria reports.</string>
     <string name="report_nutrition_description">View, manage, and review monthly nutrition reports.</string>
     <string name="report_tb_description">View, manage, and review monthly TB reports.</string>
-    <string name="report_community_alert_description">View, manage, and review community alert reports.</string>
+    <string name="report_community_alert_description">Log, track, and review community-reported illnesses, deaths, and events so outbreaks and other public health risks can be flagged and escalated early.</string>
     <string name="report_malaria_saved">Malaria report saved successfully.</string>
     <string name="report_nutrition_saved">Nutrition report saved successfully.</string>
     <string name="report_tb_saved">TB report saved successfully.</string>
@@ -446,9 +446,9 @@
     <string name="tb_report_title">Monthly TB Report - %s</string>
     <string name="nutrition_report_title">Monthly Nutrition Report - %s</string>
     <string name="malaria_report_title">Malaria Monthly Report - %s</string>
-    <string name="report_community_alert_title">Community Alert Reporting - %s</string>
-    <string name="community_alert_logsheet_title">Community Alert Reporting Form</string>
-    <string name="community_alert_logsheet_subtitle">Community alert reporting details</string>
+    <string name="report_community_alert_title">Community Based Surveillance Reporting - %s</string>
+    <string name="community_alert_logsheet_title">Community Based Surveillance Reporting Form</string>
+    <string name="community_alert_logsheet_subtitle">Community based surveillance reporting details</string>
     <string name="logsheet_district_label">District</string>
     <string name="logsheet_facility_label">Facility</string>
     <string name="logsheet_community_label">Community</string>

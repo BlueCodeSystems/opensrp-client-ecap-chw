@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.app.Activity;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -42,16 +43,17 @@ public class HouseholdChildrenFragment extends Fragment {
         binding = com.bluecodeltd.ecap.chw.databinding.FragmentChildrenBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        HouseholdDetails detailsActivity = (HouseholdDetails) requireActivity();
-        HashMap<String, Household> mymap = detailsActivity.getData();
-        HashMap<String, CaregiverAssessmentModel> vmap = detailsActivity.getVulnerabilities();
+        Activity hostActivity = getActivity();
+        HouseholdDetails detailsActivity = hostActivity instanceof HouseholdDetails ? (HouseholdDetails) hostActivity : null;
+        HashMap<String, Household> mymap = detailsActivity != null ? detailsActivity.getData() : null;
+        HashMap<String, CaregiverAssessmentModel> vmap = detailsActivity != null ? detailsActivity.getVulnerabilities() : null;
 
         Household house = mymap != null ? mymap.get("house") : null;
         if (house == null) {
-            house = detailsActivity.house;
+            house = detailsActivity != null ? detailsActivity.house : null;
         }
         houseId = house != null ? house.getHousehold_id() : null;
-        if (houseId == null || houseId.trim().isEmpty()) {
+        if ((houseId == null || houseId.trim().isEmpty()) && detailsActivity != null) {
             houseId = detailsActivity.householdId;
         }
 
@@ -87,7 +89,11 @@ public class HouseholdChildrenFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(HouseholdChildrenViewModel.class);
         viewModel.getState().observe(getViewLifecycleOwner(), state -> applyChildrenState(state));
         if (progress != null) progress.setVisibility(View.VISIBLE);
-        viewModel.refresh(houseId);
+        if (houseId != null && !houseId.trim().isEmpty()) {
+            viewModel.refresh(houseId);
+        } else if (progress != null) {
+            progress.setVisibility(View.GONE);
+        }
 
 
         return view;
@@ -105,8 +111,10 @@ public class HouseholdChildrenFragment extends Fragment {
         String resolvedHouseId = houseId;
         if ((resolvedHouseId == null || resolvedHouseId.trim().isEmpty()) && isAdded()) {
             try {
-                HouseholdDetails detailsActivity = (HouseholdDetails) requireActivity();
-                resolvedHouseId = detailsActivity.householdId;
+                Activity hostActivity = getActivity();
+                if (hostActivity instanceof HouseholdDetails) {
+                    resolvedHouseId = ((HouseholdDetails) hostActivity).householdId;
+                }
             } catch (Exception ignored) { }
         }
         this.houseId = resolvedHouseId;
@@ -121,10 +129,13 @@ public class HouseholdChildrenFragment extends Fragment {
         if (state.getChildren() != null) childList.addAll(state.getChildren());
         try { if (householdChildrenAdapter != null) householdChildrenAdapter.notifyDataSetChanged(); } catch (Exception ignored) {}
         String count = (state.getCount() != null && !state.getCount().trim().isEmpty()) ? state.getCount().trim() : "0";
-        HouseholdDetails detailsActivity = (HouseholdDetails) requireActivity();
-        detailsActivity.childrenCount = count;
-        if (detailsActivity.childTabCount != null) {
-            detailsActivity.childTabCount.setText(count);
+        Activity hostActivity = getActivity();
+        if (hostActivity instanceof HouseholdDetails) {
+            HouseholdDetails detailsActivity = (HouseholdDetails) hostActivity;
+            detailsActivity.childrenCount = count;
+            if (detailsActivity.childTabCount != null) {
+                detailsActivity.childTabCount.setText(count);
+            }
         }
         View progress = (binding != null) ? binding.progressLoading : null;
         if (progress != null) progress.setVisibility(View.GONE);

@@ -346,6 +346,30 @@ public class CommunityAlertReportViewActivity extends AppCompatActivity {
 
         setText(R.id.txt_location, data.get("location"));
 
+        String diseaseSelected = "pcz".equalsIgnoreCase(data.get("illness_type"))
+                ? data.get("pcz_priority_disease")
+                : data.get("other_priority_disease");
+        setText(R.id.txt_disease_selected, diseaseSelected);
+
+        // Suspected Cases (exact age bands: 0-4Yrs, 5-14Yrs, >=15Yrs)
+        setText(R.id.case_f_0_4, data.get("case_f_0_4"), "0");
+        setText(R.id.case_f_5_14, data.get("case_f_5_14"), "0");
+        setText(R.id.case_f_15_plus, data.get("case_f_15_plus"), "0");
+        setText(R.id.case_m_0_4, data.get("case_m_0_4"), "0");
+        setText(R.id.case_m_5_14, data.get("case_m_5_14"), "0");
+        setText(R.id.case_m_15_plus, data.get("case_m_15_plus"), "0");
+        setText(R.id.case_total, data.get("case_total"), "0");
+
+        String cbsPartOfResponse = data.get("cbs_supervisor_part_of_response");
+        if ("yes".equalsIgnoreCase(cbsPartOfResponse)) {
+            setText(R.id.txt_cbs_supervisor_part_of_response, "Yes");
+        } else if ("no".equalsIgnoreCase(cbsPartOfResponse)) {
+            setText(R.id.txt_cbs_supervisor_part_of_response, "No");
+        } else {
+            setText(R.id.txt_cbs_supervisor_part_of_response, "");
+        }
+        setText(R.id.txt_cbs_supervisor_action_taken, data.get("cbs_supervisor_action_taken"));
+
         // Section B - Affected
         setText(R.id.affected_f_0_4, data.get("affected_f_0_4"), "0");
         setText(R.id.affected_f_5_9, data.get("affected_f_5_9"), "0");
