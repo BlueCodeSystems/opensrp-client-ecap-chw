@@ -35,10 +35,19 @@ public class MotherLongitudinalAdapter extends RecyclerView.Adapter<MotherLongit
     private final List<MotherLongitudinalFollowUpModel> items;
     private ObjectMapper oMapper;
     private final SparseBooleanArray expandedPositions = new SparseBooleanArray();
+    private OnDeleteListener onDeleteListener;
+
+    public interface OnDeleteListener {
+        void onDelete(MotherLongitudinalFollowUpModel visit);
+    }
 
     public MotherLongitudinalAdapter(Context context, List<MotherLongitudinalFollowUpModel> items) {
         this.context = context;
         this.items = items != null ? new ArrayList<>(items) : new ArrayList<>();
+    }
+
+    public void setOnDeleteListener(OnDeleteListener listener) {
+        this.onDeleteListener = listener;
     }
 
     public void setItems(List<MotherLongitudinalFollowUpModel> data) {
@@ -121,6 +130,11 @@ public class MotherLongitudinalAdapter extends RecyclerView.Adapter<MotherLongit
         holder.header.setOnClickListener(toggleListener);
 
         holder.btnEdit.setOnClickListener(v -> openForm(visit));
+        holder.btnDelete.setOnClickListener(v -> {
+            if (onDeleteListener != null) {
+                onDeleteListener.onDelete(visit);
+            }
+        });
     }
 
     @Override
@@ -144,6 +158,7 @@ public class MotherLongitudinalAdapter extends RecyclerView.Adapter<MotherLongit
         View expandMore;
         View expandLess;
         View btnEdit;
+        View btnDelete;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -162,6 +177,7 @@ public class MotherLongitudinalAdapter extends RecyclerView.Adapter<MotherLongit
             txtTbStatus = itemView.findViewById(R.id.lfu_tb_status);
             txtSpecialConditions = itemView.findViewById(R.id.lfu_special_conditions);
             btnEdit = itemView.findViewById(R.id.lfu_edit);
+            btnDelete = itemView.findViewById(R.id.lfu_delete);
         }
     }
 

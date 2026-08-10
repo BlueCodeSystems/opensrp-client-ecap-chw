@@ -9,7 +9,7 @@ import java.util.List;
 public class MotherPostnatalCareDao extends AbstractDao {
 
     public static MotherPostnatalCareModel getLatestByBaseEntityId(String baseEntityId) {
-        String sql = "SELECT * FROM ec_mother_postnatal_care WHERE base_entity_id = '" + baseEntityId + "' ORDER BY last_interacted_with DESC LIMIT 1";
+        String sql = "SELECT rowid AS db_row_id, * FROM ec_mother_postnatal_care WHERE base_entity_id = '" + baseEntityId + "' AND (delete_status IS NULL OR delete_status <> '1') ORDER BY last_interacted_with DESC LIMIT 1";
         List<MotherPostnatalCareModel> values = AbstractDao.readData(sql, getMap());
         if (values == null || values.size() == 0) {
             return null;
@@ -18,18 +18,27 @@ public class MotherPostnatalCareDao extends AbstractDao {
     }
 
     public static List<MotherPostnatalCareModel> listByBaseEntityId(String baseEntityId) {
-        String sql = "SELECT * FROM ec_mother_postnatal_care WHERE base_entity_id = '" + baseEntityId + "' ORDER BY last_interacted_with DESC";
+        String sql = "SELECT rowid AS db_row_id, * FROM ec_mother_postnatal_care WHERE base_entity_id = '" + baseEntityId + "' AND (delete_status IS NULL OR delete_status <> '1') ORDER BY last_interacted_with DESC";
         return AbstractDao.readData(sql, getMap());
     }
 
     public static List<MotherPostnatalCareModel> listByHouseholdId(String householdId) {
-        String sql = "SELECT * FROM ec_mother_postnatal_care WHERE household_id = '" + householdId + "' ORDER BY last_interacted_with DESC";
+        String sql = "SELECT rowid AS db_row_id, * FROM ec_mother_postnatal_care WHERE household_id = '" + householdId + "' AND (delete_status IS NULL OR delete_status <> '1') ORDER BY last_interacted_with DESC";
         return AbstractDao.readData(sql, getMap());
+    }
+
+    public static void deleteByRowId(String rowId) {
+        if (rowId == null || rowId.isEmpty()) {
+            return;
+        }
+        String sql = "UPDATE ec_mother_postnatal_care SET delete_status = '1' WHERE rowid = '" + rowId + "'";
+        updateDB(sql);
     }
 
     public static DataMap<MotherPostnatalCareModel> getMap() {
         return c -> {
             MotherPostnatalCareModel record = new MotherPostnatalCareModel();
+            record.setDb_row_id(getCursorValue(c, "db_row_id"));
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setHousehold_id(getCursorValue(c, "household_id"));
             record.setPnc_visit_type(getCursorValue(c, "pnc_visit_type"));

@@ -135,7 +135,12 @@ public class PmtctChildDao extends AbstractDao {
             record.setAzt_3tc_npv(getCursorValue(c, "azt_3tc_npv"));
             record.setAzt_3tc_npv_date(getCursorValue(c, "azt_3tc_npv_date"));
             record.setChild_outcome(getCursorValue(c, "child_outcome"));
-
+            record.setWard(getCursorValue(c, "ward"));
+            record.setIs_closed(getCursorValue(c, "is_closed"));
+            record.setProvince(getCursorValue(c, "province"));
+            record.setDistrict(getCursorValue(c, "district"));
+            record.setFacility(getCursorValue(c, "facility"));
+            record.setPartner(getCursorValue(c, "partner"));
 
             return record;
         };

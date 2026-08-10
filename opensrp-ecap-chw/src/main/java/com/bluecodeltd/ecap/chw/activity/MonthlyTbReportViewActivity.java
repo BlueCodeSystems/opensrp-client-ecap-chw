@@ -491,6 +491,14 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
         setText(R.id.q7_wlhiv, data.get("q7_wlhiv"));
         setText(R.id.q7_pc_lhiv, data.get("q7_pc_lhiv"));
 
+        for (int q = 1; q <= 7; q++) {
+            setStatusText("q" + q + "_status", data.get("q" + q + "_status"));
+            setTextByName("q" + q + "_subpop_total", data.get("q" + q + "_subpop_total"));
+            if (q != 5) {
+                setTextByName("q" + q + "_other", data.get("q" + q + "_other"));
+            }
+        }
+
         TextView commentsView = findViewById(R.id.txt_comments);
         if (commentsView != null) {
             String comment = data.get("comment");
@@ -502,6 +510,27 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
         TextView textView = findViewById(viewId);
         if (textView != null) {
             textView.setText(value != null && !value.isEmpty() ? value : "0");
+        }
+    }
+
+    private void setTextByName(String idName, String value) {
+        int viewId = getResources().getIdentifier(idName, "id", getPackageName());
+        if (viewId != 0) {
+            setText(viewId, value);
+        }
+    }
+
+    private void setStatusText(String idName, String value) {
+        int viewId = getResources().getIdentifier(idName, "id", getPackageName());
+        if (viewId == 0) return;
+        TextView textView = findViewById(viewId);
+        if (textView == null) return;
+        if ("open".equalsIgnoreCase(value)) {
+            textView.setText("Status: Open");
+        } else if ("closed".equalsIgnoreCase(value)) {
+            textView.setText("Status: Closed");
+        } else {
+            textView.setText("");
         }
     }
 

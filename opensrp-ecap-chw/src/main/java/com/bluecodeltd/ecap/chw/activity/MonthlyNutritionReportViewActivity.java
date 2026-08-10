@@ -398,6 +398,16 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
         setText(R.id.referral_date_of_feedback, data.get("referral_date_of_feedback"));
         setText(R.id.referral_hiv_tb_integration, data.get("referral_hiv_tb_integration"));
 
+        setStatusText(R.id.status_section_a, data.get("sec_subpop_status"));
+        setStatusText(R.id.status_section_b, data.get("sec_hh_malnutrition_status"));
+        setStatusText(R.id.status_section_c, data.get("sec_mnp_vita_status"));
+        setStatusText(R.id.status_section_d, data.get("sec_ecd_status"));
+        setStatusText(R.id.status_section_e, data.get("sec_weight_for_age_status"));
+        setStatusText(R.id.status_section_f, data.get("sec_nutrition_assessment_status"));
+        setStatusText(R.id.status_section_g, data.get("sec_muac_status"));
+        setStatusText(R.id.status_section_h, data.get("sec_sti_status"));
+        setStatusText(R.id.status_section_i, data.get("sec_referral_status"));
+
         TextView commentsView = findViewById(R.id.txt_comments);
         if (commentsView != null) {
             String comment = data.get("comment");
@@ -409,6 +419,18 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
         TextView textView = findViewById(viewId);
         if (textView != null) {
             textView.setText(value != null && !value.isEmpty() ? value : "0");
+        }
+    }
+
+    private void setStatusText(int viewId, String value) {
+        TextView textView = findViewById(viewId);
+        if (textView == null) return;
+        if ("open".equalsIgnoreCase(value)) {
+            textView.setText("Status: Open");
+        } else if ("closed".equalsIgnoreCase(value)) {
+            textView.setText("Status: Closed");
+        } else {
+            textView.setText("");
         }
     }
 

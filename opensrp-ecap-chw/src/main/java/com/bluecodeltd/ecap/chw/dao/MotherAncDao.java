@@ -9,7 +9,7 @@ import java.util.List;
 public class MotherAncDao extends AbstractDao {
 
     public static MotherAncModel getLatestByBaseEntityId(String baseEntityId) {
-        String sql = "SELECT * FROM ec_mother_anc WHERE base_entity_id = '" + baseEntityId + "' ORDER BY last_interacted_with DESC LIMIT 1";
+        String sql = "SELECT rowid AS db_row_id, * FROM ec_mother_anc WHERE base_entity_id = '" + baseEntityId + "' AND (delete_status IS NULL OR delete_status <> '1') ORDER BY last_interacted_with DESC LIMIT 1";
         List<MotherAncModel> values = AbstractDao.readData(sql, getMap());
         if (values == null || values.size() == 0) {
             return null;
@@ -18,18 +18,27 @@ public class MotherAncDao extends AbstractDao {
     }
 
     public static List<MotherAncModel> listByBaseEntityId(String baseEntityId) {
-        String sql = "SELECT * FROM ec_mother_anc WHERE base_entity_id = '" + baseEntityId + "' ORDER BY last_interacted_with DESC";
+        String sql = "SELECT rowid AS db_row_id, * FROM ec_mother_anc WHERE base_entity_id = '" + baseEntityId + "' AND (delete_status IS NULL OR delete_status <> '1') ORDER BY last_interacted_with DESC";
         return AbstractDao.readData(sql, getMap());
     }
 
     public static List<MotherAncModel> listByHouseholdId(String householdId) {
-        String sql = "SELECT * FROM ec_mother_anc WHERE household_id = '" + householdId + "' ORDER BY last_interacted_with DESC";
+        String sql = "SELECT rowid AS db_row_id, * FROM ec_mother_anc WHERE household_id = '" + householdId + "' AND (delete_status IS NULL OR delete_status <> '1') ORDER BY last_interacted_with DESC";
         return AbstractDao.readData(sql, getMap());
+    }
+
+    public static void deleteByRowId(String rowId) {
+        if (rowId == null || rowId.isEmpty()) {
+            return;
+        }
+        String sql = "UPDATE ec_mother_anc SET delete_status = '1' WHERE rowid = '" + rowId + "'";
+        updateDB(sql);
     }
 
     public static DataMap<MotherAncModel> getMap() {
         return c -> {
             MotherAncModel record = new MotherAncModel();
+            record.setDb_row_id(getCursorValue(c, "db_row_id"));
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setHousehold_id(getCursorValue(c, "household_id"));
             record.setDate_1st_visit(getCursorValue(c, "date_1st_visit"));

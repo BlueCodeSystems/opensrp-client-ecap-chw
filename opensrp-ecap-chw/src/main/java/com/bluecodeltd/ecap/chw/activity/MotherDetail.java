@@ -436,6 +436,12 @@ public class MotherDetail extends AppCompatActivity {
         } catch (Exception ignored) { }
     }
 
+    public void refreshVisitTabTitles() {
+        updateAncTabTitle();
+        updateLongitudinalTabTitle();
+        updatePostnatalTabTitle();
+    }
+
 
     private void setupViewPager(boolean forceRefresh){
         // Rebuild adapter when forced or when not yet initialized

@@ -32,6 +32,16 @@
                 android:textStyle="bold"
                 app:drawableEndCompat="@drawable/baseline_expand_more_24" />
 
+            <TextView
+                android:id="@+id/q1_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text=""
+                android:textColor="@color/textSecondary"
+                android:textSize="12sp"
+                android:textStyle="italic" />
+
             <TableLayout
                 android:id="@+id/table_q1"
                 android:layout_width="match_parent"
@@ -108,6 +118,14 @@
                     <TextView android:text="PC Living with HIV" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q1_pc_lhiv" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
+                <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
+                    <TextView android:text="Other" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/q1_other" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
+                </TableRow>
+                <TableRow android:background="#F5F5F5" android:paddingVertical="10dp">
+                    <TextView android:text="Sub-Population Total" android:textStyle="bold" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/q1_subpop_total" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
+                </TableRow>
             </TableLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -136,6 +154,16 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:drawableEndCompat="@drawable/baseline_expand_more_24" />
+
+            <TextView
+                android:id="@+id/q2_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text=""
+                android:textColor="@color/textSecondary"
+                android:textSize="12sp"
+                android:textStyle="italic" />
 
             <TableLayout
                 android:id="@+id/table_q2"
@@ -213,6 +241,14 @@
                     <TextView android:text="PC Living with HIV" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q2_pc_lhiv" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
+                <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
+                    <TextView android:text="Other" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/q2_other" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
+                </TableRow>
+                <TableRow android:background="#F5F5F5" android:paddingVertical="10dp">
+                    <TextView android:text="Sub-Population Total" android:textStyle="bold" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/q2_subpop_total" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
+                </TableRow>
             </TableLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -241,6 +277,16 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:drawableEndCompat="@drawable/baseline_expand_more_24" />
+
+            <TextView
+                android:id="@+id/q3_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text=""
+                android:textColor="@color/textSecondary"
+                android:textSize="12sp"
+                android:textStyle="italic" />
 
             <TableLayout
                 android:id="@+id/table_q3"
@@ -318,6 +364,14 @@
                     <TextView android:text="PC Living with HIV" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q3_pc_lhiv" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
+                <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
+                    <TextView android:text="Other" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/q3_other" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
+                </TableRow>
+                <TableRow android:background="#F5F5F5" android:paddingVertical="10dp">
+                    <TextView android:text="Sub-Population Total" android:textStyle="bold" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/q3_subpop_total" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
+                </TableRow>
             </TableLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -346,6 +400,16 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:drawableEndCompat="@drawable/baseline_expand_more_24" />
+
+            <TextView
+                android:id="@+id/q4_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text=""
+                android:textColor="@color/textSecondary"
+                android:textSize="12sp"
+                android:textStyle="italic" />
 
             <TableLayout
                 android:id="@+id/table_q4"
@@ -423,6 +487,14 @@
                     <TextView android:text="PC Living with HIV" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q4_pc_lhiv" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
+                <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
+                    <TextView android:text="Other" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/q4_other" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
+                </TableRow>
+                <TableRow android:background="#F5F5F5" android:paddingVertical="10dp">
+                    <TextView android:text="Sub-Population Total" android:textStyle="bold" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/q4_subpop_total" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
+                </TableRow>
             </TableLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -451,6 +523,16 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:drawableEndCompat="@drawable/baseline_expand_more_24" />
+
+            <TextView
+                android:id="@+id/q5_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text=""
+                android:textColor="@color/textSecondary"
+                android:textSize="12sp"
+                android:textStyle="italic" />
 
             <TableLayout
                 android:id="@+id/table_q5"
@@ -528,6 +610,10 @@
                     <TextView android:text="PC Living with HIV" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q5_pc_lhiv" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
+                <TableRow android:background="#F5F5F5" android:paddingVertical="10dp">
+                    <TextView android:text="Sub-Population Total" android:textStyle="bold" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/q5_subpop_total" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
+                </TableRow>
             </TableLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -556,6 +642,16 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:drawableEndCompat="@drawable/baseline_expand_more_24" />
+
+            <TextView
+                android:id="@+id/q6_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text=""
+                android:textColor="@color/textSecondary"
+                android:textSize="12sp"
+                android:textStyle="italic" />
 
             <TableLayout
                 android:id="@+id/table_q6"
@@ -633,6 +729,14 @@
                     <TextView android:text="PC Living with HIV" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q6_pc_lhiv" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
+                <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
+                    <TextView android:text="Other" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/q6_other" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
+                </TableRow>
+                <TableRow android:background="#F5F5F5" android:paddingVertical="10dp">
+                    <TextView android:text="Sub-Population Total" android:textStyle="bold" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/q6_subpop_total" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
+                </TableRow>
             </TableLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -661,6 +765,16 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:drawableEndCompat="@drawable/baseline_expand_more_24" />
+
+            <TextView
+                android:id="@+id/q7_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text=""
+                android:textColor="@color/textSecondary"
+                android:textSize="12sp"
+                android:textStyle="italic" />
 
             <TableLayout
                 android:id="@+id/table_q7"
@@ -737,6 +851,14 @@
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
                     <TextView android:text="PC Living with HIV" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q7_pc_lhiv" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
+                </TableRow>
+                <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
+                    <TextView android:text="Other" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/q7_other" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
+                </TableRow>
+                <TableRow android:background="#F5F5F5" android:paddingVertical="10dp">
+                    <TextView android:text="Sub-Population Total" android:textStyle="bold" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/q7_subpop_total" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
             </TableLayout>
         </LinearLayout>

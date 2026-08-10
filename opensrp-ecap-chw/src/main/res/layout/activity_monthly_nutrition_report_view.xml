@@ -143,6 +143,16 @@
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
+
+                    <TextView
+                        android:id="@+id/status_section_a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text=""
+                        android:textColor="@color/textSecondary"
+                        android:textSize="12sp"
+                        android:textStyle="italic" />
                     <ImageView
                         android:id="@+id/icon_section_a"
                         android:layout_width="24dp"
@@ -230,6 +240,16 @@
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
+
+                    <TextView
+                        android:id="@+id/status_section_b"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text=""
+                        android:textColor="@color/textSecondary"
+                        android:textSize="12sp"
+                        android:textStyle="italic" />
                     <ImageView
                         android:id="@+id/icon_section_b"
                         android:layout_width="24dp"
@@ -321,6 +341,16 @@
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
+
+                    <TextView
+                        android:id="@+id/status_section_c"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text=""
+                        android:textColor="@color/textSecondary"
+                        android:textSize="12sp"
+                        android:textStyle="italic" />
                     <ImageView
                         android:id="@+id/icon_section_c"
                         android:layout_width="24dp"
@@ -396,6 +426,16 @@
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
+
+                    <TextView
+                        android:id="@+id/status_section_d"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text=""
+                        android:textColor="@color/textSecondary"
+                        android:textSize="12sp"
+                        android:textStyle="italic" />
                     <ImageView
                         android:id="@+id/icon_section_d"
                         android:layout_width="24dp"
@@ -463,6 +503,16 @@
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
+
+                    <TextView
+                        android:id="@+id/status_section_e"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text=""
+                        android:textColor="@color/textSecondary"
+                        android:textSize="12sp"
+                        android:textStyle="italic" />
                     <ImageView
                         android:id="@+id/icon_section_e"
                         android:layout_width="24dp"
@@ -522,6 +572,16 @@
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
+
+                    <TextView
+                        android:id="@+id/status_section_f"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text=""
+                        android:textColor="@color/textSecondary"
+                        android:textSize="12sp"
+                        android:textStyle="italic" />
                     <ImageView
                         android:id="@+id/icon_section_f"
                         android:layout_width="24dp"
@@ -581,6 +641,16 @@
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
+
+                    <TextView
+                        android:id="@+id/status_section_g"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text=""
+                        android:textColor="@color/textSecondary"
+                        android:textSize="12sp"
+                        android:textStyle="italic" />
                     <ImageView
                         android:id="@+id/icon_section_g"
                         android:layout_width="24dp"
@@ -644,6 +714,16 @@
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
+
+                    <TextView
+                        android:id="@+id/status_section_h"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text=""
+                        android:textColor="@color/textSecondary"
+                        android:textSize="12sp"
+                        android:textStyle="italic" />
                     <ImageView
                         android:id="@+id/icon_section_h"
                         android:layout_width="24dp"
@@ -699,6 +779,16 @@
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
+
+                    <TextView
+                        android:id="@+id/status_section_i"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text=""
+                        android:textColor="@color/textSecondary"
+                        android:textSize="12sp"
+                        android:textStyle="italic" />
                     <ImageView
                         android:id="@+id/icon_section_i"
                         android:layout_width="24dp"
