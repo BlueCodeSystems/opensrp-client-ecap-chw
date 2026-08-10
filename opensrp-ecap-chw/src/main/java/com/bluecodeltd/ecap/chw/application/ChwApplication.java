@@ -20,6 +20,7 @@ import com.bluecodeltd.ecap.chw.activity.DashboardActivity;
 import com.bluecodeltd.ecap.chw.activity.FamilyProfileActivity;
 import com.bluecodeltd.ecap.chw.activity.FamilyRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.FpRegisterActivity;
+import com.bluecodeltd.ecap.chw.activity.FlagActivity;
 import com.bluecodeltd.ecap.chw.activity.HivTestingServiceActivity;
 import com.bluecodeltd.ecap.chw.activity.HouseholdIndexActivity;
 import com.bluecodeltd.ecap.chw.activity.IdentificationRegisterActivity;
@@ -36,6 +37,7 @@ import com.bluecodeltd.ecap.chw.job.BasePncCloseJob;
 import com.bluecodeltd.ecap.chw.job.ChwJobCreator;
 import com.bluecodeltd.ecap.chw.job.ScheduleJob;
 import com.bluecodeltd.ecap.chw.model.NavigationModelFlv;
+import com.bluecodeltd.ecap.chw.push.FlagsNotificationScheduler;
 import com.bluecodeltd.ecap.chw.repository.ChwRepository;
 import com.bluecodeltd.ecap.chw.schedulers.ChwScheduleTaskExecutor;
 import com.bluecodeltd.ecap.chw.sync.ChwClientProcessor;
@@ -242,6 +244,16 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         } catch (Throwable ignored) { }
         JobManager.create(this).addJobCreator(new ChwJobCreator());
 
+        // Initialize Firebase (FCM) from build-config values so real push can register.
+        com.bluecodeltd.ecap.chw.push.FlagsFirebaseInitializer.init(getApplicationContext());
+
+        // Poll Directus for new flags and raise local notifications
+        try {
+            FlagsNotificationScheduler.schedule(getApplicationContext());
+        } catch (Throwable t) {
+            Log.e("ChwApplication", "Failed to schedule flags notifications", t);
+        }
+
         initOfflineSchedules();
 
         setOpenSRPUrl();
@@ -437,6 +449,7 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
             registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.ALL_CLIENTS_REGISTERED_ACTIVITY, AllClientsRegisterActivity.class);
         }
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.FP_REGISTER_ACTIVITY, FpRegisterActivity.class);
+        registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.FLAGS_ACTIVITY, FlagActivity.class);
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.UPDATES_REGISTER_ACTIVITY, UpdatesRegisterActivity.class);
         return registeredActivities;
     }

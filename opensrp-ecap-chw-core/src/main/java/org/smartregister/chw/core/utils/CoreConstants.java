@@ -752,6 +752,7 @@ public class CoreConstants {
         public static final String UPDATES = "Updates";
         public static final String IDENTIFICATION = "Identification";
         public static final String PMTCT = "Pmtct";
+        public static final String FLAGS = "Flags";
 
     }
 
@@ -994,6 +995,7 @@ public class CoreConstants {
         public static final String REPORT_REGISTER_ACTIVITY = "REPORT_REGISTER_ACTIVITY";
         public static final String HTS_ACTIVITY = "HTS";
         public static final String PMTCT = "PMTCT_ACTIVITY";
+        public static final String FLAGS_ACTIVITY = "FLAGS_ACTIVITY";
 
     }
 

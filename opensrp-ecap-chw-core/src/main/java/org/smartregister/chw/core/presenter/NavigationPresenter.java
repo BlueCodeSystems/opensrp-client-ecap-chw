@@ -2,6 +2,8 @@ package org.smartregister.chw.core.presenter;
 
 import android.app.Activity;
 
+import androidx.preference.PreferenceManager;
+
 import org.smartregister.chw.core.contract.CoreApplication;
 import org.smartregister.chw.core.contract.NavigationContract;
 import org.smartregister.chw.core.interactor.NavigationInteractor;
@@ -11,6 +13,8 @@ import org.smartregister.chw.core.job.VaccineRecurringServiceJob;
 import org.smartregister.chw.core.model.NavigationModel;
 import org.smartregister.chw.core.model.NavigationOption;
 import org.smartregister.chw.core.utils.CoreConstants;
+import org.smartregister.chw.core.BuildConfig;
+import org.smartregister.chw.core.util.DirectusFlagsRepository;
 import org.smartregister.chw.fp.util.FamilyPlanningConstants;
 import org.smartregister.job.ImageUploadServiceJob;
 import org.smartregister.job.PullUniqueIdsServiceJob;
@@ -86,7 +90,33 @@ public class NavigationPresenter implements NavigationContract.Presenter {
         int x = 0;
         while (x < mModel.getNavigationItems().size()) {
             final int finalX = x;
-            mInteractor.getRegisterCount(tableMap.get(mModel.getNavigationItems().get(x).getMenuTitle()), new NavigationContract.InteractorCallback<Integer>() {
+            String menuTitle = mModel.getNavigationItems().get(x).getMenuTitle();
+            if (CoreConstants.DrawerMenu.FLAGS.equals(menuTitle)) {
+                android.content.SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+                DirectusFlagsRepository.fetchCount(
+                        flagAssignmentValue(prefs),
+                        prefs.getString("facility", ""),
+                        prefs.getString("phone", ""),
+                        BuildConfig.DIRECTUS_EMAIL,
+                        BuildConfig.DIRECTUS_PASSWORD,
+                        BuildConfig.DIRECTUS_FLAGS_CASEWORKER_FIELD,
+                        BuildConfig.DIRECTUS_FLAGS_COLLECTION,
+                        new DirectusFlagsRepository.CountCallback() {
+                            @Override
+                            public void onResult(int count) {
+                                mModel.getNavigationItems().get(finalX).setRegisterCount(count);
+                                getNavigationView().refreshCount();
+                            }
+
+                            @Override
+                            public void onError(Throwable throwable) {
+                            }
+                        }
+                );
+                x++;
+                continue;
+            }
+            mInteractor.getRegisterCount(tableMap.get(menuTitle), new NavigationContract.InteractorCallback<Integer>() {
                 @Override
                 public void onResult(Integer result) {
 
@@ -111,6 +141,31 @@ public class NavigationPresenter implements NavigationContract.Presenter {
     }
 
 
+
+    private String flagAssignmentValue(android.content.SharedPreferences prefs) {
+        String field = BuildConfig.DIRECTUS_FLAGS_CASEWORKER_FIELD;
+        if ("caseworker_phone".equals(field)) {
+            return prefs.getString("phone", "");
+        }
+        if ("caseworker_name".equals(field)) {
+            return prefs.getString("caseworker_name", "");
+        }
+        try {
+            String registeredAnm = org.smartregister.Context.getInstance().allSharedPreferences().fetchRegisteredANM();
+            if (registeredAnm != null && !registeredAnm.trim().isEmpty()) {
+                return registeredAnm.trim();
+            }
+        } catch (Exception ignored) {
+        }
+        String[] keys = new String[]{"provider_id", "providerId", "provider", "sub"};
+        for (String key : keys) {
+            String value = prefs.getString(key, "");
+            if (value != null && !value.trim().isEmpty()) {
+                return value.trim();
+            }
+        }
+        return "";
+    }
     @Override
     public void refreshLastSync() {
         // get last sync date

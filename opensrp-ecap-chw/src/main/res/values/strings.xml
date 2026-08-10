@@ -50,6 +50,15 @@
     <string name="refresh_indicators">Refresh indicators</string>
     <string name="remarks_and__comments">Remarks and comments</string>
     <string name="reports">Home</string>
+    <string name="pmp_flags">PMP Flags</string>
+    <string name="no_flags_found">No flags found</string>
+    <string name="open_ca_profile">Open CA Profile</string>
+    <string name="open_caregiver_profile">Open Caregiver Profile</string>
+    <string name="flag_expand_toggle">Expand or collapse flag details</string>
+    <string name="flag_filter_type">Type</string>
+    <string name="flag_filter_status">Status</string>
+    <string name="flag_filter_type_hint">Who the flag is about</string>
+    <string name="flag_filter_status_hint">Stage of the flag</string>
     <string name="section_format">Section</string>
     <string name="select_communities">Select communities</string>
     <string name="severe">Severe</string>
