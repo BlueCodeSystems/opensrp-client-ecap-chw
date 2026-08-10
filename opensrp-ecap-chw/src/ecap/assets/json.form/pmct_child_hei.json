@@ -273,14 +273,7 @@
         "type": "edit_text",
         "hint": "Under 5 Card Number"
       },
-      {
-        "key": "under_five_clinic_card",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "under_five_clinic_card",
-        "type": "edit_text",
-        "hint": "DBS at Birth"
-      },
+
       {
         "key": "spacer",
         "openmrs_entity_parent": "",
@@ -308,7 +301,7 @@
         "look_up": "true",
         "expanded": false,
         "min_date": "today - 100y",
-        "max_date": "today",
+        "max_date": "today + 100y",
         "v_required": {
           "value": true,
           "err": "Please enter the date"
@@ -324,7 +317,7 @@
         "look_up": "true",
         "expanded": false,
         "min_date": "today - 100y",
-        "max_date": "today",
+        "max_date": "today + 100y",
         "v_required": {
           "value": true,
           "err": "Please enter the date"

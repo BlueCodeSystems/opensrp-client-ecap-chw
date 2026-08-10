@@ -1352,7 +1352,7 @@
       {
         "key": "q4_status",
         "type": "native_radio",
-        "label": "4. primary caregivers found with TB symptoms (presumptive TB) during community screening, referred to the health facility who are screened for TB symptom screen (only as chest x-ray or mWRD) at the health facility",
+        "label": "4. Number of primary caregivers found with TB symptoms (presumptive TB) during community screening, referred to the health facility who are screened for TB symptom screen (only as chest x-ray or mWRD) at the health facility",
         "options": [
           {
             "key": "open",
