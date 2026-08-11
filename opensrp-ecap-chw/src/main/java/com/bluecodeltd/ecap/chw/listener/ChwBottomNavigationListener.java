@@ -21,6 +21,8 @@ import org.smartregister.chw.core.listener.CoreBottomNavigationListener;
 import org.smartregister.util.FormUtils;
 import org.smartregister.view.activity.BaseRegisterActivity;
 
+import com.bluecodeltd.ecap.chw.util.Threading;
+
 import timber.log.Timber;
 
 public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
@@ -56,38 +58,36 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
 
                 IndexRegisterActivity idRegisterActivity = (IndexRegisterActivity) context;
 
-                try {
-
-                    FormUtils formUtils = new FormUtils(context);
-
-                    JSONObject indexRegisterForm;
-
-                    indexRegisterForm = formUtils.getFormJson("vca_screening");
-
-                    idRegisterActivity.startFormActivity(indexRegisterForm);
-
-                } catch (Exception e) {
-                    Timber.e(e);
-                }
+                Threading.io(() -> {
+                    try {
+                        FormUtils formUtils = new FormUtils(context);
+                        JSONObject indexRegisterForm = formUtils.getFormJson("vca_screening");
+                        Threading.main(() -> {
+                            if (context.isFinishing() || context.isDestroyed()) return;
+                            idRegisterActivity.startFormActivity(indexRegisterForm);
+                        });
+                    } catch (Exception e) {
+                        Timber.e(e);
+                    }
+                });
 
             }
             else if ( context instanceof IndexRegisterActivity ) {
 
                 IndexRegisterActivity idRegisterActivity = (IndexRegisterActivity) context;
 
-                try {
-
-                    FormUtils formUtils = new FormUtils(context);
-
-                    JSONObject indexRegisterForm;
-
-                    indexRegisterForm = formUtils.getFormJson("household_visitation_for_vca_0_20_years");
-
-                    idRegisterActivity.startFormActivity(indexRegisterForm);
-
-                } catch (Exception e) {
-                    Timber.e(e);
-                }
+                Threading.io(() -> {
+                    try {
+                        FormUtils formUtils = new FormUtils(context);
+                        JSONObject indexRegisterForm = formUtils.getFormJson("household_visitation_for_vca_0_20_years");
+                        Threading.main(() -> {
+                            if (context.isFinishing() || context.isDestroyed()) return;
+                            idRegisterActivity.startFormActivity(indexRegisterForm);
+                        });
+                    } catch (Exception e) {
+                        Timber.e(e);
+                    }
+                });
 
             }
 
@@ -97,18 +97,18 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
 
                 MotherIndexActivity motherIndexActivity = (MotherIndexActivity) context;
 
-                try {
-                    FormUtils formUtils = new FormUtils(context);
-
-                    JSONObject indexRegisterForm;
-
-                    indexRegisterForm = formUtils.getFormJson("mother_index");
-
-                    motherIndexActivity.startFormActivity(indexRegisterForm);
-
-                } catch (Exception e) {
-                    Timber.e(e);
-                }
+                Threading.io(() -> {
+                    try {
+                        FormUtils formUtils = new FormUtils(context);
+                        JSONObject indexRegisterForm = formUtils.getFormJson("mother_index");
+                        Threading.main(() -> {
+                            if (context.isFinishing() || context.isDestroyed()) return;
+                            motherIndexActivity.startFormActivity(indexRegisterForm);
+                        });
+                    } catch (Exception e) {
+                        Timber.e(e);
+                    }
+                });
             }else if(context instanceof HouseholdIndexActivity){
 
                 HouseholdIndexActivity householdIndexActivity = (HouseholdIndexActivity) context;
@@ -174,18 +174,18 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
 
                 MotherIndexActivity motherIndexActivity = (MotherIndexActivity) context;
 
-                try {
-                    FormUtils formUtils = new FormUtils(context);
-
-                    JSONObject indexRegisterForm;
-
-                    indexRegisterForm = formUtils.getFormJson("mother_index");
-
-                    motherIndexActivity.startFormActivity(indexRegisterForm);
-
-                } catch (Exception e) {
-                    Timber.e(e);
-                }
+                Threading.io(() -> {
+                    try {
+                        FormUtils formUtils = new FormUtils(context);
+                        JSONObject indexRegisterForm = formUtils.getFormJson("mother_index");
+                        Threading.main(() -> {
+                            if (context.isFinishing() || context.isDestroyed()) return;
+                            motherIndexActivity.startFormActivity(indexRegisterForm);
+                        });
+                    } catch (Exception e) {
+                        Timber.e(e);
+                    }
+                });
             } else if(context instanceof HouseholdIndexActivity) {
 
                 HouseholdIndexActivity householdIndexActivity = (HouseholdIndexActivity) context;
@@ -201,18 +201,18 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
 
                 PMTCTRegisterActivity motherIndexActivity = (PMTCTRegisterActivity) context;
 
-                try {
-                    FormUtils formUtils = new FormUtils(context);
-
-                    JSONObject indexRegisterForm;
-
-                    indexRegisterForm = formUtils.getFormJson("mother_pmtct");
-
-                    motherIndexActivity.startFormActivity(indexRegisterForm);
-
-                } catch (Exception e) {
-                    Timber.e(e);
-                }
+                Threading.io(() -> {
+                    try {
+                        FormUtils formUtils = new FormUtils(context);
+                        JSONObject indexRegisterForm = formUtils.getFormJson("mother_pmtct");
+                        Threading.main(() -> {
+                            if (context.isFinishing() || context.isDestroyed()) return;
+                            motherIndexActivity.startFormActivity(indexRegisterForm);
+                        });
+                    } catch (Exception e) {
+                        Timber.e(e);
+                    }
+                });
             }
         } else if (item.getItemId() == R.id.action_report_malaria) {
             if (context instanceof ReportRegisterActivity) {

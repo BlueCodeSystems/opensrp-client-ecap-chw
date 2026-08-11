@@ -8,6 +8,7 @@ import static org.smartregister.chw.fp.util.FpUtil.getClientProcessorForJava;
 import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_EXTRA.STEP1;
 import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
 
+import android.app.Activity;
 import android.content.res.ColorStateList;
 import android.content.Context;
 import android.content.Intent;
@@ -298,47 +299,70 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
         dueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                VcaScreeningModel screen = indexVCA;
-                if (screen == null) {
-                    try { screen = VCAScreeningDao.getVcaScreening(village); } catch (Exception ignored) {}
-                }
-                String displayName = null;
-                try {
-                    if (screen != null) {
-                        displayName = (screen.getFirst_name() != null ? screen.getFirst_name() : "")
-                                + (screen.getLast_name() != null ? (" "+screen.getLast_name()) : "");
+                VcaScreeningModel cachedScreen = indexVCA;
+                Threading.io(() -> {
+                    VcaScreeningModel screen = cachedScreen;
+                    if (screen == null) {
+                        try { screen = VCAScreeningDao.getVcaScreening(village); } catch (Exception ignored) {}
                     }
-                } catch (Exception ignored) {}
-                if (displayName == null || displayName.trim().isEmpty()) {
-                    try { displayName = String.valueOf(familyNameTextView.getText()); } catch (Exception ignored) {}
-                }
+                    VcaScreeningModel finalScreen = screen;
+                    Threading.main(() -> {
+                        if (context instanceof Activity && (((Activity) context).isFinishing() || ((Activity) context).isDestroyed())) return;
+                        String displayName = null;
+                        try {
+                            if (finalScreen != null) {
+                                displayName = (finalScreen.getFirst_name() != null ? finalScreen.getFirst_name() : "")
+                                        + (finalScreen.getLast_name() != null ? (" "+finalScreen.getLast_name()) : "");
+                            }
+                        } catch (Exception ignored) {}
+                        String resolvedDisplayName = displayName;
+                        if (resolvedDisplayName == null || resolvedDisplayName.trim().isEmpty()) {
+                            try { resolvedDisplayName = String.valueOf(familyNameTextView.getText()); } catch (Exception ignored) {}
+                        }
 
-                String caseStatus = null;
-                try { caseStatus = screen != null ? screen.getCase_status() : null; } catch (Exception ignored) {}
-                if (caseStatus != null && ("0".equals(caseStatus) || "2".equals(caseStatus))) {
-                    Toasty.warning(context, "Unable to conduct a visitation for " + (displayName != null ? displayName : "this beneficiary") + " because the record is closed", Toast.LENGTH_LONG, true).show();
-                    return;
-                }
-                String dateScreened = null;
-                try { dateScreened = screen != null ? screen.getDate_screened() : null; } catch (Exception ignored) {}
-                if (dateScreened != null) {
-                    openVisitationForm(village, vcaAge);
-                } else {
-                    Toasty.warning(context, "Unable to conduct a visitation for " + (displayName != null ? displayName : "this beneficiary") + ". VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
-                }
+                        String caseStatus = null;
+                        try { caseStatus = finalScreen != null ? finalScreen.getCase_status() : null; } catch (Exception ignored) {}
+                        if (caseStatus != null && ("0".equals(caseStatus) || "2".equals(caseStatus))) {
+                            Toasty.warning(context, "Unable to conduct a visitation for " + (resolvedDisplayName != null ? resolvedDisplayName : "this beneficiary") + " because the record is closed", Toast.LENGTH_LONG, true).show();
+                            return;
+                        }
+                        String dateScreened = null;
+                        try { dateScreened = finalScreen != null ? finalScreen.getDate_screened() : null; } catch (Exception ignored) {}
+                        if (dateScreened != null) {
+                            openVisitationForm(village, vcaAge);
+                        } else {
+                            Toasty.warning(context, "Unable to conduct a visitation for " + (resolvedDisplayName != null ? resolvedDisplayName : "this beneficiary") + ". VCA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                        }
+                    });
+                });
             }
         });
 
 
     }
     public void openVisitationForm(String village,String vcaAge){
+        Threading.io(() -> {
+            JSONObject parsedForm = null;
+            try {
+                FormUtils formUtils = new FormUtils();
+                parsedForm = formUtils.getFormJson(this.context,"household_visitation_for_vca_0_20_years");
+            } catch (Exception ignored) { }
+            JSONObject finalParsedForm = parsedForm;
+            Threading.main(() -> {
+                if (context instanceof Activity && (((Activity) context).isFinishing() || ((Activity) context).isDestroyed())) return;
+                openVisitationFormOnMain(village, vcaAge, finalParsedForm);
+            });
+        });
+    }
+
+    private void openVisitationFormOnMain(String village, String vcaAge, JSONObject parsedForm){
 
                 try {
 
-                    FormUtils formUtils = new FormUtils();
-
-                    indexRegisterForm = formUtils.getFormJson(this.context,"household_visitation_for_vca_0_20_years");
-
+                    if (parsedForm == null) {
+                        return;
+                    }
+                    indexRegisterForm = parsedForm;
 
                     JSONObject cId = getFieldJSONObject(fields(indexRegisterForm, STEP1), "unique_id");
 //                    cId.remove(JsonFormUtils.VALUE);
