@@ -10,6 +10,7 @@ import com.bluecodeltd.ecap.chw.contract.MotherIndexContract;
 import com.bluecodeltd.ecap.chw.interactor.MotherIndexInteractor;
 import com.bluecodeltd.ecap.chw.model.EventClient;
 import com.bluecodeltd.ecap.chw.model.MotherIndexModel;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 import org.json.JSONException;
 import org.smartregister.domain.FetchStatus;
@@ -75,10 +76,12 @@ public class MotherIndexPresenter implements MotherIndexContract.Presenter {
                 return;
             }
 
-            interactor.saveRegistration(eventClients, isEditMode);
             baseId = eventClients.get(0).getClient().getBaseEntityId();
 
-
+            // saveRegistration takes the shared ChwClientProcessor lock, which a concurrent
+            // background sync can also hold for a while; run it off the main thread to avoid
+            // an ANR (main thread blocked waiting on ChwClientProcessor's monitor).
+            Threading.io(() -> interactor.saveRegistration(eventClients, isEditMode));
 
         } catch (Exception e) {
             Timber.e(e);
