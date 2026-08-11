@@ -119,33 +119,43 @@ public class CommunityReportViewActivity extends AppCompatActivity {
             } catch (Exception ignored) {
             }
 
+            // Parse the json.form asset here too, off the main thread.
+            JSONObject form = null;
+            try {
+                form = new FormUtils(this).getFormJson(ReportRegisterActivity.REPORT_FORM_COMMUNITY);
+            } catch (Exception ignored) {
+            }
+
             CaseStatusModel finalCaseStatusModel = caseStatusModel;
+            JSONObject finalForm = form;
             Threading.main(() -> {
+                if (isFinishing() || isDestroyed()) return;
                 String status = finalCaseStatusModel != null ? finalCaseStatusModel.getCase_status() : null;
                 if ("0".equals(status) || "2".equals(status)) {
                     Snackbar.make(findViewById(R.id.header_card), "Beneficiary is inactive or de-registered", Snackbar.LENGTH_LONG).show();
                     return;
                 }
 
+                if (finalForm == null) {
+                    Snackbar.make(findViewById(R.id.header_card), "Unable to open form", Snackbar.LENGTH_LONG).show();
+                    return;
+                }
+
                 try {
-                    JSONObject form = new FormUtils(this).getFormJson(ReportRegisterActivity.REPORT_FORM_COMMUNITY);
-                    if (form == null) {
-                        return;
-                    }
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                    form.put("entity_id", reportModel.getBase_entity_id());
-                    org.smartregister.chw.core.utils.CoreJsonFormUtils.populateJsonForm(form, reportModel.toValueMap());
+                    finalForm.put("entity_id", reportModel.getBase_entity_id());
+                    org.smartregister.chw.core.utils.CoreJsonFormUtils.populateJsonForm(finalForm, reportModel.toValueMap());
 
                     // Pre-populate caseworkers
                     String caseworkerName = getCaseworkerName(prefs);
                     if (!caseworkerName.isEmpty()) {
-                        setStep1FieldValue(form, "caseworker_name", caseworkerName);
+                        setStep1FieldValue(finalForm, "caseworker_name", caseworkerName);
                     }
 
                     Intent intent = new Intent(this, ReportFormActivity.class);
                     Form wizardForm = new Form();
                     intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, wizardForm);
-                    intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, form.toString());
+                    intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, finalForm.toString());
                     startActivityForResult(intent, EDIT_FORM_REQUEST);
                 } catch (Exception e) {
                     Timber.e(e);
