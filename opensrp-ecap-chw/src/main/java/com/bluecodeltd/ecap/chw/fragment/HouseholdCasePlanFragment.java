@@ -43,8 +43,15 @@ public class HouseholdCasePlanFragment extends Fragment {
         binding = com.bluecodeltd.ecap.chw.databinding.FragmentHouseholdcaseplansBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        Household house = ( (HouseholdDetails) requireActivity()).house;
-        String householdId = house != null ? house.getHousehold_id() : null;
+        Household house = null;
+        Activity hostActivity = getActivity();
+        if (hostActivity instanceof HouseholdDetails) {
+            house = ((HouseholdDetails) hostActivity).house;
+        } else {
+            Timber.w("HouseholdCasePlanFragment attached to unexpected host: %s",
+                    hostActivity != null ? hostActivity.getClass().getSimpleName() : "null");
+        }
+        householdId = house != null ? house.getHousehold_id() : null;
         recyclerView = binding.householdRecycler;
         linearLayout = binding.householdVisitContainer;
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
@@ -84,17 +91,6 @@ public class HouseholdCasePlanFragment extends Fragment {
             }
             if (binding != null && binding.progressLoading != null) binding.progressLoading.setVisibility(View.GONE);
         });
-        if (householdId != null) {
-            vm.refresh(householdId);
-        } else {
-            // No household resolved; show the empty state instead of crashing.
-            if (progress != null) progress.setVisibility(View.GONE);
-            if (linearLayout != null) linearLayout.setVisibility(View.VISIBLE);
-        }
-
-
-        return view;
-
         if (householdId != null && !householdId.trim().isEmpty()) {
             view.post(() -> {
                 if (viewModel != null && isAdded() && binding != null) {
