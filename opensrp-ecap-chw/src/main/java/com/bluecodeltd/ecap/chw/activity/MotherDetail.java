@@ -145,6 +145,7 @@ public class MotherDetail extends AppCompatActivity {
         NavigationMenu.getInstance(this, null, toolbar);
         mTabLayout =  binding.tabs;
         mViewPager  = binding.viewpager;
+        try { mViewPager.setSaveEnabled(false); } catch (Throwable ignored) {}
         motherName = binding.motherName;
         txtAge = binding.motherAge;
         // Pre-filled header fields
