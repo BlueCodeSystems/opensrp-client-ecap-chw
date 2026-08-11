@@ -443,6 +443,9 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
             if (originalBitmap != null) {
                 // Resize the Bitmap to 36x36
                 Bitmap resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, 80, 80, true);
+                if (resizedBitmap != originalBitmap) {
+                    originalBitmap.recycle();
+                }
                 imageView.setImageBitmap(resizedBitmap);
             } else {
                 Log.e("ImageDecode", "Bitmap is null. Check Base64 input.");
