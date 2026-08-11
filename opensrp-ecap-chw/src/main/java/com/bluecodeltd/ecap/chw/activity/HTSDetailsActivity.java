@@ -268,6 +268,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
 
 
         viewPager = findViewById(R.id.viewpager);
+        try { viewPager.setSaveEnabled(false); } catch (Throwable ignored) {}
         tabLayout = findViewById(R.id.tabs);
         returnViewPager();
         updateTasksTabTitle();

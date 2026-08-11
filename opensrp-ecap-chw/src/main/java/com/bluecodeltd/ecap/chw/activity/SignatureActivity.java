@@ -96,6 +96,8 @@ public class SignatureActivity extends AppCompatActivity {
         toolbar.getOverflowIcon().setColorFilter(Color.WHITE , PorterDuff.Mode.SRC_ATOP);
         myAppbar = findViewById(R.id.collapsing_toolbar_appbarlayout);
         NavigationMenu.getInstance(this, null, toolbar);  signaturePad = findViewById(R.id.signature_pad);
+        // Prevent the pad's bitmap from being embedded in onSaveInstanceState (caused TransactionTooLargeException)
+        signaturePad.setSaveEnabled(false);
         clearSignature = findViewById(R.id.clearSignarture);
         saveSignature = findViewById(R.id.saveSignature);
         childId = getIntent().getExtras().getString("Child");

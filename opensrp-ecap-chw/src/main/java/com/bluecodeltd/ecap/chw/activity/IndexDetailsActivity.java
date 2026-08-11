@@ -418,6 +418,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         mTabLayout =  binding.tabs;
         mViewPager  = binding.viewpager;
+        try { mViewPager.setSaveEnabled(false); } catch (Throwable ignored) {}
 
         setupViewPager();
         setupFabVisibility();
