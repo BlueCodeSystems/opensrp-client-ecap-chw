@@ -175,6 +175,9 @@ public class VcaServiceActivity extends AppCompatActivity {
                     int finalCasePlanCount = casePlanCount;
 
                     Threading.main(() -> {
+                        if (isFinishing() || isDestroyed()) {
+                            return;
+                        }
                         if (finalCaseStatusModel == null) {
                             return;
                         }

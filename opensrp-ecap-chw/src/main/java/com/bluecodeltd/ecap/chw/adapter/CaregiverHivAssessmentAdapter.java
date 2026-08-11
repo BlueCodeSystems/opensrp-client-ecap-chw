@@ -308,6 +308,9 @@ public class CaregiverHivAssessmentAdapter extends RecyclerView.Adapter<Caregive
         }
     }
     public void showDialogBox(String caregiverName,String message){
+        if (context instanceof Activity && (((Activity) context).isFinishing() || ((Activity) context).isDestroyed())) {
+            return;
+        }
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_layout);
         dialog.show();

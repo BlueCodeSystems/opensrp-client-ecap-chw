@@ -283,6 +283,9 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
         }
     };
     public void showDialogBox(String householdId,String message){
+        if (context instanceof Activity && (((Activity) context).isFinishing() || ((Activity) context).isDestroyed())) {
+            return;
+        }
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_layout);
         dialog.show();
@@ -295,6 +298,9 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
             try { house = HouseholdDao.getHousehold(householdId); } catch (Exception ignored) {}
             Household finalHouse = house;
             Threading.main(() -> {
+                if (context instanceof Activity && (((Activity) context).isFinishing() || ((Activity) context).isDestroyed())) {
+                    return;
+                }
                 String name = (finalHouse != null && finalHouse.getCaregiver_name() != null) ? finalHouse.getCaregiver_name() : "Household";
                 dialogMessage.setText(name + message);
             });

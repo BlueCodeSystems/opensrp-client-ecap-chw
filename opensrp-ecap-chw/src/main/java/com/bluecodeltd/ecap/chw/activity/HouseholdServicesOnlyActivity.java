@@ -196,6 +196,9 @@ public class HouseholdServicesOnlyActivity extends AppCompatActivity {
                     final Household finalHouse = house;
                     final int finalCasePlanCount = casePlanCount;
                     Threading.main(() -> {
+                        if (isFinishing() || isDestroyed()) {
+                            return;
+                        }
                         if (finalHouse == null) {
                             showDialogBox("Household details unavailable");
                             return;
@@ -240,6 +243,9 @@ public class HouseholdServicesOnlyActivity extends AppCompatActivity {
         }
     }
     public void showDialogBox(String message){
+        if (isFinishing() || isDestroyed()) {
+            return;
+        }
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_layout);
         dialog.show();

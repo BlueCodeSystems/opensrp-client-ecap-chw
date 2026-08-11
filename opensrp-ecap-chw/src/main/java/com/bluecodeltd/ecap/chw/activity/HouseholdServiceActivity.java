@@ -227,6 +227,9 @@ public class HouseholdServiceActivity extends AppCompatActivity {
         }
     }
     public void showDialogBox(String message){
+        if (isFinishing() || isDestroyed()) {
+            return;
+        }
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_layout);
         dialog.show();

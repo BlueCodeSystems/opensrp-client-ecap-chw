@@ -233,6 +233,9 @@ public class AncMotherAdapter extends RecyclerView.Adapter<AncMotherAdapter.View
     }
 
     public void showDialogBox(String householdId,String message){
+        if (context instanceof Activity && (((Activity) context).isFinishing() || ((Activity) context).isDestroyed())) {
+            return;
+        }
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_layout);
         dialog.show();
@@ -245,6 +248,9 @@ public class AncMotherAdapter extends RecyclerView.Adapter<AncMotherAdapter.View
             try { house = HouseholdDao.getHousehold(hid); } catch (Exception ignored) {}
             final Household finalHouse = house;
             Threading.main(() -> {
+                if (context instanceof Activity && (((Activity) context).isFinishing() || ((Activity) context).isDestroyed())) {
+                    return;
+                }
                 String name = (finalHouse != null && finalHouse.getCaregiver_name() != null) ? finalHouse.getCaregiver_name() : "Household";
                 dialogMessage.setText(name + message);
             });
