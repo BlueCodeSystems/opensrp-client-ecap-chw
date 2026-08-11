@@ -170,149 +170,176 @@ public class MotherDetail extends AppCompatActivity {
             refresh = getIntent() != null && getIntent().getExtras() != null ? getIntent().getExtras().getString("refresh") : null;
         } catch (Exception ignored) {}
 
-        // Prefer the serialized mother passed via intent to avoid schema mismatches
-        boolean forceRefreshFromRepo = refresh != null && refresh.equalsIgnoreCase("true");
-        if (commonMother != null && !forceRefreshFromRepo) {
-            commonPersonObjectClient = commonMother;
-        } else {
-            // Fallback: try resolve using extras but guard for failures
-            String baseId = null;
-            try {
-                if (getIntent() != null && getIntent().getExtras() != null) {
-                    baseId = getIntent().getExtras().getString("base_entity_id", null);
-                    if (baseId == null) baseId = getIntent().getExtras().getString("baseId", null);
-                }
-            } catch (Exception ignored) {}
-
-            // If we are refreshing, prefer pulling the baseId from the existing cached mother payload
-            if ((baseId == null || baseId.isEmpty()) && commonMother != null) {
+        // All DB/repository reads below can block on the SQLCipher connection lock while a
+        // sync is writing, which previously ran synchronously here and could ANR onCreate.
+        // Resolve everything on a background thread, then apply to the UI once ready.
+        Threading.io(() -> {
+            CommonPersonObjectClient resolvedClient;
+            boolean forceRefreshFromRepo = refresh != null && refresh.equalsIgnoreCase("true");
+            if (commonMother != null && !forceRefreshFromRepo) {
+                resolvedClient = commonMother;
+            } else {
+                resolvedClient = null;
+                // Fallback: try resolve using extras but guard for failures
+                String baseId = null;
                 try {
-                    baseId = commonMother.getColumnmaps().get("base_entity_id");
-                } catch (Exception ignored) { }
-            }
-
-            if (baseId != null) {
-                try {
-                    CommonPersonObject personObject = getCommonRepository("ec_mother_index").findByBaseEntityId(baseId);
-                    if (personObject != null) {
-                        CommonPersonObjectClient client = new CommonPersonObjectClient(personObject.getCaseId(), personObject.getDetails(), "");
-                        client.setColumnmaps(personObject.getColumnmaps());
-                        commonPersonObjectClient = client;
+                    if (getIntent() != null && getIntent().getExtras() != null) {
+                        baseId = getIntent().getExtras().getString("base_entity_id", null);
+                        if (baseId == null) baseId = getIntent().getExtras().getString("baseId", null);
                     }
-                } catch (Exception e) {
-                    Timber.w(e, "Fallback repository lookup failed for baseId=%s", baseId);
+                } catch (Exception ignored) {}
+
+                // If we are refreshing, prefer pulling the baseId from the existing cached mother payload
+                if ((baseId == null || baseId.isEmpty()) && commonMother != null) {
+                    try {
+                        baseId = commonMother.getColumnmaps().get("base_entity_id");
+                    } catch (Exception ignored) { }
+                }
+
+                if (baseId != null) {
+                    try {
+                        CommonPersonObject personObject = getCommonRepository("ec_mother_index").findByBaseEntityId(baseId);
+                        if (personObject != null) {
+                            CommonPersonObjectClient client = new CommonPersonObjectClient(personObject.getCaseId(), personObject.getDetails(), "");
+                            client.setColumnmaps(personObject.getColumnmaps());
+                            resolvedClient = client;
+                        }
+                    } catch (Exception e) {
+                        Timber.w(e, "Fallback repository lookup failed for baseId=%s", baseId);
+                    }
                 }
             }
 
-            if (commonPersonObjectClient == null) {
-                Toasty.error(MotherDetail.this, "Mother record not found", Toast.LENGTH_LONG, true).show();
-                finish();
+            if (resolvedClient == null) {
+                Threading.main(() -> {
+                    if (isFinishing() || isDestroyed()) return;
+                    Toasty.error(MotherDetail.this, "Mother record not found", Toast.LENGTH_LONG, true).show();
+                    finish();
+                });
                 return;
             }
-        }
 
-        try {
-            String motherBaseId = commonPersonObjectClient.getColumnmaps().get("base_entity_id");
-            String hhId = commonPersonObjectClient.getColumnmaps().get("household_id");
-            // MotherDetail is backed by ec_mother_index (index mother register), not the PMTCT mother table.
-            motherIndex = IndexMotherDao.getIndexMotherByBaseEntityId(motherBaseId);
-            if (motherIndex == null && hhId != null) {
-                motherIndex = IndexMotherDao.getIndexMotherByHouseholdId(hhId);
-            }
-        } catch (Exception e) {
-            Timber.w(e, "Unable to load mother index record via IndexMotherDao");
-        }
-
-        try {
-            family = HouseholdDao.getHousehold(commonPersonObjectClient.getColumnmaps().get("household_id"));
-        } catch (Exception e) {
-            Timber.e(e);
-        }
-        if (family == null) {
-            Toasty.warning(MotherDetail.this, "Household record not found", Toast.LENGTH_LONG, true).show();
-        }
-
-        motherName.setText(commonPersonObjectClient.getColumnmaps().get("caregiver_name"));
-        String birthdate = commonPersonObjectClient.getColumnmaps().get("caregiver_birth_date");
-        String age = getAge(birthdate);
-        txtAge.setText(age);
-
-        // Prefill household_id and mother_facility in the header
-        try {
-            if (householdIdView != null) {
-                String hhId = commonPersonObjectClient.getColumnmaps().get("household_id");
-                if (hhId != null && !hhId.isEmpty()) {
-                    householdIdView.setText("ID: " + hhId);
+            final CommonPersonObjectClient finalClient = resolvedClient;
+            IndexMotherModel resolvedMotherIndex = null;
+            try {
+                String motherBaseId = finalClient.getColumnmaps().get("base_entity_id");
+                String hhId = finalClient.getColumnmaps().get("household_id");
+                // MotherDetail is backed by ec_mother_index (index mother register), not the PMTCT mother table.
+                resolvedMotherIndex = IndexMotherDao.getIndexMotherByBaseEntityId(motherBaseId);
+                if (resolvedMotherIndex == null && hhId != null) {
+                    resolvedMotherIndex = IndexMotherDao.getIndexMotherByHouseholdId(hhId);
                 }
+            } catch (Exception e) {
+                Timber.w(e, "Unable to load mother index record via IndexMotherDao");
             }
-        } catch (Exception ignored) { }
 
-        try {
-            if (motherFacilityView != null) {
-                // Try facility on mother first, then fall back to household facility
-                String facility = commonPersonObjectClient.getColumnmaps().get("mother_facility");
-                if ((facility == null || facility.isEmpty()) && family != null) {
-                    facility = family.getFacility();
-                }
-                if (facility != null && !facility.isEmpty()) {
-                    motherFacilityView.setText(facility);
-                }
+            Household resolvedFamily = null;
+            try {
+                resolvedFamily = HouseholdDao.getHousehold(finalClient.getColumnmaps().get("household_id"));
+            } catch (Exception e) {
+                Timber.e(e);
             }
-        } catch (Exception ignored) { }
 
-        // Prefill mother_last_visit and mother_next_appointment from the latest ANC record
-        try {
-            if (motherLastVisitView != null || motherNextAppointmentView != null) {
-                String baseId = commonPersonObjectClient.getColumnmaps().get("base_entity_id");
-                MotherAncModel latestAnc = baseId != null ? MotherAncDao.getLatestByBaseEntityId(baseId) : null;
-                if (latestAnc != null) {
-                    String ancVisitDate = latestAnc.getLast_interacted_with();
-                    if ((ancVisitDate == null || ancVisitDate.isEmpty())) {
-                        ancVisitDate = latestAnc.getDate_1st_visit();
+            MotherAncModel resolvedLatestAnc = null;
+            try {
+                String baseId = finalClient.getColumnmaps().get("base_entity_id");
+                resolvedLatestAnc = baseId != null ? MotherAncDao.getLatestByBaseEntityId(baseId) : null;
+            } catch (Exception ignored) { }
+
+            final IndexMotherModel finalMotherIndex = resolvedMotherIndex;
+            final Household finalFamily = resolvedFamily;
+            final MotherAncModel finalLatestAnc = resolvedLatestAnc;
+
+            Threading.main(() -> {
+                if (isFinishing() || isDestroyed()) return;
+
+                commonPersonObjectClient = finalClient;
+                motherIndex = finalMotherIndex;
+                family = finalFamily;
+                if (family == null) {
+                    Toasty.warning(MotherDetail.this, "Household record not found", Toast.LENGTH_LONG, true).show();
+                }
+
+                motherName.setText(commonPersonObjectClient.getColumnmaps().get("caregiver_name"));
+                String birthdate = commonPersonObjectClient.getColumnmaps().get("caregiver_birth_date");
+                String age = getAge(birthdate);
+                txtAge.setText(age);
+
+                // Prefill household_id and mother_facility in the header
+                try {
+                    if (householdIdView != null) {
+                        String hhId = commonPersonObjectClient.getColumnmaps().get("household_id");
+                        if (hhId != null && !hhId.isEmpty()) {
+                            householdIdView.setText("ID: " + hhId);
+                        }
                     }
-                    if (motherLastVisitView != null && ancVisitDate != null && !ancVisitDate.isEmpty()) {
-                        String formattedDate = ancVisitDate;
-                        try {
-                            long ts = Long.parseLong(ancVisitDate);
-                            formattedDate = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(new Date(ts));
-                        } catch (Exception ignored) { }
-                        motherLastVisitView.setText("Last ANC: " + formattedDate);
-                        motherLastVisitView.setVisibility(View.VISIBLE);
-                    } else if (motherLastVisitView != null) {
-                        motherLastVisitView.setVisibility(View.GONE);
+                } catch (Exception ignored) { }
+
+                try {
+                    if (motherFacilityView != null) {
+                        // Try facility on mother first, then fall back to household facility
+                        String facility = commonPersonObjectClient.getColumnmaps().get("mother_facility");
+                        if ((facility == null || facility.isEmpty()) && family != null) {
+                            facility = family.getFacility();
+                        }
+                        if (facility != null && !facility.isEmpty()) {
+                            motherFacilityView.setText(facility);
+                        }
                     }
-                    String edd = latestAnc.getEdd_date();
-                    if (motherNextAppointmentView != null && edd != null && !edd.isEmpty()) {
-                        motherNextAppointmentView.setText("EDD: " + edd);
-                        motherNextAppointmentView.setVisibility(View.VISIBLE);
-                    } else if (motherNextAppointmentView != null) {
-                        motherNextAppointmentView.setVisibility(View.GONE);
+                } catch (Exception ignored) { }
+
+                // Prefill mother_last_visit and mother_next_appointment from the latest ANC record
+                try {
+                    if (motherLastVisitView != null || motherNextAppointmentView != null) {
+                        if (finalLatestAnc != null) {
+                            String ancVisitDate = finalLatestAnc.getLast_interacted_with();
+                            if ((ancVisitDate == null || ancVisitDate.isEmpty())) {
+                                ancVisitDate = finalLatestAnc.getDate_1st_visit();
+                            }
+                            if (motherLastVisitView != null && ancVisitDate != null && !ancVisitDate.isEmpty()) {
+                                String formattedDate = ancVisitDate;
+                                try {
+                                    long ts = Long.parseLong(ancVisitDate);
+                                    formattedDate = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(new Date(ts));
+                                } catch (Exception ignored) { }
+                                motherLastVisitView.setText("Last ANC: " + formattedDate);
+                                motherLastVisitView.setVisibility(View.VISIBLE);
+                            } else if (motherLastVisitView != null) {
+                                motherLastVisitView.setVisibility(View.GONE);
+                            }
+                            String edd = finalLatestAnc.getEdd_date();
+                            if (motherNextAppointmentView != null && edd != null && !edd.isEmpty()) {
+                                motherNextAppointmentView.setText("EDD: " + edd);
+                                motherNextAppointmentView.setVisibility(View.VISIBLE);
+                            } else if (motherNextAppointmentView != null) {
+                                motherNextAppointmentView.setVisibility(View.GONE);
+                            }
+                        } else {
+                            if (motherLastVisitView != null) motherLastVisitView.setVisibility(View.GONE);
+                            if (motherNextAppointmentView != null) motherNextAppointmentView.setVisibility(View.GONE);
+                        }
                     }
-                }
-                if (latestAnc == null) {
-                    if (motherLastVisitView != null) motherLastVisitView.setVisibility(View.GONE);
-                    if (motherNextAppointmentView != null) motherNextAppointmentView.setVisibility(View.GONE);
-                }
-            }
-        } catch (Exception ignored) { }
+                } catch (Exception ignored) { }
 
-        oMapper = new ObjectMapper();
+                oMapper = new ObjectMapper();
 
-        fab = binding.fabx;
-        fabScrim = binding.fabScrim;
-        fabScrim.setOnClickListener(v -> closeFab());
-        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
-        fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
-        rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
-        rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
+                fab = binding.fabx;
+                fabScrim = binding.fabScrim;
+                fabScrim.setOnClickListener(v -> closeFab());
+                fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+                fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
+                rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
+                rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
 
-        setupViewPager(false);
-        updateChildTabTitle();
-        updateAncTabTitle();
-        updateLongitudinalTabTitle();
-        updatePostnatalTabTitle();
-        setupFabVisibility();
-        updateCaregiverHivStatusAndVisibility();
+                setupViewPager(false);
+                updateChildTabTitle();
+                updateAncTabTitle();
+                updateLongitudinalTabTitle();
+                updatePostnatalTabTitle();
+                setupFabVisibility();
+                updateCaregiverHivStatusAndVisibility();
+            });
+        });
 
     }
 
