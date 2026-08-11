@@ -504,6 +504,9 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
     }
 
     private void showInactiveDialog(CaseStatusModel caseStatusModel) {
+        if (isFinishing() || isDestroyed()) {
+            return;
+        }
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_layout);
         dialog.show();
