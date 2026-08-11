@@ -17,8 +17,9 @@
         android:title="Import CSV"
         app:showAsAction="never"/>
     <item
-        android:id="@+id/report_a_problem"
-        android:title="Report a Problem"
+        android:id="@+id/pmp_flags"
+        android:title="@string/pmp_flags"
+        android:orderInCategory="0"
         app:showAsAction="never"/>
 
     <item
