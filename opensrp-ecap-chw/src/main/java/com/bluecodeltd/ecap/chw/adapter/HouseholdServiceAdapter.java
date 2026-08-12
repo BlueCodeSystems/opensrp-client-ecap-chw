@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HouseholdServiceActivity;
+import com.bluecodeltd.ecap.chw.activity.HouseholdServiceReportViewActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.util.Threading;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
@@ -201,7 +202,17 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
 
         holder.edit.setOnClickListener(openEdit);
         holder.linearLayout.setOnClickListener(openEdit);
-        holder.delete.setOnClickListener(v -> {
+        if (holder.editButton != null) {
+            holder.editButton.setOnClickListener(openEdit);
+        }
+        if (holder.viewButton != null) {
+            holder.viewButton.setOnClickListener(v -> {
+                Intent intent = new Intent(context, HouseholdServiceReportViewActivity.class);
+                intent.putExtra(HouseholdServiceReportViewActivity.EXTRA_BASE_ENTITY_ID, service.getBase_entity_id());
+                context.startActivity(intent);
+            });
+        }
+        View.OnClickListener deleteListener = v -> {
             try {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage("You are about to delete this household service ");
@@ -252,7 +263,11 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
             } catch (Exception e) {
                 Timber.e(e);
             }
-        });
+        };
+        holder.delete.setOnClickListener(deleteListener);
+        if (holder.deleteButton != null) {
+            holder.deleteButton.setOnClickListener(deleteListener);
+        }
 
 
     }
@@ -268,6 +283,9 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
         }
     };
     public void showDialogBox(String householdId,String message){
+        if (context instanceof Activity && (((Activity) context).isFinishing() || ((Activity) context).isDestroyed())) {
+            return;
+        }
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_layout);
         dialog.show();
@@ -280,6 +298,9 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
             try { house = HouseholdDao.getHousehold(householdId); } catch (Exception ignored) {}
             Household finalHouse = house;
             Threading.main(() -> {
+                if (context instanceof Activity && (((Activity) context).isFinishing() || ((Activity) context).isDestroyed())) {
+                    return;
+                }
                 String name = (finalHouse != null && finalHouse.getCaregiver_name() != null) ? finalHouse.getCaregiver_name() : "Household";
                 dialogMessage.setText(name + message);
             });
@@ -529,6 +550,9 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
             if (originalBitmap != null) {
                 // Resize the Bitmap to 36x36
                 Bitmap resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, 80, 80, true);
+                if (resizedBitmap != originalBitmap) {
+                    originalBitmap.recycle();
+                }
 
                 // Set the resized Bitmap to the ImageView
                 imageView.setImageBitmap(resizedBitmap);
@@ -548,6 +572,7 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
         ImageView delete, edit;
         ImageView signatureView;
         LinearLayout linearLayout;
+        View editButton, deleteButton, viewButton;
 
 
         public ViewHolder(View itemView) {
@@ -561,6 +586,9 @@ public class HouseholdServiceAdapter extends RecyclerView.Adapter<HouseholdServi
             delete = itemView.findViewById(R.id.delete_record);
             signatureView = itemView.findViewById(R.id.signature_view);
             edit = itemView.findViewById(R.id.edit_me);
+            editButton = itemView.findViewById(R.id.edit_button);
+            deleteButton = itemView.findViewById(R.id.delete_button);
+            viewButton = itemView.findViewById(R.id.view_button);
 
         }
 

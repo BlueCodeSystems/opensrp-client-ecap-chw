@@ -39,6 +39,7 @@ import com.bluecodeltd.ecap.chw.dao.IndexMotherDao;
 import com.bluecodeltd.ecap.chw.model.EcMotherIndexModel;
 import com.bluecodeltd.ecap.chw.model.IndexMotherModel;
 import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao;
+import com.bluecodeltd.ecap.chw.dao.PmtctMotherPostnatalDao;
 import com.bluecodeltd.ecap.chw.dao.PmctMotherAncDao;
 import com.bluecodeltd.ecap.chw.dao.PmtctChildDao;
 import com.bluecodeltd.ecap.chw.dao.PmtctDeliveryDao;
@@ -111,6 +112,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
     private String refresh;
     private TextView childTabCount, motherName, txtAge;
     private FloatingActionButton fab;
+    private View fabScrim;
     CommonPersonObjectClient commonPersonObjectClient, commonMother;
     ObjectMapper oMapper;
     private RelativeLayout cLayout, mLayout,ancLayout,labourLayout,postnatalLayout;
@@ -146,6 +148,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         // Rely on NavigationMenu to set up navigation icon/drawer like other profile screens
         mTabLayout =  binding.tabs;
         mViewPager  = binding.viewpager;
+        try { mViewPager.setSaveEnabled(false); } catch (Throwable ignored) {}
         motherName = binding.motherName;
         txtAge = binding.motherAge;
         mLayout = binding.motherForm;
@@ -268,6 +271,8 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
        oMapper = new ObjectMapper();
 //
         fab = binding.fabx;
+        fabScrim = binding.fabScrim;
+        fabScrim.setOnClickListener(v -> closeFab());
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
@@ -423,25 +428,38 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 //
 //        mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
 //    }
-    private void updatePostnatalTitle() {
+        private void updatePostnatalTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.pmct_titles, null);
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
         visitTabTitle.setText("POSTNATAL");
         final TextView countView = taskTabTitleLayout.findViewById(R.id.children_count);
-        countView.setText("…");
+        countView.setText("0");
         if (mTabLayout.getTabAt(1) != null) {
             mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
         }
 
-        final String cid = clientId;
         Threading.ioBestEffort(() -> {
-            String count = "0";
+            int count = 0;
             try {
-                if (!isNullOrEmpty(cid)) {
-                    count = PMTCTMotherDao.countMotherPostnatal(cid);
+                String householdId = null;
+                try {
+                    householdId = ptctMotherModel != null && !isNullOrEmpty(ptctMotherModel.getHousehold_id())
+                            ? ptctMotherModel.getHousehold_id()
+                            : resolveHouseholdId();
+                } catch (Exception ignored) { }
+
+                String idForPostnatal = householdId;
+                if (isNullOrEmpty(idForPostnatal)) {
+                    try {
+                        idForPostnatal = ptctMotherModel != null ? ptctMotherModel.getPmtct_id() : null;
+                    } catch (Exception ignored) { }
                 }
-            } catch (Exception ignored) {}
-            final String finalCount = count;
+
+                if (!isNullOrEmpty(idForPostnatal)) {
+                    count = PmtctMotherPostnatalDao.getPostnatalMother(idForPostnatal).size();
+                }
+            } catch (Exception ignored) { }
+            final String finalCount = String.valueOf(count);
             Threading.main(() -> {
                 if (isFinishing() || isDestroyed()) return;
                 countView.setText(finalCount != null ? finalCount : "0");
@@ -453,7 +471,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
         visitTabTitle.setText("HEI");
         final TextView countView = taskTabTitleLayout.findViewById(R.id.children_count);
-        countView.setText("…");
+        countView.setText("0");
         if (mTabLayout.getTabAt(2) != null) {
             mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
         }
@@ -465,13 +483,14 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
                 ? ptctMotherModel.getHousehold_id()
                 : resolveHouseholdId();
         Threading.ioBestEffort(() -> {
-            String count = "0";
+            int count = 0;
             try {
-                if (!isNullOrEmpty(primaryId) || !isNullOrEmpty(secondaryId)) {
-                    count = PmtctChildDao.countMotherHei(primaryId, secondaryId);
+                String householdId = !isNullOrEmpty(secondaryId) ? secondaryId : primaryId;
+                if (!isNullOrEmpty(householdId)) {
+                    count = PmtctChildDao.getPmctChildHeiByHouseholdId(householdId).size();
                 }
-            } catch (Exception ignored) {}
-            final String finalCount = count;
+            } catch (Exception ignored) { }
+            final String finalCount = String.valueOf(count);
             Threading.main(() -> {
                 if (isFinishing() || isDestroyed()) return;
                 countView.setText(finalCount != null ? finalCount : "0");
@@ -1209,6 +1228,9 @@ break;
 
             isFabOpen = true;
             fab.startAnimation(rotate_forward);
+            fabScrim.setVisibility(View.VISIBLE);
+            fabScrim.setAlpha(0f);
+            fabScrim.animate().alpha(1f).setDuration(200).start();
             mLayout.setVisibility(View.VISIBLE);
             cLayout.setVisibility(View.VISIBLE);
             ancLayout.setVisibility(View.VISIBLE);
@@ -1221,6 +1243,8 @@ break;
     public void closeFab(){
         fab.startAnimation(rotate_backward);
         isFabOpen = false;
+        fabScrim.animate().alpha(0f).setDuration(200)
+                .withEndAction(() -> fabScrim.setVisibility(View.GONE)).start();
         cLayout.setVisibility(View.GONE);
         mLayout.setVisibility(View.GONE);
         ancLayout.setVisibility(View.GONE);
@@ -1292,30 +1316,26 @@ break;
                         Threading.io(() -> {
                             try {
                                 String hhId = resolveHouseholdId();
-                                if (isNullOrEmpty(hhId)) {
-                                    Threading.main(() -> Toasty.error(MotherPmtctProfileActivity.this, "Household record not found", Toast.LENGTH_LONG, true).show());
-                                    return;
+                                if (!isNullOrEmpty(hhId)) {
+                                    List<Child> activeChildren = IndexPersonDao.getFamilyChildren(hhId);
+                                    if (activeChildren != null && !activeChildren.isEmpty()) {
+                                        String names = "";
+                                        try {
+                                            names = IndexPersonDao.returnVcaNames(hhId);
+                                        } catch (Throwable ignored) { }
+                                        final String message = "Please delete/deregister all VCA(s) in this household first.\n\nVCA(s):\n" + (names != null ? names : "");
+                                        Threading.main(() -> {
+                                            if (isFinishing() || isDestroyed()) return;
+                                            new AlertDialog.Builder(MotherPmtctProfileActivity.this)
+                                                    .setTitle("Cannot delete")
+                                                    .setMessage(message)
+                                                    .setPositiveButton("OK", (d, which) -> d.dismiss())
+                                                    .show();
+                                        });
+                                        return;
+                                    }
                                 }
-
-                                List<Child> activeChildren = IndexPersonDao.getFamilyChildren(hhId);
-                                if (activeChildren != null && !activeChildren.isEmpty()) {
-                                    String names = "";
-                                    try {
-                                        names = IndexPersonDao.returnVcaNames(hhId);
-                                    } catch (Throwable ignored) { }
-                                    final String message = "Please delete/deregister all VCA(s) in this household first.\n\nVCA(s):\n" + (names != null ? names : "");
-                                    Threading.main(() -> {
-                                        if (isFinishing() || isDestroyed()) return;
-                                        new AlertDialog.Builder(MotherPmtctProfileActivity.this)
-                                                .setTitle("Cannot delete")
-                                                .setMessage(message)
-                                                .setPositiveButton("OK", (d, which) -> d.dismiss())
-                                                .show();
-                                    });
-                                    return;
-                                }
-
-                                String heiCount = PmtctChildDao.countMotherHei(primaryId, secondaryId);
+                                String heiCount = isNullOrEmpty(hhId) ? "0" : String.valueOf(PmtctChildDao.getPmctChildHeiByHouseholdId(hhId).size());
                                 if (heiCount != null && !"0".equals(heiCount)) {
                                     final String message = "Please delete/deregister all HEI records first before deleting the PMTCT record.";
                                     Threading.main(() -> {

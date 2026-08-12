@@ -117,14 +117,17 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
         if(casePlan.getStatus().equals(("C"))){
 
             holder.txtStatus.setText("Complete");
+            holder.txtStatus.setBackgroundResource(R.drawable.bg_chip_success);
 
         } else if(casePlan.getStatus().equals(("P"))) {
 
             holder.txtStatus.setText("In Progress");
+            holder.txtStatus.setBackgroundResource(R.drawable.bg_chip_warning);
 
         } else if(casePlan.getStatus().equals(("D"))) {
 
             holder.txtStatus.setText("Delayed");
+            holder.txtStatus.setBackgroundResource(R.drawable.bg_chip_danger);
 
         }
 
@@ -172,7 +175,10 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
                 });
             });
         });
-        holder.delete.setOnClickListener(v -> {
+        if (holder.editButton != null) {
+            holder.editButton.setOnClickListener(v -> holder.editme.performClick());
+        }
+        View.OnClickListener deleteListener = v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setMessage("You are about to delete this vulnerability");
             builder.setNegativeButton("NO", (dialog, id) -> {
@@ -219,7 +225,11 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
             //Setting the title manually
             alert.setTitle("Alert");
             alert.show();
-        });
+        };
+        holder.delete.setOnClickListener(deleteListener);
+        if (holder.deleteButton != null) {
+            holder.deleteButton.setOnClickListener(deleteListener);
+        }
 
         holder.expLess.setOnClickListener(v -> {
 
@@ -244,6 +254,9 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
         }
     };
     public void showDialogBox(String caregiverName,String message){
+        if (context instanceof Activity && (((Activity) context).isFinishing() || ((Activity) context).isDestroyed())) {
+            return;
+        }
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_layout);
         dialog.show();
@@ -462,6 +475,7 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
         LinearLayout linearLayout, exPandableView;
 
         ImageView expMore, expLess, editme, delete;
+        View editButton, deleteButton;
 
         public ViewHolder(View itemView) {
 
@@ -482,6 +496,8 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
             txtStatus = itemView.findViewById(R.id.statusx);
             txtComment = itemView.findViewById(R.id.comment);
             delete = itemView.findViewById(R.id.delete_record);
+            editButton = itemView.findViewById(R.id.edit_button);
+            deleteButton = itemView.findViewById(R.id.delete_button);
 
 
         }

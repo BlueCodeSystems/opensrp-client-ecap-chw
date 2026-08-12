@@ -25,6 +25,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.activity.VcaServiceReportViewActivity;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
@@ -158,6 +159,16 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
                 android.widget.Toast.makeText(context, "Loading case status…", android.widget.Toast.LENGTH_SHORT).show());
         holder.linearLayout.setOnClickListener(v ->
                 android.widget.Toast.makeText(context, "Loading case status…", android.widget.Toast.LENGTH_SHORT).show());
+        if (holder.editButton != null) {
+            holder.editButton.setOnClickListener(v -> holder.edit.performClick());
+        }
+        if (holder.viewButton != null) {
+            holder.viewButton.setOnClickListener(v -> {
+                Intent intent = new Intent(context, VcaServiceReportViewActivity.class);
+                intent.putExtra(VcaServiceReportViewActivity.EXTRA_BASE_ENTITY_ID, service.getBase_entity_id());
+                context.startActivity(intent);
+            });
+        }
 
         final String uniqueId = service.getUnique_id();
         Threading.ioBestEffort(() -> {
@@ -228,7 +239,7 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
 
         // linearLayout click is set from async case-status load above
 
-        holder.delete.setOnClickListener(v -> {
+        View.OnClickListener deleteListener = v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setMessage("You are about to delete this VCA service");
             builder.setNegativeButton("NO", (dialog, id) -> {
@@ -274,7 +285,11 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
             //Setting the title manually
             alert.setTitle("Alert");
             alert.show();
-        });
+        };
+        holder.delete.setOnClickListener(deleteListener);
+        if (holder.deleteButton != null) {
+            holder.deleteButton.setOnClickListener(deleteListener);
+        }
     }
 
     public void openFormUsingFormUtils(Context context, String formName, VCAServiceModel service) throws JSONException {
@@ -428,6 +443,9 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
             if (originalBitmap != null) {
                 // Resize the Bitmap to 36x36
                 Bitmap resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, 80, 80, true);
+                if (resizedBitmap != originalBitmap) {
+                    originalBitmap.recycle();
+                }
                 imageView.setImageBitmap(resizedBitmap);
             } else {
                 Log.e("ImageDecode", "Bitmap is null. Check Base64 input.");
@@ -444,6 +462,7 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
         ImageView delete,edit;
         ImageView signatureView;
         LinearLayout linearLayout;
+        View editButton, deleteButton, viewButton;
 
 
         public ViewHolder(View itemView) {
@@ -457,6 +476,9 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
             delete = itemView.findViewById(R.id.delete_record);
             signatureView = itemView.findViewById(R.id.signature_view);
             edit = itemView.findViewById(R.id.edit_me);
+            editButton = itemView.findViewById(R.id.edit_button);
+            deleteButton = itemView.findViewById(R.id.delete_button);
+            viewButton = itemView.findViewById(R.id.view_button);
 
         }
 

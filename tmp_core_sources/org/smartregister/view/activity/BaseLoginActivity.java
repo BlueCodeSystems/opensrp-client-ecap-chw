@@ -37,6 +37,7 @@ import org.smartregister.util.SyncUtils;
 import org.smartregister.util.Utils;
 import org.smartregister.view.contract.BaseLoginContract;
 
+import timber.log.Timber;
 import java.util.Locale;
 
 /**

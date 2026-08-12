@@ -5,23 +5,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:viewBindingIgnore="true">
+    tools:viewBindingIgnore="true"
+    android:fitsSystemWindows="true">
 
-    <androidx.appcompat.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
         android:id="@+id/report_view_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/chw_family_primary"
-        app:navigationIcon="@drawable/ic_arrow_back_white_24dp">
+        android:layout_height="72dp"
+        android:background="@drawable/bg_profile_header_gradient"
+        android:elevation="2dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="16dp"
+        app:titleTextColor="@android:color/white">
 
-        <TextView
-            android:id="@+id/report_view_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Malaria Monthly Report"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/report_view_back_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/back"
+                android:padding="8dp"
+                android:src="@drawable/ic_arrow_back_white_24dp"
+                app:tint="@android:color/white" />
+
+            <TextView
+                android:id="@+id/report_view_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 
     <!--  Sticky Header Card with Program Metadata and Edit Button -->
@@ -113,7 +135,7 @@
                 <!-- Q1 -->
                 <LinearLayout android:id="@+id/header_q1" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q1: People tested for malaria" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_q1" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
+                    <TextView android:id="@+id/status_q1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="8dp" android:text="" android:textColor="@color/textSecondary" android:textSize="11sp" android:textStyle="italic" /><ImageView android:id="@+id/icon_q1" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
                 </LinearLayout>
                 <LinearLayout android:id="@+id/content_q1" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
                     <include layout="@layout/table_malaria_standard_q1" />
@@ -123,7 +145,7 @@
                 <!-- Q2 -->
                 <LinearLayout android:id="@+id/header_q2" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q2: People who were malaria positive" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_q2" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
+                    <TextView android:id="@+id/status_q2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="8dp" android:text="" android:textColor="@color/textSecondary" android:textSize="11sp" android:textStyle="italic" /><ImageView android:id="@+id/icon_q2" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
                 </LinearLayout>
                 <LinearLayout android:id="@+id/content_q2" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
                     <include layout="@layout/table_malaria_standard_q2" />
@@ -133,7 +155,7 @@
                 <!-- Q3 -->
                 <LinearLayout android:id="@+id/header_q3" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q3: People who received treatment" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_q3" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
+                    <TextView android:id="@+id/status_q3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="8dp" android:text="" android:textColor="@color/textSecondary" android:textSize="11sp" android:textStyle="italic" /><ImageView android:id="@+id/icon_q3" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
                 </LinearLayout>
                 <LinearLayout android:id="@+id/content_q3" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
                     <include layout="@layout/table_malaria_standard_q3" />
@@ -143,7 +165,7 @@
                 <!-- Q4 -->
                 <LinearLayout android:id="@+id/header_q4" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q4: People who received prophylaxis" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_q4" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
+                    <TextView android:id="@+id/status_q4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="8dp" android:text="" android:textColor="@color/textSecondary" android:textSize="11sp" android:textStyle="italic" /><ImageView android:id="@+id/icon_q4" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
                 </LinearLayout>
                 <LinearLayout android:id="@+id/content_q4" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
                     <include layout="@layout/table_malaria_standard_q4" />
@@ -153,7 +175,7 @@
                 <!-- Q5 -->
                 <LinearLayout android:id="@+id/header_q5" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q5: People referred for treatment" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_q5" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
+                    <TextView android:id="@+id/status_q5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="8dp" android:text="" android:textColor="@color/textSecondary" android:textSize="11sp" android:textStyle="italic" /><ImageView android:id="@+id/icon_q5" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
                 </LinearLayout>
                 <LinearLayout android:id="@+id/content_q5" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
                     <include layout="@layout/table_malaria_standard_q5" />
@@ -163,7 +185,7 @@
                 <!-- Q6 -->
                 <LinearLayout android:id="@+id/header_q6" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q6: Referral treatment completed" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_q6" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
+                    <TextView android:id="@+id/status_q6" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="8dp" android:text="" android:textColor="@color/textSecondary" android:textSize="11sp" android:textStyle="italic" /><ImageView android:id="@+id/icon_q6" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
                 </LinearLayout>
                 <LinearLayout android:id="@+id/content_q6" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
                     <include layout="@layout/table_malaria_standard_q6" />
@@ -173,7 +195,7 @@
                 <!-- Q7 -->
                 <LinearLayout android:id="@+id/header_q7" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q7: People referred for testing" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_q7" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
+                    <TextView android:id="@+id/status_q7" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="8dp" android:text="" android:textColor="@color/textSecondary" android:textSize="11sp" android:textStyle="italic" /><ImageView android:id="@+id/icon_q7" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
                 </LinearLayout>
                 <LinearLayout android:id="@+id/content_q7" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
                     <include layout="@layout/table_malaria_standard_q7" />
@@ -183,7 +205,7 @@
                 <!-- Q8 -->
                 <LinearLayout android:id="@+id/header_q8" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q8: Referral testing completed" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_q8" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
+                    <TextView android:id="@+id/status_q8" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="8dp" android:text="" android:textColor="@color/textSecondary" android:textSize="11sp" android:textStyle="italic" /><ImageView android:id="@+id/icon_q8" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
                 </LinearLayout>
                 <LinearLayout android:id="@+id/content_q8" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
                     <include layout="@layout/table_malaria_standard_q8" />
@@ -193,7 +215,7 @@
                 <!-- Q9 -->
                 <LinearLayout android:id="@+id/header_q9" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q9: People with severe malaria" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_q9" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
+                    <TextView android:id="@+id/status_q9" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="8dp" android:text="" android:textColor="@color/textSecondary" android:textSize="11sp" android:textStyle="italic" /><ImageView android:id="@+id/icon_q9" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
                 </LinearLayout>
                 <LinearLayout android:id="@+id/content_q9" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
                     <include layout="@layout/table_malaria_standard_q9" />
@@ -203,7 +225,7 @@
                 <!-- Q10 -->
                 <LinearLayout android:id="@+id/header_q10" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q10: Households with member tested" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_q10" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
+                    <TextView android:id="@+id/status_q10" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="8dp" android:text="" android:textColor="@color/textSecondary" android:textSize="11sp" android:textStyle="italic" /><ImageView android:id="@+id/icon_q10" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
                 </LinearLayout>
                 <LinearLayout android:id="@+id/content_q10" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
                     <include layout="@layout/table_malaria_standard_q10" />
@@ -223,7 +245,7 @@
                 <!-- SB Q1 -->
                 <LinearLayout android:id="@+id/header_sb_q1" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q1: People tested for malaria" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_sb_q1" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
+                    <TextView android:id="@+id/status_sb_q1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="8dp" android:text="" android:textColor="@color/textSecondary" android:textSize="11sp" android:textStyle="italic" /><ImageView android:id="@+id/icon_sb_q1" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
                 </LinearLayout>
                 <LinearLayout android:id="@+id/content_sb_q1" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
                     <include layout="@layout/table_malaria_sb_standard_q1" />
@@ -233,7 +255,7 @@
                 <!-- SB Q2 -->
                 <LinearLayout android:id="@+id/header_sb_q2" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q2: People malaria positive" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_sb_q2" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
+                    <TextView android:id="@+id/status_sb_q2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="8dp" android:text="" android:textColor="@color/textSecondary" android:textSize="11sp" android:textStyle="italic" /><ImageView android:id="@+id/icon_sb_q2" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
                 </LinearLayout>
                 <LinearLayout android:id="@+id/content_sb_q2" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
                     <include layout="@layout/table_malaria_sb_standard_q2" />
@@ -243,7 +265,7 @@
                 <!-- SB Q3 -->
                 <LinearLayout android:id="@+id/header_sb_q3" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q3: People who received treatment" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_sb_q3" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
+                    <TextView android:id="@+id/status_sb_q3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="8dp" android:text="" android:textColor="@color/textSecondary" android:textSize="11sp" android:textStyle="italic" /><ImageView android:id="@+id/icon_sb_q3" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
                 </LinearLayout>
                 <LinearLayout android:id="@+id/content_sb_q3" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
                     <include layout="@layout/table_malaria_sb_standard_q3" />
@@ -253,7 +275,7 @@
                 <!-- SB Q4 -->
                 <LinearLayout android:id="@+id/header_sb_q4" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q4: People who received prophylaxis" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_sb_q4" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
+                    <TextView android:id="@+id/status_sb_q4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="8dp" android:text="" android:textColor="@color/textSecondary" android:textSize="11sp" android:textStyle="italic" /><ImageView android:id="@+id/icon_sb_q4" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
                 </LinearLayout>
                 <LinearLayout android:id="@+id/content_sb_q4" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
                     <include layout="@layout/table_malaria_sb_standard_q4" />
@@ -263,7 +285,7 @@
                 <!-- SB Q5 -->
                 <LinearLayout android:id="@+id/header_sb_q5" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q5: People referred for treatment" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_sb_q5" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
+                    <TextView android:id="@+id/status_sb_q5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="8dp" android:text="" android:textColor="@color/textSecondary" android:textSize="11sp" android:textStyle="italic" /><ImageView android:id="@+id/icon_sb_q5" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
                 </LinearLayout>
                 <LinearLayout android:id="@+id/content_sb_q5" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
                     <include layout="@layout/table_malaria_sb_standard_q5" />
@@ -273,7 +295,7 @@
                 <!-- SB Q6 -->
                 <LinearLayout android:id="@+id/header_sb_q6" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q6: Referral treatment completed" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_sb_q6" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
+                    <TextView android:id="@+id/status_sb_q6" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="8dp" android:text="" android:textColor="@color/textSecondary" android:textSize="11sp" android:textStyle="italic" /><ImageView android:id="@+id/icon_sb_q6" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
                 </LinearLayout>
                 <LinearLayout android:id="@+id/content_sb_q6" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
                     <include layout="@layout/table_malaria_sb_standard_q6" />
@@ -283,7 +305,7 @@
                 <!-- SB Q7 -->
                 <LinearLayout android:id="@+id/header_sb_q7" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q7: People referred for testing" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_sb_q7" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
+                    <TextView android:id="@+id/status_sb_q7" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="8dp" android:text="" android:textColor="@color/textSecondary" android:textSize="11sp" android:textStyle="italic" /><ImageView android:id="@+id/icon_sb_q7" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
                 </LinearLayout>
                 <LinearLayout android:id="@+id/content_sb_q7" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
                     <include layout="@layout/table_malaria_sb_standard_q7" />
@@ -293,7 +315,7 @@
                 <!-- SB Q8 -->
                 <LinearLayout android:id="@+id/header_sb_q8" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q8: Referral testing completed" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_sb_q8" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
+                    <TextView android:id="@+id/status_sb_q8" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="8dp" android:text="" android:textColor="@color/textSecondary" android:textSize="11sp" android:textStyle="italic" /><ImageView android:id="@+id/icon_sb_q8" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
                 </LinearLayout>
                 <LinearLayout android:id="@+id/content_sb_q8" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
                     <include layout="@layout/table_malaria_sb_standard_q8" />
@@ -303,7 +325,7 @@
                 <!-- SB Q9 -->
                 <LinearLayout android:id="@+id/header_sb_q9" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q9: People with severe malaria" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_sb_q9" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
+                    <TextView android:id="@+id/status_sb_q9" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="8dp" android:text="" android:textColor="@color/textSecondary" android:textSize="11sp" android:textStyle="italic" /><ImageView android:id="@+id/icon_sb_q9" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
                 </LinearLayout>
                 <LinearLayout android:id="@+id/content_sb_q9" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
                     <include layout="@layout/table_malaria_sb_standard_q9" />
@@ -313,7 +335,7 @@
                 <!-- SB Q10 -->
                 <LinearLayout android:id="@+id/header_sb_q10" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q10: Households with member tested" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_sb_q10" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
+                    <TextView android:id="@+id/status_sb_q10" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="8dp" android:text="" android:textColor="@color/textSecondary" android:textSize="11sp" android:textStyle="italic" /><ImageView android:id="@+id/icon_sb_q10" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
                 </LinearLayout>
                 <LinearLayout android:id="@+id/content_sb_q10" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
                     <include layout="@layout/table_malaria_sb_standard_q10" />

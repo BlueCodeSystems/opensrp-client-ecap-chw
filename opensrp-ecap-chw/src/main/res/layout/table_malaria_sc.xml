@@ -6,33 +6,41 @@
     <TableRow android:background="@drawable/bg_table_header" android:paddingVertical="10dp">
         <TextView android:paddingStart="12dp" android:text="Indicator" android:textStyle="bold" />
         <TextView android:gravity="center" android:paddingEnd="12dp" android:text="Value" android:textStyle="bold" />
+        <TextView android:gravity="center" android:paddingEnd="12dp" android:text="Status" android:textStyle="bold" />
     </TableRow>
     <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
         <TextView android:paddingStart="12dp" android:text="HH with members tested" />
         <TextView android:id="@+id/sc_q1" android:gravity="center" android:text="0" android:textStyle="bold" />
+        <TextView android:id="@+id/sc_q1_status" android:gravity="center" android:text="" android:textSize="12sp" android:textStyle="italic" />
     </TableRow>
     <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
         <TextView android:paddingStart="12dp" android:text="HH with members treated" />
         <TextView android:id="@+id/sc_q2" android:gravity="center" android:text="0" android:textStyle="bold" />
+        <TextView android:id="@+id/sc_q2_status" android:gravity="center" android:text="" android:textSize="12sp" android:textStyle="italic" />
     </TableRow>
     <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
         <TextView android:paddingStart="12dp" android:text="HH with prophylaxis" />
         <TextView android:id="@+id/sc_q3" android:gravity="center" android:text="0" android:textStyle="bold" />
+        <TextView android:id="@+id/sc_q3_status" android:gravity="center" android:text="" android:textSize="12sp" android:textStyle="italic" />
     </TableRow>
     <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
         <TextView android:paddingStart="12dp" android:text="Dihydroartemisinin-Piperaquine" />
         <TextView android:id="@+id/sc_q4" android:gravity="center" android:text="0" android:textStyle="bold" />
+        <TextView android:id="@+id/sc_q4_status" android:gravity="center" android:text="" android:textSize="12sp" android:textStyle="italic" />
     </TableRow>
     <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
         <TextView android:paddingStart="12dp" android:text="HH reporting >= 1 ITN" />
         <TextView android:id="@+id/sc_q5" android:gravity="center" android:text="0" android:textStyle="bold" />
+        <TextView android:id="@+id/sc_q5_status" android:gravity="center" android:text="" android:textSize="12sp" android:textStyle="italic" />
     </TableRow>
     <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
         <TextView android:paddingStart="12dp" android:text="Malaria RDT used" />
         <TextView android:id="@+id/sc_q6" android:gravity="center" android:text="0" android:textStyle="bold" />
+        <TextView android:id="@+id/sc_q6_status" android:gravity="center" android:text="" android:textSize="12sp" android:textStyle="italic" />
     </TableRow>
     <TableRow android:background="@drawable/bg_table_row" android:paddingVertical="10dp">
         <TextView android:paddingStart="12dp" android:text="Coartem distributed" />
         <TextView android:id="@+id/sc_q7" android:gravity="center" android:text="0" android:textStyle="bold" />
+        <TextView android:id="@+id/sc_q7_status" android:gravity="center" android:text="" android:textSize="12sp" android:textStyle="italic" />
     </TableRow>
 </TableLayout>

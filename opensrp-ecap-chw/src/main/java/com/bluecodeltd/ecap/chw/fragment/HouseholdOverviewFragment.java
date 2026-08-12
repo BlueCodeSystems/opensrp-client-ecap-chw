@@ -29,10 +29,12 @@ import com.bluecodeltd.ecap.chw.util.Threading;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rey.material.widget.Button;
 
+import android.app.Activity;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import timber.log.Timber;
 
 
 public class HouseholdOverviewFragment extends Fragment {
@@ -101,7 +103,8 @@ public class HouseholdOverviewFragment extends Fragment {
         arrowButton = binding.arrowButton;
         layoutSubpopulation = binding.layoutSubpopulation;
 
-        fab = getActivity().findViewById(R.id.fabx);
+        Activity hostActivity = getActivity();
+        fab = hostActivity != null ? hostActivity.findViewById(R.id.fabx) : null;
         txtGpsLocation = binding.gpsLocation;
         txtSubpopulation = binding.txtSubpopulation;
 
@@ -109,8 +112,12 @@ public class HouseholdOverviewFragment extends Fragment {
 
         try {
             // Get the householdId from the parent activity
-            HouseholdDetails parent = (HouseholdDetails) requireActivity();
+            HouseholdDetails parent = hostActivity instanceof HouseholdDetails ? (HouseholdDetails) hostActivity : null;
             householdId = parent != null ? parent.householdId : null;
+            if (parent == null) {
+                Timber.w("HouseholdOverviewFragment attached to unexpected host: %s",
+                        hostActivity != null ? hostActivity.getClass().getSimpleName() : "null");
+            }
         } catch (Throwable ignored) {}
 
         indexMotherModel = null;
@@ -164,14 +171,20 @@ public class HouseholdOverviewFragment extends Fragment {
     public void setViews(){
         if (!isAdded() || binding == null) return;
 
-        HashMap<String, Household> mymap = ( (HouseholdDetails) requireActivity()).getData();
-        HashMap<String, CaregiverAssessmentModel> vmap = ( (HouseholdDetails) requireActivity()).getVulnerabilities();
+        Activity hostActivity = getActivity();
+        HouseholdDetails detailsActivity = hostActivity instanceof HouseholdDetails ? (HouseholdDetails) hostActivity : null;
+        if (detailsActivity == null) {
+            return;
+        }
 
-        String females = ( (HouseholdDetails) requireActivity()).countFemales;
-        String lessThanFiveMales = ( (HouseholdDetails) requireActivity()).lessThanFiveMales;
-        String betweenTenAndSevenTeen= ( (HouseholdDetails) requireActivity()).malesBetweenTenAndSevenTeen;
-        String lessThanFiveFemales = ( (HouseholdDetails) requireActivity()).lessThanFiveFemales;
-        String femalesBetweenTenAndSevenTeen= ( (HouseholdDetails) requireActivity()).FemalesBetweenTenAndSevenTeen;
+        HashMap<String, Household> mymap = detailsActivity.getData();
+        HashMap<String, CaregiverAssessmentModel> vmap = detailsActivity.getVulnerabilities();
+
+        String females = detailsActivity.countFemales;
+        String lessThanFiveMales = detailsActivity.lessThanFiveMales;
+        String betweenTenAndSevenTeen= detailsActivity.malesBetweenTenAndSevenTeen;
+        String lessThanFiveFemales = detailsActivity.lessThanFiveFemales;
+        String femalesBetweenTenAndSevenTeen= detailsActivity.FemalesBetweenTenAndSevenTeen;
 
         if (mymap == null) return;
         house = mymap.get("house");

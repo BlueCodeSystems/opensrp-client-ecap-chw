@@ -1,277 +1,252 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/item_container"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="12dp">
+    android:layout_marginHorizontal="2dp"
+    android:layout_marginBottom="10dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="2dp"
+    app:cardUseCompatPadding="true">
 
-    <!-- HEADER: Date + Age + Edit -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
-        <!-- Date & Age -->
+        <!-- HEADER (whole row remains the click target for edit, id preserved) -->
         <LinearLayout
-            android:layout_width="0dp"
+            android:id="@+id/item_container"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-            <!-- Date of visit -->
-            <TextView
-                android:id="@+id/txtDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="22 Sep 2025"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black" />
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/bg_vca_icon_circle"
+                android:contentDescription="@string/not_available"
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_calender"
+                app:tint="@color/register_vca_icon" />
 
-            <!-- Age (we’ll combine age + visit number text in code if you like) -->
-            <TextView
-                android:id="@+id/txtAge"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="Visit #2 • Age: 6 weeks"
-                android:textSize="14sp"
-                android:textColor="@android:color/black" />
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="22 Sep 2025"
+                    android:textColor="@color/text_black"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtAge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="Visit #2 • Age: 6 weeks"
+                    android:textColor="@color/light_grey_text"
+                    android:textSize="12.5sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/expand_more"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="4dp"
+                android:contentDescription="@string/expand"
+                android:padding="2dp"
+                android:src="@drawable/baseline_expand_more_24"
+                android:visibility="visible"
+                app:tint="@color/light_grey_text" />
+
+            <ImageView
+                android:id="@+id/expand_less"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="4dp"
+                android:contentDescription="@string/expand"
+                android:padding="2dp"
+                android:src="@drawable/baseline_expand_less_24"
+                android:visibility="gone"
+                app:tint="@color/light_grey_text" />
         </LinearLayout>
 
-        <!-- Edit icon -->
-        <ImageView
-            android:id="@+id/btnEdit"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:contentDescription="@string/edit"
-            android:src="@drawable/ic_edit" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/divider_grey" />
+
+        <!-- DETAILS -->
+        <LinearLayout
+            android:id="@+id/details_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout style="@style/OverviewRow">
+                <TextView style="@style/OverviewRowLabel" android:text="Visit number" />
+                <TextView
+                    android:id="@+id/txtVisitNumber"
+                    style="@style/OverviewRowValue" />
+            </LinearLayout>
+
+            <include layout="@layout/overview_row_divider" />
+
+            <LinearLayout style="@style/OverviewRow">
+                <TextView style="@style/OverviewRowLabel" android:text="Vaccinations this visit" />
+                <TextView
+                    android:id="@+id/txtVaccinationsGiven"
+                    style="@style/OverviewRowValue" />
+            </LinearLayout>
+
+            <include layout="@layout/overview_row_divider" />
+
+            <LinearLayout style="@style/OverviewRow">
+                <TextView style="@style/OverviewRowLabel" android:text="Growth monitoring" />
+                <TextView
+                    android:id="@+id/txtGrowthMonitoring"
+                    style="@style/OverviewRowValue" />
+            </LinearLayout>
+
+            <include layout="@layout/overview_row_divider" />
+
+            <LinearLayout style="@style/OverviewRow">
+                <TextView style="@style/OverviewRowLabel" android:text="MUAC" />
+                <TextView
+                    android:id="@+id/txtMuac"
+                    style="@style/OverviewRowValue" />
+            </LinearLayout>
+
+            <include layout="@layout/overview_row_divider" />
+
+            <LinearLayout style="@style/OverviewRow">
+                <TextView style="@style/OverviewRowLabel" android:text="Oedema" />
+                <TextView
+                    android:id="@+id/txtOedema"
+                    style="@style/OverviewRowValue" />
+            </LinearLayout>
+
+            <include layout="@layout/overview_row_divider" />
+
+            <LinearLayout style="@style/OverviewRow">
+                <TextView style="@style/OverviewRowLabel" android:text="Breastfeeding" />
+                <TextView
+                    android:id="@+id/txtBreastfeeding"
+                    style="@style/OverviewRowValue" />
+            </LinearLayout>
+
+            <include layout="@layout/overview_row_divider" />
+
+            <LinearLayout style="@style/OverviewRow">
+                <TextView style="@style/OverviewRowLabel" android:text="Vitamin A given" />
+                <TextView
+                    android:id="@+id/txtVitaminA"
+                    style="@style/OverviewRowValue" />
+            </LinearLayout>
+
+            <include layout="@layout/overview_row_divider" />
+
+            <LinearLayout style="@style/OverviewRow">
+                <TextView style="@style/OverviewRowLabel" android:text="Deworming given" />
+                <TextView
+                    android:id="@+id/txtDeworming"
+                    style="@style/OverviewRowValue" />
+            </LinearLayout>
+
+            <include layout="@layout/overview_row_divider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Comments / Notes"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/txtComments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/divider_grey" />
+
+        <!-- ACTIONS -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="end|center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/edit_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_button_primary_outline"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="6dp">
+
+                <ImageView
+                    android:id="@+id/btnEdit"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:contentDescription="@string/edit"
+                    android:src="@drawable/ic_edit"
+                    app:tint="@color/primary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/edit"
+                    android:textColor="@color/primary"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
     </LinearLayout>
 
-    <!-- Divider -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="8dp"
-        android:background="@android:color/darker_gray" />
-
-    <!-- ROW: Visit number (explicit) -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="6dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Visit number"
-            android:textStyle="bold"
-            android:textSize="13sp"
-            android:textColor="@android:color/black" />
-
-        <TextView
-            android:id="@+id/txtVisitNumber"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="2"
-            android:textSize="13sp"
-            android:textColor="@android:color/black" />
-    </LinearLayout>
-
-    <!-- ROW: Vaccinations + Growth monitoring -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="4dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Vaccinations this visit"
-            android:textStyle="bold"
-            android:textSize="13sp"
-            android:textColor="@android:color/black" />
-
-        <TextView
-            android:id="@+id/txtVaccinationsGiven"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Yes"
-            android:textSize="13sp"
-            android:textColor="@android:color/black" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="2dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Growth monitoring"
-            android:textStyle="bold"
-            android:textSize="13sp"
-            android:textColor="@android:color/black" />
-
-        <TextView
-            android:id="@+id/txtGrowthMonitoring"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Yes"
-            android:textSize="13sp"
-            android:textColor="@android:color/black" />
-    </LinearLayout>
-
-    <!-- ROW: MUAC + Oedema -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="4dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="MUAC"
-            android:textStyle="bold"
-            android:textSize="13sp"
-            android:textColor="@android:color/black" />
-
-        <TextView
-            android:id="@+id/txtMuac"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="13.0 cm"
-            android:textSize="13sp"
-            android:textColor="@android:color/black" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="2dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Oedema"
-            android:textStyle="bold"
-            android:textSize="13sp"
-            android:textColor="@android:color/black" />
-
-        <TextView
-            android:id="@+id/txtOedema"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="No"
-            android:textSize="13sp"
-            android:textColor="@android:color/black" />
-    </LinearLayout>
-
-    <!-- ROW: Breastfeeding + Vitamin A -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="4dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Breastfeeding"
-            android:textStyle="bold"
-            android:textSize="13sp"
-            android:textColor="@android:color/black" />
-
-        <TextView
-            android:id="@+id/txtBreastfeeding"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Yes"
-            android:textSize="13sp"
-            android:textColor="@android:color/black" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="2dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Vitamin A given"
-            android:textStyle="bold"
-            android:textSize="13sp"
-            android:textColor="@android:color/black" />
-
-        <TextView
-            android:id="@+id/txtVitaminA"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Yes"
-            android:textSize="13sp"
-            android:textColor="@android:color/black" />
-    </LinearLayout>
-
-    <!-- ROW: Deworming -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="4dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Deworming given"
-            android:textStyle="bold"
-            android:textSize="13sp"
-            android:textColor="@android:color/black" />
-
-        <TextView
-            android:id="@+id/txtDeworming"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="No"
-            android:textSize="13sp"
-            android:textColor="@android:color/black" />
-    </LinearLayout>
-
-    <!-- COMMENTS -->
-    <TextView
-        android:id="@+id/txtComments"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:text="Comments / Notes: No concerns reported."
-        android:textSize="13sp"
-        android:textColor="@android:color/black"
-        android:maxLines="3"
-        android:ellipsize="end" />
-
-</LinearLayout>
+</androidx.cardview.widget.CardView>

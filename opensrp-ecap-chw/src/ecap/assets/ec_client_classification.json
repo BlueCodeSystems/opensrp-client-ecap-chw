@@ -432,6 +432,14 @@
           },
           {
             "field": "eventType",
+            "field_value": "Enroll PMTCT Record From Mother Index",
+            "creates_case": [
+              "ec_pmtct_mother"
+            ]
+          },
+
+          {
+            "field": "eventType",
             "field_value": "Mother Register Negative",
             "creates_case": [
               "ec_mother_index",

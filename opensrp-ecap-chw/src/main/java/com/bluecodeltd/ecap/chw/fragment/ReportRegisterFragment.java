@@ -332,7 +332,7 @@ public class ReportRegisterFragment extends BaseSafeRegisterFragment implements 
     }
 
     private String getLastSubmitted(String tableName, String caseworkerName) {
-        com.bluecodeltd.ecap.chw.model.MonthlyReportModel latest = com.bluecodeltd.ecap.chw.dao.MonthlyReportDao.getLatestReport(tableName);
+        com.bluecodeltd.ecap.chw.model.MonthlyReportModel latest = com.bluecodeltd.ecap.chw.dao.MonthlyReportDao.getLatestReport(tableName, caseworkerName);
         if (latest == null) {
             return "";
         }
@@ -354,13 +354,17 @@ public class ReportRegisterFragment extends BaseSafeRegisterFragment implements 
             return;
         }
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        int spanCount = getSpanCount();
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), spanCount);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
+                if (spanCount <= 1) {
+                    return 1;
+                }
                 int itemCount = formsAdapter == null ? 0 : formsAdapter.getItemCount();
                 if (itemCount > 0 && position == itemCount - 1 && (itemCount % 2 != 0)) {
-                    return 2;
+                    return spanCount;
                 }
                 return 1;
             }
@@ -369,33 +373,44 @@ public class ReportRegisterFragment extends BaseSafeRegisterFragment implements 
         clientsView.setHasFixedSize(true);
         clientsView.setClipToPadding(false);
 
-        int horizontalPadding = (int) (getResources().getDisplayMetrics().density * 18);
-        int verticalPadding = (int) (getResources().getDisplayMetrics().density * 12);
+        int horizontalPadding = dpToPx(16);
+        int verticalPadding = dpToPx(12);
         clientsView.setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding);
 
         ViewGroup.LayoutParams layoutParams = clientsView.getLayoutParams();
         if (layoutParams instanceof RelativeLayout.LayoutParams) {
             RelativeLayout.LayoutParams relativeLayoutParams = (RelativeLayout.LayoutParams) layoutParams;
-            relativeLayoutParams.topMargin = (int) (getResources().getDisplayMetrics().density * 24);
+            relativeLayoutParams.topMargin = dpToPx(16);
             clientsView.setLayoutParams(relativeLayoutParams);
         }
 
         if (!reportGridSpacingApplied) {
-            int spacing = (int) (getResources().getDisplayMetrics().density * 12);
-            clientsView.addItemDecoration(new GridSpacingDecoration(spacing, spacing, spacing));
+            int spacing = dpToPx(12);
+            clientsView.addItemDecoration(new GridSpacingDecoration(spacing));
             reportGridSpacingApplied = true;
         }
     }
 
-    private static class GridSpacingDecoration extends ItemDecoration {
-        private final int spanSpacing;
-        private final int topSpacing;
-        private final int bottomSpacing;
+    private int getSpanCount() {
+        if (getContext() == null) {
+            return 1;
+        }
+        android.content.res.Configuration configuration = getResources().getConfiguration();
+        if (configuration.smallestScreenWidthDp >= 600 || configuration.screenWidthDp >= 720) {
+            return 2;
+        }
+        return 1;
+    }
 
-        private GridSpacingDecoration(int spanSpacing, int topSpacing, int bottomSpacing) {
-            this.spanSpacing = spanSpacing;
-            this.topSpacing = topSpacing;
-            this.bottomSpacing = bottomSpacing;
+    private int dpToPx(int dp) {
+        return Math.round(dp * getResources().getDisplayMetrics().density);
+    }
+
+    private static class GridSpacingDecoration extends ItemDecoration {
+        private final int spacing;
+
+        private GridSpacingDecoration(int spacing) {
+            this.spacing = spacing;
         }
 
         @Override
@@ -405,22 +420,16 @@ public class ReportRegisterFragment extends BaseSafeRegisterFragment implements 
                 return;
             }
 
-            RecyclerView.Adapter<?> adapter = parent.getAdapter();
-            int itemCount = adapter == null ? 0 : adapter.getItemCount();
-            boolean isFullSpanLastItem = itemCount > 0 && position == itemCount - 1 && (itemCount % 2 != 0);
-
-            if (isFullSpanLastItem) {
-                outRect.left = spanSpacing;
-                outRect.right = spanSpacing;
-            } else if (position % 2 == 0) {
-                outRect.left = spanSpacing;
-                outRect.right = spanSpacing / 2;
-            } else {
-                outRect.left = spanSpacing / 2;
-                outRect.right = spanSpacing;
-            }
-            outRect.top = topSpacing;
-            outRect.bottom = bottomSpacing;
+            int halfSpacing = spacing / 2;
+            outRect.left = halfSpacing;
+            outRect.right = halfSpacing;
+            outRect.top = halfSpacing;
+            outRect.bottom = halfSpacing;
         }
     }
 }
+
+
+
+
+

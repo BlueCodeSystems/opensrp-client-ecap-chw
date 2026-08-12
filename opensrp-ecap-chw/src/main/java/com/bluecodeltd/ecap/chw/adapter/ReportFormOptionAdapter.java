@@ -65,6 +65,9 @@ public class ReportFormOptionAdapter extends RecyclerView.Adapter<ReportFormOpti
         if (ReportRegisterActivity.REPORT_TYPE_TB.equals(item.getID())) {
             return view.getContext().getString(R.string.report_tb_description);
         }
+        if (ReportRegisterActivity.REPORT_TYPE_COMMUNITY_ALERT.equals(item.getID())) {
+            return view.getContext().getString(R.string.report_community_alert_description);
+        }
         return view.getContext().getString(R.string.report_malaria_description);
     }
 

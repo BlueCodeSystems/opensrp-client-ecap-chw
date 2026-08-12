@@ -1,8 +1,6 @@
 package com.bluecodeltd.ecap.chw.util;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import com.bluecodeltd.ecap.chw.model.Household;
@@ -56,25 +54,11 @@ public final class PmtctEnrollmentUtils {
             setFieldValue(form, "last_name", household.getLast_name());
             setFieldValue(form, "province", household.getProvince());
             setFieldValue(form, "district", household.getDistrict());
-            setFieldValue(form, "facility", household.getFacility());
+            setFieldValue(form, "ward", household.getWard());
             setFieldValue(form, "partner", household.getPartner());
+            setFieldValue(form, "caseworker_name", household.getCaseworker_name());
             setFieldValue(form, "home_address", household.getHomeaddress());
             setFieldValue(form, "nearest_landmark", household.getLandmark());
-
-            // Always source ward + caseworker_name from SharedPreferences (current user context)
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-            String wardPref = safe(prefs.getString("ward", ""));
-            String caseworkerNamePref = safe(prefs.getString("caseworker_name", ""));
-            if (!TextUtils.isEmpty(wardPref)) {
-                setFieldValue(form, "ward", wardPref);
-            } else {
-                setFieldValue(form, "ward", household.getWard());
-            }
-            if (!TextUtils.isEmpty(caseworkerNamePref)) {
-                setFieldValue(form, "caseworker_name", caseworkerNamePref);
-            } else {
-                setFieldValue(form, "caseworker_name", household.getCaseworker_name());
-            }
 
             String phone = safe(household.getCaregiver_phone());
             if (TextUtils.isEmpty(phone)) {

@@ -13,10 +13,16 @@ class HouseholdCasePlanViewModel: ViewModel() {
     private val _casePlans = MutableLiveData<ArrayList<CasePlanModel>>(arrayListOf())
     val casePlans: LiveData<ArrayList<CasePlanModel>> = _casePlans
 
-    fun refresh(householdId: String) {
+    fun refresh(householdId: String?) {
+        val id = householdId?.trim()
+        if (id.isNullOrEmpty()) {
+            _casePlans.postValue(arrayListOf())
+            return
+        }
+
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val list = ArrayList(HouseholdDao.getCasePlansById(householdId))
+                val list = ArrayList(HouseholdDao.getCasePlansById(id) ?: emptyList())
                 _casePlans.postValue(list)
             } catch (_: Exception) {}
         }

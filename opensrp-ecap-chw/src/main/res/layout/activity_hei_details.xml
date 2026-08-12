@@ -231,7 +231,7 @@
                 app:tabMaxWidth="0dp"
                 app:tabMode="fixed"
                 app:tabSelectedTextColor="@color/white"
-                app:tabTextColor="#DDEBFA"
+                app:tabTextColor="@color/register_pmtct_header_light"
                 android:background="@drawable/bg_pmct_child_header"
                 app:tabTextAppearance="@style/CustomFontTextViewStyle.tabIndicator.sub.white" />
 
@@ -245,7 +245,14 @@
             android:layout_below="@+id/collapsing_toolbar_appbarlayout"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-
+        <View
+            android:id="@+id/fab_scrim"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#99000000"
+            android:visibility="gone"
+            android:clickable="true"
+            android:focusable="true" />
 
         <LinearLayout
             android:id="@+id/menu_bar"
@@ -268,39 +275,14 @@
                 android:orientation="horizontal"
                 android:visibility="gone">
 
-                <RelativeLayout
-                    android:background="@drawable/bg_hei_action_chip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                <TextView
+                    style="@style/HeiActionChip"
                     android:layout_toStartOf="@+id/callFabx"
-                    android:elevation="2dp"
-                    android:gravity="center_vertical"
-                    android:minWidth="96dp"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp">
-
-
-                    <TextView
-                        android:textColor="@android:color/white"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:text="Edit details"
-                        android:gravity="center_vertical"
-                        android:textSize="12sp"
-                        android:visibility="visible" />
-
-                </RelativeLayout>
-
+                    android:text="Edit details" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/callFabx"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
+                    style="@style/HeiActionMiniFab"
                     app:srcCompat="@drawable/baseline_mode_edit_24" />
 
             </RelativeLayout>
@@ -315,306 +297,16 @@
                 android:orientation="horizontal"
                 android:visibility="gone">
 
-                <RelativeLayout
-                    android:background="@drawable/bg_hei_action_chip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                <TextView
+                    android:id="@+id/CallTextViewHint"
+                    style="@style/HeiActionChip"
                     android:layout_toStartOf="@+id/fabAssessment"
-                    android:elevation="2dp"
-                    android:gravity="center_vertical"
-                    android:minWidth="96dp"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp">
-
-
-                    <TextView
-                        android:textColor="@android:color/white"
-                        android:id="@+id/CallTextViewHint"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:text="Add Monitoring"
-                        android:textSize="12sp"
-                        android:visibility="visible" />
-
-
-                </RelativeLayout>
-
+                    android:text="Add Monitoring" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fabAssessment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
-                    app:srcCompat="@android:drawable/ic_input_add"  />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/case_plan"
-                android:onClick="onClick"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_toStartOf="@+id/case_plan_fab"
-                    android:background="@drawable/bg_hei_action_chip"
-                    android:textColor="@android:color/white"
-                    android:elevation="2dp"
-                    android:gravity="center"
-                    android:minWidth="96dp"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp"
-                    android:text="CA Case Plan"
-                    android:textSize="12sp"
-                    />
-
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/case_plan_fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
-                    app:srcCompat="@android:drawable/ic_input_add"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/referral"
-                android:onClick="onClick"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_toStartOf="@+id/refer_to_facility_fab"
-                    android:elevation="2dp"
-                    android:gravity="center"
-                    android:minWidth="96dp"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp"
-                    android:text="Referral Form"
-                    android:textSize="12sp"
-                    android:background="@drawable/bg_hei_action_chip"
-                    android:textColor="@android:color/white" />
-
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/refer_to_facility_fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
-                    app:srcCompat="@drawable/baseline_mode_edit_24" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/household_visitation_for_vca"
-                android:onClick="onClick"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_toStartOf="@+id/household_visitation_for_vca_fab"
-                    android:background="@drawable/bg_hei_action_chip"
-                    android:textColor="@android:color/white"
-                    android:elevation="2dp"
-                    android:gravity="center"
-                    android:minWidth="96dp"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp"
-                    android:text="Follow-up Visitation"
-                    android:textSize="12sp"
-                    />
-
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/household_visitation_for_vca_fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
-                    app:srcCompat="@android:drawable/ic_input_add"  />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/hiv_assessment"
-                android:onClick="onClick"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_toStartOf="@+id/hiv_risk"
-                    android:background="@drawable/bg_hei_action_chip"
-                    android:textColor="@android:color/white"
-                    android:elevation="2dp"
-                    android:gravity="center"
-                    android:minWidth="96dp"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp"
-                    android:text="HIV Risk Assessment"
-                    android:textSize="12sp"
-                    />
-
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/hiv_risk"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
-                    app:srcCompat="@drawable/baseline_mode_edit_24" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/we_services_vca"
-                android:onClick="onClick"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_toStartOf="@+id/we_service"
-                    android:background="@drawable/bg_hei_action_chip"
-                    android:textColor="@android:color/white"
-                    android:elevation="2dp"
-                    android:gravity="center"
-                    android:minWidth="96dp"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp"
-                    android:text="WE Services"
-                    android:textSize="12sp"
-                    />
-
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/we_service"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
-                    app:srcCompat="@drawable/baseline_mode_edit_24" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/hiv_assessment2"
-                android:onClick="onClick"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_toStartOf="@+id/hiv_risk2"
-                    android:background="@drawable/bg_hei_action_chip"
-                    android:textColor="@android:color/white"
-                    android:elevation="2dp"
-                    android:gravity="center"
-                    android:minWidth="96dp"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp"
-                    android:text="HIV Risk Assessment"
-                    android:textSize="12sp"
-                    />
-
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/hiv_risk2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
-                    app:srcCompat="@drawable/baseline_mode_edit_24" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/childPlan"
-                android:onClick="onClick"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_toStartOf="@+id/child_plan_form"
-                    android:background="@drawable/bg_hei_action_chip"
-                    android:textColor="@android:color/white"
-                    android:elevation="2dp"
-                    android:gravity="center"
-                    android:minWidth="96dp"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp"
-                    android:text="Child Safety Plan"
-                    android:textSize="12sp"
-                    />
-
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/child_plan_form"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
-                    app:srcCompat="@android:drawable/ic_input_add"  />
+                    style="@style/HeiActionMiniFab"
+                    app:srcCompat="@android:drawable/ic_input_add" />
 
             </RelativeLayout>
         </LinearLayout>

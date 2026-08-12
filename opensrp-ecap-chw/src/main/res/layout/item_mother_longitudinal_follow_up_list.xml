@@ -8,6 +8,8 @@
     android:layout_marginEnd="8dp"
     android:layout_marginTop="6dp"
     android:layout_marginBottom="6dp"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="12dp"
     app:cardUseCompatPadding="true"
     app:cardElevation="3dp">
@@ -16,21 +18,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:padding="10dp">
 
-        <!-- HEADER: contact #, date, GA, weight -->
+        <!-- HEADER: leading icon, contact #, date, GA/weight chip -->
         <LinearLayout
             android:id="@+id/lfu_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
-            <!-- Left colored bar -->
-            <View
-                android:layout_width="3dp"
-                android:layout_height="match_parent"
-                android:background="@android:color/darker_gray" />
+            <FrameLayout
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/circle_light_grey"
+                android:backgroundTint="@color/register_mother_bg">
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/not_available"
+                    android:src="@drawable/ic_mother_holding_baby"
+                    app:tint="@color/register_mother_icon" />
+            </FrameLayout>
 
             <!-- Main header text -->
             <LinearLayout
@@ -40,214 +52,258 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <!-- Contact number -->
-                <TextView
-                    android:id="@+id/contact_count_number"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Contact #1"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:textColor="@color/chw_accent" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <!-- Contact number -->
+                    <TextView
+                        android:id="@+id/contact_count_number"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="Contact #1"
+                        android:textColor="@color/text_black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <!-- GA + Weight chip -->
+                    <TextView
+                        android:id="@+id/lfu_ga_weight_summary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_report_chip"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="4dp"
+                        android:singleLine="true"
+                        android:text="GA: 28 weeks • Wt: 62.5 kg"
+                        android:textColor="@color/register_mother_icon"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
                 <!-- Date of visit -->
-                <TextView
-                    android:id="@+id/lfu_date_of_visit"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:text="Visit Date: 22-09-2025"
-                    android:textSize="14sp"
-                    android:textColor="@android:color/black" />
+                    android:layout_marginTop="4dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                <!-- GA + Weight -->
-                <TextView
-                    android:id="@+id/lfu_ga_weight_summary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:text="GA: 28 weeks • Wt: 62.5 kg"
-                    android:textSize="13sp"
-                    android:textColor="@android:color/darker_gray"
-                    android:singleLine="true"
-                    android:ellipsize="end" />
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:contentDescription="@string/not_available"
+                        android:src="@drawable/ic_calender"
+                        app:tint="@color/light_grey_text" />
+
+                    <TextView
+                        android:id="@+id/lfu_date_of_visit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="Visit Date: 22-09-2025"
+                        android:textColor="@color/light_grey_text"
+                        android:textSize="12sp" />
+                </LinearLayout>
             </LinearLayout>
 
-            <!-- Optional edit icon -->
             <ImageView
-                android:id="@+id/lfu_edit"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/edit"
-                android:src="@drawable/ic_edit"
-                app:tint="?attr/colorPrimary" />
+                android:id="@+id/expand_more"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="4dp"
+                android:contentDescription="@string/not_available"
+                android:padding="4dp"
+                android:src="@drawable/baseline_expand_more_24"
+                android:visibility="visible"
+                app:tint="@color/light_grey_text" />
+
+            <ImageView
+                android:id="@+id/expand_less"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="4dp"
+                android:contentDescription="@string/not_available"
+                android:padding="4dp"
+                android:src="@drawable/baseline_expand_less_24"
+                android:visibility="gone"
+                app:tint="@color/light_grey_text" />
         </LinearLayout>
 
-        <!-- Divider -->
+        <LinearLayout
+            android:id="@+id/details_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="4dp"
+                android:background="@color/divider_grey" />
+
+            <!-- SECTION: HIV / Syphilis / Hep B -->
+            <TextView
+                style="@style/ReportSectionHeader"
+                android:layout_marginTop="4dp"
+                android:text="HIV, Syphilis and Hepatitis B" />
+
+            <LinearLayout style="@style/OverviewRow">
+                <TextView style="@style/OverviewRowLabel" android:text="HIV Subsequent Test" />
+                <TextView
+                    android:id="@+id/lfu_hiv_subsequent_test_result"
+                    style="@style/OverviewRowValue" />
+            </LinearLayout>
+
+            <include layout="@layout/overview_row_divider" />
+
+            <LinearLayout style="@style/OverviewRow">
+                <TextView style="@style/OverviewRowLabel" android:text="Started on PrEP (if HIV-)" />
+                <TextView
+                    android:id="@+id/lfu_started_prep_if_negative"
+                    style="@style/OverviewRowValue" />
+            </LinearLayout>
+
+            <include layout="@layout/overview_row_divider" />
+
+            <LinearLayout style="@style/OverviewRow">
+                <TextView style="@style/OverviewRowLabel" android:text="Syphilis Test" />
+                <TextView
+                    android:id="@+id/lfu_syphilis_test_result"
+                    style="@style/OverviewRowValue" />
+            </LinearLayout>
+
+            <include layout="@layout/overview_row_divider" />
+
+            <LinearLayout style="@style/OverviewRow">
+                <TextView style="@style/OverviewRowLabel" android:text="Hepatitis B Test" />
+                <TextView
+                    android:id="@+id/lfu_hepb_test_result"
+                    style="@style/OverviewRowValue" />
+            </LinearLayout>
+
+            <!-- SECTION: TB -->
+            <TextView
+                style="@style/ReportSectionHeader"
+                android:layout_marginTop="4dp"
+                android:text="TB Status" />
+
+            <LinearLayout style="@style/OverviewRow">
+                <TextView style="@style/OverviewRowLabel" android:text="TB Status" />
+                <TextView
+                    android:id="@+id/lfu_tb_status"
+                    style="@style/OverviewRowValue" />
+            </LinearLayout>
+
+            <!-- SECTION: Special conditions -->
+            <TextView
+                style="@style/ReportSectionHeader"
+                android:layout_marginTop="4dp"
+                android:text="Special Conditions" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    android:id="@+id/lfu_special_conditions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:text="None reported."
+                    android:textColor="@color/textPrimary"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="8dp"
-            android:background="@android:color/darker_gray" />
-
-        <!-- SECTION: HIV / Syphilis / Hep B -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="HIV, Syphilis and Hepatitis B"
-            android:textStyle="bold"
-            android:textSize="14sp"
-            android:textColor="@android:color/black" />
-
-        <!-- HIV subsequent test -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="4dp"
-            android:weightSum="2">
+            android:background="@color/divider_grey" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="HIV Subsequent Test"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black" />
-
-            <TextView
-                android:id="@+id/lfu_hiv_subsequent_test_result"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="N"
-                android:textSize="14sp"
-                android:textColor="@android:color/black" />
-        </LinearLayout>
-
-        <!-- Started PrEP if negative -->
+        <!-- ACTIONS -->
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="4dp"
-            android:weightSum="2">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Started on PrEP (if HIV-)"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black" />
-
-            <TextView
-                android:id="@+id/lfu_started_prep_if_negative"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="No"
-                android:textSize="14sp"
-                android:textColor="@android:color/black" />
-        </LinearLayout>
-
-        <!-- Syphilis test -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="4dp"
-            android:weightSum="2">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Syphilis Test"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black" />
-
-            <TextView
-                android:id="@+id/lfu_syphilis_test_result"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="N"
-                android:textSize="14sp"
-                android:textColor="@android:color/black" />
-        </LinearLayout>
-
-        <!-- Hep B test -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="4dp"
-            android:weightSum="2">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Hepatitis B Test"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black" />
-
-            <TextView
-                android:id="@+id/lfu_hepb_test_result"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="N"
-                android:textSize="14sp"
-                android:textColor="@android:color/black" />
-        </LinearLayout>
-
-        <!-- SECTION: TB -->
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="TB Status"
-            android:textStyle="bold"
-            android:textSize="14sp"
-            android:textColor="@android:color/black" />
+            android:gravity="end|center_vertical"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/lfu_tb_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="No"
-            android:textSize="14sp"
-            android:textColor="@android:color/black" />
+            <LinearLayout
+                android:id="@+id/lfu_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_button_alert_outline"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="6dp">
 
-        <!-- SECTION: Special conditions -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Special Conditions"
-            android:textStyle="bold"
-            android:textSize="14sp"
-            android:textColor="@android:color/black" />
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:contentDescription="@string/delete"
+                    android:src="@android:drawable/ic_menu_delete"
+                    app:tint="@color/colorRed" />
 
-        <TextView
-            android:id="@+id/lfu_special_conditions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="None reported."
-            android:textSize="14sp"
-            android:textColor="@android:color/black"
-            android:maxLines="3"
-            android:ellipsize="end" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/delete"
+                    android:textColor="@color/colorRed"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lfu_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_button_primary_outline"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="6dp">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:contentDescription="@string/edit"
+                    android:src="@drawable/ic_edit"
+                    app:tint="@color/primary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/edit"
+                    android:textColor="@color/primary"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

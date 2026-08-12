@@ -6,6 +6,7 @@ public class PtctMotherModel {
     private String last_interacted_with;
     private String is_closed;
     private String sm_number;
+    private String province;
     private String district;
     private String ward;
     private String caregiver_birth_date;
@@ -21,10 +22,13 @@ public class PtctMotherModel {
     private String last_name;
     private String mothers_age;
     private String home_address;
+    private String homeaddress;
     private String caregiver_name;
     private String household_id;
     private String nearest_landmark;
+    private String landmark;
     private String mothers_phone;
+    private String caregiver_phone;
     private String source_from;
     private String agyw_date_1st_visit;
     private String agyw_gestation_age_in_weeks;
@@ -114,6 +118,14 @@ public class PtctMotherModel {
 
     public void setSm_number(String sm_number) {
         this.sm_number = sm_number;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
     }
 
     public String getDistrict() {
@@ -228,6 +240,14 @@ public class PtctMotherModel {
         this.home_address = home_address;
     }
 
+    public String getHomeaddress() {
+        return homeaddress;
+    }
+
+    public void setHomeaddress(String homeaddress) {
+        this.homeaddress = homeaddress;
+    }
+
     public String getNearest_landmark() {
         return nearest_landmark;
     }
@@ -236,12 +256,28 @@ public class PtctMotherModel {
         this.nearest_landmark = nearest_landmark;
     }
 
+    public String getLandmark() {
+        return landmark;
+    }
+
+    public void setLandmark(String landmark) {
+        this.landmark = landmark;
+    }
+
     public String getMothers_phone() {
         return mothers_phone;
     }
 
     public void setMothers_phone(String mothers_phone) {
         this.mothers_phone = mothers_phone;
+    }
+
+    public String getCaregiver_phone() {
+        return caregiver_phone;
+    }
+
+    public void setCaregiver_phone(String caregiver_phone) {
+        this.caregiver_phone = caregiver_phone;
     }
 
     public String getSource_from() {

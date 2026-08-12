@@ -157,7 +157,14 @@ public abstract class CoreRegisterProvider extends FamilyRegisterProvider {
                 }
 
                 String gender = map.get(DBConstants.KEY.GENDER);
-                int res = ("Male".equalsIgnoreCase(gender)) ? org.smartregister.family.R.mipmap.ic_boy_child : org.smartregister.family.R.mipmap.ic_girl_child;
+                int res;
+                if ("Male".equalsIgnoreCase(gender)) {
+                    res = org.smartregister.family.R.mipmap.ic_boy_child;
+                } else if ("Female".equalsIgnoreCase(gender)) {
+                    res = org.smartregister.family.R.mipmap.ic_girl_child;
+                } else {
+                    res = R.drawable.ic_child_unknown_gender;
+                }
                 addImageView(viewHolder, res);
             }
         }

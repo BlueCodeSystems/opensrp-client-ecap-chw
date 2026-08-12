@@ -1,5 +1,6 @@
 package com.bluecodeltd.ecap.chw.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,7 @@ public class PmctChildDbsMonitoringFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 

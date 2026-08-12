@@ -3,6 +3,7 @@ package com.bluecodeltd.ecap.chw.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,10 +34,20 @@ public class MotherLongitudinalAdapter extends RecyclerView.Adapter<MotherLongit
     private final Context context;
     private final List<MotherLongitudinalFollowUpModel> items;
     private ObjectMapper oMapper;
+    private final SparseBooleanArray expandedPositions = new SparseBooleanArray();
+    private OnDeleteListener onDeleteListener;
+
+    public interface OnDeleteListener {
+        void onDelete(MotherLongitudinalFollowUpModel visit);
+    }
 
     public MotherLongitudinalAdapter(Context context, List<MotherLongitudinalFollowUpModel> items) {
         this.context = context;
         this.items = items != null ? new ArrayList<>(items) : new ArrayList<>();
+    }
+
+    public void setOnDeleteListener(OnDeleteListener listener) {
+        this.onDeleteListener = listener;
     }
 
     public void setItems(List<MotherLongitudinalFollowUpModel> data) {
@@ -104,9 +115,26 @@ public class MotherLongitudinalAdapter extends RecyclerView.Adapter<MotherLongit
         holder.txtTbStatus.setText(tbStatus != null ? tbStatus : "");
         holder.txtSpecialConditions.setText(specialConditions != null ? specialConditions : "");
 
-        View.OnClickListener listener = v -> openForm(visit);
-        holder.container.setOnClickListener(listener);
-        holder.btnEdit.setOnClickListener(listener);
+        boolean expanded = expandedPositions.get(position, false);
+        holder.detailsContainer.setVisibility(expanded ? View.VISIBLE : View.GONE);
+        holder.expandMore.setVisibility(expanded ? View.GONE : View.VISIBLE);
+        holder.expandLess.setVisibility(expanded ? View.VISIBLE : View.GONE);
+
+        View.OnClickListener toggleListener = v -> {
+            boolean next = !expandedPositions.get(position, false);
+            expandedPositions.put(position, next);
+            holder.detailsContainer.setVisibility(next ? View.VISIBLE : View.GONE);
+            holder.expandMore.setVisibility(next ? View.GONE : View.VISIBLE);
+            holder.expandLess.setVisibility(next ? View.VISIBLE : View.GONE);
+        };
+        holder.header.setOnClickListener(toggleListener);
+
+        holder.btnEdit.setOnClickListener(v -> openForm(visit));
+        holder.btnDelete.setOnClickListener(v -> {
+            if (onDeleteListener != null) {
+                onDeleteListener.onDelete(visit);
+            }
+        });
     }
 
     @Override
@@ -125,11 +153,20 @@ public class MotherLongitudinalAdapter extends RecyclerView.Adapter<MotherLongit
         TextView txtTbStatus;
         TextView txtSpecialConditions;
         View container;
+        View header;
+        View detailsContainer;
+        View expandMore;
+        View expandLess;
         View btnEdit;
+        View btnDelete;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             container = itemView.findViewById(R.id.lfu_item_container);
+            header = itemView.findViewById(R.id.lfu_header);
+            detailsContainer = itemView.findViewById(R.id.details_container);
+            expandMore = itemView.findViewById(R.id.expand_more);
+            expandLess = itemView.findViewById(R.id.expand_less);
             txtContactNumber = itemView.findViewById(R.id.contact_count_number);
             txtDateOfVisit = itemView.findViewById(R.id.lfu_date_of_visit);
             txtGaWeightSummary = itemView.findViewById(R.id.lfu_ga_weight_summary);
@@ -140,6 +177,7 @@ public class MotherLongitudinalAdapter extends RecyclerView.Adapter<MotherLongit
             txtTbStatus = itemView.findViewById(R.id.lfu_tb_status);
             txtSpecialConditions = itemView.findViewById(R.id.lfu_special_conditions);
             btnEdit = itemView.findViewById(R.id.lfu_edit);
+            btnDelete = itemView.findViewById(R.id.lfu_delete);
         }
     }
 

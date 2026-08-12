@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -178,6 +178,15 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         // Populate age and gender line
         String ageText = (dob != null && !"Invalid birthdate format".equals(dob)) ? getAge(dob) : null;
         String gender = initialChild.getGender();
+        if (holder.childIcon != null) {
+            if ("Male".equalsIgnoreCase(gender)) {
+                holder.childIcon.setImageResource(org.smartregister.family.R.mipmap.ic_boy_child);
+            } else if ("Female".equalsIgnoreCase(gender)) {
+                holder.childIcon.setImageResource(org.smartregister.family.R.mipmap.ic_girl_child);
+            } else {
+                holder.childIcon.setImageResource(org.smartregister.chw.core.R.drawable.ic_child_unknown_gender);
+            }
+        }
         StringBuilder ageGenderLine = new StringBuilder();
         if (ageText != null && !ageText.isEmpty()) {
             ageGenderLine.append(ageText);
@@ -377,10 +386,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
                     Child child = holder.itemView.getTag() instanceof Child ? (Child) holder.itemView.getTag() : initialChild;
                     String subpop3 = child != null ? child.getSubpop3() : null;
                     if (subpop3 == null) {
-                        Intent editIntent = new Intent(context, IndexDetailsActivity.class);
-                        editIntent.putExtra("Child", child != null ? child.getUnique_id() : childUniqueID);
-                        editIntent.putExtra("open_vca_edit_if_incomplete", true);
-                        context.startActivity(editIntent);
+                        Toasty.warning(context, "Go to the VCA Register to complete this VCA’s profile", Toast.LENGTH_LONG, true).show();
                         return;
                     }
 
@@ -699,9 +705,10 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         TextView caregiverName;
         TextView is_index;
         View colorView;
-        RelativeLayout lview;
+        View lview;
         Button muacButton;
         Button openProfileBtn;
+        ImageView childIcon;
 
         public ViewHolder(View itemView) {
 
@@ -715,6 +722,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
             muacButton = itemView.findViewById(R.id.muac);
             openProfileBtn = itemView.findViewById(R.id.btn_open_profile);
             is_index = itemView.findViewById(R.id.index_icon);
+            childIcon = itemView.findViewById(R.id.child_icon);
 
         }
 

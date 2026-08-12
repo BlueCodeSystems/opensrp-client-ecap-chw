@@ -2,6 +2,10 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Build;
+import android.view.Window;
+import android.view.WindowInsetsController;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -59,7 +63,12 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
-        toolbar.setNavigationOnClickListener(v -> finish());
+        applyLightStatusBar();
+        TextView toolbarTitle = findViewById(R.id.report_view_title);
+        if (toolbarTitle != null) {
+            toolbarTitle.setText("Monthly TB Report");
+        }
+        findViewById(R.id.report_view_back_button).setOnClickListener(v -> finish());
 
         baseEntityId = getIntent().getStringExtra(EXTRA_BASE_ENTITY_ID);
         loadReport();
@@ -68,6 +77,23 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
         setupEditButton();
     }
 
+    private void applyLightStatusBar() {
+        Window window = getWindow();
+        window.setStatusBarColor(Color.WHITE);
+        View decorView = window.getDecorView();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            WindowInsetsController controller = decorView.getWindowInsetsController();
+            if (controller != null) {
+                controller.setSystemBarsAppearance(
+                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS);
+            }
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int flags = decorView.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            decorView.setSystemUiVisibility(flags);
+        }
+    }
     private void loadReport() {
         if (baseEntityId != null) {
             reportModel = MonthlyReportDao.getReport(ReportRegisterActivity.REPORT_TABLE_TB, baseEntityId);
@@ -124,30 +150,40 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
             } catch (Exception ignored) {
             }
 
+            // Parse the (1000+ line) json.form asset here too, off the main thread.
+            JSONObject form = null;
+            try {
+                form = new FormUtils(this).getFormJson(ReportRegisterActivity.REPORT_FORM_TB);
+            } catch (Exception ignored) {
+            }
+
             CaseStatusModel finalCaseStatusModel = caseStatusModel;
+            JSONObject finalForm = form;
             Threading.main(() -> {
+                if (isFinishing() || isDestroyed()) return;
                 String status = finalCaseStatusModel != null ? finalCaseStatusModel.getCase_status() : null;
                 if ("0".equals(status) || "2".equals(status)) {
                     Snackbar.make(findViewById(R.id.header_card), "Beneficiary is inactive or de-registered", Snackbar.LENGTH_LONG).show();
                     return;
                 }
 
+                if (finalForm == null) {
+                    Snackbar.make(findViewById(R.id.header_card), "Unable to open form", Snackbar.LENGTH_LONG).show();
+                    return;
+                }
+
                 try {
-                    JSONObject form = new FormUtils(this).getFormJson(ReportRegisterActivity.REPORT_FORM_TB);
-                    if (form == null) {
-                        return;
-                    }
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                     if (reportModel.getAdditionalField("caseworker_name") == null || reportModel.getAdditionalField("caseworker_name").trim().isEmpty()) {
                         reportModel.setAdditionalField("caseworker_name", getCaseworkerName(prefs));
                     }
-                    form.put("entity_id", reportModel.getBase_entity_id());
-                    org.smartregister.chw.core.utils.CoreJsonFormUtils.populateJsonForm(form, reportModel.toValueMap());
+                    finalForm.put("entity_id", reportModel.getBase_entity_id());
+                    org.smartregister.chw.core.utils.CoreJsonFormUtils.populateJsonForm(finalForm, reportModel.toValueMap());
 
                     Intent intent = new Intent(this, ReportFormActivity.class);
                     Form wizardForm = new Form();
                     intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, wizardForm);
-                    intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, form.toString());
+                    intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, finalForm.toString());
                     startActivityForResult(intent, EDIT_FORM_REQUEST);
                 } catch (Exception e) {
                     Timber.e(e);
@@ -465,6 +501,14 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
         setText(R.id.q7_wlhiv, data.get("q7_wlhiv"));
         setText(R.id.q7_pc_lhiv, data.get("q7_pc_lhiv"));
 
+        for (int q = 1; q <= 7; q++) {
+            setStatusText("q" + q + "_status", data.get("q" + q + "_status"));
+            setTextByName("q" + q + "_subpop_total", data.get("q" + q + "_subpop_total"));
+            if (q != 5) {
+                setTextByName("q" + q + "_other", data.get("q" + q + "_other"));
+            }
+        }
+
         TextView commentsView = findViewById(R.id.txt_comments);
         if (commentsView != null) {
             String comment = data.get("comment");
@@ -476,6 +520,27 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
         TextView textView = findViewById(viewId);
         if (textView != null) {
             textView.setText(value != null && !value.isEmpty() ? value : "0");
+        }
+    }
+
+    private void setTextByName(String idName, String value) {
+        int viewId = getResources().getIdentifier(idName, "id", getPackageName());
+        if (viewId != 0) {
+            setText(viewId, value);
+        }
+    }
+
+    private void setStatusText(String idName, String value) {
+        int viewId = getResources().getIdentifier(idName, "id", getPackageName());
+        if (viewId == 0) return;
+        TextView textView = findViewById(viewId);
+        if (textView == null) return;
+        if ("open".equalsIgnoreCase(value)) {
+            textView.setText("Status: Open");
+        } else if ("closed".equalsIgnoreCase(value)) {
+            textView.setText("Status: Closed");
+        } else {
+            textView.setText("");
         }
     }
 

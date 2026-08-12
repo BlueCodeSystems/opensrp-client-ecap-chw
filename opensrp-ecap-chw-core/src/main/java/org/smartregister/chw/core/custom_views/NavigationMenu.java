@@ -466,8 +466,10 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
     @Override
     public void onDrawerClosed(@NonNull View drawerView) {
         Timber.v("Drawer is closed");
-        if (timer != null)
+        if (timer != null) {
+            timer.cancel();
             timer = null;
+        }
     }
 
 

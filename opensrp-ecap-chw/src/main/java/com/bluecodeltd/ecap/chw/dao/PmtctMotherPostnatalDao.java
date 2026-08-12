@@ -11,7 +11,7 @@ public class PmtctMotherPostnatalDao extends AbstractDao {
     public static List<PmtctMotherPostnatalModel> getPostnatalMother(String householdIdOrPmtctId) {
 
         String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_of_st_post_natal_care,7,4) || '-' || substr(date_of_st_post_natal_care,4,2) || '-' || substr(date_of_st_post_natal_care,1,2)) as sortable_date  " +
-                "FROM ec_pmtct_mother_postnatal WHERE (household_id = '" + householdIdOrPmtctId + "')  ORDER BY sortable_date DESC";
+                "FROM ec_pmtct_mother_postnatal WHERE (household_id = '" + householdIdOrPmtctId + "' OR pmtct_id = '" + householdIdOrPmtctId + "')  ORDER BY sortable_date DESC";
 
         List<PmtctMotherPostnatalModel> values = AbstractDao.readData(sql, getPmtctMotherPostnatalModelMap());
         if (values == null || values.size() == 0)

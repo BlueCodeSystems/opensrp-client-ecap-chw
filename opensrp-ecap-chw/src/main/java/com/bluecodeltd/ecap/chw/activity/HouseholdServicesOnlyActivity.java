@@ -72,7 +72,7 @@ public class HouseholdServicesOnlyActivity extends AppCompatActivity {
     RecyclerView.Adapter recyclerViewadapter;
     private ArrayList<HouseholdServiceReportModel> familyServiceList = new ArrayList<>();
     private LinearLayout linearLayout;
-    private TextView cname, hh_id,updatedCaregiverName;
+    private TextView cname, hh_id,updatedCaregiverName, servicesCountText;
 
     private Toolbar toolbar;
     String intent_householdId;
@@ -94,6 +94,7 @@ public class HouseholdServicesOnlyActivity extends AppCompatActivity {
         cname = binding.caregiverName;
         hh_id = binding.hhid;
         updatedCaregiverName = binding.updatedCaregiverName;
+        servicesCountText = binding.servicesCountText;
 
         Bundle extras = getIntent().getExtras();
         String intent_cname = null;
@@ -150,8 +151,24 @@ public class HouseholdServicesOnlyActivity extends AppCompatActivity {
                 familyServiceList.addAll(results);
                 try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
                 linearLayout.setVisibility(recyclerViewadapter != null && recyclerViewadapter.getItemCount() > 0 ? View.GONE : View.VISIBLE);
+                updateServicesCount();
             });
         });
+    }
+
+    private void updateServicesCount() {
+        if (servicesCountText == null) {
+            return;
+        }
+        int count = familyServiceList.size();
+        String text = getResources().getQuantityString(R.plurals.service_reports_count, count, count);
+        if (count > 0) {
+            String lastDate = familyServiceList.get(0).getDate();
+            if (lastDate != null && !lastDate.trim().isEmpty()) {
+                text += getString(R.string.service_reports_last_submitted, lastDate.trim());
+            }
+        }
+        servicesCountText.setText(text);
     }
 
     @Override
@@ -179,6 +196,9 @@ public class HouseholdServicesOnlyActivity extends AppCompatActivity {
                     final Household finalHouse = house;
                     final int finalCasePlanCount = casePlanCount;
                     Threading.main(() -> {
+                        if (isFinishing() || isDestroyed()) {
+                            return;
+                        }
                         if (finalHouse == null) {
                             showDialogBox("Household details unavailable");
                             return;
@@ -223,6 +243,9 @@ public class HouseholdServicesOnlyActivity extends AppCompatActivity {
         }
     }
     public void showDialogBox(String message){
+        if (isFinishing() || isDestroyed()) {
+            return;
+        }
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_layout);
         dialog.show();
@@ -335,6 +358,7 @@ public class HouseholdServicesOnlyActivity extends AppCompatActivity {
         List<HouseholdServiceReportModel> updatedList = HouseholdServiceReportDao.getServicesByHousehold(intent_householdId);
         familyServiceList.addAll(updatedList);
         try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
+        updateServicesCount();
     }
     public ChildIndexEventClient processRegistration(String jsonString){
 
@@ -562,6 +586,7 @@ public class HouseholdServicesOnlyActivity extends AppCompatActivity {
 
     private static boolean isPmtctEncounter(String encounterType) {
         return "Mother Pmtct".equalsIgnoreCase(encounterType)
+                || "Enroll PMTCT Record From Mother Index".equalsIgnoreCase(encounterType)
                 || "Mother PMTCT Register From Service".equalsIgnoreCase(encounterType);
     }
 

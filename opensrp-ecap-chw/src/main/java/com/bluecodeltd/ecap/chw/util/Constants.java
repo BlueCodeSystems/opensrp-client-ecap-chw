@@ -83,6 +83,7 @@ public class Constants extends CoreConstants {
         String VCA_ASSESSMENT = "VCA Assessment";
         String CACE_STATUS = "Case Record Status";
         String MOTHER_INDEX = "Mother Register";
+        String MOTHER_PMTCT_FROM_INDEX = "Enroll PMTCT Record From Mother Index";
         String MOTHER_PMTCT = "Mother Pmtct";
         String HOUSEHOLD_INDEX = "Household Screening";
         String IDENTIFICATION = "identification";

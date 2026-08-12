@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Adult: head (line) -->
+    <path
+        android:name="adult_head"
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="@android:color/white"
+        android:strokeWidth="1.6"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M10.3,5m-2.3,0a2.3,2.3 0,1 1,4.6 0a2.3,2.3 0,1 1,-4.6 0" />
+
+    <!-- Adult: flowing torso silhouette, open at the base -->
+    <path
+        android:name="adult_torso"
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="@android:color/white"
+        android:strokeWidth="1.6"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M5,20.5
+                          C4.3,16 4.4,11.8 6.4,9
+                          C7.5,7.5 9.4,7.5 10.6,8.9
+                          C12.1,10.7 12.7,13.2 12.4,15.8" />
+
+    <!-- Adult: arm cradling the infant -->
+    <path
+        android:name="adult_arm"
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="@android:color/white"
+        android:strokeWidth="1.6"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M9.6,9.6
+                          C12.2,9.9 14.6,11.3 15.1,13.9" />
+
+    <!-- Infant: head (line) -->
+    <path
+        android:name="baby_head"
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="@android:color/white"
+        android:strokeWidth="1.4"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M15,14.2m-1.55,0a1.55,1.55 0,1 1,3.1 0a1.55,1.55 0,1 1,-3.1 0" />
+
+    <!-- Infant: swaddled body, nestled against the adult's chest -->
+    <path
+        android:name="baby_body"
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="@android:color/white"
+        android:strokeWidth="1.4"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M13.1,15.4
+                          C12.6,17.2 13,19 14.4,20.4" />
+
+</vector>

@@ -1,38 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/item_container"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="16dp">
+    android:layout_marginHorizontal="2dp"
+    android:layout_marginBottom="10dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="2dp"
+    app:cardUseCompatPadding="true">
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
-        <TextView
-            android:id="@+id/txtDate"
-            android:layout_width="wrap_content"
+        <!-- HEADER (whole row remains the click target for edit, id preserved) -->
+        <LinearLayout
+            android:id="@+id/item_container"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Date"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/txtStatus"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/bg_vca_icon_circle"
+                android:contentDescription="@string/not_available"
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_calender"
+                app:tint="@color/register_vca_icon" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Final Outcome"
+                    android:textColor="@color/text_black"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="22 Sep 2025"
+                    android:textColor="@color/light_grey_text"
+                    android:textSize="12.5sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/expand_more"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="4dp"
+                android:contentDescription="@string/expand"
+                android:padding="2dp"
+                android:src="@drawable/baseline_expand_more_24"
+                android:visibility="visible"
+                app:tint="@color/light_grey_text" />
+
+            <ImageView
+                android:id="@+id/expand_less"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="4dp"
+                android:contentDescription="@string/expand"
+                android:padding="2dp"
+                android:src="@drawable/baseline_expand_less_24"
+                android:visibility="gone"
+                app:tint="@color/light_grey_text" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/divider_grey" />
+
+        <!-- DETAILS -->
+        <LinearLayout
+            android:id="@+id/details_container"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Status" />
+            android:layout_marginTop="6dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout style="@style/OverviewRow">
+                <TextView style="@style/OverviewRowLabel" android:text="Outcome" />
+                <TextView
+                    android:id="@+id/txtStatus"
+                    style="@style/OverviewRowValue" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/divider_grey" />
+
+        <!-- ACTIONS -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="end|center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/edit_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_button_primary_outline"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="6dp">
+
+                <ImageView
+                    android:id="@+id/btnEdit"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:contentDescription="@string/edit"
+                    android:src="@drawable/ic_edit"
+                    app:tint="@color/primary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/edit"
+                    android:textColor="@color/primary"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/btnEdit"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:contentDescription="@string/edit"
-        android:src="@drawable/ic_edit" />
-
-</LinearLayout>
-
+</androidx.cardview.widget.CardView>

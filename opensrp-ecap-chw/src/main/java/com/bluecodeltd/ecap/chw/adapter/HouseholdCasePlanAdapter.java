@@ -90,13 +90,14 @@ public class HouseholdCasePlanAdapter extends RecyclerView.Adapter<HouseholdCase
         holder.setIsRecyclable(false);
         holder.txtCaseDate.setText(casePlan.getCase_plan_date());
         holder.txtCasePlanStatus.setText(casePlan.getCase_plan_status());
+        holder.statusStripe.setBackgroundColor(context.getResources().getColor(statusStripeColor(casePlan.getCase_plan_status())));
 
         final String rowTag = casePlan.getBase_entity_id() != null ? casePlan.getBase_entity_id()
                 : (casePlan.getUnique_id() != null ? casePlan.getUnique_id() : String.valueOf(position));
         holder.itemView.setTag(R.id.tag_row_id, rowTag);
 
         holder.txtVulnerabilities.setText("Loading…");
-        holder.delete.setVisibility(View.GONE);
+        setDeleteVisibility(holder, View.GONE);
 
         try {
             Date thedate = new SimpleDateFormat("dd-MM-yyyy").parse(casePlan.getCase_plan_date());
@@ -141,13 +142,17 @@ public class HouseholdCasePlanAdapter extends RecyclerView.Adapter<HouseholdCase
 
             }
         });
-        holder.editme.setOnClickListener(v -> {
+        View.OnClickListener editListener = v -> {
             try {
                 openFormUsingFormUtils(context, "care_case_plan", casePlan);
             } catch (JSONException e) {
                 Timber.e(e);
             }
-        });
+        };
+        holder.editme.setOnClickListener(editListener);
+        if (holder.editButton != null) {
+            holder.editButton.setOnClickListener(editListener);
+        }
         Threading.ioBestEffort(() -> {
             String vulnerabilities = null;
             try { vulnerabilities = CasePlanDao.countCaregiverVulnerabilities(house.getHousehold_id(), casePlan.getCase_plan_date()); } catch (Exception ignored) {}
@@ -157,10 +162,10 @@ public class HouseholdCasePlanAdapter extends RecyclerView.Adapter<HouseholdCase
                 if (!(tag instanceof String) || !rowTag.equals(tag)) return;
                 String vCount = (finalVulnerabilities == null || finalVulnerabilities.trim().isEmpty()) ? "0" : finalVulnerabilities.trim();
                 holder.txtVulnerabilities.setText(vCount + " Vulnerabilities");
-                holder.delete.setVisibility("0".equals(vCount) ? View.VISIBLE : View.INVISIBLE);
+                setDeleteVisibility(holder, "0".equals(vCount) ? View.VISIBLE : View.INVISIBLE);
             });
         });
-        holder.delete.setOnClickListener(v -> {
+        View.OnClickListener deleteListener = v -> {
             try {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage("You are about to delete this household case plan ");
@@ -212,7 +217,11 @@ public class HouseholdCasePlanAdapter extends RecyclerView.Adapter<HouseholdCase
             } catch (Exception e) {
                 Timber.e(e);
             }
-        });
+        };
+        holder.delete.setOnClickListener(deleteListener);
+        if (holder.deleteButton != null) {
+            holder.deleteButton.setOnClickListener(deleteListener);
+        }
 
     }
     public void openFormUsingFormUtils(Context context, String formName, CasePlanModel casePlan) throws JSONException {
@@ -344,6 +353,23 @@ public class HouseholdCasePlanAdapter extends RecyclerView.Adapter<HouseholdCase
     private ECSyncHelper getECSyncHelper() {
         return ChwApplication.getInstance().getEcSyncHelper();
     }
+
+    private void setDeleteVisibility(ViewHolder holder, int visibility) {
+        holder.delete.setVisibility(visibility);
+        if (holder.deleteButton != null) {
+            holder.deleteButton.setVisibility(visibility);
+        }
+    }
+
+    private int statusStripeColor(String status) {
+        if ("Initial".equalsIgnoreCase(status)) {
+            return R.color.pie_chart_orange;
+        } else if ("Follow Up".equalsIgnoreCase(status)) {
+            return R.color.status_green;
+        }
+        return R.color.register_household_icon;
+    }
+
     @Override
     public int getItemCount() {
 
@@ -355,6 +381,7 @@ public class HouseholdCasePlanAdapter extends RecyclerView.Adapter<HouseholdCase
         TextView txtCaseDate, txtQuarter, txtCasePlanStatus,txtVulnerabilities;
 
         LinearLayout linearLayout;
+        View statusStripe, editButton, deleteButton;
 
         ImageView delete, editme;
 
@@ -369,6 +396,9 @@ public class HouseholdCasePlanAdapter extends RecyclerView.Adapter<HouseholdCase
             txtVulnerabilities = itemView.findViewById(R.id.vulnerabilities);
             editme = itemView.findViewById(R.id.edit_me);
             delete = itemView.findViewById(R.id.delete_record);
+            statusStripe = itemView.findViewById(R.id.status_stripe);
+            editButton = itemView.findViewById(R.id.edit_button);
+            deleteButton = itemView.findViewById(R.id.delete_button);
 
 
         }

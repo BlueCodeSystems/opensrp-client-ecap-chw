@@ -133,7 +133,7 @@ public class ReportRegisterProvider implements RecyclerViewProvider<ReportRegist
 
     @Override
     public ReportRegisterViewHolder createViewHolder(ViewGroup viewGroup) {
-        View view = inflater().inflate(R.layout.report_register_item, null);
+        View view = inflater().inflate(R.layout.report_register_item, viewGroup, false);
         return new ReportRegisterViewHolder(view);
     }
 

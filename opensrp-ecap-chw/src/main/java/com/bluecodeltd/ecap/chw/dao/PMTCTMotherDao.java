@@ -21,7 +21,7 @@ public class PMTCTMotherDao extends AbstractDao {
             );
         };
 
-      List <Mother> mother =  AbstractDao.readData(sql, dataMap);
+        List <Mother> mother =  AbstractDao.readData(sql, dataMap);
         if (mother == null) {
             return null;
         }
@@ -128,6 +128,9 @@ public class PMTCTMotherDao extends AbstractDao {
 
     // Fetch PMTCT mother record using the mother's base_entity_id
     public static PtctMotherModel getPMCTMotherByBaseEntityId(String baseEntityID) {
+        if (isNullOrEmpty(baseEntityID)) {
+            return null;
+        }
         String sql = "SELECT * FROM ec_pmtct_mother WHERE base_entity_id = '" + baseEntityID + "' AND (delete_status IS NULL OR delete_status <> '1')";
         List<PtctMotherModel> values = AbstractDao.readData(sql, getPtctMotherModelMap());
         if (values == null || values.size() == 0) {
@@ -140,7 +143,7 @@ public class PMTCTMotherDao extends AbstractDao {
 
     public static List<PtctMotherModel> getPostnatalMother(String householdIdOrPmtctId) {
 
-        String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_of_st_post_natal_care,7,4) || '-' || substr(date_of_st_post_natal_care,4,2) || '-' || substr(date_of_st_post_natal_care,1,2)) as sortable_date  FROM ec_pmtct_mother_postnatal WHERE (pmtct_id = '" + householdIdOrPmtctId + "' OR household_id = '" + householdIdOrPmtctId + "')  ORDER BY sortable_date DESC";
+        String sql = "SELECT *,strftime('%Y-%m-%d', substr(date_of_st_post_natal_care,7,4) || '-' || substr(date_of_st_post_natal_care,4,2) || '-' || substr(date_of_st_post_natal_care,1,2)) as sortable_date  FROM ec_pmtct_mother_postnatal WHERE (pmtct_id = '" + householdIdOrPmtctId + "' OR household_id = '" + householdIdOrPmtctId + "') AND (delete_status IS NULL OR delete_status <> '1')  ORDER BY sortable_date DESC";
 
         List<PtctMotherModel> values = AbstractDao.readData(sql, getPtctMotherModelMap());
         if (values == null || values.size() == 0)
@@ -151,7 +154,7 @@ public class PMTCTMotherDao extends AbstractDao {
     }
     public static String countMotherPostnatal (String householdIdOrPmtctId){
 
-        String sql = "SELECT COUNT(*) v FROM ec_pmtct_mother_postnatal WHERE (household_id = '" + householdIdOrPmtctId + "' OR pmtct_id = '" + householdIdOrPmtctId + "') ";
+        String sql = "SELECT COUNT(*) v FROM ec_pmtct_mother_postnatal WHERE (household_id = '" + householdIdOrPmtctId + "' OR pmtct_id = '" + householdIdOrPmtctId + "') AND (delete_status IS NULL OR delete_status <> '1') ";
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
 
         List<String> values = AbstractDao.readData(sql, dataMap);
@@ -174,7 +177,6 @@ public class PMTCTMotherDao extends AbstractDao {
             record.setDistrict(getCursorValue(c, "district"));
             record.setWard(getCursorValue(c, "ward"));
             record.setCaregiver_birth_date(getCursorValue(c,"caregiver_birth_date"));
-            record.setFacility(getCursorValue(c, "facility"));
             record.setCaregiver_name(getCursorValue(c,"caregiver_name"));
             record.setPartner(getCursorValue(c, "partner"));
             record.setCaseworker_name(getCursorValue(c, "caseworker_name"));
@@ -187,9 +189,19 @@ public class PMTCTMotherDao extends AbstractDao {
             record.setLast_name(getCursorValue(c, "last_name"));
             record.setMothers_age(getCursorValue(c, "mothers_age"));
             record.setHome_address(getCursorValue(c, "home_address"));
+            try { record.setHomeaddress(getCursorValue(c, "homeaddress")); } catch (Exception ignored) { }
             record.setHousehold_id(getCursorValue(c, "household_id"));
             record.setNearest_landmark(getCursorValue(c, "nearest_landmark"));
-            record.setMothers_phone(getCursorValue(c, "mothers_phone"));
+            try { record.setLandmark(getCursorValue(c, "landmark")); } catch (Exception ignored) { }
+
+            String mothersPhone = null;
+            try { mothersPhone = getCursorValue(c, "mothers_phone"); } catch (Exception ignored) { }
+            record.setMothers_phone(mothersPhone);
+            try { record.setCaregiver_phone(getCursorValue(c, "caregiver_phone")); } catch (Exception ignored) { }
+            if (isNullOrEmpty(record.getCaregiver_phone())) {
+                record.setCaregiver_phone(mothersPhone);
+            }
+
             record.setSource_from(getCursorValue(c, "source_from"));
             record.setAgyw_date_1st_visit(getCursorValue(c, "agyw_date_1st_visit"));
             record.setAgyw_gestation_age_in_weeks(getCursorValue(c, "agyw_gestation_age_in_weeks"));
@@ -248,7 +260,6 @@ public class PMTCTMotherDao extends AbstractDao {
             record.setVl_result_3rd_trimester(getCursorValue(c, "vl_result_3rd_trimester"));
             record.setUnsuppressed_vl_3rd(getCursorValue(c, "unsuppressed_vl_3rd"));
             record.setDelete_status(getCursorValue(c, "delete_status"));
-            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
     }

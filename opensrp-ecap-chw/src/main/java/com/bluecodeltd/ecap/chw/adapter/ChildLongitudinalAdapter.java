@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -39,6 +41,7 @@ public class ChildLongitudinalAdapter extends RecyclerView.Adapter<ChildLongitud
     private final String householdId;
     private final String uniqueId;
     private final ObjectMapper oMapper = new ObjectMapper();
+    private final SparseBooleanArray expandedPositions = new SparseBooleanArray();
 
     public ChildLongitudinalAdapter(Context context, List<ChildLongitudinalFollowUpModel> items,
                                     String householdId, String uniqueId) {
@@ -108,8 +111,22 @@ public class ChildLongitudinalAdapter extends RecyclerView.Adapter<ChildLongitud
         View.OnClickListener editListener = v -> {
             runIfActive(visit, () -> openForm(visit));
         };
-        holder.container.setOnClickListener(editListener);
         holder.btnEdit.setOnClickListener(editListener);
+        if (holder.editButton != null) {
+            holder.editButton.setOnClickListener(editListener);
+        }
+
+        boolean expanded = expandedPositions.get(position, false);
+        holder.detailsContainer.setVisibility(expanded ? View.VISIBLE : View.GONE);
+        holder.expandMore.setVisibility(expanded ? View.GONE : View.VISIBLE);
+        holder.expandLess.setVisibility(expanded ? View.VISIBLE : View.GONE);
+        holder.container.setOnClickListener(v -> {
+            boolean next = !expandedPositions.get(position, false);
+            expandedPositions.put(position, next);
+            holder.detailsContainer.setVisibility(next ? View.VISIBLE : View.GONE);
+            holder.expandMore.setVisibility(next ? View.GONE : View.VISIBLE);
+            holder.expandLess.setVisibility(next ? View.VISIBLE : View.GONE);
+        });
     }
 
     @Override
@@ -130,11 +147,19 @@ public class ChildLongitudinalAdapter extends RecyclerView.Adapter<ChildLongitud
         TextView txtDeworming;
         TextView txtComments;
         LinearLayout container;
+        LinearLayout detailsContainer;
+        ImageView expandMore;
+        ImageView expandLess;
         View btnEdit;
+        View editButton;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             container = itemView.findViewById(R.id.item_container);
+            editButton = itemView.findViewById(R.id.edit_button);
+            detailsContainer = itemView.findViewById(R.id.details_container);
+            expandMore = itemView.findViewById(R.id.expand_more);
+            expandLess = itemView.findViewById(R.id.expand_less);
             txtDate = itemView.findViewById(R.id.txtDate);
             txtAge = itemView.findViewById(R.id.txtAge);
             txtVisitNumber = itemView.findViewById(R.id.txtVisitNumber);

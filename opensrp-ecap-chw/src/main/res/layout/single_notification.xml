@@ -1,154 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/register_columns"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:elevation="20dp"
-    >
-
-
-    <TextView
-        android:id="@+id/index_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerInParent="true"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/rounded_corner_due"
-        android:padding="8dp"
-        android:text="Visit Overdue"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:textSize="12dp"
-        />
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginVertical="6dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="3dp"
+    app:cardUseCompatPadding="true">
 
     <LinearLayout
-        android:id="@+id/itemm"
-        android:background="@color/white"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
         android:orientation="horizontal">
 
         <View
-            android:layout_width="1dp"
+            android:id="@+id/status_stripe"
+            android:layout_width="5dp"
             android:layout_height="match_parent"
-            android:background="@android:color/darker_gray" />
+            android:background="@color/pie_chart_red" />
 
         <LinearLayout
-            android:layout_margin="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical"
+            android:id="@+id/itemm"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="14dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_notification_icon_circle"
+                android:contentDescription="@string/not_available"
+                android:padding="9dp"
+                android:src="@drawable/ic_notification"
+                app:tint="@android:color/white" />
 
             <LinearLayout
-                android:id="@+id/qlayout"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                <org.smartregister.view.customcontrols.CustomFontTextView
+                <TextView
                     android:id="@+id/name"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="10dp"
-                    style="@style/CustomFontTextViewStyle.ClientList"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:singleLine="true"
-                    android:text="John Banda"
                     android:textColor="@color/text_black"
-                    android:textSize="22sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:contentDescription="@string/not_available"
+                        android:src="@drawable/ic_calender"
+                        app:tint="@color/textSecondary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="Last visit"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/visit_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColor="@color/text_black"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </LinearLayout>
-            <LinearLayout
-                android:id="@+id/qlayout2"
+
+            <TextView
+                android:id="@+id/index_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_chip_danger"
+                android:gravity="center"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:textSize="11sp"
+                android:textStyle="bold" />
 
-                <org.smartregister.view.customcontrols.CustomFontTextView
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="10dp"
-                    style="@style/CustomFontTextViewStyle.ClientList"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:singleLine="true"
-                    android:text="Last Birthday :"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-
-                <org.smartregister.view.customcontrols.CustomFontTextView
-                    android:id="@+id/birthdate"
-                    android:layout_marginRight="10dp"
-                    style="@style/CustomFontTextViewStyle.ClientList"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:singleLine="true"
-                    android:text="22-09-2022"
-                    android:textColor="@color/text_black"
-                    android:textSize="18sp" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/qlayout3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <org.smartregister.view.customcontrols.CustomFontTextView
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="10dp"
-                    style="@style/CustomFontTextViewStyle.ClientList"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:singleLine="true"
-                    android:text="Last Visit :"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-
-                <org.smartregister.view.customcontrols.CustomFontTextView
-                    android:id="@+id/visit_date"
-                    android:layout_marginRight="10dp"
-                    style="@style/CustomFontTextViewStyle.ClientList"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:singleLine="true"
-                    android:text="22-09-2022"
-                    android:textColor="@color/text_black"
-                    android:textSize="18sp" />
-
-
-
-
-            </LinearLayout>
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="6dp"
+                android:contentDescription="@string/not_available"
+                android:src="@drawable/ic_chevron_right"
+                app:tint="@color/light_grey_text" />
 
         </LinearLayout>
 
     </LinearLayout>
 
-
-    <View
-        android:layout_below="@+id/itemm"
-        android:background="@android:color/darker_gray"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"/>
-
-
-</RelativeLayout>
+</androidx.cardview.widget.CardView>
