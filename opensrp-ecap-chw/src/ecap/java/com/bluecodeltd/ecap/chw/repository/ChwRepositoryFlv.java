@@ -365,6 +365,12 @@ public class ChwRepositoryFlv {
                     "number_of_condoms_distributed_at_18_months TEXT, " +
                     "comments_at_postnatal_care_visit_18 TEXT, " +
                     "mothers_outcome TEXT, " +
+                    "art_initiated TEXT, " +
+                    "art_adherence_counselling_support TEXT, " +
+                    "vl_result TEXT, " +
+                    "family_planning_counselling TEXT, " +
+                    "number_of_condoms_distributed TEXT, " +
+                    "comments_at_postnatal_care_visit TEXT, " +
                     "delete_status TEXT)";
 
             db.execSQL(sqlCreatePostnatal);
@@ -1232,6 +1238,29 @@ public class ChwRepositoryFlv {
             db.execSQL(sqlCreateTableCommunityAlert);
         } catch (Exception e) {
             Timber.e(e, "upgradeToVersion29");
+        }
+    }
+
+    private static void upgradeToVersion30(SQLiteDatabase db) {
+        String[] alterStatements = {
+                "ALTER TABLE ec_community_alert ADD COLUMN pcz_priority_disease TEXT",
+                "ALTER TABLE ec_community_alert ADD COLUMN other_priority_disease TEXT",
+                "ALTER TABLE ec_community_alert ADD COLUMN case_f_0_4 TEXT",
+                "ALTER TABLE ec_community_alert ADD COLUMN case_f_5_14 TEXT",
+                "ALTER TABLE ec_community_alert ADD COLUMN case_f_15_plus TEXT",
+                "ALTER TABLE ec_community_alert ADD COLUMN case_m_0_4 TEXT",
+                "ALTER TABLE ec_community_alert ADD COLUMN case_m_5_14 TEXT",
+                "ALTER TABLE ec_community_alert ADD COLUMN case_m_15_plus TEXT",
+                "ALTER TABLE ec_community_alert ADD COLUMN case_total TEXT",
+                "ALTER TABLE ec_community_alert ADD COLUMN cbs_supervisor_part_of_response TEXT",
+                "ALTER TABLE ec_community_alert ADD COLUMN cbs_supervisor_action_taken TEXT"
+        };
+        for (String statement : alterStatements) {
+            try {
+                db.execSQL(statement);
+            } catch (Exception e) {
+                Timber.e(e, "upgradeToVersion30");
+            }
         }
     }
 

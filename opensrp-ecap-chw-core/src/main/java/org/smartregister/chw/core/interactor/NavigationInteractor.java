@@ -342,3 +342,4 @@ public class NavigationInteractor implements NavigationContract.Interactor {
         return coreApplication.getEcSyncHelper().getLastCheckTimeStamp();
     }
 }
+

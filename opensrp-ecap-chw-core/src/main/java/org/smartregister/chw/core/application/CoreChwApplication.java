@@ -48,6 +48,7 @@ import org.smartregister.view.activity.DrishtiApplication;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.IOException;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -188,21 +189,34 @@ public abstract class CoreChwApplication extends DrishtiApplication implements C
     }
 
     public void initOfflineSchedules() {
-        try {
-            // child schedules
-            List<VaccineGroup> childVaccines = VaccinatorUtils.getSupportedVaccines(this);
-            List<Vaccine> specialVaccines = VaccinatorUtils.getSpecialVaccines(this);
-            VaccineSchedule.init(childVaccines, specialVaccines, CoreConstants.SERVICE_GROUPS.CHILD);
-        } catch (Exception e) {
-            Timber.e(e);
+        if (hasAsset("vaccines.json") && hasAsset("special_vaccines.json")) {
+            try {
+                List<VaccineGroup> childVaccines = VaccinatorUtils.getSupportedVaccines(this);
+                List<Vaccine> specialVaccines = VaccinatorUtils.getSpecialVaccines(this);
+                VaccineSchedule.init(childVaccines, specialVaccines, CoreConstants.SERVICE_GROUPS.CHILD);
+            } catch (Throwable t) {
+                Timber.w(t, "Skipping child offline schedule initialization");
+            }
         }
 
+        if (hasAsset("mother_vaccines.json")) {
+            try {
+                List<VaccineGroup> womanVaccines = VaccinatorUtils.getSupportedWomanVaccines(this);
+                VaccineSchedule.init(womanVaccines, null, CoreConstants.SERVICE_GROUPS.WOMAN);
+            } catch (Throwable t) {
+                Timber.w(t, "Skipping mother offline schedule initialization");
+            }
+        }
+    }
+
+    private boolean hasAsset(String fileName) {
         try {
-            // mother vaccines
-            List<VaccineGroup> womanVaccines = VaccinatorUtils.getSupportedWomanVaccines(this);
-            VaccineSchedule.init(womanVaccines, null, CoreConstants.SERVICE_GROUPS.WOMAN);
-        } catch (Exception e) {
-            Timber.e(e);
+            getApplicationContext().getAssets().open(fileName).close();
+            return true;
+        } catch (IOException e) {
+            return false;
+        } catch (Throwable t) {
+            return false;
         }
     }
 

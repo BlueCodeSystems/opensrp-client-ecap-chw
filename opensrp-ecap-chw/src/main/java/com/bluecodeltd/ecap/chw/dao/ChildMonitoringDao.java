@@ -22,7 +22,7 @@ public class ChildMonitoringDao  extends AbstractDao {
 
     public static List<ChildMonitoringModel> getPmctChildMonitoringListDBS(String uniqueID) {
 
-        String sql = "SELECT * FROM ec_pmtct_child_monitoring WHERE pediatic_care_follow_up IN ('6 weeks','6 months','9 months') AND  unique_id = '" + uniqueID + "' ";
+        String sql = "SELECT * FROM ec_pmtct_child_monitoring WHERE pediatic_care_follow_up IN ('6 weeks','6 months','9 months','12 months','18 months','24 months') AND  unique_id = '" + uniqueID + "' ";
 
         List<ChildMonitoringModel> values = AbstractDao.readData(sql, getChildMonitoringModelMap());
         if (values == null || values.size() == 0)
@@ -58,6 +58,20 @@ public class ChildMonitoringDao  extends AbstractDao {
 
     }
 
+    public static String countDBSChildMonitoring (String uniqueId){
+
+        String sql = "SELECT COUNT(*) v FROM ec_pmtct_child_monitoring WHERE pediatic_care_follow_up IN ('6 weeks','6 months','9 months','12 months','18 months','24 months') AND  unique_id = '" + uniqueId + "' ";
+        AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "v");
+
+        List<String> values = AbstractDao.readData(sql, dataMap);
+
+        if (values == null || values.size() == 0)
+            return "0";
+
+        return values.get(0);
+
+    }
+
     public static ChildMonitoringModel getRecentChildVisit(String uniqueID) {
         String sql = "SELECT *, strftime('%Y-%m-%d', substr(date,7,4) || '-' || substr(date,4,2) || '-' || substr(date,1,2)) as sortable_date " +
                 "FROM ec_pmtct_child_monitoring " +
@@ -81,6 +95,9 @@ public class ChildMonitoringDao  extends AbstractDao {
             record.setUnique_id(getCursorValue(c, "unique_id"));
             record.setPediatic_care_follow_up(getCursorValue(c, "pediatic_care_follow_up"));
             record.setDate(getCursorValue(c, "date"));
+            record.setDbs_at_birth_due_date(getCursorValue(c, "dbs_at_birth_due_date"));
+            record.setDbs_at_birth_actual_date(getCursorValue(c, "dbs_at_birth_actual_date"));
+            record.setTest_result_at_birth(getCursorValue(c, "test_result_at_birth"));
             record.setHiv_test(getCursorValue(c, "hiv_test"));
             record.setAzt_3tc_npv(getCursorValue(c, "azt_3tc_npv"));
             record.setCtx(getCursorValue(c, "ctx"));
@@ -114,5 +131,3 @@ public class ChildMonitoringDao  extends AbstractDao {
         };
     }
 }
-
-

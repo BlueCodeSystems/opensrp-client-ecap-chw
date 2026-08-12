@@ -576,43 +576,6 @@
         }
       },
       {
-        "key": "supervisor_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "supervisor_name",
-        "type": "edit_text",
-        "hint": "3. Name of Super Mentor (Supervisor)",
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        }
-      },
-      {
-        "key": "date_reviewed",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_reviewed",
-        "type": "date_picker",
-        "hint": "4. Date reviewed",
-        "date_format": "dd-MM-yyyy",
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        }
-      },
-      {
-        "key": "supervisor_signature",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "supervisor_signature",
-        "type": "edit_text",
-        "hint": "5. Signature (type full name)",
-        "v_required": {
-          "value": true,
-          "err": "Required"
-        }
-      },
-      {
         "key": "workflow_status",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",

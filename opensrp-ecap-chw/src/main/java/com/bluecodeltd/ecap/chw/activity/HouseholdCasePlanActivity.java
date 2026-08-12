@@ -408,6 +408,9 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
     }
 
     public void showDialogBox(String householdId,String message){
+        if (isFinishing() || isDestroyed()) {
+            return;
+        }
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_layout);
         dialog.show();

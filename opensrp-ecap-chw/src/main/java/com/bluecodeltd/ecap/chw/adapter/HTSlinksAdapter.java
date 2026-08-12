@@ -85,21 +85,25 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
         holder.clientDetails.setOnClickListener(view -> {
             showCustomDialog(client);
         });
+        if (holder.detailsButton != null) {
+            holder.detailsButton.setOnClickListener(v -> holder.clientDetails.performClick());
+        }
 
-        holder.editClient.setOnClickListener(new android.view.View.OnClickListener() {
-            @Override
-            public void onClick(android.view.View view) {
-                try {
+        android.view.View.OnClickListener editListener = view -> {
+            try {
 
-                    openFormUsingFormUtils(context, "hiv_testing_links", client);
+                openFormUsingFormUtils(context, "hiv_testing_links", client);
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        });
+        };
+        holder.editClient.setOnClickListener(editListener);
+        if (holder.editButton != null) {
+            holder.editButton.setOnClickListener(editListener);
+        }
 
-        holder.deleteRecord.setOnClickListener(v -> {
+        android.view.View.OnClickListener deleteListener = v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setMessage("You are about to delete this record");
             builder.setNegativeButton("NO", (dialog, id) -> {
@@ -147,7 +151,11 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
             //Setting the title manually
             alert.setTitle("Alert");
             alert.show();
-        });
+        };
+        holder.deleteRecord.setOnClickListener(deleteListener);
+        if (holder.deleteButton != null) {
+            holder.deleteButton.setOnClickListener(deleteListener);
+        }
     }
     private String getAgeWithoutText(String birthdate){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
@@ -293,11 +301,12 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
 
         TextView title = new TextView(context);
         title.setText(client.getFirst_name()+" "+client.getLast_name()+" details");
-        title.setBackgroundColor(Color.DKGRAY);
-        title.setPadding(10, 10, 10, 10);
+        title.setBackgroundColor(context.getResources().getColor(R.color.register_hts_icon));
+        title.setPadding(24, 24, 24, 24);
         title.setGravity(Gravity.CENTER);
         title.setTextColor(Color.WHITE);
-        title.setTextSize(20);
+        title.setTextSize(16);
+        title.setTypeface(null, android.graphics.Typeface.BOLD);
         builder.setCustomTitle(title);
 
         builder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
@@ -314,6 +323,7 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
     public class View extends RecyclerView.ViewHolder {
         TextView clientNameTextView, clientAgeTextView,clientDetails,artNumTxt;
         ImageView editClient,deleteRecord;
+        android.view.View editButton, deleteButton, detailsButton;
         public View(@NonNull android.view.View itemView) {
             super(itemView);
             clientNameTextView = itemView.findViewById(R.id.clientNameTextView);
@@ -321,6 +331,9 @@ public class HTSlinksAdapter extends RecyclerView.Adapter<HTSlinksAdapter.View> 
             clientDetails = itemView.findViewById(R.id.details);
             editClient = itemView.findViewById(R.id.edit_client);
             deleteRecord = itemView.findViewById(R.id.delete);
+            editButton = itemView.findViewById(R.id.edit_button);
+            deleteButton = itemView.findViewById(R.id.delete_button);
+            detailsButton = itemView.findViewById(R.id.details_button);
 
         }
     }

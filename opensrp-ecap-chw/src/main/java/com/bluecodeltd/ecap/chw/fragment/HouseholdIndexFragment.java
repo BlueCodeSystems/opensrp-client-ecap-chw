@@ -511,6 +511,24 @@ public class HouseholdIndexFragment extends BaseSafeRegisterFragment implements 
     }
 
     @Override
+    public void countExecute() {
+        // The base implementation runs a synchronous SELECT COUNT(*) on the calling thread.
+        // renderView()/filter() call this directly on the main thread on every resume, which
+        // can ANR if a background sync currently holds the SQLCipher connection lock. Run it
+        // off the main thread; onLoadFinished already re-calls setTotalPatients() once the
+        // register list's own Loader delivers data, so the header self-corrects either way.
+        Threading.io(() -> {
+            try {
+                super.countExecute();
+            } catch (Throwable ignored) { }
+            Threading.main(() -> {
+                if (!isAdded() || getActivity() == null) return;
+                setTotalPatients();
+            });
+        });
+    }
+
+    @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         super.onLoadFinished(loader, cursor);
         setTotalPatients();

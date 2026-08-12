@@ -107,7 +107,7 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
     ProgressBar loadingDataProgressBar;
     Switch  facilityInformationSwitch;
     String phone = "";
-    private final int FORTY_FIVE_MINUTES = 3000;
+    private static final long FORTY_FIVE_MINUTES = 45L * 60L * 1000L;
     Runnable runnable;
     ArrayList<Integer> colors;
     AppUpdater appUpdater;
@@ -546,6 +546,9 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
                         String name = jObj.getString("name");
                         String given_name = jObj.getString("given_name");
                         String family_name = jObj.getString("family_name");
+
+                        Log.i("chobela_creds", "userinfo response: name=[" + name + "] given_name=[" + given_name + "] family_name=[" + family_name + "]");
+
                         String province = jObj.getString("province");
                         String partner = jObj.getString("partner");
                         String phone = jObj.getString("phone");
@@ -578,11 +581,12 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
                         recreate();
 
                     } catch (JSONException e){
-                        e.printStackTrace();
+                        Log.e("chobela_creds", "Failed to parse userinfo response: " + response, e);
                     }
                 },
                 error -> {
-
+                    String status = error.networkResponse != null ? String.valueOf(error.networkResponse.statusCode) : "no response";
+                    Log.e("chobela_creds", "userinfo request failed, status=" + status, error);
                 }){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -599,16 +603,17 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
     @Override
     protected void onResume() {
         super.onResume();
-        refreshData();
     }
 
     public void refreshData() {
-        handler.postDelayed(runnable = new Runnable() {
+        handler.removeCallbacks(runnable);
+        runnable = new Runnable() {
             public void run() {
-                handler.postDelayed(runnable, FORTY_FIVE_MINUTES);
                 loadData();
+                handler.postDelayed(runnable, FORTY_FIVE_MINUTES);
             }
-        }, FORTY_FIVE_MINUTES);
+        };
+        handler.postDelayed(runnable, FORTY_FIVE_MINUTES);
     }
     @Override
     protected void onPause() {
@@ -630,6 +635,7 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
                     @Override
                     public void onResponse(Object response) {
 
+                        Log.i("chobela_token", "token request succeeded");
 
                         String jsonInString = new Gson().toJson(response.toString().trim());
                         try {
@@ -642,13 +648,16 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
 
 
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                            Log.e("chobela_token", "Failed to parse token response: " + response, e);
                         }
 
                     }
                 },
                 error -> {
-
+                    String status = error.networkResponse != null ? String.valueOf(error.networkResponse.statusCode) : "no response";
+                    String body = error.networkResponse != null && error.networkResponse.data != null
+                            ? new String(error.networkResponse.data) : "";
+                    Log.e("chobela_token", "token request failed, status=" + status + " body=" + body, error);
                 }){
             @Override
             protected Map<String,String> getParams(){
@@ -659,6 +668,7 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
                 params.put("scope","openid");
                 params.put("client_id", BuildConfig.OAUTH_CLIENT_ID);
                 params.put("client_secret",BuildConfig.OAUTH_CLIENT_SECRET);
+                Log.i("chobela_token", "requesting token client_id=[" + BuildConfig.OAUTH_CLIENT_ID + "] username=[" + username + "]");
                 return params;
             }};
 
@@ -697,6 +707,9 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
             case R.id.import_csv:
                 openCsvPicker();
                 break;
+            case R.id.pmp_flags:
+                startActivity(new Intent(this, FlagActivity.class));
+                break;
             case R.id.download_ecap_sops:
                 downloadEcapSops();
                 break;
@@ -710,7 +723,7 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
     private void downloadEcapSops() {
         ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Downloading SOPs");
-        progressDialog.setMessage("Preparing…");
+        progressDialog.setMessage("PreparingÃ¢â‚¬Â¦");
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
         try {

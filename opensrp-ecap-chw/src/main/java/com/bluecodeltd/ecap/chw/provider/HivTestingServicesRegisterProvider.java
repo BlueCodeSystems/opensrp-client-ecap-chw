@@ -136,7 +136,7 @@ public class HivTestingServicesRegisterProvider implements RecyclerViewProvider<
 
     @Override
     public HivTestingServicesRegisterViewHolder createViewHolder(ViewGroup viewGroup) {
-        View viewHolder = inflater().inflate(R.layout.hts_register_item_layout, null);
+        View viewHolder = inflater().inflate(R.layout.hts_register_item_layout, viewGroup, false);
         return new HivTestingServicesRegisterViewHolder(viewHolder);
     }
 

@@ -3,9 +3,11 @@ package com.bluecodeltd.ecap.chw.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -37,10 +39,20 @@ public class MotherPostnatalAdapter extends RecyclerView.Adapter<MotherPostnatal
     private final Context context;
     private final List<MotherPostnatalCareModel> items;
     private ObjectMapper oMapper;
+    private final SparseBooleanArray expandedPositions = new SparseBooleanArray();
+    private OnDeleteListener onDeleteListener;
+
+    public interface OnDeleteListener {
+        void onDelete(MotherPostnatalCareModel visit);
+    }
 
     public MotherPostnatalAdapter(Context context, List<MotherPostnatalCareModel> items) {
         this.context = context;
         this.items = items != null ? new ArrayList<>(items) : new ArrayList<>();
+    }
+
+    public void setOnDeleteListener(OnDeleteListener listener) {
+        this.onDeleteListener = listener;
     }
 
     public void setItems(List<MotherPostnatalCareModel> data) {
@@ -112,9 +124,29 @@ public class MotherPostnatalAdapter extends RecyclerView.Adapter<MotherPostnatal
         }
         holder.txtSummaryLine.setText(summaryBuilder.toString());
 
-        View.OnClickListener listener = v -> openForm(visit);
-        holder.container.setOnClickListener(listener);
-        holder.btnEdit.setOnClickListener(listener);
+        // Expand/collapse state (default collapsed)
+        boolean expanded = expandedPositions.get(position, false);
+        holder.detailsContainer.setVisibility(expanded ? View.VISIBLE : View.GONE);
+        holder.expandMore.setVisibility(expanded ? View.GONE : View.VISIBLE);
+        holder.expandLess.setVisibility(expanded ? View.VISIBLE : View.GONE);
+
+        View.OnClickListener toggleListener = v -> {
+            boolean next = !expandedPositions.get(position, false);
+            expandedPositions.put(position, next);
+            holder.detailsContainer.setVisibility(next ? View.VISIBLE : View.GONE);
+            holder.expandMore.setVisibility(next ? View.GONE : View.VISIBLE);
+            holder.expandLess.setVisibility(next ? View.VISIBLE : View.GONE);
+        };
+        holder.container.setOnClickListener(toggleListener);
+        holder.expandMore.setOnClickListener(toggleListener);
+        holder.expandLess.setOnClickListener(toggleListener);
+
+        holder.btnEdit.setOnClickListener(v -> openForm(visit));
+        holder.btnDelete.setOnClickListener(v -> {
+            if (onDeleteListener != null) {
+                onDeleteListener.onDelete(visit);
+            }
+        });
     }
 
     @Override
@@ -135,11 +167,18 @@ public class MotherPostnatalAdapter extends RecyclerView.Adapter<MotherPostnatal
         TextView txtPncStiScreening;
         TextView txtPncComments;
         LinearLayout container;
+        LinearLayout detailsContainer;
+        ImageView expandMore;
+        ImageView expandLess;
         View btnEdit;
+        View btnDelete;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             container = itemView.findViewById(R.id.itemm);
+            detailsContainer = itemView.findViewById(R.id.details_container);
+            expandMore = itemView.findViewById(R.id.expand_more);
+            expandLess = itemView.findViewById(R.id.expand_less);
             txtDate = itemView.findViewById(R.id.date);
             txtVisit = itemView.findViewById(R.id.visit);
              txtSummaryLine = itemView.findViewById(R.id.summary_line);
@@ -152,6 +191,7 @@ public class MotherPostnatalAdapter extends RecyclerView.Adapter<MotherPostnatal
              txtPncStiScreening = itemView.findViewById(R.id.pnc_sti_screening);
              txtPncComments = itemView.findViewById(R.id.pnc_comments);
             btnEdit = itemView.findViewById(R.id.edit_me);
+            btnDelete = itemView.findViewById(R.id.delete_me);
         }
     }
 

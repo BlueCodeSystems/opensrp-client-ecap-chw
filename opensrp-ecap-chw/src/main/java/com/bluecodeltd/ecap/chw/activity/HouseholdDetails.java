@@ -148,6 +148,7 @@ public class HouseholdDetails extends AppCompatActivity {
     private TextView visitTabCount, cname,updatedCaregiverName, txtDistrict, txtVillage,casePlanTabCount;
     public TextView childTabCount;
     private FloatingActionButton fab,callFab;
+    private View fabScrim;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private Boolean isFabOpen = false;
     private RelativeLayout refferal, rcase_plan, rassessment, rscreen, child_form, household_visitation_caregiver, grad_form, chivAssessment,we_service_caregiver, tb_screening_caregiver;
@@ -214,6 +215,8 @@ public class HouseholdDetails extends AppCompatActivity {
         // init views
         callFab = binding.callFab;
         fab = binding.fabx;
+        fabScrim = binding.fabScrim;
+        fabScrim.setOnClickListener(v -> closeFab());
         // Defer FAB color update until house is loaded
         if (house != null) {
             changeFabIconColor();
@@ -1560,7 +1563,15 @@ public class HouseholdDetails extends AppCompatActivity {
                 is_edit_mode = true;
             }
 
-            if(EncounterType.equals("Household Screening") || EncounterType.equals("Hiv Assessment For Caregiver") || EncounterType.equals("Referral") || EncounterType.equals("Household Visitation For Caregiver")) {
+            boolean isHouseholdScreening = EncounterType.equals("Household Screening") || EncounterType.equals("Household Screening Edit");
+            boolean signatureMissing = false;
+            if (isHouseholdScreening) {
+                JSONObject signatureField = getFieldJSONObject(fields(jsonFormObject, STEP2), "signature");
+                String existingSignature = signatureField != null ? signatureField.optString("value", "") : "";
+                signatureMissing = existingSignature == null || existingSignature.trim().isEmpty();
+            }
+
+            if((isHouseholdScreening && signatureMissing) || EncounterType.equals("Hiv Assessment For Caregiver") || EncounterType.equals("Referral") || EncounterType.equals("Household Visitation For Caregiver")) {
                 Intent openSignatureIntent = new Intent(this, SignatureActivity.class);
                 openSignatureIntent.putExtra("jsonForm", jsonFormObject.toString());
                 openSignatureIntent.putExtra("householdId",householdId);
@@ -2252,6 +2263,9 @@ public class HouseholdDetails extends AppCompatActivity {
 
             isFabOpen = true;
             fab.startAnimation(rotate_forward);
+            fabScrim.setVisibility(View.VISIBLE);
+            fabScrim.setAlpha(0f);
+            fabScrim.animate().alpha(1f).setDuration(200).start();
             rscreen.setVisibility(View.VISIBLE);
             grad_form.setVisibility(View.VISIBLE);
             if(house != null && house.getCaregiver_hiv_status() != null &&
@@ -2276,6 +2290,8 @@ public class HouseholdDetails extends AppCompatActivity {
     public void closeFab(){
         fab.startAnimation(rotate_backward);
         isFabOpen = false;
+        fabScrim.animate().alpha(0f).setDuration(200)
+                .withEndAction(() -> fabScrim.setVisibility(View.GONE)).start();
         rscreen.setVisibility(View.GONE);
         chivAssessment.setVisibility(View.GONE);
         grad_form.setVisibility(View.GONE);
@@ -2785,6 +2801,9 @@ public class HouseholdDetails extends AppCompatActivity {
         }
     }
     public void showDialogBox(String message){
+        if (isFinishing() || isDestroyed()) {
+            return;
+        }
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_layout);
         dialog.show();

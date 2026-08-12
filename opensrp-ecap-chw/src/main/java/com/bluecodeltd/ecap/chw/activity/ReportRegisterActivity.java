@@ -90,28 +90,29 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
             if (getSupportActionBar() != null) {
                 getSupportActionBar().setDisplayShowTitleEnabled(false);
             }
-            toolbar.setTitle("");
             TextView titleLabel = toolbar.findViewById(org.smartregister.R.id.txt_title_label);
             if (titleLabel != null) {
-                titleLabel.setVisibility(View.GONE);
+                titleLabel.setText(getString(R.string.all_report_register_title));
             }
+            TextView subtitle = toolbar.findViewById(R.id.report_register_toolbar_subtitle);
+            if (subtitle != null) {
+                subtitle.setText(getString(R.string.report_register_subtitle));
+            }
+            View navButton = toolbar.findViewById(R.id.report_register_nav_button);
             menu = NavigationMenu.getInstance(this, null, toolbar);
             try {
                 if (menu != null) {
                     androidx.drawerlayout.widget.DrawerLayout drawer = menu.getDrawer();
-                    androidx.appcompat.graphics.drawable.DrawerArrowDrawable arrow =
-                            new androidx.appcompat.graphics.drawable.DrawerArrowDrawable(this);
-                    arrow.setColor(android.graphics.Color.WHITE);
-                    toolbar.setNavigationIcon(arrow);
-                    toolbar.setNavigationOnClickListener(v -> {
-                        if (drawer != null) {
-                            drawer.openDrawer(androidx.core.view.GravityCompat.START);
-                        }
-                    });
+                    if (navButton != null) {
+                        navButton.setOnClickListener(v -> {
+                            if (drawer != null) {
+                                drawer.openDrawer(androidx.core.view.GravityCompat.START);
+                            }
+                        });
+                    }
                 }
             } catch (Throwable ignored) {
-            }
-        } else {
+            }        } else {
             menu = NavigationMenu.getInstance(this, null, null);
         }
 

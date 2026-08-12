@@ -218,6 +218,9 @@ public class ShowHouseholdReferralsAdapter extends RecyclerView.Adapter<ShowHous
             if (originalBitmap != null) {
                 // Resize the Bitmap to 36x36
                 Bitmap resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, 80, 80, true);
+                if (resizedBitmap != originalBitmap) {
+                    originalBitmap.recycle();
+                }
 
                 // Set the resized Bitmap to the ImageView
                 imageView.setImageBitmap(resizedBitmap);
@@ -231,6 +234,9 @@ public class ShowHouseholdReferralsAdapter extends RecyclerView.Adapter<ShowHous
     }
 
     public void showDialogBox(String caregiverName,String message){
+        if (context instanceof Activity && (((Activity) context).isFinishing() || ((Activity) context).isDestroyed())) {
+            return;
+        }
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_layout);
         dialog.show();

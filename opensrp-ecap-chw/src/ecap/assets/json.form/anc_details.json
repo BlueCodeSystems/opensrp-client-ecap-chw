@@ -140,6 +140,12 @@
         "v_required": {
           "value": true,
           "err": "Please enter Birth Date"
+        },
+        "relevance": {
+          "step1:hiv_tested": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
         }
       },
       {

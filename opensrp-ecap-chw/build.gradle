@@ -22,6 +22,8 @@ apply from: "jacoco.gradle"
 apply plugin: 'kotlin-android'
 apply plugin: 'org.jetbrains.kotlin.kapt'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 
 kapt {
     javacOptions {
@@ -102,6 +104,17 @@ android {
         buildConfigField "boolean", "IS_SYNC_SETTINGS", "false"
         buildConfigField "String", "THINKMD_BASE_URL", '"https://app.africa.thinkmd.tech"'
         buildConfigField "String", "THINKMD_END_POINT", '"/#/start"'
+        buildConfigField "String", "DIRECTUS_BASE_URL", '"https://pmp-api.bluecodeltd.com"'
+        buildConfigField "String", "MOBILE_DEVICES_URL", '"https://pmp-api.bluecodeltd.com/mobile-devices/register"'
+        buildConfigField "String", "DIRECTUS_FLAGS_COLLECTION", '"flagged_forms_ecapii"'
+        buildConfigField "String", "DIRECTUS_FLAGS_CASEWORKER_FIELD", '"provider_id"'
+        buildConfigField "String", "DIRECTUS_EMAIL", '""'
+        buildConfigField "String", "DIRECTUS_PASSWORD", '""'
+        buildConfigField "String", "DIRECTUS_FLAGS_AUTH_TOKEN", '""'
+        buildConfigField "String", "FIREBASE_APP_ID", '""'
+        buildConfigField "String", "FIREBASE_API_KEY", '""'
+        buildConfigField "String", "FIREBASE_PROJECT_ID", '""'
+        buildConfigField "String", "FIREBASE_SENDER_ID", '""'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         // CI-friendly versionCode: use GITHUB_RUN_NUMBER + offset when available
@@ -148,11 +161,47 @@ android {
                 buildConfigField "String", "MAPBOX_SDK_ACCESS_TOKEN", "\"sample_key\""
             }
 
+            def directusBaseUrl = System.getenv('DIRECTUS_BASE_URL') ?: properties.getProperty('directus.base.url')
+            def mobileDevicesUrl = System.getenv('MOBILE_DEVICES_URL') ?: properties.getProperty('mobile.devices.url')
+            def directusCollection = System.getenv('DIRECTUS_FLAGS_COLLECTION') ?: properties.getProperty('directus.flags.collection')
+            def directusCaseworkerField = System.getenv('DIRECTUS_FLAGS_CASEWORKER_FIELD') ?: properties.getProperty('directus.flags.caseworker.field')
+            def stripQuotes = { v -> v == null ? null : v.trim().replaceAll('^"|"$', '') }
+            def directusEmail = stripQuotes(System.getenv('DIRECTUS_EMAIL') ?: properties.getProperty('directus.email') ?: properties.getProperty('pmp.email'))
+            def directusPassword = stripQuotes(System.getenv('DIRECTUS_PASSWORD') ?: properties.getProperty('directus.password') ?: properties.getProperty('pmp.password'))
+            def directusAuthToken = System.getenv('DIRECTUS_FLAGS_AUTH_TOKEN') ?: properties.getProperty('directus.flags.auth.token')
+            def firebaseAppId = stripQuotes(System.getenv('FIREBASE_APP_ID') ?: properties.getProperty('firebase.app.id'))
+            def firebaseApiKey = stripQuotes(System.getenv('FIREBASE_API_KEY') ?: properties.getProperty('firebase.api.key'))
+            def firebaseProjectId = stripQuotes(System.getenv('FIREBASE_PROJECT_ID') ?: properties.getProperty('firebase.project.id'))
+            def firebaseSenderId = stripQuotes(System.getenv('FIREBASE_SENDER_ID') ?: properties.getProperty('firebase.sender.id'))
+
+            buildConfigField "String", "DIRECTUS_BASE_URL", "\"${directusBaseUrl ?: 'https://pmp-api.bluecodeltd.com'}\""
+            buildConfigField "String", "MOBILE_DEVICES_URL", "\"${mobileDevicesUrl ?: 'https://pmp-api.bluecodeltd.com/mobile-devices/register'}\""
+            buildConfigField "String", "DIRECTUS_FLAGS_COLLECTION", "\"${directusCollection ?: 'flagged_forms_ecapii'}\""
+            buildConfigField "String", "DIRECTUS_FLAGS_CASEWORKER_FIELD", "\"${directusCaseworkerField ?: 'provider_id'}\""
+            buildConfigField "String", "DIRECTUS_EMAIL", "\"${directusEmail ?: ''}\""
+            buildConfigField "String", "DIRECTUS_PASSWORD", "\"${directusPassword ?: ''}\""
+            buildConfigField "String", "DIRECTUS_FLAGS_AUTH_TOKEN", "\"${directusAuthToken ?: ''}\""
+            buildConfigField "String", "FIREBASE_APP_ID", "\"${firebaseAppId ?: ''}\""
+            buildConfigField "String", "FIREBASE_API_KEY", "\"${firebaseApiKey ?: ''}\""
+            buildConfigField "String", "FIREBASE_PROJECT_ID", "\"${firebaseProjectId ?: ''}\""
+            buildConfigField "String", "FIREBASE_SENDER_ID", "\"${firebaseSenderId ?: ''}\""
+
         } else {
             println("local.properties does not exist")
             buildConfigField "String", "OAUTH_CLIENT_ID", "\"sample_client_id\""
             buildConfigField "String", "OAUTH_CLIENT_SECRET", "\"sample_client_secret\""
             buildConfigField "String", "MAPBOX_SDK_ACCESS_TOKEN", "\"sample_key\""
+            buildConfigField "String", "DIRECTUS_BASE_URL", "\"https://pmp-api.bluecodeltd.com\""
+            buildConfigField "String", "MOBILE_DEVICES_URL", "\"https://pmp-api.bluecodeltd.com/mobile-devices/register\""
+            buildConfigField "String", "DIRECTUS_FLAGS_COLLECTION", "\"flagged_forms_ecapii\""
+            buildConfigField "String", "DIRECTUS_FLAGS_CASEWORKER_FIELD", "\"provider_id\""
+            buildConfigField "String", "DIRECTUS_EMAIL", "\"\""
+            buildConfigField "String", "DIRECTUS_PASSWORD", "\"\""
+            buildConfigField "String", "DIRECTUS_FLAGS_AUTH_TOKEN", "\"\""
+            buildConfigField "String", "FIREBASE_APP_ID", "\"\""
+            buildConfigField "String", "FIREBASE_API_KEY", "\"\""
+            buildConfigField "String", "FIREBASE_PROJECT_ID", "\"\""
+            buildConfigField "String", "FIREBASE_SENDER_ID", "\"\""
         }
     }
 
@@ -171,10 +220,14 @@ android {
         }
     }
 
+
+
     buildTypes {
 
         release {
             //debuggable true // Useful when debugging release builds
+
+         
             minifyEnabled false
             shrinkResources false
             zipAlignEnabled true
@@ -326,8 +379,8 @@ android {
         ecap {
             dimension = 'baseDimension'
             applicationIdSuffix ".ecap"
-            versionCode 46
-            versionName "v8.0.5"
+            versionCode 49
+            versionName "v8.0.6"
             buildConfigField "String", 'opensrp_url', '"https://opensrp.ecap.bluecodeltd.com/opensrp/"'
             buildConfigField "String", 'guidebooks_url', '"https://opensrp.s3.amazonaws.com/media/ba/"'
             buildConfigField "String", 'opensrp_url_debug', '"https://opensrp.ecap.bluecodeltd.com/opensrp/"'
@@ -356,8 +409,11 @@ configurations.all {
     resolutionStrategy {
         dependencySubstitution {
             substitute module('io.github.bluecodesystems:android-p2p-sync') using module('com.github.BlueCodeSystems:android-p2p-sync:v0.5.0')
-            substitute module('io.github.bluecodesystems:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v7.0.0')
-            substitute module('org.smartregister:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v7.0.0')
+            // Local unblock: org.smartregister:android-p2p-sync:0.3.8-aplha4-SNAPSHOT is unpublished
+            // (404 on Sonatype + all GitHub Packages repos). Route it to the working JitPack build.
+            substitute module('org.smartregister:android-p2p-sync') using module('com.github.BlueCodeSystems:android-p2p-sync:v0.5.0')
+            substitute module('io.github.bluecodesystems:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v8.0.3-beta')
+            substitute module('org.smartregister:opensrp-client-core') using module('com.github.BlueCodeSystems:opensrp-client-core:v8.0.3-beta')
             substitute module('org.jeasy:easy-rules-core') using module('org.jeasy:easy-rules-core:3.4.0')
             substitute module('org.jeasy:easy-rules-support') using module('org.jeasy:easy-rules-support:3.4.0')
             substitute module('org.jeasy:easy-rules-mvel') using module('org.jeasy:easy-rules-mvel:3.4.0')
@@ -392,6 +448,10 @@ dependencies {
         exclude group: 'stax', module: 'stax-api'
         exclude group: 'com.mapbox.mapboxsdk', module: 'mapbox-android-sdk'
     }
+    implementation 'com.google.firebase:firebase-crashlytics:20.1.0'
+    implementation platform('com.google.firebase:firebase-bom:33.5.1')
+    implementation 'com.google.firebase:firebase-firestore'
+    implementation 'com.google.firebase:firebase-storage'
     // Core library desugaring for Java 8+ APIs used by dependencies
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 
@@ -439,7 +499,7 @@ dependencies {
 //        exclude group: 'io.ona.kujaku', module: 'library'
         exclude group: 'com.github.lecho', module: 'hellocharts-library'
     }
-//    implementation 'com.google.firebase:firebase-crashlytics:19.3.0'
+    implementation 'com.google.firebase:firebase-crashlytics:19.3.0'
     implementation 'com.github.javiersantos:AppUpdater:2.7'
     implementation 'com.google.android.material:material:1.12.0'
     implementation 'androidx.cardview:cardview:1.0.0'
@@ -473,6 +533,9 @@ dependencies {
     implementation 'com.github.GrenderG:Toasty:1.5.2'
     //SwipeToRefresh
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation 'androidx.work:work-runtime:2.9.1'
+    // Guava provides ListenableFuture required by androidx.work.Worker at compile time
+    implementation 'com.google.guava:guava:33.2.1-android'
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.5.0'
@@ -484,6 +547,7 @@ dependencies {
     // Koin 3.x (required by referral v2 and app code)
     implementation 'io.insert-koin:koin-android:3.5.6'
     implementation 'io.insert-koin:koin-core:3.5.6'
+    implementation 'com.google.firebase:firebase-messaging:24.0.1'
 
     //For Charts
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
@@ -509,6 +573,46 @@ dependencies {
 
     // core library desugaring not required for minSdk 28+
 
+}
+
+def butterknifeJdkCompilerExports = [
+        '--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED',
+        '--add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED',
+        '--add-exports=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED',
+        '--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED',
+        '--add-exports=jdk.compiler/com.sun.tools.javac.jvm=ALL-UNNAMED',
+        '--add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED',
+        '--add-exports=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED',
+        '--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED',
+        '--add-exports=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED',
+        '--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED',
+        '--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED'
+]
+
+// ButterKnife 10.2.3 reaches into javac internals that are sealed off in JDK 16+.
+// `-J<flag>` passes the flag to javac's underlying JVM, opening up the packages
+// the annotation processor (ButterKnifeProcessor$RScanner) needs to subclass TreeScanner.
+kapt {
+    javacOptions {
+        butterknifeJdkCompilerExports.each { exportFlag ->
+            option("-J${exportFlag}")
+        }
+    }
+}
+
+tasks.configureEach { task ->
+    if (task.name.toLowerCase().contains("kapt") && task.hasProperty("kaptProcessJvmArgs")) {
+        task.kaptProcessJvmArgs.addAll(butterknifeJdkCompilerExports)
+    }
+}
+
+// AGP's compileJavaWithJavac also auto-discovers ButterKnife as an annotation
+// processor (via SPI from the kapt-classpath JAR). javac runs in-process by default,
+// so JVM args from gradle.properties don't apply. Forking javac into a child JVM with
+// the same exports lets ButterKnife subclass TreeScanner there too.
+tasks.withType(JavaCompile).configureEach {
+    options.fork = true
+    options.forkOptions.jvmArgs.addAll(butterknifeJdkCompilerExports)
 }
 
 // Ensure Gradle test workers run on Java 17 consistently (outside android block)

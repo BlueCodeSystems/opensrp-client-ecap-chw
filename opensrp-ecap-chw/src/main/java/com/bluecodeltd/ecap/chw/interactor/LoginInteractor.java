@@ -1,5 +1,12 @@
 package com.bluecodeltd.ecap.chw.interactor;
 
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.widget.EditText;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.contract.LoginJobScheduler;
 import org.smartregister.AllConstants;
@@ -25,9 +32,104 @@ public class LoginInteractor extends BaseLoginInteractor implements BaseLoginCon
      * job start at pin login
      */
     private LoginJobScheduler scheduler = new LoginJobSchedulerProvider();
+    private BaseLoginContract.View lastKnownView;
 
     public LoginInteractor(BaseLoginContract.Presenter loginPresenter) {
         super(loginPresenter);
+    }
+
+    @Override
+    public BaseLoginContract.View getLoginView() {
+        BaseLoginContract.View view = super.getLoginView();
+        if (view != null) {
+            lastKnownView = view;
+            return view;
+        }
+        // The presenter clears its view reference on Activity destroy (see
+        // BaseLoginPresenter.onDestroy), but BaseLoginInteractor's own remoteLogin()
+        // callback (an async network response) doesn't null-check getLoginView() before
+        // calling methods like enableLoginButton() on it -- causing a fatal NPE if the
+        // login screen is destroyed while a login request is in flight. Return a no-op
+        // stand-in instead of null so those calls become harmless no-ops.
+        return new NoOpLoginView(lastKnownView);
+    }
+
+    /**
+     * Safe fallback for {@link #getLoginView()} once the real view is gone. UI-mutating
+     * calls no-op; the read-only accessors delegate to the last known view instance,
+     * which is safe since BaseLoginActivity's getActivityContext()/getAppCompatActivity()
+     * just return "this" and remain valid for resource lookups even after destroy.
+     */
+    private static class NoOpLoginView implements BaseLoginContract.View {
+        private final BaseLoginContract.View lastKnownView;
+
+        NoOpLoginView(BaseLoginContract.View lastKnownView) {
+            this.lastKnownView = lastKnownView;
+        }
+
+        @Override
+        public void setUsernameError(int resourceId) { }
+
+        @Override
+        public void resetUsernameError() { }
+
+        @Override
+        public void setPasswordError(int resourceId) { }
+
+        @Override
+        public void resetPaswordError() { }
+
+        @Override
+        public void showProgress(boolean show) { }
+
+        @Override
+        public void updateProgressMessage(String message) { }
+
+        @Override
+        public void hideKeyboard() { }
+
+        @Override
+        public void showErrorDialog(String message) { }
+
+        @Override
+        public void enableLoginButton(boolean isClickable) { }
+
+        @Override
+        public void goToHome(boolean isRemote) { }
+
+        @Override
+        public Activity getActivityContext() {
+            return lastKnownView != null ? lastKnownView.getActivityContext() : null;
+        }
+
+        @NonNull
+        @Override
+        public AppCompatActivity getAppCompatActivity() {
+            return lastKnownView != null ? lastKnownView.getAppCompatActivity() : null;
+        }
+
+        @Override
+        public boolean isAppVersionAllowed() {
+            return true;
+        }
+
+        @Override
+        public void showClearDataDialog(@NonNull DialogInterface.OnClickListener onClickListener) { }
+
+        @Override
+        public String getAuthTokenType() {
+            return "";
+        }
+
+        @Override
+        public boolean isNewAccount() {
+            return false;
+        }
+
+        @Override
+        public EditText getPasswordEditText() {
+            return null;
+        }
     }
 
     @Override
@@ -48,11 +150,12 @@ public class LoginInteractor extends BaseLoginInteractor implements BaseLoginCon
             boolean isLocalLogin;
 
             if (!hasNetwork) {
-                if (refreshTokenExpired) {
+                boolean hasLocalAccount = getSharedPreferences().isRegisteredANM(userName);
+                if (refreshTokenExpired || !hasLocalAccount) {
                     loginView.getAppCompatActivity().runOnUiThread(() -> {
                         loginView.showProgress(false);
                         loginView.enableLoginButton(true);
-                        loginView.showErrorDialog(getApplicationContext().getString(R.string.offline_login_token_expired));
+                        loginView.showErrorDialog(getApplicationContext().getString(R.string.offline_login_unavailable));
                     });
                     SecurityHelper.clearArray(password);
                     return;

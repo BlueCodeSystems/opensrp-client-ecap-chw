@@ -7,6 +7,10 @@ import android.widget.TextView;
 import android.widget.ImageButton;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Build;
+import android.view.Window;
+import android.view.WindowInsetsController;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -55,7 +59,12 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
-        toolbar.setNavigationOnClickListener(v -> finish());
+        applyLightStatusBar();
+        TextView toolbarTitle = findViewById(R.id.report_view_title);
+        if (toolbarTitle != null) {
+            toolbarTitle.setText("Monthly Nutrition Report");
+        }
+        findViewById(R.id.report_view_back_button).setOnClickListener(v -> finish());
 
         baseEntityId = getIntent().getStringExtra(EXTRA_BASE_ENTITY_ID);
         loadReport();
@@ -64,6 +73,23 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
         setupEditButton();
     }
 
+    private void applyLightStatusBar() {
+        Window window = getWindow();
+        window.setStatusBarColor(Color.WHITE);
+        View decorView = window.getDecorView();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            WindowInsetsController controller = decorView.getWindowInsetsController();
+            if (controller != null) {
+                controller.setSystemBarsAppearance(
+                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS);
+            }
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int flags = decorView.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            decorView.setSystemUiVisibility(flags);
+        }
+    }
     private void loadReport() {
         if (baseEntityId != null) {
             reportModel = MonthlyReportDao.getReport(ReportRegisterActivity.REPORT_TABLE_NUTRITION, baseEntityId);
@@ -122,30 +148,40 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
             } catch (Exception ignored) {
             }
 
+            // Parse the json.form asset here too, off the main thread.
+            JSONObject form = null;
+            try {
+                form = new FormUtils(this).getFormJson(ReportRegisterActivity.REPORT_FORM_NUTRITION);
+            } catch (Exception ignored) {
+            }
+
             CaseStatusModel finalCaseStatusModel = caseStatusModel;
+            JSONObject finalForm = form;
             Threading.main(() -> {
+                if (isFinishing() || isDestroyed()) return;
                 String status = finalCaseStatusModel != null ? finalCaseStatusModel.getCase_status() : null;
                 if ("0".equals(status) || "2".equals(status)) {
                     Snackbar.make(findViewById(R.id.header_card), "Beneficiary is inactive or de-registered", Snackbar.LENGTH_LONG).show();
                     return;
                 }
 
+                if (finalForm == null) {
+                    Snackbar.make(findViewById(R.id.header_card), "Unable to open form", Snackbar.LENGTH_LONG).show();
+                    return;
+                }
+
                 try {
-                    JSONObject form = new FormUtils(this).getFormJson(ReportRegisterActivity.REPORT_FORM_NUTRITION);
-                    if (form == null) {
-                        return;
-                    }
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                     if (reportModel.getAdditionalField("caseworker_name") == null || reportModel.getAdditionalField("caseworker_name").trim().isEmpty()) {
                         reportModel.setAdditionalField("caseworker_name", getCaseworkerName(prefs));
                     }
-                    form.put("entity_id", reportModel.getBase_entity_id());
-                    org.smartregister.chw.core.utils.CoreJsonFormUtils.populateJsonForm(form, reportModel.toValueMap());
+                    finalForm.put("entity_id", reportModel.getBase_entity_id());
+                    org.smartregister.chw.core.utils.CoreJsonFormUtils.populateJsonForm(finalForm, reportModel.toValueMap());
 
                     Intent intent = new Intent(this, ReportFormActivity.class);
                     Form wizardForm = new Form();
                     intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, wizardForm);
-                    intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, form.toString());
+                    intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, finalForm.toString());
                     startActivityForResult(intent, EDIT_FORM_REQUEST);
                 } catch (Exception e) {
                     Timber.e(e);
@@ -360,6 +396,16 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
         setText(R.id.referral_nutrition_to_health, data.get("referral_nutrition_to_health"));
         setText(R.id.referral_feedback_received, data.get("referral_feedback_received"));
 
+        setStatusText(R.id.status_section_a, data.get("sec_subpop_status"));
+        setStatusText(R.id.status_section_b, data.get("sec_hh_malnutrition_status"));
+        setStatusText(R.id.status_section_c, data.get("sec_mnp_vita_status"));
+        setStatusText(R.id.status_section_d, data.get("sec_ecd_status"));
+        setStatusText(R.id.status_section_e, data.get("sec_weight_for_age_status"));
+        setStatusText(R.id.status_section_f, data.get("sec_nutrition_assessment_status"));
+        setStatusText(R.id.status_section_g, data.get("sec_muac_status"));
+        setStatusText(R.id.status_section_h, data.get("sec_sti_status"));
+        setStatusText(R.id.status_section_i, data.get("sec_referral_status"));
+
         TextView commentsView = findViewById(R.id.txt_comments);
         if (commentsView != null) {
             String comment = data.get("comment");
@@ -371,6 +417,18 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
         TextView textView = findViewById(viewId);
         if (textView != null) {
             textView.setText(value != null && !value.isEmpty() ? value : "0");
+        }
+    }
+
+    private void setStatusText(int viewId, String value) {
+        TextView textView = findViewById(viewId);
+        if (textView == null) return;
+        if ("open".equalsIgnoreCase(value)) {
+            textView.setText("Status: Open");
+        } else if ("closed".equalsIgnoreCase(value)) {
+            textView.setText("Status: Closed");
+        } else {
+            textView.setText("");
         }
     }
 

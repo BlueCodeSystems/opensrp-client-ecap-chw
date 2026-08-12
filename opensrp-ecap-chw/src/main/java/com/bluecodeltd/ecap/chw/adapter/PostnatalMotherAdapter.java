@@ -20,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import android.util.SparseBooleanArray;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -59,6 +61,7 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
     Context context;
     List<PmtctMotherPostnatalModel> postnatal;
     ObjectMapper oMapper;
+    private final SparseBooleanArray expandedPositions = new SparseBooleanArray();
 
     public PostnatalMotherAdapter(Context context, List<PmtctMotherPostnatalModel> postnatal) {
         this.context = context;
@@ -105,10 +108,23 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
             }
         };
 
-        holder.headerLayout.setOnClickListener(openForm);
+        boolean expanded = expandedPositions.get(position, false);
+        holder.detailsContainer.setVisibility(expanded ? View.VISIBLE : View.GONE);
+        holder.expandMore.setVisibility(expanded ? View.GONE : View.VISIBLE);
+        holder.expandLess.setVisibility(expanded ? View.VISIBLE : View.GONE);
+        holder.headerLayout.setOnClickListener(v -> {
+            boolean next = !expandedPositions.get(position, false);
+            expandedPositions.put(position, next);
+            holder.detailsContainer.setVisibility(next ? View.VISIBLE : View.GONE);
+            holder.expandMore.setVisibility(next ? View.GONE : View.VISIBLE);
+            holder.expandLess.setVisibility(next ? View.VISIBLE : View.GONE);
+        });
         holder.editme.setOnClickListener(openForm);
+        if (holder.editButton != null) {
+            holder.editButton.setOnClickListener(openForm);
+        }
 
-        holder.delete.setOnClickListener(v -> {
+        View.OnClickListener deleteListener = v -> {
             try {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage("You are about to delete this household graduation ");
@@ -160,7 +176,12 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
             } catch (Exception e) {
                 Timber.e(e);
             }
-        });
+        };
+        holder.delete.setOnClickListener(deleteListener);
+        if (holder.deleteButton != null) {
+            holder.deleteButton.setOnClickListener(deleteListener);
+        }
+
         String sVisit = visit.getPostnatal_care_visit();
         if (sVisit != null && holder.tvVisit != null) {
             SpannableString spannableString = new SpannableString(sVisit);
@@ -171,6 +192,9 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
 
     }
     public void showDialogBox(String householdId,String message){
+        if (context instanceof Activity && (((Activity) context).isFinishing() || ((Activity) context).isDestroyed())) {
+            return;
+        }
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_layout);
         dialog.show();
@@ -183,6 +207,9 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
             try { house = HouseholdDao.getHousehold(hid); } catch (Exception ignored) {}
             final Household finalHouse = house;
             Threading.main(() -> {
+                if (context instanceof Activity && (((Activity) context).isFinishing() || ((Activity) context).isDestroyed())) {
+                    return;
+                }
                 String name = (finalHouse != null && finalHouse.getCaregiver_name() != null) ? finalHouse.getCaregiver_name() : "Household";
                 dialogMessage.setText(name + message);
             });
@@ -263,6 +290,18 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
                         return new ChildIndexEventClient(event, client);
                     }
                     break;
+
+                case "Mother Pmtct Postnatal":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_pmtct_mother_postnatal");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
             }
         } catch (JSONException e) {
             Timber.e(e);
@@ -336,7 +375,9 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
         TextView tvDate, tvVisit, tvVisitType, tvMotherTestedHiv, tvArtInitiated, tvArtAdherence, tvVlResult,
                 tvFpCounselling, tvCondoms, tvTbSymptoms, tvTbOther, tvTbComments, tvComments, tvSummary;
         LinearLayout headerLayout;
-        ImageView editme, delete;
+        View detailsContainer;
+        ImageView editme, delete, expandMore, expandLess;
+        View editButton, deleteButton;
 
         public ViewHolder(View itemView) {
 
@@ -348,14 +389,25 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
             tvSummary = itemView.findViewById(R.id.tv_summary);
             tvVisitType = itemView.findViewById(R.id.tv_visit_type);
 
+            tvMotherTestedHiv = itemView.findViewById(R.id.tv_mother_tested_hiv);
+            tvArtInitiated = itemView.findViewById(R.id.tv_art_initiated);
+            tvArtAdherence = itemView.findViewById(R.id.tv_art_adherence);
+            tvVlResult = itemView.findViewById(R.id.tv_vl_result);
             tvFpCounselling = itemView.findViewById(R.id.tv_fp_counselling);
             tvCondoms = itemView.findViewById(R.id.tv_condoms);
-
- 
+            tvTbSymptoms = itemView.findViewById(R.id.tv_tb_symptoms);
+            tvTbOther = itemView.findViewById(R.id.tv_tb_other);
+            tvTbComments = itemView.findViewById(R.id.tv_tb_comments);
             tvComments = itemView.findViewById(R.id.tv_comments);
+
             editme = itemView.findViewById(R.id.iv_edit);
             delete = itemView.findViewById(R.id.delete_record);
+            editButton = itemView.findViewById(R.id.edit_button);
+            deleteButton = itemView.findViewById(R.id.delete_button);
 
+            detailsContainer = itemView.findViewById(R.id.details_container);
+            expandMore = itemView.findViewById(R.id.expand_more);
+            expandLess = itemView.findViewById(R.id.expand_less);
 
         }
 

@@ -28,13 +28,13 @@ import androidx.preference.PreferenceManager;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
-import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.fragment.IndexFragmentRegister;
 import com.bluecodeltd.ecap.chw.listener.ChwBottomNavigationListener;
-import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import com.bluecodeltd.ecap.chw.presenter.IndexRegisterPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.DueVisitsHelper;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.bluecodeltd.ecap.chw.util.Utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -87,7 +87,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
     private String uniqueId, hid;
     TextView textCartItemCount;
     int mCartItemCount = 0;
-    private ArrayList<VcaVisitationModel> notificationsList = new ArrayList<>();
+    private ArrayList<DueVisitsHelper.DueVisit> notificationsList = new ArrayList<>();
     String is_screened;
 
     @Override
@@ -126,11 +126,17 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(IndexRegisterActivity.this);
         String phone = sp.getString("phone", "anonymous");
 
-        List<VcaVisitationModel> visits = VcaVisitationDao.getVisitsByCaseWorkerPhone(phone);
-        if (visits != null) {
-            notificationsList.addAll(visits);
-        }
-        mCartItemCount = notificationsList.size();
+        Threading.io(() -> {
+            List<DueVisitsHelper.DueVisit> due = new ArrayList<>();
+            try { due = DueVisitsHelper.filterDue(DueVisitsHelper.getDueVisits(phone)); } catch (Exception ignored) {}
+            List<DueVisitsHelper.DueVisit> finalDue = due;
+            Threading.main(() -> {
+                notificationsList.clear();
+                notificationsList.addAll(finalDue);
+                mCartItemCount = notificationsList.size();
+                setupBadge();
+            });
+        });
 
     }
 

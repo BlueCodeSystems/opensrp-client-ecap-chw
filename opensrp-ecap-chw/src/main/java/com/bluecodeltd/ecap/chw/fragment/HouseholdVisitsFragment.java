@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import android.app.Activity;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -46,8 +47,13 @@ public class HouseholdVisitsFragment extends Fragment {
         binding = com.bluecodeltd.ecap.chw.databinding.FragmentChildvisitsBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        HashMap<String, Household> mymap = ((HouseholdDetails) requireActivity()).getData();
-        Household house = mymap.get("house");
+        Activity hostActivity = getActivity();
+        HouseholdDetails detailsActivity = hostActivity instanceof HouseholdDetails ? (HouseholdDetails) hostActivity : null;
+        HashMap<String, Household> mymap = detailsActivity != null ? detailsActivity.getData() : null;
+        Household house = mymap != null ? mymap.get("house") : null;
+        if (house == null && detailsActivity != null) {
+            house = detailsActivity.house;
+        }
         String houseId = house != null ? house.getHousehold_id() : null;
 
         recyclerView = binding.visitrecyclerView;
@@ -80,8 +86,10 @@ public class HouseholdVisitsFragment extends Fragment {
             }
             if (progress != null) progress.setVisibility(View.GONE);
         });
-        if (houseId != null) {
+        if (houseId != null && !houseId.trim().isEmpty()) {
             vm.refresh(houseId);
+        } else if (progress != null) {
+            progress.setVisibility(View.GONE);
         }
 
         return view;

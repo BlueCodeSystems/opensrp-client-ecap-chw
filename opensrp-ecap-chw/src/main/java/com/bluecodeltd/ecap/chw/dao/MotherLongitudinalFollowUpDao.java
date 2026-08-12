@@ -9,7 +9,7 @@ import java.util.List;
 public class MotherLongitudinalFollowUpDao extends AbstractDao {
 
     public static MotherLongitudinalFollowUpModel getLatestByBaseEntityId(String baseEntityId) {
-        String sql = "SELECT * FROM ec_mother_longitudinal_follow_up WHERE base_entity_id = '" + baseEntityId + "' ORDER BY last_interacted_with DESC LIMIT 1";
+        String sql = "SELECT rowid AS db_row_id, * FROM ec_mother_longitudinal_follow_up WHERE base_entity_id = '" + baseEntityId + "' AND (delete_status IS NULL OR delete_status <> '1') ORDER BY last_interacted_with DESC LIMIT 1";
         List<MotherLongitudinalFollowUpModel> values = AbstractDao.readData(sql, getMap());
         if (values == null || values.size() == 0) {
             return null;
@@ -18,18 +18,27 @@ public class MotherLongitudinalFollowUpDao extends AbstractDao {
     }
 
     public static List<MotherLongitudinalFollowUpModel> listByBaseEntityId(String baseEntityId) {
-        String sql = "SELECT * FROM ec_mother_longitudinal_follow_up WHERE base_entity_id = '" + baseEntityId + "' ORDER BY last_interacted_with DESC";
+        String sql = "SELECT rowid AS db_row_id, * FROM ec_mother_longitudinal_follow_up WHERE base_entity_id = '" + baseEntityId + "' AND (delete_status IS NULL OR delete_status <> '1') ORDER BY last_interacted_with DESC";
         return AbstractDao.readData(sql, getMap());
     }
 
     public static List<MotherLongitudinalFollowUpModel> listByHouseholdId(String householdId) {
-        String sql = "SELECT * FROM ec_mother_longitudinal_follow_up WHERE household_id = '" + householdId + "' ORDER BY last_interacted_with DESC";
+        String sql = "SELECT rowid AS db_row_id, * FROM ec_mother_longitudinal_follow_up WHERE household_id = '" + householdId + "' AND (delete_status IS NULL OR delete_status <> '1') ORDER BY last_interacted_with DESC";
         return AbstractDao.readData(sql, getMap());
+    }
+
+    public static void deleteByRowId(String rowId) {
+        if (rowId == null || rowId.isEmpty()) {
+            return;
+        }
+        String sql = "UPDATE ec_mother_longitudinal_follow_up SET delete_status = '1' WHERE rowid = '" + rowId + "'";
+        updateDB(sql);
     }
 
     public static DataMap<MotherLongitudinalFollowUpModel> getMap() {
         return c -> {
             MotherLongitudinalFollowUpModel record = new MotherLongitudinalFollowUpModel();
+            record.setDb_row_id(getCursorValue(c, "db_row_id"));
             record.setBase_entity_id(getCursorValue(c, "base_entity_id"));
             record.setHousehold_id(getCursorValue(c, "household_id"));
             record.setContact_count_number(getCursorValue(c, "contact_count_number"));

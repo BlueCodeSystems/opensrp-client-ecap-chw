@@ -1,5 +1,6 @@
 package com.bluecodeltd.ecap.chw.fragment;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -95,8 +96,35 @@ public class MotherAncFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         adapter = new MotherAncAdapter(requireContext(), items);
+        adapter.setOnDeleteListener(this::confirmDeleteVisit);
         recyclerView.setAdapter(adapter);
         emptyView.setVisibility(items != null && items.size() > 0 ? View.GONE : View.VISIBLE);
+    }
+
+    private void confirmDeleteVisit(MotherAncModel visit) {
+        if (getContext() == null) return;
+        new AlertDialog.Builder(getContext())
+                .setTitle("Alert")
+                .setMessage("You are about to delete this record")
+                .setNegativeButton("NO", (dialog, id) -> dialog.cancel())
+                .setPositiveButton("YES", (dialog, id) -> deleteVisit(visit))
+                .show();
+    }
+
+    private void deleteVisit(MotherAncModel visit) {
+        final View progress = binding != null ? binding.progressLoading : null;
+        if (progress != null) progress.setVisibility(View.VISIBLE);
+        Threading.io(() -> {
+            MotherAncDao.deleteByRowId(visit.getDb_row_id());
+            Threading.main(() -> {
+                if (!isAdded()) return;
+                try {
+                    ((MotherDetail) requireActivity()).refreshVisitTabTitles();
+                } catch (Exception ignored) {
+                }
+                loadVisits(progress);
+            });
+        });
     }
 
     @Override
