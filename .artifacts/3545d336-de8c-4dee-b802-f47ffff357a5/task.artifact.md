@@ -1,0 +1,4 @@
+- [x] Implement Section A Questions 3-10 rendering in `MalariaReportViewActivity.java`
+- [x] Implement Section B Questions 1-10 rendering in `MalariaReportViewActivity.java`
+- [x] Verify Section C and Comments rendering
+- [x] Final verification of all fields mapping

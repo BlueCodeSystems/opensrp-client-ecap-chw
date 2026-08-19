@@ -2788,6 +2788,13 @@
           }
         },
         {
+          "column_name": "nutrition_grade_3",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.nutrition_grade_3"
+          }
+        },
+        {
           "column_name": "nutrition_nr",
           "type": "Client",
           "json_mapping": {

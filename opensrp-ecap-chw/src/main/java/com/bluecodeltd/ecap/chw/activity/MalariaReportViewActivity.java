@@ -2,14 +2,9 @@ package com.bluecodeltd.ecap.chw.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Build;
-import android.view.Window;
-import android.view.WindowInsetsController;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,44 +51,30 @@ public class MalariaReportViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        int orientation = getIntent().getIntExtra("orientation", android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        if (orientation != android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) {
+            setRequestedOrientation(orientation);
+        }
+
         setContentView(R.layout.activity_malaria_report_view);
 
-        Toolbar toolbar = findViewById(R.id.report_view_toolbar);
+        Toolbar toolbar = findViewById(R.id.report_toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
-        applyLightStatusBar();
-        TextView toolbarTitle = findViewById(R.id.report_view_title);
-        if (toolbarTitle != null) {
-            toolbarTitle.setText("Malaria Monthly Report");
-        }
-        findViewById(R.id.report_view_back_button).setOnClickListener(v -> finish());
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         baseEntityId = getIntent().getStringExtra(EXTRA_BASE_ENTITY_ID);
         loadReport();
 
-        setupExpansionLogic();
         setupEditButton();
+        setupNavigation();
+        setupExpandableSections();
+        setupExpandCollapseButtons();
     }
 
-    private void applyLightStatusBar() {
-        Window window = getWindow();
-        window.setStatusBarColor(Color.WHITE);
-        View decorView = window.getDecorView();
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            WindowInsetsController controller = decorView.getWindowInsetsController();
-            if (controller != null) {
-                controller.setSystemBarsAppearance(
-                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
-                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS);
-            }
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            int flags = decorView.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-            decorView.setSystemUiVisibility(flags);
-        }
-    }
     private void loadReport() {
         if (baseEntityId != null) {
             reportModel = MonthlyReportDao.getReport(ReportRegisterActivity.REPORT_TABLE_MALARIA, baseEntityId);
@@ -104,60 +85,131 @@ public class MalariaReportViewActivity extends AppCompatActivity {
         }
     }
 
-    private void setupExpansionLogic() {
-        // Section A
-        setupSection(R.id.header_q1, R.id.content_q1, R.id.icon_q1);
-        setupSection(R.id.header_q2, R.id.content_q2, R.id.icon_q2);
-        setupSection(R.id.header_q3, R.id.content_q3, R.id.icon_q3);
-        setupSection(R.id.header_q4, R.id.content_q4, R.id.icon_q4);
-        setupSection(R.id.header_q5, R.id.content_q5, R.id.icon_q5);
-        setupSection(R.id.header_q6, R.id.content_q6, R.id.icon_q6);
-        setupSection(R.id.header_q7, R.id.content_q7, R.id.icon_q7);
-        setupSection(R.id.header_q8, R.id.content_q8, R.id.icon_q8);
-        setupSection(R.id.header_q9, R.id.content_q9, R.id.icon_q9);
-        setupSection(R.id.header_q10, R.id.content_q10, R.id.icon_q10);
-
-        // Section B
-        setupSection(R.id.header_sb_q1, R.id.content_sb_q1, R.id.icon_sb_q1);
-        setupSection(R.id.header_sb_q2, R.id.content_sb_q2, R.id.icon_sb_q2);
-        setupSection(R.id.header_sb_q3, R.id.content_sb_q3, R.id.icon_sb_q3);
-        setupSection(R.id.header_sb_q4, R.id.content_sb_q4, R.id.icon_sb_q4);
-        setupSection(R.id.header_sb_q5, R.id.content_sb_q5, R.id.icon_sb_q5);
-        setupSection(R.id.header_sb_q6, R.id.content_sb_q6, R.id.icon_sb_q6);
-        setupSection(R.id.header_sb_q7, R.id.content_sb_q7, R.id.icon_sb_q7);
-        setupSection(R.id.header_sb_q8, R.id.content_sb_q8, R.id.icon_sb_q8);
-        setupSection(R.id.header_sb_q9, R.id.content_sb_q9, R.id.icon_sb_q9);
-        setupSection(R.id.header_sb_q10, R.id.content_sb_q10, R.id.icon_sb_q10);
-
-        // Section C & Comments
-        setupSection(R.id.header_sc, R.id.content_sc, R.id.icon_sc);
-        setupSection(R.id.header_comments, R.id.content_comments, R.id.icon_comments);
-    }
-
-    private void setupSection(int headerId, int contentId, int iconId) {
-        View header = findViewById(headerId);
-        View content = findViewById(contentId);
-        ImageView icon = findViewById(iconId);
-
-        if (header != null && content != null && icon != null) {
-            header.setOnClickListener(v -> {
-                if (content.getVisibility() == View.VISIBLE) {
-                    content.setVisibility(View.GONE);
-                    icon.setImageResource(R.drawable.baseline_expand_more_24);
-                } else {
-                    content.setVisibility(View.VISIBLE);
-                    icon.setImageResource(R.drawable.baseline_expand_less_24);
-                }
-            });
-        }
-    }
-
     private void setupEditButton() {
         ImageButton btnEdit = findViewById(R.id.btn_edit_report);
         if (btnEdit != null) {
             btnEdit.setOnClickListener(v -> openEditForm());
         }
     }
+
+    private void setupNavigation() {
+        View tabA = findViewById(R.id.tab_a);
+        View tabB = findViewById(R.id.tab_b);
+        View tabC = findViewById(R.id.tab_c);
+        View tabComments = findViewById(R.id.tab_comments);
+
+        if (tabA != null) tabA.setOnClickListener(v -> scrollToView(findViewById(R.id.sec_a)));
+        if (tabB != null) tabB.setOnClickListener(v -> scrollToView(findViewById(R.id.sec_b)));
+        if (tabC != null) tabC.setOnClickListener(v -> scrollToView(findViewById(R.id.sec_c)));
+        if (tabComments != null) tabComments.setOnClickListener(v -> scrollToView(findViewById(R.id.sec_comments)));
+
+        for (int i = 1; i <= 10; i++) {
+            int chipAId = getResources().getIdentifier("chip_a_q" + i, "id", getPackageName());
+            int panelAId = getResources().getIdentifier("panel_a_q" + i, "id", getPackageName());
+            View chipA = findViewById(chipAId);
+            View panelA = findViewById(panelAId);
+            if (chipA != null && panelA != null) {
+                chipA.setOnClickListener(v -> scrollToView(panelA));
+            }
+
+            int chipBId = getResources().getIdentifier("chip_b_q" + i, "id", getPackageName());
+            int panelBId = getResources().getIdentifier("panel_b_q" + i, "id", getPackageName());
+            View chipB = findViewById(chipBId);
+            View panelB = findViewById(panelBId);
+            if (chipB != null && panelB != null) {
+                chipB.setOnClickListener(v -> scrollToView(panelB));
+            }
+        }
+    }
+
+    private void scrollToView(View view) {
+        if (view != null) {
+            findViewById(R.id.report_scroll).post(() ->
+                    ((androidx.core.widget.NestedScrollView) findViewById(R.id.report_scroll)).smoothScrollTo(0, view.getTop())
+            );
+        }
+    }
+
+    private void setupExpandableSections() {
+        for (int i = 1; i <= 10; i++) {
+            // Section A
+            setupExpandableSection("a", i);
+            // Section B
+            setupExpandableSection("b", i);
+        }
+    }
+
+    private void setupExpandableSection(String section, int index) {
+        int headerId = getResources().getIdentifier("header_" + section + "_q" + index, "id", getPackageName());
+        int bodyId = getResources().getIdentifier("body_" + section + "_q" + index, "id", getPackageName());
+
+        View header = findViewById(headerId);
+        View body = findViewById(bodyId);
+
+        if (header != null && body != null) {
+            header.setOnClickListener(v -> toggleSection(header, body));
+        }
+    }
+
+    private void toggleSection(View header, View body) {
+        boolean isExpanded = body.getVisibility() == View.VISIBLE;
+        body.setVisibility(isExpanded ? View.GONE : View.VISIBLE);
+        
+        // Update indicator
+        if (header instanceof android.view.ViewGroup) {
+            android.view.ViewGroup group = (android.view.ViewGroup) header;
+            if (group.getChildCount() > 1) {
+                View indicator = group.getChildAt(1);
+                if (indicator instanceof TextView) {
+                    ((TextView) indicator).setText(isExpanded ? "▸" : "▾");
+                }
+            }
+        }
+    }
+
+    private void setupExpandCollapseButtons() {
+        View btnExpand = findViewById(R.id.btn_expand_all);
+        View btnCollapse = findViewById(R.id.btn_collapse_all);
+
+        if (btnExpand != null) {
+            btnExpand.setOnClickListener(v -> setAllSectionsVisibility(View.VISIBLE));
+        }
+
+        if (btnCollapse != null) {
+            btnCollapse.setOnClickListener(v -> setAllSectionsVisibility(View.GONE));
+        }
+    }
+
+    private void setAllSectionsVisibility(int visibility) {
+        String indicator = (visibility == View.VISIBLE) ? "▾" : "▸";
+        for (int i = 1; i <= 10; i++) {
+            updateSectionVisibility("a", i, visibility, indicator);
+            updateSectionVisibility("b", i, visibility, indicator);
+        }
+    }
+
+    private void updateSectionVisibility(String section, int index, int visibility, String indicatorText) {
+        int headerId = getResources().getIdentifier("header_" + section + "_q" + index, "id", getPackageName());
+        int bodyId = getResources().getIdentifier("body_" + section + "_q" + index, "id", getPackageName());
+
+        View header = findViewById(headerId);
+        View body = findViewById(bodyId);
+
+        if (body != null) {
+            body.setVisibility(visibility);
+        }
+
+        if (header instanceof android.view.ViewGroup) {
+            android.view.ViewGroup group = (android.view.ViewGroup) header;
+            if (group.getChildCount() > 1) {
+                View indicator = group.getChildAt(1);
+                if (indicator instanceof TextView) {
+                    ((TextView) indicator).setText(indicatorText);
+                }
+            }
+        }
+    }
+
 
     private void openEditForm() {
         if (reportModel == null) return;
@@ -169,44 +221,34 @@ public class MalariaReportViewActivity extends AppCompatActivity {
             } catch (Exception ignored) {
             }
 
-            // Parse the json.form asset here too, off the main thread.
-            JSONObject form = null;
-            try {
-                form = new FormUtils(this).getFormJson(ReportRegisterActivity.REPORT_FORM_MALARIA);
-            } catch (Exception ignored) {
-            }
-
             CaseStatusModel finalCaseStatusModel = caseStatusModel;
-            JSONObject finalForm = form;
             Threading.main(() -> {
-                if (isFinishing() || isDestroyed()) return;
                 String status = finalCaseStatusModel != null ? finalCaseStatusModel.getCase_status() : null;
                 if ("0".equals(status) || "2".equals(status)) {
-                    Snackbar.make(findViewById(R.id.header_card), "Beneficiary is inactive or de-registered", Snackbar.LENGTH_LONG).show();
-                    return;
-                }
-
-                if (finalForm == null) {
-                    Snackbar.make(findViewById(R.id.header_card), "Unable to open form", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(R.id.sec_a), "Beneficiary is inactive or de-registered", Snackbar.LENGTH_LONG).show();
                     return;
                 }
 
                 try {
+                    JSONObject form = new FormUtils(this).getFormJson(ReportRegisterActivity.REPORT_FORM_MALARIA);
+                    if (form == null) {
+                        return;
+                    }
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                     if (reportModel.getAdditionalField("caseworker_name") == null || reportModel.getAdditionalField("caseworker_name").trim().isEmpty()) {
                         reportModel.setAdditionalField("caseworker_name", getCaseworkerName(prefs));
                     }
-                    finalForm.put("entity_id", reportModel.getBase_entity_id());
-                    org.smartregister.chw.core.utils.CoreJsonFormUtils.populateJsonForm(finalForm, reportModel.toValueMap());
+                    form.put("entity_id", reportModel.getBase_entity_id());
+                    org.smartregister.chw.core.utils.CoreJsonFormUtils.populateJsonForm(form, reportModel.toValueMap());
 
                     Intent intent = new Intent(this, ReportFormActivity.class);
                     Form wizardForm = new Form();
                     intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, wizardForm);
-                    intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, finalForm.toString());
+                    intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, form.toString());
                     startActivityForResult(intent, EDIT_FORM_REQUEST);
                 } catch (Exception e) {
                     Timber.e(e);
-                    Snackbar.make(findViewById(R.id.header_card), "Unable to open form", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(R.id.sec_a), "Unable to open form", Snackbar.LENGTH_LONG).show();
                 }
             });
         });
@@ -358,36 +400,97 @@ public class MalariaReportViewActivity extends AppCompatActivity {
     }
 
     private void populateData() {
-        TextView title = findViewById(R.id.report_view_title);
+        TextView title = findViewById(R.id.report_title);
         title.setText(getString(R.string.malaria_report_title, reportModel.getReporting_month()));
 
-        setText(R.id.txt_reporting_month, reportModel.getReporting_month());
-        setText(R.id.txt_facility_name, reportModel.getFacility());
+        TextView reportMeta = findViewById(R.id.report_meta);
+        if (reportMeta != null) {
+            reportMeta.setText(reportModel.getReporting_month() + " | " + reportModel.getFacility());
+        }
 
         Map<String, String> data = reportModel.toValueMap();
 
-        // Section A - Q1-Q10 (each question has the same 22 age/sub-population fields)
-        for (int q = 1; q <= 10; q++) {
-            populateSectionAQuestion(data, q);
-            setStatusTextByName("status_q" + q, data.get("sec_a_q" + q + "_status"));
+        // Section A (Q1-Q10)
+        String[] qPrefixes = {"q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10"};
+        for (String prefix : qPrefixes) {
+            int totalF = 0;
+            int totalM = 0;
+
+            // Age Groups (1-4)
+            String[] ageSuffixes = {"_f_0_4", "_m_0_4", "_f_5_15", "_m_5_15", "_f_16_19", "_m_16_19", "_f_20_plus", "_m_20_plus"};
+            for (String suffix : ageSuffixes) {
+                String key = prefix + suffix;
+                int viewId = getResources().getIdentifier("sa_" + key, "id", getPackageName());
+                if (viewId != 0) {
+                    int val = parseVal(data.get(key));
+                    setText(viewId, String.valueOf(val));
+                    if (suffix.contains("_f_")) totalF += val;
+                    if (suffix.contains("_m_")) totalM += val;
+                }
+            }
+
+            // Age Group Total (5)
+            setText(getResources().getIdentifier("sa_" + prefix + "_total_f", "id", getPackageName()), String.valueOf(totalF));
+            setText(getResources().getIdentifier("sa_" + prefix + "_total_m", "id", getPackageName()), String.valueOf(totalM));
+
+            // Sub-Populations (6-13)
+            String[] subPopSuffixes = {"calhiv", "hei", "wlhiv", "sv", "agyw", "hiv_pos", "siblings", "caregivers"};
+            int subTotalSum = 0;
+            int subTotalSumF = 0;
+            for (String sub : subPopSuffixes) {
+                String keyF = prefix + "_f_" + sub;
+                String keyM = prefix + "_m_" + sub;
+                
+                int valF = parseVal(data.get(keyF));
+                int valM = parseVal(data.get(keyM));
+                
+                // Renders on BOTH columns in the layout
+                setText(getResources().getIdentifier("sa_" + keyF, "id", getPackageName()), String.valueOf(valF));
+                int viewIdM = getResources().getIdentifier("sa_" + keyM, "id", getPackageName());
+                if (viewIdM != 0) {
+                    setText(viewIdM, String.valueOf(valM));
+                }
+                
+                // Strictly summing indicators for the Sub-Population Total (Row 14)
+                if (sub.equals("calhiv") || sub.equals("hei") || sub.equals("wlhiv") || sub.equals("sv")) {
+                    subTotalSum += (valF + valM);
+                    subTotalSumF += valF;
+                }
+            }
+            setText(getResources().getIdentifier("sa_" + prefix + "_sub_total_f", "id", getPackageName()), String.valueOf(subTotalSumF));
+            setText(getResources().getIdentifier("sa_" + prefix + "_sub_total", "id", getPackageName()), String.valueOf(subTotalSum));
         }
 
-        // Section B - Q1-Q10 (each question has the same 8 age fields)
-        for (int q = 1; q <= 10; q++) {
-            populateSectionBQuestion(data, q);
-            setStatusTextByName("status_sb_q" + q, data.get("sec_b_q" + q + "_status"));
+        // Section B (SB Q1-Q10)
+        String[] sbPrefixes = {"sb_q1", "sb_q2", "sb_q3", "sb_q4", "sb_q5", "sb_q6", "sb_q7", "sb_q8", "sb_q9", "sb_q10"};
+        for (String prefix : sbPrefixes) {
+            int totalF = 0;
+            int totalM = 0;
+            String[] sbSuffixes = {"_f_0_4", "_m_0_4", "_f_5_15", "_m_5_15", "_f_16_19", "_m_16_19", "_f_20_plus", "_m_20_plus"};
+            for (String suffix : sbSuffixes) {
+                String key = prefix + suffix;
+                int viewId = getResources().getIdentifier(key, "id", getPackageName());
+                if (viewId != 0) {
+                    int val = parseVal(data.get(key));
+                    setText(viewId, String.valueOf(val));
+                    if (suffix.contains("_f_")) totalF += val;
+                    if (suffix.contains("_m_")) totalM += val;
+                }
+            }
+            setText(getResources().getIdentifier(prefix + "_total_f", "id", getPackageName()), String.valueOf(totalF));
+            setText(getResources().getIdentifier(prefix + "_total_m", "id", getPackageName()), String.valueOf(totalM));
         }
 
-        setText(R.id.sc_q1, data.get("sc_q1_value"));
-        setText(R.id.sc_q2, data.get("sc_q2_value"));
-        setText(R.id.sc_q3, data.get("sc_q3_value"));
-        setText(R.id.sc_q4, data.get("sc_q4_value"));
-        setText(R.id.sc_q5, data.get("sc_q5_value"));
-        setText(R.id.sc_q6, data.get("sc_q6_value"));
-        setText(R.id.sc_q7, data.get("sc_q7_value"));
-        for (int q = 1; q <= 7; q++) {
-            setStatusTextByName("sc_q" + q + "_status", data.get("sec_c_q" + q + "_status"));
+        // Section C
+        int scTotal = 0;
+        int indicatorsCount = 7;
+        for (int i = 1; i <= indicatorsCount; i++) {
+            String key = "sc_q" + i + "_value";
+            int val = parseVal(data.get(key));
+            setText(getResources().getIdentifier("sc_q" + i, "id", getPackageName()), String.valueOf(val));
+            scTotal += val;
         }
+        setText(R.id.sc_total, String.valueOf(scTotal));
 
         TextView commentsView = findViewById(R.id.txt_comments);
         if (commentsView != null) {
@@ -396,48 +499,11 @@ public class MalariaReportViewActivity extends AppCompatActivity {
         }
     }
 
-    private static final String[] SECTION_A_FIELD_SUFFIXES = {
-            "f_0_4", "m_0_4", "f_5_15", "m_5_15", "f_16_19", "m_16_19", "f_20_plus", "m_20_plus",
-            "f_calhiv", "m_calhiv", "f_hei", "m_hei", "f_wlhiv", "m_wlhiv", "f_sv", "m_sv",
-            "f_agyw", "f_hiv_pos", "f_siblings", "m_siblings", "f_caregivers", "m_caregivers"
-    };
-
-    private static final String[] SECTION_B_FIELD_SUFFIXES = {
-            "f_0_4", "m_0_4", "f_5_15", "m_5_15", "f_16_19", "m_16_19", "f_20_plus", "m_20_plus"
-    };
-
-    private void populateSectionAQuestion(Map<String, String> data, int questionNumber) {
-        for (String suffix : SECTION_A_FIELD_SUFFIXES) {
-            String key = "q" + questionNumber + "_" + suffix;
-            setTextByName(key, data.get(key));
-        }
-    }
-
-    private void populateSectionBQuestion(Map<String, String> data, int questionNumber) {
-        for (String suffix : SECTION_B_FIELD_SUFFIXES) {
-            String key = "sb_q" + questionNumber + "_" + suffix;
-            setTextByName(key, data.get(key));
-        }
-    }
-
-    private void setTextByName(String idName, String value) {
-        int viewId = getResources().getIdentifier(idName, "id", getPackageName());
-        if (viewId != 0) {
-            setText(viewId, value);
-        }
-    }
-
-    private void setStatusTextByName(String idName, String value) {
-        int viewId = getResources().getIdentifier(idName, "id", getPackageName());
-        if (viewId == 0) return;
-        TextView textView = findViewById(viewId);
-        if (textView == null) return;
-        if ("open".equalsIgnoreCase(value)) {
-            textView.setText("Open");
-        } else if ("closed".equalsIgnoreCase(value)) {
-            textView.setText("Closed");
-        } else {
-            textView.setText("");
+    private int parseVal(String value) {
+        try {
+            return (value != null && !value.isEmpty()) ? Integer.parseInt(value) : 0;
+        } catch (NumberFormatException e) {
+            return 0;
         }
     }
 
