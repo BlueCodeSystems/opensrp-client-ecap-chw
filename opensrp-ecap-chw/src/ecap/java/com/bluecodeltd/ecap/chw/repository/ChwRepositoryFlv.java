@@ -1233,6 +1233,12 @@ public class ChwRepositoryFlv {
     }
 
     private static void upgradeToVersion30(SQLiteDatabase db) {
+        try {
+            db.execSQL("ALTER TABLE ec_monthly_nutrition ADD COLUMN nutrition_grade_3 TEXT");
+        } catch (Exception e) {
+            Timber.e(e, "upgradeToVersion30 ");
+        }
+
         String[] alterStatements = {
                 "ALTER TABLE ec_community_alert ADD COLUMN pcz_priority_disease TEXT",
                 "ALTER TABLE ec_community_alert ADD COLUMN other_priority_disease TEXT",
