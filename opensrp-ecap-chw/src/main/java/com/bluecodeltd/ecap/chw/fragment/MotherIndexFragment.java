@@ -17,6 +17,7 @@ import com.bluecodeltd.ecap.chw.presenter.MotherIndexFragmentPresenter;
 import com.bluecodeltd.ecap.chw.provider.IndexRegisterProvider;
 import com.bluecodeltd.ecap.chw.provider.MotherRegisterProvider;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
@@ -398,6 +399,30 @@ public class MotherIndexFragment extends BaseSafeRegisterFragment implements Mot
             }
         }
         return null;
+    }
+
+    @Override
+    public void countExecute() {
+        // The base implementation runs a synchronous SELECT COUNT(*) on the calling thread.
+        // renderView()/filter() call this directly on the main thread on every resume, which
+        // can ANR if a background sync currently holds the SQLCipher connection lock. Run it
+        // off the main thread; onLoadFinished already re-calls setTotalPatients() once the
+        // register list's own Loader delivers data, so the header self-corrects either way.
+        Threading.io(() -> {
+            try {
+                super.countExecute();
+            } catch (Throwable ignored) { }
+            Threading.main(() -> {
+                if (!isAdded() || getActivity() == null) return;
+                setTotalPatients();
+            });
+        });
+    }
+
+    @Override
+    public void onLoadFinished(androidx.loader.content.Loader<android.database.Cursor> loader, android.database.Cursor cursor) {
+        super.onLoadFinished(loader, cursor);
+        setTotalPatients();
     }
 
 }

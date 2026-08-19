@@ -19,6 +19,7 @@ import com.bluecodeltd.ecap.chw.contract.IndexRegisterFragmentContract;
 import com.bluecodeltd.ecap.chw.presenter.IndexRegisterFragmentPresenter;
 import com.bluecodeltd.ecap.chw.provider.IndexRegisterProvider;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.bluecodeltd.ecap.chw.util.ViewTagUtils;
 import com.github.javiersantos.appupdater.AppUpdater;
 
@@ -318,6 +319,30 @@ public class IndexFragmentRegister extends BaseSafeRegisterFragment implements I
             }
         }
         return null;
+    }
+
+    @Override
+    public void countExecute() {
+        // The base implementation runs a synchronous SELECT COUNT(*) on the calling thread.
+        // renderView()/filter() call this directly on the main thread on every resume, which
+        // can ANR if a background sync currently holds the SQLCipher connection lock. Run it
+        // off the main thread; onLoadFinished already re-calls setTotalPatients() once the
+        // register list's own Loader delivers data, so the header self-corrects either way.
+        Threading.io(() -> {
+            try {
+                super.countExecute();
+            } catch (Throwable ignored) { }
+            Threading.main(() -> {
+                if (!isAdded() || getActivity() == null) return;
+                setTotalPatients();
+            });
+        });
+    }
+
+    @Override
+    public void onLoadFinished(androidx.loader.content.Loader<android.database.Cursor> loader, android.database.Cursor cursor) {
+        super.onLoadFinished(loader, cursor);
+        setTotalPatients();
     }
 
     @Override
