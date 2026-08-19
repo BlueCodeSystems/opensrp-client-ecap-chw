@@ -8,7 +8,6 @@ import android.view.Window;
 import android.view.WindowInsetsController;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.NestedScrollView;
 import androidx.preference.PreferenceManager;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
@@ -56,44 +56,37 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        int orientation = getIntent().getIntExtra("orientation", android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        if (orientation != android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) {
+            setRequestedOrientation(orientation);
+        }
+
         setContentView(R.layout.activity_monthly_tb_report_view);
 
-        Toolbar toolbar = findViewById(R.id.report_view_toolbar);
+        Toolbar toolbar = findViewById(R.id.report_toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
         applyLightStatusBar();
-        TextView toolbarTitle = findViewById(R.id.report_view_title);
-        if (toolbarTitle != null) {
-            toolbarTitle.setText("Monthly TB Report");
-        }
-        findViewById(R.id.report_view_back_button).setOnClickListener(v -> finish());
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         baseEntityId = getIntent().getStringExtra(EXTRA_BASE_ENTITY_ID);
         loadReport();
-        
-        setupExpansionLogic();
+
+        setupTabLogic();
         setupEditButton();
     }
 
     private void applyLightStatusBar() {
         Window window = getWindow();
-        window.setStatusBarColor(Color.WHITE);
-        View decorView = window.getDecorView();
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            WindowInsetsController controller = decorView.getWindowInsetsController();
-            if (controller != null) {
-                controller.setSystemBarsAppearance(
-                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
-                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS);
-            }
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            int flags = decorView.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-            decorView.setSystemUiVisibility(flags);
+        window.setStatusBarColor(Color.parseColor("#1B3A4B"));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            window.getDecorView().setSystemUiVisibility(0);
         }
     }
+
     private void loadReport() {
         if (baseEntityId != null) {
             reportModel = MonthlyReportDao.getReport(ReportRegisterActivity.REPORT_TABLE_TB, baseEntityId);
@@ -104,37 +97,70 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
         }
     }
 
-    private void setupExpansionLogic() {
-        setupSection(R.id.header_q1, R.id.content_q1, R.id.icon_q1);
-        setupSection(R.id.header_q2, R.id.content_q2, R.id.icon_q2);
-        setupSection(R.id.header_q3, R.id.content_q3, R.id.icon_q3);
-        setupSection(R.id.header_q4, R.id.content_q4, R.id.icon_q4);
-        setupSection(R.id.header_q5, R.id.content_q5, R.id.icon_q5);
-        setupSection(R.id.header_q6, R.id.content_q6, R.id.icon_q6);
-        setupSection(R.id.header_q7, R.id.content_q7, R.id.icon_q7);
-        setupSection(R.id.header_comments, R.id.content_comments, R.id.icon_comments);
+    private void setupTabLogic() {
+        TextView tabQ1 = findViewById(R.id.tab_q1);
+        TextView tabQ2 = findViewById(R.id.tab_q2);
+        TextView tabQ3 = findViewById(R.id.tab_q3);
+        TextView tabQ4 = findViewById(R.id.tab_q4);
+        TextView tabQ5 = findViewById(R.id.tab_q5);
+        TextView tabQ6 = findViewById(R.id.tab_q6);
+        TextView tabQ7 = findViewById(R.id.tab_q7);
+        TextView tabComments = findViewById(R.id.tab_comments);
+
+        View secQ1 = findViewById(R.id.sec_q1);
+        View secQ2 = findViewById(R.id.sec_q2);
+        View secQ3 = findViewById(R.id.sec_q3);
+        View secQ4 = findViewById(R.id.sec_q4);
+        View secQ5 = findViewById(R.id.sec_q5);
+        View secQ6 = findViewById(R.id.sec_q6);
+        View secQ7 = findViewById(R.id.sec_q7);
+        View secComments = findViewById(R.id.sec_comments);
+
+        NestedScrollView scrollView = findViewById(R.id.report_scroll);
+
+        View.OnClickListener tabClickListener = v -> {
+            View target = null;
+            resetTabs(tabQ1, tabQ2, tabQ3, tabQ4, tabQ5, tabQ6, tabQ7, tabComments);
+            v.setBackgroundColor(Color.WHITE);
+            ((TextView) v).setTextColor(Color.parseColor("#1B3A4B"));
+
+            int id = v.getId();
+            if (id == R.id.tab_q1) target = secQ1;
+            else if (id == R.id.tab_q2) target = secQ2;
+            else if (id == R.id.tab_q3) target = secQ3;
+            else if (id == R.id.tab_q4) target = secQ4;
+            else if (id == R.id.tab_q5) target = secQ5;
+            else if (id == R.id.tab_q6) target = secQ6;
+            else if (id == R.id.tab_q7) target = secQ7;
+            else if (id == R.id.tab_comments) target = secComments;
+
+            if (target != null && scrollView != null) {
+                View finalTarget = target;
+                scrollView.post(() -> scrollView.smoothScrollTo(0, finalTarget.getTop()));
+            }
+        };
+
+        if (tabQ1 != null) tabQ1.setOnClickListener(tabClickListener);
+        if (tabQ2 != null) tabQ2.setOnClickListener(tabClickListener);
+        if (tabQ3 != null) tabQ3.setOnClickListener(tabClickListener);
+        if (tabQ4 != null) tabQ4.setOnClickListener(tabClickListener);
+        if (tabQ5 != null) tabQ5.setOnClickListener(tabClickListener);
+        if (tabQ6 != null) tabQ6.setOnClickListener(tabClickListener);
+        if (tabQ7 != null) tabQ7.setOnClickListener(tabClickListener);
+        if (tabComments != null) tabComments.setOnClickListener(tabClickListener);
     }
 
-    private void setupSection(int headerId, int contentId, int iconId) {
-        View header = findViewById(headerId);
-        View content = findViewById(contentId);
-        ImageView icon = findViewById(iconId);
-
-        if (header != null && content != null && icon != null) {
-            header.setOnClickListener(v -> {
-                if (content.getVisibility() == View.VISIBLE) {
-                    content.setVisibility(View.GONE);
-                    icon.setImageResource(R.drawable.baseline_expand_more_24);
-                } else {
-                    content.setVisibility(View.VISIBLE);
-                    icon.setImageResource(R.drawable.baseline_expand_less_24);
-                }
-            });
+    private void resetTabs(TextView... tabs) {
+        for (TextView tab : tabs) {
+            if (tab != null) {
+                tab.setBackgroundColor(Color.parseColor("#21603F"));
+                tab.setTextColor(Color.parseColor("#CFE3D6"));
+            }
         }
     }
 
     private void setupEditButton() {
-        ImageButton btnEdit = findViewById(R.id.btn_edit_report);
+        ImageView btnEdit = findViewById(R.id.btn_edit_report);
         if (btnEdit != null) {
             btnEdit.setOnClickListener(v -> openEditForm());
         }
@@ -150,7 +176,6 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
             } catch (Exception ignored) {
             }
 
-            // Parse the (1000+ line) json.form asset here too, off the main thread.
             JSONObject form = null;
             try {
                 form = new FormUtils(this).getFormJson(ReportRegisterActivity.REPORT_FORM_TB);
@@ -163,12 +188,12 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
                 if (isFinishing() || isDestroyed()) return;
                 String status = finalCaseStatusModel != null ? finalCaseStatusModel.getCase_status() : null;
                 if ("0".equals(status) || "2".equals(status)) {
-                    Snackbar.make(findViewById(R.id.header_card), "Beneficiary is inactive or de-registered", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(R.id.report_scroll), "Beneficiary is inactive or de-registered", Snackbar.LENGTH_LONG).show();
                     return;
                 }
 
                 if (finalForm == null) {
-                    Snackbar.make(findViewById(R.id.header_card), "Unable to open form", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(R.id.report_scroll), "Unable to open form", Snackbar.LENGTH_LONG).show();
                     return;
                 }
 
@@ -187,7 +212,7 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
                     startActivityForResult(intent, EDIT_FORM_REQUEST);
                 } catch (Exception e) {
                     Timber.e(e);
-                    Snackbar.make(findViewById(R.id.header_card), "Unable to open form", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(R.id.report_scroll), "Unable to open form", Snackbar.LENGTH_LONG).show();
                 }
             });
         });
@@ -339,194 +364,110 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
     }
 
     private void populateData() {
-        TextView title = findViewById(R.id.report_view_title);
-        title.setText(getString(R.string.tb_report_title, reportModel.getReporting_month()));
-
-        setText(R.id.txt_reporting_month, reportModel.getReporting_month());
-        setText(R.id.txt_facility_name, reportModel.getFacility());
+        TextView meta = findViewById(R.id.report_meta);
+        if (meta != null) {
+            meta.setText(String.format("Facility Name: %s  · Reporting Period: %s",
+                    reportModel.getFacility(), reportModel.getReporting_month()));
+        }
 
         Map<String, String> data = reportModel.toValueMap();
 
-        // Q1
-        setText(R.id.q1_f_lt1, data.get("q1_f_lt_1"));
-        setText(R.id.q1_f_1_4, data.get("q1_f_1_4"));
-        setText(R.id.q1_f_5_9, data.get("q1_f_5_9"));
-        setText(R.id.q1_f_10_14, data.get("q1_f_10_14"));
-        setText(R.id.q1_f_15_19, data.get("q1_f_15_19"));
-        setText(R.id.q1_f_20_plus, data.get("q1_f_20_plus"));
-        setText(R.id.q1_f_pc_18, data.get("q1_f_pc_18_plus"));
-        setText(R.id.q1_f_total, data.get("q1_f_total"));
-        setText(R.id.q1_m_lt1, data.get("q1_m_lt_1"));
-        setText(R.id.q1_m_1_4, data.get("q1_m_1_4"));
-        setText(R.id.q1_m_5_9, data.get("q1_m_5_9"));
-        setText(R.id.q1_m_10_14, data.get("q1_m_10_14"));
-        setText(R.id.q1_m_15_19, data.get("q1_m_15_19"));
-        setText(R.id.q1_m_20_plus, data.get("q1_m_20_plus"));
-        setText(R.id.q1_m_pc_18, data.get("q1_m_pc_18_plus"));
-        setText(R.id.q1_m_total, data.get("q1_m_total"));
-        setText(R.id.q1_hei, data.get("q1_hei"));
-        setText(R.id.q1_calhiv, data.get("q1_calhiv"));
-        setText(R.id.q1_wlhiv, data.get("q1_wlhiv"));
-        setText(R.id.q1_pc_lhiv, data.get("q1_pc_lhiv"));
+        String[] questions = {"q1", "q2", "q3", "q4", "q5", "q6", "q7"};
+        for (String q : questions) {
+            int totalF = 0;
+            int totalM = 0;
 
-        // Q2
-        setText(R.id.q2_f_lt1, data.get("q2_f_lt_1"));
-        setText(R.id.q2_f_1_4, data.get("q2_f_1_4"));
-        setText(R.id.q2_f_5_9, data.get("q2_f_5_9"));
-        setText(R.id.q2_f_10_14, data.get("q2_f_10_14"));
-        setText(R.id.q2_f_15_19, data.get("q2_f_15_19"));
-        setText(R.id.q2_f_20_plus, data.get("q2_f_20_plus"));
-        setText(R.id.q2_f_pc_18, data.get("q2_f_pc_18_plus"));
-        setText(R.id.q2_f_total, data.get("q2_f_total"));
-        setText(R.id.q2_m_lt1, data.get("q2_m_lt_1"));
-        setText(R.id.q2_m_1_4, data.get("q2_m_1_4"));
-        setText(R.id.q2_m_5_9, data.get("q2_m_5_9"));
-        setText(R.id.q2_m_10_14, data.get("q2_m_10_14"));
-        setText(R.id.q2_m_15_19, data.get("q2_m_15_19"));
-        setText(R.id.q2_m_20_plus, data.get("q2_m_20_plus"));
-        setText(R.id.q2_m_pc_18, data.get("q2_m_pc_18_plus"));
-        setText(R.id.q2_m_total, data.get("q2_m_total"));
-        setText(R.id.q2_hei, data.get("q2_hei"));
-        setText(R.id.q2_calhiv, data.get("q2_calhiv"));
-        setText(R.id.q2_wlhiv, data.get("q2_wlhiv"));
-        setText(R.id.q2_pc_lhiv, data.get("q2_pc_lhiv"));
+            // Row 1: < 1 Year
+            int f1 = parseVal(data.get(q + "_f_lt_1"));
+            int m1 = parseVal(data.get(q + "_m_lt_1"));
+            setText(getResources().getIdentifier("tv_" + q + "_lt1_f", "id", getPackageName()), String.valueOf(f1));
+            setText(getResources().getIdentifier("tv_" + q + "_lt1_m", "id", getPackageName()), String.valueOf(m1));
+            totalF += f1; totalM += m1;
 
-        // Q3
-        setText(R.id.q3_f_lt1, data.get("q3_f_lt_1"));
-        setText(R.id.q3_f_1_4, data.get("q3_f_1_4"));
-        setText(R.id.q3_f_5_9, data.get("q3_f_5_9"));
-        setText(R.id.q3_f_10_14, data.get("q3_f_10_14"));
-        setText(R.id.q3_f_15_19, data.get("q3_f_15_19"));
-        setText(R.id.q3_f_20_plus, data.get("q3_f_20_plus"));
-        setText(R.id.q3_f_pc_18, data.get("q3_f_pc_18_plus"));
-        setText(R.id.q3_f_total, data.get("q3_f_total"));
-        setText(R.id.q3_m_lt1, data.get("q3_m_lt_1"));
-        setText(R.id.q3_m_1_4, data.get("q3_m_1_4"));
-        setText(R.id.q3_m_5_9, data.get("q3_m_5_9"));
-        setText(R.id.q3_m_10_14, data.get("q3_m_10_14"));
-        setText(R.id.q3_m_15_19, data.get("q3_m_15_19"));
-        setText(R.id.q3_m_20_plus, data.get("q3_m_20_plus"));
-        setText(R.id.q3_m_pc_18, data.get("q3_m_pc_18_plus"));
-        setText(R.id.q3_m_total, data.get("q3_m_total"));
-        setText(R.id.q3_hei, data.get("q3_hei"));
-        setText(R.id.q3_calhiv, data.get("q3_calhiv"));
-        setText(R.id.q3_wlhiv, data.get("q3_wlhiv"));
-        setText(R.id.q3_pc_lhiv, data.get("q3_pc_lhiv"));
+            // Row 2: 1-4 Years
+            int f2 = parseVal(data.get(q + "_f_1_4"));
+            int m2 = parseVal(data.get(q + "_m_1_4"));
+            setText(getResources().getIdentifier("tv_" + q + "_1_4_f", "id", getPackageName()), String.valueOf(f2));
+            setText(getResources().getIdentifier("tv_" + q + "_1_4_m", "id", getPackageName()), String.valueOf(m2));
+            totalF += f2; totalM += m2;
 
-        // Q4
-        setText(R.id.q4_f_lt1, data.get("q4_f_lt_1"));
-        setText(R.id.q4_f_1_4, data.get("q4_f_1_4"));
-        setText(R.id.q4_f_5_9, data.get("q4_f_5_9"));
-        setText(R.id.q4_f_10_14, data.get("q4_f_10_14"));
-        setText(R.id.q4_f_15_19, data.get("q4_f_15_19"));
-        setText(R.id.q4_f_20_plus, data.get("q4_f_20_plus"));
-        setText(R.id.q4_f_pc_18, data.get("q4_f_pc_18_plus"));
-        setText(R.id.q4_f_total, data.get("q4_f_total"));
-        setText(R.id.q4_m_lt1, data.get("q4_m_lt_1"));
-        setText(R.id.q4_m_1_4, data.get("q4_m_1_4"));
-        setText(R.id.q4_m_5_9, data.get("q4_m_5_9"));
-        setText(R.id.q4_m_10_14, data.get("q4_m_10_14"));
-        setText(R.id.q4_m_15_19, data.get("q4_m_15_19"));
-        setText(R.id.q4_m_20_plus, data.get("q4_m_20_plus"));
-        setText(R.id.q4_m_pc_18, data.get("q4_m_pc_18_plus"));
-        setText(R.id.q4_m_total, data.get("q4_m_total"));
-        setText(R.id.q4_hei, data.get("q4_hei"));
-        setText(R.id.q4_calhiv, data.get("q4_calhiv"));
-        setText(R.id.q4_wlhiv, data.get("q4_wlhiv"));
-        setText(R.id.q4_pc_lhiv, data.get("q4_pc_lhiv"));
+            // Row 3: 5-9 Years
+            int f3 = parseVal(data.get(q + "_f_5_9"));
+            int m3 = parseVal(data.get(q + "_m_5_9"));
+            setText(getResources().getIdentifier("tv_" + q + "_5_9_f", "id", getPackageName()), String.valueOf(f3));
+            setText(getResources().getIdentifier("tv_" + q + "_5_9_m", "id", getPackageName()), String.valueOf(m3));
+            totalF += f3; totalM += m3;
 
-        // Q5
-        setText(R.id.q5_f_lt1, data.get("q5_f_lt_1"));
-        setText(R.id.q5_f_1_4, data.get("q5_f_1_4"));
-        setText(R.id.q5_f_5_9, data.get("q5_f_5_9"));
-        setText(R.id.q5_f_10_14, data.get("q5_f_10_14"));
-        setText(R.id.q5_f_15_19, data.get("q5_f_15_19"));
-        setText(R.id.q5_f_20_plus, data.get("q5_f_20_plus"));
-        setText(R.id.q5_f_pc_18, data.get("q5_f_pc_18_plus"));
-        setText(R.id.q5_f_total, data.get("q5_f_total"));
-        setText(R.id.q5_m_lt1, data.get("q5_m_lt_1"));
-        setText(R.id.q5_m_1_4, data.get("q5_m_1_4"));
-        setText(R.id.q5_m_5_9, data.get("q5_m_5_9"));
-        setText(R.id.q5_m_10_14, data.get("q5_m_10_14"));
-        setText(R.id.q5_m_15_19, data.get("q5_m_15_19"));
-        setText(R.id.q5_m_20_plus, data.get("q5_m_20_plus"));
-        setText(R.id.q5_m_pc_18, data.get("q5_m_pc_18_plus"));
-        setText(R.id.q5_m_total, data.get("q5_m_total"));
-        setText(R.id.q5_hei, data.get("q5_hei"));
-        setText(R.id.q5_calhiv, data.get("q5_calhiv"));
-        setText(R.id.q5_wlhiv, data.get("q5_wlhiv"));
-        setText(R.id.q5_pc_lhiv, data.get("q5_pc_lhiv"));
+            // Row 4: 10-14 Years
+            int f4 = parseVal(data.get(q + "_f_10_14"));
+            int m4 = parseVal(data.get(q + "_m_10_14"));
+            setText(getResources().getIdentifier("tv_" + q + "_10_14_f", "id", getPackageName()), String.valueOf(f4));
+            setText(getResources().getIdentifier("tv_" + q + "_10_14_m", "id", getPackageName()), String.valueOf(m4));
+            totalF += f4; totalM += m4;
 
-        // Q6
-        setText(R.id.q6_f_lt1, data.get("q6_f_lt_1"));
-        setText(R.id.q6_f_1_4, data.get("q6_f_1_4"));
-        setText(R.id.q6_f_5_9, data.get("q6_f_5_9"));
-        setText(R.id.q6_f_10_14, data.get("q6_f_10_14"));
-        setText(R.id.q6_f_15_19, data.get("q6_f_15_19"));
-        setText(R.id.q6_f_20_plus, data.get("q6_f_20_plus"));
-        setText(R.id.q6_f_pc_18, data.get("q6_f_pc_18_plus"));
-        setText(R.id.q6_f_total, data.get("q6_f_total"));
-        setText(R.id.q6_m_lt1, data.get("q6_m_lt_1"));
-        setText(R.id.q6_m_1_4, data.get("q6_m_1_4"));
-        setText(R.id.q6_m_5_9, data.get("q6_m_5_9"));
-        setText(R.id.q6_m_10_14, data.get("q6_m_10_14"));
-        setText(R.id.q6_m_15_19, data.get("q6_m_15_19"));
-        setText(R.id.q6_m_20_plus, data.get("q6_m_20_plus"));
-        setText(R.id.q6_m_pc_18, data.get("q6_m_pc_18_plus"));
-        setText(R.id.q6_m_total, data.get("q6_m_total"));
-        setText(R.id.q6_hei, data.get("q6_hei"));
-        setText(R.id.q6_calhiv, data.get("q6_calhiv"));
-        setText(R.id.q6_wlhiv, data.get("q6_wlhiv"));
-        setText(R.id.q6_pc_lhiv, data.get("q6_pc_lhiv"));
+            // Row 5: 15-19 Years
+            int f5 = parseVal(data.get(q + "_f_15_19"));
+            int m5 = parseVal(data.get(q + "_m_15_19"));
+            setText(getResources().getIdentifier("tv_" + q + "_15_19_f", "id", getPackageName()), String.valueOf(f5));
+            setText(getResources().getIdentifier("tv_" + q + "_15_19_m", "id", getPackageName()), String.valueOf(m5));
+            totalF += f5; totalM += m5;
 
-        // Q7
-        setText(R.id.q7_f_lt1, data.get("q7_f_lt_1"));
-        setText(R.id.q7_f_1_4, data.get("q7_f_1_4"));
-        setText(R.id.q7_f_5_9, data.get("q7_f_5_9"));
-        setText(R.id.q7_f_10_14, data.get("q7_f_10_14"));
-        setText(R.id.q7_f_15_19, data.get("q7_f_15_19"));
-        setText(R.id.q7_f_20_plus, data.get("q7_f_20_plus"));
-        setText(R.id.q7_f_pc_18, data.get("q7_f_pc_18_plus"));
-        setText(R.id.q7_f_total, data.get("q7_f_total"));
-        setText(R.id.q7_m_lt1, data.get("q7_m_lt_1"));
-        setText(R.id.q7_m_1_4, data.get("q7_m_1_4"));
-        setText(R.id.q7_m_5_9, data.get("q7_m_5_9"));
-        setText(R.id.q7_m_10_14, data.get("q7_m_10_14"));
-        setText(R.id.q7_m_15_19, data.get("q7_m_15_19"));
-        setText(R.id.q7_m_20_plus, data.get("q7_m_20_plus"));
-        setText(R.id.q7_m_pc_18, data.get("q7_m_pc_18_plus"));
-        setText(R.id.q7_m_total, data.get("q7_m_total"));
-        setText(R.id.q7_hei, data.get("q7_hei"));
-        setText(R.id.q7_calhiv, data.get("q7_calhiv"));
-        setText(R.id.q7_wlhiv, data.get("q7_wlhiv"));
-        setText(R.id.q7_pc_lhiv, data.get("q7_pc_lhiv"));
+            // Row 6: 20+ Years
+            int f6 = parseVal(data.get(q + "_f_20_plus"));
+            int m6 = parseVal(data.get(q + "_m_20_plus"));
+            setText(getResources().getIdentifier("tv_" + q + "_20_plus_f", "id", getPackageName()), String.valueOf(f6));
+            setText(getResources().getIdentifier("tv_" + q + "_20_plus_m", "id", getPackageName()), String.valueOf(m6));
+            totalF += f6; totalM += m6;
 
-        for (int q = 1; q <= 7; q++) {
-            setStatusText("q" + q + "_status", data.get("q" + q + "_status"));
-            setTextByName("q" + q + "_subpop_total", data.get("q" + q + "_subpop_total"));
-            if (q != 5) {
-                setTextByName("q" + q + "_other", data.get("q" + q + "_other"));
-            }
+            // Row 7: PC 18+ Years
+            int f7 = parseVal(data.get(q + "_f_pc_18_plus"));
+            int m7 = parseVal(data.get(q + "_m_pc_18_plus"));
+            setText(getResources().getIdentifier("tv_" + q + "_pc_18_f", "id", getPackageName()), String.valueOf(f7));
+            setText(getResources().getIdentifier("tv_" + q + "_pc_18_m", "id", getPackageName()), String.valueOf(m7));
+            totalF += f7; totalM += m7;
+
+            // Row 8: Total (1-7)
+            setText(getResources().getIdentifier("tv_" + q + "_total_f", "id", getPackageName()), String.valueOf(totalF));
+            setText(getResources().getIdentifier("tv_" + q + "_total_m", "id", getPackageName()), String.valueOf(totalM));
+
+            // Sub-Populations (9 to 12) - Aligned with BOTH column (far right)
+            int hei = parseVal(data.get(q + "_hei"));
+            int calhiv = parseVal(data.get(q + "_calhiv"));
+            int wlhiv = parseVal(data.get(q + "_wlhiv"));
+            int pcLhiv = parseVal(data.get(q + "_pc_lhiv"));
+
+            setText(getResources().getIdentifier("tv_" + q + "_hei", "id", getPackageName()), String.valueOf(hei));
+            setText(getResources().getIdentifier("tv_" + q + "_calhiv", "id", getPackageName()), String.valueOf(calhiv));
+            setText(getResources().getIdentifier("tv_" + q + "_wlhiv", "id", getPackageName()), String.valueOf(wlhiv));
+            setText(getResources().getIdentifier("tv_" + q + "_pc_lhiv", "id", getPackageName()), String.valueOf(pcLhiv));
+
+            // Row 13: Sub-Population Total (9-12)
+            int subTotal = hei + calhiv + wlhiv + pcLhiv;
+            setText(getResources().getIdentifier("tv_" + q + "_sub_total", "id", getPackageName()), String.valueOf(subTotal));
+
+            setStatusText(q + "_status", data.get(q + "_status"));
         }
 
-        TextView commentsView = findViewById(R.id.txt_comments);
+        TextView commentsView = findViewById(R.id.tv_comments);
         if (commentsView != null) {
             String comment = data.get("comment");
             commentsView.setText(comment != null && !comment.isEmpty() ? comment : "No comments");
         }
     }
 
-    private void setText(int viewId, String value) {
-        TextView textView = findViewById(viewId);
-        if (textView != null) {
-            textView.setText(value != null && !value.isEmpty() ? value : "0");
+    private int parseVal(String value) {
+        try {
+            return (value != null && !value.isEmpty()) ? Integer.parseInt(value) : 0;
+        } catch (NumberFormatException e) {
+            return 0;
         }
     }
 
-    private void setTextByName(String idName, String value) {
-        int viewId = getResources().getIdentifier(idName, "id", getPackageName());
-        if (viewId != 0) {
-            setText(viewId, value);
+    private void setText(int viewId, String value) {
+        if (viewId == 0) return;
+        TextView textView = findViewById(viewId);
+        if (textView != null) {
+            textView.setText(value != null && !value.isEmpty() ? value : "0");
         }
     }
 

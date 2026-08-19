@@ -44,16 +44,23 @@ public class ReportViewActivity extends AppCompatActivity {
     private String reportType;
     private LinearLayout container;
 
-    public static void start(Context context, String id, String type) {
+    public static void start(Context context, String id, String type, int orientation) {
         Intent intent = new Intent(context, ReportViewActivity.class);
         intent.putExtra(EXTRA_ID, id);
         intent.putExtra(EXTRA_TYPE, type);
+        intent.putExtra("orientation", orientation);
         context.startActivity(intent);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        int orientation = getIntent().getIntExtra("orientation", android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        if (orientation != android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) {
+            setRequestedOrientation(orientation);
+        }
+
         setContentView(R.layout.activity_report_view);
 
         reportId = getIntent().getStringExtra(EXTRA_ID);
