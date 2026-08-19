@@ -12,13 +12,22 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:navigationIcon="@drawable/ic_arrow_back_white_24dp">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <ImageButton
+            android:id="@+id/report_view_back_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/back"
+            android:src="@drawable/ic_arrow_back_white_24dp"
+            app:tint="@color/white" />
 
         <TextView
             android:id="@+id/report_view_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:text="@string/report_community_alert"
             android:textColor="@color/white"
             android:textSize="18sp"
@@ -240,6 +249,17 @@
                     android:layout_height="0dp"
                     android:orientation="horizontal"
                     android:visibility="gone">
+                    <TextView android:id="@+id/txt_disease_selected" android:layout_width="0dp" android:layout_height="0dp" />
+                    <TextView android:id="@+id/case_f_0_4" android:layout_width="0dp" android:layout_height="0dp" />
+                    <TextView android:id="@+id/case_f_5_14" android:layout_width="0dp" android:layout_height="0dp" />
+                    <TextView android:id="@+id/case_f_15_plus" android:layout_width="0dp" android:layout_height="0dp" />
+                    <TextView android:id="@+id/case_m_0_4" android:layout_width="0dp" android:layout_height="0dp" />
+                    <TextView android:id="@+id/case_m_5_14" android:layout_width="0dp" android:layout_height="0dp" />
+                    <TextView android:id="@+id/case_m_15_plus" android:layout_width="0dp" android:layout_height="0dp" />
+                    <TextView android:id="@+id/case_total" android:layout_width="0dp" android:layout_height="0dp" />
+                    <TextView android:id="@+id/txt_cbs_supervisor_part_of_response" android:layout_width="0dp" android:layout_height="0dp" />
+                    <TextView android:id="@+id/txt_cbs_supervisor_action_taken" android:layout_width="0dp" android:layout_height="0dp" />
+
                     <View android:id="@+id/header_sb_q1" android:layout_width="0dp" android:layout_height="0dp" />
                     <View android:id="@+id/content_sb_q1" android:layout_width="0dp" android:layout_height="0dp" />
                     <ImageView android:id="@+id/icon_sb_q1" android:layout_width="0dp" android:layout_height="0dp" />

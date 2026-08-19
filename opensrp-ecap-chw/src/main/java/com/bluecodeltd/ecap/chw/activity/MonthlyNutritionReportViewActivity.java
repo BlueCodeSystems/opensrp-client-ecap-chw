@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.NestedScrollView;
 import androidx.preference.PreferenceManager;
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.R;
@@ -52,6 +53,12 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        int orientation = getIntent().getIntExtra("orientation", android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        if (orientation != android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) {
+            setRequestedOrientation(orientation);
+        }
+
         setContentView(R.layout.activity_monthly_nutrition_report_view);
 
         Toolbar toolbar = findViewById(R.id.report_view_toolbar);
@@ -59,37 +66,23 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
-        applyLightStatusBar();
-        TextView toolbarTitle = findViewById(R.id.report_view_title);
-        if (toolbarTitle != null) {
-            toolbarTitle.setText("Monthly Nutrition Report");
-        }
-        findViewById(R.id.report_view_back_button).setOnClickListener(v -> finish());
+        toolbar.setNavigationOnClickListener(v -> finish());
+        applyInkStatusBar();
 
         baseEntityId = getIntent().getStringExtra(EXTRA_BASE_ENTITY_ID);
         loadReport();
 
-        setupExpansionLogic();
+        setupTabLogic();
         setupEditButton();
     }
 
-    private void applyLightStatusBar() {
+    private void applyInkStatusBar() {
         Window window = getWindow();
-        window.setStatusBarColor(Color.WHITE);
-        View decorView = window.getDecorView();
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            WindowInsetsController controller = decorView.getWindowInsetsController();
-            if (controller != null) {
-                controller.setSystemBarsAppearance(
-                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
-                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS);
-            }
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            int flags = decorView.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-            decorView.setSystemUiVisibility(flags);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setStatusBarColor(Color.parseColor("#1B3A4B"));
         }
     }
+
     private void loadReport() {
         if (baseEntityId != null) {
             reportModel = MonthlyReportDao.getReport(ReportRegisterActivity.REPORT_TABLE_NUTRITION, baseEntityId);
@@ -100,39 +93,56 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
         }
     }
 
-    private void setupExpansionLogic() {
-        setupSection(R.id.header_section_a, R.id.content_section_a, R.id.icon_section_a);
-        setupSection(R.id.header_section_b, R.id.content_section_b, R.id.icon_section_b);
-        setupSection(R.id.header_section_c, R.id.content_section_c, R.id.icon_section_c);
-        setupSection(R.id.header_section_d, R.id.content_section_d, R.id.icon_section_d);
-        setupSection(R.id.header_section_e, R.id.content_section_e, R.id.icon_section_e);
-        setupSection(R.id.header_section_f, R.id.content_section_f, R.id.icon_section_f);
-        setupSection(R.id.header_section_g, R.id.content_section_g, R.id.icon_section_g);
-        setupSection(R.id.header_section_h, R.id.content_section_h, R.id.icon_section_h);
-        setupSection(R.id.header_section_i, R.id.content_section_i, R.id.icon_section_i);
-        setupSection(R.id.header_section_comments, R.id.content_section_comments, R.id.icon_section_comments);
+    private void setupTabLogic() {
+        TextView tabA = findViewById(R.id.tab_a);
+        TextView tabB = findViewById(R.id.tab_b);
+        TextView tabCD = findViewById(R.id.tab_cd);
+        TextView tabEFG = findViewById(R.id.tab_efg);
+        TextView tabHI = findViewById(R.id.tab_hi);
+
+        View secA = findViewById(R.id.sec_a);
+        View secB = findViewById(R.id.sec_b);
+        View secCD = findViewById(R.id.sec_cd);
+        View secEFG = findViewById(R.id.sec_efg);
+        View secHI = findViewById(R.id.sec_hi);
+
+        NestedScrollView scrollView = findViewById(R.id.report_scroll);
+
+        View.OnClickListener tabClickListener = v -> {
+            View target = null;
+            resetTabs(tabA, tabB, tabCD, tabEFG, tabHI);
+            v.setBackgroundColor(Color.WHITE);
+            ((TextView) v).setTextColor(Color.parseColor("#1B3A4B"));
+
+            int id = v.getId();
+            if (id == R.id.tab_a) target = secA;
+            else if (id == R.id.tab_b) target = secB;
+            else if (id == R.id.tab_cd) target = secCD;
+            else if (id == R.id.tab_efg) target = secEFG;
+            else if (id == R.id.tab_hi) target = secHI;
+
+            if (target != null) {
+                View finalTarget = target;
+                scrollView.post(() -> scrollView.smoothScrollTo(0, finalTarget.getTop()));
+            }
+        };
+
+        tabA.setOnClickListener(tabClickListener);
+        tabB.setOnClickListener(tabClickListener);
+        tabCD.setOnClickListener(tabClickListener);
+        tabEFG.setOnClickListener(tabClickListener);
+        tabHI.setOnClickListener(tabClickListener);
     }
 
-    private void setupSection(int headerId, int contentId, int iconId) {
-        View header = findViewById(headerId);
-        View content = findViewById(contentId);
-        ImageView icon = findViewById(iconId);
-
-        if (header != null && content != null && icon != null) {
-            header.setOnClickListener(v -> {
-                if (content.getVisibility() == View.VISIBLE) {
-                    content.setVisibility(View.GONE);
-                    icon.setImageResource(R.drawable.baseline_expand_more_24);
-                } else {
-                    content.setVisibility(View.VISIBLE);
-                    icon.setImageResource(R.drawable.baseline_expand_less_24);
-                }
-            });
+    private void resetTabs(TextView... tabs) {
+        for (TextView tab : tabs) {
+            tab.setBackgroundColor(Color.parseColor("#21603F"));
+            tab.setTextColor(Color.parseColor("#CFE3D6"));
         }
     }
 
     private void setupEditButton() {
-        ImageButton btnEdit = findViewById(R.id.btn_edit_report);
+        View btnEdit = findViewById(R.id.btn_edit_report);
         if (btnEdit != null) {
             btnEdit.setOnClickListener(v -> openEditForm());
         }
@@ -161,12 +171,12 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
                 if (isFinishing() || isDestroyed()) return;
                 String status = finalCaseStatusModel != null ? finalCaseStatusModel.getCase_status() : null;
                 if ("0".equals(status) || "2".equals(status)) {
-                    Snackbar.make(findViewById(R.id.header_card), "Beneficiary is inactive or de-registered", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(R.id.report_scroll), "Beneficiary is inactive or de-registered", Snackbar.LENGTH_LONG).show();
                     return;
                 }
 
                 if (finalForm == null) {
-                    Snackbar.make(findViewById(R.id.header_card), "Unable to open form", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(R.id.report_scroll), "Unable to open form", Snackbar.LENGTH_LONG).show();
                     return;
                 }
 
@@ -185,7 +195,7 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
                     startActivityForResult(intent, EDIT_FORM_REQUEST);
                 } catch (Exception e) {
                     Timber.e(e);
-                    Snackbar.make(findViewById(R.id.header_card), "Unable to open form", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(R.id.report_scroll), "Unable to open form", Snackbar.LENGTH_LONG).show();
                 }
             });
         });
@@ -337,9 +347,6 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
     }
 
     private void populateData() {
-        TextView title = findViewById(R.id.report_view_title);
-        title.setText(getString(R.string.nutrition_report_title, reportModel.getReporting_month()));
-
         setText(R.id.txt_reporting_month, reportModel.getReporting_month());
         setText(R.id.txt_facility_name, reportModel.getFacility());
 
@@ -357,6 +364,13 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
         setText(R.id.hh_practicing_exclusive_bf, data.get("hh_practicing_exclusive_bf"));
         setText(R.id.hh_practicing_complementary_feeding, data.get("hh_practicing_complementary_feeding"));
         setText(R.id.hh_wash_activities, data.get("hh_wash_activities"));
+        setText(R.id.et_b_hh_visited, data.get("hh_visited"));
+        setText(R.id.et_b_ppmam_id, data.get("ppmam_id"));
+        setText(R.id.et_b_ppmam_ref, data.get("ppmam_ref"));
+        setText(R.id.et_b_other_children_pmam, data.get("other_children_pmam"));
+        setText(R.id.et_b_plw_art, data.get("plw_art"));
+        setText(R.id.et_b_plw_ifas, data.get("plw_ifas"));
+        setText(R.id.et_b_food_insecurity, data.get("food_insecurity"));
 
         // Section C
         setText(R.id.mnp_children_6_23_received, data.get("mnp_children_6_23_received"));
@@ -365,12 +379,14 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
         setText(R.id.vita_children_12_59_months, data.get("vita_children_12_59_months"));
         setText(R.id.vita_plw_supplemented, data.get("vita_plw_supplemented"));
         setText(R.id.deworming_children_12_59, data.get("deworming_children_12_59"));
+        setText(R.id.et_c_deworm_plw, data.get("deworm_plw"));
 
         // Section D
         setText(R.id.ecd_centres_supported_monitoring, data.get("ecd_centres_supported_monitoring"));
         setText(R.id.ecd_centres_with_feeding, data.get("ecd_centres_with_feeding"));
         setText(R.id.ecd_children_enrolled, data.get("ecd_children_enrolled"));
         setText(R.id.ecd_caregivers_trained, data.get("ecd_caregivers_trained"));
+        setText(R.id.et_d_dev_screening, data.get("dev_screening"));
 
         // Section E
         setText(R.id.wfa_underweight, data.get("wfa_underweight"));
@@ -387,6 +403,7 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
         setText(R.id.muac_red_below_11_5, data.get("muac_red_below_11_5"));
         setText(R.id.muac_yellow_11_5_to_12_5, data.get("muac_yellow_11_5_to_12_5"));
         setText(R.id.muac_green_12_5_plus, data.get("muac_green_12_5_plus"));
+        setText(R.id.et_g_oedema, data.get("muac_oedema"));
 
         // Section H
         setText(R.id.sti_referred, data.get("sti_referred"));
@@ -395,16 +412,11 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
         // Section I
         setText(R.id.referral_nutrition_to_health, data.get("referral_nutrition_to_health"));
         setText(R.id.referral_feedback_received, data.get("referral_feedback_received"));
+        setText(R.id.et_i_date_referral, data.get("date_referral"));
+        setText(R.id.et_i_date_feedback, data.get("date_feedback"));
+        setText(R.id.et_i_hiv_tb_integration, data.get("hiv_tb_integration"));
 
-        setStatusText(R.id.status_section_a, data.get("sec_subpop_status"));
-        setStatusText(R.id.status_section_b, data.get("sec_hh_malnutrition_status"));
-        setStatusText(R.id.status_section_c, data.get("sec_mnp_vita_status"));
-        setStatusText(R.id.status_section_d, data.get("sec_ecd_status"));
-        setStatusText(R.id.status_section_e, data.get("sec_weight_for_age_status"));
-        setStatusText(R.id.status_section_f, data.get("sec_nutrition_assessment_status"));
-        setStatusText(R.id.status_section_g, data.get("sec_muac_status"));
-        setStatusText(R.id.status_section_h, data.get("sec_sti_status"));
-        setStatusText(R.id.status_section_i, data.get("sec_referral_status"));
+        calculateAndSetTotals(data);
 
         TextView commentsView = findViewById(R.id.txt_comments);
         if (commentsView != null) {
@@ -413,22 +425,62 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
         }
     }
 
+    private void calculateAndSetTotals(Map<String, String> data) {
+        // Section A
+        int totalA = sum(data, "subpop_calhiv", "subpop_hei", "subpop_cml_hiv", "subpop_cpbfa", "subpop_siblings");
+        setText(R.id.tv_a_total, String.valueOf(totalA));
+
+        // Section B
+        int totalB = sum(data, "hh_practicing_diet_diversity", "hh_practicing_exclusive_bf", "hh_practicing_complementary_feeding", "hh_wash_activities", 
+                         "hh_visited", "ppmam_id", "ppmam_ref", "other_children_pmam", "plw_art", "plw_ifas", "food_insecurity");
+        setText(R.id.tv_b_total, String.valueOf(totalB));
+        
+        // Section C
+        int totalC = sum(data, "mnp_children_6_23_received", "mnp_plw_received", "vita_children_6_11_months", "vita_children_12_59_months", "vita_plw_supplemented", "deworming_children_12_59", "deworm_plw");
+        setText(R.id.tv_c_total, String.valueOf(totalC));
+
+        // Section D
+        int totalD = sum(data, "ecd_centres_supported_monitoring", "ecd_centres_with_feeding", "ecd_children_enrolled", "ecd_caregivers_trained", "dev_screening");
+        setText(R.id.tv_d_total, String.valueOf(totalD));
+
+        // Section E
+        int totalE = sum(data, "wfa_underweight", "wfa_overweight", "wfa_normal");
+        setText(R.id.tv_e_total, String.valueOf(totalE));
+
+        // Section F
+        int totalF = sum(data, "nutrition_grade_1", "nutrition_grade_2", "nutrition_grade_3", "nutrition_nr");
+        setText(R.id.tv_f_total, String.valueOf(totalF));
+
+        // Section G
+        int totalG = sum(data, "muac_red_below_11_5", "muac_yellow_11_5_to_12_5", "muac_green_12_5_plus", "muac_oedema");
+        setText(R.id.tv_g_total, String.valueOf(totalG));
+
+        // Section H
+        int totalH = sum(data, "sti_referred", "sti_treated");
+        setText(R.id.tv_h_total, String.valueOf(totalH));
+
+        // Section I
+        int totalI = sum(data, "referral_nutrition_to_health", "referral_feedback_received", "hiv_tb_integration");
+        setText(R.id.tv_i_total, String.valueOf(totalI));
+    }
+
+    private int sum(Map<String, String> data, String... keys) {
+        int total = 0;
+        for (String key : keys) {
+            String val = data.get(key);
+            if (val != null && !val.isEmpty()) {
+                try {
+                    total += Integer.parseInt(val);
+                } catch (NumberFormatException ignored) {}
+            }
+        }
+        return total;
+    }
+
     private void setText(int viewId, String value) {
         TextView textView = findViewById(viewId);
         if (textView != null) {
             textView.setText(value != null && !value.isEmpty() ? value : "0");
-        }
-    }
-
-    private void setStatusText(int viewId, String value) {
-        TextView textView = findViewById(viewId);
-        if (textView == null) return;
-        if ("open".equalsIgnoreCase(value)) {
-            textView.setText("Status: Open");
-        } else if ("closed".equalsIgnoreCase(value)) {
-            textView.setText("Status: Closed");
-        } else {
-            textView.setText("");
         }
     }
 
