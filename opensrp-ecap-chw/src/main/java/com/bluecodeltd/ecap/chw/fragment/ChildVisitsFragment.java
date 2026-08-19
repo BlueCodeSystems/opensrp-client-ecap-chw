@@ -70,7 +70,11 @@ public class ChildVisitsFragment extends Fragment {
             }
             if (progress != null) progress.setVisibility(View.GONE);
         });
-        viewModel.refresh(childId);
+        if (childId != null) {
+            viewModel.refresh(childId);
+        } else if (progress != null) {
+            progress.setVisibility(View.GONE);
+        }
 
 
         return vieww;
