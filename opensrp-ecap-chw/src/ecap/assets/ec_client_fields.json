@@ -9530,6 +9530,20 @@
           "json_mapping": {
             "field": "attributes.date_calculation"
           }
+        },
+        {
+          "column_name": "is_ca_pregnant",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_ca_pregnant"
+          }
+        },
+        {
+          "column_name": "is_ca_breastfeeding",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_ca_breastfeeding"
+          }
         }
       ]
     },

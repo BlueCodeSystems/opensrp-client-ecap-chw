@@ -66,7 +66,7 @@ public class ChildProfileInteractor extends CoreChildProfileInteractor {
     private static ChildProfileInteractor.Flavour childProfileInteractorFlv = new ChildProfileInteractorFlv();
 
     public ChildProfileInteractor() {
-        this(new AppExecutors());
+        this(ChwApplication.getInstance().getAppExecutors());
     }
 
     @VisibleForTesting

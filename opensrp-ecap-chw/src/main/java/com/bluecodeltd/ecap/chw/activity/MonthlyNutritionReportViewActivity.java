@@ -1,4 +1,5 @@
 package com.bluecodeltd.ecap.chw.activity;
+import com.bluecodeltd.ecap.chw.application.ChwApplication;
 
 import android.os.Bundle;
 import android.view.View;
@@ -317,7 +318,7 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
             }
         };
         try {
-            new AppExecutors().diskIO().execute(runnable);
+            ChwApplication.getInstance().getAppExecutors().diskIO().execute(runnable);
             return true;
         } catch (Exception e) {
             Timber.e(e);

@@ -51,7 +51,7 @@ public class HouseholdIndexInteractor implements HouseholdIndexContract.Interact
 
     public HouseholdIndexInteractor(HouseholdIndexContract.Presenter presenter) {
         this.presenter = presenter;
-        this.appExecutors = new AppExecutors();
+        this.appExecutors = ChwApplication.getInstance().getAppExecutors();
     }
 
 
