@@ -151,6 +151,8 @@ public class VcaScreeningModel {
     private String name_ovc;
     private String ovc_name;
     private String ovc_district;
+    private String is_ca_pregnant;
+    private String is_ca_breastfeeding;
 
     public String getLast_interacted_with() {
         return last_interacted_with;
@@ -1356,6 +1358,22 @@ public class VcaScreeningModel {
 
     public void setOvc_district(String ovc_district) {
         this.ovc_district = ovc_district;
+    }
+
+    public String getIs_ca_pregnant() {
+        return is_ca_pregnant;
+    }
+
+    public void setIs_ca_pregnant(String is_ca_pregnant) {
+        this.is_ca_pregnant = is_ca_pregnant;
+    }
+
+    public String getIs_ca_breastfeeding() {
+        return is_ca_breastfeeding;
+    }
+
+    public void setIs_ca_breastfeeding(String is_ca_breastfeeding) {
+        this.is_ca_breastfeeding = is_ca_breastfeeding;
     }
 
     private final java.util.Map<String, String> additionalFields = new java.util.HashMap<>();

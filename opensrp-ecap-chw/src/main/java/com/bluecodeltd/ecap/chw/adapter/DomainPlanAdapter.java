@@ -422,7 +422,7 @@ public class DomainPlanAdapter extends RecyclerView.Adapter<DomainPlanAdapter.Vi
         };
 
         try {
-            AppExecutors appExecutors = new AppExecutors();
+            AppExecutors appExecutors = ChwApplication.getInstance().getAppExecutors();
             appExecutors.diskIO().execute(runnable);
             return true;
         } catch (Exception exception) {

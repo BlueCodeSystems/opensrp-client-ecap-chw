@@ -134,49 +134,72 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
     @Override
     public void onClick(View view) {
         if (view != null && view.getId() == R.id.login_login_btn) {
-            // Avoid blocking the main thread on SQLCipher locks (SettingsRepository query).
-            if (cachedAppVersionAllowed != null) {
-                super.onClick(view);
-                return;
-            }
-            if (appVersionCheckInFlight) return;
-            appVersionCheckInFlight = true;
-            final long token = ++appVersionCheckToken;
-            view.setEnabled(false);
-            Toast.makeText(this, "Checking app version…", Toast.LENGTH_SHORT).show();
-
-            // Safety: avoid leaving the button disabled forever if the DB lock never clears.
-            Threading.main(() -> Threading.mainHandler().postDelayed(() -> {
-                if (!appVersionCheckInFlight) return;
-                if (appVersionCheckToken != token) return;
-                appVersionCheckInFlight = false;
-                if (!isFinishing() && !isDestroyed()) {
-                    view.setEnabled(true);
-                    Toast.makeText(this, "Version check timed out. Please try again.", Toast.LENGTH_SHORT).show();
-                }
-            }, 6000L));
-
-            Threading.io(() -> {
-                boolean allowed = false; // fail-closed
-                try {
-                    allowed = LoginActivity.super.isAppVersionAllowed();
-                } catch (Throwable t) {
-                    Timber.e(t, "isAppVersionAllowed check failed");
-                }
-                cachedAppVersionAllowed = allowed;
-
-                Threading.main(() -> {
-                    if (appVersionCheckToken != token) return;
-                    appVersionCheckInFlight = false;
-                    if (isFinishing() || isDestroyed()) return;
-                    view.setEnabled(true);
-                    LoginActivity.super.onClick(view);
-                });
-            });
+            runVersionCheckedLogin(view);
             return;
         }
 
         super.onClick(view);
+    }
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, android.view.KeyEvent event) {
+        // The password field's IME "Done"/Enter action calls BaseLoginActivity.attemptLogin()
+        // directly, bypassing onClick() above and its cached/background-threaded version
+        // check. Route it through the same path so pressing Enter can't block the main
+        // thread on the SQLCipher lock (SettingsRepository query) either.
+        if (actionId == org.smartregister.R.integer.login
+                || actionId == android.view.inputmethod.EditorInfo.IME_NULL
+                || actionId == android.view.inputmethod.EditorInfo.IME_ACTION_DONE) {
+            runVersionCheckedLogin(findViewById(R.id.login_login_btn));
+            return true;
+        }
+        return super.onEditorAction(v, actionId, event);
+    }
+
+    /**
+     * Runs the app-version check (cached after the first call) off the main thread before
+     * calling attemptLogin(), since the underlying check can block on a SQLCipher lock.
+     */
+    private void runVersionCheckedLogin(View viewToToggle) {
+        // Avoid blocking the main thread on SQLCipher locks (SettingsRepository query).
+        if (cachedAppVersionAllowed != null) {
+            attemptLogin();
+            return;
+        }
+        if (appVersionCheckInFlight) return;
+        appVersionCheckInFlight = true;
+        final long token = ++appVersionCheckToken;
+        if (viewToToggle != null) viewToToggle.setEnabled(false);
+        Toast.makeText(this, "Checking app version…", Toast.LENGTH_SHORT).show();
+
+        // Safety: avoid leaving the button disabled forever if the DB lock never clears.
+        Threading.main(() -> Threading.mainHandler().postDelayed(() -> {
+            if (!appVersionCheckInFlight) return;
+            if (appVersionCheckToken != token) return;
+            appVersionCheckInFlight = false;
+            if (!isFinishing() && !isDestroyed()) {
+                if (viewToToggle != null) viewToToggle.setEnabled(true);
+                Toast.makeText(this, "Version check timed out. Please try again.", Toast.LENGTH_SHORT).show();
+            }
+        }, 6000L));
+
+        Threading.io(() -> {
+            boolean allowed = false; // fail-closed
+            try {
+                allowed = LoginActivity.super.isAppVersionAllowed();
+            } catch (Throwable t) {
+                Timber.e(t, "isAppVersionAllowed check failed");
+            }
+            cachedAppVersionAllowed = allowed;
+
+            Threading.main(() -> {
+                if (appVersionCheckToken != token) return;
+                appVersionCheckInFlight = false;
+                if (isFinishing() || isDestroyed()) return;
+                if (viewToToggle != null) viewToToggle.setEnabled(true);
+                attemptLogin();
+            });
+        });
     }
 
 

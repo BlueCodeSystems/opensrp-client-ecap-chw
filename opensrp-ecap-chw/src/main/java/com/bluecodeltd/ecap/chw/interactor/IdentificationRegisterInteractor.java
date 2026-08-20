@@ -30,7 +30,7 @@ public class IdentificationRegisterInteractor implements IdentificationRegisterC
 
     public IdentificationRegisterInteractor(IdentificationRegisterContract.Presenter presenter) {
         this.presenter = presenter;
-        this.appExecutors = new AppExecutors();
+        this.appExecutors = ChwApplication.getInstance().getAppExecutors();
     }
 
     @Override

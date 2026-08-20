@@ -178,6 +178,17 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
         // Last updated format: 01 Jan 2025, 10:30
         dtf = DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm");
         colors = new ArrayList<Integer>();
+        // Vibrant palette matching the new card gradients.
+        // Populated before the ViewModel observer is registered below: if the ViewModel
+        // survives a configuration change, observe() delivers its cached state synchronously
+        // on subscribe, and dataForBarchart()/setColors() must never see an empty list.
+        colors.add(Color.parseColor("#0097A7")); // CALHIV  (teal)
+        colors.add(Color.parseColor("#26C6DA")); // HEI     (cyan)
+        colors.add(Color.parseColor("#5C6BC0")); // CWLHIV  (indigo)
+        colors.add(Color.parseColor("#AB47BC")); // C/ASSV  (purple)
+        // Static chart appearance (axes, legend, formatters) doesn't depend on data,
+        // so configure it once instead of rebuilding it on every state update.
+        configureChartAppearance();
 
         appUpdater = new AppUpdater(DashboardActivity.this);
         UpdateManager.startOnce(this);
@@ -207,7 +218,6 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
                 try { binding.iconDueVisits.setColorFilter(fgColor, PorterDuff.Mode.SRC_IN); } catch (Exception ignored) {}
                 try { binding.dueVisitsView.setTextColor(fgColor); } catch (Exception ignored) {}
                 BarData data = dataForBarchart(state.getSubpops());
-                configureChartAppearance();
                 prepareChartData(data);
                 allHouseHoldsCount = binding.allHouseholdsNumber;
                 allHouseHoldsCount.setText(state.getHouseholdsCount() != null ? state.getHouseholdsCount() : "0");
@@ -234,12 +244,6 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
             }
         });
 
-        // Vibrant palette matching the new card gradients
-        colors.clear();
-        colors.add(Color.parseColor("#0097A7")); // CALHIV  (teal)
-        colors.add(Color.parseColor("#26C6DA")); // HEI     (cyan)
-        colors.add(Color.parseColor("#5C6BC0")); // CWLHIV  (indigo)
-        colors.add(Color.parseColor("#AB47BC")); // C/ASSV  (purple)
         if (username != null && password != null) {
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(DashboardActivity.this);
             String code = sp.getString("code", "0000");
@@ -303,7 +307,13 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
         }
         BarDataSet set1 = new BarDataSet(values, SET_LABEL);
         ArrayList<IBarDataSet> dataSets = new ArrayList<>();
-        set1.setColors(colors);
+        // MPAndroidChart divides by the color list's size when rendering, so an empty
+        // list (which should no longer happen now that colors is seeded before the
+        // ViewModel observer is registered) would throw at render time rather than here.
+        // Leaving BarDataSet's own default color in place is safer than passing an empty list.
+        if (colors != null && !colors.isEmpty()) {
+            set1.setColors(colors);
+        }
         dataSets.add(set1);
 
         BarData data = new BarData(dataSets);

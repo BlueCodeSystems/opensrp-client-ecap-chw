@@ -1,4 +1,5 @@
 package com.bluecodeltd.ecap.chw.activity;
+import com.bluecodeltd.ecap.chw.application.ChwApplication;
 
 import static com.vijay.jsonwizard.utils.FormUtils.fields;
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
@@ -432,7 +433,7 @@ public class ReportRegisterActivity extends BaseRegisterActivity {
         };
 
         try {
-            new AppExecutors().diskIO().execute(runnable);
+            ChwApplication.getInstance().getAppExecutors().diskIO().execute(runnable);
             return true;
         } catch (Exception e) {
             timber.log.Timber.e(e);

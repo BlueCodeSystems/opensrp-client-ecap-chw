@@ -1,4 +1,5 @@
 package com.bluecodeltd.ecap.chw.interactor;
+import com.bluecodeltd.ecap.chw.application.ChwApplication;
 
 import android.content.Context;
 
@@ -26,7 +27,7 @@ public class GuideBooksFragmentInteractor implements GuideBooksFragmentContract.
     private AppExecutors appExecutors;
 
     public GuideBooksFragmentInteractor() {
-        this(new AppExecutors());
+        this(ChwApplication.getInstance().getAppExecutors());
     }
 
     @VisibleForTesting

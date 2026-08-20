@@ -293,6 +293,56 @@
         }
       },
       {
+        "key": "is_ca_pregnant",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "is_ca_pregnant",
+        "type": "native_radio",
+        "label": "Is the CA pregnant?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "is_ca_breastfeeding",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "is_ca_breastfeeding",
+        "type": "native_radio",
+        "label": "Is the CA Breastfeeding?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "vca_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "signature",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",

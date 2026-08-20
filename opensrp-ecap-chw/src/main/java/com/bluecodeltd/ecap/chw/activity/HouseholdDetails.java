@@ -2160,7 +2160,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
         try {
-            AppExecutors appExecutors = new AppExecutors();
+            AppExecutors appExecutors = ChwApplication.getInstance().getAppExecutors();
             appExecutors.diskIO().execute(runnable);
             return true;
         } catch (Exception exception) {
@@ -2223,7 +2223,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
         try {
-            AppExecutors appExecutors = new AppExecutors();
+            AppExecutors appExecutors = ChwApplication.getInstance().getAppExecutors();
             appExecutors.diskIO().execute(runnable);
             return true;
         } catch (Exception exception) {
@@ -2817,6 +2817,15 @@ public class HouseholdDetails extends AppCompatActivity {
     }
     public void openFormUsingFormUtils(Context context, String formName) throws JSONException {
 
+        if (house == null) {
+            // Household data hasn't finished loading yet (applyState runs asynchronously
+            // once the DB query completes), so oMapper and other fields below aren't ready.
+            Toast.makeText(context, "Please wait, household data is still loading", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (oMapper == null) {
+            oMapper = new ObjectMapper();
+        }
 
         FormUtils formUtils = null;
         try {

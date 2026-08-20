@@ -1,4 +1,5 @@
 package com.bluecodeltd.ecap.chw.interactor;
+import com.bluecodeltd.ecap.chw.application.ChwApplication;
 
 import com.bluecodeltd.ecap.chw.contract.ListContract;
 import org.smartregister.family.util.AppExecutors;
@@ -18,7 +19,7 @@ public class ListInteractor<T extends ListContract.Identifiable> implements List
     protected AppExecutors appExecutors;
 
     public ListInteractor() {
-        appExecutors = new AppExecutors();
+        appExecutors = ChwApplication.getInstance().getAppExecutors();
     }
 
     @Override

@@ -1,4 +1,5 @@
 package com.bluecodeltd.ecap.chw.activity;
+import com.bluecodeltd.ecap.chw.application.ChwApplication;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -370,7 +371,7 @@ public class MalariaReportViewActivity extends AppCompatActivity {
             }
         };
         try {
-            new AppExecutors().diskIO().execute(runnable);
+            ChwApplication.getInstance().getAppExecutors().diskIO().execute(runnable);
             return true;
         } catch (Exception e) {
             Timber.e(e);

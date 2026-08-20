@@ -204,6 +204,8 @@ public class VCAScreeningDao extends AbstractDao {
             record.setOvc_name(getCursorValue(c, "ovc_name"));
             record.setOvc_district(getCursorValue(c,"ovc_district"));
             record.setLocation_moved_to(getCursorValue(c,"location_moved_to"));
+            record.setIs_ca_pregnant(getCursorValue(c, "is_ca_pregnant"));
+            record.setIs_ca_breastfeeding(getCursorValue(c, "is_ca_breastfeeding"));
 
 
             DaoModelFieldMapper.captureAdditionalFields(c, record);

@@ -531,7 +531,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         };
 
         try {
-            AppExecutors appExecutors = new AppExecutors();
+            AppExecutors appExecutors = ChwApplication.getInstance().getAppExecutors();
             appExecutors.diskIO().execute(runnable);
             return true;
         } catch (Exception exception) {
