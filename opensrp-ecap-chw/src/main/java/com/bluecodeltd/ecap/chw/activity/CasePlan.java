@@ -181,6 +181,9 @@ public class CasePlan extends AppCompatActivity {
                     try { caseStatusModel = IndexPersonDao.getCaseStatus(childId); } catch (Exception ignored) {}
                     CaseStatusModel finalCaseStatusModel = caseStatusModel;
                     Threading.main(() -> {
+                        if (isFinishing() || isDestroyed()) {
+                            return;
+                        }
                         if(finalCaseStatusModel != null && finalCaseStatusModel.getCase_status() != null) {
                             if(finalCaseStatusModel.getCase_status().equals("0") || finalCaseStatusModel.getCase_status().equals("2")) {
                                 Dialog dialog = new Dialog(this);
@@ -377,7 +380,7 @@ public class CasePlan extends AppCompatActivity {
 
 
         try {
-            AppExecutors appExecutors = new AppExecutors();
+            AppExecutors appExecutors = ChwApplication.getInstance().getAppExecutors();
             appExecutors.diskIO().execute(runnable);
             return true;
         } catch (Exception exception) {

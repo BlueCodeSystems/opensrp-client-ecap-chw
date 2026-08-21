@@ -4,374 +4,583 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EDEBE4"
     android:orientation="vertical"
-    tools:viewBindingIgnore="true"
-    android:fitsSystemWindows="true">
+    tools:viewBindingIgnore="true">
 
-        <androidx.appcompat.widget.Toolbar
-        android:id="@+id/report_view_toolbar"
+    <!-- ===== Titlebar ===== -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/report_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:background="@drawable/bg_profile_header_gradient"
-        android:elevation="2dp"
-        android:paddingStart="8dp"
-        android:paddingEnd="16dp"
-        app:titleTextColor="@android:color/white">
+        android:layout_height="?attr/actionBarSize"
+        android:background="#1B3A4B"
+        app:navigationIcon="@drawable/ic_arrow_back_white_24dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+                <View android:layout_width="9dp" android:layout_height="9dp" android:layout_marginEnd="8dp" android:background="#C98A3E" />
+                <TextView android:id="@+id/report_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Monthly Malaria Report" android:textColor="#FFFFFF" android:textSize="14sp" android:textStyle="bold" />
+            </LinearLayout>
+            <TextView android:id="@+id/report_meta" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="monospace" android:text="Comprehensive Program Statistics" android:textColor="#B9CBD1" android:textSize="11sp" />
+        </LinearLayout>
+        <ImageButton
+            android:id="@+id/btn_edit_report"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/edit_icon"
+            app:tint="#FFFFFF"
+            tools:ignore="ContentDescription" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <!-- ===== Action row ===== -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F3F1EA"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="14dp"
+        android:paddingVertical="8dp">
+        <Button android:id="@+id/btn_expand_all" style="?android:attr/borderlessButtonStyle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="8dp" android:background="#FFFFFF" android:paddingHorizontal="12dp" android:paddingVertical="6dp" android:text="Expand all" android:textAllCaps="false" android:textColor="#1B3A4B" android:textSize="12sp" android:textStyle="bold" />
+        <Button android:id="@+id/btn_collapse_all" style="?android:attr/borderlessButtonStyle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="#FFFFFF" android:paddingHorizontal="12dp" android:paddingVertical="6dp" android:text="Collapse all" android:textAllCaps="false" android:textColor="#1B3A4B" android:textSize="12sp" android:textStyle="bold" />
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="end" android:text="Scroll to view full report" android:textColor="#6B6B63" android:textSize="11sp" android:textStyle="italic" />
+    </LinearLayout>
+
+    <!-- ===== Tab Bar ===== -->
+    <HorizontalScrollView android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#184B31" android:scrollbars="none">
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal">
+            <TextView android:id="@+id/tab_a" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="#FFFFFF" android:clickable="true" android:focusable="true" android:paddingHorizontal="18dp" android:paddingVertical="9dp" android:text="Section A" android:textColor="#1B3A4B" android:textSize="12.5sp" android:textStyle="bold" />
+            <TextView android:id="@+id/tab_b" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="#21603F" android:clickable="true" android:focusable="true" android:paddingHorizontal="18dp" android:paddingVertical="9dp" android:text="Section B" android:textColor="#CFE3D6" android:textSize="12.5sp" android:textStyle="bold" />
+            <TextView android:id="@+id/tab_c" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="#21603F" android:clickable="true" android:focusable="true" android:paddingHorizontal="18dp" android:paddingVertical="9dp" android:text="Section C" android:textColor="#CFE3D6" android:textSize="12.5sp" android:textStyle="bold" />
+            <TextView android:id="@+id/tab_comments" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="#21603F" android:clickable="true" android:focusable="true" android:paddingHorizontal="18dp" android:paddingVertical="9dp" android:text="Comments" android:textColor="#CFE3D6" android:textSize="12.5sp" android:textStyle="bold" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/report_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingTop="16dp"
+        android:paddingBottom="24dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/report_view_back_button"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/back"
-                android:padding="8dp"
-                android:src="@drawable/ic_arrow_back_white_24dp"
-                app:tint="@android:color/white" />
-
-            <TextView
-                android:id="@+id/report_view_title"
-                android:layout_width="0dp"
+            <!-- SECTION A -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/sec_a"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:textColor="@android:color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Section A: Comprehensive Program" android:textColor="#1B3A4B" android:textSize="18sp" android:textStyle="bold" />
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="14dp" android:text="Full breakdown by age group and sub-population" android:textColor="#6B6B63" android:textSize="12sp" />
+
+                    <HorizontalScrollView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="12dp" android:scrollbars="none">
+                        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="6dp" android:text="Jump to:" android:textColor="#6B6B63" android:textSize="11sp" />
+                            <TextView android:id="@+id/chip_a_q1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="6dp" android:background="#F3F1EA" android:paddingHorizontal="9dp" android:paddingVertical="4dp" android:text="Q1" android:fontFamily="monospace" android:textSize="11sp" android:textStyle="bold" android:textColor="#3F5B68" />
+                            <TextView android:id="@+id/chip_a_q2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="6dp" android:background="#F3F1EA" android:paddingHorizontal="9dp" android:paddingVertical="4dp" android:text="Q2" android:fontFamily="monospace" android:textSize="11sp" android:textStyle="bold" android:textColor="#3F5B68" />
+                            <TextView android:id="@+id/chip_a_q3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="6dp" android:background="#F3F1EA" android:paddingHorizontal="9dp" android:paddingVertical="4dp" android:text="Q3" android:fontFamily="monospace" android:textSize="11sp" android:textStyle="bold" android:textColor="#3F5B68" />
+                            <TextView android:id="@+id/chip_a_q4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="6dp" android:background="#F3F1EA" android:paddingHorizontal="9dp" android:paddingVertical="4dp" android:text="Q4" android:fontFamily="monospace" android:textSize="11sp" android:textStyle="bold" android:textColor="#3F5B68" />
+                            <TextView android:id="@+id/chip_a_q5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="6dp" android:background="#F3F1EA" android:paddingHorizontal="9dp" android:paddingVertical="4dp" android:text="Q5" android:fontFamily="monospace" android:textSize="11sp" android:textStyle="bold" android:textColor="#3F5B68" />
+                            <TextView android:id="@+id/chip_a_q6" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="6dp" android:background="#F3F1EA" android:paddingHorizontal="9dp" android:paddingVertical="4dp" android:text="Q6" android:fontFamily="monospace" android:textSize="11sp" android:textStyle="bold" android:textColor="#3F5B68" />
+                            <TextView android:id="@+id/chip_a_q7" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="6dp" android:background="#F3F1EA" android:paddingHorizontal="9dp" android:paddingVertical="4dp" android:text="Q7" android:fontFamily="monospace" android:textSize="11sp" android:textStyle="bold" android:textColor="#3F5B68" />
+                            <TextView android:id="@+id/chip_a_q8" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="6dp" android:background="#F3F1EA" android:paddingHorizontal="9dp" android:paddingVertical="4dp" android:text="Q8" android:fontFamily="monospace" android:textSize="11sp" android:textStyle="bold" android:textColor="#3F5B68" />
+                            <TextView android:id="@+id/chip_a_q9" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="6dp" android:background="#F3F1EA" android:paddingHorizontal="9dp" android:paddingVertical="4dp" android:text="Q9" android:fontFamily="monospace" android:textSize="11sp" android:textStyle="bold" android:textColor="#3F5B68" />
+                            <TextView android:id="@+id/chip_a_q10" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="6dp" android:background="#F3F1EA" android:paddingHorizontal="9dp" android:paddingVertical="4dp" android:text="Q10" android:fontFamily="monospace" android:textSize="11sp" android:textStyle="bold" android:textColor="#3F5B68" />
+                        </LinearLayout>
+                    </HorizontalScrollView>
+
+                    <!-- Indicator Table Section A (Reusable Pattern) -->
+                    <!-- Q1 -->
+                    <LinearLayout android:id="@+id/panel_a_q1" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:background="#C9C6BC" android:orientation="vertical">
+                        <LinearLayout android:id="@+id/header_a_q1" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#3F5B68" android:padding="11dp" android:orientation="horizontal" android:clickable="true" android:focusable="true"><TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q1: People tested for malaria in the community" android:textColor="#FFFFFF" android:textStyle="bold" /><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="▸" android:textColor="#FFFFFF" /></LinearLayout>
+                        <LinearLayout android:id="@+id/body_a_q1" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone" android:background="#FFFFFF">
+                            <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:stretchColumns="1,2,3">
+                                <TableRow android:background="#F6F5F0"><TextView android:padding="6dp" android:text="#"/><TextView android:padding="6dp" android:text="CATEGORY" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="FEMALE" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="MALE" android:textStyle="bold"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="1"/><TextView android:padding="7dp" android:text="0-4 Years"/><TextView android:id="@+id/sa_q1_f_0_4" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q1_m_0_4" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="2"/><TextView android:padding="7dp" android:text="5-15 Years"/><TextView android:id="@+id/sa_q1_f_5_15" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q1_m_5_15" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="3"/><TextView android:padding="7dp" android:text="16-19 Years"/><TextView android:id="@+id/sa_q1_f_16_19" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q1_m_16_19" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="4"/><TextView android:padding="7dp" android:text="20+ Years"/><TextView android:id="@+id/sa_q1_f_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q1_m_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="5"/><TextView android:padding="7dp" android:text="Total (Age Groups)" android:textStyle="bold"/><TextView android:id="@+id/sa_q1_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sa_q1_total_m" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                                <TableRow android:background="#F5F5F5"><TextView/><TextView android:padding="5dp" android:text="By Sub-Population" android:textStyle="italic" android:textSize="12sp"/><TextView/><TextView/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="6"/><TextView android:padding="7dp" android:text="C/ALHIV"/><TextView android:id="@+id/sa_q1_f_calhiv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q1_m_calhiv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="7"/><TextView android:padding="7dp" android:text="HEI"/><TextView android:id="@+id/sa_q1_f_hei" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q1_m_hei" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="8"/><TextView android:padding="7dp" android:text="WLHIV Child"/><TextView android:id="@+id/sa_q1_f_wlhiv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q1_m_wlhiv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="9"/><TextView android:padding="7dp" android:text="SV Survivors"/><TextView android:id="@+id/sa_q1_f_sv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q1_m_sv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="10"/><TextView android:padding="7dp" android:text="AGYW_PBFW"/><TextView android:id="@+id/sa_q1_f_agyw" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:padding="7dp" android:gravity="center" android:text="-"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="11"/><TextView android:padding="7dp" android:text="HIV+ PBFW"/><TextView android:id="@+id/sa_q1_f_hiv_pos" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:padding="7dp" android:gravity="center" android:text="-"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="12"/><TextView android:padding="7dp" android:text="Siblings"/><TextView android:id="@+id/sa_q1_f_siblings" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q1_m_siblings" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="13"/><TextView android:padding="7dp" android:text="Caregivers"/><TextView android:id="@+id/sa_q1_f_caregivers" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q1_m_caregivers" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="14"/><TextView android:padding="7dp" android:text="Sub-Population Total" android:textStyle="bold"/><TextView android:id="@+id/sa_q1_sub_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sa_q1_sub_total" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                            </TableLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Repeat this logic for Q2-Q10 -->
+                    <!-- I'll use a loop-like update for all questions in the XML to ensure correctness -->
+                    <!-- Q2 -->
+                    <LinearLayout android:id="@+id/panel_a_q2" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:background="#C9C6BC" android:orientation="vertical">
+                        <LinearLayout android:id="@+id/header_a_q2" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#3F5B68" android:padding="11dp" android:orientation="horizontal" android:clickable="true" android:focusable="true"><TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q2: People tested who were malaria positive" android:textColor="#FFFFFF" android:textStyle="bold" /><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="▸" android:textColor="#FFFFFF" /></LinearLayout>
+                        <LinearLayout android:id="@+id/body_a_q2" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone" android:background="#FFFFFF">
+                            <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:stretchColumns="1,2,3">
+                                <TableRow android:background="#F6F5F0"><TextView android:padding="6dp" android:text="#"/><TextView android:padding="6dp" android:text="CATEGORY" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="FEMALE" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="MALE" android:textStyle="bold"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="1"/><TextView android:padding="7dp" android:text="0-4 Years"/><TextView android:id="@+id/sa_q2_f_0_4" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q2_m_0_4" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="2"/><TextView android:padding="7dp" android:text="5-15 Years"/><TextView android:id="@+id/sa_q2_f_5_15" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q2_m_5_15" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="3"/><TextView android:padding="7dp" android:text="16-19 Years"/><TextView android:id="@+id/sa_q2_f_16_19" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q2_m_16_19" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="4"/><TextView android:padding="7dp" android:text="20+ Years"/><TextView android:id="@+id/sa_q2_f_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q2_m_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="5"/><TextView android:padding="7dp" android:text="Total" android:textStyle="bold"/><TextView android:id="@+id/sa_q2_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sa_q2_total_m" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                                <TableRow android:background="#F5F5F5"><TextView/><TextView android:padding="5dp" android:text="By Sub-Population" android:textStyle="italic" android:textSize="12sp"/><TextView/><TextView/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="6"/><TextView android:padding="7dp" android:text="C/ALHIV"/><TextView android:id="@+id/sa_q2_f_calhiv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q2_m_calhiv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="7"/><TextView android:padding="7dp" android:text="HEI"/><TextView android:id="@+id/sa_q2_f_hei" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q2_m_hei" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="8"/><TextView android:padding="7dp" android:text="WLHIV Child"/><TextView android:id="@+id/sa_q2_f_wlhiv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q2_m_wlhiv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="9"/><TextView android:padding="7dp" android:text="SV Survivors"/><TextView android:id="@+id/sa_q2_f_sv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q2_m_sv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="10"/><TextView android:padding="7dp" android:text="AGYW_PBFW"/><TextView android:id="@+id/sa_q2_f_agyw" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:padding="7dp" android:gravity="center" android:text="-"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="11"/><TextView android:padding="7dp" android:text="HIV+ PBFW"/><TextView android:id="@+id/sa_q2_f_hiv_pos" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:padding="7dp" android:gravity="center" android:text="-"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="12"/><TextView android:padding="7dp" android:text="Siblings"/><TextView android:id="@+id/sa_q2_f_siblings" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q2_m_siblings" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="13"/><TextView android:padding="7dp" android:text="Caregivers"/><TextView android:id="@+id/sa_q2_f_caregivers" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q2_m_caregivers" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="14"/><TextView android:padding="7dp" android:text="Sub-Population Total" android:textStyle="bold"/><TextView android:id="@+id/sa_q2_sub_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sa_q2_sub_total" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                            </TableLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Q3 -->
+                    <LinearLayout android:id="@+id/panel_a_q3" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:background="#C9C6BC" android:orientation="vertical">
+                        <LinearLayout android:id="@+id/header_a_q3" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#3F5B68" android:padding="11dp" android:orientation="horizontal" android:clickable="true" android:focusable="true"><TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q3: People who received malaria treatment" android:textColor="#FFFFFF" android:textStyle="bold" /><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="▸" android:textColor="#FFFFFF" /></LinearLayout>
+                        <LinearLayout android:id="@+id/body_a_q3" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone" android:background="#FFFFFF">
+                            <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:stretchColumns="1,2,3">
+                                <TableRow android:background="#F6F5F0"><TextView android:padding="6dp" android:text="#"/><TextView android:padding="6dp" android:text="CATEGORY" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="FEMALE" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="MALE" android:textStyle="bold"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="1"/><TextView android:padding="7dp" android:text="0-4 Years"/><TextView android:id="@+id/sa_q3_f_0_4" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q3_m_0_4" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="2"/><TextView android:padding="7dp" android:text="5-15 Years"/><TextView android:id="@+id/sa_q3_f_5_15" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q3_m_5_15" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="3"/><TextView android:padding="7dp" android:text="16-19 Years"/><TextView android:id="@+id/sa_q3_f_16_19" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q3_m_16_19" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="4"/><TextView android:padding="7dp" android:text="20+ Years"/><TextView android:id="@+id/sa_q3_f_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q3_m_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="5"/><TextView android:padding="7dp" android:text="Total" android:textStyle="bold"/><TextView android:id="@+id/sa_q3_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sa_q3_total_m" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                                <TableRow android:background="#F5F5F5"><TextView/><TextView android:padding="5dp" android:text="By Sub-Population" android:textStyle="italic" android:textSize="12sp"/><TextView/><TextView/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="6"/><TextView android:padding="7dp" android:text="C/ALHIV"/><TextView android:id="@+id/sa_q3_f_calhiv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q3_m_calhiv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="7"/><TextView android:padding="7dp" android:text="HEI"/><TextView android:id="@+id/sa_q3_f_hei" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q3_m_hei" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="8"/><TextView android:padding="7dp" android:text="WLHIV Child"/><TextView android:id="@+id/sa_q3_f_wlhiv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q3_m_wlhiv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="9"/><TextView android:padding="7dp" android:text="SV Survivors"/><TextView android:id="@+id/sa_q3_f_sv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q3_m_sv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="10"/><TextView android:padding="7dp" android:text="AGYW_PBFW"/><TextView android:id="@+id/sa_q3_f_agyw" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:padding="7dp" android:gravity="center" android:text="-"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="11"/><TextView android:padding="7dp" android:text="HIV+ PBFW"/><TextView android:id="@+id/sa_q3_f_hiv_pos" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:padding="7dp" android:gravity="center" android:text="-"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="12"/><TextView android:padding="7dp" android:text="Siblings"/><TextView android:id="@+id/sa_q3_f_siblings" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q3_m_siblings" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="13"/><TextView android:padding="7dp" android:text="Caregivers"/><TextView android:id="@+id/sa_q3_f_caregivers" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q3_m_caregivers" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="14"/><TextView android:padding="7dp" android:text="Sub-Population Total" android:textStyle="bold"/><TextView android:id="@+id/sa_q3_sub_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sa_q3_sub_total" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                            </TableLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Q4 -->
+                    <LinearLayout android:id="@+id/panel_a_q4" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:background="#C9C6BC" android:orientation="vertical">
+                        <LinearLayout android:id="@+id/header_a_q4" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#3F5B68" android:padding="11dp" android:orientation="horizontal" android:clickable="true" android:focusable="true"><TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q4: People who received malaria prophylaxis" android:textColor="#FFFFFF" android:textStyle="bold" /><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="▸" android:textColor="#FFFFFF" /></LinearLayout>
+                        <LinearLayout android:id="@+id/body_a_q4" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone" android:background="#FFFFFF">
+                            <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:stretchColumns="1,2,3">
+                                <TableRow android:background="#F6F5F0"><TextView android:padding="6dp" android:text="#"/><TextView android:padding="6dp" android:text="CATEGORY" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="FEMALE" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="MALE" android:textStyle="bold"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="1"/><TextView android:padding="7dp" android:text="0-4 Years"/><TextView android:id="@+id/sa_q4_f_0_4" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q4_m_0_4" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="2"/><TextView android:padding="7dp" android:text="5-15 Years"/><TextView android:id="@+id/sa_q4_f_5_15" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q4_m_5_15" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="3"/><TextView android:padding="7dp" android:text="16-19 Years"/><TextView android:id="@+id/sa_q4_f_16_19" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q4_m_16_19" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="4"/><TextView android:padding="7dp" android:text="20+ Years"/><TextView android:id="@+id/sa_q4_f_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q4_m_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="5"/><TextView android:padding="7dp" android:text="Total" android:textStyle="bold"/><TextView android:id="@+id/sa_q4_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sa_q4_total_m" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                                <TableRow android:background="#F5F5F5"><TextView/><TextView android:padding="5dp" android:text="By Sub-Population" android:textStyle="italic" android:textSize="12sp"/><TextView/><TextView/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="6"/><TextView android:padding="7dp" android:text="C/ALHIV"/><TextView android:id="@+id/sa_q4_f_calhiv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q4_m_calhiv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="7"/><TextView android:padding="7dp" android:text="HEI"/><TextView android:id="@+id/sa_q4_f_hei" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q4_m_hei" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="8"/><TextView android:padding="7dp" android:text="WLHIV Child"/><TextView android:id="@+id/sa_q4_f_wlhiv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q4_m_wlhiv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="9"/><TextView android:padding="7dp" android:text="SV Survivors"/><TextView android:id="@+id/sa_q4_f_sv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q4_m_sv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="10"/><TextView android:padding="7dp" android:text="AGYW_PBFW"/><TextView android:id="@+id/sa_q4_f_agyw" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:padding="7dp" android:gravity="center" android:text="-"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="11"/><TextView android:padding="7dp" android:text="HIV+ PBFW"/><TextView android:id="@+id/sa_q4_f_hiv_pos" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:padding="7dp" android:gravity="center" android:text="-"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="12"/><TextView android:padding="7dp" android:text="Siblings"/><TextView android:id="@+id/sa_q4_f_siblings" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q4_m_siblings" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="13"/><TextView android:padding="7dp" android:text="Caregivers"/><TextView android:id="@+id/sa_q4_f_caregivers" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q4_m_caregivers" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="14"/><TextView android:padding="7dp" android:text="Sub-Population Total" android:textStyle="bold"/><TextView android:id="@+id/sa_q4_sub_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sa_q4_sub_total" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                            </TableLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Q5 -->
+                    <LinearLayout android:id="@+id/panel_a_q5" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:background="#C9C6BC" android:orientation="vertical">
+                        <LinearLayout android:id="@+id/header_a_q5" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#3F5B68" android:padding="11dp" android:orientation="horizontal" android:clickable="true" android:focusable="true"><TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q5: People referred for treatment" android:textColor="#FFFFFF" android:textStyle="bold" /><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="▸" android:textColor="#FFFFFF" /></LinearLayout>
+                        <LinearLayout android:id="@+id/body_a_q5" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone" android:background="#FFFFFF">
+                            <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:stretchColumns="1,2,3">
+                                <TableRow android:background="#F6F5F0"><TextView android:padding="6dp" android:text="#"/><TextView android:padding="6dp" android:text="CATEGORY" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="FEMALE" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="MALE" android:textStyle="bold"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="1"/><TextView android:padding="7dp" android:text="0-4 Years"/><TextView android:id="@+id/sa_q5_f_0_4" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q5_m_0_4" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="2"/><TextView android:padding="7dp" android:text="5-15 Years"/><TextView android:id="@+id/sa_q5_f_5_15" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q5_m_5_15" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="3"/><TextView android:padding="7dp" android:text="16-19 Years"/><TextView android:id="@+id/sa_q5_f_16_19" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q5_m_16_19" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="4"/><TextView android:padding="7dp" android:text="20+ Years"/><TextView android:id="@+id/sa_q5_f_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q5_m_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="5"/><TextView android:padding="7dp" android:text="Total" android:textStyle="bold"/><TextView android:id="@+id/sa_q5_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sa_q5_total_m" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                                <TableRow android:background="#F5F5F5"><TextView/><TextView android:padding="5dp" android:text="By Sub-Population" android:textStyle="italic" android:textSize="12sp"/><TextView/><TextView/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="6"/><TextView android:padding="7dp" android:text="C/ALHIV"/><TextView android:id="@+id/sa_q5_f_calhiv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q5_m_calhiv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="7"/><TextView android:padding="7dp" android:text="HEI"/><TextView android:id="@+id/sa_q5_f_hei" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q5_m_hei" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="8"/><TextView android:padding="7dp" android:text="WLHIV Child"/><TextView android:id="@+id/sa_q5_f_wlhiv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q5_m_wlhiv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="9"/><TextView android:padding="7dp" android:text="SV Survivors"/><TextView android:id="@+id/sa_q5_f_sv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q5_m_sv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="10"/><TextView android:padding="7dp" android:text="AGYW_PBFW"/><TextView android:id="@+id/sa_q5_f_agyw" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:padding="7dp" android:gravity="center" android:text="-"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="11"/><TextView android:padding="7dp" android:text="HIV+ PBFW"/><TextView android:id="@+id/sa_q5_f_hiv_pos" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:padding="7dp" android:gravity="center" android:text="-"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="12"/><TextView android:padding="7dp" android:text="Siblings"/><TextView android:id="@+id/sa_q5_f_siblings" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q5_m_siblings" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="13"/><TextView android:padding="7dp" android:text="Caregivers"/><TextView android:id="@+id/sa_q5_f_caregivers" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q5_m_caregivers" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="14"/><TextView android:padding="7dp" android:text="Sub-Population Total" android:textStyle="bold"/><TextView android:id="@+id/sa_q5_sub_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sa_q5_sub_total" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                            </TableLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Q6 -->
+                    <LinearLayout android:id="@+id/panel_a_q6" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:background="#C9C6BC" android:orientation="vertical">
+                        <LinearLayout android:id="@+id/header_a_q6" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#3F5B68" android:padding="11dp" android:orientation="horizontal" android:clickable="true" android:focusable="true"><TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q6: Referred for treatment completed" android:textColor="#FFFFFF" android:textStyle="bold" /><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="▸" android:textColor="#FFFFFF" /></LinearLayout>
+                        <LinearLayout android:id="@+id/body_a_q6" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone" android:background="#FFFFFF">
+                            <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:stretchColumns="1,2,3">
+                                <TableRow android:background="#F6F5F0"><TextView android:padding="6dp" android:text="#"/><TextView android:padding="6dp" android:text="CATEGORY" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="FEMALE" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="MALE" android:textStyle="bold"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="1"/><TextView android:padding="7dp" android:text="0-4 Years"/><TextView android:id="@+id/sa_q6_f_0_4" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q6_m_0_4" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="2"/><TextView android:padding="7dp" android:text="5-15 Years"/><TextView android:id="@+id/sa_q6_f_5_15" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q6_m_5_15" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="3"/><TextView android:padding="7dp" android:text="16-19 Years"/><TextView android:id="@+id/sa_q6_f_16_19" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q6_m_16_19" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="4"/><TextView android:padding="7dp" android:text="20+ Years"/><TextView android:id="@+id/sa_q6_f_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q6_m_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="5"/><TextView android:padding="7dp" android:text="Total" android:textStyle="bold"/><TextView android:id="@+id/sa_q6_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sa_q6_total_m" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                                <TableRow android:background="#F5F5F5"><TextView/><TextView android:padding="5dp" android:text="By Sub-Population" android:textStyle="italic" android:textSize="12sp"/><TextView/><TextView/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="6"/><TextView android:padding="7dp" android:text="C/ALHIV"/><TextView android:id="@+id/sa_q6_f_calhiv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q6_m_calhiv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="7"/><TextView android:padding="7dp" android:text="HEI"/><TextView android:id="@+id/sa_q6_f_hei" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q6_m_hei" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="8"/><TextView android:padding="7dp" android:text="WLHIV Child"/><TextView android:id="@+id/sa_q6_f_wlhiv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q6_m_wlhiv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="9"/><TextView android:padding="7dp" android:text="SV Survivors"/><TextView android:id="@+id/sa_q6_f_sv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q6_m_sv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="10"/><TextView android:padding="7dp" android:text="AGYW_PBFW"/><TextView android:id="@+id/sa_q6_f_agyw" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:padding="7dp" android:gravity="center" android:text="-"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="11"/><TextView android:padding="7dp" android:text="HIV+ PBFW"/><TextView android:id="@+id/sa_q6_f_hiv_pos" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:padding="7dp" android:gravity="center" android:text="-"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="12"/><TextView android:padding="7dp" android:text="Siblings"/><TextView android:id="@+id/sa_q6_f_siblings" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q6_m_siblings" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="13"/><TextView android:padding="7dp" android:text="Caregivers"/><TextView android:id="@+id/sa_q6_f_caregivers" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q6_m_caregivers" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="14"/><TextView android:padding="7dp" android:text="Sub-Population Total" android:textStyle="bold"/><TextView android:id="@+id/sa_q6_sub_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sa_q6_sub_total" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                            </TableLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Q7 -->
+                    <LinearLayout android:id="@+id/panel_a_q7" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:background="#C9C6BC" android:orientation="vertical">
+                        <LinearLayout android:id="@+id/header_a_q7" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#3F5B68" android:padding="11dp" android:orientation="horizontal" android:clickable="true" android:focusable="true"><TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q7: People referred for malaria testing" android:textColor="#FFFFFF" android:textStyle="bold" /><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="▸" android:textColor="#FFFFFF" /></LinearLayout>
+                        <LinearLayout android:id="@+id/body_a_q7" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone" android:background="#FFFFFF">
+                            <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:stretchColumns="1,2,3">
+                                <TableRow android:background="#F6F5F0"><TextView android:padding="6dp" android:text="#"/><TextView android:padding="6dp" android:text="CATEGORY" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="FEMALE" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="MALE" android:textStyle="bold"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="1"/><TextView android:padding="7dp" android:text="0-4 Years"/><TextView android:id="@+id/sa_q7_f_0_4" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q7_m_0_4" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="2"/><TextView android:padding="7dp" android:text="5-15 Years"/><TextView android:id="@+id/sa_q7_f_5_15" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q7_m_5_15" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="3"/><TextView android:padding="7dp" android:text="16-19 Years"/><TextView android:id="@+id/sa_q7_f_16_19" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q7_m_16_19" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="4"/><TextView android:padding="7dp" android:text="20+ Years"/><TextView android:id="@+id/sa_q7_f_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q7_m_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="5"/><TextView android:padding="7dp" android:text="Total" android:textStyle="bold"/><TextView android:id="@+id/sa_q7_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sa_q7_total_m" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                                <TableRow android:background="#F5F5F5"><TextView/><TextView android:padding="5dp" android:text="By Sub-Population" android:textStyle="italic" android:textSize="12sp"/><TextView/><TextView/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="6"/><TextView android:padding="7dp" android:text="C/ALHIV"/><TextView android:id="@+id/sa_q7_f_calhiv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q7_m_calhiv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="7"/><TextView android:padding="7dp" android:text="HEI"/><TextView android:id="@+id/sa_q7_f_hei" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q7_m_hei" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="8"/><TextView android:padding="7dp" android:text="WLHIV Child"/><TextView android:id="@+id/sa_q7_f_wlhiv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q7_m_wlhiv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="9"/><TextView android:padding="7dp" android:text="SV Survivors"/><TextView android:id="@+id/sa_q7_f_sv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q7_m_sv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="10"/><TextView android:padding="7dp" android:text="AGYW_PBFW"/><TextView android:id="@+id/sa_q7_f_agyw" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:padding="7dp" android:gravity="center" android:text="-"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="11"/><TextView android:padding="7dp" android:text="HIV+ PBFW"/><TextView android:id="@+id/sa_q7_f_hiv_pos" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:padding="7dp" android:gravity="center" android:text="-"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="12"/><TextView android:padding="7dp" android:text="Siblings"/><TextView android:id="@+id/sa_q7_f_siblings" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q7_m_siblings" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="13"/><TextView android:padding="7dp" android:text="Caregivers"/><TextView android:id="@+id/sa_q7_f_caregivers" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q7_m_caregivers" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="14"/><TextView android:padding="7dp" android:text="Sub-Population Total" android:textStyle="bold"/><TextView android:id="@+id/sa_q7_sub_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sa_q7_sub_total" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                            </TableLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Q8 -->
+                    <LinearLayout android:id="@+id/panel_a_q8" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:background="#C9C6BC" android:orientation="vertical">
+                        <LinearLayout android:id="@+id/header_a_q8" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#3F5B68" android:padding="11dp" android:orientation="horizontal" android:clickable="true" android:focusable="true"><TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q8: People referred for testing completed" android:textColor="#FFFFFF" android:textStyle="bold" /><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="▸" android:textColor="#FFFFFF" /></LinearLayout>
+                        <LinearLayout android:id="@+id/body_a_q8" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone" android:background="#FFFFFF">
+                            <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:stretchColumns="1,2,3">
+                                <TableRow android:background="#F6F5F0"><TextView android:padding="6dp" android:text="#"/><TextView android:padding="6dp" android:text="CATEGORY" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="FEMALE" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="MALE" android:textStyle="bold"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="1"/><TextView android:padding="7dp" android:text="0-4 Years"/><TextView android:id="@+id/sa_q8_f_0_4" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q8_m_0_4" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="2"/><TextView android:padding="7dp" android:text="5-15 Years"/><TextView android:id="@+id/sa_q8_f_5_15" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q8_m_5_15" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="3"/><TextView android:padding="7dp" android:text="16-19 Years"/><TextView android:id="@+id/sa_q8_f_16_19" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q8_m_16_19" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="4"/><TextView android:padding="7dp" android:text="20+ Years"/><TextView android:id="@+id/sa_q8_f_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q8_m_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="5"/><TextView android:padding="7dp" android:text="Total" android:textStyle="bold"/><TextView android:id="@+id/sa_q8_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sa_q8_total_m" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                                <TableRow android:background="#F5F5F5"><TextView/><TextView android:padding="5dp" android:text="By Sub-Population" android:textStyle="italic" android:textSize="12sp"/><TextView/><TextView/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="6"/><TextView android:padding="7dp" android:text="C/ALHIV"/><TextView android:id="@+id/sa_q8_f_calhiv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q8_m_calhiv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="7"/><TextView android:padding="7dp" android:text="HEI"/><TextView android:id="@+id/sa_q8_f_hei" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q8_m_hei" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="8"/><TextView android:padding="7dp" android:text="WLHIV Child"/><TextView android:id="@+id/sa_q8_f_wlhiv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q8_m_wlhiv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="9"/><TextView android:padding="7dp" android:text="SV Survivors"/><TextView android:id="@+id/sa_q8_f_sv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q8_m_sv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="10"/><TextView android:padding="7dp" android:text="AGYW_PBFW"/><TextView android:id="@+id/sa_q8_f_agyw" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:padding="7dp" android:gravity="center" android:text="-"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="11"/><TextView android:padding="7dp" android:text="HIV+ PBFW"/><TextView android:id="@+id/sa_q8_f_hiv_pos" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:padding="7dp" android:gravity="center" android:text="-"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="12"/><TextView android:padding="7dp" android:text="Siblings"/><TextView android:id="@+id/sa_q8_f_siblings" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q8_m_siblings" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="13"/><TextView android:padding="7dp" android:text="Caregivers"/><TextView android:id="@+id/sa_q8_f_caregivers" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q8_m_caregivers" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="14"/><TextView android:padding="7dp" android:text="Sub-Population Total" android:textStyle="bold"/><TextView android:id="@+id/sa_q8_sub_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sa_q8_sub_total" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                            </TableLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Q9 -->
+                    <LinearLayout android:id="@+id/panel_a_q9" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:background="#C9C6BC" android:orientation="vertical">
+                        <LinearLayout android:id="@+id/header_a_q9" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#3F5B68" android:padding="11dp" android:orientation="horizontal" android:clickable="true" android:focusable="true"><TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q9: People who had severe malaria" android:textColor="#FFFFFF" android:textStyle="bold" /><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="▸" android:textColor="#FFFFFF" /></LinearLayout>
+                        <LinearLayout android:id="@+id/body_a_q9" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone" android:background="#FFFFFF">
+                            <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:stretchColumns="1,2,3">
+                                <TableRow android:background="#F6F5F0"><TextView android:padding="6dp" android:text="#"/><TextView android:padding="6dp" android:text="CATEGORY" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="FEMALE" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="MALE" android:textStyle="bold"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="1"/><TextView android:padding="7dp" android:text="0-4 Years"/><TextView android:id="@+id/sa_q9_f_0_4" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q9_m_0_4" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="2"/><TextView android:padding="7dp" android:text="5-15 Years"/><TextView android:id="@+id/sa_q9_f_5_15" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q9_m_5_15" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="3"/><TextView android:padding="7dp" android:text="16-19 Years"/><TextView android:id="@+id/sa_q9_f_16_19" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q9_m_16_19" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="4"/><TextView android:padding="7dp" android:text="20+ Years"/><TextView android:id="@+id/sa_q9_f_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q9_m_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="5"/><TextView android:padding="7dp" android:text="Total" android:textStyle="bold"/><TextView android:id="@+id/sa_q9_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sa_q9_total_m" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                                <TableRow android:background="#F5F5F5"><TextView/><TextView android:padding="5dp" android:text="By Sub-Population" android:textStyle="italic" android:textSize="12sp"/><TextView/><TextView/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="6"/><TextView android:padding="7dp" android:text="C/ALHIV"/><TextView android:id="@+id/sa_q9_f_calhiv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q9_m_calhiv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="7"/><TextView android:padding="7dp" android:text="HEI"/><TextView android:id="@+id/sa_q9_f_hei" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q9_m_hei" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="8"/><TextView android:padding="7dp" android:text="WLHIV Child"/><TextView android:id="@+id/sa_q9_f_wlhiv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q9_m_wlhiv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="9"/><TextView android:padding="7dp" android:text="SV Survivors"/><TextView android:id="@+id/sa_q9_f_sv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q9_m_sv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="10"/><TextView android:padding="7dp" android:text="AGYW_PBFW"/><TextView android:id="@+id/sa_q9_f_agyw" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:padding="7dp" android:gravity="center" android:text="-"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="11"/><TextView android:padding="7dp" android:text="HIV+ PBFW"/><TextView android:id="@+id/sa_q9_f_hiv_pos" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:padding="7dp" android:gravity="center" android:text="-"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="12"/><TextView android:padding="7dp" android:text="Siblings"/><TextView android:id="@+id/sa_q9_f_siblings" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q9_m_siblings" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="13"/><TextView android:padding="7dp" android:text="Caregivers"/><TextView android:id="@+id/sa_q9_f_caregivers" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q9_m_caregivers" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="14"/><TextView android:padding="7dp" android:text="Sub-Population Total" android:textStyle="bold"/><TextView android:id="@+id/sa_q9_sub_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sa_q9_sub_total" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                            </TableLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Q10 -->
+                    <LinearLayout android:id="@+id/panel_a_q10" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:background="#C9C6BC" android:orientation="vertical">
+                        <LinearLayout android:id="@+id/header_a_q10" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#3F5B68" android:padding="11dp" android:orientation="horizontal" android:clickable="true" android:focusable="true"><TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q10: Net reported sleeping under" android:textColor="#FFFFFF" android:textStyle="bold" /><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="▸" android:textColor="#FFFFFF" /></LinearLayout>
+                        <LinearLayout android:id="@+id/body_a_q10" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone" android:background="#FFFFFF">
+                            <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:stretchColumns="1,2,3">
+                                <TableRow android:background="#F6F5F0"><TextView android:padding="6dp" android:text="#"/><TextView android:padding="6dp" android:text="CATEGORY" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="FEMALE" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="MALE" android:textStyle="bold"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="1"/><TextView android:padding="7dp" android:text="0-4 Years"/><TextView android:id="@+id/sa_q10_f_0_4" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q10_m_0_4" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="2"/><TextView android:padding="7dp" android:text="5-15 Years"/><TextView android:id="@+id/sa_q10_f_5_15" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q10_m_5_15" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="3"/><TextView android:padding="7dp" android:text="16-19 Years"/><TextView android:id="@+id/sa_q10_f_16_19" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q10_m_16_19" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="4"/><TextView android:padding="7dp" android:text="20+ Years"/><TextView android:id="@+id/sa_q10_f_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q10_m_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="5"/><TextView android:padding="7dp" android:text="Total" android:textStyle="bold"/><TextView android:id="@+id/sa_q10_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sa_q10_total_m" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                                <TableRow android:background="#F5F5F5"><TextView/><TextView android:padding="5dp" android:text="By Sub-Population" android:textStyle="italic" android:textSize="12sp"/><TextView/><TextView/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="6"/><TextView android:padding="7dp" android:text="C/ALHIV"/><TextView android:id="@+id/sa_q10_f_calhiv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q10_m_calhiv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="7"/><TextView android:padding="7dp" android:text="HEI"/><TextView android:id="@+id/sa_q10_f_hei" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q10_m_hei" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="8"/><TextView android:padding="7dp" android:text="WLHIV Child"/><TextView android:id="@+id/sa_q10_f_wlhiv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q10_m_wlhiv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="9"/><TextView android:padding="7dp" android:text="SV Survivors"/><TextView android:id="@+id/sa_q10_f_sv" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q10_m_sv" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="10"/><TextView android:padding="7dp" android:text="AGYW_PBFW"/><TextView android:id="@+id/sa_q10_f_agyw" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:padding="7dp" android:gravity="center" android:text="-"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="11"/><TextView android:padding="7dp" android:text="HIV+ PBFW"/><TextView android:id="@+id/sa_q10_f_hiv_pos" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:padding="7dp" android:gravity="center" android:text="-"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="12"/><TextView android:padding="7dp" android:text="Siblings"/><TextView android:id="@+id/sa_q10_f_siblings" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q10_m_siblings" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="13"/><TextView android:padding="7dp" android:text="Caregivers"/><TextView android:id="@+id/sa_q10_f_caregivers" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sa_q10_m_caregivers" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="14"/><TextView android:padding="7dp" android:text="Sub-Population Total" android:textStyle="bold"/><TextView android:id="@+id/sa_q10_sub_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sa_q10_sub_total" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                            </TableLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- SECTION B -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/sec_b"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="6dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="14dp">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Section B: Other Community Members" android:textColor="#1B3A4B" android:textSize="18sp" android:textStyle="bold" />
+                    <HorizontalScrollView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:layout_marginBottom="12dp" android:scrollbars="none">
+                        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal">
+                            <TextView android:id="@+id/chip_b_q1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="6dp" android:background="#F3F1EA" android:paddingHorizontal="9dp" android:paddingVertical="4dp" android:text="Q1" android:fontFamily="monospace" android:textSize="11sp" android:textStyle="bold" android:textColor="#3F5B68" />
+                            <TextView android:id="@+id/chip_b_q2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="6dp" android:background="#F3F1EA" android:paddingHorizontal="9dp" android:paddingVertical="4dp" android:text="Q2" android:fontFamily="monospace" android:textSize="11sp" android:textStyle="bold" android:textColor="#3F5B68" />
+                            <TextView android:id="@+id/chip_b_q3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="6dp" android:background="#F3F1EA" android:paddingHorizontal="9dp" android:paddingVertical="4dp" android:text="Q3" android:fontFamily="monospace" android:textSize="11sp" android:textStyle="bold" android:textColor="#3F5B68" />
+                            <TextView android:id="@+id/chip_b_q4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="6dp" android:background="#F3F1EA" android:paddingHorizontal="9dp" android:paddingVertical="4dp" android:text="Q4" android:fontFamily="monospace" android:textSize="11sp" android:textStyle="bold" android:textColor="#3F5B68" />
+                            <TextView android:id="@+id/chip_b_q5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="6dp" android:background="#F3F1EA" android:paddingHorizontal="9dp" android:paddingVertical="4dp" android:text="Q5" android:fontFamily="monospace" android:textSize="11sp" android:textStyle="bold" android:textColor="#3F5B68" />
+                            <TextView android:id="@+id/chip_b_q6" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="6dp" android:background="#F3F1EA" android:paddingHorizontal="9dp" android:paddingVertical="4dp" android:text="Q6" android:fontFamily="monospace" android:textSize="11sp" android:textStyle="bold" android:textColor="#3F5B68" />
+                            <TextView android:id="@+id/chip_b_q7" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="6dp" android:background="#F3F1EA" android:paddingHorizontal="9dp" android:paddingVertical="4dp" android:text="Q7" android:fontFamily="monospace" android:textSize="11sp" android:textStyle="bold" android:textColor="#3F5B68" />
+                            <TextView android:id="@+id/chip_b_q8" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="6dp" android:background="#F3F1EA" android:paddingHorizontal="9dp" android:paddingVertical="4dp" android:text="Q8" android:fontFamily="monospace" android:textSize="11sp" android:textStyle="bold" android:textColor="#3F5B68" />
+                            <TextView android:id="@+id/chip_b_q9" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="6dp" android:background="#F3F1EA" android:paddingHorizontal="9dp" android:paddingVertical="4dp" android:text="Q9" android:fontFamily="monospace" android:textSize="11sp" android:textStyle="bold" android:textColor="#3F5B68" />
+                            <TextView android:id="@+id/chip_b_q10" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="6dp" android:background="#F3F1EA" android:paddingHorizontal="9dp" android:paddingVertical="4dp" android:text="Q10" android:fontFamily="monospace" android:textSize="11sp" android:textStyle="bold" android:textColor="#3F5B68" />
+                        </LinearLayout>
+                    </HorizontalScrollView>
+
+                    <!-- Q1 in Section B -->
+                    <LinearLayout android:id="@+id/panel_b_q1" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:background="#C9C6BC" android:orientation="vertical" android:layout_marginTop="12dp">
+                        <LinearLayout android:id="@+id/header_b_q1" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#3F5B68" android:padding="11dp" android:orientation="horizontal" android:clickable="true" android:focusable="true"><TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q1: People tested for malaria" android:textColor="#FFFFFF" android:textStyle="bold" /><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="▸" android:textColor="#FFFFFF" /></LinearLayout>
+                        <LinearLayout android:id="@+id/body_b_q1" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone" android:background="#FFFFFF">
+                            <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:stretchColumns="1,2,3">
+                                <TableRow android:background="#F6F5F0"><TextView android:padding="6dp" android:text="#"/><TextView android:padding="6dp" android:text="AGE GROUP" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="FEMALE" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="MALE" android:textStyle="bold"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="1"/><TextView android:padding="7dp" android:text="0-4 Years"/><TextView android:id="@+id/sb_q1_f_0_4" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q1_m_0_4" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="2"/><TextView android:padding="7dp" android:text="5-15 Years"/><TextView android:id="@+id/sb_q1_f_5_15" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q1_m_5_15" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="3"/><TextView android:padding="7dp" android:text="16-19 Years"/><TextView android:id="@+id/sb_q1_f_16_19" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q1_m_16_19" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="4"/><TextView android:padding="7dp" android:text="20+ Years"/><TextView android:id="@+id/sb_q1_f_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q1_m_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="5"/><TextView android:padding="7dp" android:text="Total" android:textStyle="bold"/><TextView android:id="@+id/sb_q1_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sb_q1_total_m" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                            </TableLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout android:id="@+id/panel_b_q2" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:background="#C9C6BC" android:orientation="vertical">
+                        <LinearLayout android:id="@+id/header_b_q2" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#3F5B68" android:padding="11dp" android:orientation="horizontal" android:clickable="true" android:focusable="true"><TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q2: Malaria Positive" android:textColor="#FFFFFF" android:textStyle="bold" /><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="▸" android:textColor="#FFFFFF" /></LinearLayout>
+                        <LinearLayout android:id="@+id/body_b_q2" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone" android:background="#FFFFFF">
+                            <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:stretchColumns="1,2,3">
+                                <TableRow android:background="#F6F5F0"><TextView android:padding="6dp" android:text="#"/><TextView android:padding="6dp" android:text="AGE GROUP" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="FEMALE" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="MALE" android:textStyle="bold"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="1"/><TextView android:padding="7dp" android:text="0-4 Years"/><TextView android:id="@+id/sb_q2_f_0_4" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q2_m_0_4" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="2"/><TextView android:padding="7dp" android:text="5-15 Years"/><TextView android:id="@+id/sb_q2_f_5_15" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q2_m_5_15" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="3"/><TextView android:padding="7dp" android:text="16-19 Years"/><TextView android:id="@+id/sb_q2_f_16_19" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q2_m_16_19" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="4"/><TextView android:padding="7dp" android:text="20+ Years"/><TextView android:id="@+id/sb_q2_f_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q2_m_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="5"/><TextView android:padding="7dp" android:text="Total" android:textStyle="bold"/><TextView android:id="@+id/sb_q2_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sb_q2_total_m" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                            </TableLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Q3 Section B -->
+                    <LinearLayout android:id="@+id/panel_b_q3" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:background="#C9C6BC" android:orientation="vertical">
+                        <LinearLayout android:id="@+id/header_b_q3" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#3F5B68" android:padding="11dp" android:orientation="horizontal" android:clickable="true" android:focusable="true"><TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q3: Malaria treatment" android:textColor="#FFFFFF" android:textStyle="bold" /><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="▸" android:textColor="#FFFFFF" /></LinearLayout>
+                        <LinearLayout android:id="@+id/body_b_q3" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone" android:background="#FFFFFF">
+                            <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:stretchColumns="1,2,3">
+                                <TableRow android:background="#F6F5F0"><TextView android:padding="6dp" android:text="#"/><TextView android:padding="6dp" android:text="AGE GROUP" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="FEMALE" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="MALE" android:textStyle="bold"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="1"/><TextView android:padding="7dp" android:text="0-4 Years"/><TextView android:id="@+id/sb_q3_f_0_4" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q3_m_0_4" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="2"/><TextView android:padding="7dp" android:text="5-15 Years"/><TextView android:id="@+id/sb_q3_f_5_15" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q3_m_5_15" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="3"/><TextView android:padding="7dp" android:text="16-19 Years"/><TextView android:id="@+id/sb_q3_f_16_19" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q3_m_16_19" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="4"/><TextView android:padding="7dp" android:text="20+ Years"/><TextView android:id="@+id/sb_q3_f_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q3_m_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="5"/><TextView android:padding="7dp" android:text="Total" android:textStyle="bold"/><TextView android:id="@+id/sb_q3_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sb_q3_total_m" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                            </TableLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Q4 Section B -->
+                    <LinearLayout android:id="@+id/panel_b_q4" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:background="#C9C6BC" android:orientation="vertical">
+                        <LinearLayout android:id="@+id/header_b_q4" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#3F5B68" android:padding="11dp" android:orientation="horizontal" android:clickable="true" android:focusable="true"><TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q4: Malaria prophylaxis" android:textColor="#FFFFFF" android:textStyle="bold" /><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="▸" android:textColor="#FFFFFF" /></LinearLayout>
+                        <LinearLayout android:id="@+id/body_b_q4" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone" android:background="#FFFFFF">
+                            <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:stretchColumns="1,2,3">
+                                <TableRow android:background="#F6F5F0"><TextView android:padding="6dp" android:text="#"/><TextView android:padding="6dp" android:text="AGE GROUP" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="FEMALE" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="MALE" android:textStyle="bold"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="1"/><TextView android:padding="7dp" android:text="0-4 Years"/><TextView android:id="@+id/sb_q4_f_0_4" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q4_m_0_4" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="2"/><TextView android:padding="7dp" android:text="5-15 Years"/><TextView android:id="@+id/sb_q4_f_5_15" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q4_m_5_15" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="3"/><TextView android:padding="7dp" android:text="16-19 Years"/><TextView android:id="@+id/sb_q4_f_16_19" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q4_m_16_19" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="4"/><TextView android:padding="7dp" android:text="20+ Years"/><TextView android:id="@+id/sb_q4_f_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q4_m_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="5"/><TextView android:padding="7dp" android:text="Total" android:textStyle="bold"/><TextView android:id="@+id/sb_q4_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sb_q4_total_m" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                            </TableLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Q5 Section B -->
+                    <LinearLayout android:id="@+id/panel_b_q5" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:background="#C9C6BC" android:orientation="vertical">
+                        <LinearLayout android:id="@+id/header_b_q5" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#3F5B68" android:padding="11dp" android:orientation="horizontal" android:clickable="true" android:focusable="true"><TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q5: Referred for treatment" android:textColor="#FFFFFF" android:textStyle="bold" /><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="▸" android:textColor="#FFFFFF" /></LinearLayout>
+                        <LinearLayout android:id="@+id/body_b_q5" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone" android:background="#FFFFFF">
+                            <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:stretchColumns="1,2,3">
+                                <TableRow android:background="#F6F5F0"><TextView android:padding="6dp" android:text="#"/><TextView android:padding="6dp" android:text="AGE GROUP" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="FEMALE" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="MALE" android:textStyle="bold"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="1"/><TextView android:padding="7dp" android:text="0-4 Years"/><TextView android:id="@+id/sb_q5_f_0_4" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q5_m_0_4" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="2"/><TextView android:padding="7dp" android:text="5-15 Years"/><TextView android:id="@+id/sb_q5_f_5_15" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q5_m_5_15" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="3"/><TextView android:padding="7dp" android:text="16-19 Years"/><TextView android:id="@+id/sb_q5_f_16_19" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q5_m_16_19" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="4"/><TextView android:padding="7dp" android:text="20+ Years"/><TextView android:id="@+id/sb_q5_f_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q5_m_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="5"/><TextView android:padding="7dp" android:text="Total" android:textStyle="bold"/><TextView android:id="@+id/sb_q5_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sb_q5_total_m" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                            </TableLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Q6 Section B -->
+                    <LinearLayout android:id="@+id/panel_b_q6" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:background="#C9C6BC" android:orientation="vertical">
+                        <LinearLayout android:id="@+id/header_b_q6" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#3F5B68" android:padding="11dp" android:orientation="horizontal" android:clickable="true" android:focusable="true"><TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q6: Referred for treatment completed" android:textColor="#FFFFFF" android:textStyle="bold" /><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="▸" android:textColor="#FFFFFF" /></LinearLayout>
+                        <LinearLayout android:id="@+id/body_b_q6" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone" android:background="#FFFFFF">
+                            <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:stretchColumns="1,2,3">
+                                <TableRow android:background="#F6F5F0"><TextView android:padding="6dp" android:text="#"/><TextView android:padding="6dp" android:text="AGE GROUP" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="FEMALE" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="MALE" android:textStyle="bold"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="1"/><TextView android:padding="7dp" android:text="0-4 Years"/><TextView android:id="@+id/sb_q6_f_0_4" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q6_m_0_4" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="2"/><TextView android:padding="7dp" android:text="5-15 Years"/><TextView android:id="@+id/sb_q6_f_5_15" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q6_m_5_15" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="3"/><TextView android:padding="7dp" android:text="16-19 Years"/><TextView android:id="@+id/sb_q6_f_16_19" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q6_m_16_19" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="4"/><TextView android:padding="7dp" android:text="20+ Years"/><TextView android:id="@+id/sb_q6_f_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q6_m_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="5"/><TextView android:padding="7dp" android:text="Total" android:textStyle="bold"/><TextView android:id="@+id/sb_q6_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sb_q6_total_m" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                            </TableLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Q7 Section B -->
+                    <LinearLayout android:id="@+id/panel_b_q7" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:background="#C9C6BC" android:orientation="vertical">
+                        <LinearLayout android:id="@+id/header_b_q7" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#3F5B68" android:padding="11dp" android:orientation="horizontal" android:clickable="true" android:focusable="true"><TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q7: People referred for malaria testing" android:textColor="#FFFFFF" android:textStyle="bold" /><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="▸" android:textColor="#FFFFFF" /></LinearLayout>
+                        <LinearLayout android:id="@+id/body_b_q7" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone" android:background="#FFFFFF">
+                            <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:stretchColumns="1,2,3">
+                                <TableRow android:background="#F6F5F0"><TextView android:padding="6dp" android:text="#"/><TextView android:padding="6dp" android:text="AGE GROUP" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="FEMALE" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="MALE" android:textStyle="bold"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="1"/><TextView android:padding="7dp" android:text="0-4 Years"/><TextView android:id="@+id/sb_q7_f_0_4" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q7_m_0_4" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="2"/><TextView android:padding="7dp" android:text="5-15 Years"/><TextView android:id="@+id/sb_q7_f_5_15" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q7_m_5_15" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="3"/><TextView android:padding="7dp" android:text="16-19 Years"/><TextView android:id="@+id/sb_q7_f_16_19" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q7_m_16_19" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="4"/><TextView android:padding="7dp" android:text="20+ Years"/><TextView android:id="@+id/sb_q7_f_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q7_m_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="5"/><TextView android:padding="7dp" android:text="Total" android:textStyle="bold"/><TextView android:id="@+id/sb_q7_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sb_q7_total_m" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                            </TableLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Q8 Section B -->
+                    <LinearLayout android:id="@+id/panel_b_q8" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:background="#C9C6BC" android:orientation="vertical">
+                        <LinearLayout android:id="@+id/header_b_q8" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#3F5B68" android:padding="11dp" android:orientation="horizontal" android:clickable="true" android:focusable="true"><TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q8: People referred for testing completed" android:textColor="#FFFFFF" android:textStyle="bold" /><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="▸" android:textColor="#FFFFFF" /></LinearLayout>
+                        <LinearLayout android:id="@+id/body_b_q8" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone" android:background="#FFFFFF">
+                            <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:stretchColumns="1,2,3">
+                                <TableRow android:background="#F6F5F0"><TextView android:padding="6dp" android:text="#"/><TextView android:padding="6dp" android:text="AGE GROUP" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="FEMALE" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="MALE" android:textStyle="bold"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="1"/><TextView android:padding="7dp" android:text="0-4 Years"/><TextView android:id="@+id/sb_q8_f_0_4" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q8_m_0_4" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="2"/><TextView android:padding="7dp" android:text="5-15 Years"/><TextView android:id="@+id/sb_q8_f_5_15" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q8_m_5_15" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="3"/><TextView android:padding="7dp" android:text="16-19 Years"/><TextView android:id="@+id/sb_q8_f_16_19" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q8_m_16_19" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="4"/><TextView android:padding="7dp" android:text="20+ Years"/><TextView android:id="@+id/sb_q8_f_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q8_m_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="5"/><TextView android:padding="7dp" android:text="Total" android:textStyle="bold"/><TextView android:id="@+id/sb_q8_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sb_q8_total_m" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                            </TableLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Q9 Section B -->
+                    <LinearLayout android:id="@+id/panel_b_q9" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:background="#C9C6BC" android:orientation="vertical">
+                        <LinearLayout android:id="@+id/header_b_q9" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#3F5B68" android:padding="11dp" android:orientation="horizontal" android:clickable="true" android:focusable="true"><TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q9: People who had severe malaria" android:textColor="#FFFFFF" android:textStyle="bold" /><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="▸" android:textColor="#FFFFFF" /></LinearLayout>
+                        <LinearLayout android:id="@+id/body_b_q9" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone" android:background="#FFFFFF">
+                            <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:stretchColumns="1,2,3">
+                                <TableRow android:background="#F6F5F0"><TextView android:padding="6dp" android:text="#"/><TextView android:padding="6dp" android:text="AGE GROUP" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="FEMALE" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="MALE" android:textStyle="bold"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="1"/><TextView android:padding="7dp" android:text="0-4 Years"/><TextView android:id="@+id/sb_q9_f_0_4" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q9_m_0_4" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="2"/><TextView android:padding="7dp" android:text="5-15 Years"/><TextView android:id="@+id/sb_q9_f_5_15" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q9_m_5_15" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="3"/><TextView android:padding="7dp" android:text="16-19 Years"/><TextView android:id="@+id/sb_q9_f_16_19" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q9_m_16_19" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="4"/><TextView android:padding="7dp" android:text="20+ Years"/><TextView android:id="@+id/sb_q9_f_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q9_m_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="5"/><TextView android:padding="7dp" android:text="Total" android:textStyle="bold"/><TextView android:id="@+id/sb_q9_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sb_q9_total_m" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                            </TableLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Q10 Section B -->
+                    <LinearLayout android:id="@+id/panel_b_q10" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:background="#C9C6BC" android:orientation="vertical">
+                        <LinearLayout android:id="@+id/header_b_q10" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#3F5B68" android:padding="11dp" android:orientation="horizontal" android:clickable="true" android:focusable="true"><TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q10: Net reported sleeping under" android:textColor="#FFFFFF" android:textStyle="bold" /><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="▸" android:textColor="#FFFFFF" /></LinearLayout>
+                        <LinearLayout android:id="@+id/body_b_q10" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone" android:background="#FFFFFF">
+                            <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:stretchColumns="1,2,3">
+                                <TableRow android:background="#F6F5F0"><TextView android:padding="6dp" android:text="#"/><TextView android:padding="6dp" android:text="AGE GROUP" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="FEMALE" android:textStyle="bold"/><TextView android:padding="6dp" android:gravity="center" android:text="MALE" android:textStyle="bold"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="1"/><TextView android:padding="7dp" android:text="0-4 Years"/><TextView android:id="@+id/sb_q10_f_0_4" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q10_m_0_4" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="2"/><TextView android:padding="7dp" android:text="5-15 Years"/><TextView android:id="@+id/sb_q10_f_5_15" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q10_m_5_15" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="3"/><TextView android:padding="7dp" android:text="16-19 Years"/><TextView android:id="@+id/sb_q10_f_16_19" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q10_m_16_19" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow><TextView android:padding="7dp" android:text="4"/><TextView android:padding="7dp" android:text="20+ Years"/><TextView android:id="@+id/sb_q10_f_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/><TextView android:id="@+id/sb_q10_m_20_plus" android:padding="7dp" android:gravity="center" android:text="0"/></TableRow>
+                                <TableRow android:background="#F6F5F0"><TextView android:gravity="center" android:padding="7dp" android:text="5"/><TextView android:padding="7dp" android:text="Total" android:textStyle="bold"/><TextView android:id="@+id/sb_q10_total_f" android:gravity="center" android:padding="7dp" android:textStyle="bold"/><TextView android:id="@+id/sb_q10_total_m" android:gravity="center" android:padding="7dp" android:textStyle="bold"/></TableRow>
+                            </TableLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- SECTION C -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/sec_c"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="16dp" app:cardCornerRadius="6dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="14dp">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Section C: Household &amp; Commodities" android:textColor="#1B3A4B" android:textSize="18sp" android:textStyle="bold" />
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:orientation="vertical" android:background="#C9C6BC">
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#FFFFFF" android:orientation="horizontal" android:layout_marginBottom="1dp"><TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:padding="10dp" android:text="1. HH members tested" /><TextView android:id="@+id/sc_q1" android:layout_width="100dp" android:layout_height="wrap_content" android:gravity="center" android:padding="10dp" android:text="0" android:textStyle="bold" android:textColor="#1B3A4B" /></LinearLayout>
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#FFFFFF" android:orientation="horizontal" android:layout_marginBottom="1dp"><TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:padding="10dp" android:text="2. HH members treated" /><TextView android:id="@+id/sc_q2" android:layout_width="100dp" android:layout_height="wrap_content" android:gravity="center" android:padding="10dp" android:text="0" android:textStyle="bold" android:textColor="#1B3A4B" /></LinearLayout>
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#FFFFFF" android:orientation="horizontal" android:layout_marginBottom="1dp"><TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:padding="10dp" android:text="3. HH with prophylaxis" /><TextView android:id="@+id/sc_q3" android:layout_width="100dp" android:layout_height="wrap_content" android:gravity="center" android:padding="10dp" android:text="0" android:textStyle="bold" android:textColor="#1B3A4B" /></LinearLayout>
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#FFFFFF" android:orientation="horizontal" android:layout_marginBottom="1dp"><TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:padding="10dp" android:text="4. Quantity distributed" /><TextView android:id="@+id/sc_q4" android:layout_width="100dp" android:layout_height="wrap_content" android:gravity="center" android:padding="10dp" android:text="0" android:textStyle="bold" android:textColor="#1B3A4B" /></LinearLayout>
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#FFFFFF" android:orientation="horizontal" android:layout_marginBottom="1dp"><TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:padding="10dp" android:text="5. HH reporting at least 1 ITN" /><TextView android:id="@+id/sc_q5" android:layout_width="100dp" android:layout_height="wrap_content" android:gravity="center" android:padding="10dp" android:text="0" android:textStyle="bold" android:textColor="#1B3A4B" /></LinearLayout>
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#FFFFFF" android:orientation="horizontal" android:layout_marginBottom="1dp"><TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:padding="10dp" android:text="6. Malaria RDT used" /><TextView android:id="@+id/sc_q6" android:layout_width="100dp" android:layout_height="wrap_content" android:gravity="center" android:padding="10dp" android:text="0" android:textStyle="bold" android:textColor="#1B3A4B" /></LinearLayout>
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#FFFFFF" android:orientation="horizontal" android:layout_marginBottom="1dp"><TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:padding="10dp" android:text="7. Coartem distributed" /><TextView android:id="@+id/sc_q7" android:layout_width="100dp" android:layout_height="wrap_content" android:gravity="center" android:padding="10dp" android:text="0" android:textStyle="bold" android:textColor="#1B3A4B" /></LinearLayout>
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#F6F5F0" android:orientation="horizontal"><TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:padding="10dp" android:text="Section C Total" android:textStyle="bold" /><TextView android:id="@+id/sc_total" android:layout_width="100dp" android:layout_height="wrap_content" android:gravity="center" android:padding="10dp" android:text="0" android:textStyle="bold" android:textColor="#1B3A4B" /></LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- COMMENTS -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/sec_comments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="24dp" app:cardCornerRadius="6dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="14dp">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Comments / Remarks" android:textColor="#1B3A4B" android:textSize="18sp" android:textStyle="bold" />
+                    <TextView android:id="@+id/txt_comments" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:background="#FFFFFF" android:padding="12dp" android:text="No comments" android:textColor="#232323" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
-    </androidx.appcompat.widget.Toolbar>
-
-    <!--  Sticky Header Card with Program Metadata and Edit Button -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/header_card"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp">
-
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toStartOf="@+id/btn_edit_report"
-                android:stretchColumns="1">
-
-                <TableRow android:layout_marginBottom="4dp">
-                    <TextView
-                        android:paddingEnd="8dp"
-                        android:text="Reporting Period:"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:id="@+id/txt_reporting_month"
-                        android:text="January 2024" />
-                </TableRow>
-
-                <TableRow>
-                    <TextView
-                        android:paddingEnd="8dp"
-                        android:text="Facility Name:"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:id="@+id/txt_facility_name"
-                        android:text="Sample Clinic" />
-                </TableRow>
-            </TableLayout>
-
-            <ImageButton
-                android:id="@+id/btn_edit_report"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Edit Report"
-                android:padding="8dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/edit_icon"
-                app:tint="@color/chw_family_primary" />
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingBottom="16dp">
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="2dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <!-- SECTION A -->
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#E8F5E9"
-                    android:padding="12dp"
-                    android:text="SECTION A: COMPREHENSIVE PROGRAM"
-                    android:textColor="#2E7D32"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <!-- Q1 -->
-                <LinearLayout android:id="@+id/header_q1" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q1: People tested for malaria" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_q1" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
-                </LinearLayout>
-                <LinearLayout android:id="@+id/content_q1" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
-                    <include layout="@layout/table_malaria_standard_q1" />
-                </LinearLayout>
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_grey" />
-
-                <!-- Q2 -->
-                <LinearLayout android:id="@+id/header_q2" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q2: People who were malaria positive" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_q2" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
-                </LinearLayout>
-                <LinearLayout android:id="@+id/content_q2" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
-                    <include layout="@layout/table_malaria_standard_q2" />
-                </LinearLayout>
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_grey" />
-
-                <!-- Q3 -->
-                <LinearLayout android:id="@+id/header_q3" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q3: People who received treatment" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_q3" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
-                </LinearLayout>
-                <LinearLayout android:id="@+id/content_q3" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
-                    <include layout="@layout/table_malaria_standard_q3" />
-                </LinearLayout>
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_grey" />
-
-                <!-- Q4 -->
-                <LinearLayout android:id="@+id/header_q4" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q4: People who received prophylaxis" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_q4" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
-                </LinearLayout>
-                <LinearLayout android:id="@+id/content_q4" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
-                    <include layout="@layout/table_malaria_standard_q4" />
-                </LinearLayout>
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_grey" />
-
-                <!-- Q5 -->
-                <LinearLayout android:id="@+id/header_q5" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q5: People referred for treatment" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_q5" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
-                </LinearLayout>
-                <LinearLayout android:id="@+id/content_q5" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
-                    <include layout="@layout/table_malaria_standard_q5" />
-                </LinearLayout>
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_grey" />
-
-                <!-- Q6 -->
-                <LinearLayout android:id="@+id/header_q6" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q6: Referral treatment completed" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_q6" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
-                </LinearLayout>
-                <LinearLayout android:id="@+id/content_q6" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
-                    <include layout="@layout/table_malaria_standard_q6" />
-                </LinearLayout>
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_grey" />
-
-                <!-- Q7 -->
-                <LinearLayout android:id="@+id/header_q7" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q7: People referred for testing" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_q7" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
-                </LinearLayout>
-                <LinearLayout android:id="@+id/content_q7" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
-                    <include layout="@layout/table_malaria_standard_q7" />
-                </LinearLayout>
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_grey" />
-
-                <!-- Q8 -->
-                <LinearLayout android:id="@+id/header_q8" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q8: Referral testing completed" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_q8" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
-                </LinearLayout>
-                <LinearLayout android:id="@+id/content_q8" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
-                    <include layout="@layout/table_malaria_standard_q8" />
-                </LinearLayout>
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_grey" />
-
-                <!-- Q9 -->
-                <LinearLayout android:id="@+id/header_q9" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q9: People with severe malaria" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_q9" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
-                </LinearLayout>
-                <LinearLayout android:id="@+id/content_q9" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
-                    <include layout="@layout/table_malaria_standard_q9" />
-                </LinearLayout>
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_grey" />
-
-                <!-- Q10 -->
-                <LinearLayout android:id="@+id/header_q10" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q10: Households with member tested" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_q10" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
-                </LinearLayout>
-                <LinearLayout android:id="@+id/content_q10" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
-                    <include layout="@layout/table_malaria_standard_q10" />
-                </LinearLayout>
-
-                <!-- SECTION B -->
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#E3F2FD"
-                    android:padding="12dp"
-                    android:text="SECTION B: OTHER COMMUNITY MEMBERS"
-                    android:textColor="#1976D2"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <!-- SB Q1 -->
-                <LinearLayout android:id="@+id/header_sb_q1" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q1: People tested for malaria" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_sb_q1" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
-                </LinearLayout>
-                <LinearLayout android:id="@+id/content_sb_q1" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
-                    <include layout="@layout/table_malaria_sb_standard_q1" />
-                </LinearLayout>
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_grey" />
-
-                <!-- SB Q2 -->
-                <LinearLayout android:id="@+id/header_sb_q2" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q2: People malaria positive" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_sb_q2" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
-                </LinearLayout>
-                <LinearLayout android:id="@+id/content_sb_q2" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
-                    <include layout="@layout/table_malaria_sb_standard_q2" />
-                </LinearLayout>
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_grey" />
-
-                <!-- SB Q3 -->
-                <LinearLayout android:id="@+id/header_sb_q3" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q3: People who received treatment" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_sb_q3" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
-                </LinearLayout>
-                <LinearLayout android:id="@+id/content_sb_q3" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
-                    <include layout="@layout/table_malaria_sb_standard_q3" />
-                </LinearLayout>
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_grey" />
-
-                <!-- SB Q4 -->
-                <LinearLayout android:id="@+id/header_sb_q4" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q4: People who received prophylaxis" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_sb_q4" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
-                </LinearLayout>
-                <LinearLayout android:id="@+id/content_sb_q4" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
-                    <include layout="@layout/table_malaria_sb_standard_q4" />
-                </LinearLayout>
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_grey" />
-
-                <!-- SB Q5 -->
-                <LinearLayout android:id="@+id/header_sb_q5" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q5: People referred for treatment" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_sb_q5" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
-                </LinearLayout>
-                <LinearLayout android:id="@+id/content_sb_q5" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
-                    <include layout="@layout/table_malaria_sb_standard_q5" />
-                </LinearLayout>
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_grey" />
-
-                <!-- SB Q6 -->
-                <LinearLayout android:id="@+id/header_sb_q6" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q6: Referral treatment completed" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_sb_q6" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
-                </LinearLayout>
-                <LinearLayout android:id="@+id/content_sb_q6" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
-                    <include layout="@layout/table_malaria_sb_standard_q6" />
-                </LinearLayout>
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_grey" />
-
-                <!-- SB Q7 -->
-                <LinearLayout android:id="@+id/header_sb_q7" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q7: People referred for testing" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_sb_q7" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
-                </LinearLayout>
-                <LinearLayout android:id="@+id/content_sb_q7" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
-                    <include layout="@layout/table_malaria_sb_standard_q7" />
-                </LinearLayout>
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_grey" />
-
-                <!-- SB Q8 -->
-                <LinearLayout android:id="@+id/header_sb_q8" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q8: Referral testing completed" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_sb_q8" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
-                </LinearLayout>
-                <LinearLayout android:id="@+id/content_sb_q8" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
-                    <include layout="@layout/table_malaria_sb_standard_q8" />
-                </LinearLayout>
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_grey" />
-
-                <!-- SB Q9 -->
-                <LinearLayout android:id="@+id/header_sb_q9" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q9: People with severe malaria" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_sb_q9" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
-                </LinearLayout>
-                <LinearLayout android:id="@+id/content_sb_q9" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
-                    <include layout="@layout/table_malaria_sb_standard_q9" />
-                </LinearLayout>
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_grey" />
-
-                <!-- SB Q10 -->
-                <LinearLayout android:id="@+id/header_sb_q10" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Q10: Households with member tested" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_sb_q10" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
-                </LinearLayout>
-                <LinearLayout android:id="@+id/content_sb_q10" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
-                    <include layout="@layout/table_malaria_sb_standard_q10" />
-                </LinearLayout>
-
-                <!-- SECTION C -->
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#FFF3E0"
-                    android:padding="12dp"
-                    android:text="SECTION C: HOUSEHOLD &amp; COMMODITIES"
-                    android:textColor="#D84315"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout android:id="@+id/header_sc" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Indicators &amp; Commodities" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_sc" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
-                </LinearLayout>
-                <LinearLayout android:id="@+id/content_sc" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
-                    <include layout="@layout/table_malaria_sc" />
-                </LinearLayout>
-
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_grey" />
-
-                <!-- Comments Header -->
-                <LinearLayout android:id="@+id/header_comments" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Comments / Remarks" android:textColor="@color/text_black" android:textSize="14sp" android:textStyle="bold" />
-                    <ImageView android:id="@+id/icon_comments" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/baseline_expand_more_24" />
-                </LinearLayout>
-                <LinearLayout android:id="@+id/content_comments" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="16dp" android:paddingBottom="16dp" android:visibility="gone">
-                    <TextView android:id="@+id/txt_comments" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="No comments" android:textColor="@color/text_black" />
-                </LinearLayout>
-
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

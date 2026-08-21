@@ -40,6 +40,15 @@
         android:usesCleartextTraffic="true"
         android:largeHeap="true"
         tools:replace="android:theme">
+
+        <!-- Kujaku's manifest-declared receiver unconditionally calls context.startService()
+             on every network change, even though this app never uses Kujaku's offline map
+             download feature (KujakuLibrary.init() is never called). That crashes with
+             IllegalStateException on API 26+ when the app is backgrounded. Remove it. -->
+        <receiver
+            android:name="io.ona.kujaku.receivers.KujakuNetworkChangeReceiver"
+            tools:node="remove" />
+
         <service
             android:name=".push.FlagsFirebaseMessagingService"
             android:exported="false">
@@ -60,6 +69,10 @@
 
         <activity
             android:name=".activity.SopDocumentsActivity"
+            android:exported="false"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
+            android:name=".activity.ReportProblemActivity"
             android:exported="false"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity

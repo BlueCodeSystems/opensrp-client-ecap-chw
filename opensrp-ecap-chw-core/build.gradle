@@ -303,7 +303,7 @@ dependencies {
     implementation 'io.github.bluecodesystems:MaterialEditTextLibrary:3.1.5'
 //    api 'com.simprints:libsimprints:2024.10.1-SNAPSHOT'
     // Core from JitPack (v7.0.6)
-    api('com.github.BlueCodeSystems:opensrp-client-core:v8.0.3-beta') {
+    api('com.github.BlueCodeSystems:opensrp-client-core:v8.0.5-beta') {
         transitive = true
         exclude group: 'com.github.bmelnychuk', module: 'atv'
         exclude group: 'com.google.guava', module: 'guava'

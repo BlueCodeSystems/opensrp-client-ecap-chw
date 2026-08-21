@@ -901,7 +901,7 @@ public class HeiDetailsActivity extends AppCompatActivity {
         };
 
         try {
-            AppExecutors appExecutors = new AppExecutors();
+            AppExecutors appExecutors = ChwApplication.getInstance().getAppExecutors();
             appExecutors.diskIO().execute(runnable);
             return true;
         } catch (Exception exception) {
@@ -1634,15 +1634,16 @@ public class HeiDetailsActivity extends AppCompatActivity {
 
         String province = prefs.getString("province", "");
         String district = prefs.getString("district", "");
-        String ward = prefs.getString("ward", "");
         String facility = prefs.getString("facility", "");
         String partner = prefs.getString("partner", "");
 
         setStep1FieldValue(formToBeOpened, "province", province);
         setStep1FieldValue(formToBeOpened, "district", district);
-        setStep1FieldValue(formToBeOpened, "ward", ward);
         setStep1FieldValue(formToBeOpened, "facility", facility);
         setStep1FieldValue(formToBeOpened, "partner", partner);
+        // "ward" is editable per-record (unlike province/district/facility/partner) and is
+        // already prefilled from the saved pmtctChild.ward above; don't overwrite it with the
+        // CHW's current device ward here.
     }
 
     private void setStep1FieldValue(JSONObject formToBeOpened, String key, String value) {

@@ -32,6 +32,16 @@
                 android:textStyle="bold"
                 app:drawableEndCompat="@drawable/baseline_expand_more_24" />
 
+            <TextView
+                android:id="@+id/q1_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text=""
+                android:textColor="@color/textSecondary"
+                android:textSize="12sp"
+                android:textStyle="italic" />
+
             <TableLayout
                 android:id="@+id/table_q1"
                 android:layout_width="match_parent"
@@ -47,43 +57,43 @@
                 </TableRow>
 
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="&lt; 1 Year" android:paddingStart="12dp"/>
+                    <TextView android:text="1. &lt; 1 Year" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q1_f_lt1" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q1_m_lt1" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="1-4 Years" android:paddingStart="12dp"/>
+                    <TextView android:text="2. 1-4 Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q1_f_1_4" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q1_m_1_4" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="5-9 Years" android:paddingStart="12dp"/>
+                    <TextView android:text="3. 5-9 Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q1_f_5_9" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q1_m_5_9" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="10-14 Years" android:paddingStart="12dp"/>
+                    <TextView android:text="4. 10-14 Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q1_f_10_14" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q1_m_10_14" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="15-19 Years" android:paddingStart="12dp"/>
+                    <TextView android:text="5. 15-19 Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q1_f_15_19" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q1_m_15_19" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="20+ Years" android:paddingStart="12dp"/>
+                    <TextView android:text="6. 20+ Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q1_f_20_plus" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q1_m_20_plus" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="PC 18+ Years" android:paddingStart="12dp"/>
+                    <TextView android:text="7. PC 18+ Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q1_f_pc_18" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q1_m_pc_18" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
 
                 <TableRow android:background="@drawable/bg_table_header" android:paddingVertical="10dp">
-                    <TextView android:text="Total" android:textStyle="bold" android:paddingStart="12dp" android:textColor="@color/text_black"/>
+                    <TextView android:text="8. Total" android:textStyle="bold" android:paddingStart="12dp" android:textColor="@color/text_black"/>
                     <TextView android:id="@+id/q1_f_total" android:gravity="center" android:textStyle="bold" android:text="0" android:textColor="@color/text_black"/>
                     <TextView android:id="@+id/q1_m_total" android:gravity="center" android:textStyle="bold" android:text="0" android:textColor="@color/text_black"/>
                 </TableRow>
@@ -93,20 +103,24 @@
                 </TableRow>
 
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="HEI" android:paddingStart="12dp"/>
+                    <TextView android:text="9. HEI" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q1_hei" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="C/ALHIV (0-20)" android:paddingStart="12dp"/>
+                    <TextView android:text="10. C/ALHIV (0-20)" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q1_calhiv" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="WLHIV" android:paddingStart="12dp"/>
+                    <TextView android:text="11. WLHIV" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q1_wlhiv" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="PC Living with HIV" android:paddingStart="12dp"/>
+                    <TextView android:text="12. PC Living with HIV" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q1_pc_lhiv" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
+                </TableRow>
+                <TableRow android:background="#F5F5F5" android:paddingVertical="10dp">
+                    <TextView android:text="13. Sub-Population Total" android:textStyle="bold" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/q1_subpop_total" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
             </TableLayout>
         </LinearLayout>
@@ -137,6 +151,16 @@
                 android:textStyle="bold"
                 app:drawableEndCompat="@drawable/baseline_expand_more_24" />
 
+            <TextView
+                android:id="@+id/q2_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text=""
+                android:textColor="@color/textSecondary"
+                android:textSize="12sp"
+                android:textStyle="italic" />
+
             <TableLayout
                 android:id="@+id/table_q2"
                 android:layout_width="match_parent"
@@ -152,43 +176,43 @@
                 </TableRow>
 
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="&lt; 1 Year" android:paddingStart="12dp"/>
+                    <TextView android:text="1. &lt; 1 Year" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q2_f_lt1" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q2_m_lt1" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="1-4 Years" android:paddingStart="12dp"/>
+                    <TextView android:text="2. 1-4 Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q2_f_1_4" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q2_m_1_4" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="5-9 Years" android:paddingStart="12dp"/>
+                    <TextView android:text="3. 5-9 Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q2_f_5_9" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q2_m_5_9" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="10-14 Years" android:paddingStart="12dp"/>
+                    <TextView android:text="4. 10-14 Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q2_f_10_14" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q2_m_10_14" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="15-19 Years" android:paddingStart="12dp"/>
+                    <TextView android:text="5. 15-19 Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q2_f_15_19" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q2_m_15_19" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="20+ Years" android:paddingStart="12dp"/>
+                    <TextView android:text="6. 20+ Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q2_f_20_plus" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q2_m_20_plus" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="PC 18+ Years" android:paddingStart="12dp"/>
+                    <TextView android:text="7. PC 18+ Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q2_f_pc_18" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q2_m_pc_18" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
 
                 <TableRow android:background="@drawable/bg_table_header" android:paddingVertical="10dp">
-                    <TextView android:text="Total" android:textStyle="bold" android:paddingStart="12dp" android:textColor="@color/text_black"/>
+                    <TextView android:text="8. Total" android:textStyle="bold" android:paddingStart="12dp" android:textColor="@color/text_black"/>
                     <TextView android:id="@+id/q2_f_total" android:gravity="center" android:textStyle="bold" android:text="0" android:textColor="@color/text_black"/>
                     <TextView android:id="@+id/q2_m_total" android:gravity="center" android:textStyle="bold" android:text="0" android:textColor="@color/text_black"/>
                 </TableRow>
@@ -198,20 +222,24 @@
                 </TableRow>
 
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="HEI" android:paddingStart="12dp"/>
+                    <TextView android:text="9. HEI" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q2_hei" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="C/ALHIV (0-20)" android:paddingStart="12dp"/>
+                    <TextView android:text="10. C/ALHIV (0-20)" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q2_calhiv" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="WLHIV" android:paddingStart="12dp"/>
+                    <TextView android:text="11. WLHIV" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q2_wlhiv" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="PC Living with HIV" android:paddingStart="12dp"/>
+                    <TextView android:text="12. PC Living with HIV" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q2_pc_lhiv" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
+                </TableRow>
+                <TableRow android:background="#F5F5F5" android:paddingVertical="10dp">
+                    <TextView android:text="13. Sub-Population Total" android:textStyle="bold" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/q2_subpop_total" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
             </TableLayout>
         </LinearLayout>
@@ -242,6 +270,16 @@
                 android:textStyle="bold"
                 app:drawableEndCompat="@drawable/baseline_expand_more_24" />
 
+            <TextView
+                android:id="@+id/q3_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text=""
+                android:textColor="@color/textSecondary"
+                android:textSize="12sp"
+                android:textStyle="italic" />
+
             <TableLayout
                 android:id="@+id/table_q3"
                 android:layout_width="match_parent"
@@ -257,43 +295,43 @@
                 </TableRow>
 
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="&lt; 1 Year" android:paddingStart="12dp"/>
+                    <TextView android:text="1. &lt; 1 Year" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q3_f_lt1" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q3_m_lt1" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="1-4 Years" android:paddingStart="12dp"/>
+                    <TextView android:text="2. 1-4 Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q3_f_1_4" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q3_m_1_4" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="5-9 Years" android:paddingStart="12dp"/>
+                    <TextView android:text="3. 5-9 Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q3_f_5_9" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q3_m_5_9" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="10-14 Years" android:paddingStart="12dp"/>
+                    <TextView android:text="4. 10-14 Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q3_f_10_14" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q3_m_10_14" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="15-19 Years" android:paddingStart="12dp"/>
+                    <TextView android:text="5. 15-19 Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q3_f_15_19" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q3_m_15_19" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="20+ Years" android:paddingStart="12dp"/>
+                    <TextView android:text="6. 20+ Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q3_f_20_plus" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q3_m_20_plus" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="PC 18+ Years" android:paddingStart="12dp"/>
+                    <TextView android:text="7. PC 18+ Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q3_f_pc_18" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q3_m_pc_18" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
 
                 <TableRow android:background="@drawable/bg_table_header" android:paddingVertical="10dp">
-                    <TextView android:text="Total" android:textStyle="bold" android:paddingStart="12dp" android:textColor="@color/text_black"/>
+                    <TextView android:text="8. Total" android:textStyle="bold" android:paddingStart="12dp" android:textColor="@color/text_black"/>
                     <TextView android:id="@+id/q3_f_total" android:gravity="center" android:textStyle="bold" android:text="0" android:textColor="@color/text_black"/>
                     <TextView android:id="@+id/q3_m_total" android:gravity="center" android:textStyle="bold" android:text="0" android:textColor="@color/text_black"/>
                 </TableRow>
@@ -303,20 +341,24 @@
                 </TableRow>
 
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="HEI" android:paddingStart="12dp"/>
+                    <TextView android:text="9. HEI" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q3_hei" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="C/ALHIV (0-20)" android:paddingStart="12dp"/>
+                    <TextView android:text="10. C/ALHIV (0-20)" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q3_calhiv" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="WLHIV" android:paddingStart="12dp"/>
+                    <TextView android:text="11. WLHIV" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q3_wlhiv" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="PC Living with HIV" android:paddingStart="12dp"/>
+                    <TextView android:text="12. PC Living with HIV" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q3_pc_lhiv" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
+                </TableRow>
+                <TableRow android:background="#F5F5F5" android:paddingVertical="10dp">
+                    <TextView android:text="13. Sub-Population Total" android:textStyle="bold" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/q3_subpop_total" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
             </TableLayout>
         </LinearLayout>
@@ -347,6 +389,16 @@
                 android:textStyle="bold"
                 app:drawableEndCompat="@drawable/baseline_expand_more_24" />
 
+            <TextView
+                android:id="@+id/q4_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text=""
+                android:textColor="@color/textSecondary"
+                android:textSize="12sp"
+                android:textStyle="italic" />
+
             <TableLayout
                 android:id="@+id/table_q4"
                 android:layout_width="match_parent"
@@ -362,43 +414,43 @@
                 </TableRow>
 
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="&lt; 1 Year" android:paddingStart="12dp"/>
+                    <TextView android:text="1. &lt; 1 Year" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q4_f_lt1" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q4_m_lt1" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="1-4 Years" android:paddingStart="12dp"/>
+                    <TextView android:text="2. 1-4 Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q4_f_1_4" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q4_m_1_4" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="5-9 Years" android:paddingStart="12dp"/>
+                    <TextView android:text="3. 5-9 Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q4_f_5_9" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q4_m_5_9" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="10-14 Years" android:paddingStart="12dp"/>
+                    <TextView android:text="4. 10-14 Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q4_f_10_14" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q4_m_10_14" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="15-19 Years" android:paddingStart="12dp"/>
+                    <TextView android:text="5. 15-19 Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q4_f_15_19" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q4_m_15_19" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="20+ Years" android:paddingStart="12dp"/>
+                    <TextView android:text="6. 20+ Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q4_f_20_plus" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q4_m_20_plus" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="PC 18+ Years" android:paddingStart="12dp"/>
+                    <TextView android:text="7. PC 18+ Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q4_f_pc_18" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q4_m_pc_18" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
 
                 <TableRow android:background="@drawable/bg_table_header" android:paddingVertical="10dp">
-                    <TextView android:text="Total" android:textStyle="bold" android:paddingStart="12dp" android:textColor="@color/text_black"/>
+                    <TextView android:text="8. Total" android:textStyle="bold" android:paddingStart="12dp" android:textColor="@color/text_black"/>
                     <TextView android:id="@+id/q4_f_total" android:gravity="center" android:textStyle="bold" android:text="0" android:textColor="@color/text_black"/>
                     <TextView android:id="@+id/q4_m_total" android:gravity="center" android:textStyle="bold" android:text="0" android:textColor="@color/text_black"/>
                 </TableRow>
@@ -408,20 +460,24 @@
                 </TableRow>
 
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="HEI" android:paddingStart="12dp"/>
+                    <TextView android:text="9. HEI" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q4_hei" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="C/ALHIV (0-20)" android:paddingStart="12dp"/>
+                    <TextView android:text="10. C/ALHIV (0-20)" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q4_calhiv" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="WLHIV" android:paddingStart="12dp"/>
+                    <TextView android:text="11. WLHIV" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q4_wlhiv" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="PC Living with HIV" android:paddingStart="12dp"/>
+                    <TextView android:text="12. PC Living with HIV" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q4_pc_lhiv" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
+                </TableRow>
+                <TableRow android:background="#F5F5F5" android:paddingVertical="10dp">
+                    <TextView android:text="13. Sub-Population Total" android:textStyle="bold" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/q4_subpop_total" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
             </TableLayout>
         </LinearLayout>
@@ -452,6 +508,16 @@
                 android:textStyle="bold"
                 app:drawableEndCompat="@drawable/baseline_expand_more_24" />
 
+            <TextView
+                android:id="@+id/q5_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text=""
+                android:textColor="@color/textSecondary"
+                android:textSize="12sp"
+                android:textStyle="italic" />
+
             <TableLayout
                 android:id="@+id/table_q5"
                 android:layout_width="match_parent"
@@ -467,43 +533,43 @@
                 </TableRow>
 
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="&lt; 1 Year" android:paddingStart="12dp"/>
+                    <TextView android:text="1. &lt; 1 Year" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q5_f_lt1" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q5_m_lt1" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="1-4 Years" android:paddingStart="12dp"/>
+                    <TextView android:text="2. 1-4 Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q5_f_1_4" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q5_m_1_4" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="5-9 Years" android:paddingStart="12dp"/>
+                    <TextView android:text="3. 5-9 Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q5_f_5_9" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q5_m_5_9" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="10-14 Years" android:paddingStart="12dp"/>
+                    <TextView android:text="4. 10-14 Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q5_f_10_14" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q5_m_10_14" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="15-19 Years" android:paddingStart="12dp"/>
+                    <TextView android:text="5. 15-19 Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q5_f_15_19" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q5_m_15_19" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="20+ Years" android:paddingStart="12dp"/>
+                    <TextView android:text="6. 20+ Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q5_f_20_plus" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q5_m_20_plus" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="PC 18+ Years" android:paddingStart="12dp"/>
+                    <TextView android:text="7. PC 18+ Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q5_f_pc_18" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q5_m_pc_18" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
 
                 <TableRow android:background="@drawable/bg_table_header" android:paddingVertical="10dp">
-                    <TextView android:text="Total" android:textStyle="bold" android:paddingStart="12dp" android:textColor="@color/text_black"/>
+                    <TextView android:text="8. Total" android:textStyle="bold" android:paddingStart="12dp" android:textColor="@color/text_black"/>
                     <TextView android:id="@+id/q5_f_total" android:gravity="center" android:textStyle="bold" android:text="0" android:textColor="@color/text_black"/>
                     <TextView android:id="@+id/q5_m_total" android:gravity="center" android:textStyle="bold" android:text="0" android:textColor="@color/text_black"/>
                 </TableRow>
@@ -513,20 +579,24 @@
                 </TableRow>
 
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="HEI" android:paddingStart="12dp"/>
+                    <TextView android:text="9. HEI" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q5_hei" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="C/ALHIV (0-20)" android:paddingStart="12dp"/>
+                    <TextView android:text="10. C/ALHIV (0-20)" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q5_calhiv" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="WLHIV" android:paddingStart="12dp"/>
+                    <TextView android:text="11. WLHIV" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q5_wlhiv" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="PC Living with HIV" android:paddingStart="12dp"/>
+                    <TextView android:text="12. PC Living with HIV" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q5_pc_lhiv" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
+                </TableRow>
+                <TableRow android:background="#F5F5F5" android:paddingVertical="10dp">
+                    <TextView android:text="13. Sub-Population Total" android:textStyle="bold" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/q5_subpop_total" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
             </TableLayout>
         </LinearLayout>
@@ -557,6 +627,16 @@
                 android:textStyle="bold"
                 app:drawableEndCompat="@drawable/baseline_expand_more_24" />
 
+            <TextView
+                android:id="@+id/q6_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text=""
+                android:textColor="@color/textSecondary"
+                android:textSize="12sp"
+                android:textStyle="italic" />
+
             <TableLayout
                 android:id="@+id/table_q6"
                 android:layout_width="match_parent"
@@ -572,43 +652,43 @@
                 </TableRow>
 
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="&lt; 1 Year" android:paddingStart="12dp"/>
+                    <TextView android:text="1. &lt; 1 Year" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q6_f_lt1" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q6_m_lt1" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="1-4 Years" android:paddingStart="12dp"/>
+                    <TextView android:text="2. 1-4 Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q6_f_1_4" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q6_m_1_4" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="5-9 Years" android:paddingStart="12dp"/>
+                    <TextView android:text="3. 5-9 Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q6_f_5_9" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q6_m_5_9" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="10-14 Years" android:paddingStart="12dp"/>
+                    <TextView android:text="4. 10-14 Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q6_f_10_14" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q6_m_10_14" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="15-19 Years" android:paddingStart="12dp"/>
+                    <TextView android:text="5. 15-19 Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q6_f_15_19" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q6_m_15_19" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="20+ Years" android:paddingStart="12dp"/>
+                    <TextView android:text="6. 20+ Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q6_f_20_plus" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q6_m_20_plus" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="PC 18+ Years" android:paddingStart="12dp"/>
+                    <TextView android:text="7. PC 18+ Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q6_f_pc_18" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q6_m_pc_18" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
 
                 <TableRow android:background="@drawable/bg_table_header" android:paddingVertical="10dp">
-                    <TextView android:text="Total" android:textStyle="bold" android:paddingStart="12dp" android:textColor="@color/text_black"/>
+                    <TextView android:text="8. Total" android:textStyle="bold" android:paddingStart="12dp" android:textColor="@color/text_black"/>
                     <TextView android:id="@+id/q6_f_total" android:gravity="center" android:textStyle="bold" android:text="0" android:textColor="@color/text_black"/>
                     <TextView android:id="@+id/q6_m_total" android:gravity="center" android:textStyle="bold" android:text="0" android:textColor="@color/text_black"/>
                 </TableRow>
@@ -618,20 +698,24 @@
                 </TableRow>
 
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="HEI" android:paddingStart="12dp"/>
+                    <TextView android:text="9. HEI" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q6_hei" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="C/ALHIV (0-20)" android:paddingStart="12dp"/>
+                    <TextView android:text="10. C/ALHIV (0-20)" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q6_calhiv" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="WLHIV" android:paddingStart="12dp"/>
+                    <TextView android:text="11. WLHIV" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q6_wlhiv" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="PC Living with HIV" android:paddingStart="12dp"/>
+                    <TextView android:text="12. PC Living with HIV" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q6_pc_lhiv" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
+                </TableRow>
+                <TableRow android:background="#F5F5F5" android:paddingVertical="10dp">
+                    <TextView android:text="13. Sub-Population Total" android:textStyle="bold" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/q6_subpop_total" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
             </TableLayout>
         </LinearLayout>
@@ -662,6 +746,16 @@
                 android:textStyle="bold"
                 app:drawableEndCompat="@drawable/baseline_expand_more_24" />
 
+            <TextView
+                android:id="@+id/q7_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text=""
+                android:textColor="@color/textSecondary"
+                android:textSize="12sp"
+                android:textStyle="italic" />
+
             <TableLayout
                 android:id="@+id/table_q7"
                 android:layout_width="match_parent"
@@ -677,43 +771,43 @@
                 </TableRow>
 
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="&lt; 1 Year" android:paddingStart="12dp"/>
+                    <TextView android:text="1. &lt; 1 Year" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q7_f_lt1" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q7_m_lt1" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="1-4 Years" android:paddingStart="12dp"/>
+                    <TextView android:text="2. 1-4 Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q7_f_1_4" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q7_m_1_4" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="5-9 Years" android:paddingStart="12dp"/>
+                    <TextView android:text="3. 5-9 Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q7_f_5_9" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q7_m_5_9" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="10-14 Years" android:paddingStart="12dp"/>
+                    <TextView android:text="4. 10-14 Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q7_f_10_14" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q7_m_10_14" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="15-19 Years" android:paddingStart="12dp"/>
+                    <TextView android:text="5. 15-19 Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q7_f_15_19" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q7_m_15_19" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="20+ Years" android:paddingStart="12dp"/>
+                    <TextView android:text="6. 20+ Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q7_f_20_plus" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q7_m_20_plus" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="PC 18+ Years" android:paddingStart="12dp"/>
+                    <TextView android:text="7. PC 18+ Years" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q7_f_pc_18" android:gravity="center" android:text="0" android:textStyle="bold"/>
                     <TextView android:id="@+id/q7_m_pc_18" android:gravity="center" android:text="0" android:textStyle="bold"/>
                 </TableRow>
 
                 <TableRow android:background="@drawable/bg_table_header" android:paddingVertical="10dp">
-                    <TextView android:text="Total" android:textStyle="bold" android:paddingStart="12dp" android:textColor="@color/text_black"/>
+                    <TextView android:text="8. Total" android:textStyle="bold" android:paddingStart="12dp" android:textColor="@color/text_black"/>
                     <TextView android:id="@+id/q7_f_total" android:gravity="center" android:textStyle="bold" android:text="0" android:textColor="@color/text_black"/>
                     <TextView android:id="@+id/q7_m_total" android:gravity="center" android:textStyle="bold" android:text="0" android:textColor="@color/text_black"/>
                 </TableRow>
@@ -723,20 +817,24 @@
                 </TableRow>
 
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="HEI" android:paddingStart="12dp"/>
+                    <TextView android:text="9. HEI" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q7_hei" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="C/ALHIV (0-20)" android:paddingStart="12dp"/>
+                    <TextView android:text="10. C/ALHIV (0-20)" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q7_calhiv" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="WLHIV" android:paddingStart="12dp"/>
+                    <TextView android:text="11. WLHIV" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q7_wlhiv" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
                 <TableRow android:paddingVertical="10dp" android:background="@drawable/bg_table_row">
-                    <TextView android:text="PC Living with HIV" android:paddingStart="12dp"/>
+                    <TextView android:text="12. PC Living with HIV" android:paddingStart="12dp"/>
                     <TextView android:id="@+id/q7_pc_lhiv" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
+                </TableRow>
+                <TableRow android:background="#F5F5F5" android:paddingVertical="10dp">
+                    <TextView android:text="13. Sub-Population Total" android:textStyle="bold" android:paddingStart="12dp"/>
+                    <TextView android:id="@+id/q7_subpop_total" android:gravity="center" android:text="0" android:textStyle="bold" android:layout_span="2"/>
                 </TableRow>
             </TableLayout>
         </LinearLayout>

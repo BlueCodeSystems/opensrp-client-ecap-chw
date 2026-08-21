@@ -21,6 +21,12 @@ public class PmtctChildModel {
     private String azt_3tc_npv;
     private String azt_3tc_npv_date;
     private String child_outcome;
+    private String ward;
+    private String is_closed;
+    private String province;
+    private String district;
+    private String facility;
+    private String partner;
 
     private String delete_status;
 
@@ -182,6 +188,54 @@ public class PmtctChildModel {
 
     public void setChild_outcome(String child_outcome) {
         this.child_outcome = child_outcome;
+    }
+
+    public String getWard() {
+        return ward;
+    }
+
+    public void setWard(String ward) {
+        this.ward = ward;
+    }
+
+    public String getIs_closed() {
+        return is_closed;
+    }
+
+    public void setIs_closed(String is_closed) {
+        this.is_closed = is_closed;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getFacility() {
+        return facility;
+    }
+
+    public void setFacility(String facility) {
+        this.facility = facility;
+    }
+
+    public String getPartner() {
+        return partner;
+    }
+
+    public void setPartner(String partner) {
+        this.partner = partner;
     }
 
     public String getDelete_status() {

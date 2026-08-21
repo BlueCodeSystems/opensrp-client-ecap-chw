@@ -1,4 +1,5 @@
 package com.bluecodeltd.ecap.chw.activity;
+import com.bluecodeltd.ecap.chw.application.ChwApplication;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -144,30 +145,40 @@ public class CommunityAlertReportViewActivity extends AppCompatActivity {
             } catch (Exception ignored) {
             }
 
+            // Parse the json.form asset here too, off the main thread.
+            JSONObject form = null;
+            try {
+                form = new FormUtils(this).getFormJson(ReportRegisterActivity.REPORT_FORM_COMMUNITY_ALERT);
+            } catch (Exception ignored) {
+            }
+
             CaseStatusModel finalCaseStatusModel = statusModel;
+            JSONObject finalForm = form;
             Threading.main(() -> {
+                if (isFinishing() || isDestroyed()) return;
                 String status = finalCaseStatusModel != null ? finalCaseStatusModel.getCase_status() : null;
                 if ("0".equals(status) || "2".equals(status)) {
                     Snackbar.make(findViewById(R.id.header_card), "Beneficiary is inactive or de-registered", Snackbar.LENGTH_LONG).show();
                     return;
                 }
 
+                if (finalForm == null) {
+                    Snackbar.make(findViewById(R.id.header_card), "Unable to open form", Snackbar.LENGTH_LONG).show();
+                    return;
+                }
+
                 try {
-                    JSONObject form = new FormUtils(this).getFormJson(ReportRegisterActivity.REPORT_FORM_COMMUNITY_ALERT);
-                    if (form == null) {
-                        return;
-                    }
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                     if (reportModel.getCaseworker_name() == null || reportModel.getCaseworker_name().trim().isEmpty()) {
                         reportModel.setCaseworker_name(getCaseworkerName(prefs));
                     }
-                    form.put(Constants.JSON_FORM_KEY.ENTITY_ID, reportModel.getBase_entity_id());
-                    org.smartregister.chw.core.utils.CoreJsonFormUtils.populateJsonForm(form, reportModel.toValueMap());
+                    finalForm.put(Constants.JSON_FORM_KEY.ENTITY_ID, reportModel.getBase_entity_id());
+                    org.smartregister.chw.core.utils.CoreJsonFormUtils.populateJsonForm(finalForm, reportModel.toValueMap());
 
                     Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
                     Form wizardForm = new Form();
                     intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, wizardForm);
-                    intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, form.toString());
+                    intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, finalForm.toString());
                     startActivityForResult(intent, EDIT_FORM_REQUEST);
                 } catch (Exception e) {
                     Timber.e(e);
@@ -284,7 +295,7 @@ public class CommunityAlertReportViewActivity extends AppCompatActivity {
             }
         };
         try {
-            new AppExecutors().diskIO().execute(runnable);
+            ChwApplication.getInstance().getAppExecutors().diskIO().execute(runnable);
             return true;
         } catch (Exception e) {
             Timber.e(e);
@@ -345,6 +356,30 @@ public class CommunityAlertReportViewActivity extends AppCompatActivity {
         setText(R.id.txt_event_date, when);
 
         setText(R.id.txt_location, data.get("location"));
+
+        String diseaseSelected = "pcz".equalsIgnoreCase(data.get("illness_type"))
+                ? data.get("pcz_priority_disease")
+                : data.get("other_priority_disease");
+        setText(R.id.txt_disease_selected, diseaseSelected);
+
+        // Suspected Cases (exact age bands: 0-4Yrs, 5-14Yrs, >=15Yrs)
+        setText(R.id.case_f_0_4, data.get("case_f_0_4"), "0");
+        setText(R.id.case_f_5_14, data.get("case_f_5_14"), "0");
+        setText(R.id.case_f_15_plus, data.get("case_f_15_plus"), "0");
+        setText(R.id.case_m_0_4, data.get("case_m_0_4"), "0");
+        setText(R.id.case_m_5_14, data.get("case_m_5_14"), "0");
+        setText(R.id.case_m_15_plus, data.get("case_m_15_plus"), "0");
+        setText(R.id.case_total, data.get("case_total"), "0");
+
+        String cbsPartOfResponse = data.get("cbs_supervisor_part_of_response");
+        if ("yes".equalsIgnoreCase(cbsPartOfResponse)) {
+            setText(R.id.txt_cbs_supervisor_part_of_response, "Yes");
+        } else if ("no".equalsIgnoreCase(cbsPartOfResponse)) {
+            setText(R.id.txt_cbs_supervisor_part_of_response, "No");
+        } else {
+            setText(R.id.txt_cbs_supervisor_part_of_response, "");
+        }
+        setText(R.id.txt_cbs_supervisor_action_taken, data.get("cbs_supervisor_action_taken"));
 
         // Section B - Affected
         setText(R.id.affected_f_0_4, data.get("affected_f_0_4"), "0");

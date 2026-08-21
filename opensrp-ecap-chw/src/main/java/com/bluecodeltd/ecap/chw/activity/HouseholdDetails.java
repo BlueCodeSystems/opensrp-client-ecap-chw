@@ -1563,7 +1563,15 @@ public class HouseholdDetails extends AppCompatActivity {
                 is_edit_mode = true;
             }
 
-            if(EncounterType.equals("Household Screening") || EncounterType.equals("Hiv Assessment For Caregiver") || EncounterType.equals("Referral") || EncounterType.equals("Household Visitation For Caregiver")) {
+            boolean isHouseholdScreening = EncounterType.equals("Household Screening") || EncounterType.equals("Household Screening Edit");
+            boolean signatureMissing = false;
+            if (isHouseholdScreening) {
+                JSONObject signatureField = getFieldJSONObject(fields(jsonFormObject, STEP2), "signature");
+                String existingSignature = signatureField != null ? signatureField.optString("value", "") : "";
+                signatureMissing = existingSignature == null || existingSignature.trim().isEmpty();
+            }
+
+            if((isHouseholdScreening && signatureMissing) || EncounterType.equals("Hiv Assessment For Caregiver") || EncounterType.equals("Referral") || EncounterType.equals("Household Visitation For Caregiver")) {
                 Intent openSignatureIntent = new Intent(this, SignatureActivity.class);
                 openSignatureIntent.putExtra("jsonForm", jsonFormObject.toString());
                 openSignatureIntent.putExtra("householdId",householdId);
@@ -2152,7 +2160,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
         try {
-            AppExecutors appExecutors = new AppExecutors();
+            AppExecutors appExecutors = ChwApplication.getInstance().getAppExecutors();
             appExecutors.diskIO().execute(runnable);
             return true;
         } catch (Exception exception) {
@@ -2215,7 +2223,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
 
         try {
-            AppExecutors appExecutors = new AppExecutors();
+            AppExecutors appExecutors = ChwApplication.getInstance().getAppExecutors();
             appExecutors.diskIO().execute(runnable);
             return true;
         } catch (Exception exception) {
@@ -2793,6 +2801,9 @@ public class HouseholdDetails extends AppCompatActivity {
         }
     }
     public void showDialogBox(String message){
+        if (isFinishing() || isDestroyed()) {
+            return;
+        }
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_layout);
         dialog.show();
@@ -2806,6 +2817,15 @@ public class HouseholdDetails extends AppCompatActivity {
     }
     public void openFormUsingFormUtils(Context context, String formName) throws JSONException {
 
+        if (house == null) {
+            // Household data hasn't finished loading yet (applyState runs asynchronously
+            // once the DB query completes), so oMapper and other fields below aren't ready.
+            Toast.makeText(context, "Please wait, household data is still loading", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (oMapper == null) {
+            oMapper = new ObjectMapper();
+        }
 
         FormUtils formUtils = null;
         try {

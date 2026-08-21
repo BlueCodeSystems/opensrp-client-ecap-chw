@@ -1,4 +1,5 @@
 package com.bluecodeltd.ecap.chw.activity;
+import com.bluecodeltd.ecap.chw.application.ChwApplication;
 
 import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 
@@ -378,31 +379,49 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
     }
 
     private void openViewReport(MonthlyReportModel item) {
+        showOrientationSelectionDialog(item);
+    }
+
+    private void showOrientationSelectionDialog(MonthlyReportModel item) {
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.dialog_orientation_selection, null);
+        builder.setView(view);
+
+        final androidx.appcompat.app.AlertDialog dialog = builder.create();
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT));
+        }
+
+        view.findViewById(R.id.btn_portrait).setOnClickListener(v -> {
+            launchReportActivity(item, android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            dialog.dismiss();
+        });
+
+        view.findViewById(R.id.btn_landscape).setOnClickListener(v -> {
+            launchReportActivity(item, android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            dialog.dismiss();
+        });
+
+        dialog.show();
+    }
+
+    private void launchReportActivity(MonthlyReportModel item, int orientation) {
+        Intent intent;
         if (ReportRegisterActivity.REPORT_TYPE_COMMUNITY_ALERT.equals(reportType) || ReportRegisterActivity.REPORT_TYPE_COMMUNITY.equals(reportType)) {
-            androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
-            builder.setTitle("Select Orientation");
-            String[] options = {"Portrait", "Landscape"};
-            builder.setItems(options, (dialog, which) -> {
-                Intent intent = new Intent(this, CommunityAlertReportViewActivity.class);
-                intent.putExtra(CommunityAlertReportViewActivity.EXTRA_BASE_ENTITY_ID, item.getBase_entity_id());
-                if (which == 1) { // Landscape
-                    intent.putExtra("orientation", android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                } else { // Portrait
-                    intent.putExtra("orientation", android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                }
-                startActivity(intent);
-            });
-            builder.show();
+            intent = new Intent(this, CommunityAlertReportViewActivity.class);
+            intent.putExtra(CommunityAlertReportViewActivity.EXTRA_BASE_ENTITY_ID, item.getBase_entity_id());
         } else {
-            Intent intent = switch (reportType != null ? reportType : "") {
+            intent = switch (reportType != null ? reportType : "") {
                 case ReportRegisterActivity.REPORT_TYPE_NUTRITION -> new Intent(this, MonthlyNutritionReportViewActivity.class);
                 case ReportRegisterActivity.REPORT_TYPE_TB -> new Intent(this, MonthlyTbReportViewActivity.class);
                 default -> new Intent(this, MalariaReportViewActivity.class);
             };
             intent.putExtra(MalariaReportViewActivity.EXTRA_BASE_ENTITY_ID, item.getBase_entity_id());
-            startActivity(intent);
         }
+        intent.putExtra("orientation", orientation);
+        startActivity(intent);
     }
+
 
     private void openEditForm(MonthlyReportModel item) {
         try {
@@ -504,6 +523,9 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
     }
 
     private void showInactiveDialog(CaseStatusModel caseStatusModel) {
+        if (isFinishing() || isDestroyed()) {
+            return;
+        }
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_layout);
         dialog.show();
@@ -653,7 +675,7 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
             }
         };
         try {
-            new AppExecutors().diskIO().execute(runnable);
+            ChwApplication.getInstance().getAppExecutors().diskIO().execute(runnable);
             return true;
         } catch (Exception e) {
             timber.log.Timber.e(e);

@@ -86,6 +86,7 @@ public class GraduationAssessmentFragment extends Fragment {
 
         HashMap<String, Household> mymap = ( (HouseholdDetails) requireActivity()).getData();
         Household house = mymap.get("house");
+        if (house == null) return vieww;
         String houseId = house.getHousehold_id();
 
         recyclerView = binding.visitrecyclerView;

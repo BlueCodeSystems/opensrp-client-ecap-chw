@@ -21,6 +21,7 @@ import com.bluecodeltd.ecap.chw.model.MalariaMonthlyModel;
 import com.bluecodeltd.ecap.chw.model.NutritionMonthlyModel;
 import com.bluecodeltd.ecap.chw.model.TbMonthlyModel;
 import com.bluecodeltd.ecap.chw.util.ReportFormUtils;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.bluecodeltd.ecap.chw.interactor.ReportRegisterInteractor;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.domain.Form;
@@ -44,16 +45,23 @@ public class ReportViewActivity extends AppCompatActivity {
     private String reportType;
     private LinearLayout container;
 
-    public static void start(Context context, String id, String type) {
+    public static void start(Context context, String id, String type, int orientation) {
         Intent intent = new Intent(context, ReportViewActivity.class);
         intent.putExtra(EXTRA_ID, id);
         intent.putExtra(EXTRA_TYPE, type);
+        intent.putExtra("orientation", orientation);
         context.startActivity(intent);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        int orientation = getIntent().getIntExtra("orientation", android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        if (orientation != android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) {
+            setRequestedOrientation(orientation);
+        }
+
         setContentView(R.layout.activity_report_view);
 
         reportId = getIntent().getStringExtra(EXTRA_ID);
@@ -116,9 +124,17 @@ public class ReportViewActivity extends AppCompatActivity {
                     }
                     
                     boolean isDraft = data.getBooleanExtra(JsonFormConstants.SKIP_VALIDATION, false);
-                    new ReportRegisterInteractor().saveForm(jsonString, isDraft ? "draft" : "complete");
-                    container.removeAllViews();
-                    renderReport();
+                    // saveForm()'s processClient() call takes the same ChwClientProcessor lock a
+                    // concurrent background sync can hold for a while; run it off the main thread
+                    // to avoid an ANR (main thread blocked waiting on ChwClientProcessor's monitor),
+                    // matching ReportHomeActivity's onActivityResult.
+                    Threading.io(() -> {
+                        new ReportRegisterInteractor().saveForm(jsonString, isDraft ? "draft" : "complete");
+                        Threading.main(() -> {
+                            container.removeAllViews();
+                            renderReport();
+                        });
+                    });
                 } catch (Exception e) {
                     Timber.e(e);
                 }

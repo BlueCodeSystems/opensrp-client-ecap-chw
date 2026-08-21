@@ -122,14 +122,7 @@
         "type": "spacer",
         "spacer_height": "15dp"
       },
-      {
-        "key": "hd1",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "hd1",
-        "type": "label",
-        "text": "Index CA Sub Population Screening"
-      },
+
       {
         "key": "household_id",
         "openmrs_entity_parent": "",
@@ -144,20 +137,7 @@
           "err": "Household ID is Required"
         }
       },
-      {
-        "key": "unique_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "unique_id",
-        "type": "edit_text",
-        "hint": "CA ID",
-        "edit_type": "name",
-        "read_only": "true",
-        "v_required": {
-          "value": true,
-          "err": "Unique ID is Required"
-        }
-      },
+
       {
         "key": "date_edited_check",
         "openmrs_entity_parent": "",
@@ -202,86 +182,6 @@
             }
           }
         }},
-      {
-        "key": "first_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "first_name",
-        "type": "edit_text",
-        "hint": "Index CA First Name",
-        "edit_type": "name",
-        "read_only": "true",
-        "v_regex": {
-          "value": "[A-Za-z]*",
-          "err": "First name of CA only accepts letters"
-        },
-        "v_required": {
-          "value": true,
-          "err": "CA First Name is Required"
-        }
-      },
-      {
-        "key": "last_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "last_name",
-        "type": "edit_text",
-        "hint": "Index CA Last Name",
-        "edit_type": "name",
-        "read_only": "true",
-        "value": "",
-        "v_regex": {
-          "value": "[A-Za-z]*",
-          "err": "Last name of CA only accepts letters"
-        },
-        "v_required": {
-          "value": true,
-          "err": "CA Last Name is Required"
-        }
-      },
-      {
-        "key": "adolescent_birthdate",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "adolescent_birthdate",
-        "type": "date_picker",
-        "hint": "Index CA Date of birth",
-        "look_up": "true",
-        "read_only": "true",
-        "expanded": false,
-        "duration": {
-          "label": "Age"
-        },
-        "min_date": "today-100y",
-        "max_date": "today",
-        "v_required": {
-          "value": true,
-          "err": "CA Date of Birth is Required"
-        }
-      },
-      {
-        "key": "gender",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "gender",
-        "type": "native_radio",
-        "label": "CA Gender",
-        "read_only": "true",
-        "options": [
-          {
-            "key": "male",
-            "text": "Male"
-          },
-          {
-            "key": "female",
-            "text": "Female"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "CA Gender is Required"
-        }
-      },
       {
         "key": "sub_population",
         "openmrs_entity_parent": "",
@@ -1342,6 +1242,7 @@
   "step4":{
     "title": "Household Enrollment",
     "fields":[
+
       {
         "key": "hd1",
         "openmrs_entity_parent": "",
@@ -1705,6 +1606,16 @@
           "value": "((07||09||05)[5-7][0-9]{7})|s*",
           "err": "Number must begin with 077,076,055,056,057,095, 096, or 097 and must be a total of 10 digits in length"
         }
+      },
+      {
+        "key": "caseworker_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_name",
+        "type": "edit_text",
+        "hint": "Caseworker Name",
+        "read_only": "true",
+        "edit_type": "name"
       },
       {
         "key": "status",

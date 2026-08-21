@@ -188,6 +188,9 @@ public class PmctMotherHeiAdapter extends  RecyclerView.Adapter<PmctMotherHeiAda
     }
 
     private String getAge(String birthdate){
+        if (birthdate == null || birthdate.trim().isEmpty()) {
+            return "Not Set";
+        }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         try {
             LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);

@@ -2,6 +2,7 @@ package com.bluecodeltd.ecap.chw.model;
 
 public class MotherLongitudinalFollowUpModel {
 
+    private String db_row_id;
     private String base_entity_id;
     private String household_id;
     private String contact_count_number;
@@ -37,6 +38,14 @@ public class MotherLongitudinalFollowUpModel {
     private String delete_status;
     private String entity_type;
     private String last_interacted_with;
+
+    public String getDb_row_id() {
+        return db_row_id;
+    }
+
+    public void setDb_row_id(String db_row_id) {
+        this.db_row_id = db_row_id;
+    }
 
     public String getBase_entity_id() {
         return base_entity_id;

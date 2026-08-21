@@ -418,6 +418,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         mTabLayout =  binding.tabs;
         mViewPager  = binding.viewpager;
+        try { mViewPager.setSaveEnabled(false); } catch (Throwable ignored) {}
 
         setupViewPager();
         setupFabVisibility();
@@ -749,6 +750,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
     }
 
     private void updateFabVisibilityForPosition(int position) {
+        if (fab == null) {
+            return;
+        }
         try {
             if (position == 0) {
                 fab.show();
@@ -934,17 +938,14 @@ public class IndexDetailsActivity extends AppCompatActivity {
     @SuppressLint("RestrictedApi")
     public void onClick(View v) throws JSONException {
         int id = v.getId();
+        final VcaScreeningModel vca = indexVCA;
 
         switch (id){
             case R.id.fab:
-                try {
-                    if (child.getCase_status() != null &&
-                            (child.getCase_status().equals("0") || child.getCase_status().equals("2"))) {
-                        showDeregisteredStatus();
-                    } else {
-                        animateFAB();
-                    }
-                } catch (NullPointerException e) {
+                if (child != null && child.getCase_status() != null &&
+                        (child.getCase_status().equals("0") || child.getCase_status().equals("2"))) {
+                    showDeregisteredStatus();
+                } else {
                     animateFAB();
                 }
 
@@ -970,7 +971,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     break;
                 }
 
-                if(indexVCA.getDate_screened() != null){
+                if (vca != null && vca.getDate_screened() != null){
                     try {
                         openFormUsingFormUtils(IndexDetailsActivity.this,"vca_assessment");
                     } catch (Exception e) {
@@ -984,7 +985,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 break;
             case R.id.case_plan:
 
-                if(indexVCA.getDate_screened() != null){
+                if (!ensureIndexVcaAvailable()) {
+                    break;
+                }
+                if (vca != null && vca.getDate_screened() != null){
                     try {
                         openFormUsingFormUtils(IndexDetailsActivity.this,"case_plan");
 
@@ -998,7 +1002,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 break;
             case R.id.referral:
 
-                if(indexVCA.getDate_screened() != null){
+                if (!ensureIndexVcaAvailable()) {
+                    break;
+                }
+                if (vca != null && vca.getDate_screened() != null){
 
                     try {
 
@@ -1020,14 +1027,27 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 if (!ensureIndexVcaAvailable()) {
                     break;
                 }
-                if(indexVCA.getDate_screened() != null) {
+                if (vca != null && vca.getDate_screened() != null) {
+                    String householdId = vca.getHousehold_id();
+                    String vcaId = vca.getUnique_id();
+                    String vcaName = txtName != null && txtName.getText() != null ? txtName.getText().toString() : "";
 
-                    Intent intent2 = new Intent(this, VcaServiceActivity.class);
-                    intent2.putExtra("hh_id", indexVCA.getHousehold_id());
-                    intent2.putExtra("vcaid", indexVCA.getUnique_id());
-                    intent2.putExtra("hivstatus", indexVCA.getIs_hiv_positive());
-                    intent2.putExtra("vcaname", txtName.getText().toString());
-                    startActivity(intent2);
+                    if (TextUtils.isEmpty(householdId) || TextUtils.isEmpty(vcaId)) {
+                        Toasty.warning(IndexDetailsActivity.this, "Member data incomplete", Toast.LENGTH_LONG, true).show();
+                        break;
+                    }
+
+                    try {
+                        Intent intent2 = new Intent(this, VcaServiceActivity.class);
+                        intent2.putExtra("hh_id", householdId);
+                        intent2.putExtra("vcaid", vcaId);
+                        intent2.putExtra("hivstatus", vca.getIs_hiv_positive());
+                        intent2.putExtra("vcaname", vcaName);
+                        startActivity(intent2);
+                    } catch (RuntimeException e) {
+                        Timber.e(e, "Failed to open VCA service activity for vcaId=%s", vcaId);
+                        Toasty.warning(IndexDetailsActivity.this, "Unable to open services", Toast.LENGTH_LONG, true).show();
+                    }
                 }
                 else{
                     Toasty.warning(IndexDetailsActivity.this, "CA Screening has not been done", Toast.LENGTH_LONG, true).show();
@@ -1084,7 +1104,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     Toasty.warning(IndexDetailsActivity.this, "TB screening for this quarter is required before household visitation for CAs above 10 years.", Toast.LENGTH_LONG, true).show();
                     break;
                 }
-                if(indexVCA.getDate_screened() != null) {
+                if (vca != null && vca.getDate_screened() != null) {
                     try {
 
                         openFormUsingFormUtils(IndexDetailsActivity.this,"household_visitation_for_vca_0_20_years");
@@ -1104,7 +1124,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 if (!ensureIndexVcaAvailable()) {
                     break;
                 }
-                if(indexVCA.getDate_screened() != null) {
+                if (vca != null && vca.getDate_screened() != null) {
                     openFormUsingFormUtils(IndexDetailsActivity.this, "hiv_risk_assessment_under_15_years");
                 } else {
                     Toasty.warning(IndexDetailsActivity.this, "CA Screening has not been done", Toast.LENGTH_LONG, true).show();
@@ -1115,7 +1135,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 if (!ensureIndexVcaAvailable()) {
                     break;
                 }
-                if(indexVCA.getDate_screened() != null) {
+                if (vca != null && vca.getDate_screened() != null) {
                     openFormUsingFormUtils(IndexDetailsActivity.this, "hiv_risk_assessment_above_15_years");
                 }else{
                     Toasty.warning(IndexDetailsActivity.this, "CA Screening has not been done", Toast.LENGTH_LONG, true).show();
@@ -1126,7 +1146,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 if (!ensureIndexVcaAvailable()) {
                     break;
                 }
-                if(indexVCA.getDate_screened() != null) {
+                if (vca != null && vca.getDate_screened() != null) {
                     openFormUsingFormUtils(IndexDetailsActivity.this, "we_services_vca");
                 }else{
                     Toasty.warning(IndexDetailsActivity.this, "CA Screening has not been done", Toast.LENGTH_LONG, true).show();
@@ -1134,10 +1154,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 break;
             case R.id.tb_screening:
                 if (!ensureIndexVcaAvailable()) { break; }
-                if(indexVCA.getDate_screened() != null) {
+                if (vca != null && vca.getDate_screened() != null) {
                     try {
                         long todayMillis = java.util.Calendar.getInstance().getTimeInMillis();
-                        boolean alreadyToday = TbScreeningDao.existsOnSameDateByUniqueId(indexVCA.getUnique_id(), todayMillis);
+                        boolean alreadyToday = TbScreeningDao.existsOnSameDateByUniqueId(vca.getUnique_id(), todayMillis);
                         if (alreadyToday) {
                             Toasty.warning(IndexDetailsActivity.this, "TB Screening already done today", Toast.LENGTH_LONG, true).show();
                             break;
@@ -1152,9 +1172,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 if (!ensureIndexVcaAvailable()) {
                     break;
                 }
-                if(indexVCA.getDate_screened() != null) {
+                if (vca != null && vca.getDate_screened() != null) {
                     int years = 0;
-                    try { years = calculateAge(indexVCA.getAdolescent_birthdate()); } catch (Exception ignore) {}
+                    try { years = calculateAge(vca.getAdolescent_birthdate()); } catch (Exception ignore) {}
                     if (years <= 5) {
                         openFormUsingFormUtils(IndexDetailsActivity.this, "nutrition_assessment_intervention");
                     } else {
@@ -1168,9 +1188,13 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 if (!ensureIndexVcaAvailable()) {
                     break;
                 }
+                if (vca == null) {
+                    Toasty.warning(IndexDetailsActivity.this, "Member data incomplete", Toast.LENGTH_LONG, true).show();
+                    break;
+                }
                 Intent i = new Intent(IndexDetailsActivity.this, ChildSafetyPlanActivity.class);
-                i.putExtra("vca_id", indexVCA.getUnique_id());
-                i.putExtra("vca_name", indexVCA.getFirst_name() + ' ' + indexVCA.getLast_name());
+                i.putExtra("vca_id", vca.getUnique_id());
+                i.putExtra("vca_name", vca.getFirst_name() + ' ' + vca.getLast_name());
                 startActivity(i);
                 finish();
                 break;
@@ -1285,11 +1309,19 @@ public class IndexDetailsActivity extends AppCompatActivity {
     }
 
     private void openVcaCasplanToAddVulnarabilities(String dateId,String cpId) {
+        if (!ensureIndexVcaAvailable()) {
+            return;
+        }
+        final VcaScreeningModel vca = indexVCA;
+        if (vca == null) {
+            Toasty.warning(IndexDetailsActivity.this, "Member data incomplete", Toast.LENGTH_LONG, true).show();
+            return;
+        }
         Intent i = new Intent(IndexDetailsActivity.this, CasePlan.class);
-        i.putExtra("childId", indexVCA.getUnique_id());
+        i.putExtra("childId", vca.getUnique_id());
         i.putExtra("dateId",  dateId);
         i.putExtra("case_plan_id",cpId);
-        i.putExtra("hivStatus",  indexVCA.getIs_hiv_positive());
+        i.putExtra("hivStatus",  vca.getIs_hiv_positive());
         startActivity(i);
     }
 
@@ -1593,7 +1625,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         };
 
         try {
-            AppExecutors appExecutors = new AppExecutors();
+            AppExecutors appExecutors = ChwApplication.getInstance().getAppExecutors();
             appExecutors.diskIO().execute(runnable);
             return true;
         } catch (Exception exception) {
@@ -1707,19 +1739,23 @@ public class IndexDetailsActivity extends AppCompatActivity {
     }
 
     public void animateFAB(){
-
+        if (fab == null) {
+            return;
+        }
 
         if (isFabOpen){
-
             closeFab();
         } else {
-
             isFabOpen = true;
-            fab.startAnimation(rotate_forward);
-            txtScreening.setVisibility(View.VISIBLE);
-            fabScrim.setVisibility(View.VISIBLE);
-            fabScrim.setAlpha(0f);
-            fabScrim.animate().alpha(1f).setDuration(200).start();
+            if (rotate_forward != null) {
+                fab.startAnimation(rotate_forward);
+            }
+            if (txtScreening != null) txtScreening.setVisibility(View.VISIBLE);
+            if (fabScrim != null) {
+                fabScrim.setVisibility(View.VISIBLE);
+                fabScrim.setAlpha(0f);
+                fabScrim.animate().alpha(1f).setDuration(200).start();
+            }
 
 
             boolean allowNonScreeningActions =
@@ -1728,38 +1764,39 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
             if (allowNonScreeningActions){
                 int vcaAgeYears = parseVcaAgeYears(vcaAge);
+                final VcaScreeningModel currentVca = indexVCA;
 
-                rcase_plan.setVisibility(View.VISIBLE);
-                referral.setVisibility(View.VISIBLE);
-                household_visitation_for_vca.setVisibility(View.VISIBLE);
-                childPlan.setVisibility(View.VISIBLE);
+                if (rcase_plan != null) rcase_plan.setVisibility(View.VISIBLE);
+                if (referral != null) referral.setVisibility(View.VISIBLE);
+                if (household_visitation_for_vca != null) household_visitation_for_vca.setVisibility(View.VISIBLE);
+                if (childPlan != null) childPlan.setVisibility(View.VISIBLE);
 
-                if(indexVCA.getIs_hiv_positive() != null){
-                    rassessment.setVisibility(View.VISIBLE);
+                if(currentVca != null && currentVca.getIs_hiv_positive() != null){
+                    if (rassessment != null) rassessment.setVisibility(View.VISIBLE);
                 }
-                if(indexVCA.getIs_hiv_positive() != null && indexVCA.getIs_hiv_positive().equals("yes")){
-                    hiv_assessment.setVisibility(View.GONE);
+                if(currentVca != null && currentVca.getIs_hiv_positive() != null && currentVca.getIs_hiv_positive().equals("yes")){
+                    if (hiv_assessment != null) hiv_assessment.setVisibility(View.GONE);
                 } else if (vcaAgeYears > 1) {
                     if (vcaAgeYears < 15) {
-                        hiv_assessment.setVisibility(View.VISIBLE);
+                        if (hiv_assessment != null) hiv_assessment.setVisibility(View.VISIBLE);
                     }
 
                     if (vcaAgeYears >= 15) {
-                        hiv_assessment2.setVisibility(View.VISIBLE);
+                        if (hiv_assessment2 != null) hiv_assessment2.setVisibility(View.VISIBLE);
                     }
                 }
 
                 if (vcaAgeYears > 18){
-                    weServicesVca.setVisibility(View.VISIBLE);
+                    if (weServicesVca != null) weServicesVca.setVisibility(View.VISIBLE);
                 }
                 // Show Nutrition Assessment & Intervention only for VCA aged 5 years and below
                 try {
-                    int years = calculateAge(indexVCA.getAdolescent_birthdate());
+                    int years = currentVca != null ? calculateAge(currentVca.getAdolescent_birthdate()) : -1;
                     if (years <= 5) {
-                        nutrition_assessment_intervention.setVisibility(View.VISIBLE);
+                        if (nutrition_assessment_intervention != null) nutrition_assessment_intervention.setVisibility(View.VISIBLE);
                     }
                     // TB screening available for all ages when screened
-                    tb_screening.setVisibility(View.VISIBLE);
+                    if (tb_screening != null) tb_screening.setVisibility(View.VISIBLE);
                 } catch (Exception ignore) {}
             }
             else{
@@ -1798,7 +1835,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
     private String resolveHouseholdIdForSourceChecks() {
         try {
-            String householdId = indexVCA != null ? indexVCA.getHousehold_id() : null;
+            final VcaScreeningModel vca = indexVCA;
+            String householdId = vca != null ? vca.getHousehold_id() : null;
             if (!TextUtils.isEmpty(householdId)) return householdId;
         } catch (Exception ignored) { }
         try {
@@ -1808,7 +1846,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
         // Fallback: resolve from client index (unique_id -> household_id mapping)
         try {
             String unique = null;
-            try { unique = indexVCA != null ? indexVCA.getUnique_id() : null; } catch (Exception ignored) { }
+            try {
+                final VcaScreeningModel vca = indexVCA;
+                unique = vca != null ? vca.getUnique_id() : null;
+            } catch (Exception ignored) { }
             if (TextUtils.isEmpty(unique)) {
                 try { unique = childId; } catch (Exception ignored) { }
             }
@@ -1824,7 +1865,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
     private String resolveUniqueIdForSourceChecks() {
         try {
-            String uid = indexVCA != null ? indexVCA.getUnique_id() : null;
+            final VcaScreeningModel vca = indexVCA;
+            String uid = vca != null ? vca.getUnique_id() : null;
             if (!TextUtils.isEmpty(uid)) return uid;
         } catch (Exception ignored) { }
         try {
@@ -1902,21 +1944,31 @@ public class IndexDetailsActivity extends AppCompatActivity {
     }
 
     public void closeFab(){
-        fab.startAnimation(rotate_backward);
+        if (fab == null) {
+            isFabOpen = false;
+            return;
+        }
+        if (rotate_backward != null) {
+            fab.startAnimation(rotate_backward);
+        }
         isFabOpen = false;
-        fabScrim.animate().alpha(0f).setDuration(200)
-                .withEndAction(() -> fabScrim.setVisibility(View.GONE)).start();
-        txtScreening.setVisibility(View.GONE);
-        rassessment.setVisibility(View.GONE);
-        rcase_plan.setVisibility(View.GONE);
-        referral.setVisibility(View.GONE);
-        household_visitation_for_vca.setVisibility(View.GONE);
-        hiv_assessment.setVisibility(View.GONE);
-        hiv_assessment2.setVisibility(View.GONE);
-        childPlan.setVisibility(View.GONE);
-        weServicesVca.setVisibility(View.GONE);
-        nutrition_assessment_intervention.setVisibility(View.GONE);
-        tb_screening.setVisibility(View.GONE);
+        if (fabScrim != null) {
+            fabScrim.animate().alpha(0f).setDuration(200)
+                    .withEndAction(() -> {
+                        if (fabScrim != null) fabScrim.setVisibility(View.GONE);
+                    }).start();
+        }
+        if (txtScreening != null) txtScreening.setVisibility(View.GONE);
+        if (rassessment != null) rassessment.setVisibility(View.GONE);
+        if (rcase_plan != null) rcase_plan.setVisibility(View.GONE);
+        if (referral != null) referral.setVisibility(View.GONE);
+        if (household_visitation_for_vca != null) household_visitation_for_vca.setVisibility(View.GONE);
+        if (hiv_assessment != null) hiv_assessment.setVisibility(View.GONE);
+        if (hiv_assessment2 != null) hiv_assessment2.setVisibility(View.GONE);
+        if (childPlan != null) childPlan.setVisibility(View.GONE);
+        if (weServicesVca != null) weServicesVca.setVisibility(View.GONE);
+        if (nutrition_assessment_intervention != null) nutrition_assessment_intervention.setVisibility(View.GONE);
+        if (tb_screening != null) tb_screening.setVisibility(View.GONE);
 
 
     }
@@ -1924,38 +1976,54 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
     public void openFormUsingFormUtils(Context context, String formName) throws JSONException {
 
+        if (!ensureIndexVcaAvailable()) {
+            return;
+        }
+        final VcaScreeningModel vca = indexVCA;
+        if (oMapper == null) {
+            oMapper = new ObjectMapper();
+        }
 
         FormUtils formUtils = null;
         try {
             formUtils = new FormUtils(context);
         } catch (Exception e) {
             e.printStackTrace();
+            return;
         }
         JSONObject formToBeOpened;
 
         formToBeOpened = formUtils.getFormJson(formName);
+        if (formToBeOpened == null) {
+            Toasty.warning(this, "Unable to open form", Toast.LENGTH_LONG, true).show();
+            return;
+        }
 
         String householdIdForForm = resolveHouseholdIdForSourceChecks();
 
         String uniqueIdForForm = resolveUniqueIdForSourceChecks();
-        formToBeOpened.getJSONObject("step1").put("title", this.indexVCA.getFirst_name() + " " + this.indexVCA.getLast_name() + " : " + txtAge.getText().toString() + " - " + txtGender.getText().toString());
-        formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", indexVCA.getUnique_id());
+        String safeAgeText = txtAge != null && txtAge.getText() != null ? txtAge.getText().toString() : "";
+        String safeGenderText = txtGender != null && txtGender.getText() != null ? txtGender.getText().toString() : "";
+        String safeFirstName = !TextUtils.isEmpty(vca.getFirst_name()) ? vca.getFirst_name() : "";
+        String safeLastName = !TextUtils.isEmpty(vca.getLast_name()) ? vca.getLast_name() : "";
+        formToBeOpened.getJSONObject("step1").put("title", safeFirstName + " " + safeLastName + " : " + safeAgeText + " - " + safeGenderText);
+        formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(0).put("value", vca.getUnique_id());
 
         switch (formName) {
 
             case "case_status":
-                if(indexVCA.getIs_on_hiv_treatment() == null){
-                    @NotNull Map<String, String> indexVCAMap = oMapper.convertValue(indexVCA, Map.class);
+                if(vca.getIs_on_hiv_treatment() == null){
+                    @NotNull Map<String, String> indexVCAMap = oMapper.convertValue(vca, Map.class);
                     indexVCAMap.remove("date_started_art");
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, indexVCAMap);
                 } else {
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(vca, Map.class));
                 }
 
                 //Populate Caseworker Name
                 populateCaseworkerPhoneAndName(formToBeOpened);
 
-                if(indexVCA.getIndex_check_box() != null && !indexVCA.getIndex_check_box().equals("1")){
+                if(vca.getIndex_check_box() != null && !vca.getIndex_check_box().equals("1")){
                     formToBeOpened.remove(JsonFormUtils.ENCOUNTER_TYPE);
                     formToBeOpened.put(JsonFormUtils.ENCOUNTER_TYPE, "Member Sub Population");
                 }
@@ -1965,7 +2033,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 JSONObject graduationStatus = getFieldJSONObject(fields(formToBeOpened, "step1"), "graduation_benchmark");
                     if (graduationStatus != null) {
                         graduationStatus.put("type", "toaster_notes");
-                        graduationStatus.put("text", indexVCA.getFirst_name() + " " + indexVCA.getLast_name() + " household needs to meet all eight graduation benchmarks in order to graduate");
+                        graduationStatus.put("text", safeFirstName + " " + safeLastName + " household needs to meet all eight graduation benchmarks in order to graduate");
                     }
 
                     JSONObject reasonField = getFieldJSONObject(fields(formToBeOpened, "step1"), "reason");
@@ -1985,31 +2053,31 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
 
 
-                formToBeOpened.put("entity_id", this.indexVCA.getBase_entity_id());
+                formToBeOpened.put("entity_id", vca.getBase_entity_id());
 
                 break;
 
             case "vca_screening":
             case "vca_edit":
             case "vca_edit_from_vca_service":
-                if(indexVCA.getIs_on_hiv_treatment() == null){
-                    @NotNull Map<String, String> indexVCAMap = oMapper.convertValue(indexVCA(), Map.class);
+                if(vca.getIs_on_hiv_treatment() == null){
+                    @NotNull Map<String, String> indexVCAMap = oMapper.convertValue(vca, Map.class);
                     indexVCAMap.remove("date_started_art");
                     CoreJsonFormUtils.populateJsonForm(formToBeOpened, indexVCAMap);
                 } else {
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA(), Map.class));
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(vca, Map.class));
                 }
 
                 //Populate Caseworker Name
                 populateCaseworkerPhoneAndName(formToBeOpened);
 
-                if(indexVCA.getIndex_check_box() != null && !indexVCA.getIndex_check_box().equals("1")){
+                if(vca.getIndex_check_box() != null && !vca.getIndex_check_box().equals("1")){
                     formToBeOpened.remove(JsonFormUtils.ENCOUNTER_TYPE);
                     formToBeOpened.put(JsonFormUtils.ENCOUNTER_TYPE, "Member Sub Population");
                 }
 
 
-                formToBeOpened.put("entity_id", this.indexVCA.getBase_entity_id());
+                formToBeOpened.put("entity_id", vca.getBase_entity_id());
 
                 break;
 
@@ -2018,14 +2086,14 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 if(vcaAssessmentModel == null){
 
                     //Pulls data for populating from indexchild when adding data for the very first time
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(vca, Map.class));
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
-                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(49).getJSONArray("options").getJSONObject(0).put("value", indexVCA.getSubpop1());
-                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(49).getJSONArray("options").getJSONObject(1).put("value", indexVCA.getSubpop2());
-                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(49).getJSONArray("options").getJSONObject(2).put("value", indexVCA.getSubpop3());
-                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(49).getJSONArray("options").getJSONObject(3).put("value", indexVCA.getSubpop4());
-                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(49).getJSONArray("options").getJSONObject(5).put("value", indexVCA.getSubpop());
-                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(49).getJSONArray("options").getJSONObject(4).put("value", indexVCA.getSubpop5());
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(49).getJSONArray("options").getJSONObject(0).put("value", vca.getSubpop1());
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(49).getJSONArray("options").getJSONObject(1).put("value", vca.getSubpop2());
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(49).getJSONArray("options").getJSONObject(2).put("value", vca.getSubpop3());
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(49).getJSONArray("options").getJSONObject(3).put("value", vca.getSubpop4());
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(49).getJSONArray("options").getJSONObject(5).put("value", vca.getSubpop());
+                    formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(49).getJSONArray("options").getJSONObject(4).put("value", vca.getSubpop5());
 
 
                 } else {
@@ -2038,7 +2106,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             break;
 
                 case "household_visitation_for_vca_0_20_years":
-                    Double vAge = getAndCalculateAge(indexVCA.getAdolescent_birthdate());
+                    Double vAge = getAndCalculateAge(vca.getAdolescent_birthdate());
 
                     JSONObject hiv_infection = getFieldJSONObject(fields(formToBeOpened, "step1"), "hiv_infection");
                     JSONObject nutrition_status = getFieldJSONObject(fields(formToBeOpened, "step1"), "nutrition_status");
@@ -2101,15 +2169,15 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                     formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
 
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(vca, Map.class));
 
 
                     break;
-            case "we_services_vca":
+                case "we_services_vca":
                 if(weServiceVcaModel == null){
 
                     //Pulls data for populating from indexchild when adding data for the very first time
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(vca, Map.class));
 
                 } else {
 
@@ -2134,7 +2202,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     }
                 }
 
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(vca, Map.class));
                 formToBeOpened.getJSONObject("step1").getJSONArray("fields").getJSONObject(1).put("value", vcaAge);
 
              /*   if(vcaCasePlanModel == null){
@@ -2152,7 +2220,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 //                if(hivRiskAssessmentUnder15Model == null){
 
                     //Pulls data for populating from indexchild when adding data for the very first time
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(vca, Map.class));
 
 //                } else {
 //
@@ -2167,7 +2235,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 //                if(hivRiskAssessmentAbove15Model == null){
 
                     //Pulls data for populating from indexchild when adding data for the very first time
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(vca, Map.class));
 
 //                } else {
 //
@@ -2179,7 +2247,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
             case "child_safety_plan":
             case "referral":
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(indexVCA, Map.class));
+                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(vca, Map.class));
                 populateCaseworkerPhoneAndName(formToBeOpened);
             break;
 
@@ -2190,10 +2258,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 break;
 
             case "tb_screening":
-                try { formToBeOpened.put("entity_id", this.indexVCA.getBase_entity_id()); } catch (Exception ignore) {}
+                try { formToBeOpened.put("entity_id", vca.getBase_entity_id()); } catch (Exception ignore) {}
                 try {
                     // Show age-appropriate TB symptom fields
-                    Double tbAge = getAndCalculateAge(indexVCA.getAdolescent_birthdate());
+                    Double tbAge = getAndCalculateAge(vca.getAdolescent_birthdate());
                     JSONObject lt10 = getFieldJSONObject(fields(formToBeOpened, "step1"), "tb_symptoms_child_lt10");
                     JSONObject lt10Other = getFieldJSONObject(fields(formToBeOpened, "step1"), "tb_symptoms_child_lt10_other");
                     JSONObject plus10 = getFieldJSONObject(fields(formToBeOpened, "step1"), "tb_symptoms_10plus");
@@ -2241,10 +2309,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                 case R.id.call:
                     try {
-                        String caregiverPhoneNumber = indexVCA != null ? indexVCA.getCaregiver_phone() : null;
-                        if (TextUtils.isEmpty(caregiverPhoneNumber) && child != null) {
-                            caregiverPhoneNumber = child.getCaregiver_phone();
-                        }
+                        String caregiverPhoneNumber = resolveCaregiverPhoneNumber();
                         if (!TextUtils.isEmpty(caregiverPhoneNumber)) {
                             Intent callIntent = new Intent(Intent.ACTION_DIAL);
                             callIntent.setData(Uri.parse("tel:" + caregiverPhoneNumber));
@@ -2258,85 +2323,82 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
                     return true;
             case R.id.case_status:
-
+                if (!ensureIndexVcaAvailable()) {
+                    break;
+                }
                 try {
                     openFormUsingFormUtils(IndexDetailsActivity.this, "case_status");
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 break;
 
             case R.id.delete_record:
+                if (!ensureIndexVcaAvailable() && child == null) {
+                    Toast.makeText(getApplicationContext(), "Member data incomplete", Toast.LENGTH_LONG).show();
+                    break;
+                }
 
-                    if(txtGender.getText().toString().equals("MALE")){
-                        gender = "his";
-                    } else {
-                        gender = "her";
-                    }
-
-                    builder.setMessage("You are about to delete this VCA and all " + gender + " forms.");
-                    builder.setNegativeButton("NO", (dialog, id) -> {
-                        //  Action for 'NO' Button
-                        dialog.cancel();
-
-                    }).setPositiveButton("YES",((dialogInterface, i) -> {
-                        Threading.io(() -> {
-                            try {
-                                PmtctChildModel linkedHei = resolveLinkedHeiForDeletion();
-                                if (linkedHei != null) {
-                                    try {
-                                        ChildIndexEventClient heiDeleteClient = buildHeiDeleteClient(linkedHei);
-                                        if (heiDeleteClient != null) {
-                                            saveRegistration(heiDeleteClient, true, null);
-                                        }
-                                    } catch (Exception e) {
-                                        Timber.e(e);
-                                    }
-                                }
-
-                                FormUtils formUtils = new FormUtils(this);
-                                JSONObject vcaScreeningForm = formUtils.getFormJson(resolveVcaEditFormName());
+                String deletePronoun = resolveDeletePronoun();
+                builder.setMessage("You are about to delete this VCA and all " + deletePronoun + " forms.");
+                builder.setNegativeButton("NO", (dialog, id) -> dialog.cancel())
+                        .setPositiveButton("YES", (dialogInterface, i) -> {
+                            Threading.io(() -> {
                                 try {
-                                    VcaScreeningModel vcaForDelete = indexVCA;
-
-                                    if (vcaForDelete != null) {
-                                        vcaForDelete.setDeleted("1");
-                                        CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(vcaForDelete, Map.class));
-                                        vcaScreeningForm.put("entity_id", vcaForDelete.getBase_entity_id());
-                                    } else if (child != null) {
-                                        child.setDeleted("1");
-                                        CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(child, Map.class));
-                                        vcaScreeningForm.put("entity_id", child.getBase_entity_id());
+                                    PmtctChildModel linkedHei = resolveLinkedHeiForDeletion();
+                                    if (linkedHei != null) {
+                                        try {
+                                            ChildIndexEventClient heiDeleteClient = buildHeiDeleteClient(linkedHei);
+                                            if (heiDeleteClient != null) {
+                                                saveRegistration(heiDeleteClient, true, null);
+                                            }
+                                        } catch (Exception e) {
+                                            Timber.e(e);
+                                        }
                                     }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
 
-                                ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
-                                if (childIndexEventClient == null) {
-                                    return;
+                                    FormUtils formUtils = new FormUtils(this);
+                                    JSONObject vcaScreeningForm = formUtils.getFormJson(resolveVcaEditFormName());
+                                    try {
+                                        VcaScreeningModel vcaForDelete = indexVCA;
+
+                                        if (vcaForDelete != null) {
+                                            vcaForDelete.setDeleted("1");
+                                            CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(vcaForDelete, Map.class));
+                                            vcaScreeningForm.put("entity_id", vcaForDelete.getBase_entity_id());
+                                        } else if (child != null) {
+                                            child.setDeleted("1");
+                                            CoreJsonFormUtils.populateJsonForm(vcaScreeningForm, new ObjectMapper().convertValue(child, Map.class));
+                                            vcaScreeningForm.put("entity_id", child.getBase_entity_id());
+                                        } else {
+                                            Toasty.warning(IndexDetailsActivity.this, "Member data incomplete", Toast.LENGTH_LONG, true).show();
+                                            return;
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    ChildIndexEventClient childIndexEventClient = processRegistration(vcaScreeningForm.toString());
+                                    if (childIndexEventClient == null) {
+                                        return;
+                                    }
+                                    Runnable onComplete = () -> {
+                                        Toasty.success(IndexDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
+                                        IndexDetailsActivity.super.onBackPressed();
+                                    };
+                                    boolean scheduled = saveRegistration(childIndexEventClient, true, onComplete);
+                                    if (!scheduled) {
+                                        onComplete.run();
+                                    }
+                                } catch (Exception e) {
+                                    Timber.e(e);
                                 }
-                                Runnable onComplete = () -> {
-                                    Toasty.success(IndexDetailsActivity.this, "Deleted", Toast.LENGTH_LONG, true).show();
-                                    IndexDetailsActivity.super.onBackPressed();
-                                };
-                                boolean scheduled = saveRegistration(childIndexEventClient, true, onComplete);
-                                if (!scheduled) {
-                                    onComplete.run();
-                                }
-                            } catch (Exception e) {
-                                Timber.e(e);
-                            }
+                            });
                         });
-                    }));
 
-                    //Creating dialog box
-                    AlertDialog alert = builder.create();
-                    //Setting the title manually
-                    alert.setTitle("Alert");
-                    alert.show();
+                AlertDialog alert = builder.create();
+                alert.setTitle("Alert");
+                alert.show();
 
                 break;
 
@@ -2344,15 +2406,69 @@ public class IndexDetailsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private String resolveCaregiverPhoneNumber() {
+        try {
+            final VcaScreeningModel vca = indexVCA;
+            String caregiverPhoneNumber = vca != null ? vca.getCaregiver_phone() : null;
+            if (!TextUtils.isEmpty(caregiverPhoneNumber)) {
+                return caregiverPhoneNumber.trim();
+            }
+        } catch (Exception ignored) { }
+
+        try {
+            String caregiverPhoneNumber = child != null ? child.getCaregiver_phone() : null;
+            if (!TextUtils.isEmpty(caregiverPhoneNumber)) {
+                return caregiverPhoneNumber.trim();
+            }
+        } catch (Exception ignored) { }
+
+        return null;
+    }
+
+    private String resolveDeletePronoun() {
+        try {
+            final VcaScreeningModel vca = indexVCA;
+            String resolvedGender = vca != null ? vca.getGender() : null;
+            if (TextUtils.isEmpty(resolvedGender) && child != null) {
+                resolvedGender = child.getGender();
+            }
+            return "MALE".equalsIgnoreCase(resolvedGender) ? "his" : "her";
+        } catch (Exception ignored) {
+            return "her";
+        }
+    }
+
+    private String safeMemberDisplayName() {
+        try {
+            final VcaScreeningModel vca = indexVCA;
+            String firstName = vca != null ? vca.getFirst_name() : null;
+            String lastName = vca != null ? vca.getLast_name() : null;
+            String displayName = ((firstName != null ? firstName : "") + " " + (lastName != null ? lastName : "")).trim();
+            if (!TextUtils.isEmpty(displayName)) {
+                return displayName;
+            }
+        } catch (Exception ignored) { }
+        try {
+            String firstName = child != null ? child.getAdolescent_first_name() : null;
+            String lastName = child != null ? child.getAdolescent_last_name() : null;
+            String displayName = ((firstName != null ? firstName : "") + " " + (lastName != null ? lastName : "")).trim();
+            if (!TextUtils.isEmpty(displayName)) {
+                return displayName;
+            }
+        } catch (Exception ignored) { }
+        return "this member";
+    }
+
     private PmtctChildModel resolveLinkedHeiForDeletion() {
-        if (indexVCA == null) {
+        final VcaScreeningModel vca = indexVCA;
+        if (vca == null) {
             return null;
         }
 
         PmtctChildModel linkedHei = null;
         try {
-            if (!TextUtils.isEmpty(indexVCA.getUnique_id())) {
-                linkedHei = PmtctChildDao.getPMCTChild(indexVCA.getUnique_id());
+            if (!TextUtils.isEmpty(vca.getUnique_id())) {
+                linkedHei = PmtctChildDao.getPMCTChild(vca.getUnique_id());
             }
         } catch (Exception e) {
             Timber.e(e);
@@ -2362,16 +2478,16 @@ public class IndexDetailsActivity extends AppCompatActivity {
             return linkedHei;
         }
 
-        if (TextUtils.isEmpty(indexVCA.getHousehold_id())) {
+        if (TextUtils.isEmpty(vca.getHousehold_id())) {
             return null;
         }
 
         try {
-            List<PmtctChildModel> heiRecords = PmtctChildDao.getPmctChildHei(indexVCA.getHousehold_id());
+            List<PmtctChildModel> heiRecords = PmtctChildDao.getPmctChildHei(vca.getHousehold_id());
             if (heiRecords != null && !heiRecords.isEmpty()) {
                 if (heiRecords.size() > 1) {
                     Timber.w("Multiple active HEI records matched household %s during VCA delete; deleting the first record",
-                            indexVCA.getHousehold_id());
+                            vca.getHousehold_id());
                 }
                 linkedHei = heiRecords.get(0);
             }
@@ -2491,51 +2607,44 @@ public class IndexDetailsActivity extends AppCompatActivity {
         finish();
 
     }
- public void createDialogForScreening(String entryPoint, String message){
-        if(entryPoint != null ) {
-            if (entryPoint.equals("123") && is_screened.equals("false")) {
-
-                builder.setMessage(message + indexVCA.getFirst_name() + " " + indexVCA.getLast_name() + "?");
-                builder.setNegativeButton("Later", (dialog, id) -> {
-                    //  Action for 'NO' Button
-                    getIntent().removeExtra("fromHousehold");
-                    dialog.cancel();
-
-                }).setPositiveButton(Constants.EcapConstants.PROCEED, ((dialogInterface, i) -> {
-                    getIntent().removeExtra("fromHousehold");
-                    try {
-                        openFormUsingFormUtils(IndexDetailsActivity.this, resolveVcaScreeningFormName());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }));
-                buildDialog();
-
-            } else if (entryPoint.equals("321") && is_screened.equals("false")) {
-                builder.setMessage(Constants.EcapConstants.POP_UP_DIALOG_MESSAGE_FOR_HOUSEHOLD + indexVCA.getFirst_name() + " " + indexVCA.getLast_name() + "?");
-                builder.setNegativeButton("Later", (dialog, id) -> {
-                    //  Action for 'NO' Button
-                    getIntent().removeExtra("fromIndex");
-                    dialog.cancel();
-
-                }).setPositiveButton(Constants.EcapConstants.PROCEED, ((dialogInterface, i) -> {
-                    getIntent().removeExtra("fromIndex");
-                    try {
-                        Intent intent = new Intent(this, HouseholdDetails.class);
-                        intent.putExtra("childId", resolveUniqueIdForSourceChecks());
-                        intent.putExtra("householdId", resolveHouseholdIdForSourceChecks());
-                        startActivity(intent);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }));
-                buildDialog();
-            }
-
+    public void createDialogForScreening(String entryPoint, String message){
+        if (TextUtils.isEmpty(entryPoint) || !ensureIndexVcaAvailable()) {
+            return;
         }
-
-
- }
+        boolean screenedFalse = "false".equalsIgnoreCase(is_screened);
+        if (entryPoint.equals("123") && screenedFalse) {
+            builder.setMessage(message + safeMemberDisplayName() + "?");
+            builder.setNegativeButton("Later", (dialog, id) -> {
+                getIntent().removeExtra("fromHousehold");
+                dialog.cancel();
+            }).setPositiveButton(Constants.EcapConstants.PROCEED, ((dialogInterface, i) -> {
+                getIntent().removeExtra("fromHousehold");
+                try {
+                    openFormUsingFormUtils(IndexDetailsActivity.this, resolveVcaScreeningFormName());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }));
+            buildDialog();
+        } else if (entryPoint.equals("321") && screenedFalse) {
+            builder.setMessage(Constants.EcapConstants.POP_UP_DIALOG_MESSAGE_FOR_HOUSEHOLD + safeMemberDisplayName() + "?");
+            builder.setNegativeButton("Later", (dialog, id) -> {
+                getIntent().removeExtra("fromIndex");
+                dialog.cancel();
+            }).setPositiveButton(Constants.EcapConstants.PROCEED, ((dialogInterface, i) -> {
+                getIntent().removeExtra("fromIndex");
+                try {
+                    Intent intent = new Intent(this, HouseholdDetails.class);
+                    intent.putExtra("childId", resolveUniqueIdForSourceChecks());
+                    intent.putExtra("householdId", resolveHouseholdIdForSourceChecks());
+                    startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }));
+            buildDialog();
+        }
+    }
 
     private String resolveVcaScreeningFormName() {
         try {
@@ -2586,15 +2695,25 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
  }
     public void showDeregisteredStatus(){
+        if (!ensureIndexVcaAvailable()) {
+            return;
+        }
+        final VcaScreeningModel vca = indexVCA;
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_layout);
         dialog.show();
 
         TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-        dialogMessage.setText(indexVCA.getFirst_name() + " " + indexVCA.getLast_name() + " was either de-registered or inactive in the program");
+        if (dialogMessage != null) {
+            dialogMessage.setText((vca != null && vca.getFirst_name() != null ? vca.getFirst_name() : "") + " " +
+                    (vca != null && vca.getLast_name() != null ? vca.getLast_name() : "") +
+                    " was either de-registered or inactive in the program");
+        }
 
         Button dialogButton = dialog.findViewById(R.id.dialog_button);
-        dialogButton.setOnClickListener(v -> dialog.dismiss());
+        if (dialogButton != null) {
+            dialogButton.setOnClickListener(v -> dialog.dismiss());
+        }
 
     }
     private int calculateAndReturnAge(String inputDate) {
@@ -2626,188 +2745,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
         alert.setTitle("CA Screening");
         alert.show();
     }
-    public Object indexVCA() {
-        VcaScreeningModel screeningModel = new VcaScreeningModel();
-
-        screeningModel.setBase_entity_id(indexVCA.getBase_entity_id());
-        screeningModel.setDeleted(indexVCA.getDeleted());
-        screeningModel.setHousehold_id(indexVCA.getHousehold_id());
-        screeningModel.setUnique_id(indexVCA.getUnique_id());
-        screeningModel.setSignature(indexVCA.getSignature());
-        screeningModel.setDate_edited(indexVCA.getDate_edited());
-        screeningModel.setPhone(indexVCA.getPhone());
-        screeningModel.setCaseworker_name(indexVCA.getCaseworker_name());
-        screeningModel.setProvince(indexVCA.getProvince());
-        screeningModel.setDistrict(indexVCA.getDistrict());
-        screeningModel.setWard(indexVCA.getWard());
-        screeningModel.setFacility(indexVCA.getFacility());
-        screeningModel.setPartner(indexVCA.getPartner());
-
-        // Fill from CHW context (SharedPreferences) only when missing on the client record.
-        try {
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(IndexDetailsActivity.this);
-
-            if (TextUtils.isEmpty(screeningModel.getProvince())) {
-                String province = prefs.getString("province", "");
-                if (!TextUtils.isEmpty(province)) {
-                    screeningModel.setProvince(province);
-                }
-            }
-
-            if (TextUtils.isEmpty(screeningModel.getDistrict())) {
-                String district = prefs.getString("district", "");
-                if (!TextUtils.isEmpty(district)) {
-                    screeningModel.setDistrict(district);
-                }
-            }
-
-            if (TextUtils.isEmpty(screeningModel.getCaseworker_name())) {
-                String caseworkerName = prefs.getString("caseworker_name", "Anonymous");
-                if (!TextUtils.isEmpty(caseworkerName)) {
-                    screeningModel.setCaseworker_name(caseworkerName);
-                }
-            }
-        } catch (Exception ignored) { }
-
-        screeningModel.setAdolescent_first_name(indexVCA.getAdolescent_first_name());
-        screeningModel.setAdolescent_last_name(indexVCA.getAdolescent_last_name());
-        screeningModel.setAdolescent_birthdate(indexVCA.getAdolescent_birthdate());
-        screeningModel.setHomeaddress(indexVCA.getHomeaddress());
-        screeningModel.setLandmark(indexVCA.getLandmark());
-        screeningModel.setAdolescent_gender(indexVCA.getAdolescent_gender());
-        screeningModel.setSchool(indexVCA.getSchool());
-        screeningModel.setSchoolName(indexVCA.getSchoolName());
-        screeningModel.setOther_school(indexVCA.getOther_school());
-        screeningModel.setIs_hiv_positive(indexVCA.getIs_hiv_positive());
-        screeningModel.setIs_on_hiv_treatment(indexVCA.getIs_on_hiv_treatment());
-        screeningModel.setArt_number(indexVCA.getArt_number());
-        screeningModel.setViral_load_results_on_file(indexVCA.getViral_load_results_on_file());
-        screeningModel.setIs_tb_screening_results_on_file(indexVCA.getIs_tb_screening_results_on_file());
-        screeningModel.setClient_screened(indexVCA.getClient_screened());
-        screeningModel.setClient_result(indexVCA.getClient_result());
-        screeningModel.setTpt_client_eligibility(indexVCA.getTpt_client_eligibility());
-        screeningModel.setTpt_client_initiated(indexVCA.getTpt_client_initiated());
-        screeningModel.setScreened_for_malnutrition(indexVCA.getScreened_for_malnutrition());
-        screeningModel.setTakes_drugs_to_prevent_other_diseases(indexVCA.getTakes_drugs_to_prevent_other_diseases());
-        screeningModel.setLess_3(indexVCA.getLess_3());
-        screeningModel.setPositive_mother(indexVCA.getPositive_mother());
-        screeningModel.setActive_on_treatment(indexVCA.getActive_on_treatment());
-        screeningModel.setCaregiver_art_number(indexVCA.getCaregiver_art_number());
-        if (indexVCA.getDate_next_vl_vca() != null){
-            screeningModel.setDate_next_vl_vca(indexVCA.getDate_next_vl_vca());
-        } else {
-            screeningModel.setDate_next_vl_vca(indexVCA.getDate_next_vl());
-        }
-
-        screeningModel.setAdhering_to_treatment(indexVCA.getAdhering_to_treatment());
-        screeningModel.setIs_mother_virally_suppressed(indexVCA.getIs_mother_virally_suppressed());
-        screeningModel.setChild_been_tested_for_hiv(indexVCA.getChild_been_tested_for_hiv());
-        screeningModel.setChild_receiving_breastfeeding(indexVCA.getChild_receiving_breastfeeding());
-        screeningModel.setChild_tested_for_hiv_inline_with_guidelines(indexVCA.getChild_tested_for_hiv_inline_with_guidelines());
-        screeningModel.setReceives_drugs_to_prevent_hiv_and_other_illnesses_hei(indexVCA.getReceives_drugs_to_prevent_hiv_and_other_illnesses_hei());
-        screeningModel.setChild_been_screened_for_malnutrition_hei(indexVCA.getChild_been_screened_for_malnutrition_hei());
-        screeningModel.setChild_gets_drugs_to_prevent_tb_hei(indexVCA.getChild_gets_drugs_to_prevent_tb_hei());
-        screeningModel.setChild_enrolled_in_early_childhood_development_program(indexVCA.getChild_enrolled_in_early_childhood_development_program());
-        screeningModel.setIs_biological_child_of_mother_living_with_hiv(indexVCA.getIs_biological_child_of_mother_living_with_hiv());
-        screeningModel.setChild_tested_for_hiv_with_mother_as_index_client(indexVCA.getChild_tested_for_hiv_with_mother_as_index_client());
-        screeningModel.setIs_mother_currently_on_treatment_wlhiv(indexVCA.getIs_mother_currently_on_treatment_wlhiv());
-        screeningModel.setMother_art_number_wlhiv(indexVCA.getMother_art_number_wlhiv());
-        screeningModel.setIs_mother_adhering_to_treatment_wlhiv(indexVCA.getIs_mother_adhering_to_treatment_wlhiv());
-        screeningModel.setIs_mother_virally_suppressed_wlhiv(indexVCA.getIs_mother_virally_suppressed_wlhiv());
-        screeningModel.setChild_receiving_any_hiv_and_violence_prevention_intervention(indexVCA.getChild_receiving_any_hiv_and_violence_prevention_intervention());
-        screeningModel.setAgyw_sexually_active(indexVCA.getAgyw_sexually_active());
-        screeningModel.setHiv_or_pregnancy_prevention_method_used(indexVCA.getHiv_or_pregnancy_prevention_method_used());
-        screeningModel.setHiv_or_pregnancy_prevention_method_used_other(indexVCA.getHiv_or_pregnancy_prevention_method_used_other());
-        screeningModel.setAgyw_having_sex_with_older_men(indexVCA.getAgyw_having_sex_with_older_men());
-        screeningModel.setAgyw_transactional_sex(indexVCA.getAgyw_transactional_sex());
-        screeningModel.setAgyw_engaged_in_transactional_sex(indexVCA.getAgyw_engaged_in_transactional_sex());
-        screeningModel.setAgwy_engaged_in_sex_work(indexVCA.getAgwy_engaged_in_sex_work());
-        screeningModel.setAgyw_food_or_economically_insecure(indexVCA.getAgyw_food_or_economically_insecure());
-        screeningModel.setAgyw_marry_early(indexVCA.getAgyw_marry_early());
-        screeningModel.setAgyw_give_birth_before_the_age_of_18(indexVCA.getAgyw_give_birth_before_the_age_of_18());
-        screeningModel.setAgyw_have_a_partner_who_is_violent_or_has_experienced_violence(indexVCA.getAgyw_have_a_partner_who_is_violent_or_has_experienced_violence());
-        screeningModel.setAgyw_ever_been_diagnosed_with_a_Sexually_transmitted_illness(indexVCA.getAgyw_ever_been_diagnosed_with_a_Sexually_transmitted_illness());
-        screeningModel.setAgyw_in_school(indexVCA.getAgyw_in_school());
-        screeningModel.setAgyw_receiving_an_economic_strengthening_intervention(indexVCA.getAgyw_receiving_an_economic_strengthening_intervention());
-        screeningModel.setChild_ever_experienced_sexual_violence(indexVCA.getChild_ever_experienced_sexual_violence());
-        screeningModel.setChild_still_living_in_the_same_household_as_the_perpetrator(indexVCA.getChild_still_living_in_the_same_household_as_the_perpetrator());
-        screeningModel.setChild_supported_to_seek_justice(indexVCA.getChild_supported_to_seek_justice());
-        screeningModel.setDid_the_child_access_clinical_care(indexVCA.getDid_the_child_access_clinical_care());
-        screeningModel.setChild_clinical_care_services_received(indexVCA.getChild_clinical_care_services_received());
-        screeningModel.setChild_clinical_care_services_received_other(indexVCA.getChild_clinical_care_services_received_other());
-        screeningModel.setOther_child_clinical_care_services_received(indexVCA.getOther_child_clinical_care_services_received());
-        screeningModel.setIs_the_child_caregiver_an_fsw(indexVCA.getIs_the_child_caregiver_an_fsw());
-        screeningModel.setFsw_child_tested(indexVCA.getFsw_child_tested());
-        screeningModel.setFsw_child_positive(indexVCA.getFsw_child_positive());
-        screeningModel.setFsw_prevention_intervention(indexVCA.getFsw_prevention_intervention());
-        screeningModel.setFsw_economic_strengthening_intervention(indexVCA.getFsw_economic_strengthening_intervention());
-        screeningModel.setDate_screened(indexVCA.getDate_screened());
-        screeningModel.setApproved_by(indexVCA.getApproved_by());
-        screeningModel.setConsent_check_box(indexVCA.getConsent_check_box());
-        screeningModel.setSubpop1(indexVCA.getSubpop1());
-        screeningModel.setSubpop2(indexVCA.getSubpop2());
-        screeningModel.setSubpop3(indexVCA.getSubpop3());
-        screeningModel.setSubpop4(indexVCA.getSubpop4());
-        screeningModel.setSubpop5(indexVCA.getSubpop5());
-        screeningModel.setScreening_location(indexVCA.getScreening_location());
-        screeningModel.setSubpop(indexVCA.getSubpop());
-        screeningModel.setFirst_name(indexVCA.getFirst_name());
-        screeningModel.setLast_name(indexVCA.getLast_name());
-        screeningModel.setGender(indexVCA.getGender());
-        screeningModel.setBirthdate(indexVCA.getBirthdate());
-        screeningModel.setIndex_check_box(indexVCA.getIndex_check_box());
-        screeningModel.setCase_status("1");
-        screeningModel.setDate_referred(indexVCA.getDate_referred());
-        screeningModel.setDate_offered_enrollment(indexVCA.getDate_offered_enrollment());
-        screeningModel.setAcceptance(indexVCA.getAcceptance());
-        screeningModel.setDate_enrolled(indexVCA.getDate_enrolled());
-        screeningModel.setDate_hiv_known(indexVCA.getDate_hiv_known());
-        screeningModel.setArt_check_box(indexVCA.getArt_check_box());
-        screeningModel.setDate_started_art(indexVCA.getDate_started_art());
-        screeningModel.setVl_check_box(indexVCA.getVl_check_box());
-        screeningModel.setDate_last_vl(indexVCA.getDate_last_vl());
-        screeningModel.setVl_last_result(indexVCA.getVl_last_result());
-//        screeningModel.setDate_next_vl(indexVCA.getDate_next_vl());
-        screeningModel.setChild_mmd(indexVCA.getChild_mmd());
-        screeningModel.setLevel_mmd(indexVCA.getLevel_mmd());
-        screeningModel.setCaregiver_name(indexVCA.getCaregiver_name() != null ? indexVCA.getCaregiver_name() : (householdCaregiver != null ? householdCaregiver.getCaregiver_name() : null));
-        screeningModel.setCaregiver_nrc(indexVCA.getCaregiver_nrc() != null ? indexVCA.getCaregiver_nrc() : (householdCaregiver != null ? householdCaregiver.getCaregiver_nrc() : null));
-        screeningModel.setCaregiver_sex(indexVCA.getCaregiver_sex() != null ? indexVCA.getCaregiver_sex() : (householdCaregiver != null ? householdCaregiver.getCaregiver_sex() : null));
-        screeningModel.setCaregiver_birth_date(indexVCA.getCaregiver_birth_date() != null ? indexVCA.getCaregiver_birth_date() : (householdCaregiver != null ? householdCaregiver.getCaregiver_birth_date() : null));
-        screeningModel.setCaregiver_hiv_status(indexVCA.getCaregiver_hiv_status() != null ? indexVCA.getCaregiver_hiv_status() : (householdCaregiver != null ? householdCaregiver.getCaregiver_hiv_status() : null));
-        screeningModel.setRelation(indexVCA.getRelation() != null ? indexVCA.getRelation() : (householdCaregiver != null ? householdCaregiver.getRelation() : null));
-        screeningModel.setCaregiver_phone(indexVCA.getCaregiver_phone() != null ? indexVCA.getCaregiver_phone() : (householdCaregiver != null ? householdCaregiver.getCaregiver_phone() : null));
-        screeningModel.setDe_registration_date(indexVCA.getDe_registration_date());
-        screeningModel.setReason(indexVCA.getReason());
-        screeningModel.setTransfer_reason(indexVCA.getTransfer_reason());
-        screeningModel.setOther_reason(indexVCA.getOther_reason());
-        screeningModel.setExited_graduation_reason(indexVCA.getExited_graduation_reason());
-        screeningModel.setDate_of_death(indexVCA.getDate_of_death());
-        screeningModel.setAbym_years(indexVCA.getAbym_years());
-        screeningModel.setAbym_sexually_active(indexVCA.getAbym_sexually_active());
-        screeningModel.setAbym_preventions(indexVCA.getAbym_preventions());
-        screeningModel.setAbym_preventions_other(indexVCA.getAbym_preventions_other());
-        screeningModel.setAbym_sex_older_women(indexVCA.getAbym_sex_older_women());
-        screeningModel.setAbym_transactional_sex(indexVCA.getAbym_transactional_sex());
-        screeningModel.setAbym_sex_work(indexVCA.getAbym_sex_work());
-        screeningModel.setAbym_economically_insecure(indexVCA.getAbym_economically_insecure());
-        screeningModel.setAbym_violent_partner(indexVCA.getAbym_violent_partner());
-        screeningModel.setAbym_diagnosed(indexVCA.getAbym_diagnosed());
-        screeningModel.setAbym_hiv_tested(indexVCA.getAbym_hiv_tested());
-        screeningModel.setAbym_test_positive(indexVCA.getAbym_test_positive());
-        screeningModel.setAbym_undergone_vmmc(indexVCA.getAbym_undergone_vmmc());
-        screeningModel.setAbym_in_school(indexVCA.getAbym_in_school());
-        screeningModel.setAbym_economic_strengthening(indexVCA.getAbym_economic_strengthening());
-        screeningModel.setVca_receiving_caseworker(indexVCA.getVca_receiving_caseworker());
-        screeningModel.setDistrict_moved_to(indexVCA.getDistrict_moved_to());
-        screeningModel.setName_ovc(indexVCA.getName_ovc());
-        return screeningModel;
-    }
-
     private boolean isTbScreeningCompliantForVisitation() {
         Integer ageYears = getCurrentAgeYears();
         if (ageYears != null && ageYears > 10) {
-            String vcaId = indexVCA != null ? indexVCA.getUnique_id() : null;
+            final VcaScreeningModel vca = indexVCA;
+            String vcaId = vca != null ? vca.getUnique_id() : null;
             return hasTbScreeningInCurrentQuarter(vcaId);
         }
         return true;
@@ -2832,11 +2774,12 @@ public class IndexDetailsActivity extends AppCompatActivity {
     }
 
     private String getVcaBirthdate() {
-        if (indexVCA != null && !TextUtils.isEmpty(indexVCA.getAdolescent_birthdate())) {
-            return indexVCA.getAdolescent_birthdate();
+        final VcaScreeningModel vca = indexVCA;
+        if (vca != null && !TextUtils.isEmpty(vca.getAdolescent_birthdate())) {
+            return vca.getAdolescent_birthdate();
         }
-        if (indexVCA != null && !TextUtils.isEmpty(indexVCA.getBirthdate())) {
-            return indexVCA.getBirthdate();
+        if (vca != null && !TextUtils.isEmpty(vca.getBirthdate())) {
+            return vca.getBirthdate();
         }
         if (child != null && !TextUtils.isEmpty(child.getAdolescent_birthdate())) {
             return child.getAdolescent_birthdate();

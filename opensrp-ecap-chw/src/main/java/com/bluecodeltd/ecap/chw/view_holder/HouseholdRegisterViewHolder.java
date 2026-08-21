@@ -42,6 +42,7 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
     private TextView vcaCountBadge;
 
     private ImageView homeIcon;
+    private View statusStrip;
     private Boolean isGraduated;
 
     LinearLayout hLayout;
@@ -54,11 +55,12 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
         vcaCountBadge = itemView.findViewById(R.id.vca_count_badge);
         hLayout = itemView.findViewById(R.id.child_wrapper);
         homeIcon = itemView.findViewById(R.id.home_icon);
+        statusStrip = itemView.findViewById(R.id.status_strip);
     }
 
-    public void setupViews(String family, String householdId, String baseId, String isClosed, String village, List<String> genderList, String screened, List<String> birthdateList, String vcaCount, Context context){
+    public void setupViews(String family, String householdId, String baseId, String isClosed, List<String> genderList, String screened, List<String> birthdateList, String vcaCount, Context context){
         familyNameTextView.setText(family);
-        villageTextView.setText(village);
+        villageTextView.setText(householdId);
         villageTextView.setTag(householdId);
         setupVcaCountBadge(vcaCount, context);
 
@@ -70,6 +72,7 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
         }
         homeIcon.clearColorFilter();
         homeIcon.setTag(householdId);
+        statusStrip.setBackgroundColor(ContextCompat.getColor(context, R.color.register_household_icon));
 
         Threading.ioBestEffort(() -> {
             try {
@@ -82,20 +85,24 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
                     if (!householdId.equals(homeIcon.getTag())) return; // view recycled
                     try {
                         if (house != null && householdId.equals(villageTextView.getTag())) {
-                            String realVillage = firstNonBlank(house.getVillage(), house.getLandmark(), village);
-                            if (!realVillage.isEmpty()) {
-                                villageTextView.setText(realVillage);
+                            String landmark = house.getLandmark();
+                            if (landmark != null && !landmark.trim().isEmpty()) {
+                                villageTextView.setText(householdId + " • " + landmark.trim());
+                            } else {
+                                villageTextView.setText(householdId);
                             }
                         }
 
                         if (graduationModel != null && "1".equals(graduationModel.getGraduation_status())) {
                             homeIcon.setImageResource(R.mipmap.graduation);
+                            statusStrip.setBackgroundColor(ContextCompat.getColor(context, R.color.status_green));
                             return;
                         }
 
                         if (householdStatus != null && "1".equals(householdStatus)) {
                             homeIcon.setImageResource(R.drawable.tabmenu_home);
                             homeIcon.setColorFilter(ContextCompat.getColor(context, com.nerdstone.neatformcore.R.color.colorRed));
+                            statusStrip.setBackgroundColor(ContextCompat.getColor(context, R.color.pie_chart_red));
                         } else {
                             if ("true".equals(screened)) {
                                 homeIcon.setImageResource(R.drawable.tabmenu_home_active);
@@ -103,6 +110,7 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
                                 homeIcon.setImageResource(R.drawable.tabmenu_home);
                             }
                             homeIcon.clearColorFilter();
+                            statusStrip.setBackgroundColor(ContextCompat.getColor(context, R.color.register_household_icon));
                         }
 
                         if (house != null) {
@@ -117,6 +125,7 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
                                                             "other".equals(deRegistrationReason))))) {
                                 homeIcon.setImageResource(R.drawable.inactive_house);
                                 homeIcon.clearColorFilter();
+                                statusStrip.setBackgroundColor(ContextCompat.getColor(context, R.color.stat_pill_unknown));
                             }
                         }
                     } catch (Exception ignored) {}
@@ -136,12 +145,19 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
             int avatarMarginPx = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, context.getResources().getDisplayMetrics()));
 
             // Cap visible avatars so a large household can never push the chevron off-screen.
-            int visibleCount = Math.min(genderList.size(), MAX_VISIBLE_MEMBER_ICONS);
+            // genderList and birthdateList come from two independent DAO queries and can
+            // disagree on row count for the same household, so bound by both.
+            int visibleCount = Math.min(Math.min(genderList.size(), birthdateList.size()), MAX_VISIBLE_MEMBER_ICONS);
 
             for(int i=0; i < visibleCount; i++) {
 
                 String myage = getAgeWithoutText(birthdateList.get(i));
-                int age = Integer.parseInt(myage);
+                int age;
+                try {
+                    age = Integer.parseInt(myage);
+                } catch (NumberFormatException e) {
+                    age = -1;
+                }
 
                 // Same avatar-circle treatment as home_icon: a tinted circular backdrop behind the member icon.
                 FrameLayout avatar = new FrameLayout(context);
@@ -203,22 +219,6 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
         }
 
 
-    }
-
-    private String firstNonBlank(String... values) {
-        if (values == null) {
-            return "";
-        }
-        for (String value : values) {
-            if (value == null) {
-                continue;
-            }
-            String trimmed = value.trim();
-            if (!trimmed.isEmpty()) {
-                return trimmed;
-            }
-        }
-        return "";
     }
 
     private void setupVcaCountBadge(String vcaCount, Context context) {
@@ -286,8 +286,17 @@ public boolean checkGraduationStatus(String householdId){
 //    }
 
     private String getAgeWithoutText(String birthdate){
+        if (birthdate == null || birthdate.trim().isEmpty()) {
+            return "Not Set";
+        }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
-        LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
+        LocalDate localDateBirthdate;
+        try {
+            localDateBirthdate = LocalDate.parse(birthdate, formatter);
+        } catch (Exception e) {
+            Log.w("HouseholdRegisterVH", "Unparseable birthdate: " + birthdate, e);
+            return "Not Set";
+        }
         LocalDate today =LocalDate.now();
         Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
         if(periodBetweenDateOfBirthAndNow.getYears() >0)

@@ -48,7 +48,6 @@ public class PMTCTMotherOverviewFragment extends Fragment {
         txtdate_of_delivery = binding.dateOfDelivery;
         txtplace_of_delivery = binding.placeOfDelivery;
         txt_on_art_at_time_of_delivery = binding.onArtAtTimeOfDelivery;
-        txtHouseholdId.setVisibility(View.GONE);
 
         fab = getActivity().findViewById(R.id.fabx);
 
@@ -81,7 +80,9 @@ public class PMTCTMotherOverviewFragment extends Fragment {
         PtctMotherModel motherDetails = mymap.get("client");
         if (motherDetails != null) {
             // Mother details
-            txtHouseholdId.setText(getSafeString(motherDetails.getPmtct_id()));
+            String pmtctId = motherDetails.getPmtct_id();
+            String householdIdForDisplay = motherDetails.getHousehold_id();
+            txtHouseholdId.setText(getSafeString(!isNullOrEmpty(pmtctId) ? pmtctId : householdIdForDisplay));
             txtPmtctDateEnrolled.setText(getSafeString(motherDetails.getDate_enrolled_pmtct()));
 
             // Address and phone — fall back to EcMotherIndexDao if not set on the model

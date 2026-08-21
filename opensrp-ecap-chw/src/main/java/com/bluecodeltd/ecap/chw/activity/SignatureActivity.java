@@ -96,6 +96,8 @@ public class SignatureActivity extends AppCompatActivity {
         toolbar.getOverflowIcon().setColorFilter(Color.WHITE , PorterDuff.Mode.SRC_ATOP);
         myAppbar = findViewById(R.id.collapsing_toolbar_appbarlayout);
         NavigationMenu.getInstance(this, null, toolbar);  signaturePad = findViewById(R.id.signature_pad);
+        // Prevent the pad's bitmap from being embedded in onSaveInstanceState (caused TransactionTooLargeException)
+        signaturePad.setSaveEnabled(false);
         clearSignature = findViewById(R.id.clearSignarture);
         saveSignature = findViewById(R.id.saveSignature);
         childId = getIntent().getExtras().getString("Child");
@@ -139,7 +141,7 @@ public class SignatureActivity extends AppCompatActivity {
                 Bitmap signatureBitmap = signaturePad.getSignatureBitmap();
                 String base64Signature = encodeBitmapToBase64(signatureBitmap);
 
-                JSONObject signatureField = getFieldJSONObject(fields(screeningFormObject, "step1"), "signature");
+                JSONObject signatureField = findSignatureField(screeningFormObject);
 
                 if (signatureField != null) {
                     signatureField.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
@@ -159,6 +161,8 @@ public class SignatureActivity extends AppCompatActivity {
                 debugToast("SAVE: encounter=" + encounterType + " edit=" + is_edit_mode +
                         " entity_id=" + safe(screeningFormObject.optString("entity_id")));
 
+                final boolean isEditModeFinal = is_edit_mode;
+
                 //householdId = FormUtils.getFieldJSONObject(FormUtils.fields(screeningFormObject, STEP2), "household_id").optString("value");
 
                 String signatureString = screeningFormObject.toString();
@@ -170,14 +174,11 @@ public class SignatureActivity extends AppCompatActivity {
                         return;
                     }
 
-                    boolean isSaved = saveRegistration(childIndexEventClient, is_edit_mode);
-                    if (!isSaved) {
-                        Toasty.error(SignatureActivity.this, "Failed to save data.", Toast.LENGTH_SHORT, true).show();
-                        return;
-                    }
-
+                    boolean isSaved = saveRegistration(childIndexEventClient, is_edit_mode, () -> {
                     switch (encounterType) {
                         case "Household Screening":
+                        case "Household Screening Edit":
+                            Toasty.success(getApplicationContext(), "Form Saved", Toast.LENGTH_LONG, true).show();
                             String hid = getFieldValue(screeningFormObject, "step2", "household_id");
                             Intent refreshActivity = new Intent(getApplicationContext(), HouseholdDetails.class);
                             refreshActivity.putExtra("householdId", hid);
@@ -196,7 +197,7 @@ public class SignatureActivity extends AppCompatActivity {
                             break;
 
                         case "Household Service Report":
-                            if (!is_edit_mode) {
+                            if (!isEditModeFinal) {
                                 maybeAutoEnrollMotherFromService(screeningFormObject);
                             }
                             Toasty.success(getApplicationContext(), "Service Report Saved", Toast.LENGTH_LONG, true).show();
@@ -208,7 +209,7 @@ public class SignatureActivity extends AppCompatActivity {
                             break;
 
                         case "VCA Service Report":
-                            if (!is_edit_mode) {
+                            if (!isEditModeFinal) {
                                 maybeAutoEnrollMotherFromVcaService(screeningFormObject);
                             }
                             Toasty.success(getApplicationContext(), "Service Report Saved", Toast.LENGTH_LONG, true).show();
@@ -251,6 +252,11 @@ public class SignatureActivity extends AppCompatActivity {
                             finish();
                             break;
                     }
+                    });
+
+                    if (!isSaved) {
+                        Toasty.error(SignatureActivity.this, "Failed to save data.", Toast.LENGTH_SHORT, true).show();
+                    }
                 } catch (Exception e) {
                     Timber.e(e);
                     Toasty.error(SignatureActivity.this, "An error occurred while saving.", Toast.LENGTH_SHORT, true).show();
@@ -260,6 +266,21 @@ public class SignatureActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private JSONObject findSignatureField(JSONObject form) {
+        if (form == null) return null;
+        for (String step : new String[]{"step1", "step2", "step3", "step4"}) {
+            if (!form.has(step)) continue;
+            try {
+                JSONObject field = getFieldJSONObject(fields(form, step), "signature");
+                if (field != null) {
+                    return field;
+                }
+            } catch (Exception ignored) {
+            }
+        }
+        return null;
     }
 
     String getFieldValue(JSONObject form, String step, String targetKey) {
@@ -379,6 +400,7 @@ public class SignatureActivity extends AppCompatActivity {
                     break;
 
                 case "Household Screening":
+                case "Household Screening Edit":
 
                     if (fields != null) {
                         FormTag formTag = getFormTag();
@@ -560,6 +582,10 @@ public class SignatureActivity extends AppCompatActivity {
 
 
     public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode) {
+        return saveRegistration(childIndexEventClient, isEditMode, null);
+    }
+
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode, Runnable onComplete) {
 
         Runnable runnable = () -> {
 
@@ -607,10 +633,13 @@ public class SignatureActivity extends AppCompatActivity {
                 }
             }
 
+            if (onComplete != null) {
+                Threading.main(onComplete);
+            }
         };
 
         try {
-            AppExecutors appExecutors = new AppExecutors();
+            AppExecutors appExecutors = ChwApplication.getInstance().getAppExecutors();
             appExecutors.diskIO().execute(runnable);
             return true;
         } catch (Exception exception) {

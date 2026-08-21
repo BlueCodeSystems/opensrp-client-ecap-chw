@@ -452,6 +452,10 @@ public class HouseholdIndexFragment extends BaseSafeRegisterFragment implements 
 
             final String finalIsClosed = isClosed;
             Threading.main(() -> {
+                // The fragment may have been detached (user backed out) while the DB lookup
+                // above was in flight; getActivity() would then be null, and both the Intent
+                // constructor and Toasty.warning() NPE on a null Context.
+                if (!isAdded() || getActivity() == null) return;
                 if (finalIsClosed != null && finalIsClosed.equals("1")){
                     Toasty.warning(getActivity(), "This household has been deleted", Toast.LENGTH_LONG, true).show();
                 } else {
@@ -508,6 +512,24 @@ public class HouseholdIndexFragment extends BaseSafeRegisterFragment implements 
         clientAdapter = new RecyclerViewPaginatedAdapter(null, registerProvider, context().commonrepository(Constants.EcapClientTable.EC_HOUSEHOLD));
         clientAdapter.setCurrentlimit(20);
         clientsView.setAdapter(clientAdapter);
+    }
+
+    @Override
+    public void countExecute() {
+        // The base implementation runs a synchronous SELECT COUNT(*) on the calling thread.
+        // renderView()/filter() call this directly on the main thread on every resume, which
+        // can ANR if a background sync currently holds the SQLCipher connection lock. Run it
+        // off the main thread; onLoadFinished already re-calls setTotalPatients() once the
+        // register list's own Loader delivers data, so the header self-corrects either way.
+        Threading.io(() -> {
+            try {
+                super.countExecute();
+            } catch (Throwable ignored) { }
+            Threading.main(() -> {
+                if (!isAdded() || getActivity() == null) return;
+                setTotalPatients();
+            });
+        });
     }
 
     @Override

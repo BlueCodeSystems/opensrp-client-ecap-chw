@@ -192,6 +192,9 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
 
     }
     public void showDialogBox(String householdId,String message){
+        if (context instanceof Activity && (((Activity) context).isFinishing() || ((Activity) context).isDestroyed())) {
+            return;
+        }
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_layout);
         dialog.show();
@@ -204,6 +207,9 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
             try { house = HouseholdDao.getHousehold(hid); } catch (Exception ignored) {}
             final Household finalHouse = house;
             Threading.main(() -> {
+                if (context instanceof Activity && (((Activity) context).isFinishing() || ((Activity) context).isDestroyed())) {
+                    return;
+                }
                 String name = (finalHouse != null && finalHouse.getCaregiver_name() != null) ? finalHouse.getCaregiver_name() : "Household";
                 dialogMessage.setText(name + message);
             });
@@ -284,6 +290,18 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
                         return new ChildIndexEventClient(event, client);
                     }
                     break;
+
+                case "Mother Pmtct Postnatal":
+
+                    if (fields != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
+                                encounterType, "ec_pmtct_mother_postnatal");
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fields, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
             }
         } catch (JSONException e) {
             Timber.e(e);
@@ -335,7 +353,7 @@ public class PostnatalMotherAdapter extends RecyclerView.Adapter<PostnatalMother
         };
 
         try {
-            AppExecutors appExecutors = new AppExecutors();
+            AppExecutors appExecutors = ChwApplication.getInstance().getAppExecutors();
             appExecutors.diskIO().execute(runnable);
             return true;
         } catch (Exception exception) {

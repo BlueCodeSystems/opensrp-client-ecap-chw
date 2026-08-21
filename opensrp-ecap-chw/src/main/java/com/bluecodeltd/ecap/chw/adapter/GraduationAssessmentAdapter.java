@@ -247,6 +247,9 @@ public class GraduationAssessmentAdapter extends RecyclerView.Adapter<Graduation
 
     }
     public void showDialogBox(String caregiverName,String message){
+        if (context instanceof Activity && (((Activity) context).isFinishing() || ((Activity) context).isDestroyed())) {
+            return;
+        }
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_layout);
         dialog.show();
@@ -381,7 +384,7 @@ public class GraduationAssessmentAdapter extends RecyclerView.Adapter<Graduation
         };
 
         try {
-            AppExecutors appExecutors = new AppExecutors();
+            AppExecutors appExecutors = ChwApplication.getInstance().getAppExecutors();
             appExecutors.diskIO().execute(runnable);
             return true;
         } catch (Exception exception) {

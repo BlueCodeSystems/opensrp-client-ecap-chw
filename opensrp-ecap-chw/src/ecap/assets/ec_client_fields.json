@@ -2788,6 +2788,13 @@
           }
         },
         {
+          "column_name": "nutrition_grade_3",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.nutrition_grade_3"
+          }
+        },
+        {
           "column_name": "nutrition_nr",
           "type": "Client",
           "json_mapping": {
@@ -4230,6 +4237,83 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.illness_type"
+          }
+        },
+        {
+          "column_name": "pcz_priority_disease",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.pcz_priority_disease"
+          }
+        },
+        {
+          "column_name": "other_priority_disease",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_priority_disease"
+          }
+        },
+        {
+          "column_name": "case_f_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_f_0_4"
+          }
+        },
+        {
+          "column_name": "case_f_5_14",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_f_5_14"
+          }
+        },
+        {
+          "column_name": "case_f_15_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_f_15_plus"
+          }
+        },
+        {
+          "column_name": "case_m_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_m_0_4"
+          }
+        },
+        {
+          "column_name": "case_m_5_14",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_m_5_14"
+          }
+        },
+        {
+          "column_name": "case_m_15_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_m_15_plus"
+          }
+        },
+        {
+          "column_name": "case_total",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_total"
+          }
+        },
+        {
+          "column_name": "cbs_supervisor_part_of_response",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.cbs_supervisor_part_of_response"
+          }
+        },
+        {
+          "column_name": "cbs_supervisor_action_taken",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.cbs_supervisor_action_taken"
           }
         },
         {
@@ -9445,6 +9529,20 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.date_calculation"
+          }
+        },
+        {
+          "column_name": "is_ca_pregnant",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_ca_pregnant"
+          }
+        },
+        {
+          "column_name": "is_ca_breastfeeding",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.is_ca_breastfeeding"
           }
         }
       ]
@@ -18498,6 +18596,41 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.azt_3tc_npv_date"
+          }
+        },
+        {
+          "column_name": "ward",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.ward"
+          }
+        },
+        {
+          "column_name": "province",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.province"
+          }
+        },
+        {
+          "column_name": "district",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.district"
+          }
+        },
+        {
+          "column_name": "facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.facility"
+          }
+        },
+        {
+          "column_name": "partner",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.partner"
           }
         },
         {

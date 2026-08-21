@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,6 +21,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter;
@@ -59,6 +65,7 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
+import java.util.Map;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -158,6 +165,40 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
 
         setupViewPager();
         setupFabVisibility();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.child_non_pmtct_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.edit_record) {
+            openEditForm();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void openEditForm() {
+        if (currentChild == null) {
+            Toasty.warning(this, "Child record not found", Toast.LENGTH_LONG, true).show();
+            return;
+        }
+        try {
+            FormUtils formUtils = new FormUtils(this);
+            JSONObject form = formUtils.getFormJson("vca_edit");
+
+            CoreJsonFormUtils.populateJsonForm(form, new ObjectMapper().convertValue(currentChild, Map.class));
+            form.put("entity_id", currentChild.getBase_entity_id());
+
+            startFormActivity(form);
+        } catch (Exception e) {
+            Timber.e(e);
+        }
     }
 
     public static void start(Activity activity, String baseEntityId, String householdId, String uniqueId) {
@@ -725,6 +766,20 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
                         return new ChildIndexEventClient(event, client);
                     }
                     break;
+
+                case "Sub Population Edit":
+
+                    if (fs != null) {
+                        FormTag formTag = getFormTag();
+                        Event event = org.smartregister.util.JsonFormUtils.createEvent(
+                                fs, metadata, formTag, entityId,
+                                encounterType, Constants.EcapClientTable.EC_CLIENT_INDEX
+                        );
+                        tagSyncMetadata(event);
+                        Client client = org.smartregister.util.JsonFormUtils.createBaseClient(fs, formTag, entityId);
+                        return new ChildIndexEventClient(event, client);
+                    }
+                    break;
             }
         } catch (JSONException e) {
             Timber.e(e);
@@ -781,7 +836,7 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
         };
 
         try {
-            AppExecutors appExecutors = new AppExecutors();
+            AppExecutors appExecutors = ChwApplication.getInstance().getAppExecutors();
             appExecutors.diskIO().execute(runnable);
             return true;
         } catch (Exception exception) {

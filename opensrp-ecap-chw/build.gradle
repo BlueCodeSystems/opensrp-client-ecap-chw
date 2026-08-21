@@ -379,8 +379,8 @@ android {
         ecap {
             dimension = 'baseDimension'
             applicationIdSuffix ".ecap"
-            versionCode 48
-            versionName "v8.0.5"
+            versionCode 49
+            versionName "v8.0.6"
             buildConfigField "String", 'opensrp_url', '"https://opensrp.ecap.bluecodeltd.com/opensrp/"'
             buildConfigField "String", 'guidebooks_url', '"https://opensrp.s3.amazonaws.com/media/ba/"'
             buildConfigField "String", 'opensrp_url_debug', '"https://opensrp.ecap.bluecodeltd.com/opensrp/"'
@@ -389,7 +389,7 @@ android {
             buildConfigField "String[]", "ALLOWED_LOCATION_LEVELS_DEBUG", '{"Country","Province","District","Ward","Health Facility"}'
             buildConfigField "String", 'DEFAULT_LOCATION', '"Health Facility"'
             buildConfigField "String", 'DEFAULT_LOCATION_DEBUG', '"Health Facility"'
-            buildConfigField "int", "DATABASE_VERSION", '29'
+            buildConfigField "int", "DATABASE_VERSION", '30'
         }
     }
 }
@@ -449,6 +449,9 @@ dependencies {
         exclude group: 'com.mapbox.mapboxsdk', module: 'mapbox-android-sdk'
     }
     implementation 'com.google.firebase:firebase-crashlytics:20.1.0'
+    implementation platform('com.google.firebase:firebase-bom:33.5.1')
+    implementation 'com.google.firebase:firebase-firestore'
+    implementation 'com.google.firebase:firebase-storage'
     // Core library desugaring for Java 8+ APIs used by dependencies
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 

@@ -152,7 +152,7 @@ public class ReportHomeActivity extends AppCompatActivity {
                     getResources().getColor(R.color.status_green));
 
             findViewById(R.id.btn_edit_recent).setOnClickListener(v -> launchReportForm(recentModel, false));
-            findViewById(R.id.btn_view_recent).setOnClickListener(v -> ReportViewActivity.start(this, recent.id, reportType));
+            findViewById(R.id.btn_view_recent).setOnClickListener(v -> showOrientationSelectionDialog(recent.id, reportType));
             
             List<ReportInfo> historical = history.size() > 1 ? history.subList(1, history.size()) : new ArrayList<>();
             if (historical.isEmpty()) {
@@ -290,6 +290,29 @@ public class ReportHomeActivity extends AppCompatActivity {
         startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
     }
 
+    private void showOrientationSelectionDialog(String reportId, String reportType) {
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.dialog_orientation_selection, null);
+        builder.setView(view);
+
+        final androidx.appcompat.app.AlertDialog dialog = builder.create();
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT));
+        }
+
+        view.findViewById(R.id.btn_portrait).setOnClickListener(v -> {
+            ReportViewActivity.start(this, reportId, reportType, android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            dialog.dismiss();
+        });
+
+        view.findViewById(R.id.btn_landscape).setOnClickListener(v -> {
+            ReportViewActivity.start(this, reportId, reportType, android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            dialog.dismiss();
+        });
+
+        dialog.show();
+    }
+
     private static class ReportInfo {
         String month;
         String date;
@@ -329,7 +352,7 @@ public class ReportHomeActivity extends AppCompatActivity {
             else if (ReportRegisterActivity.REPORT_TYPE_TB.equals(reportType)) iconRes = R.drawable.ic_tb_24;
             holder.imgIcon.setImageResource(iconRes);
             
-            holder.itemView.setOnClickListener(v -> ReportViewActivity.start(ReportHomeActivity.this, item.id, reportType));
+            holder.itemView.setOnClickListener(v -> showOrientationSelectionDialog(item.id, reportType));
             holder.btnEdit.setOnClickListener(v -> launchReportForm(model, false));
         }
 

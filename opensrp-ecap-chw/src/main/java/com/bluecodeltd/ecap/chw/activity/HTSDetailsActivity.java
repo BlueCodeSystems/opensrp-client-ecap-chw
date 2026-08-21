@@ -268,6 +268,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
 
 
         viewPager = findViewById(R.id.viewpager);
+        try { viewPager.setSaveEnabled(false); } catch (Throwable ignored) {}
         tabLayout = findViewById(R.id.tabs);
         returnViewPager();
         updateTasksTabTitle();
@@ -701,7 +702,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
         };
 
         try {
-            AppExecutors appExecutors = new AppExecutors();
+            AppExecutors appExecutors = ChwApplication.getInstance().getAppExecutors();
             appExecutors.diskIO().execute(runnable);
             return true;
         } catch (Exception exception) {

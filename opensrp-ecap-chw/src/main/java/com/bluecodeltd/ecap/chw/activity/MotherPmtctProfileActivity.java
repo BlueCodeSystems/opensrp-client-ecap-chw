@@ -148,6 +148,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         // Rely on NavigationMenu to set up navigation icon/drawer like other profile screens
         mTabLayout =  binding.tabs;
         mViewPager  = binding.viewpager;
+        try { mViewPager.setSaveEnabled(false); } catch (Throwable ignored) {}
         motherName = binding.motherName;
         txtAge = binding.motherAge;
         mLayout = binding.motherForm;
@@ -1156,7 +1157,7 @@ break;
         };
 
         try {
-            AppExecutors appExecutors = new AppExecutors();
+            AppExecutors appExecutors = ChwApplication.getInstance().getAppExecutors();
             appExecutors.diskIO().execute(runnable);
             return true;
         } catch (Exception exception) {

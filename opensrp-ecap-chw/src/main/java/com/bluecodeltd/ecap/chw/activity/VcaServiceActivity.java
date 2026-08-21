@@ -175,6 +175,9 @@ public class VcaServiceActivity extends AppCompatActivity {
                     int finalCasePlanCount = casePlanCount;
 
                     Threading.main(() -> {
+                        if (isFinishing() || isDestroyed()) {
+                            return;
+                        }
                         if (finalCaseStatusModel == null) {
                             return;
                         }
@@ -430,7 +433,7 @@ public class VcaServiceActivity extends AppCompatActivity {
         };
 
         try {
-            AppExecutors appExecutors = new AppExecutors();
+            AppExecutors appExecutors = ChwApplication.getInstance().getAppExecutors();
             appExecutors.diskIO().execute(runnable);
             return true;
         } catch (Exception exception) {
