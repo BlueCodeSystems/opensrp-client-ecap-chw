@@ -1,4 +1,5 @@
 package com.bluecodeltd.ecap.chw.interactor;
+import com.bluecodeltd.ecap.chw.application.ChwApplication;
 
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getAllSharedPreferences;
 
@@ -48,7 +49,7 @@ public class IndexRegisterInteractor implements IndexRegisterContract.Interactor
 
     public IndexRegisterInteractor(IndexRegisterContract.Presenter presenter) {
         this.presenter = presenter;
-        this.appExecutors = new AppExecutors();
+        this.appExecutors = ChwApplication.getInstance().getAppExecutors();
     }
 
 

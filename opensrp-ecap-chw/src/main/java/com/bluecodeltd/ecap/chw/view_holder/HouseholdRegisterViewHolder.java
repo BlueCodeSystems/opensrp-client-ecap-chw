@@ -152,7 +152,12 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
             for(int i=0; i < visibleCount; i++) {
 
                 String myage = getAgeWithoutText(birthdateList.get(i));
-                int age = Integer.parseInt(myage);
+                int age;
+                try {
+                    age = Integer.parseInt(myage);
+                } catch (NumberFormatException e) {
+                    age = -1;
+                }
 
                 // Same avatar-circle treatment as home_icon: a tinted circular backdrop behind the member icon.
                 FrameLayout avatar = new FrameLayout(context);
@@ -281,8 +286,17 @@ public boolean checkGraduationStatus(String householdId){
 //    }
 
     private String getAgeWithoutText(String birthdate){
+        if (birthdate == null || birthdate.trim().isEmpty()) {
+            return "Not Set";
+        }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
-        LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
+        LocalDate localDateBirthdate;
+        try {
+            localDateBirthdate = LocalDate.parse(birthdate, formatter);
+        } catch (Exception e) {
+            Log.w("HouseholdRegisterVH", "Unparseable birthdate: " + birthdate, e);
+            return "Not Set";
+        }
         LocalDate today =LocalDate.now();
         Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
         if(periodBetweenDateOfBirthAndNow.getYears() >0)

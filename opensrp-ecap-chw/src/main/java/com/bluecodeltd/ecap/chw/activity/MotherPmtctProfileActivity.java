@@ -1157,7 +1157,7 @@ break;
         };
 
         try {
-            AppExecutors appExecutors = new AppExecutors();
+            AppExecutors appExecutors = ChwApplication.getInstance().getAppExecutors();
             appExecutors.diskIO().execute(runnable);
             return true;
         } catch (Exception exception) {

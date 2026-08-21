@@ -21,6 +21,7 @@ import com.bluecodeltd.ecap.chw.model.MalariaMonthlyModel;
 import com.bluecodeltd.ecap.chw.model.NutritionMonthlyModel;
 import com.bluecodeltd.ecap.chw.model.TbMonthlyModel;
 import com.bluecodeltd.ecap.chw.util.ReportFormUtils;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.bluecodeltd.ecap.chw.interactor.ReportRegisterInteractor;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.domain.Form;
@@ -123,9 +124,17 @@ public class ReportViewActivity extends AppCompatActivity {
                     }
                     
                     boolean isDraft = data.getBooleanExtra(JsonFormConstants.SKIP_VALIDATION, false);
-                    new ReportRegisterInteractor().saveForm(jsonString, isDraft ? "draft" : "complete");
-                    container.removeAllViews();
-                    renderReport();
+                    // saveForm()'s processClient() call takes the same ChwClientProcessor lock a
+                    // concurrent background sync can hold for a while; run it off the main thread
+                    // to avoid an ANR (main thread blocked waiting on ChwClientProcessor's monitor),
+                    // matching ReportHomeActivity's onActivityResult.
+                    Threading.io(() -> {
+                        new ReportRegisterInteractor().saveForm(jsonString, isDraft ? "draft" : "complete");
+                        Threading.main(() -> {
+                            container.removeAllViews();
+                            renderReport();
+                        });
+                    });
                 } catch (Exception e) {
                     Timber.e(e);
                 }

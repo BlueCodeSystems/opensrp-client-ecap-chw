@@ -1,4 +1,5 @@
 package com.bluecodeltd.ecap.chw.interactor;
+import com.bluecodeltd.ecap.chw.application.ChwApplication;
 
 import com.bluecodeltd.ecap.chw.contract.FindReportContract;
 import com.bluecodeltd.ecap.chw.dao.ReportDao;
@@ -17,7 +18,7 @@ public class FindReportInteractor implements FindReportContract.Interactor {
     protected AppExecutors appExecutors;
 
     public FindReportInteractor() {
-        appExecutors = new AppExecutors();
+        appExecutors = ChwApplication.getInstance().getAppExecutors();
     }
 
     @Override

@@ -853,3 +853,17 @@ priority: 1
 condition: "step1_agyw_status.contains('positive') && step1_agyw_baby_age > 2"
 actions:
   - "isRelevant = true"
+---
+name: step1_is_ca_pregnant
+description: is_ca_pregnant relevance
+priority: 1
+condition: "helper.formatDate(step1_adolescent_birthdate,'y') >= 10 && step1_gender.contains('female')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_is_ca_breastfeeding
+description: is_ca_breastfeeding relevance
+priority: 1
+condition: "helper.formatDate(step1_adolescent_birthdate,'y') >= 10 && step1_gender.contains('female')"
+actions:
+  - "isRelevant = true"

@@ -258,7 +258,7 @@ public class NutritionAssessmentInterventionAdapter extends RecyclerView.Adapter
             }
         };
         try {
-            new AppExecutors().diskIO().execute(runnable);
+            ChwApplication.getInstance().getAppExecutors().diskIO().execute(runnable);
             return true;
         } catch (Exception e) { Timber.e(e); return false; }
     }
