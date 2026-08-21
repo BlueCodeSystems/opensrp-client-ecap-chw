@@ -435,30 +435,28 @@ public class MalariaReportViewActivity extends AppCompatActivity {
 
             // Sub-Populations (6-13)
             String[] subPopSuffixes = {"calhiv", "hei", "wlhiv", "sv", "agyw", "hiv_pos", "siblings", "caregivers"};
-            int subTotalSum = 0;
             int subTotalSumF = 0;
+            int subTotalSumM = 0;
             for (String sub : subPopSuffixes) {
                 String keyF = prefix + "_f_" + sub;
                 String keyM = prefix + "_m_" + sub;
-                
+
                 int valF = parseVal(data.get(keyF));
                 int valM = parseVal(data.get(keyM));
-                
+
                 // Renders on BOTH columns in the layout
                 setText(getResources().getIdentifier("sa_" + keyF, "id", getPackageName()), String.valueOf(valF));
                 int viewIdM = getResources().getIdentifier("sa_" + keyM, "id", getPackageName());
                 if (viewIdM != 0) {
                     setText(viewIdM, String.valueOf(valM));
                 }
-                
-                // Strictly summing indicators for the Sub-Population Total (Row 14)
-                if (sub.equals("calhiv") || sub.equals("hei") || sub.equals("wlhiv") || sub.equals("sv")) {
-                    subTotalSum += (valF + valM);
-                    subTotalSumF += valF;
-                }
+
+                // Strictly summing all indicators for the Sub-Population Total (Row 14)
+                subTotalSumF += valF;
+                subTotalSumM += valM;
             }
             setText(getResources().getIdentifier("sa_" + prefix + "_sub_total_f", "id", getPackageName()), String.valueOf(subTotalSumF));
-            setText(getResources().getIdentifier("sa_" + prefix + "_sub_total", "id", getPackageName()), String.valueOf(subTotalSum));
+            setText(getResources().getIdentifier("sa_" + prefix + "_sub_total_m", "id", getPackageName()), String.valueOf(subTotalSumM));
         }
 
         // Section B (SB Q1-Q10)
