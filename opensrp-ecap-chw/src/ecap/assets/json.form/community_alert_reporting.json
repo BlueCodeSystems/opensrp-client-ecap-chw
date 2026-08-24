@@ -160,7 +160,7 @@
         "openmrs_entity_id": "caseworker_name",
         "type": "edit_text",
         "visibility": "gone",
-        "hint": "",
+        "hint": "caseworker Name",
         "read_only": "true",
         "edit_type": "name",
         "look_up": "true"
@@ -178,7 +178,7 @@
         "key": "phone_number",
         "type": "edit_text",
         "edit_type": "phone",
-        "label": "2. Phone number of the reporting CCW",
+        "label": "Phone number of the reporting CCW",
         "hint": "Phone number",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -196,7 +196,7 @@
       {
         "key": "date_reporting",
         "type": "date_picker",
-        "label": "3. Date of reporting the alert (day, month, year)",
+        "label": "Date of reporting the alert (day, month, year)",
         "hint": "Date reporting",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -205,7 +205,7 @@
       {
         "key": "super_mentor_name",
         "type": "edit_text",
-        "hint": "4. Name of the Super mentor (Supervisor)",
+        "hint": "Name of the Super mentor (Supervisor)",
         "label": "Name of Super mentor",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -214,7 +214,7 @@
       {
         "key": "super_mentor_contact",
         "type": "edit_text",
-        "hint": "5. Contact details of the Super Mentor (Supervisor)",
+        "hint": "Contact details of the Super Mentor (Supervisor)",
         "label": "Contact details",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -222,18 +222,342 @@
       },
       {
         "key": "illness_type",
-        "type": "edit_text",
-        "edit_text_style": "bordered",
-        "hint": "4. Type of Illness,Condition, Event,or Signal (please describe)",
-        "label": "Please describe",
+        "type": "native_radio",
+        "label": "Type of Illness, Condition, Event, or Signal",
+        "options": [
+          {
+            "key": "pcz",
+            "text": "PCZ Priority Diseases, conditions and events",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "pcz"
+          },
+          {
+            "key": "other",
+            "text": "Other Priority Diseases, conditions and events",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "other"
+          }
+        ],
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "illness_type"
       },
       {
+        "key": "pcz_priority_disease",
+        "type": "native_radio",
+        "label": "PCZ Priority Diseases, conditions and events",
+        "relevance": {
+          "step1:illness_type": {
+            "type": "string",
+            "ex": "equalTo(., \"pcz\")"
+          }
+        },
+        "options": [
+          {
+            "key": "afp_polio",
+            "text": "Acute Flaccid Paralysis (Polio)",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "afp_polio"
+          },
+          {
+            "key": "malaria",
+            "text": "Malaria",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "malaria"
+          },
+          {
+            "key": "tuberculosis",
+            "text": "Tuberculosis",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "tuberculosis"
+          },
+          {
+            "key": "malnutrition",
+            "text": "Malnutrition",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "malnutrition"
+          },
+          {
+            "key": "vhf_ebola",
+            "text": "Viral Hemorrhagic Fever (Ebola)",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "vhf_ebola"
+          },
+          {
+            "key": "measles",
+            "text": "Measles",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "measles"
+          },
+          {
+            "key": "cholera",
+            "text": "Cholera",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "cholera"
+          },
+          {
+            "key": "mpox",
+            "text": "Mpox",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "mpox"
+          }
+        ],
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pcz_priority_disease"
+      },
+      {
+        "key": "other_priority_disease",
+        "type": "native_radio",
+        "label": "Other Priority Diseases, conditions and events",
+        "relevance": {
+          "step1:illness_type": {
+            "type": "string",
+            "ex": "equalTo(., \"other\")"
+          }
+        },
+        "options": [
+          {
+            "key": "anthrax",
+            "text": "Anthrax",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "anthrax"
+          },
+          {
+            "key": "bacterial_meningitis",
+            "text": "Bacterial meningitis",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "bacterial_meningitis"
+          },
+          {
+            "key": "diarrhea_with_blood",
+            "text": "Diarrhea with blood",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "diarrhea_with_blood"
+          },
+          {
+            "key": "human_rabies",
+            "text": "Human rabies",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "human_rabies"
+          },
+          {
+            "key": "influenza_like_illness",
+            "text": "Influenza like illness",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "influenza_like_illness"
+          },
+          {
+            "key": "maternal_deaths",
+            "text": "Maternal deaths",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "maternal_deaths"
+          },
+          {
+            "key": "acute_viral_hepatitis",
+            "text": "Acute Viral Hepatitis",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "acute_viral_hepatitis"
+          },
+          {
+            "key": "adverse_events_following_immunisation",
+            "text": "Adverse Events following immunisation",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "adverse_events_following_immunisation"
+          },
+          {
+            "key": "bilharzia",
+            "text": "Bilharzia",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "bilharzia"
+          },
+          {
+            "key": "chicken_pox",
+            "text": "Chicken pox",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "chicken_pox"
+          },
+          {
+            "key": "covid_19",
+            "text": "COVID 19",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "covid_19"
+          },
+          {
+            "key": "diarrhoea_non_bloody",
+            "text": "Diarrhoea non bloody",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "diarrhoea_non_bloody"
+          },
+          {
+            "key": "dog_bite",
+            "text": "Dog bite",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "dog_bite"
+          },
+          {
+            "key": "dracunculiasis",
+            "text": "Dracunculiasis (Guinea worm Disease)",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "dracunculiasis"
+          },
+          {
+            "key": "food_poisoning",
+            "text": "Food poisoning",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "food_poisoning"
+          },
+          {
+            "key": "injuries_road_traffic_accidents",
+            "text": "Injuries (road traffic accidents)",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "injuries_road_traffic_accidents"
+          },
+          {
+            "key": "lymphatic_filariasis",
+            "text": "Lymphatic filariasis (elephantiasis)",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "lymphatic_filariasis"
+          },
+          {
+            "key": "leprosy",
+            "text": "Leprosy",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "leprosy"
+          },
+          {
+            "key": "mumps",
+            "text": "Mumps",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "mumps"
+          },
+          {
+            "key": "neonatal_death",
+            "text": "Neonatal death",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "neonatal_death"
+          },
+          {
+            "key": "neonatal_tetanus",
+            "text": "Neonatal tetanus",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "neonatal_tetanus"
+          },
+          {
+            "key": "scabies",
+            "text": "Scabies",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "scabies"
+          },
+          {
+            "key": "soil_transmitted_helminths",
+            "text": "Soil transmitted helminths",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "soil_transmitted_helminths"
+          },
+          {
+            "key": "trachoma",
+            "text": "Trachoma",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "trachoma"
+          },
+          {
+            "key": "trypanosomiasis",
+            "text": "Trypanosomiasis",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "trypanosomiasis"
+          },
+          {
+            "key": "road_traffic_fatalities",
+            "text": "Road trafic fatalities",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "road_traffic_fatalities"
+          },
+          {
+            "key": "acute_jaundice",
+            "text": "Acute jaundice",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "acute_jaundice"
+          }
+        ],
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "other_priority_disease"
+      },
+      {
+        "key": "suspected_cases_header",
+        "type": "label",
+        "text": "SUSPECTED CASES",
+        "label_text_style": "bold"
+      },
+      {
+        "key": "suspected_cases_note",
+        "type": "label",
+        "text": "Note: for Maternal deaths, only Female ≥ 15 Yrs applies (all other age/sex fields are hidden). For Neonatal death and Neonatal tetanus, only Male 0-4 Yrs applies (all other age/sex fields are hidden).",
+        "text_color": "#E67E22"
+      },
+      {
+        "key": "suspected_female",
+        "type": "edit_text",
+        "hint": "Number of suspected Female cases",
+        "label": "Females",
+        "edit_type": "number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "suspected_female"
+      },
+      {
+        "key": "suspected_male",
+        "type": "edit_text",
+        "hint": "Number of suspected Male cases",
+        "label": "Males",
+        "edit_type": "number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "suspected_male"
+      },
+      {
+        "key": "cbs_supervisor_part_of_response",
+        "type": "native_radio",
+        "label": "Was CBS Focal point supervisor part of the response?",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "yes"
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "no"
+          }
+        ],
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "cbs_supervisor_part_of_response"
+      },
+      {
+        "key": "cbs_supervisor_action_taken",
+        "type": "edit_text",
+        "edit_text_style": "bordered",
+        "label": "If response was performed, what action was taken?",
+        "hint": "Action taken",
+        "relevance": {
+          "step1:cbs_supervisor_part_of_response": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        },
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "cbs_supervisor_action_taken"
+      },
+      {
         "key": "event_date",
         "type": "date_picker",
-        "hint": "5. When did this illness,condition,or event happen?",
+        "hint": "When did this illness,condition,or event happen?",
         "label": "Date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -251,7 +575,7 @@
       {
         "key": "detection_date",
         "type": "date_picker",
-        "hint": "6. Date when this illness,condition,or event was detected",
+        "hint": "Date when this illness,condition,or event was detected",
         "label": "Date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
@@ -270,17 +594,19 @@
         "key": "location",
         "type": "edit_text",
         "edit_text_style": "bordered",
-        "hint": "7. Where did this illness,condition,or event happen?(Include Community, Ward/Zone, and District)",
+        "hint": "Where did this illness,condition,or event happen?(Include Community, Ward/Zone, and District)",
         "label": "Location details",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "location"
       },
       {
-        "key": "affected_header",
-        "type": "label",
-        "text": "8. How many people have been affected by this alert?",
-        "label_text_style": "bold"
+        "key": "gps",
+        "type": "gps",
+        "label": "GPS Coordinate",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "gps"
       },
       {
         "key": "affected_status",
@@ -452,7 +778,7 @@
       {
         "key": "deaths_header",
         "type": "label",
-        "text": "9. Has anyone died as a result of this event? If yes, specify the count",
+        "text": "Has anyone died as a result of this event? If yes, specify the count",
         "label_text_style": "bold"
       },
       {
@@ -625,7 +951,7 @@
       {
         "key": "animals_involved",
         "type": "native_radio",
-        "label": "10. Are there sick or dead animals involved in this report?",
+        "label": "Are there sick or dead animals involved in this report?",
         "options": [
           {
             "key": "yes",
@@ -647,7 +973,7 @@
       {
         "key": "event_ongoing",
         "type": "native_radio",
-        "label": "11. Is the illness, condition, or event ongoing as at the time of this report?",
+        "label": "Is the illness, condition, or event ongoing as at the time of this report?",
         "options": [
           {
             "key": "yes",
@@ -670,100 +996,11 @@
         "key": "action_taken",
         "type": "edit_text",
         "edit_text_style": "bordered",
-        "label": "12. What immediate action has been taken by the CCW or community?",
+        "label": "What immediate action has been taken by the CCW or community?",
         "hint": "Action taken",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "action_taken"
-      },
-      {
-        "key": "supervisor_header",
-        "type": "label",
-        "text": "To be completed by the Super Mentor (Supervisor)",
-        "label_text_style": "bold",
-        "text_color": "#E67E22"
-      },
-      {
-        "key": "meet_case_definition",
-        "type": "native_radio",
-        "label": "Did the event or condition meet the standardized case definition?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "yes"
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "no"
-          }
-        ],
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "meet_case_definition"
-      },
-      {
-        "key": "response_performed",
-        "type": "native_radio",
-        "label": "Was any official response or investigation performed by the supervisor?",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "yes"
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "openmrs_entity": "person_attribute",
-            "openmrs_entity_id": "no"
-          }
-        ],
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "response_performed"
-      },
-      {
-        "key": "supervisor_action_taken",
-        "type": "edit_text",
-        "edit_text_style": "bordered",
-        "label": "If Yes, please describe what specific action was taken by the supervisor",
-        "hint": "Action taken",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "supervisor_action_taken"
-      },
-      {
-        "key": "supervisor_name",
-        "type": "edit_text",
-        "label": "Name of the Super Mentor (Supervisor) conducting the review",
-        "hint": "Supervisor name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "supervisor_name"
-      },
-      {
-        "key": "date_reviewed",
-        "type": "date_picker",
-        "label": "Date when this report was reviewed by the supervisor",
-        "hint": "Date",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_reviewed"
-      },
-      {
-        "key": "signature",
-        "type": "edit_text",
-        "edit_type": "name",
-        "label": "Signature or Full Name of the Super Mentor (Supervisor)",
-        "hint": "Signature",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "signature"
       }
     ]
   }

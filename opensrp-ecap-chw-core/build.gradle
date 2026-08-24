@@ -236,7 +236,7 @@ dependencies {
     implementation 'io.realm:realm-android-library:10.19.0'
     implementation 'androidx.multidex:multidex:2.0.1'
     // Evernote Android Job (for BaseJob, Job, JobRequest, etc.)
-    implementation project(':android-job')
+    api project(':android-job')
     // MapLibre GL (v9 API-compatible)
     implementation 'org.maplibre.gl:android-sdk:9.6.0'
     implementation('com.github.BlueCodeSystems.kujaku:kujaku:v1.0.0') {
@@ -422,7 +422,7 @@ dependencies {
     // Because RxAndroid releases are few and far between, it is recommended you also
     // explicitly depend on RxJava's latest version for bug fixes and new features.
     api 'io.reactivex.rxjava2:rxjava:2.2.15'
-    api 'com.evernote:android-job:1.4.3'
+
     api 'org.greenrobot:eventbus:3.1.1'
     api("org.smartregister:android-p2p-sync:0.3.8-aplha4-SNAPSHOT") {
         transitive = true

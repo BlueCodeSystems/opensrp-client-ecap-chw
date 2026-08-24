@@ -53,7 +53,8 @@ public class MonthlyReportDao extends AbstractDao {
     }
 
     public static MonthlyReportModel getReport(String tableName, String baseEntityId) {
-        String sql = "SELECT * FROM " + tableName + buildMonthlyReportWhereClause(tableName, "base_entity_id = '" + sanitize(baseEntityId) + "'");
+        String sql = "SELECT * FROM " + tableName + buildMonthlyReportWhereClause(tableName, "base_entity_id = '" + sanitize(baseEntityId) + "'") +
+                " ORDER BY last_interacted_with DESC, rowid DESC LIMIT 1";
         List<MonthlyReportModel> values = AbstractDao.readData(sql, getModelMap());
         if (values == null || values.isEmpty()) {
             return null;

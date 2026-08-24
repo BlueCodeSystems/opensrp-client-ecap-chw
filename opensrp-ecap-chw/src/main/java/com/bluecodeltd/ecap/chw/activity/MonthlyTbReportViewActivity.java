@@ -9,7 +9,6 @@ import android.view.WindowInsetsController;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +55,12 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        int orientation = getIntent().getIntExtra("orientation", android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        if (orientation != android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) {
+            setRequestedOrientation(orientation);
+        }
+
         setContentView(R.layout.activity_monthly_tb_report_view);
 
         Toolbar toolbar = findViewById(R.id.report_view_toolbar);
@@ -74,6 +79,7 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
         loadReport();
         
         setupExpansionLogic();
+        setupNavigationLogic();
         setupEditButton();
     }
 
@@ -105,30 +111,48 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
     }
 
     private void setupExpansionLogic() {
-        setupSection(R.id.header_q1, R.id.content_q1, R.id.icon_q1);
-        setupSection(R.id.header_q2, R.id.content_q2, R.id.icon_q2);
-        setupSection(R.id.header_q3, R.id.content_q3, R.id.icon_q3);
-        setupSection(R.id.header_q4, R.id.content_q4, R.id.icon_q4);
-        setupSection(R.id.header_q5, R.id.content_q5, R.id.icon_q5);
-        setupSection(R.id.header_q6, R.id.content_q6, R.id.icon_q6);
-        setupSection(R.id.header_q7, R.id.content_q7, R.id.icon_q7);
-        setupSection(R.id.header_comments, R.id.content_comments, R.id.icon_comments);
+        int[] contents = {R.id.content_q1, R.id.content_q2, R.id.content_q3, R.id.content_q4, R.id.content_q5, R.id.content_q6, R.id.content_q7, R.id.content_comments};
+        int[] icons = {R.id.icon_q1, R.id.icon_q2, R.id.icon_q3, R.id.icon_q4, R.id.icon_q5, R.id.icon_q6, R.id.icon_q7, R.id.icon_comments};
+
+        for (int contentId : contents) {
+            View content = findViewById(contentId);
+            if (content != null) content.setVisibility(View.VISIBLE);
+        }
+
+        for (int iconId : icons) {
+            View icon = findViewById(iconId);
+            if (icon != null) icon.setVisibility(View.GONE);
+        }
     }
 
-    private void setupSection(int headerId, int contentId, int iconId) {
-        View header = findViewById(headerId);
-        View content = findViewById(contentId);
-        ImageView icon = findViewById(iconId);
+    private void setupNavigationLogic() {
+        androidx.core.widget.NestedScrollView scrollView = findViewById(R.id.report_scroll);
+        if (scrollView == null) return;
 
-        if (header != null && content != null && icon != null) {
-            header.setOnClickListener(v -> {
-                if (content.getVisibility() == View.VISIBLE) {
-                    content.setVisibility(View.GONE);
-                    icon.setImageResource(R.drawable.baseline_expand_more_24);
-                } else {
-                    content.setVisibility(View.VISIBLE);
-                    icon.setImageResource(R.drawable.baseline_expand_less_24);
+        for (int i = 1; i <= 7; i++) {
+            int tabId = getResources().getIdentifier("tab_q" + i, "id", getPackageName());
+            int secId = getResources().getIdentifier("sec_q" + i, "id", getPackageName());
+            setupJump(tabId, secId, scrollView);
+        }
+        setupJump(R.id.tab_comments, R.id.sec_comments, scrollView);
+    }
+
+    private void setupJump(int chipId, int targetId, androidx.core.widget.NestedScrollView scrollView) {
+        View chip = findViewById(chipId);
+        View target = findViewById(targetId);
+        if (chip != null && target != null) {
+            chip.setOnClickListener(v -> {
+                int top = 0;
+                View parent = target;
+                while (parent != null && parent != scrollView) {
+                    top += parent.getTop();
+                    if (parent.getParent() instanceof View) {
+                        parent = (View) parent.getParent();
+                    } else {
+                        break;
+                    }
                 }
+                scrollView.smoothScrollTo(0, top);
             });
         }
     }
@@ -168,7 +192,14 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
                         reportModel.setAdditionalField("caseworker_name", getCaseworkerName(prefs));
                     }
                     form.put("entity_id", reportModel.getBase_entity_id());
-                    org.smartregister.chw.core.utils.CoreJsonFormUtils.populateJsonForm(form, reportModel.toValueMap());
+
+                    Map<String, String> data = reportModel.toValueMap();
+                    Map<String, String> normalizedFields = new java.util.HashMap<>();
+                    for (Map.Entry<String, String> entry : data.entrySet()) {
+                        normalizedFields.put(entry.getKey().toLowerCase(), entry.getValue());
+                    }
+
+                    org.smartregister.chw.core.utils.CoreJsonFormUtils.populateJsonForm(form, normalizedFields);
 
                     Intent intent = new Intent(this, ReportFormActivity.class);
                     Form wizardForm = new Form();
@@ -225,15 +256,6 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
             JSONObject metadata = formJsonObject.getJSONObject(com.bluecodeltd.ecap.chw.util.Constants.METADATA);
             org.json.JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
-            for (int i = 0; i < fields.length(); i++) {
-                JSONObject field = fields.getJSONObject(i);
-                String entity = field.optString("openmrs_entity");
-                if (entity.isEmpty() || "person_attribute".equals(entity)) {
-                    field.put("openmrs_entity", "concept");
-                    field.put("openmrs_entity_id", field.optString("key"));
-                }
-            }
-
             FormTag formTag = getFormTag();
             String tableName = getReportTableName(encounterType);
             if (tableName == null) {
@@ -278,6 +300,9 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
                     JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
                     if (isEditMode && existingClientJsonObject != null) {
                         JSONObject mergedClientJsonObject = org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
+                        if (existingClientJsonObject.has("attributes") && newClientJsonObject.has("attributes")) {
+                            mergedClientJsonObject.put("attributes", org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject.getJSONObject("attributes"), newClientJsonObject.getJSONObject("attributes")));
+                        }
                         ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
                     } else {
                         ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
@@ -337,164 +362,56 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
 
         Map<String, String> data = reportModel.toValueMap();
 
-        // Q1
-        setText(R.id.q1_f_lt1, data.get("q1_f_lt_1"));
-        setText(R.id.q1_f_1_4, data.get("q1_f_1_4"));
-        setText(R.id.q1_f_5_9, data.get("q1_f_5_9"));
-        setText(R.id.q1_f_10_14, data.get("q1_f_10_14"));
-        setText(R.id.q1_f_15_19, data.get("q1_f_15_19"));
-        setText(R.id.q1_f_20_plus, data.get("q1_f_20_plus"));
-        setText(R.id.q1_f_pc_18, data.get("q1_f_pc_18_plus"));
-        setText(R.id.q1_f_total, data.get("q1_f_total"));
-        setText(R.id.q1_m_lt1, data.get("q1_m_lt_1"));
-        setText(R.id.q1_m_1_4, data.get("q1_m_1_4"));
-        setText(R.id.q1_m_5_9, data.get("q1_m_5_9"));
-        setText(R.id.q1_m_10_14, data.get("q1_m_10_14"));
-        setText(R.id.q1_m_15_19, data.get("q1_m_15_19"));
-        setText(R.id.q1_m_20_plus, data.get("q1_m_20_plus"));
-        setText(R.id.q1_m_pc_18, data.get("q1_m_pc_18_plus"));
-        setText(R.id.q1_m_total, data.get("q1_m_total"));
-        setText(R.id.q1_hei, data.get("q1_hei"));
-        setText(R.id.q1_calhiv, data.get("q1_calhiv"));
-        setText(R.id.q1_wlhiv, data.get("q1_wlhiv"));
-        setText(R.id.q1_pc_lhiv, data.get("q1_pc_lhiv"));
+        for (int q = 1; q <= 7; q++) {
+            int f_total = 0;
+            int m_total = 0;
+            int sub_total = 0;
 
-        // Q2
-        setText(R.id.q2_f_lt1, data.get("q2_f_lt_1"));
-        setText(R.id.q2_f_1_4, data.get("q2_f_1_4"));
-        setText(R.id.q2_f_5_9, data.get("q2_f_5_9"));
-        setText(R.id.q2_f_10_14, data.get("q2_f_10_14"));
-        setText(R.id.q2_f_15_19, data.get("q2_f_15_19"));
-        setText(R.id.q2_f_20_plus, data.get("q2_f_20_plus"));
-        setText(R.id.q2_f_pc_18, data.get("q2_f_pc_18_plus"));
-        setText(R.id.q2_f_total, data.get("q2_f_total"));
-        setText(R.id.q2_m_lt1, data.get("q2_m_lt_1"));
-        setText(R.id.q2_m_1_4, data.get("q2_m_1_4"));
-        setText(R.id.q2_m_5_9, data.get("q2_m_5_9"));
-        setText(R.id.q2_m_10_14, data.get("q2_m_10_14"));
-        setText(R.id.q2_m_15_19, data.get("q2_m_15_19"));
-        setText(R.id.q2_m_20_plus, data.get("q2_m_20_plus"));
-        setText(R.id.q2_m_pc_18, data.get("q2_m_pc_18_plus"));
-        setText(R.id.q2_m_total, data.get("q2_m_total"));
-        setText(R.id.q2_hei, data.get("q2_hei"));
-        setText(R.id.q2_calhiv, data.get("q2_calhiv"));
-        setText(R.id.q2_wlhiv, data.get("q2_wlhiv"));
-        setText(R.id.q2_pc_lhiv, data.get("q2_pc_lhiv"));
+            String[] f_suffixes = {"_f_lt_1", "_f_1_4", "_f_5_9", "_f_10_14", "_f_15_19", "_f_20_plus", "_f_pc_18_plus"};
+            String[] m_suffixes = {"_m_lt_1", "_m_1_4", "_m_5_9", "_m_10_14", "_m_15_19", "_m_20_plus", "_m_pc_18_plus"};
+            String[] sub_keys = {"_hei", "_calhiv", "_wlhiv", "_pc_lhiv", "_other"};
 
-        // Q3
-        setText(R.id.q3_f_lt1, data.get("q3_f_lt_1"));
-        setText(R.id.q3_f_1_4, data.get("q3_f_1_4"));
-        setText(R.id.q3_f_5_9, data.get("q3_f_5_9"));
-        setText(R.id.q3_f_10_14, data.get("q3_f_10_14"));
-        setText(R.id.q3_f_15_19, data.get("q3_f_15_19"));
-        setText(R.id.q3_f_20_plus, data.get("q3_f_20_plus"));
-        setText(R.id.q3_f_pc_18, data.get("q3_f_pc_18_plus"));
-        setText(R.id.q3_f_total, data.get("q3_f_total"));
-        setText(R.id.q3_m_lt1, data.get("q3_m_lt_1"));
-        setText(R.id.q3_m_1_4, data.get("q3_m_1_4"));
-        setText(R.id.q3_m_5_9, data.get("q3_m_5_9"));
-        setText(R.id.q3_m_10_14, data.get("q3_m_10_14"));
-        setText(R.id.q3_m_15_19, data.get("q3_m_15_19"));
-        setText(R.id.q3_m_20_plus, data.get("q3_m_20_plus"));
-        setText(R.id.q3_m_pc_18, data.get("q3_m_pc_18_plus"));
-        setText(R.id.q3_m_total, data.get("q3_m_total"));
-        setText(R.id.q3_hei, data.get("q3_hei"));
-        setText(R.id.q3_calhiv, data.get("q3_calhiv"));
-        setText(R.id.q3_wlhiv, data.get("q3_wlhiv"));
-        setText(R.id.q3_pc_lhiv, data.get("q3_pc_lhiv"));
+            for (String s : f_suffixes) {
+                String key = "q" + q + s;
+                String val = data.get(key);
+                f_total += parseSafeInt(val);
+                int resId = getResources().getIdentifier(key.replace("_f_lt_1", "_f_lt1").replace("_f_pc_18_plus", "_f_pc_18"), "id", getPackageName());
+                if (resId != 0) setText(resId, val);
+            }
 
-        // Q4
-        setText(R.id.q4_f_lt1, data.get("q4_f_lt_1"));
-        setText(R.id.q4_f_1_4, data.get("q4_f_1_4"));
-        setText(R.id.q4_f_5_9, data.get("q4_f_5_9"));
-        setText(R.id.q4_f_10_14, data.get("q4_f_10_14"));
-        setText(R.id.q4_f_15_19, data.get("q4_f_15_19"));
-        setText(R.id.q4_f_20_plus, data.get("q4_f_20_plus"));
-        setText(R.id.q4_f_pc_18, data.get("q4_f_pc_18_plus"));
-        setText(R.id.q4_f_total, data.get("q4_f_total"));
-        setText(R.id.q4_m_lt1, data.get("q4_m_lt_1"));
-        setText(R.id.q4_m_1_4, data.get("q4_m_1_4"));
-        setText(R.id.q4_m_5_9, data.get("q4_m_5_9"));
-        setText(R.id.q4_m_10_14, data.get("q4_m_10_14"));
-        setText(R.id.q4_m_15_19, data.get("q4_m_15_19"));
-        setText(R.id.q4_m_20_plus, data.get("q4_m_20_plus"));
-        setText(R.id.q4_m_pc_18, data.get("q4_m_pc_18_plus"));
-        setText(R.id.q4_m_total, data.get("q4_m_total"));
-        setText(R.id.q4_hei, data.get("q4_hei"));
-        setText(R.id.q4_calhiv, data.get("q4_calhiv"));
-        setText(R.id.q4_wlhiv, data.get("q4_wlhiv"));
-        setText(R.id.q4_pc_lhiv, data.get("q4_pc_lhiv"));
+            for (String s : m_suffixes) {
+                String key = "q" + q + s;
+                String val = data.get(key);
+                m_total += parseSafeInt(val);
+                int resId = getResources().getIdentifier(key.replace("_m_lt_1", "_m_lt1").replace("_m_pc_18_plus", "_m_pc_18"), "id", getPackageName());
+                if (resId != 0) setText(resId, val);
+            }
 
-        // Q5
-        setText(R.id.q5_f_lt1, data.get("q5_f_lt_1"));
-        setText(R.id.q5_f_1_4, data.get("q5_f_1_4"));
-        setText(R.id.q5_f_5_9, data.get("q5_f_5_9"));
-        setText(R.id.q5_f_10_14, data.get("q5_f_10_14"));
-        setText(R.id.q5_f_15_19, data.get("q5_f_15_19"));
-        setText(R.id.q5_f_20_plus, data.get("q5_f_20_plus"));
-        setText(R.id.q5_f_pc_18, data.get("q5_f_pc_18_plus"));
-        setText(R.id.q5_f_total, data.get("q5_f_total"));
-        setText(R.id.q5_m_lt1, data.get("q5_m_lt_1"));
-        setText(R.id.q5_m_1_4, data.get("q5_m_1_4"));
-        setText(R.id.q5_m_5_9, data.get("q5_m_5_9"));
-        setText(R.id.q5_m_10_14, data.get("q5_m_10_14"));
-        setText(R.id.q5_m_15_19, data.get("q5_m_15_19"));
-        setText(R.id.q5_m_20_plus, data.get("q5_m_20_plus"));
-        setText(R.id.q5_m_pc_18, data.get("q5_m_pc_18_plus"));
-        setText(R.id.q5_m_total, data.get("q5_m_total"));
-        setText(R.id.q5_hei, data.get("q5_hei"));
-        setText(R.id.q5_calhiv, data.get("q5_calhiv"));
-        setText(R.id.q5_wlhiv, data.get("q5_wlhiv"));
-        setText(R.id.q5_pc_lhiv, data.get("q5_pc_lhiv"));
+            for (String s : sub_keys) {
+                String key = "q" + q + s;
+                String val = data.get(key);
+                sub_total += parseSafeInt(val);
+                int resId = getResources().getIdentifier(key, "id", getPackageName());
+                if (resId != 0) setText(resId, val);
+            }
 
-        // Q6
-        setText(R.id.q6_f_lt1, data.get("q6_f_lt_1"));
-        setText(R.id.q6_f_1_4, data.get("q6_f_1_4"));
-        setText(R.id.q6_f_5_9, data.get("q6_f_5_9"));
-        setText(R.id.q6_f_10_14, data.get("q6_f_10_14"));
-        setText(R.id.q6_f_15_19, data.get("q6_f_15_19"));
-        setText(R.id.q6_f_20_plus, data.get("q6_f_20_plus"));
-        setText(R.id.q6_f_pc_18, data.get("q6_f_pc_18_plus"));
-        setText(R.id.q6_f_total, data.get("q6_f_total"));
-        setText(R.id.q6_m_lt1, data.get("q6_m_lt_1"));
-        setText(R.id.q6_m_1_4, data.get("q6_m_1_4"));
-        setText(R.id.q6_m_5_9, data.get("q6_m_5_9"));
-        setText(R.id.q6_m_10_14, data.get("q6_m_10_14"));
-        setText(R.id.q6_m_15_19, data.get("q6_m_15_19"));
-        setText(R.id.q6_m_20_plus, data.get("q6_m_20_plus"));
-        setText(R.id.q6_m_pc_18, data.get("q6_m_pc_18_plus"));
-        setText(R.id.q6_m_total, data.get("q6_m_total"));
-        setText(R.id.q6_hei, data.get("q6_hei"));
-        setText(R.id.q6_calhiv, data.get("q6_calhiv"));
-        setText(R.id.q6_wlhiv, data.get("q6_wlhiv"));
-        setText(R.id.q6_pc_lhiv, data.get("q6_pc_lhiv"));
-
-        // Q7
-        setText(R.id.q7_f_lt1, data.get("q7_f_lt_1"));
-        setText(R.id.q7_f_1_4, data.get("q7_f_1_4"));
-        setText(R.id.q7_f_5_9, data.get("q7_f_5_9"));
-        setText(R.id.q7_f_10_14, data.get("q7_f_10_14"));
-        setText(R.id.q7_f_15_19, data.get("q7_f_15_19"));
-        setText(R.id.q7_f_20_plus, data.get("q7_f_20_plus"));
-        setText(R.id.q7_f_pc_18, data.get("q7_f_pc_18_plus"));
-        setText(R.id.q7_f_total, data.get("q7_f_total"));
-        setText(R.id.q7_m_lt1, data.get("q7_m_lt_1"));
-        setText(R.id.q7_m_1_4, data.get("q7_m_1_4"));
-        setText(R.id.q7_m_5_9, data.get("q7_m_5_9"));
-        setText(R.id.q7_m_10_14, data.get("q7_m_10_14"));
-        setText(R.id.q7_m_15_19, data.get("q7_m_15_19"));
-        setText(R.id.q7_m_20_plus, data.get("q7_m_20_plus"));
-        setText(R.id.q7_m_pc_18, data.get("q7_m_pc_18_plus"));
-        setText(R.id.q7_m_total, data.get("q7_m_total"));
-        setText(R.id.q7_hei, data.get("q7_hei"));
-        setText(R.id.q7_calhiv, data.get("q7_calhiv"));
-        setText(R.id.q7_wlhiv, data.get("q7_wlhiv"));
-        setText(R.id.q7_pc_lhiv, data.get("q7_pc_lhiv"));
+            setText(getResources().getIdentifier("q" + q + "_f_total", "id", getPackageName()), String.valueOf(f_total));
+            setText(getResources().getIdentifier("q" + q + "_m_total", "id", getPackageName()), String.valueOf(m_total));
+            setText(getResources().getIdentifier("q" + q + "_sub_total", "id", getPackageName()), String.valueOf(sub_total));
+        }
 
         TextView commentsView = findViewById(R.id.txt_comments);
         if (commentsView != null) {
             String comment = data.get("comment");
             commentsView.setText(comment != null && !comment.isEmpty() ? comment : "No comments");
+        }
+    }
+
+    private int parseSafeInt(String val) {
+        try {
+            return (val != null && !val.isEmpty()) ? Integer.parseInt(val) : 0;
+        } catch (NumberFormatException e) {
+            return 0;
         }
     }
 

@@ -9,6 +9,7 @@ import com.bluecodeltd.ecap.chw.util.ChwDBConstants;
 import com.bluecodeltd.ecap.chw.util.RepositoryUtils;
 import com.bluecodeltd.ecap.chw.util.RepositoryUtilsFlv;
 
+import net.sqlcipher.Cursor;
 import net.sqlcipher.database.SQLiteDatabase;
 
 import org.smartregister.chw.anc.repository.VisitDetailsRepository;
@@ -119,6 +120,15 @@ public class ChwRepositoryFlv {
                     break;
                 case 29:
                     upgradeToVersion29(db);
+                    break;
+                case 30:
+                    upgradeToVersion30(db);
+                    break;
+                case 31:
+                    upgradeToVersion31(db);
+                    break;
+                case 32:
+                    upgradeToVersion32(db);
                     break;
                 default:
                     break;
@@ -1215,7 +1225,21 @@ public class ChwRepositoryFlv {
                     "supervisor_action_taken TEXT, " +
                     "supervisor_name TEXT, " +
                     "date_reviewed TEXT, " +
-                    "signature TEXT" +
+                    "signature TEXT, " +
+                    "pcz_priority_disease TEXT, " +
+                    "other_priority_disease TEXT, " +
+                    "case_f_0_4 TEXT, " +
+                    "case_f_5_14 TEXT, " +
+                    "case_f_15_plus TEXT, " +
+                    "case_m_0_4 TEXT, " +
+                    "case_m_5_14 TEXT, " +
+                    "case_m_15_plus TEXT, " +
+                    "case_total TEXT, " +
+                    "cbs_supervisor_part_of_response TEXT, " +
+                    "cbs_supervisor_action_taken TEXT, " +
+                    "gps TEXT, " +
+                    "suspected_female TEXT, " +
+                    "suspected_male TEXT" +
                     ")";
             db.execSQL(sqlCreateTableCommunityAlert);
         } catch (Exception e) {
@@ -1223,4 +1247,73 @@ public class ChwRepositoryFlv {
         }
     }
 
+    private static void upgradeToVersion30(SQLiteDatabase db) {
+        try {
+            String[] newColumns = {
+                    "pcz_priority_disease",
+                    "other_priority_disease",
+                    "case_f_0_4",
+                    "case_f_5_14",
+                    "case_f_15_plus",
+                    "case_m_0_4",
+                    "case_m_5_14",
+                    "case_m_15_plus",
+                    "case_total",
+                    "cbs_supervisor_part_of_response",
+                    "cbs_supervisor_action_taken"
+            };
+
+            for (String column : newColumns) {
+                if (!hasColumn(db, "ec_community_alert", column)) {
+                    db.execSQL("ALTER TABLE ec_community_alert ADD COLUMN " + column + " TEXT;");
+                }
+            }
+        } catch (Exception e) {
+            Timber.e(e, "upgradeToVersion30");
+        }
+    }
+
+    private static void upgradeToVersion31(SQLiteDatabase db) {
+        try {
+            if (!hasColumn(db, "ec_community_alert", "gps")) {
+                db.execSQL("ALTER TABLE ec_community_alert ADD COLUMN gps TEXT;");
+            }
+        } catch (Exception e) {
+            Timber.e(e, "upgradeToVersion31");
+        }
+    }
+
+    private static void upgradeToVersion32(SQLiteDatabase db) {
+        try {
+            if (!hasColumn(db, "ec_community_alert", "suspected_female")) {
+                db.execSQL("ALTER TABLE ec_community_alert ADD COLUMN suspected_female TEXT;");
+            }
+            if (!hasColumn(db, "ec_community_alert", "suspected_male")) {
+                db.execSQL("ALTER TABLE ec_community_alert ADD COLUMN suspected_male TEXT;");
+            }
+        } catch (Exception e) {
+            Timber.e(e, "upgradeToVersion32");
+        }
+    }
+
+    private static boolean hasColumn(SQLiteDatabase db, String tableName, String columnName) {
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery("PRAGMA table_info(" + tableName + ")", null);
+            if (cursor != null) {
+                int nameColumnIndex = cursor.getColumnIndex("name");
+                while (cursor.moveToNext()) {
+                    String name = cursor.getString(nameColumnIndex);
+                    if (columnName.equalsIgnoreCase(name)) {
+                        return true;
+                    }
+                }
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return false;
+    }
 }

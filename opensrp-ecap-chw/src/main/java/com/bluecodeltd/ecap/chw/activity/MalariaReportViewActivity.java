@@ -56,6 +56,12 @@ public class MalariaReportViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        int orientation = getIntent().getIntExtra("orientation", android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        if (orientation != android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) {
+            setRequestedOrientation(orientation);
+        }
+
         setContentView(R.layout.activity_malaria_report_view);
 
         Toolbar toolbar = findViewById(R.id.report_view_toolbar);
@@ -74,7 +80,92 @@ public class MalariaReportViewActivity extends AppCompatActivity {
         loadReport();
 
         setupExpansionLogic();
+        setupActionButtons();
+        setupNavigationLogic();
         setupEditButton();
+    }
+
+    private void setupActionButtons() {
+        findViewById(R.id.btn_expand_all).setOnClickListener(v -> toggleAllSections(true));
+        findViewById(R.id.btn_collapse_all).setOnClickListener(v -> toggleAllSections(false));
+    }
+
+    private void toggleAllSections(boolean expand) {
+        int visibility = expand ? View.VISIBLE : View.GONE;
+        int iconRes = expand ? R.drawable.baseline_expand_less_24 : R.drawable.baseline_expand_more_24;
+
+        int[] sectionContents = {
+                R.id.content_q1, R.id.content_q2, R.id.content_q3, R.id.content_q4, R.id.content_q5,
+                R.id.content_q6, R.id.content_q7, R.id.content_q8, R.id.content_q9, R.id.content_q10,
+                R.id.content_sb_q1, R.id.content_sb_q2, R.id.content_sb_q3, R.id.content_sb_q4, R.id.content_sb_q5,
+                R.id.content_sb_q6, R.id.content_sb_q7, R.id.content_sb_q8, R.id.content_sb_q9, R.id.content_sb_q10
+        };
+
+        int[] sectionIcons = {
+                R.id.icon_q1, R.id.icon_q2, R.id.icon_q3, R.id.icon_q4, R.id.icon_q5,
+                R.id.icon_q6, R.id.icon_q7, R.id.icon_q8, R.id.icon_q9, R.id.icon_q10,
+                R.id.icon_sb_q1, R.id.icon_sb_q2, R.id.icon_sb_q3, R.id.icon_sb_q4, R.id.icon_sb_q5,
+                R.id.icon_sb_q6, R.id.icon_sb_q7, R.id.icon_sb_q8, R.id.icon_sb_q9, R.id.icon_sb_q10
+        };
+
+        for (int i = 0; i < sectionContents.length; i++) {
+            View content = findViewById(sectionContents[i]);
+            ImageView icon = findViewById(sectionIcons[i]);
+            if (content != null) content.setVisibility(visibility);
+            if (icon != null) icon.setImageResource(iconRes);
+        }
+    }
+
+    private void setupNavigationLogic() {
+        androidx.core.widget.NestedScrollView scrollView = findViewById(R.id.report_scroll);
+
+        // Tabs
+        setupTab(R.id.tab_a, R.id.sec_a, scrollView);
+        setupTab(R.id.tab_b, R.id.sec_b, scrollView);
+        setupTab(R.id.tab_c, R.id.sec_c, scrollView);
+        setupTab(R.id.tab_comments, R.id.sec_comments, scrollView);
+
+        // Chips Section A
+        for (int i = 1; i <= 10; i++) {
+            int chipId = getResources().getIdentifier("chip_a_q" + i, "id", getPackageName());
+            int panelId = getResources().getIdentifier("panel_a_q" + i, "id", getPackageName());
+            setupJump(chipId, panelId, scrollView);
+        }
+
+        // Chips Section B
+        for (int i = 1; i <= 10; i++) {
+            int chipId = getResources().getIdentifier("chip_b_q" + i, "id", getPackageName());
+            int panelId = getResources().getIdentifier("panel_b_q" + i, "id", getPackageName());
+            setupJump(chipId, panelId, scrollView);
+        }
+    }
+
+    private void setupTab(int tabId, int targetId, androidx.core.widget.NestedScrollView scrollView) {
+        View tab = findViewById(tabId);
+        View target = findViewById(targetId);
+        if (tab != null && target != null) {
+            tab.setOnClickListener(v -> scrollView.smoothScrollTo(0, target.getTop()));
+        }
+    }
+
+    private void setupJump(int chipId, int targetId, androidx.core.widget.NestedScrollView scrollView) {
+        View chip = findViewById(chipId);
+        View target = findViewById(targetId);
+        if (chip != null && target != null) {
+            chip.setOnClickListener(v -> {
+                int top = 0;
+                View parent = target;
+                while (parent != null && parent != scrollView) {
+                    top += parent.getTop();
+                    if (parent.getParent() instanceof View) {
+                        parent = (View) parent.getParent();
+                    } else {
+                        break;
+                    }
+                }
+                scrollView.smoothScrollTo(0, top);
+            });
+        }
     }
 
     private void applyLightStatusBar() {
@@ -129,9 +220,16 @@ public class MalariaReportViewActivity extends AppCompatActivity {
         setupSection(R.id.header_sb_q9, R.id.content_sb_q9, R.id.icon_sb_q9);
         setupSection(R.id.header_sb_q10, R.id.content_sb_q10, R.id.icon_sb_q10);
 
-        // Section C & Comments
-        setupSection(R.id.header_sc, R.id.content_sc, R.id.icon_sc);
-        setupSection(R.id.header_comments, R.id.content_comments, R.id.icon_comments);
+        // Section C & Comments - Always expanded
+        View contentSc = findViewById(R.id.content_sc);
+        if (contentSc != null) contentSc.setVisibility(View.VISIBLE);
+        View iconSc = findViewById(R.id.icon_sc);
+        if (iconSc != null) iconSc.setVisibility(View.GONE);
+
+        View contentComments = findViewById(R.id.content_comments);
+        if (contentComments != null) contentComments.setVisibility(View.VISIBLE);
+        View iconComments = findViewById(R.id.icon_comments);
+        if (iconComments != null) iconComments.setVisibility(View.GONE);
     }
 
     private void setupSection(int headerId, int contentId, int iconId) {
@@ -187,7 +285,22 @@ public class MalariaReportViewActivity extends AppCompatActivity {
                         reportModel.setAdditionalField("caseworker_name", getCaseworkerName(prefs));
                     }
                     form.put("entity_id", reportModel.getBase_entity_id());
-                    org.smartregister.chw.core.utils.CoreJsonFormUtils.populateJsonForm(form, reportModel.toValueMap());
+
+                    Map<String, String> data = reportModel.toValueMap();
+                    Map<String, String> normalizedFields = new java.util.HashMap<>();
+                    for (Map.Entry<String, String> entry : data.entrySet()) {
+                        String key = entry.getKey().toLowerCase();
+                        String value = entry.getValue();
+                        if (key.startsWith("sa_q")) {
+                            normalizedFields.put(key.substring(3), value);
+                        } else if (key.startsWith("sc_q") && !key.endsWith("_value")) {
+                            normalizedFields.put(key + "_value", value);
+                        } else {
+                            normalizedFields.put(key, value);
+                        }
+                    }
+
+                    org.smartregister.chw.core.utils.CoreJsonFormUtils.populateJsonForm(form, normalizedFields);
 
                     Intent intent = new Intent(this, ReportFormActivity.class);
                     Form wizardForm = new Form();
@@ -244,15 +357,6 @@ public class MalariaReportViewActivity extends AppCompatActivity {
             JSONObject metadata = formJsonObject.getJSONObject(com.bluecodeltd.ecap.chw.util.Constants.METADATA);
             org.json.JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
-            for (int i = 0; i < fields.length(); i++) {
-                JSONObject field = fields.getJSONObject(i);
-                String entity = field.optString("openmrs_entity");
-                if (entity.isEmpty() || "person_attribute".equals(entity)) {
-                    field.put("openmrs_entity", "concept");
-                    field.put("openmrs_entity_id", field.optString("key"));
-                }
-            }
-
             FormTag formTag = getFormTag();
             String tableName = getReportTableName(encounterType);
             if (tableName == null) {
@@ -297,6 +401,9 @@ public class MalariaReportViewActivity extends AppCompatActivity {
                     JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
                     if (isEditMode && existingClientJsonObject != null) {
                         JSONObject mergedClientJsonObject = org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
+                        if (existingClientJsonObject.has("attributes") && newClientJsonObject.has("attributes")) {
+                            mergedClientJsonObject.put("attributes", org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject.getJSONObject("attributes"), newClientJsonObject.getJSONObject("attributes")));
+                        }
                         ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
                     } else {
                         ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
@@ -356,69 +463,92 @@ public class MalariaReportViewActivity extends AppCompatActivity {
 
         Map<String, String> data = reportModel.toValueMap();
 
-        // Section A - Q1
-        setText(R.id.q1_f_0_4, data.get("q1_f_0_4"));
-        setText(R.id.q1_m_0_4, data.get("q1_m_0_4"));
-        setText(R.id.q1_f_5_15, data.get("q1_f_5_15"));
-        setText(R.id.q1_m_5_15, data.get("q1_m_5_15"));
-        setText(R.id.q1_f_16_19, data.get("q1_f_16_19"));
-        setText(R.id.q1_m_16_19, data.get("q1_m_16_19"));
-        setText(R.id.q1_f_20_plus, data.get("q1_f_20_plus"));
-        setText(R.id.q1_m_20_plus, data.get("q1_m_20_plus"));
-        setText(R.id.q1_f_calhiv, data.get("q1_f_calhiv"));
-        setText(R.id.q1_m_calhiv, data.get("q1_m_calhiv"));
-        setText(R.id.q1_f_hei, data.get("q1_f_hei"));
-        setText(R.id.q1_m_hei, data.get("q1_m_hei"));
-        setText(R.id.q1_f_wlhiv, data.get("q1_f_wlhiv"));
-        setText(R.id.q1_m_wlhiv, data.get("q1_m_wlhiv"));
-        setText(R.id.q1_f_sv, data.get("q1_f_sv"));
-        setText(R.id.q1_m_sv, data.get("q1_m_sv"));
-        setText(R.id.q1_f_agyw, data.get("q1_f_agyw"));
-        setText(R.id.q1_f_hiv_pos, data.get("q1_f_hiv_pos"));
-        setText(R.id.q1_f_siblings, data.get("q1_f_siblings"));
-        setText(R.id.q1_m_siblings, data.get("q1_m_siblings"));
-        setText(R.id.q1_f_caregivers, data.get("q1_f_caregivers"));
-        setText(R.id.q1_m_caregivers, data.get("q1_m_caregivers"));
+        // Section A
+        int[] questions = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        String[] suffixes = {"_f_0_4", "_m_0_4", "_f_5_15", "_m_5_15", "_f_16_19", "_m_16_19", "_f_20_plus", "_m_20_plus", "_f_calhiv", "_m_calhiv", "_f_hei", "_m_hei", "_f_wlhiv", "_m_wlhiv", "_f_sv", "_m_sv", "_f_agyw", "_f_hiv_pos", "_f_siblings", "_m_siblings", "_f_caregivers", "_m_caregivers"};
 
-        // Q2
-        setText(R.id.q2_f_0_4, data.get("q2_f_0_4"));
-        setText(R.id.q2_m_0_4, data.get("q2_m_0_4"));
-        setText(R.id.q2_f_5_15, data.get("q2_f_5_15"));
-        setText(R.id.q2_m_5_15, data.get("q2_m_5_15"));
-        setText(R.id.q2_f_16_19, data.get("q2_f_16_19"));
-        setText(R.id.q2_m_16_19, data.get("q2_m_16_19"));
-        setText(R.id.q2_f_20_plus, data.get("q2_f_20_plus"));
-        setText(R.id.q2_m_20_plus, data.get("q2_m_20_plus"));
-        setText(R.id.q2_f_calhiv, data.get("q2_f_calhiv"));
-        setText(R.id.q2_m_calhiv, data.get("q2_m_calhiv"));
-        setText(R.id.q2_f_hei, data.get("q2_f_hei"));
-        setText(R.id.q2_m_hei, data.get("q2_m_hei"));
-        setText(R.id.q2_f_wlhiv, data.get("q2_f_wlhiv"));
-        setText(R.id.q2_m_wlhiv, data.get("q2_m_wlhiv"));
-        setText(R.id.q2_f_sv, data.get("q2_f_sv"));
-        setText(R.id.q2_m_sv, data.get("q2_m_sv"));
-        setText(R.id.q2_f_agyw, data.get("q2_f_agyw"));
-        setText(R.id.q2_f_hiv_pos, data.get("q2_f_hiv_pos"));
-        setText(R.id.q2_f_siblings, data.get("q2_f_siblings"));
-        setText(R.id.q2_m_siblings, data.get("q2_m_siblings"));
-        setText(R.id.q2_f_caregivers, data.get("q2_f_caregivers"));
-        setText(R.id.q2_m_caregivers, data.get("q2_m_caregivers"));
+        for (int q : questions) {
+            int totalF = 0;
+            int totalM = 0;
+            int subTotalF = 0;
+            int subTotalM = 0;
 
-        // ... Populating other questions omitted for brevity in this response, 
-        // but follow the same pattern as above for Q3-Q10, SB Q1-Q10, and Section C.
+            for (String s : suffixes) {
+                String key = "q" + q + s;
+                int resId = getResources().getIdentifier(key, "id", getPackageName());
+                if (resId != 0) {
+                    String value = data.get(key);
+                    if (value == null) value = data.get("sa_" + key);
+                    setText(resId, value);
 
-        setText(R.id.sc_q1, data.get("sc_q1_value"));
-        setText(R.id.sc_q2, data.get("sc_q2_value"));
-        setText(R.id.sc_q3, data.get("sc_q3_value"));
-        setText(R.id.sc_q4, data.get("sc_q4_value"));
-        setText(R.id.sc_q5, data.get("sc_q5_value"));
-        setText(R.id.sc_q6, data.get("sc_q6_value"));
-        setText(R.id.sc_q7, data.get("sc_q7_value"));
+                    int val = parseSafeInt(value);
+                    if (s.contains("_f_0_4") || s.contains("_f_5_15") || s.contains("_f_16_19") || s.contains("_f_20_plus")) {
+                        totalF += val;
+                    } else if (s.contains("_m_0_4") || s.contains("_m_5_15") || s.contains("_m_16_19") || s.contains("_m_20_plus")) {
+                        totalM += val;
+                    } else if (s.contains("_f_")) {
+                        subTotalF += val;
+                    } else if (s.contains("_m_")) {
+                        subTotalM += val;
+                    }
+                }
+            }
+            setText(getResources().getIdentifier("q" + q + "_total_f", "id", getPackageName()), String.valueOf(totalF));
+            setText(getResources().getIdentifier("q" + q + "_total_m", "id", getPackageName()), String.valueOf(totalM));
+            setText(getResources().getIdentifier("q" + q + "_sub_total_f", "id", getPackageName()), String.valueOf(subTotalF));
+            setText(getResources().getIdentifier("q" + q + "_sub_total_m", "id", getPackageName()), String.valueOf(subTotalM));
+        }
+
+        // Section B
+        for (int q : questions) {
+            String[] sbSuffixes = {"_f_0_4", "_m_0_4", "_f_5_15", "_m_5_15", "_f_16_19", "_m_16_19", "_f_20_plus", "_m_20_plus"};
+            int totalF = 0;
+            int totalM = 0;
+
+            for (String s : sbSuffixes) {
+                String key = "sb_q" + q + s;
+                int resId = getResources().getIdentifier(key, "id", getPackageName());
+                if (resId != 0) {
+                    String value = data.get(key);
+                    setText(resId, value);
+
+                    int val = parseSafeInt(value);
+                    if (s.contains("_f_")) totalF += val;
+                    if (s.contains("_m_")) totalM += val;
+                }
+            }
+            setText(getResources().getIdentifier("sb_q" + q + "_total_f", "id", getPackageName()), String.valueOf(totalF));
+            setText(getResources().getIdentifier("sb_q" + q + "_total_m", "id", getPackageName()), String.valueOf(totalM));
+        }
+
+        int scTotal = 0;
+        for (int i = 1; i <= 7; i++) {
+            String key = "sc_q" + i;
+            String valStr = data.get(key);
+            if (valStr == null) valStr = data.get(key + "_value");
+
+            int resId = getResources().getIdentifier(key, "id", getPackageName());
+            if (resId != 0) {
+                setText(resId, valStr);
+            }
+
+            scTotal += parseSafeInt(valStr);
+        }
+        setText(R.id.sc_total, String.valueOf(scTotal));
 
         TextView commentsView = findViewById(R.id.txt_comments);
         if (commentsView != null) {
             String comment = data.get("comments");
+            if (comment == null) comment = data.get("comment");
             commentsView.setText(comment != null && !comment.isEmpty() ? comment : "No comments");
+        }
+    }
+
+    private int parseSafeInt(String val) {
+        try {
+            return (val != null && !val.isEmpty()) ? Integer.parseInt(val) : 0;
+        } catch (NumberFormatException e) {
+            return 0;
         }
     }
 
