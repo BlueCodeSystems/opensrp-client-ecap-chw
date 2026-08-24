@@ -233,6 +233,16 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
 
         initializeLibraries();
 
+        // The session's password is only ever held in memory (org.smartregister.util.Session),
+        // never persisted or restored. If Android kills this process while the user was mid-session
+        // (low memory, or "Don't keep activities") and later recreates whatever activity was on
+        // screen, SecuredActivity.onCreate()/onResume() sees a null password, treats the session as
+        // expired, and force-logs the user out -- even though nothing about their actual login is
+        // invalid. Silently restore the session here, before any Activity gets a chance to run that
+        // check, using the same encrypted local-login credentials the app already uses for offline
+        // login.
+        restoreSessionAfterProcessRestart();
+
         // init json helper
         this.jsonSpecHelper = new JsonSpecHelper(this);
 
@@ -389,6 +399,30 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
             Class<?> gc = Class.forName("org.koin.core.context.GlobalContextKt");
             gc.getMethod("stopKoin").invoke(null);
         } catch (Throwable ignored) { }
+    }
+
+    /**
+     * If there's a registered user but no live session (the in-memory password was lost to a
+     * process restart, not an actual logout), silently re-derive it from the encrypted local
+     * credentials -- the same mechanism {@link org.smartregister.service.UserService#localLoginWith}
+     * uses for offline login -- so the next SecuredActivity doesn't force a full logout.
+     */
+    private void restoreSessionAfterProcessRestart() {
+        try {
+            String registeredUser = context.allSharedPreferences().fetchRegisteredANM();
+            if (registeredUser == null || registeredUser.trim().isEmpty()) {
+                return;
+            }
+            if (!context.IsUserLoggedOut()) {
+                return;
+            }
+            boolean restored = context.userService().localLoginWith(registeredUser);
+            if (!restored) {
+                Timber.w("Could not silently restore session for %s after process restart", registeredUser);
+            }
+        } catch (Throwable t) {
+            Timber.e(t, "Failed attempting to restore session after process restart");
+        }
     }
 
     @Override
