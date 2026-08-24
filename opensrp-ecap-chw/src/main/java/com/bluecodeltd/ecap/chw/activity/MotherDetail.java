@@ -391,17 +391,24 @@ public class MotherDetail extends AppCompatActivity {
     }
 
     private void updateChildTabTitle() {
-        ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.child_tab_title, null);
-        TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
-        visitTabTitle.setText("CHILDREN");
-        childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
+        try {
+            ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.child_tab_title, null);
+            TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
+            visitTabTitle.setText("CHILDREN");
+            childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
 
+            String children = "0";
+            try {
+                if (commonPersonObjectClient != null && commonPersonObjectClient.getColumnmaps() != null) {
+                    children = IndexPersonDao.countMotherChildren(commonPersonObjectClient.getColumnmaps().get("household_id"));
+                }
+            } catch (Exception ignored) { }
+            childTabCount.setText(children);
 
-        String children = IndexPersonDao.countMotherChildren(commonPersonObjectClient.getColumnmaps().get("household_id"));
-
-        childTabCount.setText(children);
-
-        mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
+            if (mTabLayout.getTabCount() > 1 && mTabLayout.getTabAt(1) != null) {
+                mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
+            }
+        } catch (Exception ignored) { }
     }
 
     private void updateAncTabTitle() {
