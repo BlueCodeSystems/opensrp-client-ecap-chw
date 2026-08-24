@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterContract;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.fragment.HivTestingServiceRegisterFragment;
@@ -35,6 +36,7 @@ import org.smartregister.AllConstants;
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.client.utils.domain.Form;
+import org.smartregister.family.util.AppExecutors;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.helper.BottomNavigationHelper;
 import org.smartregister.opd.pojo.RegisterParams;
@@ -108,9 +110,23 @@ public class HivTestingServiceActivity extends BaseRegisterActivity implements I
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(HivTestingServiceActivity.this);
         String phone = sp.getString("phone", "anonymous");
 
-        notificationsList.addAll(VcaVisitationDao.getVisitsByCaseWorkerPhone(phone));
-        mCartItemCount = notificationsList.size();
+        loadNotifications(phone);
 
+    }
+
+    private void loadNotifications(String phone) {
+        AppExecutors appExecutors = ChwApplication.getInstance().getAppExecutors();
+        appExecutors.diskIO().execute(() -> {
+            List<VcaVisitationModel> visits = VcaVisitationDao.getVisitsByCaseWorkerPhone(phone);
+            appExecutors.mainThread().execute(() -> {
+                if (isFinishing() || isDestroyed()) {
+                    return;
+                }
+                notificationsList.addAll(visits);
+                mCartItemCount = notificationsList.size();
+                setupBadge();
+            });
+        });
     }
 
 
