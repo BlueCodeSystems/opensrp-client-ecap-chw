@@ -4539,6 +4539,104 @@
           "json_mapping": {
             "field": "attributes.signature"
           }
+        },
+        {
+          "column_name": "pcz_priority_disease",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.pcz_priority_disease"
+          }
+        },
+        {
+          "column_name": "other_priority_disease",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.other_priority_disease"
+          }
+        },
+        {
+          "column_name": "case_f_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_f_0_4"
+          }
+        },
+        {
+          "column_name": "case_f_5_14",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_f_5_14"
+          }
+        },
+        {
+          "column_name": "case_f_15_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_f_15_plus"
+          }
+        },
+        {
+          "column_name": "case_m_0_4",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_m_0_4"
+          }
+        },
+        {
+          "column_name": "case_m_5_14",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_m_5_14"
+          }
+        },
+        {
+          "column_name": "case_m_15_plus",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_m_15_plus"
+          }
+        },
+        {
+          "column_name": "case_total",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.case_total"
+          }
+        },
+        {
+          "column_name": "cbs_supervisor_part_of_response",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.cbs_supervisor_part_of_response"
+          }
+        },
+        {
+          "column_name": "cbs_supervisor_action_taken",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.cbs_supervisor_action_taken"
+          }
+        },
+        {
+          "column_name": "gps",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.gps"
+          }
+        },
+        {
+          "column_name": "suspected_female",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.suspected_female"
+          }
+        },
+        {
+          "column_name": "suspected_male",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.suspected_male"
+          }
         }
       ]
     },

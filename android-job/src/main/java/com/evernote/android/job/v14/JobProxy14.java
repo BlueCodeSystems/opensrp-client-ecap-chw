@@ -162,8 +162,14 @@ public class JobProxy14 implements JobProxy {
         if (alarmManager != null) {
             try {
                 // exact parameter doesn't matter
-                alarmManager.cancel(getPendingIntent(jobId, false, null, createPendingIntentFlags(true)));
-                alarmManager.cancel(getPendingIntent(jobId, false, null, createPendingIntentFlags(false)));
+                PendingIntent pi1 = getPendingIntent(jobId, false, null, createPendingIntentFlags(true));
+                if (pi1 != null) {
+                    alarmManager.cancel(pi1);
+                }
+                PendingIntent pi2 = getPendingIntent(jobId, false, null, createPendingIntentFlags(false));
+                if (pi2 != null) {
+                    alarmManager.cancel(pi2);
+                }
             } catch (Exception e) {
                 // java.lang.SecurityException: get application info: Neither user 1010133 nor
                 // current process has android.permission.INTERACT_ACROSS_USERS.

@@ -382,6 +382,7 @@
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.MalariaReportViewActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.HouseholdServiceReportViewActivity"
@@ -391,15 +392,21 @@
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.MonthlyNutritionReportViewActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.MonthlyTbReportViewActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.CommunityAlertReportViewActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
             android:name=".activity.TbScreeningActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
+            android:name=".activity.ReportFormActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
 
         <meta-data

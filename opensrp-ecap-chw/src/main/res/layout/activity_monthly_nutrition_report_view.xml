@@ -5,7 +5,7 @@
     preserving the same ink/parchment design system, section colour-coding,
     grid-row layout, and sticky section tab bar.
 
-    Designer : BY BRAVELY MUTIZIWA
+    Designer : BY munashe nyikadzino
       ink            #1B3A4B      paper         #EDEBE4      grid     #C9C6BC
       ink_soft       #3F5B68      line          #D9D5C9      gold     #C98A3E
       red            #C4453F      red_bg        #FBEAE9      amber    #D99A2B
@@ -27,19 +27,28 @@
         android:id="@+id/report_view_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#1B3A4B"
-        app:navigationIcon="@drawable/ic_arrow_back_white_24dp">
+        android:background="#1B3A4B">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingEnd="16dp">
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/report_view_back_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
+                android:padding="8dp"
+                android:src="@drawable/ic_arrow_back_white_24dp"
+                app:tint="#FFFFFF" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/report_view_back_button"
                 android:layout_toStartOf="@+id/btn_edit_report"
                 android:orientation="vertical">
 
@@ -825,7 +834,7 @@
                                 android:background="#FFFFFF"
                                 android:paddingHorizontal="10dp"
                                 android:paddingVertical="7dp"
-                                android:text="Number of Linked For Under-5 Clinic (GMP Services)"
+                                android:text="Number of Households with WASH Activities"
                                 android:textColor="#232323"
                                 android:textSize="13sp" />
 
@@ -876,7 +885,7 @@
                                 android:textSize="13sp" />
 
                             <TextView
-                                android:id="@+id/et_b_hh_visited"
+                                android:id="@+id/hh_visited_assessment"
                                 android:layout_width="110dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="1dp"
@@ -922,7 +931,7 @@
                                 android:textSize="13sp" />
 
                             <TextView
-                                android:id="@+id/et_b_ppmam_id"
+                                android:id="@+id/ppmam_identified"
                                 android:layout_width="110dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="1dp"
@@ -968,7 +977,7 @@
                                 android:textSize="13sp" />
 
                             <TextView
-                                android:id="@+id/et_b_ppmam_ref"
+                                android:id="@+id/ppmam_referred_commenced"
                                 android:layout_width="110dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="1dp"
@@ -1014,7 +1023,7 @@
                                 android:textSize="13sp" />
 
                             <TextView
-                                android:id="@+id/et_b_other_children_pmam"
+                                android:id="@+id/other_children_pmam"
                                 android:layout_width="110dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="1dp"
@@ -1060,7 +1069,7 @@
                                 android:textSize="13sp" />
 
                             <TextView
-                                android:id="@+id/et_b_plw_art"
+                                android:id="@+id/plw_art_pmtct_nutrition_assessment"
                                 android:layout_width="110dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="1dp"
@@ -1106,7 +1115,7 @@
                                 android:textSize="13sp" />
 
                             <TextView
-                                android:id="@+id/et_b_plw_ifas"
+                                android:id="@+id/plw_received_ifas"
                                 android:layout_width="110dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="1dp"
@@ -1152,7 +1161,7 @@
                                 android:textSize="13sp" />
 
                             <TextView
-                                android:id="@+id/et_b_food_insecurity"
+                                android:id="@+id/hh_food_insecurity_counselled"
                                 android:layout_width="110dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="1dp"
@@ -1326,7 +1335,7 @@
                                 android:background="#FFFFFF"
                                 android:paddingHorizontal="10dp"
                                 android:paddingVertical="7dp"
-                                android:text="Number of PPBFW reached with Nutrition Counselling"
+                                android:text="Number of Children 6-23 Months Received MNP"
                                 android:textColor="#232323"
                                 android:textSize="13sp" />
 
@@ -1372,7 +1381,7 @@
                                 android:background="#FFFFFF"
                                 android:paddingHorizontal="10dp"
                                 android:paddingVertical="7dp"
-                                android:text="Number of PPBFW Screened for Acute Malnutrition (MUAC)"
+                                android:text="Number of PLW Received MNP"
                                 android:textColor="#232323"
                                 android:textSize="13sp" />
 
@@ -1418,7 +1427,7 @@
                                 android:background="#FFFFFF"
                                 android:paddingHorizontal="10dp"
                                 android:paddingVertical="7dp"
-                                android:text="Number of PPBFW with Acute Malnutrition (MAM/SAM)"
+                                android:text="Number of Children Received Vitamin A (6-11 Months)"
                                 android:textColor="#232323"
                                 android:textSize="13sp" />
 
@@ -1464,7 +1473,7 @@
                                 android:background="#FFFFFF"
                                 android:paddingHorizontal="10dp"
                                 android:paddingVertical="7dp"
-                                android:text="Number of PPBFW Referred for Treatment"
+                                android:text="Number of Children Received Vitamin A (12-59 Months)"
                                 android:textColor="#232323"
                                 android:textSize="13sp" />
 
@@ -1510,7 +1519,7 @@
                                 android:background="#FFFFFF"
                                 android:paddingHorizontal="10dp"
                                 android:paddingVertical="7dp"
-                                android:text="Number of 0 to 6 Months Reached with Exclusive Breastfeeding Counseling"
+                                android:text="Number of PLW Supplemented with Vitamin A (Post-Partum)"
                                 android:textColor="#232323"
                                 android:textSize="13sp" />
 
@@ -1556,7 +1565,7 @@
                                 android:background="#FFFFFF"
                                 android:paddingHorizontal="10dp"
                                 android:paddingVertical="7dp"
-                                android:text="Number of 6 Months to 5 Years Reached with Complimentary Feeding Counseling"
+                                android:text="Number of Children 12-59 Months Dewormed"
                                 android:textColor="#232323"
                                 android:textSize="13sp" />
 
@@ -1607,7 +1616,7 @@
                                 android:textSize="13sp" />
 
                             <TextView
-                                android:id="@+id/et_c_deworm_plw"
+                                android:id="@+id/deworming_plw"
                                 android:layout_width="110dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="1dp"
@@ -1936,7 +1945,7 @@
                                 android:textSize="13sp" />
 
                             <TextView
-                                android:id="@+id/et_d_dev_screening"
+                                android:id="@+id/ecd_developmental_screening"
                                 android:layout_width="110dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="1dp"
@@ -2119,11 +2128,11 @@
                                 android:layout_width="110dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="1dp"
-                                android:background="#FBEAE9"
+                                android:background="#FFFFFF"
                                 android:gravity="end|center_vertical"
                                 android:paddingHorizontal="10dp"
                                 android:paddingVertical="7dp"
-                                android:textColor="#C4453F"
+                                android:textColor="#232323"
                                 android:textSize="13sp" android:textStyle="bold" />
                         </LinearLayout>
 
@@ -2164,11 +2173,11 @@
                                 android:layout_width="110dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="1dp"
-                                android:background="#FBF1DD"
+                                android:background="#FFFFFF"
                                 android:gravity="end|center_vertical"
                                 android:paddingHorizontal="10dp"
                                 android:paddingVertical="7dp"
-                                android:textColor="#D99A2B"
+                                android:textColor="#232323"
                                 android:textSize="13sp" android:textStyle="bold" />
                         </LinearLayout>
 
@@ -2209,11 +2218,11 @@
                                 android:layout_width="110dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="1dp"
-                                android:background="#E9F3ED"
+                                android:background="#FFFFFF"
                                 android:gravity="end|center_vertical"
                                 android:paddingHorizontal="10dp"
                                 android:paddingVertical="7dp"
-                                android:textColor="#3F8F62"
+                                android:textColor="#232323"
                                 android:textSize="13sp" android:textStyle="bold" />
                         </LinearLayout>
 
@@ -2354,11 +2363,11 @@
                                 android:layout_width="110dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="1dp"
-                                android:background="#FBF1DD"
+                                android:background="#FFFFFF"
                                 android:gravity="end|center_vertical"
                                 android:paddingHorizontal="10dp"
                                 android:paddingVertical="7dp"
-                                android:textColor="#D99A2B"
+                                android:textColor="#232323"
                                 android:textSize="13sp" android:textStyle="bold" />
                         </LinearLayout>
 
@@ -2399,11 +2408,11 @@
                                 android:layout_width="110dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="1dp"
-                                android:background="#FBEAE9"
+                                android:background="#FFFFFF"
                                 android:gravity="end|center_vertical"
                                 android:paddingHorizontal="10dp"
                                 android:paddingVertical="7dp"
-                                android:textColor="#C4453F"
+                                android:textColor="#232323"
                                 android:textSize="13sp" android:textStyle="bold" />
                         </LinearLayout>
 
@@ -2444,11 +2453,11 @@
                                 android:layout_width="110dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="1dp"
-                                android:background="#FBEAE9"
+                                android:background="#FFFFFF"
                                 android:gravity="end|center_vertical"
                                 android:paddingHorizontal="10dp"
                                 android:paddingVertical="7dp"
-                                android:textColor="#C4453F"
+                                android:textColor="#232323"
                                 android:textSize="13sp" android:textStyle="bold" />
                         </LinearLayout>
 
@@ -2647,11 +2656,11 @@
                                 android:layout_width="110dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="1dp"
-                                android:background="#FBEAE9"
+                                android:background="#FFFFFF"
                                 android:gravity="end|center_vertical"
                                 android:paddingHorizontal="10dp"
                                 android:paddingVertical="7dp"
-                                android:textColor="#C4453F"
+                                android:textColor="#232323"
                                 android:textSize="13sp" android:textStyle="bold" />
                         </LinearLayout>
 
@@ -2692,11 +2701,11 @@
                                 android:layout_width="110dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="1dp"
-                                android:background="#FBF1DD"
+                                android:background="#FFFFFF"
                                 android:gravity="end|center_vertical"
                                 android:paddingHorizontal="10dp"
                                 android:paddingVertical="7dp"
-                                android:textColor="#D99A2B"
+                                android:textColor="#232323"
                                 android:textSize="13sp" android:textStyle="bold" />
                         </LinearLayout>
 
@@ -2737,11 +2746,11 @@
                                 android:layout_width="110dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="1dp"
-                                android:background="#E9F3ED"
+                                android:background="#FFFFFF"
                                 android:gravity="end|center_vertical"
                                 android:paddingHorizontal="10dp"
                                 android:paddingVertical="7dp"
-                                android:textColor="#3F8F62"
+                                android:textColor="#232323"
                                 android:textSize="13sp" android:textStyle="bold" />
                         </LinearLayout>
 
@@ -2778,15 +2787,15 @@
                                 android:textSize="13sp" />
 
                             <TextView
-                                android:id="@+id/et_g_oedema"
+                                android:id="@+id/muac_oedema"
                                 android:layout_width="110dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="1dp"
-                                android:background="#FBEAE9"
+                                android:background="#FFFFFF"
                                 android:gravity="end|center_vertical"
                                 android:paddingHorizontal="10dp"
                                 android:paddingVertical="7dp"
-                                android:textColor="#C4453F"
+                                android:textColor="#232323"
                                 android:textSize="13sp" android:textStyle="bold" />
                         </LinearLayout>
 
@@ -3234,7 +3243,7 @@
                                 android:textSize="13sp" />
 
                             <TextView
-                                android:id="@+id/et_i_date_referral"
+                                android:id="@+id/referral_date_of_referral"
                                 android:layout_width="110dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="1dp"
@@ -3279,7 +3288,7 @@
                                 android:textSize="13sp" />
 
                             <TextView
-                                android:id="@+id/et_i_date_feedback"
+                                android:id="@+id/referral_date_of_feedback"
                                 android:layout_width="110dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="1dp"
@@ -3324,7 +3333,7 @@
                                 android:textSize="13sp" />
 
                             <TextView
-                                android:id="@+id/et_i_hiv_tb_integration"
+                                android:id="@+id/referral_hiv_tb_integration"
                                 android:layout_width="110dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="1dp"

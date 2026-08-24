@@ -1,11 +1,15 @@
 package com.bluecodeltd.ecap.chw.activity;
-import com.bluecodeltd.ecap.chw.application.ChwApplication;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Build;
+import android.view.Window;
+import android.view.WindowInsetsController;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,22 +64,127 @@ public class MalariaReportViewActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_malaria_report_view);
 
-        Toolbar toolbar = findViewById(R.id.report_toolbar);
+        Toolbar toolbar = findViewById(R.id.report_view_toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
-        toolbar.setNavigationOnClickListener(v -> finish());
+        applyLightStatusBar();
+        TextView toolbarTitle = findViewById(R.id.report_view_title);
+        if (toolbarTitle != null) {
+            toolbarTitle.setText("Malaria Monthly Report");
+        }
+        findViewById(R.id.report_view_back_button).setOnClickListener(v -> finish());
 
         baseEntityId = getIntent().getStringExtra(EXTRA_BASE_ENTITY_ID);
         loadReport();
 
+        setupExpansionLogic();
+        setupActionButtons();
+        setupNavigationLogic();
         setupEditButton();
-        setupNavigation();
-        setupExpandableSections();
-        setupExpandCollapseButtons();
     }
 
+    private void setupActionButtons() {
+        findViewById(R.id.btn_expand_all).setOnClickListener(v -> toggleAllSections(true));
+        findViewById(R.id.btn_collapse_all).setOnClickListener(v -> toggleAllSections(false));
+    }
+
+    private void toggleAllSections(boolean expand) {
+        int visibility = expand ? View.VISIBLE : View.GONE;
+        int iconRes = expand ? R.drawable.baseline_expand_less_24 : R.drawable.baseline_expand_more_24;
+
+        int[] sectionContents = {
+                R.id.content_q1, R.id.content_q2, R.id.content_q3, R.id.content_q4, R.id.content_q5,
+                R.id.content_q6, R.id.content_q7, R.id.content_q8, R.id.content_q9, R.id.content_q10,
+                R.id.content_sb_q1, R.id.content_sb_q2, R.id.content_sb_q3, R.id.content_sb_q4, R.id.content_sb_q5,
+                R.id.content_sb_q6, R.id.content_sb_q7, R.id.content_sb_q8, R.id.content_sb_q9, R.id.content_sb_q10
+        };
+
+        int[] sectionIcons = {
+                R.id.icon_q1, R.id.icon_q2, R.id.icon_q3, R.id.icon_q4, R.id.icon_q5,
+                R.id.icon_q6, R.id.icon_q7, R.id.icon_q8, R.id.icon_q9, R.id.icon_q10,
+                R.id.icon_sb_q1, R.id.icon_sb_q2, R.id.icon_sb_q3, R.id.icon_sb_q4, R.id.icon_sb_q5,
+                R.id.icon_sb_q6, R.id.icon_sb_q7, R.id.icon_sb_q8, R.id.icon_sb_q9, R.id.icon_sb_q10
+        };
+
+        for (int i = 0; i < sectionContents.length; i++) {
+            View content = findViewById(sectionContents[i]);
+            ImageView icon = findViewById(sectionIcons[i]);
+            if (content != null) content.setVisibility(visibility);
+            if (icon != null) icon.setImageResource(iconRes);
+        }
+    }
+
+    private void setupNavigationLogic() {
+        androidx.core.widget.NestedScrollView scrollView = findViewById(R.id.report_scroll);
+
+        // Tabs
+        setupTab(R.id.tab_a, R.id.sec_a, scrollView);
+        setupTab(R.id.tab_b, R.id.sec_b, scrollView);
+        setupTab(R.id.tab_c, R.id.sec_c, scrollView);
+        setupTab(R.id.tab_comments, R.id.sec_comments, scrollView);
+
+        // Chips Section A
+        for (int i = 1; i <= 10; i++) {
+            int chipId = getResources().getIdentifier("chip_a_q" + i, "id", getPackageName());
+            int panelId = getResources().getIdentifier("panel_a_q" + i, "id", getPackageName());
+            setupJump(chipId, panelId, scrollView);
+        }
+
+        // Chips Section B
+        for (int i = 1; i <= 10; i++) {
+            int chipId = getResources().getIdentifier("chip_b_q" + i, "id", getPackageName());
+            int panelId = getResources().getIdentifier("panel_b_q" + i, "id", getPackageName());
+            setupJump(chipId, panelId, scrollView);
+        }
+    }
+
+    private void setupTab(int tabId, int targetId, androidx.core.widget.NestedScrollView scrollView) {
+        View tab = findViewById(tabId);
+        View target = findViewById(targetId);
+        if (tab != null && target != null) {
+            tab.setOnClickListener(v -> scrollView.smoothScrollTo(0, target.getTop()));
+        }
+    }
+
+    private void setupJump(int chipId, int targetId, androidx.core.widget.NestedScrollView scrollView) {
+        View chip = findViewById(chipId);
+        View target = findViewById(targetId);
+        if (chip != null && target != null) {
+            chip.setOnClickListener(v -> {
+                int top = 0;
+                View parent = target;
+                while (parent != null && parent != scrollView) {
+                    top += parent.getTop();
+                    if (parent.getParent() instanceof View) {
+                        parent = (View) parent.getParent();
+                    } else {
+                        break;
+                    }
+                }
+                scrollView.smoothScrollTo(0, top);
+            });
+        }
+    }
+
+    private void applyLightStatusBar() {
+        Window window = getWindow();
+        window.setStatusBarColor(Color.WHITE);
+        View decorView = window.getDecorView();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            WindowInsetsController controller = decorView.getWindowInsetsController();
+            if (controller != null) {
+                controller.setSystemBarsAppearance(
+                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS);
+            }
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int flags = decorView.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            decorView.setSystemUiVisibility(flags);
+        }
+    }
     private void loadReport() {
         if (baseEntityId != null) {
             reportModel = MonthlyReportDao.getReport(ReportRegisterActivity.REPORT_TABLE_MALARIA, baseEntityId);
@@ -86,131 +195,67 @@ public class MalariaReportViewActivity extends AppCompatActivity {
         }
     }
 
+    private void setupExpansionLogic() {
+        // Section A
+        setupSection(R.id.header_q1, R.id.content_q1, R.id.icon_q1);
+        setupSection(R.id.header_q2, R.id.content_q2, R.id.icon_q2);
+        setupSection(R.id.header_q3, R.id.content_q3, R.id.icon_q3);
+        setupSection(R.id.header_q4, R.id.content_q4, R.id.icon_q4);
+        setupSection(R.id.header_q5, R.id.content_q5, R.id.icon_q5);
+        setupSection(R.id.header_q6, R.id.content_q6, R.id.icon_q6);
+        setupSection(R.id.header_q7, R.id.content_q7, R.id.icon_q7);
+        setupSection(R.id.header_q8, R.id.content_q8, R.id.icon_q8);
+        setupSection(R.id.header_q9, R.id.content_q9, R.id.icon_q9);
+        setupSection(R.id.header_q10, R.id.content_q10, R.id.icon_q10);
+
+        // Section B
+        setupSection(R.id.header_sb_q1, R.id.content_sb_q1, R.id.icon_sb_q1);
+        setupSection(R.id.header_sb_q2, R.id.content_sb_q2, R.id.icon_sb_q2);
+        setupSection(R.id.header_sb_q3, R.id.content_sb_q3, R.id.icon_sb_q3);
+        setupSection(R.id.header_sb_q4, R.id.content_sb_q4, R.id.icon_sb_q4);
+        setupSection(R.id.header_sb_q5, R.id.content_sb_q5, R.id.icon_sb_q5);
+        setupSection(R.id.header_sb_q6, R.id.content_sb_q6, R.id.icon_sb_q6);
+        setupSection(R.id.header_sb_q7, R.id.content_sb_q7, R.id.icon_sb_q7);
+        setupSection(R.id.header_sb_q8, R.id.content_sb_q8, R.id.icon_sb_q8);
+        setupSection(R.id.header_sb_q9, R.id.content_sb_q9, R.id.icon_sb_q9);
+        setupSection(R.id.header_sb_q10, R.id.content_sb_q10, R.id.icon_sb_q10);
+
+        // Section C & Comments - Always expanded
+        View contentSc = findViewById(R.id.content_sc);
+        if (contentSc != null) contentSc.setVisibility(View.VISIBLE);
+        View iconSc = findViewById(R.id.icon_sc);
+        if (iconSc != null) iconSc.setVisibility(View.GONE);
+
+        View contentComments = findViewById(R.id.content_comments);
+        if (contentComments != null) contentComments.setVisibility(View.VISIBLE);
+        View iconComments = findViewById(R.id.icon_comments);
+        if (iconComments != null) iconComments.setVisibility(View.GONE);
+    }
+
+    private void setupSection(int headerId, int contentId, int iconId) {
+        View header = findViewById(headerId);
+        View content = findViewById(contentId);
+        ImageView icon = findViewById(iconId);
+
+        if (header != null && content != null && icon != null) {
+            header.setOnClickListener(v -> {
+                if (content.getVisibility() == View.VISIBLE) {
+                    content.setVisibility(View.GONE);
+                    icon.setImageResource(R.drawable.baseline_expand_more_24);
+                } else {
+                    content.setVisibility(View.VISIBLE);
+                    icon.setImageResource(R.drawable.baseline_expand_less_24);
+                }
+            });
+        }
+    }
+
     private void setupEditButton() {
         ImageButton btnEdit = findViewById(R.id.btn_edit_report);
         if (btnEdit != null) {
             btnEdit.setOnClickListener(v -> openEditForm());
         }
     }
-
-    private void setupNavigation() {
-        View tabA = findViewById(R.id.tab_a);
-        View tabB = findViewById(R.id.tab_b);
-        View tabC = findViewById(R.id.tab_c);
-        View tabComments = findViewById(R.id.tab_comments);
-
-        if (tabA != null) tabA.setOnClickListener(v -> scrollToView(findViewById(R.id.sec_a)));
-        if (tabB != null) tabB.setOnClickListener(v -> scrollToView(findViewById(R.id.sec_b)));
-        if (tabC != null) tabC.setOnClickListener(v -> scrollToView(findViewById(R.id.sec_c)));
-        if (tabComments != null) tabComments.setOnClickListener(v -> scrollToView(findViewById(R.id.sec_comments)));
-
-        for (int i = 1; i <= 10; i++) {
-            int chipAId = getResources().getIdentifier("chip_a_q" + i, "id", getPackageName());
-            int panelAId = getResources().getIdentifier("panel_a_q" + i, "id", getPackageName());
-            View chipA = findViewById(chipAId);
-            View panelA = findViewById(panelAId);
-            if (chipA != null && panelA != null) {
-                chipA.setOnClickListener(v -> scrollToView(panelA));
-            }
-
-            int chipBId = getResources().getIdentifier("chip_b_q" + i, "id", getPackageName());
-            int panelBId = getResources().getIdentifier("panel_b_q" + i, "id", getPackageName());
-            View chipB = findViewById(chipBId);
-            View panelB = findViewById(panelBId);
-            if (chipB != null && panelB != null) {
-                chipB.setOnClickListener(v -> scrollToView(panelB));
-            }
-        }
-    }
-
-    private void scrollToView(View view) {
-        if (view != null) {
-            findViewById(R.id.report_scroll).post(() ->
-                    ((androidx.core.widget.NestedScrollView) findViewById(R.id.report_scroll)).smoothScrollTo(0, view.getTop())
-            );
-        }
-    }
-
-    private void setupExpandableSections() {
-        for (int i = 1; i <= 10; i++) {
-            // Section A
-            setupExpandableSection("a", i);
-            // Section B
-            setupExpandableSection("b", i);
-        }
-    }
-
-    private void setupExpandableSection(String section, int index) {
-        int headerId = getResources().getIdentifier("header_" + section + "_q" + index, "id", getPackageName());
-        int bodyId = getResources().getIdentifier("body_" + section + "_q" + index, "id", getPackageName());
-
-        View header = findViewById(headerId);
-        View body = findViewById(bodyId);
-
-        if (header != null && body != null) {
-            header.setOnClickListener(v -> toggleSection(header, body));
-        }
-    }
-
-    private void toggleSection(View header, View body) {
-        boolean isExpanded = body.getVisibility() == View.VISIBLE;
-        body.setVisibility(isExpanded ? View.GONE : View.VISIBLE);
-        
-        // Update indicator
-        if (header instanceof android.view.ViewGroup) {
-            android.view.ViewGroup group = (android.view.ViewGroup) header;
-            if (group.getChildCount() > 1) {
-                View indicator = group.getChildAt(1);
-                if (indicator instanceof TextView) {
-                    ((TextView) indicator).setText(isExpanded ? "▸" : "▾");
-                }
-            }
-        }
-    }
-
-    private void setupExpandCollapseButtons() {
-        View btnExpand = findViewById(R.id.btn_expand_all);
-        View btnCollapse = findViewById(R.id.btn_collapse_all);
-
-        if (btnExpand != null) {
-            btnExpand.setOnClickListener(v -> setAllSectionsVisibility(View.VISIBLE));
-        }
-
-        if (btnCollapse != null) {
-            btnCollapse.setOnClickListener(v -> setAllSectionsVisibility(View.GONE));
-        }
-    }
-
-    private void setAllSectionsVisibility(int visibility) {
-        String indicator = (visibility == View.VISIBLE) ? "▾" : "▸";
-        for (int i = 1; i <= 10; i++) {
-            updateSectionVisibility("a", i, visibility, indicator);
-            updateSectionVisibility("b", i, visibility, indicator);
-        }
-    }
-
-    private void updateSectionVisibility(String section, int index, int visibility, String indicatorText) {
-        int headerId = getResources().getIdentifier("header_" + section + "_q" + index, "id", getPackageName());
-        int bodyId = getResources().getIdentifier("body_" + section + "_q" + index, "id", getPackageName());
-
-        View header = findViewById(headerId);
-        View body = findViewById(bodyId);
-
-        if (body != null) {
-            body.setVisibility(visibility);
-        }
-
-        if (header instanceof android.view.ViewGroup) {
-            android.view.ViewGroup group = (android.view.ViewGroup) header;
-            if (group.getChildCount() > 1) {
-                View indicator = group.getChildAt(1);
-                if (indicator instanceof TextView) {
-                    ((TextView) indicator).setText(indicatorText);
-                }
-            }
-        }
-    }
-
 
     private void openEditForm() {
         if (reportModel == null) return;
@@ -224,9 +269,10 @@ public class MalariaReportViewActivity extends AppCompatActivity {
 
             CaseStatusModel finalCaseStatusModel = caseStatusModel;
             Threading.main(() -> {
+                if (isFinishing() || isDestroyed()) return;
                 String status = finalCaseStatusModel != null ? finalCaseStatusModel.getCase_status() : null;
                 if ("0".equals(status) || "2".equals(status)) {
-                    Snackbar.make(findViewById(R.id.sec_a), "Beneficiary is inactive or de-registered", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(R.id.header_card), "Beneficiary is inactive or de-registered", Snackbar.LENGTH_LONG).show();
                     return;
                 }
 
@@ -240,7 +286,22 @@ public class MalariaReportViewActivity extends AppCompatActivity {
                         reportModel.setAdditionalField("caseworker_name", getCaseworkerName(prefs));
                     }
                     form.put("entity_id", reportModel.getBase_entity_id());
-                    org.smartregister.chw.core.utils.CoreJsonFormUtils.populateJsonForm(form, reportModel.toValueMap());
+
+                    Map<String, String> data = reportModel.toValueMap();
+                    Map<String, String> normalizedFields = new java.util.HashMap<>();
+                    for (Map.Entry<String, String> entry : data.entrySet()) {
+                        String key = entry.getKey().toLowerCase();
+                        String value = entry.getValue();
+                        if (key.startsWith("sa_q")) {
+                            normalizedFields.put(key.substring(3), value);
+                        } else if (key.startsWith("sc_q") && !key.endsWith("_value")) {
+                            normalizedFields.put(key + "_value", value);
+                        } else {
+                            normalizedFields.put(key, value);
+                        }
+                    }
+
+                    org.smartregister.chw.core.utils.CoreJsonFormUtils.populateJsonForm(form, normalizedFields);
 
                     Intent intent = new Intent(this, ReportFormActivity.class);
                     Form wizardForm = new Form();
@@ -249,7 +310,7 @@ public class MalariaReportViewActivity extends AppCompatActivity {
                     startActivityForResult(intent, EDIT_FORM_REQUEST);
                 } catch (Exception e) {
                     Timber.e(e);
-                    Snackbar.make(findViewById(R.id.sec_a), "Unable to open form", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(R.id.header_card), "Unable to open form", Snackbar.LENGTH_LONG).show();
                 }
             });
         });
@@ -297,15 +358,6 @@ public class MalariaReportViewActivity extends AppCompatActivity {
             JSONObject metadata = formJsonObject.getJSONObject(com.bluecodeltd.ecap.chw.util.Constants.METADATA);
             org.json.JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
-            for (int i = 0; i < fields.length(); i++) {
-                JSONObject field = fields.getJSONObject(i);
-                String entity = field.optString("openmrs_entity");
-                if (entity.isEmpty() || "person_attribute".equals(entity)) {
-                    field.put("openmrs_entity", "concept");
-                    field.put("openmrs_entity_id", field.optString("key"));
-                }
-            }
-
             FormTag formTag = getFormTag();
             String tableName = getReportTableName(encounterType);
             if (tableName == null) {
@@ -350,6 +402,9 @@ public class MalariaReportViewActivity extends AppCompatActivity {
                     JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
                     if (isEditMode && existingClientJsonObject != null) {
                         JSONObject mergedClientJsonObject = org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
+                        if (existingClientJsonObject.has("attributes") && newClientJsonObject.has("attributes")) {
+                            mergedClientJsonObject.put("attributes", org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject.getJSONObject("attributes"), newClientJsonObject.getJSONObject("attributes")));
+                        }
                         ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
                     } else {
                         ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
@@ -371,7 +426,7 @@ public class MalariaReportViewActivity extends AppCompatActivity {
             }
         };
         try {
-            ChwApplication.getInstance().getAppExecutors().diskIO().execute(runnable);
+            new AppExecutors().diskIO().execute(runnable);
             return true;
         } catch (Exception e) {
             Timber.e(e);
@@ -401,108 +456,98 @@ public class MalariaReportViewActivity extends AppCompatActivity {
     }
 
     private void populateData() {
-        TextView title = findViewById(R.id.report_title);
+        TextView title = findViewById(R.id.report_view_title);
         title.setText(getString(R.string.malaria_report_title, reportModel.getReporting_month()));
 
-        TextView reportMeta = findViewById(R.id.report_meta);
-        if (reportMeta != null) {
-            reportMeta.setText(reportModel.getReporting_month() + " | " + reportModel.getFacility());
-        }
+        setText(R.id.txt_reporting_month, reportModel.getReporting_month());
+        setText(R.id.txt_facility_name, reportModel.getFacility());
 
         Map<String, String> data = reportModel.toValueMap();
 
-        // Section A (Q1-Q10)
-        String[] qPrefixes = {"q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10"};
-        for (String prefix : qPrefixes) {
+        // Section A
+        int[] questions = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        String[] suffixes = {"_f_0_4", "_m_0_4", "_f_5_15", "_m_5_15", "_f_16_19", "_m_16_19", "_f_20_plus", "_m_20_plus", "_f_calhiv", "_m_calhiv", "_f_hei", "_m_hei", "_f_wlhiv", "_m_wlhiv", "_f_sv", "_m_sv", "_f_agyw", "_f_hiv_pos", "_f_siblings", "_m_siblings", "_f_caregivers", "_m_caregivers"};
+
+        for (int q : questions) {
             int totalF = 0;
             int totalM = 0;
+            int subTotalF = 0;
+            int subTotalM = 0;
 
-            // Age Groups (1-4)
-            String[] ageSuffixes = {"_f_0_4", "_m_0_4", "_f_5_15", "_m_5_15", "_f_16_19", "_m_16_19", "_f_20_plus", "_m_20_plus"};
-            for (String suffix : ageSuffixes) {
-                String key = prefix + suffix;
-                int viewId = getResources().getIdentifier("sa_" + key, "id", getPackageName());
-                if (viewId != 0) {
-                    int val = parseVal(data.get(key));
-                    setText(viewId, String.valueOf(val));
-                    if (suffix.contains("_f_")) totalF += val;
-                    if (suffix.contains("_m_")) totalM += val;
+            for (String s : suffixes) {
+                String key = "q" + q + s;
+                int resId = getResources().getIdentifier(key, "id", getPackageName());
+                if (resId != 0) {
+                    String value = data.get(key);
+                    if (value == null) value = data.get("sa_" + key);
+                    setText(resId, value);
+
+                    int val = parseSafeInt(value);
+                    if (s.contains("_f_0_4") || s.contains("_f_5_15") || s.contains("_f_16_19") || s.contains("_f_20_plus")) {
+                        totalF += val;
+                    } else if (s.contains("_m_0_4") || s.contains("_m_5_15") || s.contains("_m_16_19") || s.contains("_m_20_plus")) {
+                        totalM += val;
+                    } else if (s.contains("_f_")) {
+                        subTotalF += val;
+                    } else if (s.contains("_m_")) {
+                        subTotalM += val;
+                    }
                 }
             }
-
-            // Age Group Total (5)
-            setText(getResources().getIdentifier("sa_" + prefix + "_total_f", "id", getPackageName()), String.valueOf(totalF));
-            setText(getResources().getIdentifier("sa_" + prefix + "_total_m", "id", getPackageName()), String.valueOf(totalM));
-
-            // Sub-Populations (6-13)
-            String[] subPopSuffixes = {"calhiv", "hei", "wlhiv", "sv", "agyw", "hiv_pos", "siblings", "caregivers"};
-            int subTotalSum = 0;
-            int subTotalSumF = 0;
-            for (String sub : subPopSuffixes) {
-                String keyF = prefix + "_f_" + sub;
-                String keyM = prefix + "_m_" + sub;
-                
-                int valF = parseVal(data.get(keyF));
-                int valM = parseVal(data.get(keyM));
-                
-                // Renders on BOTH columns in the layout
-                setText(getResources().getIdentifier("sa_" + keyF, "id", getPackageName()), String.valueOf(valF));
-                int viewIdM = getResources().getIdentifier("sa_" + keyM, "id", getPackageName());
-                if (viewIdM != 0) {
-                    setText(viewIdM, String.valueOf(valM));
-                }
-                
-                // Strictly summing indicators for the Sub-Population Total (Row 14)
-                if (sub.equals("calhiv") || sub.equals("hei") || sub.equals("wlhiv") || sub.equals("sv")) {
-                    subTotalSum += (valF + valM);
-                    subTotalSumF += valF;
-                }
-            }
-            setText(getResources().getIdentifier("sa_" + prefix + "_sub_total_f", "id", getPackageName()), String.valueOf(subTotalSumF));
-            setText(getResources().getIdentifier("sa_" + prefix + "_sub_total", "id", getPackageName()), String.valueOf(subTotalSum));
+            setText(getResources().getIdentifier("q" + q + "_total_f", "id", getPackageName()), String.valueOf(totalF));
+            setText(getResources().getIdentifier("q" + q + "_total_m", "id", getPackageName()), String.valueOf(totalM));
+            setText(getResources().getIdentifier("q" + q + "_sub_total_f", "id", getPackageName()), String.valueOf(subTotalF));
+            setText(getResources().getIdentifier("q" + q + "_sub_total_m", "id", getPackageName()), String.valueOf(subTotalM));
         }
 
-        // Section B (SB Q1-Q10)
-        String[] sbPrefixes = {"sb_q1", "sb_q2", "sb_q3", "sb_q4", "sb_q5", "sb_q6", "sb_q7", "sb_q8", "sb_q9", "sb_q10"};
-        for (String prefix : sbPrefixes) {
-            int totalF = 0;
-            int totalM = 0;
+        // Section B
+        for (int q : questions) {
             String[] sbSuffixes = {"_f_0_4", "_m_0_4", "_f_5_15", "_m_5_15", "_f_16_19", "_m_16_19", "_f_20_plus", "_m_20_plus"};
-            for (String suffix : sbSuffixes) {
-                String key = prefix + suffix;
-                int viewId = getResources().getIdentifier(key, "id", getPackageName());
-                if (viewId != 0) {
-                    int val = parseVal(data.get(key));
-                    setText(viewId, String.valueOf(val));
-                    if (suffix.contains("_f_")) totalF += val;
-                    if (suffix.contains("_m_")) totalM += val;
+            int totalF = 0;
+            int totalM = 0;
+
+            for (String s : sbSuffixes) {
+                String key = "sb_q" + q + s;
+                int resId = getResources().getIdentifier(key, "id", getPackageName());
+                if (resId != 0) {
+                    String value = data.get(key);
+                    setText(resId, value);
+
+                    int val = parseSafeInt(value);
+                    if (s.contains("_f_")) totalF += val;
+                    if (s.contains("_m_")) totalM += val;
                 }
             }
-            setText(getResources().getIdentifier(prefix + "_total_f", "id", getPackageName()), String.valueOf(totalF));
-            setText(getResources().getIdentifier(prefix + "_total_m", "id", getPackageName()), String.valueOf(totalM));
+            setText(getResources().getIdentifier("sb_q" + q + "_total_f", "id", getPackageName()), String.valueOf(totalF));
+            setText(getResources().getIdentifier("sb_q" + q + "_total_m", "id", getPackageName()), String.valueOf(totalM));
         }
 
-        // Section C
         int scTotal = 0;
-        int indicatorsCount = 7;
-        for (int i = 1; i <= indicatorsCount; i++) {
-            String key = "sc_q" + i + "_value";
-            int val = parseVal(data.get(key));
-            setText(getResources().getIdentifier("sc_q" + i, "id", getPackageName()), String.valueOf(val));
-            scTotal += val;
+        for (int i = 1; i <= 7; i++) {
+            String key = "sc_q" + i;
+            String valStr = data.get(key);
+            if (valStr == null) valStr = data.get(key + "_value");
+
+            int resId = getResources().getIdentifier(key, "id", getPackageName());
+            if (resId != 0) {
+                setText(resId, valStr);
+            }
+
+            scTotal += parseSafeInt(valStr);
         }
         setText(R.id.sc_total, String.valueOf(scTotal));
 
         TextView commentsView = findViewById(R.id.txt_comments);
         if (commentsView != null) {
             String comment = data.get("comments");
+            if (comment == null) comment = data.get("comment");
             commentsView.setText(comment != null && !comment.isEmpty() ? comment : "No comments");
         }
     }
 
-    private int parseVal(String value) {
+    private int parseSafeInt(String val) {
         try {
-            return (value != null && !value.isEmpty()) ? Integer.parseInt(value) : 0;
+            return (val != null && !val.isEmpty()) ? Integer.parseInt(val) : 0;
         } catch (NumberFormatException e) {
             return 0;
         }

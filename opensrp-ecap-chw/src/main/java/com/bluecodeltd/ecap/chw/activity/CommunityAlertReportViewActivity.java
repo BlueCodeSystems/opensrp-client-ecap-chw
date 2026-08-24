@@ -348,7 +348,23 @@ public class CommunityAlertReportViewActivity extends AppCompatActivity {
         setText(R.id.txt_date_reporting, data.get("date_reporting"));
         setText(R.id.txt_super_mentor_name, data.get("super_mentor_name"));
         setText(R.id.txt_super_mentor_contact, data.get("super_mentor_contact"));
-        setText(R.id.txt_illness_type, data.get("illness_type"));
+
+        String illnessType = data.get("illness_type");
+        String specificDisease = "";
+        if ("pcz".equalsIgnoreCase(illnessType)) {
+            specificDisease = data.get("pcz_priority_disease");
+        } else if ("other".equalsIgnoreCase(illnessType)) {
+            specificDisease = data.get("other_priority_disease");
+        }
+
+        if (specificDisease != null && !specificDisease.isEmpty()) {
+            // Capitalize and replace underscores for better display if labels aren't easily available
+            String displayDisease = specificDisease.replace("_", " ");
+            displayDisease = displayDisease.substring(0, 1).toUpperCase() + displayDisease.substring(1);
+            setText(R.id.txt_illness_type, displayDisease);
+        } else {
+            setText(R.id.txt_illness_type, illnessType);
+        }
 
         String eventDate = data.get("event_date") != null ? data.get("event_date") : "";
         String eventTime = data.get("event_time") != null ? data.get("event_time") : "";
@@ -356,6 +372,29 @@ public class CommunityAlertReportViewActivity extends AppCompatActivity {
         setText(R.id.txt_event_date, when);
 
         setText(R.id.txt_location, data.get("location"));
+        setText(R.id.txt_gps, data.get("gps"));
+
+        // Suspected Cases (Summing both new simplified fields and old age-specific fields for compatibility)
+        int simplifiedFemale = parseSafe(data.get("suspected_female"));
+        int simplifiedMale = parseSafe(data.get("suspected_male"));
+
+        int oldF04 = parseSafe(data.get("case_f_0_4"));
+        int oldF514 = parseSafe(data.get("case_f_5_14"));
+        int oldF15p = parseSafe(data.get("case_f_15_plus"));
+
+        int oldM04 = parseSafe(data.get("case_m_0_4"));
+        int oldM514 = parseSafe(data.get("case_m_5_14"));
+        int oldM15p = parseSafe(data.get("case_m_15_plus"));
+
+        int grandTotal = simplifiedFemale + simplifiedMale + oldF04 + oldF514 + oldF15p + oldM04 + oldM514 + oldM15p;
+
+        // If a manual case_total was entered and it's higher than our calculated sum, we use it as fallback
+        int manualTotal = parseSafe(data.get("case_total"));
+        if (manualTotal > grandTotal) {
+            grandTotal = manualTotal;
+        }
+
+        setText(R.id.txt_case_total, String.valueOf(grandTotal));
 
         String diseaseSelected = "pcz".equalsIgnoreCase(data.get("illness_type"))
                 ? data.get("pcz_priority_disease")
@@ -413,6 +452,9 @@ public class CommunityAlertReportViewActivity extends AppCompatActivity {
         if (commentsView != null) {
             String comment = data.get("supervisor_action_taken"); 
             if (comment == null || comment.isEmpty()) {
+                comment = data.get("cbs_supervisor_action_taken");
+            }
+            if (comment == null || comment.isEmpty()) {
                 comment = data.get("action_taken");
             }
             commentsView.setText(comment != null && !comment.isEmpty() ? comment : "");
@@ -427,6 +469,14 @@ public class CommunityAlertReportViewActivity extends AppCompatActivity {
         TextView textView = findViewById(viewId);
         if (textView != null) {
             textView.setText(value != null && !value.isEmpty() ? value : defaultValue);
+        }
+    }
+
+    private int parseSafe(String value) {
+        try {
+            return Integer.parseInt(value);
+        } catch (Exception e) {
+            return 0;
         }
     }
 

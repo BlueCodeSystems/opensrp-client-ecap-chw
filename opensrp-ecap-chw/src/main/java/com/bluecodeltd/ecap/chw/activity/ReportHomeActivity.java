@@ -300,12 +300,12 @@ public class ReportHomeActivity extends AppCompatActivity {
             dialog.getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT));
         }
 
-        view.findViewById(R.id.btn_portrait).setOnClickListener(v -> {
+        view.findViewById(R.id.cardPortrait).setOnClickListener(v -> {
             ReportViewActivity.start(this, reportId, reportType, android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             dialog.dismiss();
         });
 
-        view.findViewById(R.id.btn_landscape).setOnClickListener(v -> {
+        view.findViewById(R.id.cardLandscape).setOnClickListener(v -> {
             ReportViewActivity.start(this, reportId, reportType, android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
             dialog.dismiss();
         });

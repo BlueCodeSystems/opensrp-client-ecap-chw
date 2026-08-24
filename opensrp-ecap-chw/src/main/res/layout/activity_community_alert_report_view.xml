@@ -131,6 +131,7 @@
                         <TextView android:layout_width="120dp" android:layout_height="match_parent" android:text="Type of illness /Condition/ Event/Alert" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textStyle="bold" android:textSize="10sp"/>
                         <TextView android:layout_width="100dp" android:layout_height="match_parent" android:text="When did this happen (DD/MM/YYYY )" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textStyle="bold" android:textSize="10sp"/>
                         <TextView android:layout_width="120dp" android:layout_height="match_parent" android:text="Where did this happen (Community, District)" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textStyle="bold" android:textSize="10sp"/>
+                        <TextView android:layout_width="120dp" android:layout_height="match_parent" android:text="Suspected Cases" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textStyle="bold" android:textSize="10sp"/>
                         <TextView android:layout_width="180dp" android:layout_height="match_parent" android:text="How many have been affected" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textStyle="bold" android:textSize="10sp"/>
                         <TextView android:layout_width="180dp" android:layout_height="match_parent" android:text="How many died" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textStyle="bold" android:textSize="10sp"/>
                         <TextView android:layout_width="100dp" android:layout_height="match_parent" android:text="What action was taken" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textStyle="bold" android:textSize="10sp"/>
@@ -146,7 +147,22 @@
                         <!-- When -->
                         <TextView android:id="@+id/txt_event_date" android:layout_width="match_parent" android:layout_height="match_parent" android:textColor="#000000" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textSize="10sp"/>
                         <!-- Where -->
-                        <TextView android:id="@+id/txt_location" android:layout_width="match_parent" android:layout_height="match_parent" android:textColor="#000000" android:gravity="center_vertical" android:padding="4dp" android:background="@drawable/table_cell_background" android:textSize="10sp"/>
+                        <LinearLayout android:layout_width="120dp" android:layout_height="match_parent" android:orientation="vertical" android:background="@drawable/table_cell_background">
+                            <TextView android:id="@+id/txt_location" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#000000" android:padding="4dp" android:textSize="10sp"/>
+                            <TextView android:id="@+id/txt_gps" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#638790" android:padding="4dp" android:textSize="8sp" android:textStyle="italic"/>
+                        </LinearLayout>
+
+                        <!-- Suspected Cases -->
+                        <TextView
+                            android:id="@+id/txt_case_total"
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:textColor="#000000"
+                            android:gravity="center"
+                            android:padding="4dp"
+                            android:background="@drawable/table_cell_background"
+                            android:textStyle="bold"
+                            android:textSize="12sp"/>
 
                         <!-- Affected -->
                         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/table_cell_background">
