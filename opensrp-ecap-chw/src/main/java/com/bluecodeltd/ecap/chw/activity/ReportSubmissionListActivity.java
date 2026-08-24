@@ -378,30 +378,54 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
     }
 
     private void openViewReport(MonthlyReportModel item) {
-        if (ReportRegisterActivity.REPORT_TYPE_COMMUNITY_ALERT.equals(reportType) || ReportRegisterActivity.REPORT_TYPE_COMMUNITY.equals(reportType)) {
-            androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
-            builder.setTitle("Select Orientation");
-            String[] options = {"Portrait", "Landscape"};
-            builder.setItems(options, (dialog, which) -> {
-                Intent intent = new Intent(this, CommunityAlertReportViewActivity.class);
-                intent.putExtra(CommunityAlertReportViewActivity.EXTRA_BASE_ENTITY_ID, item.getBase_entity_id());
-                if (which == 1) { // Landscape
-                    intent.putExtra("orientation", android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                } else { // Portrait
-                    intent.putExtra("orientation", android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                }
-                startActivity(intent);
+        if (item == null) return;
+        
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        View dialogView = android.view.LayoutInflater.from(builder.getContext()).inflate(R.layout.dialog_orientation_selection, null);
+        builder.setView(dialogView);
+        androidx.appcompat.app.AlertDialog dialog = builder.create();
+
+        View cardPortrait = dialogView.findViewById(R.id.cardPortrait);
+        if (cardPortrait != null) {
+            cardPortrait.setOnClickListener(v -> {
+                launchReportActivity(item, android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                dialog.dismiss();
             });
-            builder.show();
-        } else {
-            Intent intent = switch (reportType != null ? reportType : "") {
-                case ReportRegisterActivity.REPORT_TYPE_NUTRITION -> new Intent(this, MonthlyNutritionReportViewActivity.class);
-                case ReportRegisterActivity.REPORT_TYPE_TB -> new Intent(this, MonthlyTbReportViewActivity.class);
-                default -> new Intent(this, MalariaReportViewActivity.class);
-            };
-            intent.putExtra(MalariaReportViewActivity.EXTRA_BASE_ENTITY_ID, item.getBase_entity_id());
-            startActivity(intent);
         }
+
+        View cardLandscape = dialogView.findViewById(R.id.cardLandscape);
+        if (cardLandscape != null) {
+            cardLandscape.setOnClickListener(v -> {
+                launchReportActivity(item, android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                dialog.dismiss();
+            });
+        }
+
+        dialog.show();
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+    }
+
+    private void launchReportActivity(MonthlyReportModel item, int orientation) {
+        if (item == null) return;
+        
+        Intent intent;
+        String type = reportType != null ? reportType : "";
+        
+        if (ReportRegisterActivity.REPORT_TYPE_COMMUNITY_ALERT.equals(type) || ReportRegisterActivity.REPORT_TYPE_COMMUNITY.equals(type)) {
+            intent = new Intent(this, CommunityAlertReportViewActivity.class);
+        } else if (ReportRegisterActivity.REPORT_TYPE_NUTRITION.equals(type)) {
+            intent = new Intent(this, MonthlyNutritionReportViewActivity.class);
+        } else if (ReportRegisterActivity.REPORT_TYPE_TB.equals(type)) {
+            intent = new Intent(this, MonthlyTbReportViewActivity.class);
+        } else {
+            intent = new Intent(this, MalariaReportViewActivity.class);
+        }
+
+        intent.putExtra("base_entity_id", item.getBase_entity_id());
+        intent.putExtra("orientation", orientation);
+        startActivity(intent);
     }
 
     private void openEditForm(MonthlyReportModel item) {

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.ImageButton;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -52,6 +51,12 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        int orientation = getIntent().getIntExtra("orientation", android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        if (orientation != android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) {
+            setRequestedOrientation(orientation);
+        }
+
         setContentView(R.layout.activity_monthly_nutrition_report_view);
 
         Toolbar toolbar = findViewById(R.id.report_view_toolbar);
@@ -69,7 +74,7 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
         baseEntityId = getIntent().getStringExtra(EXTRA_BASE_ENTITY_ID);
         loadReport();
 
-        setupExpansionLogic();
+        setupTabNavigation();
         setupEditButton();
     }
 
@@ -100,39 +105,46 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
         }
     }
 
-    private void setupExpansionLogic() {
-        setupSection(R.id.header_section_a, R.id.content_section_a, R.id.icon_section_a);
-        setupSection(R.id.header_section_b, R.id.content_section_b, R.id.icon_section_b);
-        setupSection(R.id.header_section_c, R.id.content_section_c, R.id.icon_section_c);
-        setupSection(R.id.header_section_d, R.id.content_section_d, R.id.icon_section_d);
-        setupSection(R.id.header_section_e, R.id.content_section_e, R.id.icon_section_e);
-        setupSection(R.id.header_section_f, R.id.content_section_f, R.id.icon_section_f);
-        setupSection(R.id.header_section_g, R.id.content_section_g, R.id.icon_section_g);
-        setupSection(R.id.header_section_h, R.id.content_section_h, R.id.icon_section_h);
-        setupSection(R.id.header_section_i, R.id.content_section_i, R.id.icon_section_i);
-        setupSection(R.id.header_section_comments, R.id.content_section_comments, R.id.icon_section_comments);
+    private void setupTabNavigation() {
+        findViewById(R.id.tab_a).setOnClickListener(v -> scrollToSection(R.id.sec_a));
+        findViewById(R.id.tab_b).setOnClickListener(v -> scrollToSection(R.id.sec_b));
+        findViewById(R.id.tab_cd).setOnClickListener(v -> scrollToSection(R.id.sec_cd));
+        findViewById(R.id.tab_efg).setOnClickListener(v -> scrollToSection(R.id.sec_efg));
+        findViewById(R.id.tab_hi).setOnClickListener(v -> scrollToSection(R.id.sec_hi));
     }
 
-    private void setupSection(int headerId, int contentId, int iconId) {
-        View header = findViewById(headerId);
-        View content = findViewById(contentId);
-        ImageView icon = findViewById(iconId);
+    private void scrollToSection(int sectionId) {
+        View section = findViewById(sectionId);
+        androidx.core.widget.NestedScrollView scrollView = findViewById(R.id.report_scroll);
+        if (section != null && scrollView != null) {
+            scrollView.smoothScrollTo(0, section.getTop());
+            updateTabStyles(sectionId);
+        }
+    }
 
-        if (header != null && content != null && icon != null) {
-            header.setOnClickListener(v -> {
-                if (content.getVisibility() == View.VISIBLE) {
-                    content.setVisibility(View.GONE);
-                    icon.setImageResource(R.drawable.baseline_expand_more_24);
-                } else {
-                    content.setVisibility(View.VISIBLE);
-                    icon.setImageResource(R.drawable.baseline_expand_less_24);
-                }
-            });
+    private void updateTabStyles(int sectionId) {
+        int activeColor = Color.parseColor("#FFFFFF");
+        int inactiveColor = Color.parseColor("#21603F");
+        int activeText = Color.parseColor("#1B3A4B");
+        int inactiveText = Color.parseColor("#CFE3D6");
+
+        setTabStyle(R.id.tab_a, sectionId == R.id.sec_a ? activeColor : inactiveColor, sectionId == R.id.sec_a ? activeText : inactiveText);
+        setTabStyle(R.id.tab_b, sectionId == R.id.sec_b ? activeColor : inactiveColor, sectionId == R.id.sec_b ? activeText : inactiveText);
+        setTabStyle(R.id.tab_cd, sectionId == R.id.sec_cd ? activeColor : inactiveColor, sectionId == R.id.sec_cd ? activeText : inactiveText);
+        setTabStyle(R.id.tab_efg, sectionId == R.id.sec_efg ? activeColor : inactiveColor, sectionId == R.id.sec_efg ? activeText : inactiveText);
+        setTabStyle(R.id.tab_hi, sectionId == R.id.sec_hi ? activeColor : inactiveColor, sectionId == R.id.sec_hi ? activeText : inactiveText);
+    }
+
+    private void setTabStyle(int tabId, int bgColor, int textColor) {
+        TextView tab = findViewById(tabId);
+        if (tab != null) {
+            tab.setBackgroundColor(bgColor);
+            tab.setTextColor(textColor);
         }
     }
 
     private void setupEditButton() {
-        ImageButton btnEdit = findViewById(R.id.btn_edit_report);
+        View btnEdit = findViewById(R.id.btn_edit_report);
         if (btnEdit != null) {
             btnEdit.setOnClickListener(v -> openEditForm());
         }
@@ -152,7 +164,7 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
             Threading.main(() -> {
                 String status = finalCaseStatusModel != null ? finalCaseStatusModel.getCase_status() : null;
                 if ("0".equals(status) || "2".equals(status)) {
-                    Snackbar.make(findViewById(R.id.header_card), "Beneficiary is inactive or de-registered", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(R.id.report_scroll), "Beneficiary is inactive or de-registered", Snackbar.LENGTH_LONG).show();
                     return;
                 }
 
@@ -175,7 +187,7 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
                     startActivityForResult(intent, EDIT_FORM_REQUEST);
                 } catch (Exception e) {
                     Timber.e(e);
-                    Snackbar.make(findViewById(R.id.header_card), "Unable to open form", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(R.id.report_scroll), "Unable to open form", Snackbar.LENGTH_LONG).show();
                 }
             });
         });
@@ -223,15 +235,6 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
             JSONObject metadata = formJsonObject.getJSONObject(com.bluecodeltd.ecap.chw.util.Constants.METADATA);
             org.json.JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
-            for (int i = 0; i < fields.length(); i++) {
-                JSONObject field = fields.getJSONObject(i);
-                String entity = field.optString("openmrs_entity");
-                if (entity.isEmpty() || "person_attribute".equals(entity)) {
-                    field.put("openmrs_entity", "concept");
-                    field.put("openmrs_entity_id", field.optString("key"));
-                }
-            }
-
             FormTag formTag = getFormTag();
             String tableName = getReportTableName(encounterType);
             if (tableName == null) {
@@ -276,6 +279,9 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
                     JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
                     if (isEditMode && existingClientJsonObject != null) {
                         JSONObject mergedClientJsonObject = org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
+                        if (existingClientJsonObject.has("attributes") && newClientJsonObject.has("attributes")) {
+                            mergedClientJsonObject.put("attributes", org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject.getJSONObject("attributes"), newClientJsonObject.getJSONObject("attributes")));
+                        }
                         ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
                     } else {
                         ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
@@ -328,7 +334,9 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
 
     private void populateData() {
         TextView title = findViewById(R.id.report_view_title);
-        title.setText(getString(R.string.nutrition_report_title, reportModel.getReporting_month()));
+        if (title != null) {
+            title.setText(getString(R.string.nutrition_report_title, reportModel.getReporting_month()));
+        }
 
         setText(R.id.txt_reporting_month, reportModel.getReporting_month());
         setText(R.id.txt_facility_name, reportModel.getFacility());
@@ -341,6 +349,7 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
         setText(R.id.subpop_cml_hiv, data.get("subpop_cml_hiv"));
         setText(R.id.subpop_cpbfa, data.get("subpop_cpbfa"));
         setText(R.id.subpop_siblings, data.get("subpop_siblings"));
+        calculateAndSetTotal(R.id.tv_a_total, data.get("subpop_calhiv"), data.get("subpop_hei"), data.get("subpop_cml_hiv"), data.get("subpop_cpbfa"), data.get("subpop_siblings"));
 
         // Section B
         setText(R.id.hh_practicing_diet_diversity, data.get("hh_practicing_diet_diversity"));
@@ -354,6 +363,7 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
         setText(R.id.plw_art_pmtct_nutrition_assessment, data.get("plw_art_pmtct_nutrition_assessment"));
         setText(R.id.plw_received_ifas, data.get("plw_received_ifas"));
         setText(R.id.hh_food_insecurity_counselled, data.get("hh_food_insecurity_counselled"));
+        calculateAndSetTotal(R.id.tv_b_total, data.get("hh_practicing_diet_diversity"), data.get("hh_practicing_exclusive_bf"), data.get("hh_practicing_complementary_feeding"), data.get("hh_wash_activities"), data.get("hh_visited_assessment"), data.get("ppmam_identified"), data.get("ppmam_referred_commenced"), data.get("other_children_pmam"), data.get("plw_art_pmtct_nutrition_assessment"), data.get("plw_received_ifas"), data.get("hh_food_insecurity_counselled"));
 
         // Section C
         setText(R.id.mnp_children_6_23_received, data.get("mnp_children_6_23_received"));
@@ -363,6 +373,7 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
         setText(R.id.vita_plw_supplemented, data.get("vita_plw_supplemented"));
         setText(R.id.deworming_children_12_59, data.get("deworming_children_12_59"));
         setText(R.id.deworming_plw, data.get("deworming_plw"));
+        calculateAndSetTotal(R.id.tv_c_total, data.get("mnp_children_6_23_received"), data.get("mnp_plw_received"), data.get("vita_children_6_11_months"), data.get("vita_children_12_59_months"), data.get("vita_plw_supplemented"), data.get("deworming_children_12_59"), data.get("deworming_plw"));
 
         // Section D
         setText(R.id.ecd_centres_supported_monitoring, data.get("ecd_centres_supported_monitoring"));
@@ -370,26 +381,31 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
         setText(R.id.ecd_children_enrolled, data.get("ecd_children_enrolled"));
         setText(R.id.ecd_caregivers_trained, data.get("ecd_caregivers_trained"));
         setText(R.id.ecd_developmental_screening, data.get("ecd_developmental_screening"));
+        calculateAndSetTotal(R.id.tv_d_total, data.get("ecd_centres_supported_monitoring"), data.get("ecd_centres_with_feeding"), data.get("ecd_children_enrolled"), data.get("ecd_caregivers_trained"), data.get("ecd_developmental_screening"));
 
         // Section E
         setText(R.id.wfa_underweight, data.get("wfa_underweight"));
         setText(R.id.wfa_overweight, data.get("wfa_overweight"));
         setText(R.id.wfa_normal, data.get("wfa_normal"));
+        calculateAndSetTotal(R.id.tv_e_total, data.get("wfa_underweight"), data.get("wfa_overweight"), data.get("wfa_normal"));
 
         // Section F
         setText(R.id.nutrition_grade_1, data.get("nutrition_grade_1"));
         setText(R.id.nutrition_grade_2, data.get("nutrition_grade_2"));
         setText(R.id.nutrition_nr, data.get("nutrition_nr"));
+        calculateAndSetTotal(R.id.tv_f_total, data.get("nutrition_grade_1"), data.get("nutrition_grade_2"), data.get("nutrition_nr"));
 
         // Section G
         setText(R.id.muac_red_below_11_5, data.get("muac_red_below_11_5"));
         setText(R.id.muac_yellow_11_5_to_12_5, data.get("muac_yellow_11_5_to_12_5"));
         setText(R.id.muac_green_12_5_plus, data.get("muac_green_12_5_plus"));
         setText(R.id.muac_oedema, data.get("muac_oedema"));
+        calculateAndSetTotal(R.id.tv_g_total, data.get("muac_red_below_11_5"), data.get("muac_yellow_11_5_to_12_5"), data.get("muac_green_12_5_plus"), data.get("muac_oedema"));
 
         // Section H
         setText(R.id.sti_referred, data.get("sti_referred"));
         setText(R.id.sti_treated, data.get("sti_treated"));
+        calculateAndSetTotal(R.id.tv_h_total, data.get("sti_referred"), data.get("sti_treated"));
 
         // Section I
         setText(R.id.referral_nutrition_to_health, data.get("referral_nutrition_to_health"));
@@ -397,11 +413,28 @@ public class MonthlyNutritionReportViewActivity extends AppCompatActivity {
         setText(R.id.referral_date_of_referral, data.get("referral_date_of_referral"));
         setText(R.id.referral_date_of_feedback, data.get("referral_date_of_feedback"));
         setText(R.id.referral_hiv_tb_integration, data.get("referral_hiv_tb_integration"));
+        calculateAndSetTotal(R.id.tv_i_total, data.get("referral_nutrition_to_health"), data.get("referral_feedback_received"), data.get("referral_hiv_tb_integration"));
 
         TextView commentsView = findViewById(R.id.txt_comments);
         if (commentsView != null) {
             String comment = data.get("comment");
             commentsView.setText(comment != null && !comment.isEmpty() ? comment : "No comments");
+        }
+    }
+
+    private void calculateAndSetTotal(int totalViewId, String... values) {
+        int total = 0;
+        for (String value : values) {
+            try {
+                if (value != null && !value.isEmpty()) {
+                    total += Integer.parseInt(value);
+                }
+            } catch (NumberFormatException ignored) {
+            }
+        }
+        TextView totalView = findViewById(totalViewId);
+        if (totalView != null) {
+            totalView.setText(String.valueOf(total));
         }
     }
 

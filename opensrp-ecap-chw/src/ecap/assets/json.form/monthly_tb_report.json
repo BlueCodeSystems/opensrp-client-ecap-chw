@@ -335,23 +335,6 @@
         "openmrs_entity_id": "q1_f_pc_18_plus"
       },
       {
-        "key": "q1_f_total",
-        "type": "edit_text",
-        "hint": "Grand Total Female:",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "edit_type": "number",
-        "relevance": {
-          "step1:q1_status": {
-            "type": "string",
-            "ex": "equalTo(., \"open\")"
-          }
-        },
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "q1_f_total"
-      },
-      {
         "key": "q1_m_lt_1",
         "type": "edit_text",
         "hint": "Under 1 Male",
@@ -457,23 +440,6 @@
         "openmrs_entity_id": "q1_m_pc_18_plus"
       },
       {
-        "key": "q1_m_total",
-        "type": "edit_text",
-        "hint": "Grand Total Male:",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "edit_type": "number",
-        "relevance": {
-          "step1:q1_status": {
-            "type": "string",
-            "ex": "equalTo(., \"open\")"
-          }
-        },
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "q1_m_total"
-      },
-      {
         "key": "q1_subpop_label",
         "type": "label",
         "text": "Sub-populations",
@@ -559,23 +525,6 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "q1_other"
-      },
-      {
-        "key": "q1_subpop_total",
-        "type": "edit_text",
-        "hint": "Grand Total:",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "edit_type": "number",
-        "relevance": {
-          "step1:q1_status": {
-            "type": "string",
-            "ex": "equalTo(., \"open\")"
-          }
-        },
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "q1_subpop_total"
       },
       {
         "key": "q2_status",
@@ -721,23 +670,6 @@
         "openmrs_entity_id": "q2_f_pc_18_plus"
       },
       {
-        "key": "q2_f_total",
-        "type": "edit_text",
-        "hint": "Grand Total Female:",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "edit_type": "number",
-        "relevance": {
-          "step1:q2_status": {
-            "type": "string",
-            "ex": "equalTo(., \"open\")"
-          }
-        },
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "q2_f_total"
-      },
-      {
         "key": "q2_m_lt_1",
         "type": "edit_text",
         "hint": "Under 1 Male",
@@ -843,23 +775,6 @@
         "openmrs_entity_id": "q2_m_pc_18_plus"
       },
       {
-        "key": "q2_m_total",
-        "type": "edit_text",
-        "hint": "Grand Total Male:",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "edit_type": "number",
-        "relevance": {
-          "step1:q2_status": {
-            "type": "string",
-            "ex": "equalTo(., \"open\")"
-          }
-        },
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "q2_m_total"
-      },
-      {
         "key": "q2_subpop_label",
         "type": "label",
         "text": "Sub-populations",
@@ -945,23 +860,6 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "q2_other"
-      },
-      {
-        "key": "q2_subpop_total",
-        "type": "edit_text",
-        "hint": "Grand Total:",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "edit_type": "number",
-        "relevance": {
-          "step1:q2_status": {
-            "type": "string",
-            "ex": "equalTo(., \"open\")"
-          }
-        },
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "q2_subpop_total"
       },
       {
         "key": "q3_status",
@@ -1107,23 +1005,6 @@
         "openmrs_entity_id": "q3_f_pc_18_plus"
       },
       {
-        "key": "q3_f_total",
-        "type": "edit_text",
-        "hint": "Grand Total Female:",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "edit_type": "number",
-        "relevance": {
-          "step1:q3_status": {
-            "type": "string",
-            "ex": "equalTo(., \"open\")"
-          }
-        },
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "q3_f_total"
-      },
-      {
         "key": "q3_m_lt_1",
         "type": "edit_text",
         "hint": "Under 1 Male",
@@ -1229,23 +1110,6 @@
         "openmrs_entity_id": "q3_m_pc_18_plus"
       },
       {
-        "key": "q3_m_total",
-        "type": "edit_text",
-        "hint": "Grand Total Male:",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "edit_type": "number",
-        "relevance": {
-          "step1:q3_status": {
-            "type": "string",
-            "ex": "equalTo(., \"open\")"
-          }
-        },
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "q3_m_total"
-      },
-      {
         "key": "q3_subpop_label",
         "type": "label",
         "text": "Sub-populations",
@@ -1331,23 +1195,6 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "q3_other"
-      },
-      {
-        "key": "q3_subpop_total",
-        "type": "edit_text",
-        "hint": "Grand Total:",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "edit_type": "number",
-        "relevance": {
-          "step1:q3_status": {
-            "type": "string",
-            "ex": "equalTo(., \"open\")"
-          }
-        },
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "q3_subpop_total"
       },
       {
         "key": "q4_status",
@@ -1493,23 +1340,6 @@
         "openmrs_entity_id": "q4_f_pc_18_plus"
       },
       {
-        "key": "q4_f_total",
-        "type": "edit_text",
-        "hint": "Grand Total Female:",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "edit_type": "number",
-        "relevance": {
-          "step1:q4_status": {
-            "type": "string",
-            "ex": "equalTo(., \"open\")"
-          }
-        },
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "q4_f_total"
-      },
-      {
         "key": "q4_m_lt_1",
         "type": "edit_text",
         "hint": "Under 1 Male",
@@ -1615,23 +1445,6 @@
         "openmrs_entity_id": "q4_m_pc_18_plus"
       },
       {
-        "key": "q4_m_total",
-        "type": "edit_text",
-        "hint": "Grand Total Male:",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "edit_type": "number",
-        "relevance": {
-          "step1:q4_status": {
-            "type": "string",
-            "ex": "equalTo(., \"open\")"
-          }
-        },
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "q4_m_total"
-      },
-      {
         "key": "q4_subpop_label",
         "type": "label",
         "text": "Sub-populations",
@@ -1717,23 +1530,6 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "q4_other"
-      },
-      {
-        "key": "q4_subpop_total",
-        "type": "edit_text",
-        "hint": "Grand Total:",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "edit_type": "number",
-        "relevance": {
-          "step1:q4_status": {
-            "type": "string",
-            "ex": "equalTo(., \"open\")"
-          }
-        },
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "q4_subpop_total"
       },
       {
         "key": "q5_status",
@@ -1879,23 +1675,6 @@
         "openmrs_entity_id": "q5_f_pc_18_plus"
       },
       {
-        "key": "q5_f_total",
-        "type": "edit_text",
-        "hint": "Grand Total Female:",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "edit_type": "number",
-        "relevance": {
-          "step1:q5_status": {
-            "type": "string",
-            "ex": "equalTo(., \"open\")"
-          }
-        },
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "q5_f_total"
-      },
-      {
         "key": "q5_m_lt_1",
         "type": "edit_text",
         "hint": "Under 1 Male",
@@ -2001,24 +1780,7 @@
         "openmrs_entity_id": "q5_m_pc_18_plus"
       },
       {
-        "key": "q5_m_total",
-        "type": "edit_text",
-        "hint": "Grand Total Male:",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "edit_type": "number",
-        "relevance": {
-          "step1:q5_status": {
-            "type": "string",
-            "ex": "equalTo(., \"open\")"
-          }
-        },
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "q5_m_total"
-      },
-      {
-        "key": "q5_subpop_label",
+        "key": "q5_agesex_label",
         "type": "label",
         "text": "Sub-populations",
         "text_color": "#2ECC71",
@@ -2088,23 +1850,6 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "q5_pc_lhiv"
-      },
-      {
-        "key": "q5_subpop_total",
-        "type": "edit_text",
-        "hint": "Grand Total:",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "edit_type": "number",
-        "relevance": {
-          "step1:q5_status": {
-            "type": "string",
-            "ex": "equalTo(., \"open\")"
-          }
-        },
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "q5_subpop_total"
       },
       {
         "key": "q6_status",
@@ -2250,23 +1995,6 @@
         "openmrs_entity_id": "q6_f_pc_18_plus"
       },
       {
-        "key": "q6_f_total",
-        "type": "edit_text",
-        "hint": "Grand Total Female:",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "edit_type": "number",
-        "relevance": {
-          "step1:q6_status": {
-            "type": "string",
-            "ex": "equalTo(., \"open\")"
-          }
-        },
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "q6_f_total"
-      },
-      {
         "key": "q6_m_lt_1",
         "type": "edit_text",
         "hint": "Under 1 Male",
@@ -2372,24 +2100,7 @@
         "openmrs_entity_id": "q6_m_pc_18_plus"
       },
       {
-        "key": "q6_m_total",
-        "type": "edit_text",
-        "hint": "Grand Total Male:",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "edit_type": "number",
-        "relevance": {
-          "step1:q6_status": {
-            "type": "string",
-            "ex": "equalTo(., \"open\")"
-          }
-        },
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "q6_m_total"
-      },
-      {
-        "key": "q6_subpop_label",
+        "key": "q6_agesex_label",
         "type": "label",
         "text": "Sub-populations",
         "text_color": "#2ECC71",
@@ -2474,23 +2185,6 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "q6_other"
-      },
-      {
-        "key": "q6_subpop_total",
-        "type": "edit_text",
-        "hint": "Grand Total:",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "edit_type": "number",
-        "relevance": {
-          "step1:q6_status": {
-            "type": "string",
-            "ex": "equalTo(., \"open\")"
-          }
-        },
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "q6_subpop_total"
       },
       {
         "key": "q7_status",
@@ -2636,23 +2330,6 @@
         "openmrs_entity_id": "q7_f_pc_18_plus"
       },
       {
-        "key": "q7_f_total",
-        "type": "edit_text",
-        "hint": "Grand Total Female:",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "edit_type": "number",
-        "relevance": {
-          "step1:q7_status": {
-            "type": "string",
-            "ex": "equalTo(., \"open\")"
-          }
-        },
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "q7_f_total"
-      },
-      {
         "key": "q7_m_lt_1",
         "type": "edit_text",
         "hint": "Under 1 Male",
@@ -2758,24 +2435,7 @@
         "openmrs_entity_id": "q7_m_pc_18_plus"
       },
       {
-        "key": "q7_m_total",
-        "type": "edit_text",
-        "hint": "Grand Total Male:",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "edit_type": "number",
-        "relevance": {
-          "step1:q7_status": {
-            "type": "string",
-            "ex": "equalTo(., \"open\")"
-          }
-        },
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "q7_m_total"
-      },
-      {
-        "key": "q7_subpop_label",
+        "key": "q7_agesex_label",
         "type": "label",
         "text": "Sub-populations",
         "text_color": "#2ECC71",
@@ -2845,23 +2505,6 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "q7_pc_lhiv"
-      },
-      {
-        "key": "q7_subpop_total",
-        "type": "edit_text",
-        "hint": "Grand Total:",
-        "label_text_style": "bold",
-        "text_color": "#000000",
-        "edit_type": "number",
-        "relevance": {
-          "step1:q7_status": {
-            "type": "string",
-            "ex": "equalTo(., \"open\")"
-          }
-        },
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "q7_subpop_total"
       }
     ]
   }
