@@ -220,7 +220,6 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "super_mentor_contact"
       },
-
       {
         "key": "illness_type",
         "type": "native_radio",
@@ -498,115 +497,24 @@
         "text_color": "#E67E22"
       },
       {
-        "key": "case_f_label",
-        "type": "label",
-        "text": "Females",
-        "text_color": "#27AE60"
-      },
-      {
-        "key": "case_f_0_4",
+        "key": "suspected_female",
         "type": "edit_text",
-        "hint": "0-4 Yrs",
-        "edit_type": "number",
-        "relevance": {
-          "step1:other_priority_disease": {
-            "type": "string",
-            "ex": "!equalTo(., \"maternal_deaths\")"
-          }
-        },
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "case_f_0_4"
-      },
-      {
-        "key": "case_f_5_14",
-        "type": "edit_text",
-        "hint": "5-14 Yrs",
-        "edit_type": "number",
-        "relevance": {
-          "step1:other_priority_disease": {
-            "type": "string",
-            "ex": "!equalTo(., \"maternal_deaths\") && !equalTo(., \"neonatal_death\") && !equalTo(., \"neonatal_tetanus\")"
-          }
-        },
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "case_f_5_14"
-      },
-      {
-        "key": "case_f_15_plus",
-        "type": "edit_text",
-        "hint": "≥ 15 Yrs",
-        "edit_type": "number",
-        "relevance": {
-          "step1:other_priority_disease": {
-            "type": "string",
-            "ex": "!equalTo(., \"neonatal_death\") && !equalTo(., \"neonatal_tetanus\")"
-          }
-        },
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "case_f_15_plus"
-      },
-      {
-        "key": "case_m_label",
-        "type": "label",
-        "text": "Males",
-        "text_color": "#2980B9"
-      },
-      {
-        "key": "case_m_0_4",
-        "type": "edit_text",
-        "hint": "0-4 Yrs",
-        "edit_type": "number",
-        "relevance": {
-          "step1:other_priority_disease": {
-            "type": "string",
-            "ex": "!equalTo(., \"maternal_deaths\")"
-          }
-        },
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "case_m_0_4"
-      },
-      {
-        "key": "case_m_5_14",
-        "type": "edit_text",
-        "hint": "5-14 Yrs",
-        "edit_type": "number",
-        "relevance": {
-          "step1:other_priority_disease": {
-            "type": "string",
-            "ex": "!equalTo(., \"maternal_deaths\") && !equalTo(., \"neonatal_death\") && !equalTo(., \"neonatal_tetanus\")"
-          }
-        },
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "case_m_5_14"
-      },
-      {
-        "key": "case_m_15_plus",
-        "type": "edit_text",
-        "hint": "≥ 15 Yrs",
-        "edit_type": "number",
-        "relevance": {
-          "step1:other_priority_disease": {
-            "type": "string",
-            "ex": "!equalTo(., \"maternal_deaths\") && !equalTo(., \"neonatal_death\") && !equalTo(., \"neonatal_tetanus\")"
-          }
-        },
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "case_m_15_plus"
-      },
-      {
-        "key": "case_total",
-        "type": "edit_text",
-        "hint": "Total",
+        "hint": "Number of suspected Female cases",
+        "label": "Females",
         "edit_type": "number",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "case_total"
+        "openmrs_entity_id": "suspected_female"
+      },
+      {
+        "key": "suspected_male",
+        "type": "edit_text",
+        "hint": "Number of suspected Male cases",
+        "label": "Males",
+        "edit_type": "number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "suspected_male"
       },
       {
         "key": "cbs_supervisor_part_of_response",
@@ -692,7 +600,14 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "location"
       },
-
+      {
+        "key": "gps",
+        "type": "gps",
+        "label": "GPS Coordinate",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "gps"
+      },
       {
         "key": "affected_status",
         "type": "native_radio",
@@ -866,7 +781,6 @@
         "text": "Has anyone died as a result of this event? If yes, specify the count",
         "label_text_style": "bold"
       },
-
       {
         "key": "dead_status",
         "type": "native_radio",

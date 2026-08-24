@@ -1,5 +1,4 @@
 package com.bluecodeltd.ecap.chw.activity;
-import com.bluecodeltd.ecap.chw.application.ChwApplication;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,14 +8,13 @@ import android.view.Window;
 import android.view.WindowInsetsController;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.widget.NestedScrollView;
 import androidx.preference.PreferenceManager;
 
 import com.bluecodeltd.ecap.chw.BuildConfig;
@@ -65,29 +63,43 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_monthly_tb_report_view);
 
-        Toolbar toolbar = findViewById(R.id.report_toolbar);
+        Toolbar toolbar = findViewById(R.id.report_view_toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
         applyLightStatusBar();
-        toolbar.setNavigationOnClickListener(v -> finish());
+        TextView toolbarTitle = findViewById(R.id.report_view_title);
+        if (toolbarTitle != null) {
+            toolbarTitle.setText("Monthly TB Report");
+        }
+        findViewById(R.id.report_view_back_button).setOnClickListener(v -> finish());
 
         baseEntityId = getIntent().getStringExtra(EXTRA_BASE_ENTITY_ID);
         loadReport();
-
-        setupTabLogic();
+        
+        setupExpansionLogic();
+        setupNavigationLogic();
         setupEditButton();
     }
 
     private void applyLightStatusBar() {
         Window window = getWindow();
-        window.setStatusBarColor(Color.parseColor("#1B3A4B"));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            window.getDecorView().setSystemUiVisibility(0);
+        window.setStatusBarColor(Color.WHITE);
+        View decorView = window.getDecorView();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            WindowInsetsController controller = decorView.getWindowInsetsController();
+            if (controller != null) {
+                controller.setSystemBarsAppearance(
+                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS);
+            }
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int flags = decorView.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            decorView.setSystemUiVisibility(flags);
         }
     }
-
     private void loadReport() {
         if (baseEntityId != null) {
             reportModel = MonthlyReportDao.getReport(ReportRegisterActivity.REPORT_TABLE_TB, baseEntityId);
@@ -98,70 +110,55 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
         }
     }
 
-    private void setupTabLogic() {
-        TextView tabQ1 = findViewById(R.id.tab_q1);
-        TextView tabQ2 = findViewById(R.id.tab_q2);
-        TextView tabQ3 = findViewById(R.id.tab_q3);
-        TextView tabQ4 = findViewById(R.id.tab_q4);
-        TextView tabQ5 = findViewById(R.id.tab_q5);
-        TextView tabQ6 = findViewById(R.id.tab_q6);
-        TextView tabQ7 = findViewById(R.id.tab_q7);
-        TextView tabComments = findViewById(R.id.tab_comments);
+    private void setupExpansionLogic() {
+        int[] contents = {R.id.content_q1, R.id.content_q2, R.id.content_q3, R.id.content_q4, R.id.content_q5, R.id.content_q6, R.id.content_q7, R.id.content_comments};
+        int[] icons = {R.id.icon_q1, R.id.icon_q2, R.id.icon_q3, R.id.icon_q4, R.id.icon_q5, R.id.icon_q6, R.id.icon_q7, R.id.icon_comments};
 
-        View secQ1 = findViewById(R.id.sec_q1);
-        View secQ2 = findViewById(R.id.sec_q2);
-        View secQ3 = findViewById(R.id.sec_q3);
-        View secQ4 = findViewById(R.id.sec_q4);
-        View secQ5 = findViewById(R.id.sec_q5);
-        View secQ6 = findViewById(R.id.sec_q6);
-        View secQ7 = findViewById(R.id.sec_q7);
-        View secComments = findViewById(R.id.sec_comments);
+        for (int contentId : contents) {
+            View content = findViewById(contentId);
+            if (content != null) content.setVisibility(View.VISIBLE);
+        }
 
-        NestedScrollView scrollView = findViewById(R.id.report_scroll);
-
-        View.OnClickListener tabClickListener = v -> {
-            View target = null;
-            resetTabs(tabQ1, tabQ2, tabQ3, tabQ4, tabQ5, tabQ6, tabQ7, tabComments);
-            v.setBackgroundColor(Color.WHITE);
-            ((TextView) v).setTextColor(Color.parseColor("#1B3A4B"));
-
-            int id = v.getId();
-            if (id == R.id.tab_q1) target = secQ1;
-            else if (id == R.id.tab_q2) target = secQ2;
-            else if (id == R.id.tab_q3) target = secQ3;
-            else if (id == R.id.tab_q4) target = secQ4;
-            else if (id == R.id.tab_q5) target = secQ5;
-            else if (id == R.id.tab_q6) target = secQ6;
-            else if (id == R.id.tab_q7) target = secQ7;
-            else if (id == R.id.tab_comments) target = secComments;
-
-            if (target != null && scrollView != null) {
-                View finalTarget = target;
-                scrollView.post(() -> scrollView.smoothScrollTo(0, finalTarget.getTop()));
-            }
-        };
-
-        if (tabQ1 != null) tabQ1.setOnClickListener(tabClickListener);
-        if (tabQ2 != null) tabQ2.setOnClickListener(tabClickListener);
-        if (tabQ3 != null) tabQ3.setOnClickListener(tabClickListener);
-        if (tabQ4 != null) tabQ4.setOnClickListener(tabClickListener);
-        if (tabQ5 != null) tabQ5.setOnClickListener(tabClickListener);
-        if (tabQ6 != null) tabQ6.setOnClickListener(tabClickListener);
-        if (tabQ7 != null) tabQ7.setOnClickListener(tabClickListener);
-        if (tabComments != null) tabComments.setOnClickListener(tabClickListener);
+        for (int iconId : icons) {
+            View icon = findViewById(iconId);
+            if (icon != null) icon.setVisibility(View.GONE);
+        }
     }
 
-    private void resetTabs(TextView... tabs) {
-        for (TextView tab : tabs) {
-            if (tab != null) {
-                tab.setBackgroundColor(Color.parseColor("#21603F"));
-                tab.setTextColor(Color.parseColor("#CFE3D6"));
-            }
+    private void setupNavigationLogic() {
+        androidx.core.widget.NestedScrollView scrollView = findViewById(R.id.report_scroll);
+        if (scrollView == null) return;
+
+        for (int i = 1; i <= 7; i++) {
+            int tabId = getResources().getIdentifier("tab_q" + i, "id", getPackageName());
+            int secId = getResources().getIdentifier("sec_q" + i, "id", getPackageName());
+            setupJump(tabId, secId, scrollView);
+        }
+        setupJump(R.id.tab_comments, R.id.sec_comments, scrollView);
+    }
+
+    private void setupJump(int chipId, int targetId, androidx.core.widget.NestedScrollView scrollView) {
+        View chip = findViewById(chipId);
+        View target = findViewById(targetId);
+        if (chip != null && target != null) {
+            chip.setOnClickListener(v -> {
+                int top = 0;
+                View parent = target;
+                while (parent != null && parent != scrollView) {
+                    top += parent.getTop();
+                    if (parent.getParent() instanceof View) {
+                        parent = (View) parent.getParent();
+                    } else {
+                        break;
+                    }
+                }
+                scrollView.smoothScrollTo(0, top);
+            });
         }
     }
 
     private void setupEditButton() {
-        ImageView btnEdit = findViewById(R.id.btn_edit_report);
+        ImageButton btnEdit = findViewById(R.id.btn_edit_report);
         if (btnEdit != null) {
             btnEdit.setOnClickListener(v -> openEditForm());
         }
@@ -177,43 +174,42 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
             } catch (Exception ignored) {
             }
 
-            JSONObject form = null;
-            try {
-                form = new FormUtils(this).getFormJson(ReportRegisterActivity.REPORT_FORM_TB);
-            } catch (Exception ignored) {
-            }
-
             CaseStatusModel finalCaseStatusModel = caseStatusModel;
-            JSONObject finalForm = form;
             Threading.main(() -> {
                 if (isFinishing() || isDestroyed()) return;
                 String status = finalCaseStatusModel != null ? finalCaseStatusModel.getCase_status() : null;
                 if ("0".equals(status) || "2".equals(status)) {
-                    Snackbar.make(findViewById(R.id.report_scroll), "Beneficiary is inactive or de-registered", Snackbar.LENGTH_LONG).show();
-                    return;
-                }
-
-                if (finalForm == null) {
-                    Snackbar.make(findViewById(R.id.report_scroll), "Unable to open form", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(R.id.header_card), "Beneficiary is inactive or de-registered", Snackbar.LENGTH_LONG).show();
                     return;
                 }
 
                 try {
+                    JSONObject form = new FormUtils(this).getFormJson(ReportRegisterActivity.REPORT_FORM_TB);
+                    if (form == null) {
+                        return;
+                    }
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                     if (reportModel.getAdditionalField("caseworker_name") == null || reportModel.getAdditionalField("caseworker_name").trim().isEmpty()) {
                         reportModel.setAdditionalField("caseworker_name", getCaseworkerName(prefs));
                     }
-                    finalForm.put("entity_id", reportModel.getBase_entity_id());
-                    org.smartregister.chw.core.utils.CoreJsonFormUtils.populateJsonForm(finalForm, reportModel.toValueMap());
+                    form.put("entity_id", reportModel.getBase_entity_id());
+
+                    Map<String, String> data = reportModel.toValueMap();
+                    Map<String, String> normalizedFields = new java.util.HashMap<>();
+                    for (Map.Entry<String, String> entry : data.entrySet()) {
+                        normalizedFields.put(entry.getKey().toLowerCase(), entry.getValue());
+                    }
+
+                    org.smartregister.chw.core.utils.CoreJsonFormUtils.populateJsonForm(form, normalizedFields);
 
                     Intent intent = new Intent(this, ReportFormActivity.class);
                     Form wizardForm = new Form();
                     intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, wizardForm);
-                    intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, finalForm.toString());
+                    intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, form.toString());
                     startActivityForResult(intent, EDIT_FORM_REQUEST);
                 } catch (Exception e) {
                     Timber.e(e);
-                    Snackbar.make(findViewById(R.id.report_scroll), "Unable to open form", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(R.id.header_card), "Unable to open form", Snackbar.LENGTH_LONG).show();
                 }
             });
         });
@@ -261,15 +257,6 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
             JSONObject metadata = formJsonObject.getJSONObject(com.bluecodeltd.ecap.chw.util.Constants.METADATA);
             org.json.JSONArray fields = org.smartregister.util.JsonFormUtils.fields(formJsonObject);
 
-            for (int i = 0; i < fields.length(); i++) {
-                JSONObject field = fields.getJSONObject(i);
-                String entity = field.optString("openmrs_entity");
-                if (entity.isEmpty() || "person_attribute".equals(entity)) {
-                    field.put("openmrs_entity", "concept");
-                    field.put("openmrs_entity_id", field.optString("key"));
-                }
-            }
-
             FormTag formTag = getFormTag();
             String tableName = getReportTableName(encounterType);
             if (tableName == null) {
@@ -314,6 +301,9 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
                     JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
                     if (isEditMode && existingClientJsonObject != null) {
                         JSONObject mergedClientJsonObject = org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
+                        if (existingClientJsonObject.has("attributes") && newClientJsonObject.has("attributes")) {
+                            mergedClientJsonObject.put("attributes", org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject.getJSONObject("attributes"), newClientJsonObject.getJSONObject("attributes")));
+                        }
                         ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
                     } else {
                         ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
@@ -335,7 +325,7 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
             }
         };
         try {
-            ChwApplication.getInstance().getAppExecutors().diskIO().execute(runnable);
+            new AppExecutors().diskIO().execute(runnable);
             return true;
         } catch (Exception e) {
             Timber.e(e);
@@ -365,124 +355,71 @@ public class MonthlyTbReportViewActivity extends AppCompatActivity {
     }
 
     private void populateData() {
-        TextView meta = findViewById(R.id.report_meta);
-        if (meta != null) {
-            meta.setText(String.format("Facility Name: %s  · Reporting Period: %s",
-                    reportModel.getFacility(), reportModel.getReporting_month()));
-        }
+        TextView title = findViewById(R.id.report_view_title);
+        title.setText(getString(R.string.tb_report_title, reportModel.getReporting_month()));
+
+        setText(R.id.txt_reporting_month, reportModel.getReporting_month());
+        setText(R.id.txt_facility_name, reportModel.getFacility());
 
         Map<String, String> data = reportModel.toValueMap();
 
-        String[] questions = {"q1", "q2", "q3", "q4", "q5", "q6", "q7"};
-        for (String q : questions) {
-            int totalF = 0;
-            int totalM = 0;
+        for (int q = 1; q <= 7; q++) {
+            int f_total = 0;
+            int m_total = 0;
+            int sub_total = 0;
 
-            // Row 1: < 1 Year
-            int f1 = parseVal(data.get(q + "_f_lt_1"));
-            int m1 = parseVal(data.get(q + "_m_lt_1"));
-            setText(getResources().getIdentifier("tv_" + q + "_lt1_f", "id", getPackageName()), String.valueOf(f1));
-            setText(getResources().getIdentifier("tv_" + q + "_lt1_m", "id", getPackageName()), String.valueOf(m1));
-            totalF += f1; totalM += m1;
+            String[] f_suffixes = {"_f_lt_1", "_f_1_4", "_f_5_9", "_f_10_14", "_f_15_19", "_f_20_plus", "_f_pc_18_plus"};
+            String[] m_suffixes = {"_m_lt_1", "_m_1_4", "_m_5_9", "_m_10_14", "_m_15_19", "_m_20_plus", "_m_pc_18_plus"};
+            String[] sub_keys = {"_hei", "_calhiv", "_wlhiv", "_pc_lhiv", "_other"};
 
-            // Row 2: 1-4 Years
-            int f2 = parseVal(data.get(q + "_f_1_4"));
-            int m2 = parseVal(data.get(q + "_m_1_4"));
-            setText(getResources().getIdentifier("tv_" + q + "_1_4_f", "id", getPackageName()), String.valueOf(f2));
-            setText(getResources().getIdentifier("tv_" + q + "_1_4_m", "id", getPackageName()), String.valueOf(m2));
-            totalF += f2; totalM += m2;
+            for (String s : f_suffixes) {
+                String key = "q" + q + s;
+                String val = data.get(key);
+                f_total += parseSafeInt(val);
+                int resId = getResources().getIdentifier(key.replace("_f_lt_1", "_f_lt1").replace("_f_pc_18_plus", "_f_pc_18"), "id", getPackageName());
+                if (resId != 0) setText(resId, val);
+            }
 
-            // Row 3: 5-9 Years
-            int f3 = parseVal(data.get(q + "_f_5_9"));
-            int m3 = parseVal(data.get(q + "_m_5_9"));
-            setText(getResources().getIdentifier("tv_" + q + "_5_9_f", "id", getPackageName()), String.valueOf(f3));
-            setText(getResources().getIdentifier("tv_" + q + "_5_9_m", "id", getPackageName()), String.valueOf(m3));
-            totalF += f3; totalM += m3;
+            for (String s : m_suffixes) {
+                String key = "q" + q + s;
+                String val = data.get(key);
+                m_total += parseSafeInt(val);
+                int resId = getResources().getIdentifier(key.replace("_m_lt_1", "_m_lt1").replace("_m_pc_18_plus", "_m_pc_18"), "id", getPackageName());
+                if (resId != 0) setText(resId, val);
+            }
 
-            // Row 4: 10-14 Years
-            int f4 = parseVal(data.get(q + "_f_10_14"));
-            int m4 = parseVal(data.get(q + "_m_10_14"));
-            setText(getResources().getIdentifier("tv_" + q + "_10_14_f", "id", getPackageName()), String.valueOf(f4));
-            setText(getResources().getIdentifier("tv_" + q + "_10_14_m", "id", getPackageName()), String.valueOf(m4));
-            totalF += f4; totalM += m4;
+            for (String s : sub_keys) {
+                String key = "q" + q + s;
+                String val = data.get(key);
+                sub_total += parseSafeInt(val);
+                int resId = getResources().getIdentifier(key, "id", getPackageName());
+                if (resId != 0) setText(resId, val);
+            }
 
-            // Row 5: 15-19 Years
-            int f5 = parseVal(data.get(q + "_f_15_19"));
-            int m5 = parseVal(data.get(q + "_m_15_19"));
-            setText(getResources().getIdentifier("tv_" + q + "_15_19_f", "id", getPackageName()), String.valueOf(f5));
-            setText(getResources().getIdentifier("tv_" + q + "_15_19_m", "id", getPackageName()), String.valueOf(m5));
-            totalF += f5; totalM += m5;
-
-            // Row 6: 20+ Years
-            int f6 = parseVal(data.get(q + "_f_20_plus"));
-            int m6 = parseVal(data.get(q + "_m_20_plus"));
-            setText(getResources().getIdentifier("tv_" + q + "_20_plus_f", "id", getPackageName()), String.valueOf(f6));
-            setText(getResources().getIdentifier("tv_" + q + "_20_plus_m", "id", getPackageName()), String.valueOf(m6));
-            totalF += f6; totalM += m6;
-
-            // Row 7: PC 18+ Years
-            int f7 = parseVal(data.get(q + "_f_pc_18_plus"));
-            int m7 = parseVal(data.get(q + "_m_pc_18_plus"));
-            setText(getResources().getIdentifier("tv_" + q + "_pc_18_f", "id", getPackageName()), String.valueOf(f7));
-            setText(getResources().getIdentifier("tv_" + q + "_pc_18_m", "id", getPackageName()), String.valueOf(m7));
-            totalF += f7; totalM += m7;
-
-            // Row 8: Total (1-7)
-            setText(getResources().getIdentifier("tv_" + q + "_total_f", "id", getPackageName()), String.valueOf(totalF));
-            setText(getResources().getIdentifier("tv_" + q + "_total_m", "id", getPackageName()), String.valueOf(totalM));
-
-            // Sub-Populations (9 to 12) - Aligned with BOTH column (far right)
-            int hei = parseVal(data.get(q + "_hei"));
-            int calhiv = parseVal(data.get(q + "_calhiv"));
-            int wlhiv = parseVal(data.get(q + "_wlhiv"));
-            int pcLhiv = parseVal(data.get(q + "_pc_lhiv"));
-
-            setText(getResources().getIdentifier("tv_" + q + "_hei", "id", getPackageName()), String.valueOf(hei));
-            setText(getResources().getIdentifier("tv_" + q + "_calhiv", "id", getPackageName()), String.valueOf(calhiv));
-            setText(getResources().getIdentifier("tv_" + q + "_wlhiv", "id", getPackageName()), String.valueOf(wlhiv));
-            setText(getResources().getIdentifier("tv_" + q + "_pc_lhiv", "id", getPackageName()), String.valueOf(pcLhiv));
-
-            // Row 13: Sub-Population Total (9-12)
-            int subTotal = hei + calhiv + wlhiv + pcLhiv;
-            setText(getResources().getIdentifier("tv_" + q + "_sub_total", "id", getPackageName()), String.valueOf(subTotal));
-
-            setStatusText(q + "_status", data.get(q + "_status"));
+            setText(getResources().getIdentifier("q" + q + "_f_total", "id", getPackageName()), String.valueOf(f_total));
+            setText(getResources().getIdentifier("q" + q + "_m_total", "id", getPackageName()), String.valueOf(m_total));
+            setText(getResources().getIdentifier("q" + q + "_sub_total", "id", getPackageName()), String.valueOf(sub_total));
         }
 
-        TextView commentsView = findViewById(R.id.tv_comments);
+        TextView commentsView = findViewById(R.id.txt_comments);
         if (commentsView != null) {
             String comment = data.get("comment");
             commentsView.setText(comment != null && !comment.isEmpty() ? comment : "No comments");
         }
     }
 
-    private int parseVal(String value) {
+    private int parseSafeInt(String val) {
         try {
-            return (value != null && !value.isEmpty()) ? Integer.parseInt(value) : 0;
+            return (val != null && !val.isEmpty()) ? Integer.parseInt(val) : 0;
         } catch (NumberFormatException e) {
             return 0;
         }
     }
 
     private void setText(int viewId, String value) {
-        if (viewId == 0) return;
         TextView textView = findViewById(viewId);
         if (textView != null) {
             textView.setText(value != null && !value.isEmpty() ? value : "0");
-        }
-    }
-
-    private void setStatusText(String idName, String value) {
-        int viewId = getResources().getIdentifier(idName, "id", getPackageName());
-        if (viewId == 0) return;
-        TextView textView = findViewById(viewId);
-        if (textView == null) return;
-        if ("open".equalsIgnoreCase(value)) {
-            textView.setText("Status: Open");
-        } else if ("closed".equalsIgnoreCase(value)) {
-            textView.setText("Status: Closed");
-        } else {
-            textView.setText("");
         }
     }
 
