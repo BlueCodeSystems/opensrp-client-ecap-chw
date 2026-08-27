@@ -97,9 +97,18 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
         super.onResume();
 
         try {
-            // Avoid stale values across sessions.
+            // Avoid stale values across sessions. Bumping the token also invalidates any
+            // version-check/login attempt left running from before this Activity was
+            // backgrounded, so its callback can't silently call attemptLogin() out of the
+            // blue once it completes after we've already reset state here (it would
+            // otherwise still match the token it captured and fire unexpectedly).
+            appVersionCheckToken++;
             cachedAppVersionAllowed = null;
             appVersionCheckInFlight = false;
+            View loginButton = findViewById(R.id.login_login_btn);
+            if (loginButton != null) {
+                loginButton.setEnabled(true);
+            }
 
             if (mLoginPresenter != null) {
                 mLoginPresenter.processViewCustomizations();

@@ -2900,6 +2900,13 @@
           }
         },
         {
+          "column_name": "sec_malnutrition_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sec_malnutrition_status"
+          }
+        },
+        {
           "column_name": "comment",
           "type": "Client",
           "json_mapping": {

@@ -200,7 +200,9 @@ public class HouseholdServiceReportDao extends AbstractDao {
             record.setCaregiver_mmd(getCursorValue(c, "caregiver_mmd"));
             record.setLevel_mmd(getCursorValue(c, "level_mmd"));
             record.setHousehold_id(getCursorValue(c, "household_id"));
-            record.setOther_services_caregiver(getCursorValue(c, "other_services_caregiver"));
+            String otherServiceCaregiver = getCursorValue(c, "other_service_caregiver");
+            record.setOther_services_caregiver(otherServiceCaregiver != null && !otherServiceCaregiver.isEmpty()
+                    ? otherServiceCaregiver : getCursorValue(c, "other_services_caregiver"));
             record.setOther_services_household(getCursorValue(c, "other_services_household"));
             record.setDelete_status(getCursorValue(c, "delete_status"));
             record.setSignature(getCursorValue(c, "signature"));

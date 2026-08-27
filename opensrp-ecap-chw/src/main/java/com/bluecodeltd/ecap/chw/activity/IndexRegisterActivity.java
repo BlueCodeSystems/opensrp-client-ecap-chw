@@ -302,16 +302,16 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
 
 
         //******** POPULATE JSON FORM VCA UNIQUE ID ******//
-//        JSONObject stepOneUniqueId = getFieldJSONObject(fields(jsonObject, STEP1), "unique_id");
-//
-//        if (stepOneUniqueId != null) {
-//            stepOneUniqueId.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
-//            try {
-//                stepOneUniqueId.put(JsonFormUtils.VALUE, newEntityId);
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//        }
+        JSONObject stepOneUniqueId = getFieldJSONObject(fields(jsonObject, STEP1), "unique_id");
+
+        if (stepOneUniqueId != null) {
+            stepOneUniqueId.remove(org.smartregister.family.util.JsonFormUtils.VALUE);
+            try {
+                stepOneUniqueId.put(JsonFormUtils.VALUE, newEntityId);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
 
 

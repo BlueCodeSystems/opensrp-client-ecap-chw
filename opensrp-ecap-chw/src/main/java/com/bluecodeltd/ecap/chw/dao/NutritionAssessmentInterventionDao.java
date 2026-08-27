@@ -66,6 +66,7 @@ public class NutritionAssessmentInterventionDao extends AbstractDao {
                 "FROM ec_client_index c " +
                 "WHERE c.household_id = '" + householdId + "' " +
                 "AND (c.deleted IS NULL OR c.deleted <> '1') " +
+                "AND c.unique_id IS NOT NULL AND c.unique_id != '' " +
                 "AND ((strftime('%Y', 'now') - substr(c.adolescent_birthdate, 7, 4)) * 12 + " +
                 "     (strftime('%m', 'now') - substr(c.adolescent_birthdate, 4, 2))) <= 60 " +
                 "AND (" +

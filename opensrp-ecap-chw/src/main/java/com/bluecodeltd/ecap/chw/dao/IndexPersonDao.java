@@ -137,7 +137,8 @@ public class IndexPersonDao  extends AbstractDao {
                 "FROM ec_client_index " +
                 "WHERE ((strftime('%Y', 'now') - substr(adolescent_birthdate, 7, 4)) * 12 + " +
                 "(strftime('%m', 'now') - substr(adolescent_birthdate, 4, 2))) BETWEEN 120 AND 204 " +
-                "AND household_id = '" + householdID + "' AND (deleted IS NULL OR deleted <> '1')";
+                "AND household_id = '" + householdID + "' AND (deleted IS NULL OR deleted <> '1') " +
+                "AND unique_id IS NOT NULL AND unique_id != ''";
 
 
         List<String> ids = AbstractDao.readData(sql, c -> getCursorValue(c, "unique_id"));
@@ -226,7 +227,7 @@ public class IndexPersonDao  extends AbstractDao {
 
     }
     public static boolean checkForAtLeastOnePositiveVca(String householdID) {
-        String sql = "SELECT is_hiv_positive FROM ec_client_index WHERE household_id = '" + householdID + "' AND (deleted IS NULL OR deleted <> '1')";
+        String sql = "SELECT is_hiv_positive FROM ec_client_index WHERE household_id = '" + householdID + "' AND (deleted IS NULL OR deleted <> '1') AND unique_id IS NOT NULL AND unique_id != ''";
 
         AbstractDao.DataMap<String> dataMap = c -> getCursorValue(c, "is_hiv_positive");
 
@@ -250,7 +251,8 @@ public class IndexPersonDao  extends AbstractDao {
         String sql1 = "SELECT is_hiv_positive, vl_last_result, household_id, unique_id " +
                 "FROM ec_client_index " +
                 "WHERE is_hiv_positive = 'yes' "  +
-                "AND household_id = '" + householdID + "' AND (deleted IS NULL OR deleted <> '1')";
+                "AND household_id = '" + householdID + "' AND (deleted IS NULL OR deleted <> '1') " +
+                "AND unique_id IS NOT NULL AND unique_id != ''";
 
         List<String> vcaIds = AbstractDao.readData(sql1, c -> getCursorValue(c, "unique_id"));
         List<String> viralResult = AbstractDao.readData(sql1, c -> getCursorValue(c, "vl_last_result"));
@@ -335,9 +337,9 @@ public class IndexPersonDao  extends AbstractDao {
         }
 
         for (String status : hivStatuses) {
-            if (status.equalsIgnoreCase("no") ||
+            if (status != null && (status.equalsIgnoreCase("no") ||
                     status.equalsIgnoreCase("yes") ||
-                    status.equalsIgnoreCase("not_required")) {
+                    status.equalsIgnoreCase("not_required"))) {
                 return true;
             }
         }
@@ -361,7 +363,8 @@ public class IndexPersonDao  extends AbstractDao {
                 "WHERE ((strftime('%Y', 'now') - substr(adolescent_birthdate, 7, 4)) * 12 + " +
                 "       (strftime('%m', 'now') - substr(adolescent_birthdate, 4, 2))) <= 60 " +
                 "AND household_id = '" + householdID + "' " +
-                "AND (deleted IS NULL OR deleted <> '1')";
+                "AND (deleted IS NULL OR deleted <> '1') " +
+                "AND unique_id IS NOT NULL AND unique_id != ''";
         return getCount(sql, "child_count") > 0;
     }
     private static int getCount(String sql, String alias) {

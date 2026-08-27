@@ -34,6 +34,7 @@ import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.MonthlyReportDao;
 import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.MonthlyReportModel;
+import com.bluecodeltd.ecap.chw.util.CbsWeeklyUtils;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.Threading;
 import com.google.android.material.snackbar.Snackbar;
@@ -68,9 +69,17 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
 
     private static final int LIST_FORM_REQUEST = JsonFormUtils.REQUEST_CODE_GET_JSON;
 
+    public static final String ADDITIONAL_FIELD_WEEK_AGGREGATE = "is_week_aggregate";
+    public static final String ADDITIONAL_FIELD_WEEK_LABEL = "week_label";
+    public static final String ADDITIONAL_FIELD_REPORT_COUNT = "week_report_count";
+    public static final String ADDITIONAL_FIELD_TOTAL_AFFECTED = "week_total_affected";
+    public static final String ADDITIONAL_FIELD_TOTAL_DEATHS = "week_total_deaths";
+    public static final String ADDITIONAL_FIELD_TOTAL_SUSPECTED = "week_total_suspected";
+
     private RecyclerView recyclerView;
     private View emptyView;
     private TextView metaText;
+    private TextView periodFilterLabel;
     private Spinner monthFilterSpinner;
     private final List<MonthlyReportModel> allItems = new ArrayList<>();
     private final List<MonthlyReportModel> items = new ArrayList<>();
@@ -78,6 +87,7 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
     private ReportSubmissionAdapter adapter;
     private String reportType;
     private String selectedPeriodKey = "";
+    private int rawFilteredCount = 0;
     private ArrayAdapter<String> monthFilterAdapter;
 
     @Override
@@ -107,15 +117,20 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
         }
 
         metaText = findViewById(R.id.report_submission_meta_text);
+        periodFilterLabel = findViewById(R.id.report_submission_period_filter_label);
         monthFilterSpinner = findViewById(R.id.report_submission_month_filter);
         findViewById(R.id.report_submission_back_button).setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+
+        if (isWeeklyGrouping() && periodFilterLabel != null) {
+            periodFilterLabel.setText(getString(R.string.report_submission_week_filter_label));
+        }
 
         recyclerView = findViewById(R.id.report_submission_recycler);
         emptyView = findViewById(R.id.report_submission_empty);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
-        adapter = new ReportSubmissionAdapter(this, items, new ReportSubmissionAdapter.Listener() {
+        adapter = new ReportSubmissionAdapter(this, items, reportType, new ReportSubmissionAdapter.Listener() {
             @Override
             public void onView(MonthlyReportModel item) {
                 openViewReport(item);
@@ -123,11 +138,17 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
 
             @Override
             public void onEdit(MonthlyReportModel item) {
+                if (isWeekAggregate(item)) {
+                    return;
+                }
                 openEditForm(item);
             }
 
             @Override
             public void onDelete(MonthlyReportModel item) {
+                if (isWeekAggregate(item)) {
+                    return;
+                }
                 deleteReport(item);
             }
         });
@@ -222,25 +243,141 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
     }
 
     private void applyMonthFilter() {
-        items.clear();
+        List<MonthlyReportModel> filtered = new ArrayList<>();
         if (selectedPeriodKey == null || selectedPeriodKey.trim().isEmpty()) {
-            items.addAll(allItems);
+            filtered.addAll(allItems);
         } else {
             for (MonthlyReportModel item : allItems) {
                 PeriodOption option = buildPeriodOption(item.getReporting_month());
                 if (option != null && java.util.Objects.equals(selectedPeriodKey, option.key)) {
-                    items.add(item);
+                    filtered.add(item);
                 }
             }
         }
+        rawFilteredCount = filtered.size();
+        items.clear();
+        if (isWeeklyGrouping()) {
+            items.addAll(buildWeeklyAggregates(filtered));
+        } else {
+            items.addAll(filtered);
+        }
         adapter.notifyDataSetChanged();
+    }
+
+    private boolean isWeeklyGrouping() {
+        String type = reportType != null ? reportType : "";
+        return ReportRegisterActivity.REPORT_TYPE_COMMUNITY_ALERT.equals(type)
+                || ReportRegisterActivity.REPORT_TYPE_COMMUNITY.equals(type);
+    }
+
+    /**
+     * Collapses raw report submissions into one synthetic row per Sunday-to-Saturday week, with
+     * the numeric CBS counts summed across every report submitted that week. This is how the
+     * recycler view shows "one report" per week instead of one row per individual submission.
+     */
+    private List<MonthlyReportModel> buildWeeklyAggregates(List<MonthlyReportModel> source) {
+        java.util.LinkedHashMap<String, List<MonthlyReportModel>> byWeek = new java.util.LinkedHashMap<>();
+        java.util.Map<String, PeriodOption> weekOptionByKey = new java.util.HashMap<>();
+        for (MonthlyReportModel item : source) {
+            PeriodOption option = buildPeriodOption(item.getReporting_month());
+            String key = option != null ? option.key : "unknown";
+            byWeek.computeIfAbsent(key, k -> new ArrayList<>()).add(item);
+            if (option != null) {
+                weekOptionByKey.put(key, option);
+            }
+        }
+        List<Map.Entry<String, List<MonthlyReportModel>>> entries = new ArrayList<>(byWeek.entrySet());
+        entries.sort((first, second) -> comparePeriodDesc(first.getKey(), second.getKey()));
+
+        List<MonthlyReportModel> aggregates = new ArrayList<>();
+        for (Map.Entry<String, List<MonthlyReportModel>> entry : entries) {
+            aggregates.add(buildWeekAggregateModel(entry.getKey(), weekOptionByKey.get(entry.getKey()), entry.getValue()));
+        }
+        return aggregates;
+    }
+
+    /**
+     * Builds one row representing a whole week. Its base_entity_id is the REAL id of the most
+     * recently updated report in the group (not a synthetic marker) so that tapping it can open
+     * CommunityAlertReportViewActivity exactly like any other row -- that screen independently
+     * recomputes the week from this report's date and rolls up totals across every report in it.
+     * The is_week_aggregate flag is only used here to hide Edit/Delete, which don't apply to a
+     * row that stands in for more than one underlying report.
+     */
+    private MonthlyReportModel buildWeekAggregateModel(String weekKey, PeriodOption option, List<MonthlyReportModel> groupItems) {
+        MonthlyReportModel latest = groupItems.get(0);
+        long latestTimestamp = parseTimestamp(latest.getLast_interacted_with());
+        for (MonthlyReportModel item : groupItems) {
+            long timestamp = parseTimestamp(item.getLast_interacted_with());
+            if (timestamp > latestTimestamp) {
+                latestTimestamp = timestamp;
+                latest = item;
+            }
+        }
+
+        Map<String, String> numericTotals = CbsWeeklyUtils.aggregateNumericFields(groupItems);
+        int totalAffected = sumMapped(numericTotals, CbsWeeklyUtils.AFFECTED_FIELD_KEYS);
+        int totalDeaths = sumMapped(numericTotals, CbsWeeklyUtils.DEATH_FIELD_KEYS);
+        int totalSuspected = sumMapped(numericTotals, CbsWeeklyUtils.SUSPECTED_FIELD_KEYS);
+
+        MonthlyReportModel aggregate = new MonthlyReportModel();
+        aggregate.setBase_entity_id(latest.getBase_entity_id());
+        aggregate.setReporting_month(latest.getReporting_month());
+        aggregate.setProvince(latest.getProvince());
+        aggregate.setDistrict(latest.getDistrict());
+        aggregate.setWard(latest.getWard());
+        aggregate.setFacility(latest.getFacility());
+        aggregate.setPartner(latest.getPartner());
+        aggregate.setCaseworker_name(latest.getCaseworker_name());
+        aggregate.setLast_interacted_with(latest.getLast_interacted_with());
+        aggregate.setDelete_status("0");
+
+        aggregate.setAdditionalField(ADDITIONAL_FIELD_WEEK_AGGREGATE, "1");
+        aggregate.setAdditionalField(ADDITIONAL_FIELD_WEEK_LABEL, option != null ? option.label : aggregate.getReporting_month());
+        aggregate.setAdditionalField(ADDITIONAL_FIELD_REPORT_COUNT, String.valueOf(groupItems.size()));
+        aggregate.setAdditionalField(ADDITIONAL_FIELD_TOTAL_AFFECTED, String.valueOf(totalAffected));
+        aggregate.setAdditionalField(ADDITIONAL_FIELD_TOTAL_DEATHS, String.valueOf(totalDeaths));
+        aggregate.setAdditionalField(ADDITIONAL_FIELD_TOTAL_SUSPECTED, String.valueOf(totalSuspected));
+        return aggregate;
+    }
+
+    private boolean isWeekAggregate(MonthlyReportModel item) {
+        return item != null && "1".equals(item.getAdditionalField(ADDITIONAL_FIELD_WEEK_AGGREGATE));
+    }
+
+    private long parseTimestamp(String value) {
+        if (value == null || value.trim().isEmpty()) {
+            return -1;
+        }
+        try {
+            return Long.parseLong(value.trim());
+        } catch (NumberFormatException e) {
+            return -1;
+        }
+    }
+
+    private int sumMapped(Map<String, String> values, String[] keys) {
+        int sum = 0;
+        for (String key : keys) {
+            String value = values.get(key);
+            if (value == null || value.trim().isEmpty()) {
+                continue;
+            }
+            try {
+                sum += Integer.parseInt(value.trim());
+            } catch (NumberFormatException ignored) {
+            }
+        }
+        return sum;
     }
 
     private void updateMetaText() {
         if (metaText == null) {
             return;
         }
-        if (items.size() == allItems.size()) {
+        if (isWeeklyGrouping()) {
+            metaText.setText(getString(R.string.report_submission_meta_weeks, items.size(), rawFilteredCount));
+        } else if (items.size() == allItems.size()) {
             metaText.setText(getString(R.string.report_submission_meta, items.size()));
         } else {
             metaText.setText(getString(R.string.report_submission_meta_filtered, items.size(), allItems.size()));
@@ -281,16 +418,32 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
     }
 
     private Date parsePeriodKey(String value) {
-        try {
-            return new SimpleDateFormat("yyyy-MM", Locale.getDefault()).parse(value);
-        } catch (Exception e) {
-            return null;
+        // Weekly keys are "yyyy-MM-dd" (the Sunday starting the week); monthly keys are "yyyy-MM".
+        // Try the more specific pattern first so a weekly key isn't truncated by the monthly one.
+        for (String pattern : new String[]{"yyyy-MM-dd", "yyyy-MM"}) {
+            try {
+                SimpleDateFormat format = new SimpleDateFormat(pattern, Locale.getDefault());
+                format.setLenient(false);
+                Date date = format.parse(value);
+                if (date != null) {
+                    return date;
+                }
+            } catch (Exception ignored) {
+            }
         }
+        return null;
     }
 
     private PeriodOption buildPeriodOption(String reportingMonth) {
         if (reportingMonth == null || reportingMonth.trim().isEmpty()) {
             return null;
+        }
+        if (isWeeklyGrouping()) {
+            // Delegate to CbsWeeklyUtils so the list's week grouping and
+            // CommunityAlertReportViewActivity's weekly-total rollup always agree on boundaries.
+            CbsWeeklyUtils.Week week =
+                    CbsWeeklyUtils.weekForReportingDate(reportingMonth);
+            return week == null ? null : new PeriodOption(week.key, week.label);
         }
         try {
             Date date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).parse(reportingMonth.trim());
@@ -341,7 +494,9 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
 
     private String getScreenSubtitle() {
         if (selectedPeriodKey == null || selectedPeriodKey.trim().isEmpty()) {
-            return getString(R.string.report_submission_toolbar_subtitle);
+            return isWeeklyGrouping()
+                    ? getString(R.string.report_submission_toolbar_subtitle_weekly)
+                    : getString(R.string.report_submission_toolbar_subtitle);
         }
         for (PeriodOption option : periodOptions) {
             if (selectedPeriodKey.equals(option.key)) {

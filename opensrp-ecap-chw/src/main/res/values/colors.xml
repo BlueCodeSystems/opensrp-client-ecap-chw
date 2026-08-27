@@ -163,5 +163,28 @@
     <color name="register_report_bg">#EEF2FF</color>
     <color name="register_report_icon">#4338CA</color>
 
+    <!-- Community Alert (CBS) report document colors -->
+    <color name="cbs_report_screen_bg">#EEF2F6</color>
+    <color name="cbs_report_header_start">#1E6FA8</color>
+    <color name="cbs_report_header_end">#218CC5</color>
+    <color name="cbs_report_section_label">#0D384E</color>
+    <color name="cbs_report_border">#C7D3DD</color>
+    <color name="cbs_report_column_header_bg">#E5EFF6</color>
+    <color name="cbs_report_column_header_text">#0D384E</color>
+    <color name="cbs_report_row_stripe">#F4F8FB</color>
+    <color name="cbs_report_row_white">#FFFFFF</color>
+    <color name="cbs_report_total_row_bg">#FDECC8</color>
+    <color name="cbs_report_total_row_border">#E3A426</color>
+    <color name="cbs_report_group_label_bg">#EDF2F2</color>
+    <color name="cbs_report_text">#1F2933</color>
+
+    <!-- CBS weekly submissions-list card: stat chip colors -->
+    <color name="cbs_stat_affected_bg">#E3F0FA</color>
+    <color name="cbs_stat_affected_text">#1E6FA8</color>
+    <color name="cbs_stat_deaths_bg">#FBE7E6</color>
+    <color name="cbs_stat_deaths_text">#B3261E</color>
+    <color name="cbs_stat_suspected_bg">#FDECC8</color>
+    <color name="cbs_stat_suspected_text">#8A5A00</color>
+
 </resources>
 

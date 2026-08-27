@@ -40,18 +40,19 @@ public class VcaAssessmentDao extends AbstractDao {
         String sql = "SELECT ec_vca_assessment.*, ec_client_index.household_id " +
                 "FROM ec_vca_assessment " +
                 "JOIN ec_client_index ON ec_vca_assessment.unique_id = ec_client_index.unique_id " +
-                "WHERE ec_client_index.household_id = '" + householdID + "' AND  (ec_client_index.deleted IS NULL OR ec_client_index.deleted != '1')";
+                "WHERE ec_client_index.household_id = '" + householdID + "' AND  (ec_client_index.deleted IS NULL OR ec_client_index.deleted != '1') " +
+                "AND ec_client_index.unique_id IS NOT NULL AND ec_client_index.unique_id != ''";
 
         List<VcaAssessmentModel> values = AbstractDao.readData(sql, getVcaAssessmentModelMap());
 
-        if (values.isEmpty()) {
+        if (values == null || values.isEmpty()) {
             return false;
         }
 
-        String vcaSql = "SELECT * FROM ec_client_index WHERE household_id = '" + householdID + "' AND  (deleted IS NULL OR deleted != '1')";
+        String vcaSql = "SELECT * FROM ec_client_index WHERE household_id = '" + householdID + "' AND  (deleted IS NULL OR deleted != '1') AND unique_id IS NOT NULL AND unique_id != ''";
         List<VcaAssessmentModel> allVcas = AbstractDao.readData(vcaSql, getVcaAssessmentModelMap());
 
-        if (allVcas.isEmpty()) {
+        if (allVcas == null || allVcas.isEmpty()) {
             return false;
         }
 

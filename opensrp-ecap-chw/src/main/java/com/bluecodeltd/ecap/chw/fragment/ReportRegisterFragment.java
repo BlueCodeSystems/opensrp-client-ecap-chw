@@ -22,7 +22,9 @@ import com.bluecodeltd.ecap.chw.adapter.ReportFormOptionAdapter;
 import com.bluecodeltd.ecap.chw.contract.ReportRegisterFragmentContract;
 import com.bluecodeltd.ecap.chw.domain.ReportType;
 import com.bluecodeltd.ecap.chw.dao.HouseholdServiceReportDao;
+import com.bluecodeltd.ecap.chw.dao.MonthlyReportDao;
 import com.bluecodeltd.ecap.chw.presenter.ReportRegisterFragmentPresenter;
+import com.bluecodeltd.ecap.chw.util.CbsWeeklyUtils;
 import com.bluecodeltd.ecap.chw.util.Constants;
 
 import org.smartregister.chw.core.custom_views.NavigationMenu;
@@ -325,10 +327,26 @@ public class ReportRegisterFragment extends BaseSafeRegisterFragment implements 
         options.add(new ReportType(
                 ReportRegisterActivity.REPORT_TYPE_COMMUNITY_ALERT,
                 getString(R.string.report_community_alert),
-                HouseholdServiceReportDao.getMonthlyReportCount(ReportRegisterActivity.REPORT_TABLE_COMMUNITY_ALERT, caseworkerName),
+                countCommunityAlertWeeks(caseworkerName),
                 getLastSubmitted(ReportRegisterActivity.REPORT_TABLE_COMMUNITY_ALERT, caseworkerName)
         ));
         return options;
+    }
+
+    /**
+     * Community Alert (CBS) reports are reviewed and listed by Sunday-to-Saturday week -- several
+     * reports submitted in the same week collapse into a single row in the submissions list -- so
+     * the count shown here must match: distinct weeks, not raw report submissions.
+     */
+    private int countCommunityAlertWeeks(String caseworkerName) {
+        try {
+            List<com.bluecodeltd.ecap.chw.model.MonthlyReportModel> reports =
+                    MonthlyReportDao.getReports(ReportRegisterActivity.REPORT_TABLE_COMMUNITY_ALERT, caseworkerName);
+            return CbsWeeklyUtils.countDistinctWeeks(reports);
+        } catch (Exception e) {
+            Log.w("ReportRegisterFragment", "Unable to count CBS weeks: " + e.getMessage());
+            return 0;
+        }
     }
 
     private String getLastSubmitted(String tableName, String caseworkerName) {

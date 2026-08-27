@@ -87,6 +87,7 @@ public class GradDao extends AbstractDao {
                 "(SELECT COUNT(*) FROM ec_client_index " +
                 " WHERE household_id = '" + householdID + "' " +
                 " AND (deleted IS NULL OR deleted <> '1') " +
+                " AND unique_id IS NOT NULL AND unique_id != '' " +
                 " AND " + ageFilter + ") AS eligible_count, " +
 
                 "(SELECT COUNT(DISTINCT v.unique_id) " +
@@ -123,7 +124,8 @@ public class GradDao extends AbstractDao {
                 "WHERE (strftime('%Y', 'now') - substr(adolescent_birthdate, 7, 4)) >= 10 " +
                 "AND (strftime('%Y', 'now') - substr(adolescent_birthdate, 7, 4)) <= 17 " +
                 "AND household_id = '" + householdID + "' " +
-                "AND (deleted IS NULL OR deleted <> '1')";
+                "AND (deleted IS NULL OR deleted <> '1') " +
+                "AND unique_id IS NOT NULL AND unique_id != ''";
         DataMap<Integer> dataMap = c -> getCursorIntValue(c, "in_range_count");
         List<Integer> values = AbstractDao.readData(sql, dataMap);
         return values != null && !values.isEmpty() && values.get(0) != null && values.get(0) > 0;
