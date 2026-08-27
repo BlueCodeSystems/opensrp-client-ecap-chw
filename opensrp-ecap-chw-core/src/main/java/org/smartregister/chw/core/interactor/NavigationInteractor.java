@@ -311,12 +311,18 @@ public class NavigationInteractor implements NavigationContract.Interactor {
         String caseworkerName = getCurrentCaseworkerName();
         String safeCaseworkerName = caseworkerName == null ? "" : caseworkerName.trim().replace("'", "''");
         String filter = safeCaseworkerName.isEmpty() ? "" : " AND caseworker_name = '" + safeCaseworkerName + "'";
+        // Community Alert (CBS) reports are reviewed and listed by Sunday-to-Saturday week --
+        // several reports submitted in the same week collapse into a single row in the
+        // submissions list -- so this badge must count distinct weeks for that table, not raw
+        // report rows, to stay consistent with what the list actually shows.
+        String communityAlertWeekExpr =
+                "date(substr(reporting_month,7,4)||'-'||substr(reporting_month,4,2)||'-'||substr(reporting_month,1,2), '-6 days', 'weekday 0')";
         String sql =
                 "SELECT (" +
                         "(SELECT COUNT(*) FROM ec_monthly_malaria WHERE (delete_status IS NULL OR delete_status <> '1')" + filter + ") + " +
                         "(SELECT COUNT(*) FROM ec_monthly_nutrition WHERE (delete_status IS NULL OR delete_status <> '1')" + filter + ") + " +
                         "(SELECT COUNT(*) FROM ec_monthly_tb WHERE (delete_status IS NULL OR delete_status <> '1')" + filter + ") + " +
-                        "(SELECT COUNT(*) FROM ec_community_alert WHERE (delete_status IS NULL OR delete_status <> '1')" + filter + ")" +
+                        "(SELECT COUNT(DISTINCT " + communityAlertWeekExpr + ") FROM ec_community_alert WHERE (delete_status IS NULL OR delete_status <> '1')" + filter + ")" +
                         ") AS c";
         return NavigationDao.getQueryCount(sql);
     }

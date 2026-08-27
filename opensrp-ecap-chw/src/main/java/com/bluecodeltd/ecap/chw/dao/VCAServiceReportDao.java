@@ -17,19 +17,20 @@ public class VCAServiceReportDao extends AbstractDao {
                 "FROM ec_vca_service_report " +
                 "JOIN ec_client_index ON ec_vca_service_report.unique_id = ec_client_index.unique_id " +
                 "WHERE ec_client_index.household_id = '" + householdID + "' " +
-                "AND (ec_vca_service_report.delete_status IS NULL OR ec_vca_service_report.delete_status <> '1') AND  (ec_client_index.deleted IS NULL OR ec_client_index.deleted != '1')";
+                "AND (ec_vca_service_report.delete_status IS NULL OR ec_vca_service_report.delete_status <> '1') AND  (ec_client_index.deleted IS NULL OR ec_client_index.deleted != '1') " +
+                "AND ec_client_index.unique_id IS NOT NULL AND ec_client_index.unique_id != ''";
 
         List<VCAServiceModel> values = AbstractDao.readData(sql, getServiceModelMap());
 
-        if (values.isEmpty()) {
+        if (values == null || values.isEmpty()) {
             return false;
         }
 
         // Query to get all VCAs in the household
-        String vcaSql = "SELECT * FROM ec_client_index WHERE household_id = '" + householdID + "' AND (deleted IS NULL OR deleted != '1')";
+        String vcaSql = "SELECT * FROM ec_client_index WHERE household_id = '" + householdID + "' AND (deleted IS NULL OR deleted != '1') AND unique_id IS NOT NULL AND unique_id != ''";
         List<VCAServiceModel> allVcas = AbstractDao.readData(vcaSql, getServiceModelMap());
 
-        if (allVcas.isEmpty()) {
+        if (allVcas == null || allVcas.isEmpty()) {
             return false;
         }
 
@@ -102,6 +103,7 @@ public class VCAServiceReportDao extends AbstractDao {
                 " FROM ec_vca_service_report\n" +
                 " JOIN ec_client_index ON ec_client_index.unique_id = ec_vca_service_report.unique_id\n" +
                 " WHERE household_id = '" + householdId + "' AND (ec_vca_service_report.delete_status IS NULL OR ec_vca_service_report.delete_status <> '1') \n" +
+                " AND ec_client_index.unique_id IS NOT NULL AND ec_client_index.unique_id != '' \n" +
                 " AND ec_vca_service_report.is_hiv_positive = 'yes' GROUP BY ec_vca_service_report.unique_id";
         // Map the result set to extract the vl_last_result as an integer
         AbstractDao.DataMap<Integer> dataMap = c -> getCursorIntValue(c, "vl_last_result");

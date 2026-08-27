@@ -24,6 +24,7 @@ import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.dao.MonthlyReportDao;
 import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.MonthlyReportModel;
+import com.bluecodeltd.ecap.chw.util.CbsWeeklyUtils;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.Threading;
 import com.google.android.material.snackbar.Snackbar;
@@ -40,7 +41,9 @@ import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +56,10 @@ public class CommunityAlertReportViewActivity extends AppCompatActivity {
     private static final int EDIT_FORM_REQUEST = JsonFormUtils.REQUEST_CODE_GET_JSON;
     private MonthlyReportModel reportModel;
     private String baseEntityId;
+    private CbsWeeklyUtils.Week week;
+    private int weekReportCount = 1;
+    private Map<String, String> weekTotals = Collections.emptyMap();
+    private List<MonthlyReportModel> weekReports = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -103,6 +110,17 @@ public class CommunityAlertReportViewActivity extends AppCompatActivity {
         }
 
         if (reportModel != null) {
+            // Community Alert reports are reviewed by week (Sunday-Saturday): show every report
+            // submitted in the same week as this one as its own numbered row, with a Total row
+            // summing the numeric counts across all of them, so the screen is a comprehensive
+            // weekly report rather than just this single submission.
+            week = CbsWeeklyUtils.weekForReportingDate(reportModel.getReporting_month());
+            List<MonthlyReportModel> allReports = MonthlyReportDao.getReports(ReportRegisterActivity.REPORT_TABLE_COMMUNITY_ALERT);
+            List<MonthlyReportModel> matched = CbsWeeklyUtils.filterSameWeek(allReports, reportModel.getReporting_month());
+            weekReports = new ArrayList<>(matched.isEmpty() ? Collections.singletonList(reportModel) : matched);
+            weekReports.sort(Comparator.comparing(this::parseReportDate, Comparator.nullsLast(Comparator.naturalOrder())));
+            weekReportCount = weekReports.size();
+            weekTotals = CbsWeeklyUtils.aggregateNumericFields(weekReports);
             populateData();
         }
     }
@@ -329,135 +347,217 @@ public class CommunityAlertReportViewActivity extends AppCompatActivity {
 
         TextView title = findViewById(R.id.report_view_title);
         if (title != null) {
-            String reportingMonth = reportModel.getReporting_month() != null ? reportModel.getReporting_month() : "";
-            title.setText(getString(R.string.report_community_alert_title, reportingMonth));
+            if (week != null) {
+                title.setText(getString(R.string.report_community_alert_week_title, week.label, weekReportCount));
+            } else {
+                String reportingMonth = reportModel.getReporting_month() != null ? reportModel.getReporting_month() : "";
+                title.setText(getString(R.string.report_community_alert_title, reportingMonth));
+            }
         }
 
+        // Administrative/location fields are shared across the week's reports, so they're shown
+        // from this (most recently updated) report.
         setText(R.id.txt_reporting_month, reportModel.getReporting_month());
         setText(R.id.txt_facility_name, reportModel.getFacility());
-
-        Map<String, String> data = reportModel.toValueMap();
-
         setText(R.id.txt_form_id, reportModel.getForm_id());
         setText(R.id.txt_province, reportModel.getProvince());
         setText(R.id.txt_district, reportModel.getDistrict());
         setText(R.id.txt_ward, reportModel.getWard());
         setText(R.id.txt_caseworker_name, reportModel.getCaseworker_name());
+
+        Map<String, String> data = reportModel.toValueMap();
         setText(R.id.txt_phone_number, data.get("phone_number"));
         setText(R.id.txt_community, data.get("community"));
         setText(R.id.txt_date_reporting, data.get("date_reporting"));
         setText(R.id.txt_super_mentor_name, data.get("super_mentor_name"));
         setText(R.id.txt_super_mentor_contact, data.get("super_mentor_contact"));
 
-        String illnessType = data.get("illness_type");
-        String specificDisease = "";
-        if ("pcz".equalsIgnoreCase(illnessType)) {
-            specificDisease = data.get("pcz_priority_disease");
-        } else if ("other".equalsIgnoreCase(illnessType)) {
-            specificDisease = data.get("other_priority_disease");
+        String comment = data.get("cbs_supervisor_action_taken");
+        if (comment == null || comment.isEmpty()) {
+            comment = data.get("action_taken");
+        }
+        TextView commentsView = findViewById(R.id.txt_comments);
+        if (commentsView != null) {
+            commentsView.setText(comment != null && !comment.isEmpty() ? comment : "");
         }
 
+        buildDataTable();
+    }
+
+    /**
+     * Renders the comprehensive weekly table: one numbered row per report submitted this week,
+     * followed by a bolded Total row summing the numeric counts across all of them.
+     */
+    private void buildDataTable() {
+        android.widget.TableLayout table = findViewById(R.id.community_alert_data_table);
+        if (table == null) {
+            return;
+        }
+        // Table's first child is the static header row (from XML) -- remove everything after it
+        // before re-adding rows, so switching between reports doesn't keep stacking old rows.
+        while (table.getChildCount() > 1) {
+            table.removeViewAt(1);
+        }
+
+        int sn = 1;
+        for (MonthlyReportModel report : weekReports) {
+            table.addView(buildReportRow(table, sn++, report));
+        }
+        table.addView(buildTotalRow(table));
+    }
+
+    private View buildReportRow(android.widget.TableLayout table, int sn, MonthlyReportModel report) {
+        View row = getLayoutInflater().inflate(R.layout.community_alert_report_data_row, table, false);
+        Map<String, String> data = report.toValueMap();
+
+        setRowCell(row, R.id.row_sn, String.valueOf(sn));
+
+        String illnessType = data.get("illness_type");
+        String specificDisease = "pcz".equalsIgnoreCase(illnessType)
+                ? data.get("pcz_priority_disease")
+                : data.get("other_priority_disease");
         if (specificDisease != null && !specificDisease.isEmpty()) {
-            // Capitalize and replace underscores for better display if labels aren't easily available
             String displayDisease = specificDisease.replace("_", " ");
             displayDisease = displayDisease.substring(0, 1).toUpperCase() + displayDisease.substring(1);
-            setText(R.id.txt_illness_type, displayDisease);
+            setRowCell(row, R.id.row_illness_type, displayDisease);
         } else {
-            setText(R.id.txt_illness_type, illnessType);
+            setRowCell(row, R.id.row_illness_type, illnessType);
         }
 
         String eventDate = data.get("event_date") != null ? data.get("event_date") : "";
         String eventTime = data.get("event_time") != null ? data.get("event_time") : "";
-        String when = eventDate + (!eventDate.isEmpty() && !eventTime.isEmpty() ? " " : "") + eventTime;
-        setText(R.id.txt_event_date, when);
+        setRowCell(row, R.id.row_event_date, eventDate + (!eventDate.isEmpty() && !eventTime.isEmpty() ? " " : "") + eventTime);
 
-        setText(R.id.txt_location, data.get("location"));
-        setText(R.id.txt_gps, data.get("gps"));
+        setRowCell(row, R.id.row_location, data.get("location"));
+        setRowCell(row, R.id.row_gps, data.get("gps"));
 
-        // Suspected Cases (Summing both new simplified fields and old age-specific fields for compatibility)
-        int simplifiedFemale = parseSafe(data.get("suspected_female"));
-        int simplifiedMale = parseSafe(data.get("suspected_male"));
+        int suspected = parseSafe(data.get("suspected_female")) + parseSafe(data.get("suspected_male"));
+        setRowCell(row, R.id.row_case_total, String.valueOf(suspected));
 
-        int oldF04 = parseSafe(data.get("case_f_0_4"));
-        int oldF514 = parseSafe(data.get("case_f_5_14"));
-        int oldF15p = parseSafe(data.get("case_f_15_plus"));
-
-        int oldM04 = parseSafe(data.get("case_m_0_4"));
-        int oldM514 = parseSafe(data.get("case_m_5_14"));
-        int oldM15p = parseSafe(data.get("case_m_15_plus"));
-
-        int grandTotal = simplifiedFemale + simplifiedMale + oldF04 + oldF514 + oldF15p + oldM04 + oldM514 + oldM15p;
-
-        // If a manual case_total was entered and it's higher than our calculated sum, we use it as fallback
-        int manualTotal = parseSafe(data.get("case_total"));
-        if (manualTotal > grandTotal) {
-            grandTotal = manualTotal;
+        for (String key : CbsWeeklyUtils.AFFECTED_FIELD_KEYS) {
+            setRowCell(row, affectedCellId(key), data.get(key), "0");
+        }
+        for (String key : CbsWeeklyUtils.DEATH_FIELD_KEYS) {
+            setRowCell(row, deathCellId(key), data.get(key), "0");
         }
 
-        setText(R.id.txt_case_total, String.valueOf(grandTotal));
-
-        String diseaseSelected = "pcz".equalsIgnoreCase(data.get("illness_type"))
-                ? data.get("pcz_priority_disease")
-                : data.get("other_priority_disease");
-        setText(R.id.txt_disease_selected, diseaseSelected);
-
-        // Suspected Cases (exact age bands: 0-4Yrs, 5-14Yrs, >=15Yrs)
-        setText(R.id.case_f_0_4, data.get("case_f_0_4"), "0");
-        setText(R.id.case_f_5_14, data.get("case_f_5_14"), "0");
-        setText(R.id.case_f_15_plus, data.get("case_f_15_plus"), "0");
-        setText(R.id.case_m_0_4, data.get("case_m_0_4"), "0");
-        setText(R.id.case_m_5_14, data.get("case_m_5_14"), "0");
-        setText(R.id.case_m_15_plus, data.get("case_m_15_plus"), "0");
-        setText(R.id.case_total, data.get("case_total"), "0");
-
+        setRowCell(row, R.id.row_action_taken, data.get("action_taken"));
         String cbsPartOfResponse = data.get("cbs_supervisor_part_of_response");
-        if ("yes".equalsIgnoreCase(cbsPartOfResponse)) {
-            setText(R.id.txt_cbs_supervisor_part_of_response, "Yes");
-        } else if ("no".equalsIgnoreCase(cbsPartOfResponse)) {
-            setText(R.id.txt_cbs_supervisor_part_of_response, "No");
-        } else {
-            setText(R.id.txt_cbs_supervisor_part_of_response, "");
+        setRowCell(row, R.id.row_response_performed,
+                "yes".equalsIgnoreCase(cbsPartOfResponse) ? "Yes" : "no".equalsIgnoreCase(cbsPartOfResponse) ? "No" : "");
+
+        // Zebra-stripe alternate rows for readability, like a real report table.
+        if (sn % 2 == 0 && row instanceof android.view.ViewGroup) {
+            applyCellBackgroundRecursively((android.view.ViewGroup) row, R.drawable.table_cell_background_alt);
         }
-        setText(R.id.txt_cbs_supervisor_action_taken, data.get("cbs_supervisor_action_taken"));
+        return row;
+    }
 
-        // Section B - Affected
-        setText(R.id.affected_f_0_4, data.get("affected_f_0_4"), "0");
-        setText(R.id.affected_f_5_9, data.get("affected_f_5_9"), "0");
-        setText(R.id.affected_f_10_17, data.get("affected_f_10_17"), "0");
-        setText(R.id.affected_f_18_plus, data.get("affected_f_18_plus"), "0");
-        setText(R.id.affected_m_0_4, data.get("affected_m_0_4"), "0");
-        setText(R.id.affected_m_5_9, data.get("affected_m_5_9"), "0");
-        setText(R.id.affected_m_10_17, data.get("affected_m_10_17"), "0");
-        setText(R.id.affected_m_18_plus, data.get("affected_m_18_plus"), "0");
+    private View buildTotalRow(android.widget.TableLayout table) {
+        View row = getLayoutInflater().inflate(R.layout.community_alert_report_data_row, table, false);
+        setRowCell(row, R.id.row_sn, getString(R.string.report_community_alert_total_row_label));
+        setRowCell(row, R.id.row_illness_type, "");
+        setRowCell(row, R.id.row_event_date, "");
+        setRowCell(row, R.id.row_location, "");
+        setRowCell(row, R.id.row_gps, "");
 
-        // Section B - Dead
-        setText(R.id.dead_f_0_4, data.get("dead_f_0_4"), "0");
-        setText(R.id.dead_f_5_9, data.get("dead_f_5_9"), "0");
-        setText(R.id.dead_f_10_17, data.get("dead_f_10_17"), "0");
-        setText(R.id.dead_f_18_plus, data.get("dead_f_18_plus"), "0");
-        setText(R.id.dead_m_0_4, data.get("dead_m_0_4"), "0");
-        setText(R.id.dead_m_5_9, data.get("dead_m_5_9"), "0");
-        setText(R.id.dead_m_10_17, data.get("dead_m_10_17"), "0");
-        setText(R.id.dead_m_18_plus, data.get("dead_m_18_plus"), "0");
+        int totalSuspected = parseSafe(weekTotals.get("suspected_female")) + parseSafe(weekTotals.get("suspected_male"));
+        setRowCell(row, R.id.row_case_total, String.valueOf(totalSuspected));
 
-        setText(R.id.txt_action_taken, data.get("action_taken"));
-        setText(R.id.txt_response_performed, data.get("response_performed"));
+        for (String key : CbsWeeklyUtils.AFFECTED_FIELD_KEYS) {
+            setRowCell(row, affectedCellId(key), weekTotals.get(key), "0");
+        }
+        for (String key : CbsWeeklyUtils.DEATH_FIELD_KEYS) {
+            setRowCell(row, deathCellId(key), weekTotals.get(key), "0");
+        }
+        setRowCell(row, R.id.row_action_taken, "");
+        setRowCell(row, R.id.row_response_performed, "");
 
-        // Section C / Footer
-        setText(R.id.txt_supervisor_name, data.get("supervisor_name"));
-        setText(R.id.txt_date_reviewed, data.get("date_reviewed"));
-        setText(R.id.txt_signature, data.get("signature"));
+        if (row instanceof android.view.ViewGroup) {
+            android.view.ViewGroup group = (android.view.ViewGroup) row;
+            applyCellBackgroundRecursively(group, R.drawable.table_cell_background_total);
+            applyBoldRecursively(group);
+        }
+        return row;
+    }
 
-        TextView commentsView = findViewById(R.id.txt_comments);
-        if (commentsView != null) {
-            String comment = data.get("supervisor_action_taken"); 
-            if (comment == null || comment.isEmpty()) {
-                comment = data.get("cbs_supervisor_action_taken");
+    private int affectedCellId(String key) {
+        switch (key) {
+            case "affected_f_0_4": return R.id.row_affected_f_0_4;
+            case "affected_f_5_9": return R.id.row_affected_f_5_9;
+            case "affected_f_10_17": return R.id.row_affected_f_10_17;
+            case "affected_f_18_plus": return R.id.row_affected_f_18_plus;
+            case "affected_m_0_4": return R.id.row_affected_m_0_4;
+            case "affected_m_5_9": return R.id.row_affected_m_5_9;
+            case "affected_m_10_17": return R.id.row_affected_m_10_17;
+            default: return R.id.row_affected_m_18_plus;
+        }
+    }
+
+    private int deathCellId(String key) {
+        switch (key) {
+            case "dead_f_0_4": return R.id.row_dead_f_0_4;
+            case "dead_f_5_9": return R.id.row_dead_f_5_9;
+            case "dead_f_10_17": return R.id.row_dead_f_10_17;
+            case "dead_f_18_plus": return R.id.row_dead_f_18_plus;
+            case "dead_m_0_4": return R.id.row_dead_m_0_4;
+            case "dead_m_5_9": return R.id.row_dead_m_5_9;
+            case "dead_m_10_17": return R.id.row_dead_m_10_17;
+            default: return R.id.row_dead_m_18_plus;
+        }
+    }
+
+    /**
+     * Recolors every "cell" background in a row -- any child whose current background is one of
+     * the bordered table_cell_background* shape drawables (a GradientDrawable at runtime) -- to
+     * the given drawable, leaving solid-color backgrounds (like the Female/Male group labels)
+     * untouched. Used for zebra-striping data rows and highlighting the Total row.
+     */
+    private void applyCellBackgroundRecursively(android.view.ViewGroup group, int drawableRes) {
+        if (group.getBackground() instanceof android.graphics.drawable.GradientDrawable) {
+            group.setBackgroundResource(drawableRes);
+        }
+        for (int i = 0; i < group.getChildCount(); i++) {
+            View child = group.getChildAt(i);
+            if (child.getBackground() instanceof android.graphics.drawable.GradientDrawable) {
+                child.setBackgroundResource(drawableRes);
             }
-            if (comment == null || comment.isEmpty()) {
-                comment = data.get("action_taken");
+            if (child instanceof android.view.ViewGroup) {
+                applyCellBackgroundRecursively((android.view.ViewGroup) child, drawableRes);
             }
-            commentsView.setText(comment != null && !comment.isEmpty() ? comment : "");
+        }
+    }
+
+    private void applyBoldRecursively(android.view.ViewGroup group) {
+        for (int i = 0; i < group.getChildCount(); i++) {
+            View child = group.getChildAt(i);
+            if (child instanceof TextView) {
+                ((TextView) child).setTypeface(((TextView) child).getTypeface(), android.graphics.Typeface.BOLD);
+            } else if (child instanceof android.view.ViewGroup) {
+                applyBoldRecursively((android.view.ViewGroup) child);
+            }
+        }
+    }
+
+    private void setRowCell(View row, int viewId, String value) {
+        setRowCell(row, viewId, value, "");
+    }
+
+    private void setRowCell(View row, int viewId, String value, String defaultValue) {
+        TextView textView = row.findViewById(viewId);
+        if (textView != null) {
+            textView.setText(value != null && !value.isEmpty() ? value : defaultValue);
+        }
+    }
+
+    private Date parseReportDate(MonthlyReportModel report) {
+        if (report == null || report.getReporting_month() == null || report.getReporting_month().trim().isEmpty()) {
+            return null;
+        }
+        try {
+            return new java.text.SimpleDateFormat("dd-MM-yyyy", java.util.Locale.getDefault()).parse(report.getReporting_month().trim());
+        } catch (Exception e) {
+            return null;
         }
     }
 

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/cbs_report_row_white">
+
+    <!-- S/N -->
+    <TextView android:id="@+id/row_sn" android:layout_width="match_parent" android:layout_height="match_parent" android:textColor="@color/cbs_report_text" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+    <!-- Type -->
+    <TextView android:id="@+id/row_illness_type" android:layout_width="match_parent" android:layout_height="match_parent" android:textColor="@color/cbs_report_text" android:gravity="center_vertical" android:padding="4dp" android:background="@drawable/table_cell_background" android:textSize="10sp"/>
+    <!-- When -->
+    <TextView android:id="@+id/row_event_date" android:layout_width="match_parent" android:layout_height="match_parent" android:textColor="@color/cbs_report_text" android:gravity="center" android:padding="4dp" android:background="@drawable/table_cell_background" android:textSize="10sp"/>
+    <!-- Where -->
+    <LinearLayout android:layout_width="120dp" android:layout_height="match_parent" android:orientation="vertical" android:background="@drawable/table_cell_background">
+        <TextView android:id="@+id/row_location" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/cbs_report_text" android:padding="4dp" android:textSize="10sp"/>
+        <TextView android:id="@+id/row_gps" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#638790" android:padding="4dp" android:textSize="8sp" android:textStyle="italic"/>
+    </LinearLayout>
+
+    <!-- Suspected Cases -->
+    <TextView
+        android:id="@+id/row_case_total"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:textColor="@color/cbs_report_text"
+        android:gravity="center"
+        android:padding="4dp"
+        android:background="@drawable/table_cell_background"
+        android:textStyle="bold"
+        android:textSize="12sp"/>
+
+    <!-- Affected -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/table_cell_background">
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Female" android:textColor="@color/cbs_report_section_label" android:gravity="center" android:background="@color/cbs_report_group_label_bg" android:padding="2dp" android:textStyle="bold" android:textSize="9sp"/>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+            <TextView android:id="@+id/row_affected_f_0_4" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="@color/cbs_report_text" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+            <TextView android:id="@+id/row_affected_f_5_9" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="@color/cbs_report_text" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+            <TextView android:id="@+id/row_affected_f_10_17" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="@color/cbs_report_text" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+            <TextView android:id="@+id/row_affected_f_18_plus" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="@color/cbs_report_text" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+        </LinearLayout>
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Male" android:textColor="@color/cbs_report_section_label" android:gravity="center" android:background="@color/cbs_report_group_label_bg" android:padding="2dp" android:textStyle="bold" android:textSize="9sp"/>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+            <TextView android:id="@+id/row_affected_m_0_4" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="@color/cbs_report_text" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+            <TextView android:id="@+id/row_affected_m_5_9" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="@color/cbs_report_text" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+            <TextView android:id="@+id/row_affected_m_10_17" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="@color/cbs_report_text" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+            <TextView android:id="@+id/row_affected_m_18_plus" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="@color/cbs_report_text" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Died -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/table_cell_background">
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Female" android:textColor="@color/cbs_report_section_label" android:gravity="center" android:background="@color/cbs_report_group_label_bg" android:padding="2dp" android:textStyle="bold" android:textSize="9sp"/>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+            <TextView android:id="@+id/row_dead_f_0_4" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="@color/cbs_report_text" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+            <TextView android:id="@+id/row_dead_f_5_9" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="@color/cbs_report_text" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+            <TextView android:id="@+id/row_dead_f_10_17" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="@color/cbs_report_text" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+            <TextView android:id="@+id/row_dead_f_18_plus" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="@color/cbs_report_text" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+        </LinearLayout>
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Male" android:textColor="@color/cbs_report_section_label" android:gravity="center" android:background="@color/cbs_report_group_label_bg" android:padding="2dp" android:textStyle="bold" android:textSize="9sp"/>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+            <TextView android:id="@+id/row_dead_m_0_4" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="@color/cbs_report_text" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+            <TextView android:id="@+id/row_dead_m_5_9" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="@color/cbs_report_text" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+            <TextView android:id="@+id/row_dead_m_10_17" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="@color/cbs_report_text" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+            <TextView android:id="@+id/row_dead_m_18_plus" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="@color/cbs_report_text" android:gravity="center" android:textSize="10sp" android:padding="4dp" android:background="@drawable/table_cell_background"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Action -->
+    <TextView android:id="@+id/row_action_taken" android:layout_width="match_parent" android:layout_height="match_parent" android:textColor="@color/cbs_report_text" android:gravity="center_vertical" android:padding="4dp" android:background="@drawable/table_cell_background" android:textSize="10sp"/>
+    <!-- Supervisor -->
+    <TextView android:id="@+id/row_response_performed" android:layout_width="match_parent" android:layout_height="match_parent" android:textColor="@color/cbs_report_text" android:gravity="center_vertical" android:padding="4dp" android:background="@drawable/table_cell_background" android:textSize="10sp"/>
+</TableRow>

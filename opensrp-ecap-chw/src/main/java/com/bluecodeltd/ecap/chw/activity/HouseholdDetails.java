@@ -1589,6 +1589,7 @@ public class HouseholdDetails extends AppCompatActivity {
 
                 final boolean shouldCreatePmtctChildRecord =
                         shouldCreatePmtctChildRecordFromFamilyMember(jsonFormObject, EncounterType, is_edit_mode);
+                final boolean isEditMode = is_edit_mode;
 
                 Runnable postSave = () -> {
                     switch (EncounterType) {
@@ -1639,29 +1640,39 @@ public class HouseholdDetails extends AppCompatActivity {
 
                         case "Caregiver Case Plan":
 
-                            try {
-                                JSONObject date = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
-                                String dateId = date != null ? date.optString("value") : "";
+                            closeFab();
+                            Toasty.success(HouseholdDetails.this, "Case Plan Saved", Toast.LENGTH_LONG, true).show();
+                            refreshActivity();
 
-                                JSONObject cpId = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_id");
-                                String cp_Id = cpId != null ? cpId.optString("value") : "";
+                            if (!isEditMode) {
+                                try {
+                                    JSONObject date = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
+                                    String dateId = date != null ? date.optString("value") : "";
 
-                                AddVulnarabilitiesToCasePlan(dateId,cp_Id);
-                            } catch (Exception e) {
-                                Timber.e(e);
-                                refreshActivity();
+                                    JSONObject cpId = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_id");
+                                    String cp_Id = cpId != null ? cpId.optString("value") : "";
+
+                                    AddVulnarabilitiesToCasePlan(dateId, cp_Id);
+                                } catch (Exception e) {
+                                    Timber.e(e);
+                                }
                             }
                             break;
 
                         case "Household Case Plan":
-                            try {
-                                JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
-                                String dateIdh = cpdate != null ? cpdate.optString("value") : "";
-                                refreshActivity();
-                                openHouseholdCasplanToAddVulnarabilities(dateIdh);
-                            } catch (Exception e) {
-                                Timber.e(e);
-                                refreshActivity();
+
+                            closeFab();
+                            Toasty.success(HouseholdDetails.this, "Case Plan Saved", Toast.LENGTH_LONG, true).show();
+                            refreshActivity();
+
+                            if (!isEditMode) {
+                                try {
+                                    JSONObject cpdate = getFieldJSONObject(fields(jsonFormObject, "step1"), "case_plan_date");
+                                    String dateIdh = cpdate != null ? cpdate.optString("value") : "";
+                                    openHouseholdCasplanToAddVulnarabilities(dateIdh);
+                                } catch (Exception e) {
+                                    Timber.e(e);
+                                }
                             }
                             break;
 
