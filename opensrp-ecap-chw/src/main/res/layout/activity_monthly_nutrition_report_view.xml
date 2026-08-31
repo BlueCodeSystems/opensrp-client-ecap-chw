@@ -300,7 +300,7 @@
                                 android:gravity="end"
                                 android:paddingHorizontal="10dp"
                                 android:paddingVertical="6dp"
-                                android:text="COUNT"
+                                android:text="VALUE"
                                 android:textColor="#6B6B63"
                                 android:textSize="10.5sp"
                                 android:textStyle="bold" />
@@ -2085,7 +2085,7 @@
                                 android:gravity="end"
                                 android:paddingHorizontal="10dp"
                                 android:paddingVertical="6dp"
-                                android:text="COUNT"
+                                android:text="VALUE"
                                 android:textColor="#6B6B63"
                                 android:textSize="10.5sp"
                                 android:textStyle="bold" />
@@ -2320,7 +2320,7 @@
                                 android:gravity="end"
                                 android:paddingHorizontal="10dp"
                                 android:paddingVertical="6dp"
-                                android:text="COUNT"
+                                android:text="VALUE"
                                 android:textColor="#6B6B63"
                                 android:textSize="10.5sp"
                                 android:textStyle="bold" />
@@ -2613,7 +2613,7 @@
                                 android:gravity="end"
                                 android:paddingHorizontal="10dp"
                                 android:paddingVertical="6dp"
-                                android:text="COUNT"
+                                android:text="VALUE"
                                 android:textColor="#6B6B63"
                                 android:textSize="10.5sp"
                                 android:textStyle="bold" />
