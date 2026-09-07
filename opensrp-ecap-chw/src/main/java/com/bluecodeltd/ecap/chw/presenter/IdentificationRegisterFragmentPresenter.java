@@ -1,6 +1,7 @@
 package com.bluecodeltd.ecap.chw.presenter;
 
 import com.bluecodeltd.ecap.chw.contract.IdentificationRegisterFragmentContract;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 
 public class IdentificationRegisterFragmentPresenter implements IdentificationRegisterFragmentContract.Presenter {
@@ -30,8 +31,24 @@ public class IdentificationRegisterFragmentPresenter implements IdentificationRe
 
         getView().initializeQueryParams("ec_client_index", countSelect, mainSelect);
         getView().initializeAdapter();
-        getView().countExecute();
-        getView().filterandSortInInitializeQueries();
+
+        // countExecute() runs a synchronous COUNT query against the SQLCipher-encrypted DB on
+        // whatever thread calls it; called here from Fragment.onResume() it can block the UI
+        // thread long enough to ANR. Run it off the main thread instead.
+        Threading.io(() -> {
+            IdentificationRegisterFragmentContract.View countingView = getView();
+            if (countingView != null) {
+                countingView.countExecute();
+            }
+            Threading.main(() -> {
+                IdentificationRegisterFragmentContract.View view = getView();
+                if (view == null) {
+                    return;
+                }
+                view.setTotalPatients();
+                view.filterandSortInInitializeQueries();
+            });
+        });
     }
 
     @Override

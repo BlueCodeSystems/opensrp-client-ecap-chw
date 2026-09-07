@@ -278,16 +278,20 @@ public class CasePlan extends AppCompatActivity {
                     return;
                 }
 
-                saveRegistration(childIndexEventClient, is_edit_mode, EncounterType);
+                Runnable postSave = () -> {
+                    switch (EncounterType) {
 
-                switch (EncounterType) {
+                        case "Domain":
+                            Toasty.success(CasePlan.this, "Vulnerability Saved", Toast.LENGTH_LONG, true).show();
+                            fetchData();
+                            break;
 
-                    case "Domain":
-                        Toasty.success(CasePlan.this, "Vulnerability Saved", Toast.LENGTH_LONG, true).show();
-                        recreate();
-                        refresh();
-                        break;
+                    }
+                };
 
+                boolean scheduled = saveRegistration(childIndexEventClient, is_edit_mode, EncounterType, postSave);
+                if (!scheduled) {
+                    postSave.run();
                 }
 
             } catch (Exception e) {
@@ -336,43 +340,49 @@ public class CasePlan extends AppCompatActivity {
         return null;
     }
 
-    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode,String encounterType) {
+    public boolean saveRegistration(ChildIndexEventClient childIndexEventClient, boolean isEditMode, String encounterType, Runnable onComplete) {
 
         Runnable runnable = () -> {
 
             Event event = childIndexEventClient.getEvent();
             Client client = childIndexEventClient.getClient();
 
-            if (event != null && client != null) {
-                try {
-                    ECSyncHelper ecSyncHelper = getECSyncHelper();
+            try {
+                if (event != null && client != null) {
+                    try {
+                        ECSyncHelper ecSyncHelper = getECSyncHelper();
 
-                    JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
+                        JSONObject newClientJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(client));
 
-                    JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
+                        JSONObject existingClientJsonObject = ecSyncHelper.getClient(client.getBaseEntityId());
 
-                    if (isEditMode) {
-                        JSONObject mergedClientJsonObject =
-                                org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
-                        ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
-                    } else {
-                        ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                        if (isEditMode) {
+                            JSONObject mergedClientJsonObject =
+                                    org.smartregister.util.JsonFormUtils.merge(existingClientJsonObject, newClientJsonObject);
+                            ecSyncHelper.addClient(client.getBaseEntityId(), mergedClientJsonObject);
+                        } else {
+                            ecSyncHelper.addClient(client.getBaseEntityId(), newClientJsonObject);
+                        }
+
+                        JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
+                        ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
+
+                        Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
+                        Date currentSyncDate = new Date(lastUpdatedAtDate);
+
+                        //Get saved event for processing
+                        List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
+                        getClientProcessorForJava().processClient(savedEvents);
+                        getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
+
+
+                    } catch (Exception e) {
+                        Timber.e(e);
                     }
-
-                    JSONObject eventJsonObject = new JSONObject(org.smartregister.util.JsonFormUtils.gson.toJson(event));
-                    ecSyncHelper.addEvent(event.getBaseEntityId(), eventJsonObject);
-
-                    Long lastUpdatedAtDate = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
-                    Date currentSyncDate = new Date(lastUpdatedAtDate);
-
-                    //Get saved event for processing
-                    List<EventClient> savedEvents = ecSyncHelper.getEvents(Collections.singletonList(event.getFormSubmissionId()));
-                    getClientProcessorForJava().processClient(savedEvents);
-                    getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
-
-
-                } catch (Exception e) {
-                    Timber.e(e);
+                }
+            } finally {
+                if (onComplete != null) {
+                    runOnUiThread(onComplete);
                 }
             }
 
@@ -385,6 +395,9 @@ public class CasePlan extends AppCompatActivity {
             return true;
         } catch (Exception exception) {
             Timber.e(exception);
+            if (onComplete != null) {
+                runOnUiThread(onComplete);
+            }
             return false;
         }
     }
@@ -409,10 +422,4 @@ public class CasePlan extends AppCompatActivity {
     private ClientProcessorForJava getClientProcessorForJava() {
         return ChwApplication.getInstance().getClientProcessorForJava();
     }
-    public void refresh(){
-        recreate();
-    }
-
-
-
 }

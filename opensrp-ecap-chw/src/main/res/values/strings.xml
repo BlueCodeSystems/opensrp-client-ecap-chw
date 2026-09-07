@@ -449,6 +449,7 @@
     <string name="report_nutrition_saved">Nutrition report saved successfully.</string>
     <string name="report_tb_saved">TB report saved successfully.</string>
     <string name="report_community_alert_saved">Community alert report saved successfully.</string>
+    <string name="report_community_alert_deleted">Community alert report deleted successfully.</string>
     <string name="report_community_saved">Community report saved successfully.</string>
     <string name="report_summary">Report Summary</string>
     <string name="submitted_at">Submitted at %1$s</string>

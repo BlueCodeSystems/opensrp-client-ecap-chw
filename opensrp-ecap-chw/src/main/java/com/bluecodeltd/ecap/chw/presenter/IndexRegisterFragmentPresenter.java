@@ -2,6 +2,7 @@ package com.bluecodeltd.ecap.chw.presenter;
 
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterFragmentContract;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 public class IndexRegisterFragmentPresenter implements IndexRegisterFragmentContract.Presenter {
 
@@ -37,8 +38,24 @@ public class IndexRegisterFragmentPresenter implements IndexRegisterFragmentCont
 
         getView().initializeQueryParams(Constants.EcapClientTable.EC_CLIENT_INDEX, countSelect, mainSelect);
         getView().initializeAdapter();
-        getView().countExecute();
-        getView().filterandSortInInitializeQueries();
+
+        // countExecute() runs a synchronous COUNT query against the SQLCipher-encrypted DB on
+        // whatever thread calls it; called here from Fragment.onResume() it can block the UI
+        // thread long enough to ANR. Run it off the main thread instead.
+        Threading.io(() -> {
+            IndexRegisterFragmentContract.View countingView = getView();
+            if (countingView != null) {
+                countingView.countExecute();
+            }
+            Threading.main(() -> {
+                IndexRegisterFragmentContract.View view = getView();
+                if (view == null) {
+                    return;
+                }
+                view.setTotalPatients();
+                view.filterandSortInInitializeQueries();
+            });
+        });
     }
 
 

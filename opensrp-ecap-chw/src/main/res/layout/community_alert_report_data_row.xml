@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/cbs_report_row_white">
 
     <!-- S/N -->
@@ -66,4 +67,26 @@
     <TextView android:id="@+id/row_action_taken" android:layout_width="match_parent" android:layout_height="match_parent" android:textColor="@color/cbs_report_text" android:gravity="center_vertical" android:padding="4dp" android:background="@drawable/table_cell_background" android:textSize="10sp"/>
     <!-- Supervisor -->
     <TextView android:id="@+id/row_response_performed" android:layout_width="match_parent" android:layout_height="match_parent" android:textColor="@color/cbs_report_text" android:gravity="center_vertical" android:padding="4dp" android:background="@drawable/table_cell_background" android:textSize="10sp"/>
+    <!-- Edit/Delete this specific report -->
+    <LinearLayout android:layout_width="96dp" android:layout_height="match_parent" android:orientation="horizontal" android:gravity="center" android:background="@drawable/table_cell_background">
+        <ImageView
+            android:id="@+id/row_edit_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/edit"
+            android:src="@drawable/ic_edit_white"
+            app:tint="@color/cbs_report_text"
+            android:padding="2dp"/>
+        <ImageView
+            android:id="@+id/row_delete_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/delete"
+            android:src="@drawable/delete_icon"
+            app:tint="@color/pie_chart_red"
+            android:padding="2dp"/>
+    </LinearLayout>
 </TableRow>

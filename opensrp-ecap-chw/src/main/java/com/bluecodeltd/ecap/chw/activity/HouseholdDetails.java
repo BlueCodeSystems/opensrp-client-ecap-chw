@@ -2557,19 +2557,11 @@ public class HouseholdDetails extends AppCompatActivity {
                 break;
 
             case "case_status":
-                try {
-                    openFormUsingFormUtils(getBaseContext(), "household_case_status");
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
+                openFormUsingFormUtils(getBaseContext(), "household_case_status");
                 break;
 
             case "update_caregiver_details":
-                try {
-                    openFormUsingFormUtils(getBaseContext(), "update_caregiver_details");
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
+                openFormUsingFormUtils(getBaseContext(), "update_caregiver_details");
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -2826,7 +2818,7 @@ public class HouseholdDetails extends AppCompatActivity {
         dialogButton.setOnClickListener(v -> dialog.dismiss());
 
     }
-    public void openFormUsingFormUtils(Context context, String formName) throws JSONException {
+    public void openFormUsingFormUtils(Context context, String formName) {
 
         if (house == null) {
             // Household data hasn't finished loading yet (applyState runs asynchronously
@@ -2838,86 +2830,105 @@ public class HouseholdDetails extends AppCompatActivity {
             oMapper = new ObjectMapper();
         }
 
-        FormUtils formUtils = null;
-        try {
-            formUtils = new FormUtils(context);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        JSONObject formToBeOpened;
-
-        formToBeOpened = formUtils.getFormJson(formName);
-
-        switch (formName) {
-
-            case "household_case_status":
-
-                CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(house, Map.class));
-                formToBeOpened.put("entity_id", this.house.getBase_entity_id());
-                Boolean vcaGradStatus = IndexPersonDao.checkGraduationStatus(householdId);
-                if(vcaGradStatus.equals(false)){
-                    JSONObject status = getFieldJSONObject(fields(formToBeOpened, "step1"), "household_case_status");
-                    JSONArray options = status.getJSONArray("options");
-
-                    for (int i = 0; i < options.length(); i++) {
-                        JSONObject option = options.getJSONObject(i);
-                        if ("0".equals(option.getString("key"))) {
-                            options.remove(i);
-                            break;
-                        }
-                    }
-
-
-                    JSONObject info = getFieldJSONObject(fields(formToBeOpened, "step1"), "info");
-                    info.put("type", "toaster_notes");
-                    info.put("text","If you need to close the case for this household, please deregister the following CA(s) in the household: \n\n"+IndexPersonDao.returnVcaNames(householdId));
-
-                } else {
-                    JSONObject info = getFieldJSONObject(fields(formToBeOpened, "step1"), "info");
-                    info.put("type", "hidden");
+        // This is invoked synchronously from a toolbar menu click (onOptionsItemSelected). The
+        // "household_case_status" branch below does several DB reads (checkGraduationStatus,
+        // returnVcaNames, GraduationDao.getGraduationStatus); running those on the UI thread can
+        // block long enough to ANR if the DB is busy. Do the whole form-building step off the main
+        // thread and only hop back to launch the form activity once it's ready.
+        Threading.io(() -> {
+            try {
+                FormUtils formUtils;
+                try {
+                    formUtils = new FormUtils(context);
+                } catch (Exception e) {
+                    Timber.e(e);
+                    return;
                 }
 
-                GraduationModel graduationModel = GraduationDao.getGraduationStatus(householdId);
-                if (graduationModel == null || "0".equals(graduationModel.getGraduation_status()) || graduationModel.getGraduation_status() == null) {
+                JSONObject formToBeOpened = formUtils.getFormJson(formName);
 
-                    JSONObject graduationStatus = getFieldJSONObject(fields(formToBeOpened, "step1"), "graduation_benchmark");
-                    if (graduationStatus != null) {
-                        graduationStatus.put("type", "toaster_notes");
-                        graduationStatus.put("text", house.getCaregiver_name() + "' "  + " household needs to meet all eight graduation benchmarks in order to graduate");
-                    }
+                switch (formName) {
 
-                    JSONObject reasonField = getFieldJSONObject(fields(formToBeOpened, "step1"), "de_registration_reason");
-                    if (reasonField != null) {
-                        JSONArray optionsArray = reasonField.getJSONArray("options");
-                        if (optionsArray != null) {
-                            for (int i = 0; i < optionsArray.length(); i++) {
-                                JSONObject option = optionsArray.getJSONObject(i);
-                                if (option != null && "Graduated (Household has met the graduation benchmarks in ALL domains)".equals(option.getString("key"))) {
-                                    optionsArray.remove(i);
+                    case "household_case_status": {
+
+                        CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(house, Map.class));
+                        formToBeOpened.put("entity_id", this.house.getBase_entity_id());
+                        Boolean vcaGradStatus = IndexPersonDao.checkGraduationStatus(householdId);
+                        if (vcaGradStatus.equals(false)) {
+                            JSONObject status = getFieldJSONObject(fields(formToBeOpened, "step1"), "household_case_status");
+                            JSONArray options = status.getJSONArray("options");
+
+                            for (int i = 0; i < options.length(); i++) {
+                                JSONObject option = options.getJSONObject(i);
+                                if ("0".equals(option.getString("key"))) {
+                                    options.remove(i);
                                     break;
                                 }
                             }
+
+
+                            JSONObject info = getFieldJSONObject(fields(formToBeOpened, "step1"), "info");
+                            info.put("type", "toaster_notes");
+                            info.put("text", "If you need to close the case for this household, please deregister the following CA(s) in the household: \n\n" + IndexPersonDao.returnVcaNames(householdId));
+
+                        } else {
+                            JSONObject info = getFieldJSONObject(fields(formToBeOpened, "step1"), "info");
+                            info.put("type", "hidden");
                         }
+
+                        GraduationModel graduationModel = GraduationDao.getGraduationStatus(householdId);
+                        if (graduationModel == null || "0".equals(graduationModel.getGraduation_status()) || graduationModel.getGraduation_status() == null) {
+
+                            JSONObject graduationStatus = getFieldJSONObject(fields(formToBeOpened, "step1"), "graduation_benchmark");
+                            if (graduationStatus != null) {
+                                graduationStatus.put("type", "toaster_notes");
+                                graduationStatus.put("text", house.getCaregiver_name() + "' " + " household needs to meet all eight graduation benchmarks in order to graduate");
+                            }
+
+                            JSONObject reasonField = getFieldJSONObject(fields(formToBeOpened, "step1"), "de_registration_reason");
+                            if (reasonField != null) {
+                                JSONArray optionsArray = reasonField.getJSONArray("options");
+                                if (optionsArray != null) {
+                                    for (int i = 0; i < optionsArray.length(); i++) {
+                                        JSONObject option = optionsArray.getJSONObject(i);
+                                        if (option != null && "Graduated (Household has met the graduation benchmarks in ALL domains)".equals(option.getString("key"))) {
+                                            optionsArray.remove(i);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        break;
                     }
+                    case "update_caregiver_details":
+                        if (updatedCaregiver != null) {
+                            CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(updatedCaregiver, Map.class));
+                            formToBeOpened.put("entity_id", this.house.getBase_entity_id());
+                        } else {
+                            CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(house, Map.class));
+                            formToBeOpened.put("entity_id", this.house.getBase_entity_id());
+                        }
+
+
+                        break;
+
                 }
 
-
-                break;
-            case "update_caregiver_details":
-                if (updatedCaregiver != null){
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(updatedCaregiver, Map.class));
-                    formToBeOpened.put("entity_id", this.house.getBase_entity_id());
-                } else {
-                    CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(house, Map.class));
-                    formToBeOpened.put("entity_id", this.house.getBase_entity_id());
-                }
-
-
-                break;
-
-        }
-
-        startFormActivity(formToBeOpened);
+                Threading.main(() -> {
+                    if (isFinishing() || isDestroyed()) return;
+                    startFormActivity(formToBeOpened);
+                });
+            } catch (JSONException e) {
+                Timber.e(e);
+                Threading.main(() -> {
+                    if (!isFinishing() && !isDestroyed()) {
+                        Toast.makeText(HouseholdDetails.this, "Unable to open form", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
     }
 
 

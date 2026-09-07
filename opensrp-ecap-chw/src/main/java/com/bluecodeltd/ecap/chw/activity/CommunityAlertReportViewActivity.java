@@ -57,6 +57,7 @@ public class CommunityAlertReportViewActivity extends AppCompatActivity {
     private MonthlyReportModel reportModel;
     private String baseEntityId;
     private CbsWeeklyUtils.Week week;
+    private String referenceReportingMonth;
     private int weekReportCount = 1;
     private Map<String, String> weekTotals = Collections.emptyMap();
     private List<MonthlyReportModel> weekReports = new ArrayList<>();
@@ -105,24 +106,73 @@ public class CommunityAlertReportViewActivity extends AppCompatActivity {
         }
     }
     private void loadReport() {
-        if (baseEntityId != null) {
-            reportModel = MonthlyReportDao.getReport(ReportRegisterActivity.REPORT_TABLE_COMMUNITY_ALERT, baseEntityId);
+        MonthlyReportModel primary = baseEntityId != null
+                ? MonthlyReportDao.getReport(ReportRegisterActivity.REPORT_TABLE_COMMUNITY_ALERT, baseEntityId)
+                : null;
+
+        List<MonthlyReportModel> allReports = filterVisibleReports(MonthlyReportDao.getReports(ReportRegisterActivity.REPORT_TABLE_COMMUNITY_ALERT));
+
+        if (primary != null && isSoftDeleted(primary)) {
+            primary = null;
         }
+
+        if (primary == null && referenceReportingMonth != null) {
+            // The report this screen anchors on may have just been deleted -- keep showing the
+            // rest of the week (if any is left) using the previously known week as the reference,
+            // since this now-gone report can no longer supply its own reporting_month.
+            List<MonthlyReportModel> sameWeek = CbsWeeklyUtils.filterSameWeek(allReports, referenceReportingMonth);
+            if (!sameWeek.isEmpty()) {
+                primary = sameWeek.get(0);
+                baseEntityId = primary.getBase_entity_id();
+            }
+        }
+
+        reportModel = primary;
 
         if (reportModel != null) {
             // Community Alert reports are reviewed by week (Sunday-Saturday): show every report
             // submitted in the same week as this one as its own numbered row, with a Total row
             // summing the numeric counts across all of them, so the screen is a comprehensive
             // weekly report rather than just this single submission.
-            week = CbsWeeklyUtils.weekForReportingDate(reportModel.getReporting_month());
-            List<MonthlyReportModel> allReports = MonthlyReportDao.getReports(ReportRegisterActivity.REPORT_TABLE_COMMUNITY_ALERT);
-            List<MonthlyReportModel> matched = CbsWeeklyUtils.filterSameWeek(allReports, reportModel.getReporting_month());
+            referenceReportingMonth = reportModel.getReporting_month();
+            week = CbsWeeklyUtils.weekForReportingDate(referenceReportingMonth);
+            List<MonthlyReportModel> matched = CbsWeeklyUtils.filterSameWeek(allReports, referenceReportingMonth);
             weekReports = new ArrayList<>(matched.isEmpty() ? Collections.singletonList(reportModel) : matched);
             weekReports.sort(Comparator.comparing(this::parseReportDate, Comparator.nullsLast(Comparator.naturalOrder())));
             weekReportCount = weekReports.size();
             weekTotals = CbsWeeklyUtils.aggregateNumericFields(weekReports);
             populateData();
+        } else {
+            // Nothing left to show for this week -- the last report just got deleted.
+            Toast.makeText(this, R.string.report_community_alert_deleted, Toast.LENGTH_SHORT).show();
+            finish();
         }
+    }
+
+    /** Belt-and-suspenders on top of MonthlyReportDao's own delete_status filter -- a just-deleted
+     *  row must never render here even if a stale query result slips through. */
+    private List<MonthlyReportModel> filterVisibleReports(List<MonthlyReportModel> source) {
+        List<MonthlyReportModel> visible = new ArrayList<>();
+        if (source == null) {
+            return visible;
+        }
+        for (MonthlyReportModel item : source) {
+            if (!isSoftDeleted(item)) {
+                visible.add(item);
+            }
+        }
+        return visible;
+    }
+
+    private boolean isSoftDeleted(MonthlyReportModel item) {
+        if (item == null) {
+            return false;
+        }
+        String deleteStatus = item.getDelete_status();
+        if (deleteStatus == null || deleteStatus.trim().isEmpty()) {
+            deleteStatus = item.getAdditionalField("delete_status");
+        }
+        return "1".equals(deleteStatus == null ? null : deleteStatus.trim());
     }
 
     private void setupExpansionLogic() {
@@ -149,17 +199,22 @@ public class CommunityAlertReportViewActivity extends AppCompatActivity {
     private void setupEditButton() {
         View btnEdit = findViewById(R.id.btn_edit_report);
         if (btnEdit != null) {
-            btnEdit.setOnClickListener(v -> openEditForm());
+            btnEdit.setOnClickListener(v -> openEditForm(reportModel));
         }
     }
 
-    private void openEditForm() {
-        if (reportModel == null) return;
+    /**
+     * Opens the edit wizard for a specific report within the week (not necessarily the one this
+     * screen was launched with) -- the target is whichever row's edit icon was tapped, or the
+     * top-level Edit button's bound report if invoked from there.
+     */
+    private void openEditForm(MonthlyReportModel target) {
+        if (target == null) return;
 
         Threading.io(() -> {
             CaseStatusModel statusModel = null;
             try {
-                statusModel = IndexPersonDao.getCaseStatus(reportModel.getBase_entity_id());
+                statusModel = IndexPersonDao.getCaseStatus(target.getBase_entity_id());
             } catch (Exception ignored) {
             }
 
@@ -187,11 +242,11 @@ public class CommunityAlertReportViewActivity extends AppCompatActivity {
 
                 try {
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                    if (reportModel.getCaseworker_name() == null || reportModel.getCaseworker_name().trim().isEmpty()) {
-                        reportModel.setCaseworker_name(getCaseworkerName(prefs));
+                    if (target.getCaseworker_name() == null || target.getCaseworker_name().trim().isEmpty()) {
+                        target.setCaseworker_name(getCaseworkerName(prefs));
                     }
-                    finalForm.put(Constants.JSON_FORM_KEY.ENTITY_ID, reportModel.getBase_entity_id());
-                    org.smartregister.chw.core.utils.CoreJsonFormUtils.populateJsonForm(finalForm, reportModel.toValueMap());
+                    finalForm.put(Constants.JSON_FORM_KEY.ENTITY_ID, target.getBase_entity_id());
+                    org.smartregister.chw.core.utils.CoreJsonFormUtils.populateJsonForm(finalForm, target.toValueMap());
 
                     Intent intent = new Intent(this, org.smartregister.family.util.Utils.metadata().familyFormActivity);
                     Form wizardForm = new Form();
@@ -201,6 +256,50 @@ public class CommunityAlertReportViewActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     Timber.e(e);
                     Snackbar.make(findViewById(R.id.header_card), "Unable to open form", Snackbar.LENGTH_LONG).show();
+                }
+            });
+        });
+    }
+
+    /**
+     * Soft-deletes a single report within the week by resubmitting its form with delete_status
+     * flagged -- MonthlyReportDao already filters out delete_status = 1 rows, so this row simply
+     * drops out of the list (and the week's Total row) once processed.
+     */
+    private void confirmDeleteReport(MonthlyReportModel target) {
+        if (target == null) return;
+
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Delete Report")
+                .setMessage("Are you sure you want to delete this report?")
+                .setNegativeButton("NO", (dialog, id) -> dialog.dismiss())
+                .setPositiveButton("YES", (dialog, id) -> deleteReport(target))
+                .show();
+    }
+
+    private void deleteReport(MonthlyReportModel target) {
+        Threading.io(() -> {
+            JSONObject form = null;
+            try {
+                form = new FormUtils(this).getFormJson(ReportRegisterActivity.REPORT_FORM_COMMUNITY_ALERT);
+            } catch (Exception ignored) {
+            }
+
+            JSONObject finalForm = form;
+            Threading.main(() -> {
+                if (isFinishing() || isDestroyed() || finalForm == null) return;
+                try {
+                    target.setDelete_status("1");
+                    finalForm.put("delete_status", "1");
+                    finalForm.put(Constants.JSON_FORM_KEY.ENTITY_ID, target.getBase_entity_id());
+
+                    @SuppressWarnings("unchecked")
+                    Map<String, String> valueMap = new com.fasterxml.jackson.databind.ObjectMapper().convertValue(target, Map.class);
+                    org.smartregister.chw.core.utils.CoreJsonFormUtils.populateJsonForm(finalForm, valueMap);
+
+                    saveFromFormJson(finalForm.toString(), true, R.string.report_community_alert_deleted);
+                } catch (Exception e) {
+                    Timber.e(e);
                 }
             });
         });
@@ -221,16 +320,16 @@ public class CommunityAlertReportViewActivity extends AppCompatActivity {
         if (requestCode == EDIT_FORM_REQUEST && resultCode == RESULT_OK && data != null) {
             String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
             if (jsonString != null) {
-                saveFromFormJson(jsonString, true);
+                saveFromFormJson(jsonString, true, R.string.report_community_alert_saved);
             }
         }
     }
 
-    private void saveFromFormJson(String jsonString, boolean isEditMode) {
+    private void saveFromFormJson(String jsonString, boolean isEditMode, int successMessageResId) {
         try {
             ReportEventClient reportEventClient = processRegistration(jsonString);
             if (reportEventClient != null) {
-                saveRegistration(reportEventClient, isEditMode);
+                saveRegistration(reportEventClient, isEditMode, successMessageResId);
             }
         } catch (Exception e) {
             Timber.e(e);
@@ -278,7 +377,7 @@ public class CommunityAlertReportViewActivity extends AppCompatActivity {
         return null;
     }
 
-    private boolean saveRegistration(ReportEventClient reportEventClient, boolean isEditMode) {
+    private boolean saveRegistration(ReportEventClient reportEventClient, boolean isEditMode, int successMessageResId) {
         Runnable runnable = () -> {
             Event event = reportEventClient.getEvent();
             Client client = reportEventClient.getClient();
@@ -305,7 +404,7 @@ public class CommunityAlertReportViewActivity extends AppCompatActivity {
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
                     runOnUiThread(() -> {
                         loadReport();
-                        Toast.makeText(this, R.string.report_community_alert_saved, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, successMessageResId, Toast.LENGTH_SHORT).show();
                     });
                 } catch (Exception e) {
                     Timber.e(e);
@@ -446,6 +545,18 @@ public class CommunityAlertReportViewActivity extends AppCompatActivity {
         setRowCell(row, R.id.row_response_performed,
                 "yes".equalsIgnoreCase(cbsPartOfResponse) ? "Yes" : "no".equalsIgnoreCase(cbsPartOfResponse) ? "No" : "");
 
+        // Let the user pick exactly which of the week's reports to edit, since they're otherwise
+        // indistinguishable in the aggregated list/nav badges.
+        View editIcon = row.findViewById(R.id.row_edit_icon);
+        if (editIcon != null) {
+            editIcon.setOnClickListener(v -> openEditForm(report));
+        }
+
+        View deleteIcon = row.findViewById(R.id.row_delete_icon);
+        if (deleteIcon != null) {
+            deleteIcon.setOnClickListener(v -> confirmDeleteReport(report));
+        }
+
         // Zebra-stripe alternate rows for readability, like a real report table.
         if (sn % 2 == 0 && row instanceof android.view.ViewGroup) {
             applyCellBackgroundRecursively((android.view.ViewGroup) row, R.drawable.table_cell_background_alt);
@@ -472,6 +583,16 @@ public class CommunityAlertReportViewActivity extends AppCompatActivity {
         }
         setRowCell(row, R.id.row_action_taken, "");
         setRowCell(row, R.id.row_response_performed, "");
+
+        // The Total row summarizes the whole week, not a single report -- no edit/delete affordance.
+        View editIcon = row.findViewById(R.id.row_edit_icon);
+        if (editIcon != null) {
+            editIcon.setVisibility(View.INVISIBLE);
+        }
+        View deleteIcon = row.findViewById(R.id.row_delete_icon);
+        if (deleteIcon != null) {
+            deleteIcon.setVisibility(View.INVISIBLE);
+        }
 
         if (row instanceof android.view.ViewGroup) {
             android.view.ViewGroup group = (android.view.ViewGroup) row;

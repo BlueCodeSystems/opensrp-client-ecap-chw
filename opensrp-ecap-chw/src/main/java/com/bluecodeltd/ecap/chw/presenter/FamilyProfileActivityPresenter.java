@@ -5,6 +5,7 @@ import com.bluecodeltd.ecap.chw.application.ChwApplication;
 import org.smartregister.chw.core.utils.ChildDBConstants;
 import org.smartregister.chw.core.utils.CoreConstants;
 import com.bluecodeltd.ecap.chw.model.WashCheckModel;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import org.smartregister.family.contract.FamilyProfileActivityContract;
 import org.smartregister.family.presenter.BaseFamilyProfileActivityPresenter;
 import org.smartregister.family.util.Utils;
@@ -30,8 +31,21 @@ public class FamilyProfileActivityPresenter extends BaseFamilyProfileActivityPre
         getView().initializeQueryParams(Utils.metadata().familyActivityRegister.tableName, countSelect, mainSelect);
         getView().initializeAdapter(visibleColumns);
 
-        getView().countExecute();
-        getView().filterandSortInInitializeQueries();
+        // countExecute() runs a synchronous COUNT query against the SQLCipher-encrypted DB on
+        // whatever thread calls it; called here from Fragment.onResume() it can block the UI
+        // thread long enough to ANR. Run it off the main thread instead.
+        Threading.io(() -> {
+            FamilyProfileActivityContract.View countingView = getView();
+            if (countingView != null) {
+                countingView.countExecute();
+            }
+            Threading.main(() -> {
+                FamilyProfileActivityContract.View view = getView();
+                if (view != null) {
+                    view.filterandSortInInitializeQueries();
+                }
+            });
+        });
     }
 
     @Override

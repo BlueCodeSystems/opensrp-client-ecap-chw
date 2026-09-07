@@ -4,6 +4,8 @@ import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getAllSharedPrefer
 import static com.bluecodeltd.ecap.chw.util.IndexClientsUtils.getFormTag;
 import static org.smartregister.chw.fp.util.FpUtil.getClientProcessorForJava;
 import static com.bluecodeltd.ecap.chw.util.JsonFormUtils.tagSyncMetadata;
+import static com.vijay.jsonwizard.utils.FormUtils.fields;
+import static com.vijay.jsonwizard.utils.FormUtils.getFieldJSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -313,8 +315,81 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
 
         CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(service, Map.class));
 
+        // VCAServiceModel doesn't carry the VCA's gender/birthdate (they're not part of this
+        // report), so -- same as the "new" service report form -- look them up here to drive the
+        // hidden vca_gender field and the pregnant_breastfeeding relevance/eligibility below.
+        try {
+            com.bluecodeltd.ecap.chw.model.EcClientIndexSummary summary = null;
+            try {
+                summary = IndexPersonDao.getClientSummaryByUniqueId(service.getUnique_id());
+            } catch (Exception ignored) {
+            }
+
+            JSONArray step1Fields = fields(formToBeOpened, org.smartregister.util.JsonFormUtils.STEP1);
+            String normalizedGender = summary != null && !android.text.TextUtils.isEmpty(summary.getGender())
+                    ? summary.getGender().trim().toLowerCase(java.util.Locale.ENGLISH)
+                    : null;
+            if (!android.text.TextUtils.isEmpty(normalizedGender)) {
+                JSONObject genderField = getFieldJSONObject(step1Fields, "vca_gender");
+                if (genderField != null) {
+                    genderField.put("value", normalizedGender);
+                }
+            }
+
+            Integer ageYears = summary != null ? getAgeInYearsFromBirthdate(summary.getAdolescentBirthdate()) : null;
+            boolean shouldShowPregnantBreastfeeding =
+                    "female".equalsIgnoreCase(normalizedGender) &&
+                            ageYears != null &&
+                            ageYears >= 10 &&
+                            ageYears <= 25;
+
+            if (!shouldShowPregnantBreastfeeding) {
+                for (int i = step1Fields.length() - 1; i >= 0; i--) {
+                    JSONObject field = step1Fields.optJSONObject(i);
+                    if (field != null && "pregnant_breastfeeding".equals(field.optString(JsonFormConstants.KEY))) {
+                        step1Fields.remove(i);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+
         startFormActivity(formToBeOpened);
 
+    }
+
+    private Integer getAgeInYearsFromBirthdate(String birthdate) {
+        String normalizedDate = normalizeBirthdate(birthdate);
+        if (normalizedDate == null) {
+            return null;
+        }
+        try {
+            java.time.LocalDate dob = java.time.LocalDate.parse(normalizedDate, java.time.format.DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            return java.time.Period.between(dob, java.time.LocalDate.now()).getYears();
+        } catch (java.time.format.DateTimeParseException e) {
+            Timber.e(e);
+            return null;
+        }
+    }
+
+    private String normalizeBirthdate(String birthdate) {
+        if (android.text.TextUtils.isEmpty(birthdate)) {
+            return null;
+        }
+        String trimmed = birthdate.trim();
+        if (trimmed.matches("\\d{2}-\\d{2}-\\d{4}")) {
+            return trimmed;
+        }
+        String[] patterns = new String[]{"dd MMM yyyy", "yyyy-MM-dd", "dd/MM/yyyy"};
+        for (String pattern : patterns) {
+            try {
+                java.time.LocalDate parsedDate = java.time.LocalDate.parse(trimmed, java.time.format.DateTimeFormatter.ofPattern(pattern, java.util.Locale.ENGLISH));
+                return parsedDate.format(java.time.format.DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            } catch (java.time.format.DateTimeParseException ignored) {
+            }
+        }
+        return null;
     }
 
     public void startFormActivity(JSONObject jsonObject) {

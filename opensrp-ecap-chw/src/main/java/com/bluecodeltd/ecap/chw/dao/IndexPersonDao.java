@@ -933,7 +933,6 @@ public class IndexPersonDao  extends AbstractDao {
             );
             record.setGraduation_benchmark(getCursorValue(c, "graduation_benchmark"));
             record.setOvc_name(getCursorValue(c, "ovc_name"));
-            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
         List<Child> children = null;
@@ -1073,7 +1072,6 @@ public class IndexPersonDao  extends AbstractDao {
             );
             record.setGraduation_benchmark(getCursorValue(c, "graduation_benchmark"));
             record.setOvc_name(getCursorValue(c, "ovc_name"));
-            DaoModelFieldMapper.captureAdditionalFields(c, record);
             return record;
         };
         List <Child> children =  AbstractDao.readData(sql, dataMap);
