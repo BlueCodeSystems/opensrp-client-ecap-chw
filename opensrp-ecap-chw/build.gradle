@@ -6,7 +6,7 @@ buildscript {
     }
     dependencies {
         classpath 'org.apache.commons:commons-lang3:3.14.0'
-        classpath 'com.android.tools.build:gradle:8.7.0'
+        classpath 'com.android.tools.build:gradle:8.9.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     }
 }
@@ -60,8 +60,8 @@ def SIGNING_KEY_PASSWORD   = System.getenv('SIGNING_KEY_PASSWORD')   ?: lp.getPr
 android {
     namespace  = "com.bluecodeltd.ecap.chw"
     useLibrary 'org.apache.http.legacy'
-    compileSdkVersion 35
-    buildToolsVersion '35.0.0'
+    compileSdkVersion 36
+    buildToolsVersion '36.0.0'
 
     lint {
         // Keep lint strict but simple
@@ -88,7 +88,7 @@ android {
     defaultConfig {
         applicationId "com.bluecodeltd.chw"
         minSdk 28
-        targetSdk 35
+        targetSdk 36
         versionCode 14
         versionName "v6.1.2"
         // multidex not required (minSdk 28+)
@@ -375,8 +375,8 @@ android {
         ecap {
             dimension = 'baseDimension'
             applicationIdSuffix ".ecap"
-            versionCode 49
-            versionName "v8.0.6"
+            versionCode 52
+            versionName "v9.0.0"
             buildConfigField "String", 'opensrp_url', '"https://opensrp.ecap.bluecodeltd.com/opensrp/"'
             buildConfigField "String", 'guidebooks_url', '"https://opensrp.s3.amazonaws.com/media/ba/"'
             buildConfigField "String", 'opensrp_url_debug', '"https://opensrp.ecap.bluecodeltd.com/opensrp/"'
