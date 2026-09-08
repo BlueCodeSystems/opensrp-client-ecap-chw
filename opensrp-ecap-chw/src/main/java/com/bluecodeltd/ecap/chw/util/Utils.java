@@ -83,7 +83,7 @@ public class Utils extends org.smartregister.chw.core.utils.Utils {
 
             bottomNavigationView.getMenu().clear();
 
-            bottomNavigationView.inflateMenu(R.menu.bottom_nav_menu);
+            bottomNavigationView.inflateMenu(R.menu.bottom_nav_vca_menu);
             bottomNavigationHelper.disableShiftMode(bottomNavigationView);
             bottomNavigationView.setOnNavigationItemSelectedListener(listener);
 

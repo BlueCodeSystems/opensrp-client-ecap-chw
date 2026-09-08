@@ -68,9 +68,15 @@ public class ChildSafetyPlanActions extends AppCompatActivity {
         actionBtn = findViewById(R.id.actionBtn);
         actionBtn2 = findViewById(R.id.actionBtn2);
 
-        childId = getIntent().getExtras().getString("vca_id");
-        vcaName = getIntent().getExtras().getString("vca_name");
-        actionDate = getIntent().getExtras().getString("action_date");
+        childId = getIntent().getStringExtra("vca_id");
+        vcaName = getIntent().getStringExtra("vca_name");
+        actionDate = getIntent().getStringExtra("action_date");
+
+        if (childId == null) {
+            Toasty.warning(ChildSafetyPlanActions.this, "Member data incomplete", Toast.LENGTH_LONG, true).show();
+            finish();
+            return;
+        }
 
         fetchData();
 

@@ -121,6 +121,21 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // DashboardActivity isn't a SecuredActivity, so nothing else checks the session before
+        // this point. If the process was killed and ChwApplication's silent session restore
+        // (restoreSessionAfterProcessRestart) couldn't re-derive the DB password -- e.g. no
+        // registered user, or the encrypted local credentials couldn't be decrypted -- proceeding
+        // would crash the background dashboard queries with "Password has not been set!"
+        // (Repository.getReadableDatabase). Bail out to LoginActivity instead.
+        if (org.smartregister.Context.getInstance().IsUserLoggedOut()) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
         binding = com.bluecodeltd.ecap.chw.databinding.ActivityDashboardBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         toolbar = binding.toolbarx;

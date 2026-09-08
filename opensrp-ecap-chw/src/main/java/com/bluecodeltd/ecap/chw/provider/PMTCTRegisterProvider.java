@@ -2,6 +2,7 @@ package com.bluecodeltd.ecap.chw.provider;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,8 +32,17 @@ import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Locale;
 
 public class PMTCTRegisterProvider implements RecyclerViewProvider<PMTCTRegisterViewHolder> {
+
+    private static final String TAG = "PMTCTRegisterProvider";
+    // Birthdates are normally stored/displayed as "dd-MM-uuuu", but some records (e.g. caregiver
+    // birth dates pulled in from older forms/imports) are in the legacy "dd MMM uuuu" shape --
+    // parsing those with the strict formatter alone crashes the list (DateTimeParseException).
+    private static final DateTimeFormatter DISPLAY_DOB_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-uuuu");
+    private static final DateTimeFormatter LEGACY_DOB_FORMATTER = DateTimeFormatter.ofPattern("dd MMM uuuu", Locale.ENGLISH);
 
     private final Context context;
     private View.OnClickListener onClickListener;
@@ -47,10 +57,35 @@ public class PMTCTRegisterProvider implements RecyclerViewProvider<PMTCTRegister
         this.paginationViewHandler = paginationViewHandler;
     }
 
+    private LocalDate parseBirthdate(String birthdate) {
+        if (birthdate == null) {
+            return null;
+        }
+        String trimmed = birthdate.trim();
+        if (trimmed.isEmpty()) {
+            return null;
+        }
+        try {
+            return LocalDate.parse(trimmed, DISPLAY_DOB_FORMATTER);
+        } catch (DateTimeParseException e) {
+            try {
+                return LocalDate.parse(trimmed, LEGACY_DOB_FORMATTER);
+            } catch (DateTimeParseException e2) {
+                Log.w(TAG, "Unable to parse birthdate: " + trimmed, e2);
+                return null;
+            }
+        }
+    }
+
     private String getAge(String birthdate){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
-        LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
+        LocalDate localDateBirthdate = parseBirthdate(birthdate);
+        if (localDateBirthdate == null) {
+            return "Age Not Set";
+        }
         LocalDate today =LocalDate.now();
+        if (localDateBirthdate.isAfter(today)) {
+            return "Age Not Set";
+        }
         Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
         if(periodBetweenDateOfBirthAndNow.getYears() >0)
         {

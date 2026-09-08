@@ -117,7 +117,16 @@ public class HivTestingServiceActivity extends BaseRegisterActivity implements I
     private void loadNotifications(String phone) {
         AppExecutors appExecutors = ChwApplication.getInstance().getAppExecutors();
         appExecutors.diskIO().execute(() -> {
-            List<VcaVisitationModel> visits = VcaVisitationDao.getVisitsByCaseWorkerPhone(phone);
+            List<VcaVisitationModel> visits;
+            try {
+                visits = VcaVisitationDao.getVisitsByCaseWorkerPhone(phone);
+            } catch (RuntimeException e) {
+                // The user can log out (clearing the in-memory DB password) while this
+                // queued background read is still pending -- treat that race as "nothing to
+                // show" instead of crashing on Repository.getReadableDatabase().
+                Timber.w(e, "Unable to load HTS notifications for phone=%s", phone);
+                return;
+            }
             appExecutors.mainThread().execute(() -> {
                 if (isFinishing() || isDestroyed()) {
                     return;

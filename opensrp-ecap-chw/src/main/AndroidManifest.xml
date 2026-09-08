@@ -236,6 +236,9 @@
             android:theme="@style/ChwTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
+            android:name="org.smartregister.chw.core.activity.HIA2ReportsActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
             android:name=".activity.ChildRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity

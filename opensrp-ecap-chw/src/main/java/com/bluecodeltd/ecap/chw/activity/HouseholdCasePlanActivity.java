@@ -82,12 +82,17 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
         recyclerView = binding.householdDomainrecyclerView;
         domainBtn = binding.householdDomainBtn;
         domainBtn2 = binding.householdDomainBtn2;
-        Bundle bundle = getIntent().getExtras();
-        householdId = getIntent().getExtras().getString("householdId");
-        caseDate = getIntent().getExtras().getString("dateId");
-        uniqueId = getIntent().getExtras().getString("unique_id");
+        householdId = getIntent().getStringExtra("householdId");
+        caseDate = getIntent().getStringExtra("dateId");
+        uniqueId = getIntent().getStringExtra("unique_id");
         hivStatus = getIntent().getStringExtra("status");
-        case_plan_id = getIntent().getExtras().getString("case_plan_id");
+        case_plan_id = getIntent().getStringExtra("case_plan_id");
+
+        if (householdId == null) {
+            Toasty.warning(HouseholdCasePlanActivity.this, "Member data incomplete", Toast.LENGTH_LONG, true).show();
+            finish();
+            return;
+        }
 
         fetchData();
         domainBtn.setOnClickListener(new View.OnClickListener() {

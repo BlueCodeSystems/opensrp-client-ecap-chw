@@ -956,11 +956,13 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     if (!ensureIndexVcaAvailable()) {
                         break;
                     }
-                    try {
-                        openFormUsingFormUtils(IndexDetailsActivity.this, resolveVcaScreeningFormName());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                   }
+                    resolveVcaScreeningFormNameAsync(formName -> {
+                        try {
+                            openFormUsingFormUtils(IndexDetailsActivity.this, formName);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    });
 
                 break;
 
@@ -1100,22 +1102,23 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 if (!ensureIndexVcaAvailable()) {
                     break;
                 }
-                if (!isTbScreeningCompliantForVisitation()) {
-                    Toasty.warning(IndexDetailsActivity.this, "TB screening for this quarter is required before household visitation for CAs above 10 years.", Toast.LENGTH_LONG, true).show();
-                    break;
-                }
-                if (vca != null && vca.getDate_screened() != null) {
-                    try {
-
-                        openFormUsingFormUtils(IndexDetailsActivity.this,"household_visitation_for_vca_0_20_years");
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                checkTbScreeningCompliantForVisitation(isCompliant -> {
+                    if (!isCompliant) {
+                        Toasty.warning(IndexDetailsActivity.this, "TB screening for this quarter is required before household visitation for CAs above 10 years.", Toast.LENGTH_LONG, true).show();
+                        return;
                     }
-                } else{
-                    Toasty.warning(IndexDetailsActivity.this, "CA Screening has not been done", Toast.LENGTH_LONG, true).show();
-                }
+                    if (vca != null && vca.getDate_screened() != null) {
+                        try {
 
+                            openFormUsingFormUtils(IndexDetailsActivity.this,"household_visitation_for_vca_0_20_years");
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else{
+                        Toasty.warning(IndexDetailsActivity.this, "CA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                    }
+                });
 
                 break;
 
@@ -2619,11 +2622,13 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 dialog.cancel();
             }).setPositiveButton(Constants.EcapConstants.PROCEED, ((dialogInterface, i) -> {
                 getIntent().removeExtra("fromHousehold");
-                try {
-                    openFormUsingFormUtils(IndexDetailsActivity.this, resolveVcaScreeningFormName());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                resolveVcaScreeningFormNameAsync(formName -> {
+                    try {
+                        openFormUsingFormUtils(IndexDetailsActivity.this, formName);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                });
             }));
             buildDialog();
         } else if (entryPoint.equals("321") && screenedFalse) {
@@ -2644,6 +2649,24 @@ public class IndexDetailsActivity extends AppCompatActivity {
             }));
             buildDialog();
         }
+    }
+
+    /**
+     * resolveVcaScreeningFormName() runs several PMTCTMotherDao/IndexMotherDao queries, so it
+     * must never be invoked directly from a click handler on the main thread -- doing so blocked
+     * the UI thread on the DB lock and triggered an ANR. Runs it on Threading.io() and delivers
+     * the resolved form name back on the main thread.
+     */
+    private void resolveVcaScreeningFormNameAsync(java.util.function.Consumer<String> callback) {
+        Threading.io(() -> {
+            String formName = resolveVcaScreeningFormName();
+            Threading.main(() -> {
+                if (isFinishing() || isDestroyed()) {
+                    return;
+                }
+                callback.accept(formName);
+            });
+        });
     }
 
     private String resolveVcaScreeningFormName() {
@@ -2745,14 +2768,28 @@ public class IndexDetailsActivity extends AppCompatActivity {
         alert.setTitle("CA Screening");
         alert.show();
     }
-    private boolean isTbScreeningCompliantForVisitation() {
+    /**
+     * TbScreeningDao.listByVcaId() hits the database, so this must never run on the main
+     * thread -- doing so blocked the UI thread on the DB lock and triggered an ANR. Runs the
+     * lookup on Threading.io() and delivers the result back on the main thread.
+     */
+    private void checkTbScreeningCompliantForVisitation(java.util.function.Consumer<Boolean> callback) {
         Integer ageYears = getCurrentAgeYears();
-        if (ageYears != null && ageYears > 10) {
-            final VcaScreeningModel vca = indexVCA;
-            String vcaId = vca != null ? vca.getUnique_id() : null;
-            return hasTbScreeningInCurrentQuarter(vcaId);
+        if (ageYears == null || ageYears <= 10) {
+            callback.accept(true);
+            return;
         }
-        return true;
+        final VcaScreeningModel vca = indexVCA;
+        String vcaId = vca != null ? vca.getUnique_id() : null;
+        Threading.io(() -> {
+            boolean compliant = hasTbScreeningInCurrentQuarter(vcaId);
+            Threading.main(() -> {
+                if (isFinishing() || isDestroyed()) {
+                    return;
+                }
+                callback.accept(compliant);
+            });
+        });
     }
 
     private Integer getCurrentAgeYears() {

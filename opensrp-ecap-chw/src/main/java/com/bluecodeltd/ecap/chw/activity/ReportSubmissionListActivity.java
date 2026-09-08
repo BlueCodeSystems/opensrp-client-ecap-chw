@@ -93,6 +93,19 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Not a SecuredActivity, so nothing else checks the session before this point. If the
+        // process was killed and ChwApplication's silent session restore
+        // (restoreSessionAfterProcessRestart) couldn't re-derive the DB password, proceeding
+        // would crash loadReports() with "Password has not been set!" (Repository.getReadableDatabase).
+        if (org.smartregister.Context.getInstance().IsUserLoggedOut()) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
         setContentView(R.layout.activity_report_submission_list);
 
         reportType = getIntent() == null ? ReportRegisterActivity.REPORT_TYPE_MALARIA : getIntent().getStringExtra(ReportRegisterActivity.EXTRA_REPORT_TYPE);
@@ -164,6 +177,13 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
     }
 
     private void loadReports() {
+        // onResume() (and thus loadReports()) still fires even after onCreate() calls finish()
+        // to bounce a logged-out session to LoginActivity -- Android runs the rest of the
+        // lifecycle before actually destroying the activity. Re-check here so that path can't
+        // still crash on MonthlyReportDao's DB read.
+        if (org.smartregister.Context.getInstance().IsUserLoggedOut()) {
+            return;
+        }
         allItems.clear();
         allItems.addAll(filterVisibleReports(MonthlyReportDao.getReports(getTableName())));
         rebuildMonthFilterOptions();

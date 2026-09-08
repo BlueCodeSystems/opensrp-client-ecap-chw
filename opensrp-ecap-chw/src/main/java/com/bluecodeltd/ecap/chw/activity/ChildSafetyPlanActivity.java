@@ -84,9 +84,14 @@ public class ChildSafetyPlanActivity extends AppCompatActivity {
         hh_id = findViewById(R.id.hhid);
         child_plan = findViewById(R.id.child_plan);
 
-        intent_vcaid = getIntent().getExtras().getString("vca_id");
-        intent_cname = getIntent().getExtras().getString("vca_name");
+        intent_vcaid = getIntent().getStringExtra("vca_id");
+        intent_cname = getIntent().getStringExtra("vca_name");
 
+        if (intent_vcaid == null) {
+            Toasty.warning(ChildSafetyPlanActivity.this, "Member data incomplete", Toast.LENGTH_LONG, true).show();
+            finish();
+            return;
+        }
 
         hh_id.setText("CA ID: " + intent_vcaid);
         vcaname.setText(intent_cname);

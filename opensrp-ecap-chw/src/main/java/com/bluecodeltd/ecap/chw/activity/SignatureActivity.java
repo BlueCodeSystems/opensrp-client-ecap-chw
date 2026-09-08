@@ -100,17 +100,17 @@ public class SignatureActivity extends AppCompatActivity {
         signaturePad.setSaveEnabled(false);
         clearSignature = findViewById(R.id.clearSignarture);
         saveSignature = findViewById(R.id.saveSignature);
-        childId = getIntent().getExtras().getString("Child");
-        householdId = getIntent().getExtras().getString("householdId");
+        childId = getIntent().getStringExtra("Child");
+        householdId = getIntent().getStringExtra("householdId");
 
-        intent_caregivername = getIntent().getExtras().getString("cname");
+        intent_caregivername = getIntent().getStringExtra("cname");
 
-        intent_vcaid = getIntent().getExtras().getString("vcaid");
-        intent_cname = getIntent().getExtras().getString("vcaname");
-        hivstatus = getIntent().getExtras().getString("hivstatus");
-        household_id = getIntent().getExtras().getString("hh_id");
-        c_name = getIntent().getExtras().getString("vcaname");
-        signature =  getIntent().getExtras().getString("signature");
+        intent_vcaid = getIntent().getStringExtra("vcaid");
+        intent_cname = getIntent().getStringExtra("vcaname");
+        hivstatus = getIntent().getStringExtra("hivstatus");
+        household_id = getIntent().getStringExtra("hh_id");
+        c_name = getIntent().getStringExtra("vcaname");
+        signature =  getIntent().getStringExtra("signature");
 
 
         // Get the JSON string from the Bundle

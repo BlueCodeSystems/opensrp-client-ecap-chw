@@ -86,10 +86,16 @@ public class CasePlan extends AppCompatActivity {
         domainBtn = binding.domainBtn;
         domainBtn2 = binding.domainBtn2;
 
-        childId = getIntent().getExtras().getString("childId");
-        caseDate = getIntent().getExtras().getString("dateId");
-        hivStatus = getIntent().getExtras().getString("hivStatus");
-        case_plan_id = getIntent().getExtras().getString("case_plan_id");
+        childId = getIntent().getStringExtra("childId");
+        caseDate = getIntent().getStringExtra("dateId");
+        hivStatus = getIntent().getStringExtra("hivStatus");
+        case_plan_id = getIntent().getStringExtra("case_plan_id");
+
+        if (childId == null) {
+            Toasty.warning(CasePlan.this, "Member data incomplete", Toast.LENGTH_LONG, true).show();
+            finish();
+            return;
+        }
 
         fetchData();
 

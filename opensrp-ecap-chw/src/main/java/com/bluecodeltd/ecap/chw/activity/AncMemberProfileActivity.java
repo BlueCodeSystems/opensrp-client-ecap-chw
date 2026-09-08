@@ -90,6 +90,14 @@ public class AncMemberProfileActivity extends CoreAncMemberProfileActivity imple
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // CoreAncMemberProfileActivity only assigns notificationAndReferralRecyclerView if its
+        // own onCreate() found the base-entity-id extra and resolved a member record; that extra
+        // can be missing if this activity is relaunched without its original Intent (recent-tasks
+        // restore, process death), leaving the field null here.
+        if (notificationAndReferralRecyclerView == null) {
+            finish();
+            return;
+        }
         notificationAndReferralRecyclerView.setAdapter(notificationListAdapter);
         notificationListAdapter.setOnClickListener(this);
     }
@@ -97,6 +105,11 @@ public class AncMemberProfileActivity extends CoreAncMemberProfileActivity imple
     @Override
     protected void onResume() {
         super.onResume();
+        // onResume() still fires even after onCreate() calls finish() for a missing memberObject
+        // (Android runs the rest of the lifecycle before actually destroying the activity).
+        if (memberObject == null) {
+            return;
+        }
         notificationListAdapter.canOpen = true;
         ChwNotificationUtil.retrieveNotifications(ChwApplication.getApplicationFlavor().hasReferrals(),
                 memberObject.getBaseEntityId(), this);

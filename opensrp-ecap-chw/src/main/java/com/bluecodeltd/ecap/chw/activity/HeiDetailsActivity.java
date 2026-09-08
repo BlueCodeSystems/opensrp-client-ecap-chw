@@ -215,7 +215,12 @@ public class HeiDetailsActivity extends AppCompatActivity {
 //        builder = new AlertDialog.Builder(HTSDetailsActivity.this);
 //        screeningBuilder = new AlertDialog.Builder(HTSDetailsActivity.this);
 //
-        clientId = getIntent().getExtras().getString("client_id");
+        clientId = getIntent().getStringExtra("client_id");
+        if (TextUtils.isEmpty(clientId)) {
+            Toasty.warning(HeiDetailsActivity.this, "Infant record not found", Toast.LENGTH_LONG, true).show();
+            finish();
+            return;
+        }
 //        pmtctChild = PmtctChildDao.getPmctChildHei(clientId);
         try {
             pmtctChild = PmtctChildDao.getPMCTChild(clientId);

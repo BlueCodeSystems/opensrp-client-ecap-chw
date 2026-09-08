@@ -207,7 +207,13 @@ public class LoginInteractor extends BaseLoginInteractor implements BaseLoginCon
 
     @Override
     protected void scheduleJobsImmediately() {
-        super.scheduleJobsImmediately();
-        scheduler.scheduleJobsImmediately();
+        // BaseJob.scheduleJobImmediately() writes job metadata to android-job's own SQLite
+        // store synchronously. The local-login path above already runs this off the main
+        // thread; BaseLoginInteractor.postProcessRemoteLoginSuccess() (remote/first login)
+        // calls this override directly on the main thread, which ANRs on that DB write.
+        new Thread(() -> {
+            super.scheduleJobsImmediately();
+            scheduler.scheduleJobsImmediately();
+        }).start();
     }
 }
