@@ -27,6 +27,8 @@ import com.bluecodeltd.ecap.chw.model.Household;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Locale;
 import java.util.List;
 import com.bluecodeltd.ecap.chw.util.Threading;
 
@@ -285,16 +287,30 @@ public boolean checkGraduationStatus(String householdId){
 //        return check;
 //    }
 
+    // Birthdates are stored in more than one format (e.g. "02-07-2004" and "02 Jul 2004").
+    private static final DateTimeFormatter[] BIRTHDATE_FORMATS = {
+            DateTimeFormatter.ofPattern("dd-MM-u"),
+            DateTimeFormatter.ofPattern("dd MMM u", Locale.ENGLISH),
+            DateTimeFormatter.ofPattern("u-MM-dd"),
+            DateTimeFormatter.ofPattern("dd/MM/u")
+    };
+
+    private static LocalDate parseBirthdate(String birthdate) {
+        for (DateTimeFormatter format : BIRTHDATE_FORMATS) {
+            try {
+                return LocalDate.parse(birthdate, format);
+            } catch (DateTimeParseException ignored) { }
+        }
+        return null;
+    }
+
     private String getAgeWithoutText(String birthdate){
         if (birthdate == null || birthdate.trim().isEmpty()) {
             return "Not Set";
         }
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
-        LocalDate localDateBirthdate;
-        try {
-            localDateBirthdate = LocalDate.parse(birthdate, formatter);
-        } catch (Exception e) {
-            Log.w("HouseholdRegisterVH", "Unparseable birthdate: " + birthdate, e);
+        LocalDate localDateBirthdate = parseBirthdate(birthdate.trim());
+        if (localDateBirthdate == null) {
+            Log.w("HouseholdRegisterVH", "Unparseable birthdate: " + birthdate);
             return "Not Set";
         }
         LocalDate today =LocalDate.now();

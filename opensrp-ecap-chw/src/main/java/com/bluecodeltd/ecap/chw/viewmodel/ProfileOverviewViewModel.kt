@@ -22,7 +22,9 @@ class ProfileOverviewViewModel: ViewModel() {
     private val _state = MutableLiveData(ProfileOverviewState())
     val state: LiveData<ProfileOverviewState> = _state
 
-    fun refresh(householdId: String, childUniqueId: String) {
+    fun refresh(householdId: String?, childUniqueId: String?) {
+        // Called from Java fragments; ids can be null while the host activity is still loading.
+        if (householdId.isNullOrBlank() || childUniqueId.isNullOrBlank()) return
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val household = HouseholdDao.getVcaSubPop(householdId, childUniqueId)

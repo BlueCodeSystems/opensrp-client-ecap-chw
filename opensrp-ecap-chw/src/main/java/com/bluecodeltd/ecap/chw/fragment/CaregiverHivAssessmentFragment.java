@@ -1,5 +1,6 @@
 package com.bluecodeltd.ecap.chw.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +19,13 @@ import com.bluecodeltd.ecap.chw.adapter.CaregiverHivAssessmentAdapter;
 import com.bluecodeltd.ecap.chw.dao.CaregiverHivAssessmentDao;
 import com.bluecodeltd.ecap.chw.model.CaregiverHivAssessmentModel;
 import com.bluecodeltd.ecap.chw.model.Household;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import timber.log.Timber;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -80,16 +85,17 @@ public class CaregiverHivAssessmentFragment extends Fragment {
 
         vieww = inflater.inflate(R.layout.fragment_caregiver_hiv_assessment, container, false);
 
-        HashMap<String, Household> mymap = ( (HouseholdDetails) requireActivity()).getData();
-        Household house = mymap.get("house");
-        String houseId = house.getHousehold_id();
+        // house is null when this fragment is restored before HouseholdDetails has loaded it;
+        // HouseholdDetails rebuilds the tabs once the household arrives.
+        Activity hostActivity = getActivity();
+        HashMap<String, Household> mymap = hostActivity instanceof HouseholdDetails ? ((HouseholdDetails) hostActivity).getData() : null;
+        Household house = mymap != null ? mymap.get("house") : null;
+        String houseId = house != null ? house.getHousehold_id() : null;
 
         recyclerView = vieww.findViewById(R.id.visitrecyclerView);
         linearLayout = vieww.findViewById(R.id.visit_container);
 
         assessmentList.clear();
-
-        assessmentList.addAll(CaregiverHivAssessmentDao.getHivAssessment(houseId));
 
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);
@@ -97,13 +103,25 @@ public class CaregiverHivAssessmentFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerViewadapter = new CaregiverHivAssessmentAdapter( getContext(), assessmentList);
         recyclerView.setAdapter(recyclerViewadapter);
-        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
 
-        if (recyclerViewadapter.getItemCount() > 0){
-
-            linearLayout.setVisibility(View.GONE);
+        if (houseId != null) {
+            Threading.io(() -> {
+                List<CaregiverHivAssessmentModel> assessments;
+                try {
+                    assessments = CaregiverHivAssessmentDao.getHivAssessment(houseId);
+                } catch (Exception e) {
+                    Timber.e(e);
+                    return;
+                }
+                Threading.main(() -> {
+                    if (!isAdded() || vieww == null) return;
+                    assessmentList.clear();
+                    if (assessments != null) assessmentList.addAll(assessments);
+                    recyclerViewadapter.notifyDataSetChanged();
+                    linearLayout.setVisibility(assessmentList.isEmpty() ? View.VISIBLE : View.GONE);
+                });
+            });
         }
-
 
         return vieww;
 

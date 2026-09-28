@@ -33,6 +33,7 @@ import com.bluecodeltd.ecap.chw.domain.ChildIndexEventClient;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Household;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.rey.material.widget.Button;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -147,9 +148,6 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
     }
 
     public void fetchData() {
-        domainList.clear();
-        domainList.addAll(HouseholdDao.getDomainsById(householdId, caseDate));
-
         if (recyclerViewadapter == null) {
             RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(HouseholdCasePlanActivity.this);
             recyclerView.setHasFixedSize(true);
@@ -158,17 +156,30 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
             recyclerViewadapter = new HouseholdDomainPlanAdapter(domainList, HouseholdCasePlanActivity.this, "caregiver_domain");
             recyclerView.setAdapter(recyclerViewadapter);
 
-            recyclerViewadapter.setOnDataUpdateListener(() -> runOnUiThread(() -> {
-                recreate();
-            }));
-        } else {
-            try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
+            // Reload in place instead of recreate(): recreating re-inflates the whole screen and
+            // every row, which under memory pressure stalls the main thread on GC (ANR).
+            recyclerViewadapter.setOnDataUpdateListener(this::fetchData);
         }
 
-        if (recyclerViewadapter.getItemCount() > 0) {
-            domainBtn.setVisibility(View.GONE);
-            domainBtn2.setVisibility(View.VISIBLE);
-        }
+        Threading.io(() -> {
+            List<CasePlanModel> domains;
+            try {
+                domains = HouseholdDao.getDomainsById(householdId, caseDate);
+            } catch (Exception e) {
+                Timber.e(e);
+                return;
+            }
+            Threading.main(() -> {
+                if (isFinishing() || isDestroyed()) return;
+                domainList.clear();
+                if (domains != null) domainList.addAll(domains);
+                recyclerViewadapter.notifyDataSetChanged();
+
+                boolean hasDomains = !domainList.isEmpty();
+                domainBtn.setVisibility(hasDomains ? View.GONE : View.VISIBLE);
+                domainBtn2.setVisibility(hasDomains ? View.VISIBLE : View.GONE);
+            });
+        });
     }
 
     public void startFormActivity(JSONObject jsonObject) {
@@ -217,20 +228,13 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
 
                 saveRegistration(childIndexEventClient, is_edit_mode,EncounterType);
 
-                switch (EncounterType) {
-
-                    case "Caregiver Domain":
-                        Toasty.success(HouseholdCasePlanActivity.this, "Vulnerability Saved", Toast.LENGTH_LONG, true).show();
-                        recreate();
-                        refresh();
-                        break;
-
+                if ("Caregiver Domain".equals(EncounterType)) {
+                    Toasty.success(HouseholdCasePlanActivity.this, "Vulnerability Saved", Toast.LENGTH_LONG, true).show();
                 }
             } catch (Exception e) {
                 Timber.e(e);
             }
         }
-        recreate();
     }
 
     public ChildIndexEventClient processRegistration(String jsonString){
@@ -311,6 +315,8 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     Timber.e(e);
                 }
+                // Reload only after the event is processed, so the list reflects the save.
+                Threading.main(this::fetchData);
             }
 
         };
@@ -400,19 +406,23 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
         }
     }
     public void getGraduationBenchmarkStatus(String householdId){
-        Household household = HouseholdDao.getHousehold(householdId);
-        if (household.getHousehold_case_status() != null && (household.getHousehold_case_status().equals("0") || household.getHousehold_case_status().equals("2"))) {
-            showDialogBox(household.getHousehold_id(), "`s has been inactive or de-registered");
-        } else {
-            addVulnarability();
-        }
-
+        Threading.io(() -> {
+            Household household = null;
+            try { household = HouseholdDao.getHousehold(householdId); } catch (Exception e) { Timber.e(e); }
+            Household finalHousehold = household;
+            Threading.main(() -> {
+                if (isFinishing() || isDestroyed()) return;
+                String status = finalHousehold != null ? finalHousehold.getHousehold_case_status() : null;
+                if ("0".equals(status) || "2".equals(status)) {
+                    showDialogBox(finalHousehold.getCaregiver_name(), "`s has been inactive or de-registered");
+                } else {
+                    addVulnarability();
+                }
+            });
+        });
     }
-    public void refresh(){
-        recreate();
-    }
 
-    public void showDialogBox(String householdId,String message){
+    public void showDialogBox(String caregiverName,String message){
         if (isFinishing() || isDestroyed()) {
             return;
         }
@@ -421,8 +431,7 @@ public class HouseholdCasePlanActivity extends AppCompatActivity {
         dialog.show();
 
         TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-        Household house = HouseholdDao.getHousehold(householdId);
-        dialogMessage.setText(house.getCaregiver_name() + message);
+        dialogMessage.setText((caregiverName != null ? caregiverName : "") + message);
 
         android.widget.Button dialogButton = dialog.findViewById(R.id.dialog_button);
         dialogButton.setOnClickListener(v -> dialog.dismiss());

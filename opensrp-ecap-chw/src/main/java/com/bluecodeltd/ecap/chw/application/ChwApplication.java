@@ -1,8 +1,12 @@
 package com.bluecodeltd.ecap.chw.application;
 
+import android.content.BroadcastReceiver;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
+
+import androidx.core.content.ContextCompat;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
@@ -208,6 +212,7 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
     @Override
     public void onCreate() {
         super.onCreate();
+        setUpLogging();
 
         mInstance = this;
         context = Context.getInstance();
@@ -289,9 +294,14 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         }
 
         reloadLanguage();
+    }
 
-        // Ensure Timber uses the local safe tree when Crashlytics is not present
-        // This keeps logging independent from the external SmartRegister Crashlytics tree
+    /**
+     * Replace the Timber trees planted by DrishtiApplication.onCreate() (CrashLyticsTree in release,
+     * which reports every Timber.e as a Crashlytics non-fatal) with the local safe tree. Must run
+     * straight after super.onCreate(), before library init logs its expected startup errors.
+     */
+    private void setUpLogging() {
         try {
             Timber.uprootAll();
             if (BuildConfig.DEBUG) {
@@ -358,10 +368,16 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         );
 
         try {
-            SyncStatusBroadcastReceiver.init(this);
+            // The library calls registerReceiver(receiver, filter) without an export flag, which
+            // throws on API 34+ and leaves an unregistered singleton that never gets sync events.
+            // Route that call through ContextCompat so it registers as RECEIVER_NOT_EXPORTED.
+            SyncStatusBroadcastReceiver.init(new ContextWrapper(this) {
+                @Override
+                public Intent registerReceiver(BroadcastReceiver receiver, IntentFilter filter) {
+                    return ContextCompat.registerReceiver(getBaseContext(), receiver, filter, ContextCompat.RECEIVER_NOT_EXPORTED);
+                }
+            });
             SyncStatusBroadcastReceiver.getInstance().addSyncStatusListener(this);
-        } catch (SecurityException se) {
-            Timber.w(se, "Skipping SyncStatusBroadcastReceiver init on API 33+ (receiver flags required)");
         } catch (Throwable t) {
             Timber.w(t, "SyncStatusBroadcastReceiver init failed; continuing without it");
         }

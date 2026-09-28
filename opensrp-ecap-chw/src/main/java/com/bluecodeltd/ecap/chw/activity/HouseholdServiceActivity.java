@@ -329,8 +329,8 @@ public class HouseholdServiceActivity extends AppCompatActivity {
 
                         case "Household Service Report Edit":
 
+                            // The list is refreshed by saveRegistration once the event has been processed.
                             Toasty.success(HouseholdServiceActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
-                            refreshData();
 
 
                             break;
@@ -343,16 +343,28 @@ public class HouseholdServiceActivity extends AppCompatActivity {
         }
     }
     private void refreshData() {
-        familyServiceList.clear();
-        List<HouseholdServiceReportModel> updatedList = HouseholdServiceReportDao.getServicesByHousehold(intent_householdId);
-        familyServiceList.addAll(updatedList);
-        if (recyclerViewadapter == null) {
+        // Off the main thread: the DB lock may be held by client processing or sync (ANR).
+        Threading.io(() -> {
+            List<HouseholdServiceReportModel> updatedList;
             try {
-                recyclerViewadapter = new HouseholdServiceAdapter(familyServiceList, HouseholdServiceActivity.this);
-                if (recyclerView != null) recyclerView.setAdapter(recyclerViewadapter);
-            } catch (Exception ignored) {}
-        }
-        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
+                updatedList = HouseholdServiceReportDao.getServicesByHousehold(intent_householdId);
+            } catch (Exception e) {
+                Timber.e(e);
+                return;
+            }
+            Threading.main(() -> {
+                if (isFinishing() || isDestroyed()) return;
+                familyServiceList.clear();
+                if (updatedList != null) familyServiceList.addAll(updatedList);
+                if (recyclerViewadapter == null) {
+                    try {
+                        recyclerViewadapter = new HouseholdServiceAdapter(familyServiceList, HouseholdServiceActivity.this);
+                        if (recyclerView != null) recyclerView.setAdapter(recyclerViewadapter);
+                    } catch (Exception ignored) {}
+                }
+                try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
+            });
+        });
     }
     public ChildIndexEventClient processRegistration(String jsonString){
 
@@ -481,7 +493,7 @@ public class HouseholdServiceActivity extends AppCompatActivity {
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
 
                     // Refresh the data on the main thread
-                    runOnUiThread(this::refreshData);
+                    refreshData();
 
 
                 } catch (Exception e) {

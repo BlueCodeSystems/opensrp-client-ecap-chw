@@ -13,7 +13,9 @@ class HouseholdVisitsViewModel: ViewModel() {
     private val _visits = MutableLiveData<ArrayList<CaregiverVisitationModel>>(arrayListOf())
     val visits: LiveData<ArrayList<CaregiverVisitationModel>> = _visits
 
-    fun refresh(householdId: String) {
+    fun refresh(householdId: String?) {
+        // Called from Java fragments; the id can be null while the host activity is still loading.
+        if (householdId.isNullOrBlank()) return
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val list = ArrayList(CaregiverVisitationDao.getVisitsByID(householdId))

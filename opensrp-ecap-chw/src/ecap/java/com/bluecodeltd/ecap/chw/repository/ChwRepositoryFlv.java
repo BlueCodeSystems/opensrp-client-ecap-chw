@@ -34,9 +34,7 @@ public class ChwRepositoryFlv {
     private static String appVersionCodePref = "APP_VERSION_CODE";
 
     public static void onUpgrade(Context context, SQLiteDatabase db, int oldVersion, int newVersion) {
-        Timber.w(ChwRepository.class.getName(),
-                "Upgrading database from version " + oldVersion + " to "
-                        + newVersion + ", which will destroy all old data");
+        Timber.i("Upgrading database from version %d to %d", oldVersion, newVersion);
         int upgradeTo = oldVersion + 1;
         while (upgradeTo <= newVersion) {
             switch (upgradeTo) {
@@ -129,6 +127,9 @@ public class ChwRepositoryFlv {
                     break;
                 case 32:
                     upgradeToVersion32(db);
+                    break;
+                case 33:
+                    upgradeToVersion33(db);
                     break;
                 default:
                     break;
@@ -1293,6 +1294,14 @@ public class ChwRepositoryFlv {
             }
         } catch (Exception e) {
             Timber.e(e, "upgradeToVersion32");
+        }
+    }
+
+    private static void upgradeToVersion33(SQLiteDatabase db) {
+        try {
+            RegisterIndexes.ensure(db);
+        } catch (Exception e) {
+            Timber.e(e, "upgradeToVersion33");
         }
     }
 

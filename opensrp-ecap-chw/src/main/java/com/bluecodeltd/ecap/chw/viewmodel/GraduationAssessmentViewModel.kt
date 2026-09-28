@@ -13,7 +13,9 @@ class GraduationAssessmentViewModel : ViewModel() {
     private val _assessments = MutableLiveData<ArrayList<GraduationModel>>(arrayListOf())
     val assessments: LiveData<ArrayList<GraduationModel>> = _assessments
 
-    fun refresh(householdId: String) {
+    fun refresh(householdId: String?) {
+        // Called from Java fragments; the id can be null while the host activity is still loading.
+        if (householdId.isNullOrBlank()) return
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val list = ArrayList(GraduationDao.getAssessment(householdId))

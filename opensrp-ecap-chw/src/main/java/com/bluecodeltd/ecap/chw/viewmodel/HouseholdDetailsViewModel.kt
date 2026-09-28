@@ -30,7 +30,9 @@ class HouseholdDetailsViewModel : ViewModel() {
     private val _state = MutableLiveData<HouseholdDetailsState>()
     val state: LiveData<HouseholdDetailsState> = _state
 
-    fun refresh(householdId: String) {
+    fun refresh(householdId: String?) {
+        // Called from Java; the id can be null while the host activity is still loading.
+        if (householdId.isNullOrBlank()) return
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val children = ArrayList(IndexPersonDao.getFamilyChildren(householdId))

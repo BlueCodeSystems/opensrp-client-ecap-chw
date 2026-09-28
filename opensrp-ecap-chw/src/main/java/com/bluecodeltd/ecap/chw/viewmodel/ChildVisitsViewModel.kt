@@ -13,7 +13,9 @@ class ChildVisitsViewModel: ViewModel() {
     private val _visits = MutableLiveData<ArrayList<VcaVisitationModel>>(arrayListOf())
     val visits: LiveData<ArrayList<VcaVisitationModel>> = _visits
 
-    fun refresh(childId: String) {
+    fun refresh(childId: String?) {
+        // Called from Java fragments; the id can be null while the host activity is still loading.
+        if (childId.isNullOrBlank()) return
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val list = ArrayList(VcaVisitationDao.getVisitsByID(childId))

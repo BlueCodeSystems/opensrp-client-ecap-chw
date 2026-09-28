@@ -684,7 +684,12 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
     public void openFormUsingFormUtils(Context context, String formName) throws JSONException {
 
-
+        // ptctMotherModel is loaded asynchronously in onCreate; a tap before it arrives would pass
+        // null into populateJsonForm (NPE). Only anc_details and mother_pmtct_edit handle null.
+        if (ptctMotherModel == null && !"anc_details".equals(formName) && !"mother_pmtct_edit".equals(formName)) {
+            Toasty.warning(MotherPmtctProfileActivity.this, "Mother details are still loading, please try again", Toast.LENGTH_SHORT, true).show();
+            return;
+        }
 
         FormUtils formUtils = null;
         try {
@@ -692,9 +697,11 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        JSONObject formToBeOpened;
-
-        formToBeOpened = formUtils.getFormJson(formName);
+        JSONObject formToBeOpened = formUtils != null ? formUtils.getFormJson(formName) : null;
+        if (formToBeOpened == null) {
+            Timber.w("Could not load form %s", formName);
+            return;
+        }
 
         switch (formName) {
 

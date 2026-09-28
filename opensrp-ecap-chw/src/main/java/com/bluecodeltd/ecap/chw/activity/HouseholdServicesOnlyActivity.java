@@ -341,8 +341,8 @@ public class HouseholdServicesOnlyActivity extends AppCompatActivity {
                         if (!is_edit_mode) {
                             maybeAutoEnrollMotherFromService(jsonFormObject);
                         }
+                        // The list is refreshed by saveRegistration once the event has been processed.
                         Toasty.success(HouseholdServicesOnlyActivity.this, "Service Report Saved", Toast.LENGTH_LONG, true).show();
-                        refreshData();
 
 
                         break;
@@ -354,11 +354,23 @@ public class HouseholdServicesOnlyActivity extends AppCompatActivity {
         }
     }
     private void refreshData() {
-        familyServiceList.clear();
-        List<HouseholdServiceReportModel> updatedList = HouseholdServiceReportDao.getServicesByHousehold(intent_householdId);
-        familyServiceList.addAll(updatedList);
-        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
-        updateServicesCount();
+        // Off the main thread: the DB lock may be held by client processing or sync (ANR).
+        Threading.io(() -> {
+            List<HouseholdServiceReportModel> updatedList;
+            try {
+                updatedList = HouseholdServiceReportDao.getServicesByHousehold(intent_householdId);
+            } catch (Exception e) {
+                Timber.e(e);
+                return;
+            }
+            Threading.main(() -> {
+                if (isFinishing() || isDestroyed()) return;
+                familyServiceList.clear();
+                if (updatedList != null) familyServiceList.addAll(updatedList);
+                try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
+                updateServicesCount();
+            });
+        });
     }
     public ChildIndexEventClient processRegistration(String jsonString){
 
@@ -437,8 +449,7 @@ public class HouseholdServicesOnlyActivity extends AppCompatActivity {
                     getClientProcessorForJava().processClient(savedEvents);
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
 
-                    // Refresh the data on the main thread
-                    runOnUiThread(this::refreshData);
+                    refreshData();
 
 
                 } catch (Exception e) {

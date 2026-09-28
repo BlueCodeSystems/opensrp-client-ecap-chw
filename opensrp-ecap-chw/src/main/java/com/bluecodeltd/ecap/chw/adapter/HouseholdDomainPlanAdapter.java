@@ -72,8 +72,6 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
     List<CasePlanModel> caseplans;
 
     ObjectMapper oMapper;
-    private static final long REFRESH_DELAY = 100;
-    private Handler handler = new Handler();
     public interface OnDataUpdateListener {
         void onDataUpdate();
     }
@@ -114,17 +112,17 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
         holder.txtDueDate.setText("Due Date : " + casePlan.getDue_date());
 
 
-        if(casePlan.getStatus().equals(("C"))){
+        if("C".equals(casePlan.getStatus())){
 
             holder.txtStatus.setText("Complete");
             holder.txtStatus.setBackgroundResource(R.drawable.bg_chip_success);
 
-        } else if(casePlan.getStatus().equals(("P"))) {
+        } else if("P".equals(casePlan.getStatus())) {
 
             holder.txtStatus.setText("In Progress");
             holder.txtStatus.setBackgroundResource(R.drawable.bg_chip_warning);
 
-        } else if(casePlan.getStatus().equals(("D"))) {
+        } else if("D".equals(casePlan.getStatus())) {
 
             holder.txtStatus.setText("Delayed");
             holder.txtStatus.setBackgroundResource(R.drawable.bg_chip_danger);
@@ -207,16 +205,12 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
                     if (childIndexEventClient == null) {
                         return;
                     }
+                    // saveRegistration notifies onDataUpdateListener once the delete is processed.
                     saveRegistration(childIndexEventClient,true);
-
-                    if (onDataUpdateListener != null) {
-                        onDataUpdateListener.onDataUpdate();
-                    }
 
                 } catch (Exception e) {
                     Timber.e(e);
                 }
-               refreshActivity();
 
             }));
 
@@ -242,17 +236,6 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
         });
     }
 
-    public void refreshActivity() {
-        handler.postDelayed(refreshRunnable, REFRESH_DELAY);
-    }
-
-    private Runnable refreshRunnable = new Runnable() {
-        @Override
-        public void run() {
-            Activity activity = (HouseholdCasePlanActivity) context;
-            activity.recreate();
-        }
-    };
     public void showDialogBox(String caregiverName,String message){
         if (context instanceof Activity && (((Activity) context).isFinishing() || ((Activity) context).isDestroyed())) {
             return;
@@ -439,12 +422,11 @@ public class HouseholdDomainPlanAdapter extends RecyclerView.Adapter<HouseholdDo
                     getClientProcessorForJava().processClient(savedEvents);
                     getAllSharedPreferences().saveLastUpdatedAtDate(currentSyncDate.getTime());
 
-                    if (onDataUpdateListener != null) {
-                        onDataUpdateListener.onDataUpdate();
-                    }
-
                 } catch (Exception e) {
                     Timber.e(e);
+                }
+                if (onDataUpdateListener != null) {
+                    Threading.main(onDataUpdateListener::onDataUpdate);
                 }
             }
 

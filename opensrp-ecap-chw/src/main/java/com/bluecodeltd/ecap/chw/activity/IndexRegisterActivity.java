@@ -34,6 +34,7 @@ import com.bluecodeltd.ecap.chw.listener.ChwBottomNavigationListener;
 import com.bluecodeltd.ecap.chw.presenter.IndexRegisterPresenter;
 import com.bluecodeltd.ecap.chw.util.Constants;
 import com.bluecodeltd.ecap.chw.util.DueVisitsHelper;
+import com.bluecodeltd.ecap.chw.repository.RegisterIndexes;
 import com.bluecodeltd.ecap.chw.util.Threading;
 import com.bluecodeltd.ecap.chw.util.Utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -127,6 +128,7 @@ public class IndexRegisterActivity extends BaseRegisterActivity implements Index
         String phone = sp.getString("phone", "anonymous");
 
         Threading.io(() -> {
+            RegisterIndexes.ensureOnce();
             List<DueVisitsHelper.DueVisit> due = new ArrayList<>();
             try { due = DueVisitsHelper.filterDue(DueVisitsHelper.getDueVisits(phone)); } catch (Exception ignored) {}
             List<DueVisitsHelper.DueVisit> finalDue = due;

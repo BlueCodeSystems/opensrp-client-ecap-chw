@@ -156,12 +156,17 @@ public class HouseholdDetails extends AppCompatActivity {
     private String refresh;
     private UniqueIdRepository uniqueIdRepository;
     public Household house;
+    private volatile boolean graduationCheckRunning = false;
     public ArrayList houseHoldsContainingSameId;
 
     Caregiver caregiver;
     AlertDialog.Builder builder, screeningBuilder;
 
-    ObjectMapper oMapper, householdMapper, caregiverMapper,weServiceMapper, assessmentMapper, graduationMapper;
+    // Created up front: menu/FAB handlers use these before applyState() has run (household still
+    // loading), and ObjectMapper holds no per-household state.
+    ObjectMapper oMapper = new ObjectMapper(), householdMapper = new ObjectMapper(),
+            caregiverMapper = new ObjectMapper(), weServiceMapper = new ObjectMapper(),
+            assessmentMapper = new ObjectMapper(), graduationMapper = new ObjectMapper();
     CommonPersonObjectClient household;
     Random number;
     int rNumber;
@@ -285,10 +290,6 @@ public class HouseholdDetails extends AppCompatActivity {
             if (house == null) return;
 
             caregiver = state.getCaregiver();
-            oMapper = new ObjectMapper();
-            caregiverMapper = new ObjectMapper();
-            weServiceMapper = new ObjectMapper();
-            assessmentMapper = new ObjectMapper();
 
             setupViewPager();
             updateTasksTabTitle();
@@ -820,6 +821,14 @@ public class HouseholdDetails extends AppCompatActivity {
             if (v == null) return;
             int id = v.getId();
 
+            // Every action except toggling the FAB menu opens a form populated from `house`, which
+            // is only set once applyState() runs after the async load; a tap before then would
+            // pass null into populateJsonForm and crash.
+            if (house == null && id != R.id.fabx) {
+                Toast.makeText(HouseholdDetails.this, "Please wait, household data is still loading", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             FormUtils formUtils = null;
             try {
                 formUtils = new FormUtils(HouseholdDetails.this);
@@ -839,7 +848,12 @@ public class HouseholdDetails extends AppCompatActivity {
                         break;
                     }
                     final FormUtils formUtilsFinal = formUtils;
+                    // Each tap runs ~15 eligibility queries; ignore repeat taps while a check is in flight so they
+                    // don't pile up on the DB lock (seen in ANR traces as several copies of this lambda at once).
+                    if (graduationCheckRunning) break;
+                    graduationCheckRunning = true;
                     Threading.io(() -> {
+                        try {
                         boolean areAllVcasVisited = VcaVisitationDao.areAllVcasVisited(householdId);
                         boolean areAllVcasAssessed = VcaAssessmentDao.areAllVcasAssessed(householdId);
                         boolean hasVisitsByID = CaregiverVisitationDao.hasVisitsByID(householdId);
@@ -1058,6 +1072,9 @@ public class HouseholdDetails extends AppCompatActivity {
                                     Toasty.error(HouseholdDetails.this, "Cannot proceed with graduation. Please check household requirements.", Toast.LENGTH_LONG, true).show();
                                 }
                             });
+                        }
+                        } finally {
+                            graduationCheckRunning = false;
                         }
                     });
                 break;
