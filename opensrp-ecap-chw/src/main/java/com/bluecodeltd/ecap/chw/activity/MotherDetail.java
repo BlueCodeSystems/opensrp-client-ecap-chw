@@ -397,17 +397,29 @@ public class MotherDetail extends AppCompatActivity {
             visitTabTitle.setText("CHILDREN");
             childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
 
-            String children = "0";
-            try {
-                if (commonPersonObjectClient != null && commonPersonObjectClient.getColumnmaps() != null) {
-                    children = IndexPersonDao.countMotherChildren(commonPersonObjectClient.getColumnmaps().get("household_id"));
-                }
-            } catch (Exception ignored) { }
-            childTabCount.setText(children);
+            childTabCount.setText("0");
 
             if (mTabLayout.getTabCount() > 1 && mTabLayout.getTabAt(1) != null) {
                 mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
             }
+
+            // Count off the main thread: during a sync the DB lock can be held for seconds.
+            final String householdId = commonPersonObjectClient != null && commonPersonObjectClient.getColumnmaps() != null
+                    ? commonPersonObjectClient.getColumnmaps().get("household_id") : null;
+            final TextView countView = childTabCount;
+            Threading.io(() -> {
+                String children = "0";
+                try {
+                    if (householdId != null) {
+                        children = IndexPersonDao.countMotherChildren(householdId);
+                    }
+                } catch (Exception ignored) { }
+                final String finalChildren = children;
+                Threading.main(() -> {
+                    if (isFinishing() || isDestroyed()) return;
+                    countView.setText(finalChildren);
+                });
+            });
         } catch (Exception ignored) { }
     }
 
@@ -418,16 +430,25 @@ public class MotherDetail extends AppCompatActivity {
             TextView countView = layout.findViewById(R.id.visits_count);
             title.setText("ANC");
 
-            int count = 0;
-            try {
-                String householdId = commonPersonObjectClient.getColumnmaps().get("household_id");
-                count = MotherAncDao.listByHouseholdId(householdId).size();
-            } catch (Exception ignored) { }
-            countView.setText(String.valueOf(count));
+            countView.setText("0");
 
             if (mTabLayout.getTabCount() > 2 && mTabLayout.getTabAt(2) != null) {
                 mTabLayout.getTabAt(2).setCustomView(layout);
             }
+
+            final String householdId = commonPersonObjectClient != null && commonPersonObjectClient.getColumnmaps() != null
+                    ? commonPersonObjectClient.getColumnmaps().get("household_id") : null;
+            Threading.io(() -> {
+                int count = 0;
+                try {
+                    count = MotherAncDao.listByHouseholdId(householdId).size();
+                } catch (Exception ignored) { }
+                final int finalCount = count;
+                Threading.main(() -> {
+                    if (isFinishing() || isDestroyed()) return;
+                    countView.setText(String.valueOf(finalCount));
+                });
+            });
         } catch (Exception ignored) { }
     }
 
@@ -617,23 +638,29 @@ public class MotherDetail extends AppCompatActivity {
 
 //                } else {
 
-                    String rawHouseholdId = commonPersonObjectClient.getColumnmaps().get("household_id");
-                    String sourceFrom = commonPersonObjectClient.getColumnmaps().get("source_from");
-                    String resolvedHouseholdId = rawHouseholdId;
+                    final String rawHouseholdId = commonPersonObjectClient.getColumnmaps().get("household_id");
+                    final String sourceFrom = commonPersonObjectClient.getColumnmaps().get("source_from");
 
-                    if ("service_report_vca".equalsIgnoreCase(sourceFrom) && rawHouseholdId != null && !rawHouseholdId.trim().isEmpty()) {
-                        try {
-                            com.bluecodeltd.ecap.chw.model.EcClientIndexSummary summary =
-                                    IndexPersonDao.getClientSummaryByUniqueId(rawHouseholdId);
-                            if (summary != null && summary.getHouseholdId() != null && !summary.getHouseholdId().trim().isEmpty()) {
-                                resolvedHouseholdId = summary.getHouseholdId();
-                            }
-                        } catch (Exception ignored) {}
-                    }
-
-                    Intent householdIntent = new Intent(this, HouseholdDetails.class);
-                    householdIntent.putExtra("householdId", resolvedHouseholdId);
-                    startActivity(householdIntent);
+                    // The household lookup below hits the DB; resolve it off the main thread.
+                    Threading.io(() -> {
+                        String resolvedHouseholdId = rawHouseholdId;
+                        if ("service_report_vca".equalsIgnoreCase(sourceFrom) && rawHouseholdId != null && !rawHouseholdId.trim().isEmpty()) {
+                            try {
+                                com.bluecodeltd.ecap.chw.model.EcClientIndexSummary summary =
+                                        IndexPersonDao.getClientSummaryByUniqueId(rawHouseholdId);
+                                if (summary != null && summary.getHouseholdId() != null && !summary.getHouseholdId().trim().isEmpty()) {
+                                    resolvedHouseholdId = summary.getHouseholdId();
+                                }
+                            } catch (Exception ignored) {}
+                        }
+                        final String finalHouseholdId = resolvedHouseholdId;
+                        Threading.main(() -> {
+                            if (isFinishing() || isDestroyed()) return;
+                            Intent householdIntent = new Intent(this, HouseholdDetails.class);
+                            householdIntent.putExtra("householdId", finalHouseholdId);
+                            startActivity(householdIntent);
+                        });
+                    });
 
 
 //                }
@@ -643,26 +670,39 @@ public class MotherDetail extends AppCompatActivity {
             case R.id.pmtct_prof:
 
                 try {
-                    String householdId = commonPersonObjectClient.getColumnmaps().get("household_id");
-                    String baseEntityId = commonPersonObjectClient.getColumnmaps().get("base_entity_id");
-                    PtctMotherModel pmtctMother = getPmtctMotherByBaseEntity(baseEntityId);
+                    final String householdId = commonPersonObjectClient.getColumnmaps().get("household_id");
+                    final String baseEntityId = commonPersonObjectClient.getColumnmaps().get("base_entity_id");
+                    final CommonPersonObjectClient client = commonPersonObjectClient;
 
-                    // Always allow opening the PMTCT profile; if not yet enrolled, the profile will show limited info.
-                    String targetId = householdId;
-                    if (pmtctMother != null) {
-                        String pmtctId = pmtctMother.getPmtct_id();
-                        if (pmtctId != null && !pmtctId.trim().isEmpty()) {
-                            targetId = pmtctId;
-                        } else if (pmtctMother.getHousehold_id() != null && !pmtctMother.getHousehold_id().trim().isEmpty()) {
-                            targetId = pmtctMother.getHousehold_id();
+                    // PMTCT lookup hits the DB; do it off the main thread, then launch.
+                    Threading.io(() -> {
+                        PtctMotherModel pmtctMother = getPmtctMotherByBaseEntity(baseEntityId);
+
+                        // Always allow opening the PMTCT profile; if not yet enrolled, the profile will show limited info.
+                        String targetId = householdId;
+                        if (pmtctMother != null) {
+                            String pmtctId = pmtctMother.getPmtct_id();
+                            if (pmtctId != null && !pmtctId.trim().isEmpty()) {
+                                targetId = pmtctId;
+                            } else if (pmtctMother.getHousehold_id() != null && !pmtctMother.getHousehold_id().trim().isEmpty()) {
+                                targetId = pmtctMother.getHousehold_id();
+                            }
                         }
-                    }
-
-                    Intent intent = new Intent(this, MotherPmtctProfileActivity.class);
-                    intent.putExtra("client_id", targetId);
-                    intent.putExtra("household_id", householdId);
-                    intent.putExtra("baseId", commonPersonObjectClient);
-                    startActivity(intent);
+                        final String finalTargetId = targetId;
+                        Threading.main(() -> {
+                            if (isFinishing() || isDestroyed()) return;
+                            try {
+                                Intent intent = new Intent(this, MotherPmtctProfileActivity.class);
+                                intent.putExtra("client_id", finalTargetId);
+                                intent.putExtra("household_id", householdId);
+                                intent.putExtra("baseId", client);
+                                startActivity(intent);
+                            } catch (Exception e) {
+                                Timber.e(e);
+                                Toasty.error(MotherDetail.this, "Unable to open PMTCT profile", Toast.LENGTH_LONG, true).show();
+                            }
+                        });
+                    });
                 } catch (Exception e) {
                     Timber.e(e);
                     Toasty.error(MotherDetail.this, "Unable to open PMTCT profile", Toast.LENGTH_LONG, true).show();
@@ -870,41 +910,71 @@ public class MotherDetail extends AppCompatActivity {
 
             case "mother_delivery":
 
-                try {
-                    String baseId = this.commonPersonObjectClient.getColumnmaps().get("base_entity_id");
-                    MotherDeliveryModel delivery = MotherDeliveryDao.getLatestByBaseEntityId(baseId);
-                    formToBeOpened.put("entity_id", baseId);
-                    if (delivery != null) {
-                        // Prefill using the latest delivery record (includes household_id)
-                        CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(delivery, Map.class));
-                    } else {
-                        // Fallback to mother details so household_id and basic info appear
-                        CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(commonPersonObjectClient.getColumnmaps(), Map.class));
-                    }
-                } catch (Exception e) {
-                    Timber.e(e);
+                {
+                    // Look up the latest delivery record off the main thread, then prefill and open the form.
+                    final String baseId = this.commonPersonObjectClient.getColumnmaps().get("base_entity_id");
+                    final JSONObject form = formToBeOpened;
+                    Threading.io(() -> {
+                        MotherDeliveryModel delivery = null;
+                        try {
+                            delivery = MotherDeliveryDao.getLatestByBaseEntityId(baseId);
+                        } catch (Exception e) {
+                            Timber.e(e);
+                        }
+                        final MotherDeliveryModel latest = delivery;
+                        Threading.main(() -> {
+                            if (isFinishing() || isDestroyed()) return;
+                            try {
+                                form.put("entity_id", baseId);
+                                if (latest != null) {
+                                    // Prefill using the latest delivery record (includes household_id)
+                                    CoreJsonFormUtils.populateJsonForm(form, oMapper.convertValue(latest, Map.class));
+                                } else {
+                                    // Fallback to mother details so household_id and basic info appear
+                                    CoreJsonFormUtils.populateJsonForm(form, oMapper.convertValue(commonPersonObjectClient.getColumnmaps(), Map.class));
+                                }
+                            } catch (Exception e) {
+                                Timber.e(e);
+                            }
+                            startFormActivity(form);
+                        });
+                    });
                 }
-
-                break;
+                return;
 
             case "mother_outcome":
 
-                try {
-                    String baseId = this.commonPersonObjectClient.getColumnmaps().get("base_entity_id");
-                    MotherOutcomeModel outcome = MotherOutcomeDao.getLatestByBaseEntityId(baseId);
-                    formToBeOpened.put("entity_id", baseId);
-                    if (outcome != null) {
-                        // Prefill using the latest outcome record (includes household_id)
-                        CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(outcome, Map.class));
-                    } else {
-                        // Fallback to mother details so household_id and basic info appear
-                        CoreJsonFormUtils.populateJsonForm(formToBeOpened, oMapper.convertValue(commonPersonObjectClient.getColumnmaps(), Map.class));
-                    }
-                } catch (Exception e) {
-                    Timber.e(e);
+                {
+                    // Look up the latest outcome record off the main thread, then prefill and open the form.
+                    final String baseId = this.commonPersonObjectClient.getColumnmaps().get("base_entity_id");
+                    final JSONObject form = formToBeOpened;
+                    Threading.io(() -> {
+                        MotherOutcomeModel outcome = null;
+                        try {
+                            outcome = MotherOutcomeDao.getLatestByBaseEntityId(baseId);
+                        } catch (Exception e) {
+                            Timber.e(e);
+                        }
+                        final MotherOutcomeModel latest = outcome;
+                        Threading.main(() -> {
+                            if (isFinishing() || isDestroyed()) return;
+                            try {
+                                form.put("entity_id", baseId);
+                                if (latest != null) {
+                                    // Prefill using the latest outcome record (includes household_id)
+                                    CoreJsonFormUtils.populateJsonForm(form, oMapper.convertValue(latest, Map.class));
+                                } else {
+                                    // Fallback to mother details so household_id and basic info appear
+                                    CoreJsonFormUtils.populateJsonForm(form, oMapper.convertValue(commonPersonObjectClient.getColumnmaps(), Map.class));
+                                }
+                            } catch (Exception e) {
+                                Timber.e(e);
+                            }
+                            startFormActivity(form);
+                        });
+                    });
                 }
-
-                break;
+                return;
         }
         startFormActivity(formToBeOpened);
 

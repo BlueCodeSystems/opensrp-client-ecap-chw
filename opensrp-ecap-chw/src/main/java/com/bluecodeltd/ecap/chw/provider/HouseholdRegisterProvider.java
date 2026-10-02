@@ -59,7 +59,9 @@ public class HouseholdRegisterProvider implements RecyclerViewProvider<Household
         // Tag to avoid stale updates on recycled rows
         final String rowTag = firstNonBlank(householdLookupId, String.valueOf(cursor != null ? cursor.getPosition() : 0));
         householdRegisterViewHolder.itemView.setTag(R.id.tag_row_id, rowTag);
-        Threading.ioBestEffort(() -> {
+        Threading.dbRow(() -> {
+            // Skip rows that were recycled while queued; their queries would only hold up the DB lock.
+            if (!rowTag.equals(householdRegisterViewHolder.itemView.getTag(R.id.tag_row_id))) return;
             List<String> genderList = new ArrayList<>();
             List<String> ageList = new ArrayList<>();
             String is_screened = null;

@@ -18,10 +18,11 @@ public class HouseholdServiceReportDao extends AbstractDao {
     private static final String PREF_LAST_USERNAME = "last_logged_in_username";
 
     public static boolean hasHouseholdServices(String householdId) {
-        String sql = "SELECT * FROM ec_household_service_report " +
-                "WHERE (delete_status IS NULL OR delete_status <> '1') AND household_id = '" + householdId + "'";
+        // Existence check only; don't load and map every report for the household.
+        String sql = "SELECT 1 AS present FROM ec_household_service_report " +
+                "WHERE (delete_status IS NULL OR delete_status <> '1') AND household_id = '" + householdId + "' LIMIT 1";
 
-        List<HouseholdServiceReportModel> values = AbstractDao.readData(sql, getServiceModelMap());
+        List<Integer> values = AbstractDao.readData(sql, c -> 1);
         return values != null && values.size() > 0;
     }
 

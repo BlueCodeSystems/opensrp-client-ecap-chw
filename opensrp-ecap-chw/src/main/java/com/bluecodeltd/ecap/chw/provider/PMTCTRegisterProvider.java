@@ -161,7 +161,9 @@ public class PMTCTRegisterProvider implements RecyclerViewProvider<PMTCTRegister
 
         final String fClientId = clientId;
         final String fHouseholdId = householdId;
-        Threading.ioBestEffort(() -> {
+        Threading.dbRow(() -> {
+            // Skip rows that were recycled while queued; their queries would only hold up the DB lock.
+            if (!rowTag.equals(pmtctRegisterViewHolder.itemView.getTag(R.id.tag_row_id))) return;
             boolean unsuppressed = false;
             boolean suppressed = false;
             try {

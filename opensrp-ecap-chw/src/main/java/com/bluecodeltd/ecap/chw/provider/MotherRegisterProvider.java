@@ -66,7 +66,9 @@ public class MotherRegisterProvider implements RecyclerViewProvider<MotherRegist
         motherRegisterViewHolder.setupViews(fullName, household_id, age, buildChildrenSummary("0", null), enrollmentLabel);
 
         final String fHouseholdId = household_id;
-        Threading.ioBestEffort(() -> {
+        Threading.dbRow(() -> {
+            // Skip rows that were recycled while queued; their queries would only hold up the DB lock.
+            if (!rowTag.equals(motherRegisterViewHolder.itemView.getTag(R.id.tag_row_id))) return;
             String childrenCount = null;
             IndexMotherModel indexMother = null;
             try { childrenCount = IndexPersonDao.countChildren(fHouseholdId); } catch (Exception ignored) { }

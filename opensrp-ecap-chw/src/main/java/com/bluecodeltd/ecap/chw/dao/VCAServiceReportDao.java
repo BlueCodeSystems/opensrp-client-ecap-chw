@@ -12,35 +12,31 @@ import java.util.Set;
 public class VCAServiceReportDao extends AbstractDao {
 
     public static boolean areAllVcasServiced(String householdID) {
-
-        String sql = "SELECT ec_vca_service_report.*, ec_client_index.household_id " +
+        // Counts in SQL instead of loading and mapping every service report in the household: this runs
+        // on every graduation tap and its cursor held the DB lock long enough to stall the main thread.
+        // Same rule as before: at least one serviced VCA, and the number of distinct serviced VCAs equals
+        // the number of (non-deleted) VCA rows in the household.
+        String sql = "SELECT " +
+                "(SELECT COUNT(DISTINCT ec_vca_service_report.unique_id) " +
                 "FROM ec_vca_service_report " +
                 "JOIN ec_client_index ON ec_vca_service_report.unique_id = ec_client_index.unique_id " +
                 "WHERE ec_client_index.household_id = '" + householdID + "' " +
                 "AND (ec_vca_service_report.delete_status IS NULL OR ec_vca_service_report.delete_status <> '1') AND  (ec_client_index.deleted IS NULL OR ec_client_index.deleted != '1') " +
-                "AND ec_client_index.unique_id IS NOT NULL AND ec_client_index.unique_id != ''";
+                "AND ec_client_index.unique_id IS NOT NULL AND ec_client_index.unique_id != '') AS serviced, " +
+                "(SELECT COUNT(*) FROM ec_client_index WHERE household_id = '" + householdID + "' AND (deleted IS NULL OR deleted != '1') AND unique_id IS NOT NULL AND unique_id != '') AS total";
 
-        List<VCAServiceModel> values = AbstractDao.readData(sql, getServiceModelMap());
+        List<int[]> values = AbstractDao.readData(sql, c -> new int[]{
+                c.getInt(c.getColumnIndexOrThrow("serviced")),
+                c.getInt(c.getColumnIndexOrThrow("total"))
+        });
 
         if (values == null || values.isEmpty()) {
             return false;
         }
 
-        // Query to get all VCAs in the household
-        String vcaSql = "SELECT * FROM ec_client_index WHERE household_id = '" + householdID + "' AND (deleted IS NULL OR deleted != '1') AND unique_id IS NOT NULL AND unique_id != ''";
-        List<VCAServiceModel> allVcas = AbstractDao.readData(vcaSql, getServiceModelMap());
-
-        if (allVcas == null || allVcas.isEmpty()) {
-            return false;
-        }
-
-
-        Set<String> servicedVcaIds = new HashSet<>();
-        for (VCAServiceModel service : values) {
-            servicedVcaIds.add(service.getUnique_id());
-        }
-
-        return servicedVcaIds.size() == allVcas.size();
+        int serviced = values.get(0)[0];
+        int total = values.get(0)[1];
+        return serviced > 0 && total > 0 && serviced == total;
     }
 
     public static List<VCAServiceModel> getRecentServicesByVCAID(String vcaID) {

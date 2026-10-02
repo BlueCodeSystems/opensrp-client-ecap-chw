@@ -38,6 +38,18 @@ public final class Threading {
             named("IOBE-"),
             new ThreadPoolExecutor.DiscardPolicy()
     );
+    // Register-row DB pool: per-row lookups from the register providers. Every query takes SQLCipher's
+    // single fair database lock, so a wide pool only lengthens the queue the main thread joins when it
+    // closes a cursor (ANR: main parked in SQLiteDatabase.lock behind dozens of row lookups). Two
+    // threads keep the queue short; tasks should bail out early when their row has been recycled.
+    private static final ThreadPoolExecutor DB_ROW = new ThreadPoolExecutor(
+            /* core */ 2,
+            /* max  */ 2,
+            /* keepAlive */ 30L,
+            TimeUnit.SECONDS,
+            new LinkedBlockingQueue<>(),
+            named("DBROW-")
+    );
     // CPU pool: bound to CPU cores for compute-bound work
     private static final ExecutorService CPU = new ThreadPoolExecutor(
             /* core */ CPU_COUNT,
@@ -52,6 +64,7 @@ public final class Threading {
     static {
         IO.allowCoreThreadTimeOut(true);
         IO_BEST_EFFORT.allowCoreThreadTimeOut(true);
+        DB_ROW.allowCoreThreadTimeOut(true);
     }
 
     private Threading() {}
@@ -76,6 +89,15 @@ public final class Threading {
             // Best-effort: ok to drop.
         }
     }
+    /** Per-row register lookups that hit the database. See {@link #DB_ROW}. */
+    public static void dbRow(Runnable r) {
+        try {
+            DB_ROW.execute(r);
+        } catch (RejectedExecutionException ignored) {
+            // Unbounded queue; only rejects if shut down.
+        }
+    }
+
     public static void cpu(Runnable r) { CPU.execute(r); }
     public static void main(Runnable r) { MAIN.post(r); }
 

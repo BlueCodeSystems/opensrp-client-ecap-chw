@@ -77,7 +77,9 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
         // Load per-row details asynchronously to avoid UI jank
         final String rowTag = firstNonBlank(childLookupId, String.valueOf(cursor != null ? cursor.getPosition() : 0));
         indexRegisterViewHolder.itemView.setTag(R.id.tag_row_id, rowTag);
-        Threading.ioBestEffort(() -> {
+        Threading.dbRow(() -> {
+            // Skip rows that were recycled while queued; their queries would only hold up the DB lock.
+            if (!rowTag.equals(indexRegisterViewHolder.itemView.getTag(R.id.tag_row_id))) return;
             int plans = 0;
             int visits = 0;
             boolean visitedThisMonth = false;

@@ -1,5 +1,6 @@
 package com.bluecodeltd.ecap.chw.application;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.ContextWrapper;
 import android.content.Intent;
@@ -8,6 +9,8 @@ import android.content.res.Configuration;
 
 import androidx.core.content.ContextCompat;
 import android.os.Build;
+import android.os.Bundle;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -43,6 +46,7 @@ import com.bluecodeltd.ecap.chw.job.ScheduleJob;
 import com.bluecodeltd.ecap.chw.model.NavigationModelFlv;
 import com.bluecodeltd.ecap.chw.push.FlagsNotificationScheduler;
 import com.bluecodeltd.ecap.chw.repository.ChwRepository;
+import com.bluecodeltd.ecap.chw.repository.RegisterIndexes;
 import com.bluecodeltd.ecap.chw.schedulers.ChwScheduleTaskExecutor;
 import com.bluecodeltd.ecap.chw.sync.ChwClientProcessor;
 import com.bluecodeltd.ecap.chw.util.ChwLocationBasedClassifier;
@@ -107,6 +111,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import timber.log.Timber;
 
@@ -119,6 +125,11 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
     private boolean isBulkProcessing;
     private boolean fetchedLoad = false;
     private RequestQueue mRequestQueue;
+    // Released once restoreSessionAfterProcessRestart() has finished (or decided there is nothing to do).
+    private final CountDownLatch sessionRestoreLatch = new CountDownLatch(1);
+    // Upper bound on how long a caller blocks for the restore, so a stuck keystore/DB open can't
+    // freeze an Activity launch indefinitely. Past this the caller proceeds as if logged out.
+    private static final long SESSION_RESTORE_TIMEOUT_MS = 8_000;
 
     public static final String TAG = ChwApplication.class.getSimpleName();
     private static final String ONESIGNAL_APP_ID = "a074b7f3-c15f-4838-8fd3-6974c6adee87";
@@ -246,7 +257,14 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         // invalid. Silently restore the session here, before any Activity gets a chance to run that
         // check, using the same encrypted local-login credentials the app already uses for offline
         // login.
-        restoreSessionAfterProcessRestart();
+        //
+        // The restore decrypts the stored password and opens the SQLCipher database, which is too slow
+        // for the main thread here (startup ANRs, especially when the process is started in the
+        // background for FCM/WorkManager/jobs with no UI at all). Run it on a worker thread and make
+        // every Activity wait for it in onActivityCreated(), which Activity.onCreate() dispatches
+        // before SecuredActivity checks IsUserLoggedOut().
+        registerActivityLifecycleCallbacks(new SessionRestoreGate());
+        startSessionRestore();
 
         // init json helper
         this.jsonSpecHelper = new JsonSpecHelper(this);
@@ -423,6 +441,74 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
      * credentials -- the same mechanism {@link org.smartregister.service.UserService#localLoginWith}
      * uses for offline login -- so the next SecuredActivity doesn't force a full logout.
      */
+    private void startSessionRestore() {
+        try {
+            // Resolve the lazily-created Context singletons the restore uses on this thread first, so the
+            // worker doesn't race the rest of onCreate() into building duplicate instances.
+            context.allSharedPreferences();
+            context.userService();
+            Thread worker = new Thread(() -> {
+                try {
+                    restoreSessionAfterProcessRestart();
+                } finally {
+                    sessionRestoreLatch.countDown();
+                }
+                // Same worker, after releasing the gate so no Activity waits on it: make sure the
+                // per-household lookup indexes exist whichever register the user opens first.
+                RegisterIndexes.ensureOnce();
+            }, "SessionRestore");
+            worker.start();
+        } catch (Throwable t) {
+            Timber.e(t, "Could not start session restore");
+            sessionRestoreLatch.countDown();
+        }
+    }
+
+    /**
+     * Blocks until the post-process-restart session restore has finished, so callers see the real
+     * logged-in state from {@link org.smartregister.Context#IsUserLoggedOut()}. Returns immediately
+     * once the restore is done. Call before checking the session on any thread that can run
+     * straight after a cold start (activities are covered by {@link SessionRestoreGate}).
+     */
+    public void awaitSessionRestore() {
+        if (sessionRestoreLatch.getCount() == 0) {
+            return;
+        }
+        try {
+            if (!sessionRestoreLatch.await(SESSION_RESTORE_TIMEOUT_MS, TimeUnit.MILLISECONDS)) {
+                Timber.w("Session restore still running after %d ms (main thread: %b); continuing without it",
+                        SESSION_RESTORE_TIMEOUT_MS, Looper.myLooper() == Looper.getMainLooper());
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    private class SessionRestoreGate implements ActivityLifecycleCallbacks {
+        @Override
+        public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+            awaitSessionRestore();
+        }
+
+        @Override
+        public void onActivityStarted(Activity activity) { }
+
+        @Override
+        public void onActivityResumed(Activity activity) { }
+
+        @Override
+        public void onActivityPaused(Activity activity) { }
+
+        @Override
+        public void onActivityStopped(Activity activity) { }
+
+        @Override
+        public void onActivitySaveInstanceState(Activity activity, Bundle outState) { }
+
+        @Override
+        public void onActivityDestroyed(Activity activity) { }
+    }
+
     private void restoreSessionAfterProcessRestart() {
         try {
             String registeredUser = context.allSharedPreferences().fetchRegisteredANM();

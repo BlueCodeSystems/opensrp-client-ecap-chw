@@ -602,6 +602,51 @@ tasks.configureEach { task ->
     }
 }
 
+// org.smartregister.Context reads and parses ec_client_fields.json on the main thread during
+// Application.onCreate (via ChwRepository -> sharedRepositoriesArray). The ecap copy is ~560KB of
+// pretty-printed JSON, nearly half of it whitespace, and shows up in startup ANR traces. Strip the
+// insignificant whitespace from the merged copy so the source stays readable but the APK ships
+// the minified file.
+def minifyJsonWhitespace = { String json ->
+    StringBuilder out = new StringBuilder(json.length())
+    boolean inString = false
+    boolean escaped = false
+    for (int i = 0; i < json.length(); i++) {
+        char c = json.charAt(i)
+        if (inString) {
+            out.append(c)
+            if (escaped) {
+                escaped = false
+            } else if (c == '\\' as char) {
+                escaped = true
+            } else if (c == '"' as char) {
+                inString = false
+            }
+        } else if (c == '"' as char) {
+            inString = true
+            out.append(c)
+        } else if (!Character.isWhitespace(c) && c != '﻿' as char) {
+            out.append(c)
+        }
+    }
+    return out.toString()
+}
+
+tasks.matching { it.name ==~ /merge\w*Assets/ }.configureEach { task ->
+    task.doLast {
+        task.outputs.files.files.each { dir ->
+            File json = new File(dir, "ec_client_fields.json")
+            if (json.isFile()) {
+                String original = json.getText("UTF-8")
+                String minified = minifyJsonWhitespace(original)
+                new groovy.json.JsonSlurper().parseText(minified) // fail the build rather than ship broken JSON
+                json.write(minified, "UTF-8")
+                logger.info("Minified ${json} (${original.length()} -> ${minified.length()} chars)")
+            }
+        }
+    }
+}
+
 // AGP's compileJavaWithJavac also auto-discovers ButterKnife as an annotation
 // processor (via SPI from the kapt-classpath JAR). javac runs in-process by default,
 // so JVM args from gradle.properties don't apply. Forking javac into a child JVM with
