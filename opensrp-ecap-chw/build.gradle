@@ -431,10 +431,14 @@ configurations.all {
             substitute module('io.github.bluecodesystems:opensrp-chw-family-planning') using module('com.github.BlueCodeSystems:opensrp-client-chw-family-planning:v1.0.27')
             substitute module('org.smartregister:opensrp-client-immunization') using module('com.github.BlueCodeSystems:opensrp-client-immunization:v5.1.1')
             substitute module('io.github.bluecodesystems:opensrp-client-immunization') using module('com.github.BlueCodeSystems:opensrp-client-immunization:v5.1.1')
-            substitute module('io.github.bluecodesystems:opensrp-client-native-form-new') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:opensrp-client-native-form:v3.2.2')
-            substitute module('com.github.BlueCodeSystems.Opensrp-client-native-form-new:opensrp-client-native-form') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:opensrp-client-native-form:v3.2.2')
+            substitute module('io.github.bluecodesystems:opensrp-client-native-form-new') using module('com.github.BlueCodeSystems:Opensrp-client-native-form-new:v3.2.7')
+            substitute module('com.github.BlueCodeSystems.Opensrp-client-native-form-new:opensrp-client-native-form') using module('com.github.BlueCodeSystems:Opensrp-client-native-form-new:v3.2.7')
             substitute module('io.github.bluecodesystems:circleprogressbar') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:circleprogressbar:v3.2.2')
             substitute module('com.github.BlueCodeSystems.Opensrp-client-native-form-new:circleprogressbar') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:circleprogressbar:v3.2.2')
+            // v3.2.4+ publishes native-form as a single JitPack artifact; keep the old multi-module coordinate from adding a second copy
+            substitute module('com.github.BlueCodeSystems.opensrp-client-native-form-new:opensrp-client-native-form') using module('com.github.BlueCodeSystems:Opensrp-client-native-form-new:v3.2.7')
+            // native-form v3.2.7's POM depends on org.smartregister:circleprogressbar, which is not published; circleprogressbar is unchanged since v3.2.2
+            substitute module('org.smartregister:circleprogressbar') using module('com.github.BlueCodeSystems.opensrp-client-native-form-new:circleprogressbar:v3.2.2')
             substitute module('io.github.bluecodesystems:opensrp-client-utils') using module('com.github.BlueCodeSystems:opensrp-client-utils:v1.0.0')
             substitute module('org.smartregister:opensrp-client-chw-anc') using module('com.github.BlueCodeSystems.opensrp-client-chw-anc:opensrp-client-chw-anc:v2.0.0')
             substitute module('org.smartregister:opensrp-client-growth-monitoring') using module('com.github.BlueCodeSystems:opensrp-client-growth-monitoring:v3.0.0')
