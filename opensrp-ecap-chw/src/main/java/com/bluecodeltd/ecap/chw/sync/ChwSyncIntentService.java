@@ -18,6 +18,8 @@ public class ChwSyncIntentService extends SyncIntentService {
 
     @Override
     public int getEventPullLimit() {
-        return 1000;
+        // The whole response is buffered into one String; 1000 events (many carrying Base64
+        // signatures) produced 16MB+ bodies and OutOfMemoryError in HTTPAgent.processResponse.
+        return 250;
     }
 }

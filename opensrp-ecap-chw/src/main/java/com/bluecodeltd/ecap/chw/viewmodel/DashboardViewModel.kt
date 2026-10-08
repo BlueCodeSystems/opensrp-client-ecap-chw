@@ -10,8 +10,9 @@ import com.bluecodeltd.ecap.chw.dao.HivTestingServiceDao
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao
 import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao
-import com.bluecodeltd.ecap.chw.model.Child
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
@@ -34,17 +35,19 @@ class DashboardViewModel : ViewModel() {
     private val _state = MutableLiveData(DashboardState())
     val state: LiveData<DashboardState> = _state
 
+    private var refreshJob: Job? = null
+
     fun refresh(caseworkerPhone: String? = null) {
-        viewModelScope.launch(Dispatchers.IO) {
+        // Overlapping refreshes (onResume + filter change) used to run concurrently; supersede the old one.
+        refreshJob?.cancel()
+        refreshJob = viewModelScope.launch(Dispatchers.IO) {
             val now = LocalDateTime.now()
             val visitDates = CaregiverVisitationDao.getAllVisitDates()
             val visitsDue = computeVisitsDue(visitDates)
-            val childList: List<Child>? = if (caseworkerPhone.isNullOrEmpty())
-                IndexPersonDao.getAllChildrenSubpops()
-            else
-                IndexPersonDao.getAllChildrenSubpopsByCaseworkerPhoneNumber(caseworkerPhone)
-            val subpops = countSubpop(childList)
-            val genderCounts = countGender(childList)
+            ensureActive()
+            val totals = IndexPersonDao.countSubpopsAndGender(caseworkerPhone)
+            val subpops = arrayListOf(totals[0], totals[1], totals[2], totals[3], totals[4], totals[5])
+            ensureActive()
             val householdsCount = if (caseworkerPhone.isNullOrEmpty())
                 HouseholdDao.countNumberoFHouseholds() else HouseholdDao.countNumberOfHouseholdsByCaseworkerPhone(caseworkerPhone)
             val vcasCount = if (caseworkerPhone.isNullOrEmpty())
@@ -59,14 +62,15 @@ class DashboardViewModel : ViewModel() {
             val htsCount = try { HivTestingServiceDao.countAllHtsClients() ?: "0" } catch (_: Exception) { "0" }
             val pmtctCount = try { EcMotherIndexDao.countAllPmtctMothers() ?: "0" } catch (_: Exception) { "0" }
 
+            ensureActive()
             _state.postValue(
                 DashboardState(
                     visitsDue = visitsDue,
                     subpops = subpops,
                     householdsCount = householdsCount,
                     vcasCount = vcasCount,
-                    maleCount = genderCounts[0].toString(),
-                    femaleCount = genderCounts[1].toString(),
+                    maleCount = totals[6].toString(),
+                    femaleCount = totals[7].toString(),
                     caregiverMaleCount = caregiverMaleCount,
                     caregiverFemaleCount = caregiverFemaleCount,
                     mothersCount = mothersCount,
@@ -92,29 +96,4 @@ class DashboardViewModel : ViewModel() {
         } catch (_: Exception) { 0 }
     }
 
-    /** Returns [maleCount, femaleCount] from the child list. */
-    private fun countGender(childList: List<Child>?): IntArray {
-        var males = 0; var females = 0
-        childList?.forEach { c ->
-            when (c.gender?.lowercase()) {
-                "male" -> males++
-                "female" -> females++
-            }
-        }
-        return intArrayOf(males, females)
-    }
-
-    private fun countSubpop(childList: List<Child>?): ArrayList<Int> {
-        val totals = arrayListOf(0, 0, 0, 0, 0, 0)
-        if (childList == null) return totals
-        childList.forEach { c ->
-            if (c.subpop1 == "true") totals[0]++
-            if (c.subpop2 == "true") totals[1]++
-            if (c.subpop3 == "true") totals[2]++
-            if (c.subpop4 == "true") totals[3]++
-            if (c.subpop5 == "true") totals[4]++
-            if (c.subpop6 == "true") totals[5]++
-        }
-        return totals
-    }
 }

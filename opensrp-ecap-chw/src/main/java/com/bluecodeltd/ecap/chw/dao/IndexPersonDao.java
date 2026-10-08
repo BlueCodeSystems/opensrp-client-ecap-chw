@@ -68,6 +68,46 @@ public class IndexPersonDao  extends AbstractDao {
 
     }
 
+    /**
+     * Dashboard totals computed in SQL: [subpop1..subpop6, male, female]. Same rows as
+     * getAllChildrenSubpops(), which loaded every child (~150 columns incl. signature images) just
+     * to count these and drove the app out of memory on large caseloads.
+     */
+    public static int[] countSubpopsAndGender(String caseworkerPhoneNumber) {
+        int[] totals = new int[8];
+        String phoneFilter = (caseworkerPhoneNumber == null || caseworkerPhoneNumber.isEmpty()) ? ""
+                : "AND phone = '" + caseworkerPhoneNumber.replace("'", "''") + "' ";
+        String sql = "SELECT " +
+                "SUM(CASE WHEN subpop1 = 'true' THEN 1 ELSE 0 END) AS s1, " +
+                "SUM(CASE WHEN subpop2 = 'true' THEN 1 ELSE 0 END) AS s2, " +
+                "SUM(CASE WHEN subpop3 = 'true' THEN 1 ELSE 0 END) AS s3, " +
+                "SUM(CASE WHEN subpop4 = 'true' THEN 1 ELSE 0 END) AS s4, " +
+                "SUM(CASE WHEN subpop5 = 'true' THEN 1 ELSE 0 END) AS s5, " +
+                "SUM(CASE WHEN subpop = 'true' THEN 1 ELSE 0 END) AS s6, " +
+                "SUM(CASE WHEN LOWER(gender) = 'male' THEN 1 ELSE 0 END) AS males, " +
+                "SUM(CASE WHEN LOWER(gender) = 'female' THEN 1 ELSE 0 END) AS females " +
+                "FROM ec_client_index WHERE is_closed = 0 AND (deleted IS NULL OR deleted != '1') " +
+                phoneFilter;
+        String[] columns = {"s1", "s2", "s3", "s4", "s5", "s6", "males", "females"};
+        try {
+            AbstractDao.DataMap<int[]> dataMap = c -> {
+                int[] row = new int[columns.length];
+                for (int i = 0; i < columns.length; i++) {
+                    String value = getCursorValue(c, columns[i]);
+                    row[i] = value == null ? 0 : Integer.parseInt(value);
+                }
+                return row;
+            };
+            List<int[]> rows = AbstractDao.readData(sql, dataMap);
+            if (rows != null && !rows.isEmpty() && rows.get(0) != null) {
+                totals = rows.get(0);
+            }
+        } catch (Exception e) {
+            Log.e("countSubpopsAndGender", "Exception", e);
+        }
+        return totals;
+    }
+
     public static String countAllChildren(){
         try {
             String sql = "SELECT COUNT(DISTINCT base_entity_id) AS childrenCount FROM ec_client_index " +
