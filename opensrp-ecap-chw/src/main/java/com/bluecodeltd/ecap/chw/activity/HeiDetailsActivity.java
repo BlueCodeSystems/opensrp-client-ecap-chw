@@ -40,6 +40,7 @@ import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.bluecodeltd.ecap.chw.util.BirthdateParser;
 import com.bluecodeltd.ecap.chw.dao.ChildMonitoringDao;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -522,17 +523,17 @@ public class HeiDetailsActivity extends AppCompatActivity {
     }
 
     public int calculateAge(String dateOfBirth) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate currentDate = LocalDate.now();
-        LocalDate birthDate = LocalDate.parse(dateOfBirth, formatter);
+        LocalDate birthDate = BirthdateParser.parse(dateOfBirth);
+        if (birthDate == null) return 0;
         Period period = Period.between(birthDate, currentDate);
         int age = period.getYears();
         return age;
     }
 
     private String getAgeWithoutText(String birthdate){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
-        LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
+        LocalDate localDateBirthdate = BirthdateParser.parse(birthdate);
+        if (localDateBirthdate == null) return "Not Set";
         LocalDate today =LocalDate.now();
         Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
         if(periodBetweenDateOfBirthAndNow.getYears() >0)
@@ -551,8 +552,8 @@ public class HeiDetailsActivity extends AppCompatActivity {
 
 
     private String getAge(String birthdate){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
-        LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
+        LocalDate localDateBirthdate = BirthdateParser.parse(birthdate);
+        if (localDateBirthdate == null) return "Not Set";
         LocalDate today =LocalDate.now();
         Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
         if(periodBetweenDateOfBirthAndNow.getYears() >0)

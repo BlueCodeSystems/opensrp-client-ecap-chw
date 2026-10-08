@@ -30,6 +30,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import com.bluecodeltd.ecap.chw.util.BirthdateParser;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.adapter.ProfileViewPagerAdapter;
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
@@ -541,8 +542,8 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         mTabLayout.getTabAt(0).setCustomView(taskTabTitleLayout);
     }
     private String getClientAge(String birthdate){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
-        LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
+        LocalDate localDateBirthdate = BirthdateParser.parse(birthdate);
+        if (localDateBirthdate == null) return "Age Not Set";
         LocalDate today =LocalDate.now();
         Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
         if(periodBetweenDateOfBirthAndNow.getYears() >0)
@@ -575,8 +576,8 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
 
 
     private String getAge(String birthdate){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-u");
-        LocalDate localDateBirthdate = LocalDate.parse(birthdate, formatter);
+        LocalDate localDateBirthdate = BirthdateParser.parse(birthdate);
+        if (localDateBirthdate == null) return "Not Set";
         LocalDate today =LocalDate.now();
         Period periodBetweenDateOfBirthAndNow = Period.between(localDateBirthdate, today);
         if(periodBetweenDateOfBirthAndNow.getYears() >0)
