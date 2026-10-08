@@ -373,8 +373,14 @@ android {
     // Keep every screen density in the base APK. ~107 drawables (e.g. the login
     // coat of arms) exist only in drawable-*dpi folders, so an install missing its
     // density split (sideloaded/shared base.apk) crashed with Resources$NotFoundException.
+    // Native libraries (libsqlcipher.so, MapLibre) likewise stay in the base APK: a base.apk
+    // shared without its ABI split has no libsqlcipher.so, so the database cannot open
+    // (UnsatisfiedLinkError in ChwApplication.getRepository).
     bundle {
         density {
+            enableSplit = false
+        }
+        abi {
             enableSplit = false
         }
     }
