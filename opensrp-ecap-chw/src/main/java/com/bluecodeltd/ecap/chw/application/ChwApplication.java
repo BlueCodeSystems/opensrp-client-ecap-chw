@@ -56,6 +56,7 @@ import com.bluecodeltd.ecap.chw.util.IncompleteInstall;
 import com.bluecodeltd.ecap.chw.util.JsonFormUtils;
 import com.bluecodeltd.ecap.chw.util.SafeDebugTree;
 import com.bluecodeltd.ecap.chw.util.SavedStateSizeGuard;
+import com.bluecodeltd.ecap.chw.util.StartupTrace;
 import com.bluecodeltd.ecap.chw.util.Utils;
 import com.evernote.android.job.JobApi;
 import com.evernote.android.job.JobConfig;
@@ -237,6 +238,8 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
             return;
         }
 
+        StartupTrace trace = new StartupTrace();
+
         context = Context.getInstance();
         context.updateApplicationContext(getApplicationContext());
         context.updateCommonFtsObject(getCommonFtsObject());
@@ -256,9 +259,10 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         //Setup Navigation menu. Done only once when app is created
         NavigationMenu.setupNavigationMenu(this, new NavigationMenuFlv(), new NavigationModelFlv(),
                 getRegisteredActivities(), flavor.hasP2P());
-
+        trace.step("context");
 
         initializeLibraries();
+        trace.step("libs");
 
         // The session's password is only ever held in memory (org.smartregister.util.Session),
         // never persisted or restored. If Android kills this process while the user was mid-session
@@ -280,6 +284,7 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         // Oversized saved-instance-state Bundles crash in activityStopped/activitySlept with no app
         // frames in the trace; report the offending Activity and trim the Bundle instead.
         registerActivityLifecycleCallbacks(new SavedStateSizeGuard());
+        trace.step("session");
 
         // init json helper
         this.jsonSpecHelper = new JsonSpecHelper(this);
@@ -291,18 +296,14 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
             JobConfig.setApiEnabled(JobApi.V_19, false);
         } catch (Throwable ignored) { }
         JobManager.create(this).addJobCreator(new ChwJobCreator());
+        trace.step("jobs");
 
         // Initialize Firebase (FCM) from build-config values so real push can register.
         com.bluecodeltd.ecap.chw.push.FlagsFirebaseInitializer.init(getApplicationContext());
-
-        // Poll Directus for new flags and raise local notifications
-        try {
-            FlagsNotificationScheduler.schedule(getApplicationContext());
-        } catch (Throwable t) {
-            Log.e("ChwApplication", "Failed to schedule flags notifications", t);
-        }
+        trace.step("firebase");
 
         initOfflineSchedules();
+        trace.step("schedules");
 
         setOpenSRPUrl();
 
@@ -318,8 +319,6 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
             saveLanguage(Locale.FRENCH.getLanguage());
         }
 
-        prepareDirectories();
-
         EventBus.getDefault().register(this);
 
         if (getApplicationFlavor().hasMap()) {
@@ -327,6 +326,35 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         }
 
         reloadLanguage();
+        trace.step("rest");
+
+        startDeferredStartupWork();
+        trace.finish();
+    }
+
+    /**
+     * Startup work nothing on the first screen depends on, moved off the main thread: the first
+     * WorkManager call opens WorkManager's database, and the folder setup touches storage
+     * (JobAidsActivity also creates the folders itself before using them). On slow
+     * phones Application.onCreate already runs close to the startup ANR limit, and it also runs
+     * for every background start (sync, jobs, push) where no screen is waiting at all.
+     */
+    private void startDeferredStartupWork() {
+        Thread worker = new Thread(() -> {
+            android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
+            // Poll Directus for new flags and raise local notifications
+            try {
+                FlagsNotificationScheduler.schedule(getApplicationContext());
+            } catch (Throwable t) {
+                Log.e("ChwApplication", "Failed to schedule flags notifications", t);
+            }
+            try {
+                prepareDirectories();
+            } catch (Throwable t) {
+                Timber.w(t, "Could not prepare document folders");
+            }
+        }, "DeferredStartup");
+        worker.start();
     }
 
     /**
