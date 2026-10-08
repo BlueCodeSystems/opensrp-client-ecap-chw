@@ -22,6 +22,12 @@ public final class FlagsNotificationScheduler {
 
     private FlagsNotificationScheduler() {}
 
+    /**
+     * Called from Application.onCreate, so it runs on every process start -- including the
+     * background starts WorkManager itself makes to run these workers. Keep work that is already
+     * queued instead of replacing it: REPLACE cancelled a running poll and reset the periodic
+     * schedule each time, which only produced more background process starts.
+     */
     public static void schedule(Context context) {
         Constraints constraints = new Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
@@ -33,10 +39,10 @@ public final class FlagsNotificationScheduler {
 
         WorkManager.getInstance(context).enqueueUniqueWork(
                 IMMEDIATE_WORK_NAME,
-                ExistingWorkPolicy.REPLACE,
+                ExistingWorkPolicy.KEEP,
                 immediateRequest);
 
-        registerDevice(context);
+        enqueueDeviceRegistration(context, ExistingWorkPolicy.KEEP);
 
         // 15 minutes is the minimum interval WorkManager allows for periodic work.
         PeriodicWorkRequest periodicRequest = new PeriodicWorkRequest.Builder(
@@ -46,7 +52,7 @@ public final class FlagsNotificationScheduler {
 
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(
                 WORK_NAME,
-                ExistingPeriodicWorkPolicy.REPLACE,
+                ExistingPeriodicWorkPolicy.UPDATE,
                 periodicRequest);
     }
 
@@ -55,6 +61,11 @@ public final class FlagsNotificationScheduler {
      * PMP API. Safe to call repeatedly: the worker de-duplicates and only registers on change.
      */
     public static void registerDevice(Context context) {
+        // A new FCM token must replace any registration still queued with the old one.
+        enqueueDeviceRegistration(context, ExistingWorkPolicy.REPLACE);
+    }
+
+    private static void enqueueDeviceRegistration(Context context, ExistingWorkPolicy policy) {
         Constraints constraints = new Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build();
@@ -65,7 +76,7 @@ public final class FlagsNotificationScheduler {
 
         WorkManager.getInstance(context).enqueueUniqueWork(
                 DEVICE_REGISTRATION_WORK_NAME,
-                ExistingWorkPolicy.REPLACE,
+                policy,
                 request);
     }
 }
