@@ -49,6 +49,13 @@
             android:name="io.ona.kujaku.receivers.KujakuNetworkChangeReceiver"
             tools:node="remove" />
 
+        <!-- The offline-download service that receiver started. Its onDestroy() calls
+             Mapbox.getApiKey(), which throws MapboxConfigurationException because
+             Mapbox.getInstance() is never called (initializeMapBox() is a no-op). -->
+        <service
+            android:name="io.ona.kujaku.services.MapboxOfflineDownloaderService"
+            tools:node="remove" />
+
         <service
             android:name=".push.FlagsFirebaseMessagingService"
             android:exported="false">
