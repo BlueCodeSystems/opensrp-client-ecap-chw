@@ -366,7 +366,13 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
                 LangUtils.saveLanguage(context.getApplication(), lang.getValue().getLanguage());
                 CoreChwApplication.getInstance().persistLanguage(lang.getValue().getLanguage());
 
-                // destroy current instance
+                // destroy current instance. Stop its count timer first: onDrawerClosed may never
+                // run for a finishing activity, and an orphaned timer keeps querying every 5s
+                // (through the static activity reference, so alongside the new menu's timer).
+                if (timer != null) {
+                    timer.cancel();
+                    timer = null;
+                }
                 drawer.closeDrawers();
                 instance = null;
                 Intent intent = context.getIntent();
