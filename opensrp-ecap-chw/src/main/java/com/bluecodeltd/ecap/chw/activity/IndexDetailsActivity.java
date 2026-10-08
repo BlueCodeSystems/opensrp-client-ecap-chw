@@ -695,13 +695,23 @@ public class IndexDetailsActivity extends AppCompatActivity {
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.visits_title);
         visitTabTitle.setText("TB SCREENING");
         visitTabCount = taskTabTitleLayout.findViewById(R.id.visits_count);
+        final TextView tbCount = visitTabCount;
+        tbCount.setVisibility(View.GONE);
 
-        int count = 0;
-        try {
-            count = com.bluecodeltd.ecap.chw.dao.TbScreeningDao.countByVcaId(uniqueId);
-        } catch (Exception ignored) { }
-        visitTabCount.setText(String.valueOf(count));
-        visitTabCount.setVisibility(View.VISIBLE);
+        // Counted off the main thread; the badge appears once the count is in.
+        final String tbUniqueId = uniqueId;
+        Threading.io(() -> {
+            int count = 0;
+            try {
+                count = com.bluecodeltd.ecap.chw.dao.TbScreeningDao.countByVcaId(tbUniqueId);
+            } catch (Exception ignored) { }
+            final int finalCount = count;
+            Threading.main(() -> {
+                if (isFinishing() || isDestroyed()) return;
+                tbCount.setText(String.valueOf(finalCount));
+                tbCount.setVisibility(View.VISIBLE);
+            });
+        });
 
         if (mTabLayout.getTabCount() > index && mTabLayout.getTabAt(index) != null) {
             mTabLayout.getTabAt(index).setCustomView(taskTabTitleLayout);
@@ -1158,15 +1168,32 @@ public class IndexDetailsActivity extends AppCompatActivity {
             case R.id.tb_screening:
                 if (!ensureIndexVcaAvailable()) { break; }
                 if (vca != null && vca.getDate_screened() != null) {
-                    try {
-                        long todayMillis = java.util.Calendar.getInstance().getTimeInMillis();
-                        boolean alreadyToday = TbScreeningDao.existsOnSameDateByUniqueId(vca.getUnique_id(), todayMillis);
-                        if (alreadyToday) {
-                            Toasty.warning(IndexDetailsActivity.this, "TB Screening already done today", Toast.LENGTH_LONG, true).show();
-                            break;
+                    // The same-day check reads the database; off the main thread so a busy DB
+                    // (sync, validation) can't freeze the tap into an ANR.
+                    final String tbUniqueId = vca.getUnique_id();
+                    final long todayMillis = java.util.Calendar.getInstance().getTimeInMillis();
+                    Threading.io(() -> {
+                        boolean alreadyToday;
+                        try {
+                            alreadyToday = TbScreeningDao.existsOnSameDateByUniqueId(tbUniqueId, todayMillis);
+                        } catch (Exception e) {
+                            Timber.e(e);
+                            alreadyToday = false;
                         }
-                        openFormUsingFormUtils(IndexDetailsActivity.this, "tb_screening");
-                    } catch (org.json.JSONException e) { e.printStackTrace(); }
+                        final boolean doneToday = alreadyToday;
+                        Threading.main(() -> {
+                            if (isFinishing() || isDestroyed()) return;
+                            if (doneToday) {
+                                Toasty.warning(IndexDetailsActivity.this, "TB Screening already done today", Toast.LENGTH_LONG, true).show();
+                                return;
+                            }
+                            try {
+                                openFormUsingFormUtils(IndexDetailsActivity.this, "tb_screening");
+                            } catch (org.json.JSONException e) {
+                                Timber.e(e);
+                            }
+                        });
+                    });
                 } else {
                     Toasty.warning(IndexDetailsActivity.this, "CA Screening has not been done", Toast.LENGTH_LONG, true).show();
                 }

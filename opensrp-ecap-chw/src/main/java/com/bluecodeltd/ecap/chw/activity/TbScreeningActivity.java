@@ -24,6 +24,7 @@ import com.bluecodeltd.ecap.chw.dao.TbScreeningDao;
 import com.bluecodeltd.ecap.chw.model.TbScreeningModel;
 // removed outcomes list usage
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.google.android.material.snackbar.Snackbar;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
@@ -112,11 +113,25 @@ public class TbScreeningActivity extends AppCompatActivity {
     }
 
     private void reloadLists() {
-        List<TbScreeningModel> screenings = TbScreeningDao.listByVcaId(uniqueId);
-        screeningAdapter.setItems(screenings);
-        try {
-            if (emptyView != null) emptyView.setVisibility((screenings == null || screenings.isEmpty()) ? View.VISIBLE : View.GONE);
-        } catch (Exception ignored) {}
+        // Read off the main thread: onResume runs this, and a busy DB would freeze the screen.
+        final String vcaId = uniqueId;
+        Threading.io(() -> {
+            List<TbScreeningModel> loaded;
+            try {
+                loaded = TbScreeningDao.listByVcaId(vcaId);
+            } catch (Exception e) {
+                Timber.e(e);
+                return;
+            }
+            final List<TbScreeningModel> screenings = loaded;
+            Threading.main(() -> {
+                if (isFinishing() || isDestroyed()) return;
+                screeningAdapter.setItems(screenings);
+                try {
+                    if (emptyView != null) emptyView.setVisibility((screenings == null || screenings.isEmpty()) ? View.VISIBLE : View.GONE);
+                } catch (Exception ignored) {}
+            });
+        });
 
         // outcomes list removed
     }
