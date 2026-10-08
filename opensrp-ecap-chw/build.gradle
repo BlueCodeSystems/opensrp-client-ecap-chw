@@ -370,6 +370,15 @@ android {
         }
     }
 
+    // Keep every screen density in the base APK. ~107 drawables (e.g. the login
+    // coat of arms) exist only in drawable-*dpi folders, so an install missing its
+    // density split (sideloaded/shared base.apk) crashed with Resources$NotFoundException.
+    bundle {
+        density {
+            enableSplit = false
+        }
+    }
+
     flavorDimensions 'baseDimension'
     productFlavors {
         ecap {
