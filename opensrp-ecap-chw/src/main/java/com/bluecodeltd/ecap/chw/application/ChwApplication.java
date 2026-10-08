@@ -54,6 +54,7 @@ import com.bluecodeltd.ecap.chw.util.FailSafeRecalledID;
 import com.bluecodeltd.ecap.chw.util.FileUtils;
 import com.bluecodeltd.ecap.chw.util.JsonFormUtils;
 import com.bluecodeltd.ecap.chw.util.SafeDebugTree;
+import com.bluecodeltd.ecap.chw.util.SavedStateSizeGuard;
 import com.bluecodeltd.ecap.chw.util.Utils;
 import com.evernote.android.job.JobApi;
 import com.evernote.android.job.JobConfig;
@@ -265,6 +266,10 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         // before SecuredActivity checks IsUserLoggedOut().
         registerActivityLifecycleCallbacks(new SessionRestoreGate());
         startSessionRestore();
+
+        // Oversized saved-instance-state Bundles crash in activityStopped/activitySlept with no app
+        // frames in the trace; report the offending Activity and trim the Bundle instead.
+        registerActivityLifecycleCallbacks(new SavedStateSizeGuard());
 
         // init json helper
         this.jsonSpecHelper = new JsonSpecHelper(this);
