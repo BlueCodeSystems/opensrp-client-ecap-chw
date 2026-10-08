@@ -52,6 +52,7 @@ import com.bluecodeltd.ecap.chw.sync.ChwClientProcessor;
 import com.bluecodeltd.ecap.chw.util.ChwLocationBasedClassifier;
 import com.bluecodeltd.ecap.chw.util.FailSafeRecalledID;
 import com.bluecodeltd.ecap.chw.util.FileUtils;
+import com.bluecodeltd.ecap.chw.util.IncompleteInstall;
 import com.bluecodeltd.ecap.chw.util.JsonFormUtils;
 import com.bluecodeltd.ecap.chw.util.SafeDebugTree;
 import com.bluecodeltd.ecap.chw.util.SavedStateSizeGuard;
@@ -227,6 +228,15 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         setUpLogging();
 
         mInstance = this;
+
+        // A base.apk shared without its native-library split has no libsqlcipher.so, and every
+        // library below needs the database. Skip startup; ChwAppComponentFactory shows the
+        // "install from the Play Store" screen in place of every Activity.
+        if (IncompleteInstall.isDatabaseLibraryMissing()) {
+            IncompleteInstall.report(this);
+            return;
+        }
+
         context = Context.getInstance();
         context.updateApplicationContext(getApplicationContext());
         context.updateCommonFtsObject(getCommonFtsObject());

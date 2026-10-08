@@ -39,7 +39,8 @@
         android:theme="@style/ChwTheme"
         android:usesCleartextTraffic="true"
         android:largeHeap="true"
-        tools:replace="android:theme">
+        android:appComponentFactory=".util.ChwAppComponentFactory"
+        tools:replace="android:theme,android:appComponentFactory">
 
         <!-- Kujaku's manifest-declared receiver unconditionally calls context.startService()
              on every network change, even though this app never uses Kujaku's offline map

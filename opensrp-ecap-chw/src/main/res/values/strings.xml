@@ -619,6 +619,11 @@
     <!-- Common menu/action strings expected by library menus -->
     <string name="logout_text">Logout</string>
 
+    <!-- Shown instead of every screen when the install is missing its native libraries -->
+    <string name="incomplete_install_title">Install ECAP from the Play Store</string>
+    <string name="incomplete_install_message">This copy of ECAP is incomplete, so it cannot open its records. This usually happens when the app is shared from another phone.\n\nInstall ECAP from the Play Store to fix it. Do not uninstall this copy first: records on this phone that have not synced would be lost.</string>
+    <string name="incomplete_install_open_store">Open Play Store</string>
+
 </resources>
 
 
