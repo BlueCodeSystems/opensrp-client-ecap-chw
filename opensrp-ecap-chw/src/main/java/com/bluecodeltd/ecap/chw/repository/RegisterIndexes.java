@@ -24,6 +24,9 @@ public final class RegisterIndexes {
 
     private static final String[][] INDEXES = {
             {"ec_client_index", "CREATE INDEX IF NOT EXISTS idx_ec_client_index_household_id ON ec_client_index(household_id)"},
+            // VCA lookups by unique_id (register rows, profiles, graduation and service-report joins) ran a full
+            // scan of ec_client_index each; the register fires one per visible row, all queued on the DB lock.
+            {"ec_client_index", "CREATE INDEX IF NOT EXISTS idx_ec_client_index_unique_id ON ec_client_index(unique_id)"},
             {"ec_household", "CREATE INDEX IF NOT EXISTS idx_ec_household_household_id ON ec_household(household_id)"},
             // Household graduation checks join service reports to household members.
             {"ec_vca_service_report", "CREATE INDEX IF NOT EXISTS idx_ec_vca_service_report_unique_id ON ec_vca_service_report(unique_id)"},
@@ -34,6 +37,14 @@ public final class RegisterIndexes {
             {"ec_tb_screening_caregiver", "CREATE INDEX IF NOT EXISTS idx_ec_tb_screening_caregiver_household_id ON ec_tb_screening_caregiver(household_id)"},
             {"ec_graduation", "CREATE INDEX IF NOT EXISTS idx_ec_graduation_household_id ON ec_graduation(household_id)"},
             {"ec_mother_index", "CREATE INDEX IF NOT EXISTS idx_ec_mother_index_household_id ON ec_mother_index(household_id)"},
+            // ValidateIntentService picks the oldest synced, not-yet-valid records with
+            // "WHERE syncStatus = ? AND (validationStatus IS NULL OR validationStatus != ?) ORDER BY updatedAt LIMIT n".
+            // With only the core library's single-column indexes, SQLite reads every synced row (walking each
+            // row's large json, signatures included, to reach the later columns) and sorts them, holding the DB
+            // lock long enough to ANR any main-thread query. These covering indexes answer it from the index
+            // alone, already in updatedAt order, stopping at the limit.
+            {"event", "CREATE INDEX IF NOT EXISTS idx_event_validation_queue ON event(syncStatus, updatedAt, validationStatus, formSubmissionId)"},
+            {"client", "CREATE INDEX IF NOT EXISTS idx_client_validation_queue ON client(syncStatus, updatedAt, validationStatus, baseEntityId)"},
     };
 
     private static final Pattern SAFE_TABLE_NAME = Pattern.compile("[A-Za-z0-9_]+");
