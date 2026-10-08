@@ -40,7 +40,7 @@ public abstract class CoreFamilyChangeContractInteractor implements FamilyChange
     private AppExecutors appExecutors;
 
     public CoreFamilyChangeContractInteractor() {
-        this(new AppExecutors());
+        this(org.smartregister.chw.core.utils.SharedAppExecutors.family());
     }
 
     @VisibleForTesting

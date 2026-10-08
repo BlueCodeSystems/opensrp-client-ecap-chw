@@ -426,7 +426,7 @@ public class MalariaReportViewActivity extends AppCompatActivity {
             }
         };
         try {
-            new AppExecutors().diskIO().execute(runnable);
+            org.smartregister.chw.core.utils.SharedAppExecutors.family().diskIO().execute(runnable);
             return true;
         } catch (Exception e) {
             Timber.e(e);

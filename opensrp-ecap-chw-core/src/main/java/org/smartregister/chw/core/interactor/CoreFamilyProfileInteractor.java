@@ -16,7 +16,7 @@ public class CoreFamilyProfileInteractor extends org.smartregister.family.intera
     protected AppExecutors appExecutors;
 
     protected CoreFamilyProfileInteractor() {
-        this(new AppExecutors());
+        this(org.smartregister.chw.core.utils.SharedAppExecutors.family());
     }
 
     @VisibleForTesting

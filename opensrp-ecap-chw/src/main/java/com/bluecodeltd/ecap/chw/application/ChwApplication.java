@@ -632,7 +632,7 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
 
     public AppExecutors getAppExecutors() {
         if (appExecutors == null) {
-            appExecutors = new AppExecutors();
+            appExecutors = org.smartregister.chw.core.utils.SharedAppExecutors.family();
         }
         return appExecutors;
     }

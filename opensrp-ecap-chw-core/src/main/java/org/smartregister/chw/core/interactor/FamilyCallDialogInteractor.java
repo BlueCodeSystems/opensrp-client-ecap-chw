@@ -24,7 +24,7 @@ public class FamilyCallDialogInteractor implements FamilyCallDialogContract.Inte
 
 
     public FamilyCallDialogInteractor(String familyBaseEntityId) {
-        this(new AppExecutors(), familyBaseEntityId);
+        this(org.smartregister.chw.core.utils.SharedAppExecutors.family(), familyBaseEntityId);
     }
 
     @VisibleForTesting

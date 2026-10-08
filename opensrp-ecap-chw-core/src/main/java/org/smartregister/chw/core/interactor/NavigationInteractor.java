@@ -24,7 +24,7 @@ import timber.log.Timber;
 public class NavigationInteractor implements NavigationContract.Interactor {
 
     private static NavigationInteractor instance;
-    private AppExecutors appExecutors = new AppExecutors();
+    private AppExecutors appExecutors = org.smartregister.chw.core.utils.SharedAppExecutors.family();
     private CoreApplication coreApplication;
 
     private NavigationInteractor() {

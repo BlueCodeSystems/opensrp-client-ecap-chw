@@ -93,7 +93,7 @@ public class CoreChildProfileInteractor implements CoreChildProfileContract.Inte
     private String childBaseEntityId;
 
     public CoreChildProfileInteractor() {
-        this(new AppExecutors());
+        this(org.smartregister.chw.core.utils.SharedAppExecutors.family());
     }
 
     @VisibleForTesting

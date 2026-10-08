@@ -19,7 +19,7 @@ public class CoreReferralInteractor implements BaseReferralRegisterFragmentContr
     private CommonPersonObjectClient pClient;
 
     public CoreReferralInteractor() {
-        this(new AppExecutors());
+        this(org.smartregister.chw.core.utils.SharedAppExecutors.family());
     }
 
     public CoreReferralInteractor(AppExecutors appExecutors) {

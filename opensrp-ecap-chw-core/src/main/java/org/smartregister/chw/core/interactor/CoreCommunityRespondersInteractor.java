@@ -29,7 +29,7 @@ public class CoreCommunityRespondersInteractor implements CoreCommunityResponder
     protected AppExecutors appExecutors;
 
     public CoreCommunityRespondersInteractor() {
-        this(new AppExecutors());
+        this(org.smartregister.chw.core.utils.SharedAppExecutors.family());
     }
 
     @VisibleForTesting

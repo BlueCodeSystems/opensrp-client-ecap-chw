@@ -39,7 +39,7 @@ public class CoreChildRegisterInteractor implements CoreChildRegisterContract.In
 
 
     public CoreChildRegisterInteractor() {
-        this(new AppExecutors());
+        this(org.smartregister.chw.core.utils.SharedAppExecutors.family());
     }
 
     @VisibleForTesting

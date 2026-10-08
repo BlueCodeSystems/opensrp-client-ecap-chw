@@ -24,7 +24,7 @@ public class SickFormMedicalHistoryInteractor implements SickFormMedicalHistoryC
     }
 
     public SickFormMedicalHistoryInteractor() {
-        this(new AppExecutors());
+        this(org.smartregister.chw.core.utils.SharedAppExecutors.anc());
     }
 
     @Override

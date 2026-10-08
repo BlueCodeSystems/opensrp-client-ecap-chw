@@ -43,7 +43,7 @@ public abstract class CoreFamilyRemoveMemberInteractor implements FamilyRemoveMe
     private AppExecutors appExecutors;
 
     public CoreFamilyRemoveMemberInteractor() {
-        this(new AppExecutors());
+        this(org.smartregister.chw.core.utils.SharedAppExecutors.family());
     }
 
     @VisibleForTesting

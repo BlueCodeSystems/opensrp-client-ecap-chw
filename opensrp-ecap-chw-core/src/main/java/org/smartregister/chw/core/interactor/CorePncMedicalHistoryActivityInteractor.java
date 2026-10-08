@@ -25,7 +25,7 @@ public abstract class CorePncMedicalHistoryActivityInteractor extends BasePncMed
     protected final AppExecutors appExecutors;
 
     public CorePncMedicalHistoryActivityInteractor() {
-        this(new AppExecutors());
+        this(org.smartregister.chw.core.utils.SharedAppExecutors.anc());
     }
 
     @VisibleForTesting

@@ -271,7 +271,7 @@ public class ShowHouseholdReferralsActivity extends AppCompatActivity {
 
 
         try {
-            AppExecutors appExecutors = new AppExecutors();
+            AppExecutors appExecutors = org.smartregister.chw.core.utils.SharedAppExecutors.family();
             appExecutors.diskIO().execute(runnable);
             return true;
         } catch (Exception exception) {

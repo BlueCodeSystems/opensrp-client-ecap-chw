@@ -76,7 +76,7 @@ public class WashCheckDialogFragment extends DialogFragment implements View.OnCl
     }
 
     private void initFragment() {
-        appExecutors = new AppExecutors();
+        appExecutors = org.smartregister.chw.core.utils.SharedAppExecutors.anc();
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage(getActivity().getResources().getString(R.string.updating));
         progressDialog.setCancelable(false);
