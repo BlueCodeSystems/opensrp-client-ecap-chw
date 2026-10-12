@@ -35,6 +35,7 @@ public class CaregiverTbScreeningFragment extends Fragment {
     private FragmentCaregiverTbScreeningBinding binding;
     private RecyclerView recyclerView;
     private View emptyView;
+    private boolean outcomeLoading;
 
     public static CaregiverTbScreeningFragment newInstance() { return new CaregiverTbScreeningFragment(); }
 
@@ -81,6 +82,30 @@ public class CaregiverTbScreeningFragment extends Fragment {
     }
 
     private void openTbForm(String formName, TbScreeningCaregiverModel item, String caregiverId, String caregiverName, String baseEntityId) {
+        if (!"tb_screening_outcome_caregiver".equals(formName)) {
+            buildAndOpenTbForm(formName, item, null, caregiverId, caregiverName, baseEntityId);
+            return;
+        }
+        // The outcome form is pre-filled from the latest screening; read it off the main thread so
+        // the tap doesn't block on the DB lock while sync is running.
+        if (outcomeLoading) return;
+        outcomeLoading = true;
+        final String entityId = (baseEntityId == null || baseEntityId.trim().isEmpty()) ? caregiverId : baseEntityId;
+        Threading.io(() -> {
+            TbScreeningCaregiverModel latest = null;
+            try {
+                latest = TbScreeningCaregiverDao.getLatestByBaseEntityId(entityId);
+            } catch (Exception ignored) {}
+            final TbScreeningCaregiverModel finalLatest = latest;
+            Threading.main(() -> {
+                outcomeLoading = false;
+                if (!isAdded()) return;
+                buildAndOpenTbForm(formName, item, finalLatest, caregiverId, caregiverName, baseEntityId);
+            });
+        });
+    }
+
+    private void buildAndOpenTbForm(String formName, TbScreeningCaregiverModel item, TbScreeningCaregiverModel latest, String caregiverId, String caregiverName, String baseEntityId) {
         try {
             FormUtils formUtils = new FormUtils(requireContext());
             org.json.JSONObject form = formUtils.getFormJson(formName);
@@ -106,7 +131,6 @@ public class CaregiverTbScreeningFragment extends Fragment {
                     form.remove(JsonFormConstants.ENCOUNTER_TYPE);
                     form.put(JsonFormConstants.ENCOUNTER_TYPE, "TB Screening Caregiver");
                     try {
-                        TbScreeningCaregiverModel latest = TbScreeningCaregiverDao.getLatestByBaseEntityId(entityId);
                         if (latest != null) {
                             CoreJsonFormUtils.populateJsonForm(form, new ObjectMapper().convertValue(latest, Map.class));
                         }
