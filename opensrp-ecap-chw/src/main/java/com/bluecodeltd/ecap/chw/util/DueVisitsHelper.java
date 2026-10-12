@@ -1,16 +1,14 @@
 package com.bluecodeltd.ecap.chw.util;
 
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
-import com.bluecodeltd.ecap.chw.dao.VCAScreeningDao;
 import com.bluecodeltd.ecap.chw.dao.VcaAssessmentDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.model.Child;
-import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
-import com.bluecodeltd.ecap.chw.model.VcaScreeningModel;
-import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Shared source of truth for VCA due-visit status, reusing the same red/yellow/green
@@ -50,16 +48,27 @@ public final class DueVisitsHelper {
             return result;
         }
 
+        // One query each for every VCA's latest visit and assessment. This used to run three queries
+        // per VCA (screening, visit, assessment); for large caseloads that kept the DB lock busy long
+        // enough to stall the UI every time the VCA register opened.
+        Map<String, String[]> latestVisits = new HashMap<>();
+        Map<String, String[]> latestAssessments = new HashMap<>();
+        try {
+            latestVisits = VcaVisitationDao.getLatestVisitStatusByCaseworker(caseworkerPhone);
+        } catch (Exception ignored) {
+        }
+        try {
+            latestAssessments = VcaAssessmentDao.getLatestAssessmentStatusByCaseworker(caseworkerPhone);
+        } catch (Exception ignored) {
+        }
+
         for (Child child : children) {
             try {
                 String uniqueId = child.getUnique_id();
 
-                VcaScreeningModel screening = null;
-                try {
-                    screening = VCAScreeningDao.getVcaScreening(uniqueId);
-                } catch (Exception ignored) {
-                }
-                if (screening != null && ("0".equals(screening.getCase_status()) || "2".equals(screening.getCase_status()))) {
+                // case_status comes from the same ec_client_index row VCAScreeningDao.getVcaScreening re-read.
+                String caseStatus = child.getCase_status();
+                if ("0".equals(caseStatus) || "2".equals(caseStatus)) {
                     continue;
                 }
 
@@ -68,28 +77,12 @@ public final class DueVisitsHelper {
                         (child.getAdolescent_last_name() != null ? child.getAdolescent_last_name() : child.getLast_name());
                 String birthdate = child.getAdolescent_birthdate();
 
-                String color = null;
-                String date = null;
-
-                VcaVisitationModel visit = null;
-                try {
-                    visit = VcaVisitationDao.getVcaVisitationNotification(uniqueId);
-                } catch (Exception ignored) {
+                String[] status = latestVisits.get(uniqueId);
+                if (status == null) {
+                    status = latestAssessments.get(uniqueId);
                 }
-                if (visit != null) {
-                    color = visit.getStatus_color();
-                    date = visit.getVisit_date();
-                } else {
-                    VcaAssessmentModel assessment = null;
-                    try {
-                        assessment = VcaAssessmentDao.getVcaVisitationNotificationFromAssessment(uniqueId);
-                    } catch (Exception ignored) {
-                    }
-                    if (assessment != null) {
-                        color = assessment.getStatus_color();
-                        date = assessment.getDate_edited();
-                    }
-                }
+                String color = status != null ? status[0] : null;
+                String date = status != null ? status[1] : null;
 
                 if (color != null && date != null) {
                     result.add(new DueVisit(uniqueId, name, birthdate, color.trim(), date));

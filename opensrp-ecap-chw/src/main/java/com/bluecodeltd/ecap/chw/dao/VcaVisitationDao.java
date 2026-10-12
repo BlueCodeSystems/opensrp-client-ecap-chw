@@ -5,8 +5,10 @@ import com.bluecodeltd.ecap.chw.model.VcaVisitationModel;
 import org.smartregister.dao.AbstractDao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class VcaVisitationDao extends AbstractDao {
@@ -169,6 +171,37 @@ public class VcaVisitationDao extends AbstractDao {
 
         return values;
     }
+    /**
+     * Latest visit colour and date for every VCA of a caseworker in one query, keyed by unique_id.
+     * Same red/yellow/green rule as {@link #getVcaVisitationNotification(String)}, which DueVisitsHelper
+     * used to run once per VCA (thousands of queries holding the DB lock).
+     */
+    public static Map<String, String[]> getLatestVisitStatusByCaseworker(String caseworkerPhone) {
+        String sortable = "strftime('%Y-%m-%d', substr(visit_date,7,4) || '-' || substr(visit_date,4,2) || '-' || substr(visit_date,1,2))";
+        String sql = "SELECT unique_id, visit_date, " +
+                "CASE " +
+                "    WHEN DATE(latest) < DATE('now','-90 day') THEN 'red' " +
+                "    WHEN DATE(latest) > DATE('now','-90 day') AND DATE(latest) <= DATE('now','-60 day') THEN 'yellow' " +
+                "    WHEN DATE(latest) > DATE('now','-60 day') THEN 'green' " +
+                "    ELSE 'red' " +
+                "END AS status_color " +
+                // SQLite returns the bare visit_date column from the row that holds MAX(), i.e. the latest record.
+                "FROM (SELECT unique_id, visit_date, MAX(" + sortable + ") AS latest " +
+                "      FROM ec_household_visitation_for_vca_0_20_years " +
+                "      WHERE (delete_status IS NULL OR delete_status <> '1') AND unique_id IN (SELECT unique_id FROM ec_client_index WHERE phone = '" + caseworkerPhone + "' " +
+                "          AND is_closed = 0 AND (deleted IS NULL OR deleted != '1')) " +
+                "      GROUP BY unique_id)";
+        Map<String, String[]> result = new HashMap<>();
+        List<String[]> rows = readData(sql, c -> new String[]{
+                getCursorValue(c, "unique_id"), getCursorValue(c, "status_color"), getCursorValue(c, "visit_date")});
+        if (rows != null) {
+            for (String[] row : rows) {
+                if (row[0] != null) result.put(row[0], new String[]{row[1], row[2]});
+            }
+        }
+        return result;
+    }
+
     public static VcaVisitationModel getVcaVisitationNotification (String vcaID) {
         String sql = "SELECT *, " +
                 "strftime('%Y-%m-%d', substr(visit_date,7,4) || '-' || substr(visit_date,4,2) || '-' || substr(visit_date,1,2)) as sortable_date, " +

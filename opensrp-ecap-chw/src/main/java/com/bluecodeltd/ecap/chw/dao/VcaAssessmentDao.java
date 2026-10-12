@@ -4,11 +4,43 @@ import com.bluecodeltd.ecap.chw.model.VcaAssessmentModel;
 
 import org.smartregister.dao.AbstractDao;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class VcaAssessmentDao extends AbstractDao {
+
+    /**
+     * Latest assessment colour and date for every VCA of a caseworker in one query, keyed by unique_id.
+     * Same rule as {@link #getVcaVisitationNotificationFromAssessment(String)}.
+     */
+    public static Map<String, String[]> getLatestAssessmentStatusByCaseworker(String caseworkerPhone) {
+        String sortable = "strftime('%Y-%m-%d', substr(date_edited,7,4) || '-' || substr(date_edited,4,2) || '-' || substr(date_edited,1,2))";
+        String sql = "SELECT unique_id, date_edited, " +
+                "CASE " +
+                "    WHEN DATE(latest) < DATE('now','-90 day') THEN 'red' " +
+                "    WHEN DATE(latest) > DATE('now','-90 day') AND DATE(latest) <= DATE('now','-60 day') THEN 'yellow' " +
+                "    WHEN DATE(latest) > DATE('now','-60 day') THEN 'green' " +
+                "    ELSE 'red' " +
+                "END AS status_color " +
+                // SQLite returns the bare date_edited column from the row that holds MAX(), i.e. the latest record.
+                "FROM (SELECT unique_id, date_edited, MAX(" + sortable + ") AS latest " +
+                "      FROM ec_vca_assessment " +
+                "      WHERE unique_id IN (SELECT unique_id FROM ec_client_index WHERE phone = '" + caseworkerPhone + "' " +
+                "          AND is_closed = 0 AND (deleted IS NULL OR deleted != '1')) " +
+                "      GROUP BY unique_id)";
+        Map<String, String[]> result = new HashMap<>();
+        List<String[]> rows = readData(sql, c -> new String[]{
+                getCursorValue(c, "unique_id"), getCursorValue(c, "status_color"), getCursorValue(c, "date_edited")});
+        if (rows != null) {
+            for (String[] row : rows) {
+                if (row[0] != null) result.put(row[0], new String[]{row[1], row[2]});
+            }
+        }
+        return result;
+    }
 
     public static VcaAssessmentModel  getVcaVisitationNotificationFromAssessment (String vcaID) {
         String sql = "SELECT *, " +
