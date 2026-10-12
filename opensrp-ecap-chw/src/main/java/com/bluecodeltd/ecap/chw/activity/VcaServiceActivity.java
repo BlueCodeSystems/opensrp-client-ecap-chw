@@ -170,9 +170,14 @@ public class VcaServiceActivity extends AppCompatActivity {
                     int casePlanCount = 0;
                     try { caseStatusModel = IndexPersonDao.getCaseStatus(intent_vcaid); } catch (Exception ignored) {}
                     try { casePlanCount = CasePlanDao.checkCasePlan(intent_vcaid); } catch (Exception ignored) {}
+                    // Also read here: looking the summary up inside the main-thread block below blocked
+                    // the UI on the DB lock while sync ran and caused ANRs.
+                    EcClientIndexSummary clientSummary = null;
+                    try { clientSummary = IndexPersonDao.getClientSummaryByUniqueId(intent_vcaid); } catch (Exception ignored) {}
 
                     CaseStatusModel finalCaseStatusModel = caseStatusModel;
                     int finalCasePlanCount = casePlanCount;
+                    EcClientIndexSummary finalClientSummary = clientSummary;
 
                     Threading.main(() -> {
                         if (isFinishing() || isDestroyed()) {
@@ -223,8 +228,7 @@ public class VcaServiceActivity extends AppCompatActivity {
                             JSONObject cId = getFieldJSONObject(step1Fields, "unique_id");
                             cId.put("value", hh_id.getText().toString());
 
-                            EcClientIndexSummary summary = null;
-                            try { summary = IndexPersonDao.getClientSummaryByUniqueId(intent_vcaid); } catch (Exception ignored) {}
+                            EcClientIndexSummary summary = finalClientSummary;
                             String normalizedGender = summary != null && !TextUtils.isEmpty(summary.getGender())
                                     ? summary.getGender().trim().toLowerCase(Locale.ENGLISH)
                                     : null;
@@ -674,17 +678,24 @@ public class VcaServiceActivity extends AppCompatActivity {
 
             if (v.getId() == R.id.hh_service_link) {
 
-                Intent i = new Intent(this, HouseholdServicesOnlyActivity.class);
-                String resolvedHouseholdId = household_id;
-                try {
-                    EcClientIndexSummary summary = IndexPersonDao.getClientSummaryByUniqueId(intent_vcaid);
-                    if (summary != null && !TextUtils.isEmpty(summary.getHouseholdId())) {
-                        resolvedHouseholdId = summary.getHouseholdId();
-                    }
-                } catch (Exception ignored) {}
-                i.putExtra("householdId", resolvedHouseholdId);
-                i.putExtra("cname", c_name);
-                startActivity(i);
+                // Resolve the household off the main thread; this lookup blocked on the DB lock during sync.
+                Threading.io(() -> {
+                    String resolvedHouseholdId = household_id;
+                    try {
+                        EcClientIndexSummary summary = IndexPersonDao.getClientSummaryByUniqueId(intent_vcaid);
+                        if (summary != null && !TextUtils.isEmpty(summary.getHouseholdId())) {
+                            resolvedHouseholdId = summary.getHouseholdId();
+                        }
+                    } catch (Exception ignored) {}
+                    final String finalHouseholdId = resolvedHouseholdId;
+                    Threading.main(() -> {
+                        if (isFinishing() || isDestroyed()) return;
+                        Intent i = new Intent(this, HouseholdServicesOnlyActivity.class);
+                        i.putExtra("householdId", finalHouseholdId);
+                        i.putExtra("cname", c_name);
+                        startActivity(i);
+                    });
+                });
 
             }
 
