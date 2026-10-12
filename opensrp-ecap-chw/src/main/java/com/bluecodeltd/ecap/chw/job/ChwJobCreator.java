@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.bluecodeltd.ecap.chw.application.ChwApplication;
-import com.bluecodeltd.ecap.chw.sync.ChwSyncIntentService;
 import com.bluecodeltd.ecap.chw.sync.intent.ChwSyncTaskIntentService;
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobCreator;
@@ -18,7 +17,6 @@ import org.smartregister.job.SyncLocationsByLevelAndTagsServiceJob;
 import org.smartregister.job.SyncServiceJob;
 import org.smartregister.job.SyncTaskServiceJob;
 import org.smartregister.job.ValidateSyncDataServiceJob;
-import org.smartregister.sync.intent.DocumentConfigurationIntentService;
 
 import timber.log.Timber;
 
@@ -31,7 +29,8 @@ public class ChwJobCreator implements JobCreator {
     public Job create(@NonNull String tag) {
         switch (tag) {
             case SyncServiceJob.TAG:
-                return new SyncServiceJob(ChwSyncIntentService.class);
+                // Falls back to running the sync inside the job when Android blocks a background service start.
+                return new ChwSyncServiceJob();
             case ExtendedSyncServiceJob.TAG:
                 return new ExtendedSyncServiceJob();
             case PullUniqueIdsServiceJob.TAG:
@@ -47,7 +46,7 @@ public class ChwJobCreator implements JobCreator {
             case SyncLocationsByLevelAndTagsServiceJob.TAG:
                 return new SyncLocationsByLevelAndTagsServiceJob();
             case DocumentConfigurationServiceJob.TAG:
-                return new DocumentConfigurationServiceJob(DocumentConfigurationIntentService.class);
+                return new ChwDocumentConfigurationServiceJob();
             case "P2PServiceJob":
                 return new NoOpJob(tag);
             case "SyncSettingsServiceJob":
