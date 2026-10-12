@@ -175,6 +175,11 @@ public class IndexDetailsActivity extends AppCompatActivity {
     public String gender;
 
     ObjectMapper oMapper, clientMapper;
+    // Looked up off the main thread before the case_status form is built (see openCaseStatusForm).
+    private boolean caseStatusPrefetched;
+    private String prefetchedHouseholdId;
+    private GraduationModel prefetchedGraduation;
+    private boolean caseStatusLoading;
     Child child;
 
     VcaAssessmentModel vcaAssessmentModel;
@@ -2029,7 +2034,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
             return;
         }
 
-        String householdIdForForm = resolveHouseholdIdForSourceChecks();
+        final boolean usePrefetch = caseStatusPrefetched && "case_status".equals(formName);
+        caseStatusPrefetched = false;
+        String householdIdForForm = usePrefetch ? prefetchedHouseholdId : resolveHouseholdIdForSourceChecks();
 
         String uniqueIdForForm = resolveUniqueIdForSourceChecks();
         String safeAgeText = txtAge != null && txtAge.getText() != null ? txtAge.getText().toString() : "";
@@ -2057,7 +2064,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
                     formToBeOpened.remove(JsonFormUtils.ENCOUNTER_TYPE);
                     formToBeOpened.put(JsonFormUtils.ENCOUNTER_TYPE, "Member Sub Population");
                 }
-                GraduationModel graduationModel = TextUtils.isEmpty(householdIdForForm) ? null : GraduationDao.getGraduationStatus(householdIdForForm);
+                GraduationModel graduationModel = usePrefetch ? prefetchedGraduation
+                        : TextUtils.isEmpty(householdIdForForm) ? null : GraduationDao.getGraduationStatus(householdIdForForm);
                 if (graduationModel == null || "0".equals(graduationModel.getGraduation_status()) || graduationModel.getGraduation_status() == null) {
 
                 JSONObject graduationStatus = getFieldJSONObject(fields(formToBeOpened, "step1"), "graduation_benchmark");
@@ -2356,11 +2364,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
                 if (!ensureIndexVcaAvailable()) {
                     break;
                 }
-                try {
-                    openFormUsingFormUtils(IndexDetailsActivity.this, "case_status");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                openCaseStatusForm();
                 break;
 
             case R.id.delete_record:
@@ -2676,6 +2680,44 @@ public class IndexDetailsActivity extends AppCompatActivity {
             }));
             buildDialog();
         }
+    }
+
+    /**
+     * The case_status form needs the household's graduation status. Reading it on the main thread
+     * from the menu click blocked on the DB lock while sync ran and triggered an ANR, so look it
+     * up on Threading.io() and build the form once it arrives. Repeat taps while loading are ignored.
+     */
+    private void openCaseStatusForm() {
+        if (caseStatusLoading) return;
+        caseStatusLoading = true;
+        Threading.io(() -> {
+            String householdId = null;
+            GraduationModel graduation = null;
+            try {
+                householdId = resolveHouseholdIdForSourceChecks();
+                if (!TextUtils.isEmpty(householdId)) {
+                    graduation = GraduationDao.getGraduationStatus(householdId);
+                }
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+            final String finalHouseholdId = householdId;
+            final GraduationModel finalGraduation = graduation;
+            Threading.main(() -> {
+                caseStatusLoading = false;
+                if (isFinishing() || isDestroyed()) return;
+                prefetchedHouseholdId = finalHouseholdId;
+                prefetchedGraduation = finalGraduation;
+                caseStatusPrefetched = true;
+                try {
+                    openFormUsingFormUtils(IndexDetailsActivity.this, "case_status");
+                } catch (JSONException e) {
+                    Timber.e(e);
+                } finally {
+                    caseStatusPrefetched = false;
+                }
+            });
+        });
     }
 
     /**
