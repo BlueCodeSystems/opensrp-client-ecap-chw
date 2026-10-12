@@ -39,6 +39,7 @@ import com.bluecodeltd.ecap.chw.fragment.ChildOverviewFragment;
 import com.bluecodeltd.ecap.chw.fragment.ChildPostnatalFragment;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.json.JSONArray;
@@ -346,18 +347,26 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
             TextView title = layout.findViewById(R.id.visits_title);
             TextView countView = layout.findViewById(R.id.visits_count);
             title.setText("LONGITUDINAL");
-
-            int count = 0;
-            try {
-                if (uniqueId != null) {
-                    count = ChildLongitudinalFollowUpDao.listByUniqueId(uniqueId).size();
-                }
-            } catch (Exception ignored) { }
-            countView.setText(String.valueOf(count));
+            countView.setText("0");
 
             if (tabLayout.getTabCount() > 1 && tabLayout.getTabAt(1) != null) {
                 tabLayout.getTabAt(1).setCustomView(layout);
             }
+
+            final String id = uniqueId;
+            Threading.io(() -> {
+                int count = 0;
+                try {
+                    if (id != null) {
+                        count = ChildLongitudinalFollowUpDao.listByUniqueId(id).size();
+                    }
+                } catch (Exception ignored) { }
+                final int finalCount = count;
+                Threading.main(() -> {
+                    if (isFinishing() || isDestroyed()) return;
+                    countView.setText(String.valueOf(finalCount));
+                });
+            });
         } catch (Exception ignored) { }
     }
 
@@ -368,18 +377,26 @@ public class ChildNonPmtctDetail extends AppCompatActivity implements View.OnCli
             TextView title = layout.findViewById(R.id.visits_title);
             TextView countView = layout.findViewById(R.id.visits_count);
             title.setText("POSTNATAL");
-
-            int count = 0;
-            try {
-                if (uniqueId != null) {
-                    count = ChildPostnatalCareDao.listByUniqueId(uniqueId).size();
-                }
-            } catch (Exception ignored) { }
-            countView.setText(String.valueOf(count));
+            countView.setText("0");
 
             if (tabLayout.getTabCount() > 2 && tabLayout.getTabAt(2) != null) {
                 tabLayout.getTabAt(2).setCustomView(layout);
             }
+
+            final String id = uniqueId;
+            Threading.io(() -> {
+                int count = 0;
+                try {
+                    if (id != null) {
+                        count = ChildPostnatalCareDao.listByUniqueId(id).size();
+                    }
+                } catch (Exception ignored) { }
+                final int finalCount = count;
+                Threading.main(() -> {
+                    if (isFinishing() || isDestroyed()) return;
+                    countView.setText(String.valueOf(finalCount));
+                });
+            });
         } catch (Exception ignored) { }
     }
 

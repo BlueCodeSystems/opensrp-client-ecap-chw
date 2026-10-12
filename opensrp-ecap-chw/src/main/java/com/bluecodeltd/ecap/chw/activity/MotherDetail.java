@@ -458,17 +458,25 @@ public class MotherDetail extends AppCompatActivity {
             TextView title = layout.findViewById(R.id.visits_title);
             TextView countView = layout.findViewById(R.id.visits_count);
             title.setText("LONGITUDINAL");
-
-            int count = 0;
-            try {
-                String householdId = commonPersonObjectClient.getColumnmaps().get("household_id");
-                count = MotherLongitudinalFollowUpDao.listByHouseholdId(householdId).size();
-            } catch (Exception ignored) { }
-            countView.setText(String.valueOf(count));
+            countView.setText("0");
 
             if (mTabLayout.getTabCount() > 3 && mTabLayout.getTabAt(3) != null) {
                 mTabLayout.getTabAt(3).setCustomView(layout);
             }
+
+            final String householdId = commonPersonObjectClient != null && commonPersonObjectClient.getColumnmaps() != null
+                    ? commonPersonObjectClient.getColumnmaps().get("household_id") : null;
+            Threading.io(() -> {
+                int count = 0;
+                try {
+                    count = MotherLongitudinalFollowUpDao.listByHouseholdId(householdId).size();
+                } catch (Exception ignored) { }
+                final int finalCount = count;
+                Threading.main(() -> {
+                    if (isFinishing() || isDestroyed()) return;
+                    countView.setText(String.valueOf(finalCount));
+                });
+            });
         } catch (Exception ignored) { }
     }
 
@@ -478,17 +486,25 @@ public class MotherDetail extends AppCompatActivity {
             TextView title = layout.findViewById(R.id.visits_title);
             TextView countView = layout.findViewById(R.id.visits_count);
             title.setText("POSTNATAL");
-
-            int count = 0;
-            try {
-                String householdId = commonPersonObjectClient.getColumnmaps().get("household_id");
-                count = MotherPostnatalCareDao.listByHouseholdId(householdId).size();
-            } catch (Exception ignored) { }
-            countView.setText(String.valueOf(count));
+            countView.setText("0");
 
             if (mTabLayout.getTabCount() > 4 && mTabLayout.getTabAt(4) != null) {
                 mTabLayout.getTabAt(4).setCustomView(layout);
             }
+
+            final String householdId = commonPersonObjectClient != null && commonPersonObjectClient.getColumnmaps() != null
+                    ? commonPersonObjectClient.getColumnmaps().get("household_id") : null;
+            Threading.io(() -> {
+                int count = 0;
+                try {
+                    count = MotherPostnatalCareDao.listByHouseholdId(householdId).size();
+                } catch (Exception ignored) { }
+                final int finalCount = count;
+                Threading.main(() -> {
+                    if (isFinishing() || isDestroyed()) return;
+                    countView.setText(String.valueOf(finalCount));
+                });
+            });
         } catch (Exception ignored) { }
     }
 
