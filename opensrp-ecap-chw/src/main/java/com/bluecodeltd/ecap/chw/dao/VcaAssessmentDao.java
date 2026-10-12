@@ -68,32 +68,30 @@ public class VcaAssessmentDao extends AbstractDao {
         return values.get(0);
     }
     public static boolean areAllVcasAssessed(String householdID) {
-
-        String sql = "SELECT ec_vca_assessment.*, ec_client_index.household_id " +
+        // Counts in SQL instead of loading every assessment record (with all form fields) in the household;
+        // this runs on each graduation tap and the cursor held the DB lock long enough to stall the UI.
+        // Same rule as before: at least one assessment, and the number of distinct VCAs with one equals the
+        // number of (non-deleted) VCA rows in the household.
+        String sql = "SELECT " +
+                "(SELECT COUNT(DISTINCT ec_vca_assessment.unique_id) " +
                 "FROM ec_vca_assessment " +
                 "JOIN ec_client_index ON ec_vca_assessment.unique_id = ec_client_index.unique_id " +
-                "WHERE ec_client_index.household_id = '" + householdID + "' AND  (ec_client_index.deleted IS NULL OR ec_client_index.deleted != '1') " +
-                "AND ec_client_index.unique_id IS NOT NULL AND ec_client_index.unique_id != ''";
+                "WHERE ec_client_index.household_id = '" + householdID + "' AND (ec_client_index.deleted IS NULL OR ec_client_index.deleted != '1') " +
+                "AND ec_client_index.unique_id IS NOT NULL AND ec_client_index.unique_id != '') AS done, " +
+                "(SELECT COUNT(*) FROM ec_client_index WHERE household_id = '" + householdID + "' AND (deleted IS NULL OR deleted != '1') AND unique_id IS NOT NULL AND unique_id != '') AS total";
 
-        List<VcaAssessmentModel> values = AbstractDao.readData(sql, getVcaAssessmentModelMap());
+        List<int[]> values = AbstractDao.readData(sql, c -> new int[]{
+                c.getInt(c.getColumnIndexOrThrow("done")),
+                c.getInt(c.getColumnIndexOrThrow("total"))
+        });
 
         if (values == null || values.isEmpty()) {
             return false;
         }
 
-        String vcaSql = "SELECT * FROM ec_client_index WHERE household_id = '" + householdID + "' AND  (deleted IS NULL OR deleted != '1') AND unique_id IS NOT NULL AND unique_id != ''";
-        List<VcaAssessmentModel> allVcas = AbstractDao.readData(vcaSql, getVcaAssessmentModelMap());
-
-        if (allVcas == null || allVcas.isEmpty()) {
-            return false;
-        }
-
-        Set<String> assessedVcaIds = new HashSet<>();
-        for (VcaAssessmentModel assessment : values) {
-            assessedVcaIds.add(assessment.getUnique_id());
-        }
-
-        return assessedVcaIds.size() == allVcas.size();
+        int done = values.get(0)[0];
+        int total = values.get(0)[1];
+        return done > 0 && total > 0 && done == total;
     }
     public static VcaAssessmentModel getVcaAssessment (String vcaID) {
 
