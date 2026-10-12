@@ -1,5 +1,6 @@
 package com.bluecodeltd.ecap.chw.fragment;
 
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import com.bluecodeltd.ecap.chw.dao.MonthlyReportDao;
 import com.bluecodeltd.ecap.chw.presenter.ReportRegisterFragmentPresenter;
 import com.bluecodeltd.ecap.chw.util.CbsWeeklyUtils;
 import com.bluecodeltd.ecap.chw.util.Constants;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 import org.smartregister.chw.core.custom_views.NavigationMenu;
 
@@ -38,6 +40,7 @@ public class ReportRegisterFragment extends BaseSafeRegisterFragment implements 
     private com.bluecodeltd.ecap.chw.databinding.FragmentBaseRegisterBinding binding;
     private RecyclerView.Adapter<?> formsAdapter;
     private boolean reportGridSpacingApplied;
+    private int loadGeneration;
 
     @Override
     protected void initializePresenter() {
@@ -235,12 +238,24 @@ public class ReportRegisterFragment extends BaseSafeRegisterFragment implements 
             return;
         }
 
-        formsAdapter = new ReportFormOptionAdapter(buildFormOptions(), reportType -> {
-            if (getActivity() instanceof ReportRegisterActivity) {
-                ((ReportRegisterActivity) getActivity()).openReportList(reportType.getID());
-            }
+        // The counts and "last submitted" dates are eight DB queries; reading them in onResume on the
+        // main thread blocked on the DB lock while sync ran. Load them in the background, then build the cards.
+        final String caseworkerName = getCaseworkerName();
+        final int generation = ++loadGeneration;
+        Threading.io(() -> {
+            final ReportSummary summary = loadReportSummary(caseworkerName);
+            Threading.main(() -> {
+                if (generation != loadGeneration || !isAdded() || getActivity() == null || clientsView == null) {
+                    return;
+                }
+                formsAdapter = new ReportFormOptionAdapter(buildFormOptions(summary), reportType -> {
+                    if (getActivity() instanceof ReportRegisterActivity) {
+                        ((ReportRegisterActivity) getActivity()).openReportList(reportType.getID());
+                    }
+                });
+                clientsView.setAdapter(formsAdapter);
+            });
         });
-        clientsView.setAdapter(formsAdapter);
     }
 
     public void refreshReportCards() {
@@ -254,6 +269,30 @@ public class ReportRegisterFragment extends BaseSafeRegisterFragment implements 
     public void onResume() {
         super.onResume();
         refreshReportCards();
+    }
+
+    // This screen shows a fixed grid of report cards and never sets a register table, so the base
+    // class's client-list loader has no repository to query (commonRepository() is null). Starting it,
+    // e.g. after a sync completes or on resume, crashed in RecyclerViewFragment.loadInBackground with
+    // a NullPointerException. None of the base list loading applies here, so skip it.
+    @Override
+    public void filterandSortInInitializeQueries() {
+        // No client list on this screen.
+    }
+
+    @Override
+    public void initialFilterandSortExecute() {
+        // No client list on this screen.
+    }
+
+    @Override
+    public void filterandSortExecute(Bundle args) {
+        // No client list on this screen.
+    }
+
+    @Override
+    public void countExecute() {
+        // No client list on this screen.
     }
 
     @Override
@@ -298,39 +337,70 @@ public class ReportRegisterFragment extends BaseSafeRegisterFragment implements 
         binding = null;
     }
 
-    private List<ReportType> buildFormOptions() {
+    private String getCaseworkerName() {
         String caseworkerName = PreferenceManager.getDefaultSharedPreferences(requireContext())
                 .getString("caseworker_name", "");
         if (caseworkerName == null || caseworkerName.trim().isEmpty()) {
             caseworkerName = PreferenceManager.getDefaultSharedPreferences(requireContext())
                     .getString("last_logged_in_username", "");
         }
+        return caseworkerName;
+    }
+
+    /** Report counts and last-submitted dates, read off the main thread. */
+    private static final class ReportSummary {
+        int malariaCount, nutritionCount, tbCount, communityAlertWeeks;
+        String malariaLast, nutritionLast, tbLast, communityAlertLast;
+    }
+
+    private ReportSummary loadReportSummary(String caseworkerName) {
+        ReportSummary summary = new ReportSummary();
+        try {
+            summary.malariaCount = HouseholdServiceReportDao.getMonthlyReportCount(ReportRegisterActivity.REPORT_TABLE_MALARIA, caseworkerName);
+            summary.nutritionCount = HouseholdServiceReportDao.getMonthlyReportCount(ReportRegisterActivity.REPORT_TABLE_NUTRITION, caseworkerName);
+            summary.tbCount = HouseholdServiceReportDao.getMonthlyReportCount(ReportRegisterActivity.REPORT_TABLE_TB, caseworkerName);
+            summary.communityAlertWeeks = countCommunityAlertWeeks(caseworkerName);
+            summary.malariaLast = getLastSubmitted(ReportRegisterActivity.REPORT_TABLE_MALARIA, caseworkerName);
+            summary.nutritionLast = getLastSubmitted(ReportRegisterActivity.REPORT_TABLE_NUTRITION, caseworkerName);
+            summary.tbLast = getLastSubmitted(ReportRegisterActivity.REPORT_TABLE_TB, caseworkerName);
+            summary.communityAlertLast = getLastSubmitted(ReportRegisterActivity.REPORT_TABLE_COMMUNITY_ALERT, caseworkerName);
+        } catch (Exception e) {
+            Log.w("ReportRegisterFragment", "Unable to load report summary: " + e.getMessage());
+        }
+        return summary;
+    }
+
+    private List<ReportType> buildFormOptions(ReportSummary summary) {
         List<ReportType> options = new ArrayList<>();
         options.add(new ReportType(
                 ReportRegisterActivity.REPORT_TYPE_MALARIA,
                 getString(R.string.menu_malaria),
-                HouseholdServiceReportDao.getMonthlyReportCount(ReportRegisterActivity.REPORT_TABLE_MALARIA, caseworkerName),
-                getLastSubmitted(ReportRegisterActivity.REPORT_TABLE_MALARIA, caseworkerName)
+                summary.malariaCount,
+                nonNull(summary.malariaLast)
         ));
         options.add(new ReportType(
                 ReportRegisterActivity.REPORT_TYPE_NUTRITION,
                 getString(R.string.report_nutrition),
-                HouseholdServiceReportDao.getMonthlyReportCount(ReportRegisterActivity.REPORT_TABLE_NUTRITION, caseworkerName),
-                getLastSubmitted(ReportRegisterActivity.REPORT_TABLE_NUTRITION, caseworkerName)
+                summary.nutritionCount,
+                nonNull(summary.nutritionLast)
         ));
         options.add(new ReportType(
                 ReportRegisterActivity.REPORT_TYPE_TB,
                 getString(R.string.report_tb),
-                HouseholdServiceReportDao.getMonthlyReportCount(ReportRegisterActivity.REPORT_TABLE_TB, caseworkerName),
-                getLastSubmitted(ReportRegisterActivity.REPORT_TABLE_TB, caseworkerName)
+                summary.tbCount,
+                nonNull(summary.tbLast)
         ));
         options.add(new ReportType(
                 ReportRegisterActivity.REPORT_TYPE_COMMUNITY_ALERT,
                 getString(R.string.report_community_alert),
-                countCommunityAlertWeeks(caseworkerName),
-                getLastSubmitted(ReportRegisterActivity.REPORT_TABLE_COMMUNITY_ALERT, caseworkerName)
+                summary.communityAlertWeeks,
+                nonNull(summary.communityAlertLast)
         ));
         return options;
+    }
+
+    private static String nonNull(String value) {
+        return value != null ? value : "";
     }
 
     /**
