@@ -116,6 +116,8 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
+import com.bluecodeltd.ecap.chw.util.Threading;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -222,46 +224,77 @@ public class HeiDetailsActivity extends AppCompatActivity {
             finish();
             return;
         }
-//        pmtctChild = PmtctChildDao.getPmctChildHei(clientId);
-        try {
-            pmtctChild = PmtctChildDao.getPMCTChild(clientId);
-        } catch (Exception e) {
-            Timber.e(e);
-        }
-        if (pmtctChild == null) {
-            Toasty.warning(HeiDetailsActivity.this, "Infant record not found", Toast.LENGTH_LONG, true).show();
-            finish();
-            return;
-        }
-        childMonitoring = ChildMonitoringDao.getPMCTChildMonitoring(clientId);
-        childOutcomeModel = PmtctChildOutcomeDao.getPMCTChildOutcome(clientId);
-
         txtName = binding.vcaName;
         txtGender = binding.vcaGender;
         txtAge = binding.vcaAge;
         txtChildid = binding.childid;
         genderSpacer = binding.genderSpacer;
         ageSpacer = binding.ageSpacer;
-//        try {
-//            if(hivTestingServiceModel.getTesting_modality() !=null && hivTestingServiceModel.getTesting_modality().equals("Other Community")){
         txtAge.setVisibility(View.GONE);
         txtGender.setVisibility(View.GONE);
         genderSpacer.setVisibility(View.GONE);
         ageSpacer.setVisibility(View.GONE);
-//            }
-//        } catch (NullPointerException e) {
-//            Log.e("YourActivityName", "NullPointerException", e);
-//        }
+        txtChildid.setText("ID : " + clientId);
 
-//        try {
-//            if (hivTestingServiceModel != null && hivTestingServiceModel.getGender() != null) {
-//                txtGender.setText(hivTestingServiceModel.getGender().toUpperCase());
-//            }
-//        } catch (Exception e) {
-//            Log.e("YourActivityName", "Exception", e);
-//        }
+        oMapper = new ObjectMapper();
+        clientMapper = new ObjectMapper();
 
+        viewPager = findViewById(R.id.viewpager);
+        tabLayout = findViewById(R.id.tabs);
 
+        // The infant, its monitoring and outcome, the tab counts, the linked mother and her latest VL are
+        // all DB reads. Doing them here on the main thread blocked on the DB lock while sync ran (ANR), so
+        // load them in the background and build the screen when they arrive. The FAB actions need the
+        // infant, so the FAB stays disabled until then.
+        fab.setEnabled(false);
+        final String finalClientId = clientId;
+        Threading.io(() -> {
+            PmtctChildModel infant = null;
+            try {
+                infant = PmtctChildDao.getPMCTChild(finalClientId);
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+            if (infant == null) {
+                Threading.main(() -> {
+                    if (isFinishing() || isDestroyed()) return;
+                    Toasty.warning(HeiDetailsActivity.this, "Infant record not found", Toast.LENGTH_LONG, true).show();
+                    finish();
+                });
+                return;
+            }
+            final PmtctChildModel loadedInfant = infant;
+            ChildMonitoringModel monitoring = ChildMonitoringDao.getPMCTChildMonitoring(finalClientId);
+            PmtctChildOutcomeModel outcome = PmtctChildOutcomeDao.getPMCTChildOutcome(finalClientId);
+            String monitoringCount = ChildMonitoringDao.countChildMonitoring(infant.getUnique_id());
+            String dbsCount = ChildMonitoringDao.countDBSChildMonitoring(infant.getUnique_id());
+            PtctMotherModel mother = null;
+            try {
+                if (!TextUtils.isEmpty(infant.getPmtct_id())) {
+                    mother = PMTCTMotherDao.getPMCTMother(infant.getPmtct_id());
+                }
+            } catch (Exception ignored) { }
+            final PtctMotherModel loadedMother = mother;
+            MotherVlSummary vlSummary = resolveLatestMotherVlSummary(infant);
+            Threading.main(() -> {
+                if (isFinishing() || isDestroyed()) return;
+                pmtctChild = loadedInfant;
+                childMonitoring = monitoring;
+                childOutcomeModel = outcome;
+                showInfantHeader();
+                returnViewPager();
+                setupFabVisibility();
+                updateOverviewTabTitle();
+                updateAncTabTitle(monitoringCount);
+                updateDbsTabTitle(dbsCount);
+                updateMotherProfileButton(loadedMother);
+                updateMotherVlFlag(vlSummary);
+                fab.setEnabled(true);
+            });
+        });
+    }
+
+    private void showInfantHeader() {
         try {
             if (pmtctChild != null && pmtctChild.getInfant_first_name() != null && pmtctChild.getInfant_lastname() != null) {
                 String full_name = pmtctChild.getInfant_first_name() + " " + pmtctChild.getInfant_lastname();
@@ -280,27 +313,6 @@ public class HeiDetailsActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.e("YourActivityName", "Exception", e);
         }
-
-        if (clientId != null && !clientId.isEmpty()){
-            txtChildid.setText("ID : " + clientId);
-        }
-
-        oMapper = new ObjectMapper();
-        clientMapper = new ObjectMapper();
-
-
-        viewPager = findViewById(R.id.viewpager);
-        tabLayout = findViewById(R.id.tabs);
-//        updateTasksTabTitle();
-        returnViewPager();
-        setupFabVisibility();
-        updateOverviewTabTitle();
-        updateAncTabTitle();
-        updateDbsTabTitle();
-
-
-        updateMotherProfileButton();
-        refreshProfileFlags();
     }
 
     private void setupToolbarBackNavigation() {
@@ -320,17 +332,10 @@ public class HeiDetailsActivity extends AppCompatActivity {
         } catch (Exception ignored) { }
     }
 
-    private void updateMotherProfileButton() {
+    private void updateMotherProfileButton(PtctMotherModel mother) {
         if (motherProfile == null) return;
 
         final String pmtctId = getLinkedMotherPmtctId();
-
-        PtctMotherModel mother = null;
-        try {
-            if (!TextUtils.isEmpty(pmtctId)) {
-                mother = PMTCTMotherDao.getPMCTMother(pmtctId);
-            }
-        } catch (Exception ignored) { }
 
         boolean hide = false;
         if (mother != null && !TextUtils.isEmpty(mother.getSource_from())) {
@@ -1183,13 +1188,8 @@ public class HeiDetailsActivity extends AppCompatActivity {
 
         startFormActivity(formToBeOpened);
     }
-    private void refreshProfileFlags() {
-        updateMotherVlFlag();
-    }
-
-    private void updateMotherVlFlag() {
+    private void updateMotherVlFlag(MotherVlSummary summary) {
         View alert = findViewById(R.id.hei_unsuppressed_alert);
-        MotherVlSummary summary = resolveLatestMotherVlSummary();
         boolean unsuppressed = summary != null && summary.unsuppressed;
 
         if (alert != null) {
@@ -1358,6 +1358,10 @@ public class HeiDetailsActivity extends AppCompatActivity {
     }
 
     private MotherVlSummary resolveLatestMotherVlSummary() {
+        return resolveLatestMotherVlSummary(pmtctChild);
+    }
+
+    private MotherVlSummary resolveLatestMotherVlSummary(PmtctChildModel pmtctChild) {
         String householdId = null;
         if (pmtctChild != null) {
             householdId = pmtctChild.getHousehold_id();
@@ -1735,27 +1739,23 @@ public class HeiDetailsActivity extends AppCompatActivity {
 
         tabLayout.getTabAt(0).setCustomView(taskTabTitleLayout);
     }
-    private void updateAncTabTitle() {
+    private void updateAncTabTitle(String countANC) {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.pmct_titles, null);
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
         visitTabTitle.setText("MONITORING");
         childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
 
-
-        String countANC = ChildMonitoringDao.countChildMonitoring(pmtctChild.getUnique_id());
         childTabCount.setText(countANC);
 
         tabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
     }
 
-    private void updateDbsTabTitle() {
+    private void updateDbsTabTitle(String countANC) {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.pmct_titles, null);
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.children_title);
         visitTabTitle.setText("DBS MONITORING");
         childTabCount = taskTabTitleLayout.findViewById(R.id.children_count);
 
-
-        String countANC = ChildMonitoringDao.countDBSChildMonitoring(pmtctChild.getUnique_id());
         childTabCount.setText(countANC);
         tabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
     }

@@ -41,6 +41,8 @@ import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
 
+import com.bluecodeltd.ecap.chw.util.Threading;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -98,20 +100,27 @@ public class ShowReferralsActivity extends AppCompatActivity {
         }
 //
 
-        if (intent_vcaid != null) {
-            referralList.addAll(ReferralDao.getReferralsByID(intent_vcaid));
-        }
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(ShowReferralsActivity.this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerViewadapter = new ShowReferralsAdapter(referralList, ShowReferralsActivity.this);
         recyclerView.setAdapter(recyclerViewadapter);
-        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
 
-        if (recyclerViewadapter != null && recyclerViewadapter.getItemCount() > 0){
-
-            linearLayout.setVisibility(View.GONE);
+        // Reading referrals on the main thread blocked on the DB lock while sync ran (ANR).
+        // Load them in the background and fill the list when they arrive.
+        if (intent_vcaid != null) {
+            final String vcaId = intent_vcaid;
+            Threading.io(() -> {
+                List<ReferralModel> rows = ReferralDao.getReferralsByID(vcaId);
+                Threading.main(() -> {
+                    if (isFinishing() || isDestroyed()) return;
+                    referralList.clear();
+                    if (rows != null) referralList.addAll(rows);
+                    recyclerViewadapter.notifyDataSetChanged();
+                    linearLayout.setVisibility(referralList.isEmpty() ? View.VISIBLE : View.GONE);
+                });
+            });
         }
     }
 

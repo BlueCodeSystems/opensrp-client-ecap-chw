@@ -48,6 +48,8 @@ import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.util.FormUtils;
 
+import com.bluecodeltd.ecap.chw.util.Threading;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -96,40 +98,32 @@ public class ChildSafetyPlanActivity extends AppCompatActivity {
         hh_id.setText("CA ID: " + intent_vcaid);
         vcaname.setText(intent_cname);
 
-        childSafetyPlanList.addAll(ChildSafetyPlanDao.getChildSafetyPlanModel(intent_vcaid));
-
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(ChildSafetyPlanActivity.this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerViewadapter = new ChildSafetyPlanAdapter(childSafetyPlanList, ChildSafetyPlanActivity.this);
         recyclerView.setAdapter(recyclerViewadapter);
-        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
-
-
-        if (recyclerViewadapter.getItemCount() > 0){
-
-            linearLayout.setVisibility(View.GONE);
-        }
     }
     @Override
     public void onResume() {
         super.onResume();
-        ArrayList<ChildSafetyPlanModel> reloadChildSafetyPlanList = new ArrayList<>();
-       // childSafetyPlanList.addAll(ChildSafetyPlanDao.getChildSafetyPlanModel(intent_vcaid));
-        reloadChildSafetyPlanList.addAll(ChildSafetyPlanDao.getChildSafetyPlanModel(intent_vcaid));
-        if(reloadChildSafetyPlanList.size() != 0)
-        {
-            recyclerViewadapter = new ChildSafetyPlanAdapter(reloadChildSafetyPlanList, ChildSafetyPlanActivity.this);
-        }else{
-
-            recyclerViewadapter = new ChildSafetyPlanAdapter(childSafetyPlanList, ChildSafetyPlanActivity.this);
+        if (intent_vcaid == null || recyclerViewadapter == null) {
+            return;
         }
-
-        recyclerView.setAdapter(recyclerViewadapter);
-        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
-
-
+        // onResume runs after onCreate too, so this is the only load. Reading the plans on the main thread
+        // blocked on the DB lock while sync ran (ANR); load them in the background and refresh the list.
+        final String vcaId = intent_vcaid;
+        Threading.io(() -> {
+            List<ChildSafetyPlanModel> rows = ChildSafetyPlanDao.getChildSafetyPlanModel(vcaId);
+            Threading.main(() -> {
+                if (isFinishing() || isDestroyed()) return;
+                childSafetyPlanList.clear();
+                if (rows != null) childSafetyPlanList.addAll(rows);
+                recyclerViewadapter.notifyDataSetChanged();
+                linearLayout.setVisibility(childSafetyPlanList.isEmpty() ? View.VISIBLE : View.GONE);
+            });
+        });
     }
 
     @SuppressLint("NonConstantResourceId")

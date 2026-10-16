@@ -99,6 +99,8 @@ import org.smartregister.util.FormUtils;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import com.bluecodeltd.ecap.chw.util.Threading;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -211,15 +213,46 @@ public class HTSDetailsActivity extends AppCompatActivity {
             }
         } catch (Exception ignored) { }
 
-        hivTestingServiceModel = HivTestingServiceDao.getHivServiceClient(clientId);
-        htslinksModel = HTSLinksDao.getLinks(clientId);
-
         txtName = binding.vcaName;
         txtGender = binding.vcaGender;
         txtAge = binding.vcaAge;
         txtChildid = binding.childid;
         genderSpacer = binding.genderSpacer;
         ageSpacer = binding.ageSpacer;
+        if (clientId != null && !clientId.isEmpty()){
+            txtChildid.setText("ID : " + clientId);
+        }
+
+        oMapper = new ObjectMapper();
+        clientMapper = new ObjectMapper();
+
+        viewPager = findViewById(R.id.viewpager);
+        try { viewPager.setSaveEnabled(false); } catch (Throwable ignored) {}
+        tabLayout = findViewById(R.id.tabs);
+
+        // Reading the client, its links and the links count on the main thread blocked on the DB lock while
+        // sync ran (ANR). Load them in the background, then fill the header and build the tabs. The FAB
+        // actions need the client, so the FAB stays disabled until it arrives.
+        fab.setEnabled(false);
+        final String finalClientId = clientId;
+        Threading.io(() -> {
+            HivTestingServiceModel client = HivTestingServiceDao.getHivServiceClient(finalClientId);
+            HTSlinksModel links = HTSLinksDao.getLinks(finalClientId);
+            int linksCount = client != null ? HTSLinksDao.htsCount(client.getClient_number()) : 0;
+            Threading.main(() -> {
+                if (isFinishing() || isDestroyed()) return;
+                hivTestingServiceModel = client;
+                htslinksModel = links;
+                showClientHeader();
+                returnViewPager();
+                updateTasksTabTitle(linksCount);
+                fab.setEnabled(true);
+            });
+        });
+
+    }
+
+    private void showClientHeader() {
         try {
             if(hivTestingServiceModel.getTesting_modality() !=null && hivTestingServiceModel.getTesting_modality().equals("Other Community")){
                 txtAge.setVisibility(View.GONE);
@@ -258,21 +291,6 @@ public class HTSDetailsActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.e("YourActivityName", "Exception", e);
         }
-
-        if (clientId != null && !clientId.isEmpty()){
-            txtChildid.setText("ID : " + clientId);
-        }
-
-        oMapper = new ObjectMapper();
-        clientMapper = new ObjectMapper();
-
-
-        viewPager = findViewById(R.id.viewpager);
-        try { viewPager.setSaveEnabled(false); } catch (Throwable ignored) {}
-        tabLayout = findViewById(R.id.tabs);
-        returnViewPager();
-        updateTasksTabTitle();
-
     }
     public void animateFAB(){
 
@@ -1208,13 +1226,11 @@ public class HTSDetailsActivity extends AppCompatActivity {
         });
         tabMediator.attach();
     }
-    private void updateTasksTabTitle() {
+    private void updateTasksTabTitle(int htsLinks) {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.hts_tab_title, null);
         TextView visitTabTitle = taskTabTitleLayout.findViewById(R.id.plans_title);
         visitTabTitle.setText("INDEX/SNT CONTACT");
         htsCount = taskTabTitleLayout.findViewById(R.id.hts_count);
-
-        int htsLinks = HTSLinksDao.htsCount(hivTestingServiceModel.getClient_number());
 
         htsCount.setText(String.valueOf(htsLinks));
 

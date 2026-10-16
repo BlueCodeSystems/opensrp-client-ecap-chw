@@ -21,7 +21,10 @@ import com.bluecodeltd.ecap.chw.dao.ChildMonitoringDao;
 import com.bluecodeltd.ecap.chw.model.ChildMonitoringModel;
 import com.bluecodeltd.ecap.chw.model.PmtctChildModel;
 
+import com.bluecodeltd.ecap.chw.util.Threading;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
 
 public class PmctChildDbsMonitoringFragment extends Fragment {
@@ -58,7 +61,6 @@ public class PmctChildDbsMonitoringFragment extends Fragment {
         visitCount = view.findViewById(R.id.tv_visit_count);
 
         assessmentList.clear();
-        assessmentList.addAll(ChildMonitoringDao.getPmctChildMonitoringListDBS(uniqueId));
 
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);
@@ -67,14 +69,23 @@ public class PmctChildDbsMonitoringFragment extends Fragment {
         recyclerViewadapter = new PmctChildMonitoringAdapter(getContext(), assessmentList);
         recyclerView.setAdapter(recyclerViewadapter);
 
-        int count = recyclerViewadapter != null ? recyclerViewadapter.getItemCount() : 0;
-        if (visitCount != null) {
-            visitCount.setText(count + (count == 1 ? " visit" : " visits"));
-        }
-
-        if (count > 0){
-            linearLayout.setVisibility(View.GONE);
-        }
+        // Reading this list on the main thread blocked on the DB lock while sync ran (ANR).
+        // Load it in the background and fill the adapter when it arrives.
+        final String finalUniqueId = uniqueId;
+        Threading.io(() -> {
+            List<ChildMonitoringModel> rows = ChildMonitoringDao.getPmctChildMonitoringListDBS(finalUniqueId);
+            Threading.main(() -> {
+                if (!isAdded() || getView() != view) return;
+                assessmentList.clear();
+                if (rows != null) assessmentList.addAll(rows);
+                recyclerViewadapter.notifyDataSetChanged();
+                int count = assessmentList.size();
+                if (visitCount != null) {
+                    visitCount.setText(count + (count == 1 ? " visit" : " visits"));
+                }
+                linearLayout.setVisibility(count > 0 ? View.GONE : View.VISIBLE);
+            });
+        });
 
         return view;
     }

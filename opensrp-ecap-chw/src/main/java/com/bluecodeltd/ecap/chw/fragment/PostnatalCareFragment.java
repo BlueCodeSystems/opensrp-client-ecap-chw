@@ -19,7 +19,10 @@ import com.bluecodeltd.ecap.chw.dao.PmtctMotherPostnatalDao;
 import com.bluecodeltd.ecap.chw.model.PmtctMotherPostnatalModel;
 import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
 
+import com.bluecodeltd.ecap.chw.util.Threading;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
 
 /**
@@ -112,7 +115,6 @@ public class PostnatalCareFragment extends Fragment {
         if (idForPostnatal == null || idForPostnatal.isEmpty()) {
             idForPostnatal = pmtctId;
         }
-        assessmentList.addAll(PmtctMotherPostnatalDao.getPostnatalMother(idForPostnatal));
 
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);
@@ -120,12 +122,19 @@ public class PostnatalCareFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerViewadapter = new PostnatalMotherAdapter( getContext(), assessmentList);
         recyclerView.setAdapter(recyclerViewadapter);
-        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
-
-        if (recyclerViewadapter.getItemCount() > 0){
-
-            linearLayout.setVisibility(View.GONE);
-        }
+        // Reading this list on the main thread blocked on the DB lock while sync ran (ANR).
+        // Load it in the background and fill the adapter when it arrives.
+        final String finalIdForPostnatal = idForPostnatal;
+        Threading.io(() -> {
+            List<PmtctMotherPostnatalModel> rows = PmtctMotherPostnatalDao.getPostnatalMother(finalIdForPostnatal);
+            Threading.main(() -> {
+                if (!isAdded() || getView() != vieww) return;
+                assessmentList.clear();
+                if (rows != null) assessmentList.addAll(rows);
+                recyclerViewadapter.notifyDataSetChanged();
+                linearLayout.setVisibility(assessmentList.isEmpty() ? View.VISIBLE : View.GONE);
+            });
+        });
 
 
         return vieww;

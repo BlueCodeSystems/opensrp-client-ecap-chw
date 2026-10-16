@@ -19,7 +19,10 @@ import com.bluecodeltd.ecap.chw.dao.PmctMotherAncDao;
 import com.bluecodeltd.ecap.chw.model.PmctMotherAncModel;
 import com.bluecodeltd.ecap.chw.model.PtctMotherModel;
 
+import com.bluecodeltd.ecap.chw.util.Threading;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
 
 /**
@@ -106,20 +109,25 @@ public class AncPmctFragment extends Fragment {
 
         assessmentList.clear();
 
-        assessmentList.addAll(PmctMotherAncDao.getPostnatalAncMother(pmtctId));
-
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerViewadapter = new AncMotherAdapter( getContext(), assessmentList);
         recyclerView.setAdapter(recyclerViewadapter);
-        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
-
-        if (recyclerViewadapter.getItemCount() > 0){
-
-            linearLayout.setVisibility(View.GONE);
-        }
+        // Reading this list on the main thread blocked on the DB lock while sync ran (ANR).
+        // Load it in the background and fill the adapter when it arrives.
+        final String finalPmtctId = pmtctId;
+        Threading.io(() -> {
+            List<PmctMotherAncModel> rows = PmctMotherAncDao.getPostnatalAncMother(finalPmtctId);
+            Threading.main(() -> {
+                if (!isAdded() || getView() != vieww) return;
+                assessmentList.clear();
+                if (rows != null) assessmentList.addAll(rows);
+                recyclerViewadapter.notifyDataSetChanged();
+                linearLayout.setVisibility(assessmentList.isEmpty() ? View.VISIBLE : View.GONE);
+            });
+        });
 
 
         return vieww;

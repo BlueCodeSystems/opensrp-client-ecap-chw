@@ -45,6 +45,8 @@ import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
 
+import com.bluecodeltd.ecap.chw.util.Threading;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -108,10 +110,36 @@ public class ShowHouseholdReferralActivity extends AppCompatActivity {
         }
 
 
-        if (!TextUtils.isEmpty(intent_household_id)) {
-            updatedCaregiver = newCaregiverDao.getNewCaregiverById(intent_household_id);
-        }
+        updatedCaregiverName.setVisibility(View.GONE);
 
+        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(ShowHouseholdReferralActivity.this);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(eLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewadapter = new ShowHouseholdReferralsAdapter(referralList, ShowHouseholdReferralActivity.this);
+        recyclerView.setAdapter(recyclerViewadapter);
+
+        // Reading the caregiver and referrals on the main thread blocked on the DB lock while sync ran
+        // (ANR). Load them in the background and update the screen when they arrive.
+        if (!TextUtils.isEmpty(intent_household_id)) {
+            final String householdId = intent_household_id;
+            Threading.io(() -> {
+                newCaregiverModel caregiver = newCaregiverDao.getNewCaregiverById(householdId);
+                List<ReferralModel> rows = ReferralDao.getReferralsByHouseholdID(householdId);
+                Threading.main(() -> {
+                    if (isFinishing() || isDestroyed()) return;
+                    updatedCaregiver = caregiver;
+                    showUpdatedCaregiver();
+                    referralList.clear();
+                    if (rows != null) referralList.addAll(rows);
+                    recyclerViewadapter.notifyDataSetChanged();
+                    linearLayout.setVisibility(referralList.isEmpty() ? View.VISIBLE : View.GONE);
+                });
+            });
+        }
+    }
+
+    private void showUpdatedCaregiver() {
         if(updatedCaregiver != null && (("Update Caregiver Details".equals(updatedCaregiver.getHousehold_case_status())) || ("0".equals(updatedCaregiver.getHousehold_case_status()) && !TextUtils.isEmpty(updatedCaregiver.getNew_caregiver_name())))){
 
             updatedCaregiverName.setVisibility(View.VISIBLE);
@@ -119,23 +147,6 @@ public class ShowHouseholdReferralActivity extends AppCompatActivity {
 
         } else {
             updatedCaregiverName.setVisibility(View.GONE);
-        }
-
-
-        if (!TextUtils.isEmpty(intent_household_id)) {
-            referralList.addAll(ReferralDao.getReferralsByHouseholdID(intent_household_id));
-        }
-        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(ShowHouseholdReferralActivity.this);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(eLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new ShowHouseholdReferralsAdapter(referralList, ShowHouseholdReferralActivity.this);
-        recyclerView.setAdapter(recyclerViewadapter);
-        try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
-
-        if (recyclerViewadapter.getItemCount() > 0) {
-
-            linearLayout.setVisibility(View.GONE);
         }
     }
 

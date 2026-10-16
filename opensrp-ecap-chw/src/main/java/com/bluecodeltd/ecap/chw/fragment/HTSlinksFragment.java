@@ -42,6 +42,8 @@ import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
 
+import com.bluecodeltd.ecap.chw.util.Threading;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -93,14 +95,26 @@ public class HTSlinksFragment extends Fragment {
         htsModel =  mymap.get("client");
         id = htsModel.getClient_number();
 
-        htsLinksModel.addAll(HTSLinksDao.getHTSLinks(id));
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerViewAdapter = new HTSlinksAdapter(getContext(), htsLinksModel);
         recyclerView.setAdapter(recyclerViewAdapter);
-        try { if (recyclerViewAdapter != null) recyclerViewAdapter.notifyDataSetChanged(); } catch (Exception ignored) {}
+
+        // Reading this list on the main thread blocked on the DB lock while sync ran (ANR).
+        // Load it in the background and fill the adapter when it arrives.
+        final String clientId = id;
+        final View view = rootView;
+        Threading.io(() -> {
+            List<HTSlinksModel> rows = HTSLinksDao.getHTSLinks(clientId);
+            Threading.main(() -> {
+                if (!isAdded() || getView() != view) return;
+                htsLinksModel.clear();
+                if (rows != null) htsLinksModel.addAll(rows);
+                recyclerViewAdapter.notifyDataSetChanged();
+            });
+        });
 
         return rootView;
     }
