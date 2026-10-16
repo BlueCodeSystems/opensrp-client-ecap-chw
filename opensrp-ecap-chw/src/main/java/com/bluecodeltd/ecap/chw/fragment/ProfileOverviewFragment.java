@@ -23,7 +23,6 @@ import androidx.fragment.app.Fragment;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.dao.AbymSubpopulationDao;
-import com.bluecodeltd.ecap.chw.dao.HouseholdDao;
 import com.bluecodeltd.ecap.chw.dao.MuacDao;
 import com.bluecodeltd.ecap.chw.dao.VCAScreeningDao;
 import com.bluecodeltd.ecap.chw.dao.VCAServiceReportDao;
@@ -207,13 +206,7 @@ public class ProfileOverviewFragment extends Fragment {
 //        }
 
         String householdId = childIndex.getHousehold_id();
-        Household householdByVCA = householdId != null ? HouseholdDao.getHouseholdByVCA(householdId) : null;
         String uniqueId = childIndex.getUnique_id();
-        Boolean check = uniqueId != null ? HouseholdDao.hasNonNullSubPopulationByVCA(uniqueId) : Boolean.FALSE;
-        if(check.equals(true)) {
-
-
-        }
 
 
 

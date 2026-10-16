@@ -22,9 +22,11 @@ import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.model.CasePlanModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.Household;
+import com.bluecodeltd.ecap.chw.util.Threading;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ChildCasePlanFragment extends Fragment {
 
@@ -51,21 +53,25 @@ public class ChildCasePlanFragment extends Fragment {
         recyclerView = view.findViewById(R.id.planrecyclerView);
         linearLayout = view.findViewById(R.id.visit_container);
 
-        casePlanList.addAll(IndexPersonDao.getCasePlansById(childId));
-
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerViewadapter = new CasePlanAdapter(casePlanList, getContext(), hivStatus);
         recyclerView.setAdapter(recyclerViewadapter);
-        recyclerViewadapter.notifyDataSetChanged();
 
-        if (recyclerViewadapter.getItemCount() > 0){
-
-            linearLayout.setVisibility(View.GONE);
-        }
-
+        // Reading case plans on the main thread blocked on the DB lock while sync ran (ANR).
+        // Load them in the background and fill the adapter when they arrive.
+        Threading.io(() -> {
+            List<CasePlanModel> plans = IndexPersonDao.getCasePlansById(childId);
+            Threading.main(() -> {
+                if (!isAdded() || getView() != view) return;
+                casePlanList.clear();
+                if (plans != null) casePlanList.addAll(plans);
+                recyclerViewadapter.notifyDataSetChanged();
+                linearLayout.setVisibility(casePlanList.isEmpty() ? View.VISIBLE : View.GONE);
+            });
+        });
 
         return view;
 

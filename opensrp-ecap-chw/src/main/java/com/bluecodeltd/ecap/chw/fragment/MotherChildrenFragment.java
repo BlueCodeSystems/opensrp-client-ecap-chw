@@ -59,39 +59,7 @@ public class MotherChildrenFragment extends Fragment {
         }
         String motherBaseEntityId = (mother != null && mother.getColumnmaps() != null) ? mother.getColumnmaps().get("base_entity_id") : null;
         String motherSourceFrom = (mother != null && mother.getColumnmaps() != null) ? mother.getColumnmaps().get("source_from") : null;
-        boolean allowVcaProfileNavigation = true;
         Timber.d("MotherChildrenFragment init: houseId=%s base_entity_id=%s source_from(col)=%s", houseId, motherBaseEntityId, motherSourceFrom);
-        if (motherSourceFrom != null && motherSourceFrom.trim().equalsIgnoreCase("vca_screening")) {
-            allowVcaProfileNavigation = false;
-        } else {
-            // Fallback: mother columnmaps may not include source_from; resolve from DB using base_entity_id first,
-            // then household_id (and handle multiple mother records).
-            try {
-                IndexMotherModel indexMother = null;
-                if (motherBaseEntityId != null && !motherBaseEntityId.trim().isEmpty()) {
-                    indexMother = IndexMotherDao.getIndexMotherByBaseEntityId(motherBaseEntityId);
-                }
-                String dbSourceFrom = indexMother != null ? indexMother.getSource_from() : null;
-                Timber.d("MotherChildrenFragment db(by base_entity_id): source_from=%s", dbSourceFrom);
-                if (dbSourceFrom != null && dbSourceFrom.trim().equalsIgnoreCase("vca_screening")) {
-                    allowVcaProfileNavigation = false;
-                } else if (houseId != null && !houseId.trim().isEmpty()) {
-                    java.util.List<IndexMotherModel> mothers = IndexMotherDao.getIndexMothersByHouseholdId(houseId);
-                    Timber.d("MotherChildrenFragment db(by household): mothers=%s", mothers != null ? mothers.size() : 0);
-                    if (mothers != null) {
-                        for (IndexMotherModel m : mothers) {
-                            String sf = m != null ? m.getSource_from() : null;
-                            Timber.d("MotherChildrenFragment db mother row source_from=%s", sf);
-                            if (sf != null && sf.trim().equalsIgnoreCase("vca_screening")) {
-                                allowVcaProfileNavigation = false;
-                                break;
-                            }
-                        }
-                    }
-                }
-            } catch (Exception ignored) { }
-        }
-        Timber.d("MotherChildrenFragment allowVcaProfileNavigation=%s", allowVcaProfileNavigation);
 
         recyclerView = binding.recyclerView;
 
@@ -99,8 +67,19 @@ public class MotherChildrenFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(eLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewadapter = new ChildrenAdapter(childList, getContext(), "0", allowVcaProfileNavigation);
-        recyclerView.setAdapter(recyclerViewadapter);
+
+        // Whether a child row may open the VCA profile can need two DB lookups. Reading them here on the
+        // main thread blocked on the DB lock while sync or validation ran (ANR), so resolve it in the
+        // background and attach the adapter once it is known. The children list loads in parallel.
+        final String finalHouseId = houseId;
+        Threading.io(() -> {
+            boolean allow = resolveAllowVcaProfileNavigation(motherSourceFrom, motherBaseEntityId, finalHouseId);
+            Threading.main(() -> {
+                if (!isAdded() || binding == null || getView() != view) return;
+                recyclerViewadapter = new ChildrenAdapter(childList, getContext(), "0", allow);
+                recyclerView.setAdapter(recyclerViewadapter);
+            });
+        });
 
         View progress = binding.progressLoading;
         if (progress != null) progress.setVisibility(View.VISIBLE);
@@ -120,6 +99,44 @@ public class MotherChildrenFragment extends Fragment {
         try { if (recyclerViewadapter != null) recyclerViewadapter.notifyDataSetChanged(); } catch (Exception ignored) {}
         View progress = (binding != null) ? binding.progressLoading : null;
         if (progress != null) progress.setVisibility(View.GONE);
+    }
+
+    /**
+     * Children of a mother registered through VCA screening must not open the VCA profile. The mother's
+     * column maps may not carry source_from, so fall back to her DB record by base_entity_id, then to any
+     * mother record in the household. Runs off the main thread.
+     */
+    private static boolean resolveAllowVcaProfileNavigation(String motherSourceFrom, String motherBaseEntityId, String houseId) {
+        if (isVcaScreening(motherSourceFrom)) {
+            return false;
+        }
+        try {
+            IndexMotherModel indexMother = null;
+            if (motherBaseEntityId != null && !motherBaseEntityId.trim().isEmpty()) {
+                indexMother = IndexMotherDao.getIndexMotherByBaseEntityId(motherBaseEntityId);
+            }
+            String dbSourceFrom = indexMother != null ? indexMother.getSource_from() : null;
+            Timber.d("MotherChildrenFragment db(by base_entity_id): source_from=%s", dbSourceFrom);
+            if (isVcaScreening(dbSourceFrom)) {
+                return false;
+            }
+            if (houseId != null && !houseId.trim().isEmpty()) {
+                java.util.List<IndexMotherModel> mothers = IndexMotherDao.getIndexMothersByHouseholdId(houseId);
+                Timber.d("MotherChildrenFragment db(by household): mothers=%s", mothers != null ? mothers.size() : 0);
+                if (mothers != null) {
+                    for (IndexMotherModel m : mothers) {
+                        if (m != null && isVcaScreening(m.getSource_from())) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        } catch (Exception ignored) { }
+        return true;
+    }
+
+    private static boolean isVcaScreening(String sourceFrom) {
+        return sourceFrom != null && sourceFrom.trim().equalsIgnoreCase("vca_screening");
     }
 
     @Override
