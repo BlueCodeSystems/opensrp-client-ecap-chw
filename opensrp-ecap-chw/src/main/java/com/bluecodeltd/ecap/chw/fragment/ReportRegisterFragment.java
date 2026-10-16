@@ -22,8 +22,8 @@ import com.bluecodeltd.ecap.chw.activity.ReportRegisterActivity;
 import com.bluecodeltd.ecap.chw.adapter.ReportFormOptionAdapter;
 import com.bluecodeltd.ecap.chw.contract.ReportRegisterFragmentContract;
 import com.bluecodeltd.ecap.chw.domain.ReportType;
-import com.bluecodeltd.ecap.chw.dao.HouseholdServiceReportDao;
 import com.bluecodeltd.ecap.chw.dao.MonthlyReportDao;
+import com.bluecodeltd.ecap.chw.model.MonthlyReportModel;
 import com.bluecodeltd.ecap.chw.presenter.ReportRegisterFragmentPresenter;
 import com.bluecodeltd.ecap.chw.util.CbsWeeklyUtils;
 import com.bluecodeltd.ecap.chw.util.Constants;
@@ -354,20 +354,32 @@ public class ReportRegisterFragment extends BaseSafeRegisterFragment implements 
     }
 
     private ReportSummary loadReportSummary(String caseworkerName) {
+        // Each card reads the same visible reports its submission list shows, so the count and
+        // date match what opens when the card is tapped. Each table is read on its own so one
+        // failing table only blanks its own card.
         ReportSummary summary = new ReportSummary();
-        try {
-            summary.malariaCount = HouseholdServiceReportDao.getMonthlyReportCount(ReportRegisterActivity.REPORT_TABLE_MALARIA, caseworkerName);
-            summary.nutritionCount = HouseholdServiceReportDao.getMonthlyReportCount(ReportRegisterActivity.REPORT_TABLE_NUTRITION, caseworkerName);
-            summary.tbCount = HouseholdServiceReportDao.getMonthlyReportCount(ReportRegisterActivity.REPORT_TABLE_TB, caseworkerName);
-            summary.communityAlertWeeks = countCommunityAlertWeeks(caseworkerName);
-            summary.malariaLast = getLastSubmitted(ReportRegisterActivity.REPORT_TABLE_MALARIA, caseworkerName);
-            summary.nutritionLast = getLastSubmitted(ReportRegisterActivity.REPORT_TABLE_NUTRITION, caseworkerName);
-            summary.tbLast = getLastSubmitted(ReportRegisterActivity.REPORT_TABLE_TB, caseworkerName);
-            summary.communityAlertLast = getLastSubmitted(ReportRegisterActivity.REPORT_TABLE_COMMUNITY_ALERT, caseworkerName);
-        } catch (Exception e) {
-            Log.w("ReportRegisterFragment", "Unable to load report summary: " + e.getMessage());
-        }
+        List<MonthlyReportModel> malaria = loadVisibleReports(ReportRegisterActivity.REPORT_TABLE_MALARIA, caseworkerName);
+        List<MonthlyReportModel> nutrition = loadVisibleReports(ReportRegisterActivity.REPORT_TABLE_NUTRITION, caseworkerName);
+        List<MonthlyReportModel> tb = loadVisibleReports(ReportRegisterActivity.REPORT_TABLE_TB, caseworkerName);
+        List<MonthlyReportModel> communityAlert = loadVisibleReports(ReportRegisterActivity.REPORT_TABLE_COMMUNITY_ALERT, caseworkerName);
+        summary.malariaCount = malaria.size();
+        summary.nutritionCount = nutrition.size();
+        summary.tbCount = tb.size();
+        summary.communityAlertWeeks = countCommunityAlertWeeks(communityAlert);
+        summary.malariaLast = getLastSubmitted(malaria);
+        summary.nutritionLast = getLastSubmitted(nutrition);
+        summary.tbLast = getLastSubmitted(tb);
+        summary.communityAlertLast = getLastSubmitted(communityAlert);
         return summary;
+    }
+
+    private List<MonthlyReportModel> loadVisibleReports(String tableName, String caseworkerName) {
+        try {
+            return MonthlyReportDao.getVisibleReports(tableName, caseworkerName);
+        } catch (Exception e) {
+            Log.w("ReportRegisterFragment", "Unable to load " + tableName + ": " + e.getMessage());
+            return new ArrayList<>();
+        }
     }
 
     private List<ReportType> buildFormOptions(ReportSummary summary) {
@@ -408,10 +420,8 @@ public class ReportRegisterFragment extends BaseSafeRegisterFragment implements 
      * reports submitted in the same week collapse into a single row in the submissions list -- so
      * the count shown here must match: distinct weeks, not raw report submissions.
      */
-    private int countCommunityAlertWeeks(String caseworkerName) {
+    private int countCommunityAlertWeeks(List<MonthlyReportModel> reports) {
         try {
-            List<com.bluecodeltd.ecap.chw.model.MonthlyReportModel> reports =
-                    MonthlyReportDao.getReports(ReportRegisterActivity.REPORT_TABLE_COMMUNITY_ALERT, caseworkerName);
             return CbsWeeklyUtils.countDistinctWeeks(reports);
         } catch (Exception e) {
             Log.w("ReportRegisterFragment", "Unable to count CBS weeks: " + e.getMessage());
@@ -419,12 +429,9 @@ public class ReportRegisterFragment extends BaseSafeRegisterFragment implements 
         }
     }
 
-    private String getLastSubmitted(String tableName, String caseworkerName) {
-        com.bluecodeltd.ecap.chw.model.MonthlyReportModel latest = com.bluecodeltd.ecap.chw.dao.MonthlyReportDao.getLatestReport(tableName, caseworkerName);
-        if (latest == null) {
-            return "";
-        }
-        return latest.getLast_interacted_with();
+    /** Reports come newest first, so the first one is the latest submission. */
+    private static String getLastSubmitted(List<MonthlyReportModel> reports) {
+        return reports.isEmpty() ? "" : reports.get(0).getLast_interacted_with();
     }
 
     private void ensureReportGridConfig() {

@@ -693,14 +693,7 @@ public class ReportSubmissionListActivity extends AppCompatActivity {
     }
 
     private boolean isSoftDeleted(MonthlyReportModel item) {
-        if (item == null) {
-            return false;
-        }
-        String deleteStatus = item.getDelete_status();
-        if (deleteStatus == null || deleteStatus.trim().isEmpty()) {
-            deleteStatus = item.getAdditionalField("delete_status");
-        }
-        return "1".equals(deleteStatus == null ? null : deleteStatus.trim());
+        return MonthlyReportDao.isSoftDeleted(item);
     }
 
     private void showInactiveDialog(CaseStatusModel caseStatusModel) {

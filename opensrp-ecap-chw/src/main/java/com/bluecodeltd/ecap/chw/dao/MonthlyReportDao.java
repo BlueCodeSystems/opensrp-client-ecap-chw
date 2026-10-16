@@ -33,6 +33,31 @@ public class MonthlyReportDao extends AbstractDao {
         return values;
     }
 
+    /**
+     * The reports the submission lists show: getReports() minus anything soft-deleted, including
+     * reports whose delete_status only appears in their additional fields. Newest first.
+     */
+    public static List<MonthlyReportModel> getVisibleReports(String tableName, String caseworkerName) {
+        List<MonthlyReportModel> visible = new ArrayList<>();
+        for (MonthlyReportModel item : getReports(tableName, caseworkerName)) {
+            if (!isSoftDeleted(item)) {
+                visible.add(item);
+            }
+        }
+        return visible;
+    }
+
+    public static boolean isSoftDeleted(MonthlyReportModel item) {
+        if (item == null) {
+            return false;
+        }
+        String deleteStatus = item.getDelete_status();
+        if (deleteStatus == null || deleteStatus.trim().isEmpty()) {
+            deleteStatus = item.getAdditionalField("delete_status");
+        }
+        return "1".equals(deleteStatus == null ? null : deleteStatus.trim());
+    }
+
     public static MonthlyReportModel getLatestReport(String tableName) {
         return getLatestReport(tableName, getCurrentCaseworkerName());
     }
