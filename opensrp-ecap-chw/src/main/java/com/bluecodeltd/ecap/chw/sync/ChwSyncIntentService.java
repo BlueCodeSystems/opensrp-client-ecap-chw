@@ -23,7 +23,13 @@ public class ChwSyncIntentService extends SyncIntentService {
         // A sync started straight after a cold start must see the restored session, not the
         // transient "logged out" state while ChwApplication is still restoring it.
         ChwApplication.getInstance().awaitSessionRestore();
-        SYNC_LOCK.lock();
+        // If a sync is already running (e.g. inline from the background job), skip this one rather
+        // than queue a second full sync behind it. runInline holds the lock on this same thread,
+        // and the lock is reentrant, so its own call still gets through.
+        if (!SYNC_LOCK.tryLock()) {
+            Timber.i("Sync already running; skipping requested sync");
+            return;
+        }
         try {
             super.onHandleIntent(intent);
         } finally {
