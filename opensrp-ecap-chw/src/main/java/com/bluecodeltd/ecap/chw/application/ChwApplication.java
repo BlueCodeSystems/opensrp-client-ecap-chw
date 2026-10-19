@@ -484,11 +484,33 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
      * credentials -- the same mechanism {@link org.smartregister.service.UserService#localLoginWith}
      * uses for offline login -- so the next SecuredActivity doesn't force a full logout.
      */
+    /**
+     * Puts {@link ChwUserService} in place of the library's UserService so its post-login settings
+     * writes can't crash after a logout. Context creates UserService lazily in a private field with no
+     * setter, so it is set here before anything first asks for it. If that already happened, or the
+     * field can't be set, the stock UserService stays in use.
+     */
+    private void installChwUserService() {
+        try {
+            java.lang.reflect.Field field = org.smartregister.Context.class.getDeclaredField("userService");
+            field.setAccessible(true);
+            if (field.get(context) == null) {
+                field.set(context, new ChwUserService(context.allSettings(), context.allSharedPreferences(),
+                        context.httpAgent(), context.session(), context.configuration()));
+            } else {
+                Timber.w("UserService already created; keeping the library's");
+            }
+        } catch (Exception e) {
+            Timber.w(e, "Could not install ChwUserService");
+        }
+    }
+
     private void startSessionRestore() {
         try {
             // Resolve the lazily-created Context singletons the restore uses on this thread first, so the
             // worker doesn't race the rest of onCreate() into building duplicate instances.
             context.allSharedPreferences();
+            installChwUserService();
             context.userService();
             Thread worker = new Thread(() -> {
                 try {
