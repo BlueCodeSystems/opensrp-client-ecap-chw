@@ -348,4 +348,19 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
         }
     }
 
+    // BaseLoginActivity.showProgress only checks isFinishing(). When a remote login returns after this
+    // screen was destroyed without finishing (recreated, or reclaimed while ECAP was in the background),
+    // the "Logging in..." dialog's window is already gone and dismiss() throws
+    // IllegalArgumentException ("not attached to window manager"), crashing the app.
+    @Override
+    public void showProgress(boolean show) {
+        if (isFinishing() || isDestroyed()) {
+            return;
+        }
+        try {
+            super.showProgress(show);
+        } catch (IllegalArgumentException e) {
+            Timber.w(e, "Login progress dialog no longer attached to a window");
+        }
+    }
 }
