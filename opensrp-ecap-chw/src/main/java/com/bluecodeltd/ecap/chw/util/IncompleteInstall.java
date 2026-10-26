@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.os.Build;
 
-import com.google.firebase.crashlytics.FirebaseCrashlytics;
-
 import java.util.Arrays;
+
+import timber.log.Timber;
 
 /**
  * Detects an install that is missing libsqlcipher.so.
@@ -44,19 +44,14 @@ public final class IncompleteInstall {
         return missing;
     }
 
-    /** Records a Crashlytics non-fatal with what is needed to confirm how the app was installed. */
+    /** Logs what is needed to confirm how the app was installed. */
     public static void report(Context context) {
         try {
             String installer = installerOf(context);
             ApplicationInfo info = context.getApplicationInfo();
             String splits = info.splitNames == null ? "none" : Arrays.toString(info.splitNames);
-            FirebaseCrashlytics crashlytics = FirebaseCrashlytics.getInstance();
-            crashlytics.setCustomKey("install_source", installer);
-            crashlytics.setCustomKey("install_splits", splits);
-            crashlytics.setCustomKey("device_abis", Arrays.toString(Build.SUPPORTED_ABIS));
-            crashlytics.recordException(new IllegalStateException(
-                    "Incomplete install: libsqlcipher.so missing (installer=" + installer
-                            + ", splits=" + splits + ")", loadError));
+            Timber.e(loadError, "Incomplete install: libsqlcipher.so missing (installer=%s, splits=%s, abis=%s)",
+                    installer, splits, Arrays.toString(Build.SUPPORTED_ABIS));
         } catch (Throwable ignored) {
             // Reporting must never stop the reinstall screen from showing.
         }

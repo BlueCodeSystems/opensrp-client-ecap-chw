@@ -850,6 +850,234 @@
 
                     </LinearLayout>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="66dp"
+                        android:background="@color/divider_grey" />
+
+                    <!-- 4. Appointments -->
+                    <LinearLayout
+                        android:id="@+id/register_row_appointments"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingTop="@dimen/register_row_vertical_padding"
+                        android:paddingBottom="@dimen/register_row_vertical_padding"
+                        android:paddingStart="@dimen/register_row_horizontal_padding"
+                        android:paddingEnd="@dimen/register_row_horizontal_padding">
+
+                        <FrameLayout
+                            android:layout_width="@dimen/register_icon_size"
+                            android:layout_height="@dimen/register_icon_size"
+                            android:background="@drawable/bg_register_icon"
+                            android:backgroundTint="@color/register_appointments_bg">
+
+                            <ImageView
+                                android:layout_width="@dimen/register_icon_inner"
+                                android:layout_height="@dimen/register_icon_inner"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_service_calendar"
+                                app:tint="@color/register_appointments_icon" />
+
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="14dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Appointments"
+                                android:textSize="14sp"
+                                android:textColor="@color/text_black" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="1dp"
+                                android:text="Scheduled client appointments"
+                                android:textSize="11sp"
+                                android:textColor="@color/light_grey_text" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/register_appointments_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:text="0"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/register_appointments_icon" />
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_navigate_next_black_24dp"
+                            app:tint="@color/light_grey_text" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="66dp"
+                        android:background="@color/divider_grey" />
+
+                    <!-- 5. HIV Prevention (PrEP) -->
+                    <LinearLayout
+                        android:id="@+id/register_row_prep"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingTop="@dimen/register_row_vertical_padding"
+                        android:paddingBottom="@dimen/register_row_vertical_padding"
+                        android:paddingStart="@dimen/register_row_horizontal_padding"
+                        android:paddingEnd="@dimen/register_row_horizontal_padding">
+
+                        <FrameLayout
+                            android:layout_width="@dimen/register_icon_size"
+                            android:layout_height="@dimen/register_icon_size"
+                            android:background="@drawable/bg_register_icon"
+                            android:backgroundTint="@color/register_prep_bg">
+
+                            <ImageView
+                                android:layout_width="@dimen/register_icon_inner"
+                                android:layout_height="@dimen/register_icon_inner"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_shield_cross"
+                                app:tint="@color/register_prep_icon" />
+
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="14dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="HIV Prevention (PrEP)"
+                                android:textSize="14sp"
+                                android:textColor="@color/text_black" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="1dp"
+                                android:text="Pre-exposure prophylaxis clients"
+                                android:textSize="11sp"
+                                android:textColor="@color/light_grey_text" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/register_prep_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:text="0"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/register_prep_icon" />
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_navigate_next_black_24dp"
+                            app:tint="@color/light_grey_text" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="66dp"
+                        android:background="@color/divider_grey" />
+
+                    <!-- 6. Referral Linkages -->
+                    <LinearLayout
+                        android:id="@+id/register_row_referral_linkages"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingTop="@dimen/register_row_vertical_padding"
+                        android:paddingBottom="@dimen/register_row_vertical_padding"
+                        android:paddingStart="@dimen/register_row_horizontal_padding"
+                        android:paddingEnd="@dimen/register_row_horizontal_padding">
+
+                        <FrameLayout
+                            android:layout_width="@dimen/register_icon_size"
+                            android:layout_height="@dimen/register_icon_size"
+                            android:background="@drawable/bg_register_icon"
+                            android:backgroundTint="@color/register_linkages_bg">
+
+                            <ImageView
+                                android:layout_width="@dimen/register_icon_inner"
+                                android:layout_height="@dimen/register_icon_inner"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_referral_link"
+                                app:tint="@color/register_linkages_icon" />
+
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="14dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Referral Linkages"
+                                android:textSize="14sp"
+                                android:textColor="@color/text_black" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="1dp"
+                                android:text="Referrals and linkage to services"
+                                android:textSize="11sp"
+                                android:textColor="@color/light_grey_text" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/register_referral_linkages_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:text="0"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/register_linkages_icon" />
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_navigate_next_black_24dp"
+                            app:tint="@color/light_grey_text" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>

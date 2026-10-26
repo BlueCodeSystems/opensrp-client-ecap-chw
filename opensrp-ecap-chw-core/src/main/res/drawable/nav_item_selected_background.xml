@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Side menu row for the open register: a tinted pill inset from the drawer edges -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/nav_ripple">
+
+    <item>
+        <inset
+            android:insetLeft="8dp"
+            android:insetRight="8dp">
+            <shape android:shape="rectangle">
+                <corners android:radius="24dp" />
+                <solid android:color="@color/nav_selected_bg" />
+            </shape>
+        </inset>
+    </item>
+</ripple>

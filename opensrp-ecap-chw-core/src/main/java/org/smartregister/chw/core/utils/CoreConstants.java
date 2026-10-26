@@ -694,6 +694,9 @@ public class CoreConstants {
         public static final String EC_MOTHER_PMTCT = "ec_pmtct_mother";
         public static final String EC_HOUSEHOLD = "ec_household";
         public static final String EC_HIV_TESTING_SERVICE= "ec_hiv_testing_service";
+        public static final String EC_APPOINTMENT = "ec_appointment";
+        public static final String EC_PREP = "ec_prep";
+        public static final String EC_REFERRAL_LINKAGE = "ec_referral_linkage";
 
 
     }
@@ -752,6 +755,9 @@ public class CoreConstants {
         public static final String UPDATES = "Updates";
         public static final String IDENTIFICATION = "Identification";
         public static final String PMTCT = "Pmtct";
+        public static final String APPOINTMENTS = "Appointments";
+        public static final String PREP = "Prep";
+        public static final String REFERRAL_LINKAGES = "Referral Linkages";
         public static final String FLAGS = "Flags";
 
     }
@@ -995,6 +1001,9 @@ public class CoreConstants {
         public static final String REPORT_REGISTER_ACTIVITY = "REPORT_REGISTER_ACTIVITY";
         public static final String HTS_ACTIVITY = "HTS";
         public static final String PMTCT = "PMTCT_ACTIVITY";
+        public static final String APPOINTMENTS_ACTIVITY = "APPOINTMENTS_ACTIVITY";
+        public static final String PREP_ACTIVITY = "PREP_ACTIVITY";
+        public static final String REFERRAL_LINKAGES_ACTIVITY = "REFERRAL_LINKAGES_ACTIVITY";
         public static final String FLAGS_ACTIVITY = "FLAGS_ACTIVITY";
 
     }

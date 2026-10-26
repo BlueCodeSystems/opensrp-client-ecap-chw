@@ -1,0 +1,313 @@
+{
+  "count": "1",
+  "encounter_type": "Referral Linkage",
+  "entity_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1": {
+    "title": "Referral Linkages",
+    "fields": [
+      {
+        "key": "placeholder_notice",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "instructions",
+        "type": "toaster_notes",
+        "text": "Interim form: the final questions will be added in a later update. Submitted records are saved and synced.",
+        "text_color": "#000000",
+        "toaster_type": "info"
+      },
+      {
+        "key": "client_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "client_number",
+        "type": "edit_text",
+        "hint": "Client Number",
+        "read_only": "true",
+        "edit_type": "number"
+      },
+      {
+        "key": "health_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "health_facility",
+        "type": "edit_text",
+        "hint": "Health Facility",
+        "read_only": "true"
+      },
+      {
+        "key": "first_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "first_name",
+        "type": "edit_text",
+        "hint": "First Name",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Names can only contain letters"
+        },
+        "v_required": {
+          "value": "true",
+          "err": "First Name is Required"
+        }
+      },
+      {
+        "key": "middle_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "middle_name",
+        "type": "edit_text",
+        "hint": "Middle Name",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Names can only contain letters"
+        }
+      },
+      {
+        "key": "last_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "last_name",
+        "type": "edit_text",
+        "hint": "Last Name",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Names can only contain letters"
+        },
+        "v_required": {
+          "value": "true",
+          "err": "Last Name is Required"
+        }
+      },
+      {
+        "key": "gender",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "gender",
+        "type": "native_radio",
+        "label": "Sex",
+        "options": [
+          {
+            "key": "Male",
+            "text": "Male"
+          },
+          {
+            "key": "Female",
+            "text": "Female"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "birthdate",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "birthdate",
+        "type": "date_picker",
+        "hint": "Date of Birth",
+        "expanded": false,
+        "duration": {
+          "label": "Age"
+        },
+        "min_date": "today-100y",
+        "max_date": "today",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter the date of birth"
+        }
+      },
+      {
+        "key": "phone",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "phone",
+        "type": "edit_text",
+        "hint": "Phone Number",
+        "edit_type": "number",
+        "v_regex": {
+          "value": "((07||09||05)[5-7][0-9]{7})|s*",
+          "err": "Number must begin with 077,076,055,056,057,095, 096, or 097 and must be a total of 10 digits in length"
+        }
+      },
+      {
+        "key": "address",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "address",
+        "type": "edit_text",
+        "hint": "Address"
+      },
+      {
+        "key": "date_referred",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_referred",
+        "type": "date_picker",
+        "hint": "Date Referred",
+        "expanded": false,
+        "min_date": "today-5y",
+        "max_date": "today",
+        "v_required": {
+          "value": "true",
+          "err": "Date Referred is Required"
+        }
+      },
+      {
+        "key": "referral_service",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "referral_service",
+        "type": "native_radio",
+        "label": "Referred For",
+        "options": [
+          {
+            "key": "HTS",
+            "text": "HTS"
+          },
+          {
+            "key": "ART",
+            "text": "ART"
+          },
+          {
+            "key": "PrEP",
+            "text": "PrEP"
+          },
+          {
+            "key": "VMMC",
+            "text": "VMMC"
+          },
+          {
+            "key": "TB screening",
+            "text": "TB screening"
+          },
+          {
+            "key": "GBV services",
+            "text": "GBV services"
+          },
+          {
+            "key": "Family planning",
+            "text": "Family planning"
+          },
+          {
+            "key": "Other",
+            "text": "Other"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "receiving_facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "receiving_facility",
+        "type": "edit_text",
+        "hint": "Receiving Facility",
+        "v_required": {
+          "value": "true",
+          "err": "Receiving Facility is Required"
+        }
+      },
+      {
+        "key": "linkage_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "linkage_status",
+        "type": "native_radio",
+        "label": "Linkage Status",
+        "options": [
+          {
+            "key": "Pending",
+            "text": "Pending"
+          },
+          {
+            "key": "Linked",
+            "text": "Linked"
+          },
+          {
+            "key": "Not linked",
+            "text": "Not linked"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "This field is Required"
+        }
+      },
+      {
+        "key": "date_linked",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_linked",
+        "type": "date_picker",
+        "hint": "Date Linked",
+        "expanded": false,
+        "min_date": "today-5y",
+        "max_date": "today"
+      },
+      {
+        "key": "comment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "comment",
+        "type": "edit_text",
+        "hint": "Comments"
+      }
+    ]
+  }
+}

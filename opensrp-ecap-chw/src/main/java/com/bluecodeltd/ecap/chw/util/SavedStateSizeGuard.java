@@ -8,8 +8,6 @@ import android.os.Parcel;
 
 import androidx.annotation.NonNull;
 
-import com.google.firebase.crashlytics.FirebaseCrashlytics;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,8 +19,8 @@ import timber.log.Timber;
  * <p>
  * The Bundle is sent to system_server in activityStopped/activitySlept; anything over ~1MB
  * crashes the app with TransactionTooLargeException (or "Could not copy bitmap to parcel blob")
- * from a stack trace that names no app code. This records which Activity saved what, reports
- * oversized state as a non-fatal with a per-key size breakdown, and drops the largest entries so
+ * from a stack trace that names no app code. This logs oversized state with a per-key size
+ * breakdown and drops the largest entries so
  * the worst case is a screen that restores without its UI state instead of a crash.
  * <p>
  * On API 29+ the check runs in onActivityPostSaveInstanceState and sees the complete Bundle. On
@@ -35,7 +33,6 @@ public class SavedStateSizeGuard implements Application.ActivityLifecycleCallbac
 
     @Override
     public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle outState) {
-        setCustomKey("last_saved_state_activity", activity.getClass().getName());
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             enforceLimit(activity, outState);
         }
@@ -48,7 +45,6 @@ public class SavedStateSizeGuard implements Application.ActivityLifecycleCallbac
 
     private void enforceLimit(Activity activity, Bundle outState) {
         int totalBytes = sizeOf(outState);
-        setCustomKey("last_saved_state_bytes", totalBytes);
         if (totalBytes <= MAX_STATE_BYTES) {
             return;
         }
@@ -62,10 +58,6 @@ public class SavedStateSizeGuard implements Application.ActivityLifecycleCallbac
         String message = "Oversized saved state in " + activity.getClass().getName()
                 + ": " + totalBytes + " bytes; keys=" + keySizes;
         Timber.w(message);
-        try {
-            FirebaseCrashlytics.getInstance().recordException(new IllegalStateException(message));
-        } catch (Throwable ignored) {
-        }
 
         for (KeySize keySize : keySizes) {
             outState.remove(keySize.key);
@@ -92,20 +84,6 @@ public class SavedStateSizeGuard implements Application.ActivityLifecycleCallbac
             return Integer.MAX_VALUE;
         } finally {
             parcel.recycle();
-        }
-    }
-
-    private static void setCustomKey(String key, String value) {
-        try {
-            FirebaseCrashlytics.getInstance().setCustomKey(key, value);
-        } catch (Throwable ignored) {
-        }
-    }
-
-    private static void setCustomKey(String key, int value) {
-        try {
-            FirebaseCrashlytics.getInstance().setCustomKey(key, value);
-        } catch (Throwable ignored) {
         }
     }
 

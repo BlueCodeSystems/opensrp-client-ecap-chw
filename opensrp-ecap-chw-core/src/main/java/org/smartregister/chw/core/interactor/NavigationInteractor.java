@@ -114,6 +114,11 @@ public class NavigationInteractor implements NavigationContract.Interactor {
                 String hivServiceCount = "SELECT count(*) AS clients FROM ec_hiv_testing_service WHERE (delete_status IS NULL OR delete_status != '1')";
                 return NavigationDao.getQueryCount(hivServiceCount);
 
+            case CoreConstants.TABLE_NAME.EC_APPOINTMENT:
+            case CoreConstants.TABLE_NAME.EC_PREP:
+            case CoreConstants.TABLE_NAME.EC_REFERRAL_LINKAGE:
+                String serviceRegisterCount = "SELECT count(*) AS clients FROM " + tableName + " WHERE (delete_status IS NULL OR delete_status != '1')";
+                return NavigationDao.getQueryCount(serviceRegisterCount);
 
             case CoreConstants.TABLE_NAME.EC_MOTHER_PMTCT:
                 String pmtctMotherCount = "SELECT COUNT(*) AS clients\n" +

@@ -2,6 +2,7 @@ package org.smartregister.chw.core.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.apache.commons.lang3.StringUtils;
@@ -63,9 +65,11 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.My
         if(context.getResources().getText(model.getTitleID()).equals("Home"))
         {
             holder.tvCount.setText("");
+            holder.tvCount.setVisibility(View.GONE);
         }
         else {
             holder.tvCount.setText(String.format(Locale.getDefault(), "%d", model.getRegisterCount()));
+            holder.tvCount.setVisibility(View.VISIBLE);
         }
 
         holder.tvCount.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX,
@@ -76,14 +80,22 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.My
         holder.getView().setTag(model.getMenuTitle());
 
 
+        // The open register gets a solid blue pill with white text and icon, and a white count badge.
+        // Icons are tinted because the register PNGs are mid-grey or blue, which vanish on the navy drawer.
         if (host.getSelectedView().equals(model.getMenuTitle())) {
-            holder.tvCount.setTextColor(context.getResources().getColor(R.color.navigation_item_selected));
-            holder.tvName.setTextColor(context.getResources().getColor(R.color.navigation_item_selected));
+            holder.getView().setBackgroundResource(R.drawable.nav_item_selected_background);
+            holder.tvCount.setBackgroundResource(R.drawable.nav_count_badge_selected);
+            holder.tvCount.setTextColor(ContextCompat.getColor(context, R.color.nav_selected_bg));
+            holder.tvName.setTextColor(ContextCompat.getColor(context, R.color.white));
             holder.ivIcon.setImageResource(model.getResourceActiveID());
+            holder.ivIcon.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.white)));
         } else {
-            holder.tvCount.setTextColor(context.getResources().getColor(R.color.navigation_item_unselected));
-            holder.tvName.setTextColor(context.getResources().getColor(R.color.navigation_item_unselected));
+            holder.getView().setBackgroundResource(R.drawable.nav_item_background);
+            holder.tvCount.setBackgroundResource(R.drawable.nav_count_badge);
+            holder.tvCount.setTextColor(ContextCompat.getColor(context, R.color.nav_badge_text));
+            holder.tvName.setTextColor(ContextCompat.getColor(context, R.color.nav_text));
             holder.ivIcon.setImageResource(model.getResourceID());
+            holder.ivIcon.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.nav_icon)));
         }
     }
 

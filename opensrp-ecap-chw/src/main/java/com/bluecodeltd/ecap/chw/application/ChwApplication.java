@@ -21,6 +21,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.bluecodeltd.ecap.chw.BuildConfig;
 import com.bluecodeltd.ecap.chw.activity.AllClientsRegisterActivity;
+import com.bluecodeltd.ecap.chw.activity.AppointmentsRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.BeneficiariesRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.CasePlanRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.DashboardActivity;
@@ -35,6 +36,8 @@ import com.bluecodeltd.ecap.chw.activity.IndexRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.LoginActivity;
 import com.bluecodeltd.ecap.chw.activity.MotherIndexActivity;
 import com.bluecodeltd.ecap.chw.activity.PMTCTRegisterActivity;
+import com.bluecodeltd.ecap.chw.activity.PrepRegisterActivity;
+import com.bluecodeltd.ecap.chw.activity.ReferralLinkagesRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.ReportRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.ReferralRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.UpdatesRegisterActivity;
@@ -359,9 +362,17 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
     }
 
     /**
-     * Replace the Timber trees planted by DrishtiApplication.onCreate() (CrashLyticsTree in release,
-     * which reports every Timber.e as a Crashlytics non-fatal) with the local safe tree. Must run
-     * straight after super.onCreate(), before library init logs its expected startup errors.
+     * DrishtiApplication.onCreate() plants the library's CrashLyticsTree in release builds. The app
+     * ships without the Crashlytics SDK, so plant nothing here; setUpLogging() plants the real trees.
+     */
+    @Override
+    public void initializeCrashLyticsTree() {
+        // Intentionally empty
+    }
+
+    /**
+     * Replace the Timber trees planted by DrishtiApplication.onCreate() with the local safe tree.
+     * Must run straight after super.onCreate(), before library init logs its expected startup errors.
      */
     private void setUpLogging() {
         try {
@@ -646,6 +657,9 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.REPORT_REGISTER_ACTIVITY, ReportRegisterActivity.class);
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.HTS_ACTIVITY, HivTestingServiceActivity.class);
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.PMTCT, PMTCTRegisterActivity.class);
+        registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.APPOINTMENTS_ACTIVITY, AppointmentsRegisterActivity.class);
+        registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.PREP_ACTIVITY, PrepRegisterActivity.class);
+        registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.REFERRAL_LINKAGES_ACTIVITY, ReferralLinkagesRegisterActivity.class);
         if (BuildConfig.USE_UNIFIED_REFERRAL_APPROACH) {
             registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.REFERRALS_REGISTER_ACTIVITY, ReferralRegisterActivity.class);
         }

@@ -126,6 +126,15 @@
             android:name=".activity.PMTCTRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
+            android:name=".activity.AppointmentsRegisterActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
+            android:name=".activity.PrepRegisterActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
+            android:name=".activity.ReferralLinkagesRegisterActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
             android:name=".activity.HouseholdCasePlanActivity"
             android:exported="true"
             android:label="Caregiver Case Plan"

@@ -195,26 +195,7 @@
             android:orientation="vertical"
             android:paddingTop="30dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:paddingTop="10dp"
-                android:paddingBottom="5dp"
-                android:text="@string/powered_by"
-                android:textAlignment="center"
-                android:textColor="#585858" />
-
-            <ImageView
-                android:id="@+id/opensrp_logo_image_view"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/login_opensrp_logo_height"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:adjustViewBounds="false"
-                android:cropToPadding="false"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_opensrp_logo" />
+            <include layout="@layout/login_partner_logos" />
         </LinearLayout>
 
         <ProgressBar

@@ -63,7 +63,6 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
     private static NavigationModel.Flavor modelFlavor;
     private static Map<String, Class> registeredActivities;
     private static boolean showDeviceToDeviceSync = true;
-    private static final float NAV_DRAWER_HEIGHT_RATIO = 0.9f;
     private DrawerLayout drawer;
     private Toolbar toolbar;
     private NavigationAdapter navigationAdapter;
@@ -173,8 +172,8 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
             DrawerLayout.LayoutParams params = (DrawerLayout.LayoutParams) rootView.getLayoutParams();
             if (params != null) {
                 params.width = activity.getResources().getDimensionPixelSize(R.dimen.nav_drawer_width);
-                int screenHeight = activity.getResources().getDisplayMetrics().heightPixels;
-                params.height = (int) (screenHeight * NAV_DRAWER_HEIGHT_RATIO);
+                // Full height, so the sync bar sits on the bottom edge instead of leaving the screen showing below it
+                params.height = DrawerLayout.LayoutParams.MATCH_PARENT;
                 rootView.setLayoutParams(params);
             }
         }
@@ -306,6 +305,8 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
             navigationAdapter = new NavigationAdapter(navigationOptions, parentActivity, registeredActivities, this);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(parentActivity);
             recyclerView.setLayoutManager(mLayoutManager);
+            // The drawer's NestedScrollView does the scrolling; the list just lays out every item
+            recyclerView.setNestedScrollingEnabled(false);
             recyclerView.setItemAnimator(new DefaultItemAnimator());
             recyclerView.setAdapter(navigationAdapter);
         }
@@ -313,7 +314,8 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
 
     private void registerLogout(final Activity parentActivity) {
         mPresenter.displayCurrentUser();
-        tvLogout.setOnClickListener(v -> logout(parentActivity));
+        // The whole row is the touch target, matching the other menu actions
+        rootView.findViewById(R.id.rlLogout).setOnClickListener(v -> logout(parentActivity));
     }
 
     private void registerSync(final Activity parentActivity) {

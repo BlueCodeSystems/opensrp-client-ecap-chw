@@ -28,6 +28,7 @@
     <string name="action_start_sync">Sync Started</string>
     <string name="action_sync_failed">Sync Failed</string>
     <string name="nav_registers">Registers</string>
+    <string name="nav_more">More</string>
     <string name="nav_logout_as">Logout as</string>
     <string name="nav_sync">Sync</string>
     <string name="nav_last">"Last: </string>

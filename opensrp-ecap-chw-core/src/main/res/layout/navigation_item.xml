@@ -1,56 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- One register in the side menu; NavigationAdapter swaps the background, colors and badge for the open register -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="15dp"
-    android:paddingBottom="15dp">
-
+    android:minHeight="48dp"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp"
+    android:background="@drawable/nav_item_background"
+    android:clickable="true"
+    android:focusable="true">
 
     <ImageView
         android:id="@+id/ivIcon"
-        android:layout_width="33dp"
-        android:layout_height="33dp"
-        android:scaleType="fitXY"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:scaleType="fitCenter"
+        android:contentDescription="@null"
+        android:tint="@color/nav_icon"
         app:srcCompat="@drawable/child_boy_infant"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <TextView
         android:id="@+id/tvName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_toEndOf="@+id/ivIcon"
-        android:layout_toRightOf="@+id/tvCount"
-        android:fontFamily="sans-serif"
-        android:text="@string/all_registers"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="12dp"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:maxLines="1"
+        android:textColor="@color/nav_text"
         android:textSize="@dimen/nav_item_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tvCount"
         app:layout_constraintStart_toEndOf="@id/ivIcon"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/tvCount"
-        />
+        tools:text="@string/all_registers" />
 
     <TextView
         android:id="@+id/tvCount"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:fontFamily="sans-serif"
+        android:layout_height="20dp"
+        android:background="@drawable/nav_count_badge"
+        android:fontFamily="sans-serif-medium"
         android:gravity="center"
-        android:text="0"
+        android:minWidth="28dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:textColor="@color/nav_badge_text"
         android:textSize="@dimen/nav_item_count_size"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tvName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+        tools:text="12" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,6 +15,7 @@ import com.bluecodeltd.ecap.chw.activity.IndexRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.MotherIndexActivity;
 import com.bluecodeltd.ecap.chw.activity.PMTCTRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.ReportRegisterActivity;
+import com.bluecodeltd.ecap.chw.activity.ServiceRegisterActivity;
 
 import org.json.JSONObject;
 import org.smartregister.chw.core.listener.CoreBottomNavigationListener;
@@ -158,7 +159,11 @@ public class ChwBottomNavigationListener extends CoreBottomNavigationListener {
         }
 
         else if (item.getItemId() == R.id.action_identifcation) {
-            if ( context instanceof IndexRegisterActivity ) {
+            if (context instanceof ServiceRegisterActivity) {
+
+                ((ServiceRegisterActivity) context).openRegisterForm();
+
+            } else if ( context instanceof IndexRegisterActivity ) {
 
                 IndexRegisterActivity idRegisterActivity = (IndexRegisterActivity) context;
 

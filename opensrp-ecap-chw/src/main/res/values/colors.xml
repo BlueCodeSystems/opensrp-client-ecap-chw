@@ -145,6 +145,12 @@
     <color name="register_hts_icon">#1565C0</color>
     <color name="register_pmtct_bg">#FCE4EC</color>
     <color name="register_pmtct_icon">#D81B60</color>
+    <color name="register_appointments_bg">#FFF3E0</color>
+    <color name="register_appointments_icon">#E65100</color>
+    <color name="register_prep_bg">#EDE7F6</color>
+    <color name="register_prep_icon">#5E35B1</color>
+    <color name="register_linkages_bg">#E0F2F1</color>
+    <color name="register_linkages_icon">#00796B</color>
     <color name="register_pmtct_header">#AD1457</color>
     <color name="register_pmtct_header_light">#F8BBD0</color>
     <color name="register_pmtct_accent_light">#EC407A</color>

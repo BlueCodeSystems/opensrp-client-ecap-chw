@@ -10,6 +10,8 @@ import com.bluecodeltd.ecap.chw.dao.HivTestingServiceDao
 import com.bluecodeltd.ecap.chw.dao.HouseholdDao
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao
 import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao
+import com.bluecodeltd.ecap.chw.dao.ServiceRegisterDao
+import com.bluecodeltd.ecap.chw.util.ServiceRegister
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.ensureActive
@@ -28,6 +30,9 @@ data class DashboardState(
     val mothersCount: String = "0",
     val htsCount: String = "0",
     val pmtctCount: String = "0",
+    val appointmentsCount: String = "0",
+    val prepCount: String = "0",
+    val referralLinkagesCount: String = "0",
     val lastUpdated: LocalDateTime? = null
 )
 
@@ -61,6 +66,9 @@ class DashboardViewModel : ViewModel() {
             val mothersCount = try { PMTCTMotherDao.countAllMotherIndexRecords() ?: "0" } catch (_: Exception) { "0" }
             val htsCount = try { HivTestingServiceDao.countAllHtsClients() ?: "0" } catch (_: Exception) { "0" }
             val pmtctCount = try { EcMotherIndexDao.countAllPmtctMothers() ?: "0" } catch (_: Exception) { "0" }
+            val appointmentsCount = try { ServiceRegisterDao.countClients(ServiceRegister.APPOINTMENTS) ?: "0" } catch (_: Exception) { "0" }
+            val prepCount = try { ServiceRegisterDao.countClients(ServiceRegister.PREP) ?: "0" } catch (_: Exception) { "0" }
+            val referralLinkagesCount = try { ServiceRegisterDao.countClients(ServiceRegister.REFERRAL_LINKAGES) ?: "0" } catch (_: Exception) { "0" }
 
             ensureActive()
             _state.postValue(
@@ -76,6 +84,9 @@ class DashboardViewModel : ViewModel() {
                     mothersCount = mothersCount,
                     htsCount = htsCount,
                     pmtctCount = pmtctCount,
+                    appointmentsCount = appointmentsCount,
+                    prepCount = prepCount,
+                    referralLinkagesCount = referralLinkagesCount,
                     lastUpdated = now
                 )
             )

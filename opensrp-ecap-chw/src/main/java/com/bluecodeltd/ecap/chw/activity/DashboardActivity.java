@@ -187,6 +187,12 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
             binding.registerRowPmtct.setOnClickListener(v ->
                 startActivity(new Intent(DashboardActivity.this, PMTCTRegisterActivity.class)));
         }
+        binding.registerRowAppointments.setOnClickListener(v ->
+                startActivity(new Intent(DashboardActivity.this, AppointmentsRegisterActivity.class)));
+        binding.registerRowPrep.setOnClickListener(v ->
+                startActivity(new Intent(DashboardActivity.this, PrepRegisterActivity.class)));
+        binding.registerRowReferralLinkages.setOnClickListener(v ->
+                startActivity(new Intent(DashboardActivity.this, ReferralLinkagesRegisterActivity.class)));
         Bundle extras = getIntent().getExtras();
         String username = extras != null ? extras.getString("username") : null;
         String password = extras != null ? extras.getString("password") : null;
@@ -250,6 +256,9 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
                 binding.registerMotherCount.setText(state.getMothersCount());
                 binding.registerHtsCount.setText(state.getHtsCount());
                 binding.registerPmtctCount.setText(state.getPmtctCount());
+                binding.registerAppointmentsCount.setText(state.getAppointmentsCount());
+                binding.registerPrepCount.setText(state.getPrepCount());
+                binding.registerReferralLinkagesCount.setText(state.getReferralLinkagesCount());
                 if (state.getLastUpdated() != null) {
                     lastUpdated.setText(dtf.format(state.getLastUpdated()));
                 }

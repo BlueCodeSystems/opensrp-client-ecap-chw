@@ -444,8 +444,6 @@ dependencies {
 
     // SpinKit loading indicators (FadingCircle)
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
-    // Old Fabric Crashlytics API to satisfy compile for CrashlyticsTree; host apps may provide Firebase Crashlytics
-    compileOnly 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
     // Unit test dependencies
     testImplementation 'junit:junit:4.13.2'
@@ -519,7 +517,9 @@ task androidSourcesJar(type: Jar) {
 version = project.findProperty('VERSION_NAME') ?: "1.2.1-SNAPSHOT"
 
 def properties = new Properties()
-properties.load(new FileInputStream(rootProject.file("github.properties")))
+if (rootProject.file("github.properties").exists()) {
+    properties.load(new FileInputStream(rootProject.file("github.properties")))
+}
 
 publishing {
     publications {

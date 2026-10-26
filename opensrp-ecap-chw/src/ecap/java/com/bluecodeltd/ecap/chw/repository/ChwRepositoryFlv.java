@@ -8,6 +8,7 @@ import com.bluecodeltd.ecap.chw.util.ChildDBConstants;
 import com.bluecodeltd.ecap.chw.util.ChwDBConstants;
 import com.bluecodeltd.ecap.chw.util.RepositoryUtils;
 import com.bluecodeltd.ecap.chw.util.RepositoryUtilsFlv;
+import com.bluecodeltd.ecap.chw.util.ServiceRegister;
 
 import net.sqlcipher.Cursor;
 import net.sqlcipher.database.SQLiteDatabase;
@@ -130,6 +131,9 @@ public class ChwRepositoryFlv {
                     break;
                 case 33:
                     upgradeToVersion33(db);
+                    break;
+                case 34:
+                    upgradeToVersion34(db);
                     break;
                 default:
                     break;
@@ -1302,6 +1306,27 @@ public class ChwRepositoryFlv {
             RegisterIndexes.ensure(db);
         } catch (Exception e) {
             Timber.e(e, "upgradeToVersion33");
+        }
+    }
+
+    private static void upgradeToVersion34(SQLiteDatabase db) {
+        // Appointments, PrEP and Referral Linkages registers. Same shape as the table CommonRepository
+        // creates on a fresh install from ec_client_fields.json, so both paths end up identical.
+        for (ServiceRegister register : ServiceRegister.values()) {
+            try {
+                StringBuilder sql = new StringBuilder("CREATE TABLE IF NOT EXISTS ").append(register.table)
+                        .append(" (id VARCHAR PRIMARY KEY, relationalid VARCHAR, details VARCHAR, is_closed TINYINT DEFAULT 0");
+                for (String column : ServiceRegister.COMMON_COLUMNS) {
+                    sql.append(", ").append(column).append(" VARCHAR");
+                }
+                for (String column : register.specificColumns()) {
+                    sql.append(", ").append(column).append(" VARCHAR");
+                }
+                db.execSQL(sql.append(")").toString());
+                db.execSQL("CREATE INDEX IF NOT EXISTS " + register.table + "_base_entity_id_index ON " + register.table + " (base_entity_id)");
+            } catch (Exception e) {
+                Timber.e(e, "upgradeToVersion34 %s", register.table);
+            }
         }
     }
 

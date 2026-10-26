@@ -72,6 +72,15 @@ public class NavigationListener implements View.OnClickListener {
                 case CoreConstants.DrawerMenu.PMTCT:
                     startRegisterActivity(getActivity(CoreConstants.REGISTERED_ACTIVITIES.PMTCT));
                     break;
+                case CoreConstants.DrawerMenu.APPOINTMENTS:
+                    startRegisterActivity(getActivity(CoreConstants.REGISTERED_ACTIVITIES.APPOINTMENTS_ACTIVITY));
+                    break;
+                case CoreConstants.DrawerMenu.PREP:
+                    startRegisterActivity(getActivity(CoreConstants.REGISTERED_ACTIVITIES.PREP_ACTIVITY));
+                    break;
+                case CoreConstants.DrawerMenu.REFERRAL_LINKAGES:
+                    startRegisterActivity(getActivity(CoreConstants.REGISTERED_ACTIVITIES.REFERRAL_LINKAGES_ACTIVITY));
+                    break;
                 case CoreConstants.DrawerMenu.UPDATES:
                     startRegisterActivity(getActivity(CoreConstants.REGISTERED_ACTIVITIES.UPDATES_REGISTER_ACTIVITY));
                     break;

@@ -20564,6 +20564,483 @@
           }
         }
       ]
+    },
+    {
+      "name": "ec_appointment",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "relational_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "client_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.client_number"
+          }
+        },
+        {
+          "column_name": "first_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.first_name"
+          }
+        },
+        {
+          "column_name": "middle_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.middle_name"
+          }
+        },
+        {
+          "column_name": "last_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.last_name"
+          }
+        },
+        {
+          "column_name": "gender",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.gender"
+          }
+        },
+        {
+          "column_name": "birthdate",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.birthdate"
+          }
+        },
+        {
+          "column_name": "phone",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.phone"
+          }
+        },
+        {
+          "column_name": "address",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.address"
+          }
+        },
+        {
+          "column_name": "health_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.health_facility"
+          }
+        },
+        {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
+          }
+        },
+        {
+          "column_name": "last_interacted_with",
+          "type": "Client",
+          "json_mapping": {
+            "field": "relationships.last_interacted_with"
+          }
+        },
+        {
+          "column_name": "date_created",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_created"
+          }
+        },
+        {
+          "column_name": "date_edited",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_edited"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
+        },
+        {
+          "column_name": "appointment_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.appointment_date"
+          }
+        },
+        {
+          "column_name": "appointment_type",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.appointment_type"
+          }
+        },
+        {
+          "column_name": "appointment_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.appointment_status"
+          }
+        },
+        {
+          "column_name": "service_point",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.service_point"
+          }
+        },
+        {
+          "column_name": "comment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.comment"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ec_prep",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "relational_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "client_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.client_number"
+          }
+        },
+        {
+          "column_name": "first_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.first_name"
+          }
+        },
+        {
+          "column_name": "middle_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.middle_name"
+          }
+        },
+        {
+          "column_name": "last_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.last_name"
+          }
+        },
+        {
+          "column_name": "gender",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.gender"
+          }
+        },
+        {
+          "column_name": "birthdate",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.birthdate"
+          }
+        },
+        {
+          "column_name": "phone",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.phone"
+          }
+        },
+        {
+          "column_name": "address",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.address"
+          }
+        },
+        {
+          "column_name": "health_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.health_facility"
+          }
+        },
+        {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
+          }
+        },
+        {
+          "column_name": "last_interacted_with",
+          "type": "Client",
+          "json_mapping": {
+            "field": "relationships.last_interacted_with"
+          }
+        },
+        {
+          "column_name": "date_created",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_created"
+          }
+        },
+        {
+          "column_name": "date_edited",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_edited"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
+        },
+        {
+          "column_name": "prep_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.prep_status"
+          }
+        },
+        {
+          "column_name": "date_initiated",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_initiated"
+          }
+        },
+        {
+          "column_name": "prep_regimen",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.prep_regimen"
+          }
+        },
+        {
+          "column_name": "next_refill_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.next_refill_date"
+          }
+        },
+        {
+          "column_name": "hiv_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_status"
+          }
+        },
+        {
+          "column_name": "date_tested",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_tested"
+          }
+        },
+        {
+          "column_name": "comment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.comment"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ec_referral_linkage",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "relational_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "client_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.client_number"
+          }
+        },
+        {
+          "column_name": "first_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.first_name"
+          }
+        },
+        {
+          "column_name": "middle_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.middle_name"
+          }
+        },
+        {
+          "column_name": "last_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.last_name"
+          }
+        },
+        {
+          "column_name": "gender",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.gender"
+          }
+        },
+        {
+          "column_name": "birthdate",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.birthdate"
+          }
+        },
+        {
+          "column_name": "phone",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.phone"
+          }
+        },
+        {
+          "column_name": "address",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.address"
+          }
+        },
+        {
+          "column_name": "health_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.health_facility"
+          }
+        },
+        {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
+          }
+        },
+        {
+          "column_name": "last_interacted_with",
+          "type": "Client",
+          "json_mapping": {
+            "field": "relationships.last_interacted_with"
+          }
+        },
+        {
+          "column_name": "date_created",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_created"
+          }
+        },
+        {
+          "column_name": "date_edited",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_edited"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
+        },
+        {
+          "column_name": "date_referred",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_referred"
+          }
+        },
+        {
+          "column_name": "referral_service",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.referral_service"
+          }
+        },
+        {
+          "column_name": "receiving_facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.receiving_facility"
+          }
+        },
+        {
+          "column_name": "linkage_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.linkage_status"
+          }
+        },
+        {
+          "column_name": "date_linked",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_linked"
+          }
+        },
+        {
+          "column_name": "comment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.comment"
+          }
+        }
+      ]
     }
   ]
 }

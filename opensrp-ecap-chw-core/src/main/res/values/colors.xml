@@ -55,4 +55,18 @@
     <color name="navigation_item_unselected">#9E9E9E</color>
     <color name="light_pink">#FFCDD2</color>
     <color name="progress_orange">#FFA726</color>
+    <!-- Side menu: ECAP navy body under a white logo header -->
+    <color name="nav_drawer_bg">#0D384E</color>
+    <color name="nav_header_bg">#FFFFFF</color>
+    <color name="nav_header_accent">#218CC5</color>
+    <color name="nav_text">#FFFFFF</color>
+    <color name="nav_text_secondary">#A9C3D1</color>
+    <color name="nav_icon">#CFE0EA</color>
+    <color name="nav_divider">#1FFFFFFF</color>
+    <color name="nav_ripple">#33FFFFFF</color>
+    <!-- Deeper than the brand blue so white text on it stays above 4.5:1 -->
+    <color name="nav_selected_bg">#1A75A8</color>
+    <color name="nav_badge_bg">#26FFFFFF</color>
+    <color name="nav_badge_text">#FFFFFF</color>
+    <color name="nav_sync_bg">#0A2D3F</color>
 </resources>

@@ -58,6 +58,14 @@ public class IndexClientsUtils {
             else if(encounterType.equals("Household Visitation Form 0-20 years")) {
                 table = Constants.EcapClientTable.EC_HOUSEHOLD_VCA;
             }
+            else {
+                // Appointments, PrEP and Referral Linkages
+                for (ServiceRegister register : ServiceRegister.values()) {
+                    if (register.encounterType.equals(encounterType)) {
+                        table = register.table;
+                    }
+                }
+            }
 
             Event childEvent = JsonFormUtils.createEvent(fields, metadata, formTag, entityId,
                     encounterType, table);

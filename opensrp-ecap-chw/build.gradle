@@ -18,8 +18,14 @@ apply from: "jacoco.gradle"
 apply plugin: 'kotlin-android'
 apply plugin: 'org.jetbrains.kotlin.kapt'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.google.firebase.crashlytics'
+// Crashlytics is removed for now. google-services.json is gitignored; without it,
+// FlagsFirebaseInitializer sets up Firebase from the firebase.* keys in local.properties.
+def hasGoogleServicesJson = ['google-services.json', 'src/ecap/google-services.json',
+                             'src/ecap/debug/google-services.json', 'src/ecap/release/google-services.json']
+        .any { file(it).exists() }
+if (hasGoogleServicesJson) {
+    apply plugin: 'com.google.gms.google-services'
+}
 
 kapt {
     javacOptions {
@@ -400,7 +406,7 @@ android {
             buildConfigField "String[]", "ALLOWED_LOCATION_LEVELS_DEBUG", '{"Country","Province","District","Ward","Health Facility"}'
             buildConfigField "String", 'DEFAULT_LOCATION', '"Health Facility"'
             buildConfigField "String", 'DEFAULT_LOCATION_DEBUG', '"Health Facility"'
-            buildConfigField "int", "DATABASE_VERSION", '33'
+            buildConfigField "int", "DATABASE_VERSION", '34'
         }
     }
 }
@@ -416,6 +422,9 @@ configurations.all {
     exclude group: 'com.github.BlueCodeSystems.Opensrp-client-native-form-new', module: 'circleprogressbar'
     // Ensure only one SQLCipher native binary (prefer android-database-sqlcipher)
     exclude group: 'net.zetetic', module: 'sqlcipher-android'
+    // Crashlytics is removed for now; keep libraries (e.g. opensrp-client-opd) from pulling it back in
+    exclude group: 'com.google.firebase', module: 'firebase-crashlytics'
+    exclude group: 'com.crashlytics.sdk.android'
 
     resolutionStrategy {
         dependencySubstitution {
@@ -463,7 +472,6 @@ dependencies {
         exclude group: 'stax', module: 'stax-api'
         exclude group: 'com.mapbox.mapboxsdk', module: 'mapbox-android-sdk'
     }
-    implementation 'com.google.firebase:firebase-crashlytics:20.1.0'
     // Core library desugaring for Java 8+ APIs used by dependencies
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 

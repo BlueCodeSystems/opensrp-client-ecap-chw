@@ -14,6 +14,9 @@
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
     <string name="logo">Logo</string>
+    <string name="partner_coat_of_arms">Coat of arms of Zambia</string>
+    <string name="partner_us_flag">Flag of the United States</string>
+    <string name="partner_pcz_logo">Project Concern Zambia</string>
     <string name="use_4_digit_pin_number_promt">Use 4-digit PIN number</string>
     <string name="immunisation_and_services">Immunisation and services</string>
     <string name="select_options">Select options</string>
@@ -288,6 +291,17 @@
     <string name="gdl">g/dl</string>
     <string name="hiv_referral">HIV referral</string>
     <string name="hts_services">HTS services</string>
+    <string name="appointments_register">Appointments</string>
+    <string name="appointments_register_subtitle">Scheduled client appointments</string>
+    <string name="prep_register">HIV Prevention (PrEP)</string>
+    <string name="prep_register_subtitle">Pre-exposure prophylaxis clients</string>
+    <string name="referral_linkages_register">Referral Linkages</string>
+    <string name="referral_linkages_register_subtitle">Referrals and linkage to services</string>
+    <string name="service_register_profile_pending">Client profiles for this register are not available yet</string>
+    <string name="service_register_add_client">Add Client</string>
+    <string name="service_register_saving">Saving…</string>
+    <string name="service_register_saved">Record saved</string>
+    <string name="service_register_save_failed">Unable to save the record. Please try again.</string>
     <string name="weight">Weight</string>
     <string name="mmHg">mmHg</string>
     <string name="hb_level">Hb level</string>
