@@ -82,7 +82,9 @@
         <activity
             android:name=".activity.ReportProblemActivity"
             android:exported="false"
-            android:theme="@style/ChwTheme.NoActionBar" />
+            android:label="@string/report_problem"
+            android:theme="@style/ChwTheme.Material.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activity.SopPdfViewerActivity"
             android:exported="false"
@@ -439,6 +441,15 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/captured_images_path" />
+        </provider>
+        <provider
+            android:name=".issue.IssuePhotoProvider"
+            android:authorities="${applicationId}.issuephotos"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/issue_photo_paths" />
         </provider>
 
         <service

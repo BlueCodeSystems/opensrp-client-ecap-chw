@@ -735,6 +735,9 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
             case R.id.pmp_flags:
                 startActivity(new Intent(this, FlagActivity.class));
                 break;
+            case R.id.report_problem:
+                ReportProblemActivity.start(this);
+                break;
             case R.id.download_ecap_sops:
                 downloadEcapSops();
                 break;

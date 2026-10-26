@@ -425,4 +425,24 @@
         <item name="fabSize">mini</item>
     </style>
 
+    <!-- Material Components theme for screens built with chips, toggle groups and text fields,
+         which crash under the AppCompat ChwTheme. Same ECAP palette. -->
+    <style name="ChwTheme.Material.NoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/chw_primary</item>
+        <item name="colorPrimaryVariant">@color/chw_primary_dark</item>
+        <item name="colorPrimaryDark">@color/chw_primary_dark</item>
+        <item name="colorSecondary">@color/chw_accent</item>
+        <item name="colorAccent">@color/chw_accent</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorOnSecondary">@android:color/white</item>
+    </style>
+
+    <style name="IssueReportQuestion">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

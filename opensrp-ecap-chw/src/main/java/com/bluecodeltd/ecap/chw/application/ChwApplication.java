@@ -54,6 +54,7 @@ import com.bluecodeltd.ecap.chw.util.FailSafeRecalledID;
 import com.bluecodeltd.ecap.chw.util.FileUtils;
 import com.bluecodeltd.ecap.chw.util.IncompleteInstall;
 import com.bluecodeltd.ecap.chw.util.JsonFormUtils;
+import com.bluecodeltd.ecap.chw.issue.LogBufferTree;
 import com.bluecodeltd.ecap.chw.util.SafeDebugTree;
 import com.bluecodeltd.ecap.chw.util.SavedStateSizeGuard;
 import com.bluecodeltd.ecap.chw.util.StartupTrace;
@@ -370,6 +371,8 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
             } else {
                 Timber.plant(new SafeDebugTree(4_000, Log.WARN));
             }
+            // Recent log lines, kept in memory only, for "Report a problem"
+            Timber.plant(new LogBufferTree(Log.INFO));
         } catch (Throwable t) {
             // Ignore; logging is non-critical
         }

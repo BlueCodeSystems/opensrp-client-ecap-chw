@@ -624,6 +624,46 @@
     <string name="incomplete_install_message">This copy of ECAP is incomplete, so it cannot open its records. This usually happens when the app is shared from another phone.\n\nInstall ECAP from the Play Store to fix it. Do not uninstall this copy first: records on this phone that have not synced would be lost.</string>
     <string name="incomplete_install_open_store">Open Play Store</string>
 
+    <!-- Report a problem -->
+    <string name="report_problem">Report a problem</string>
+    <string name="report_problem_intro_title">Tell us what went wrong</string>
+    <string name="report_problem_intro_body">Your report goes to the ECAP II support team. It is saved on this phone and sent automatically when you are online.</string>
+    <string name="report_problem_category_question">What is the problem about?</string>
+    <string name="report_problem_category_required">Choose what the problem is about</string>
+    <string name="report_problem_category_app">Device / App issue</string>
+    <string name="report_problem_category_sync">Data / Sync issue</string>
+    <string name="report_problem_category_stockout">Stockout</string>
+    <string name="report_problem_category_safety">Client safety concern</string>
+    <string name="report_problem_category_other">Other</string>
+    <string name="report_problem_severity_question">How much is it affecting your work?</string>
+    <string name="report_problem_severity_blocking">I can\'t work</string>
+    <string name="report_problem_severity_major">Slows me down</string>
+    <string name="report_problem_severity_minor">Minor</string>
+    <string name="report_problem_description">Describe the problem</string>
+    <string name="report_problem_description_helper">What were you doing, and what happened?</string>
+    <string name="report_problem_description_required">Please describe the problem in a few words</string>
+    <string name="report_problem_photo_question">Add a photo (optional)</string>
+    <string name="report_problem_photo_hint">A photo of the screen or the problem helps us fix it faster.</string>
+    <string name="report_problem_take_photo">Take photo</string>
+    <string name="report_problem_choose_photo">Choose photo</string>
+    <string name="report_problem_remove_photo">Remove photo</string>
+    <string name="report_problem_photo_failed">Could not use that photo. Try another one.</string>
+    <string name="report_problem_camera_denied">Camera permission is needed to take a photo</string>
+    <string name="report_problem_sent_with">Sent with your report</string>
+    <string name="report_problem_facility">Facility</string>
+    <string name="report_problem_reported_by">Reported by</string>
+    <string name="report_problem_include_diagnostics">Include device details and recent app activity</string>
+    <string name="report_problem_include_diagnostics_hint">App version, phone model, unsynced records and the last few app log lines. Client forms are not attached.</string>
+    <string name="report_problem_see_details">See details</string>
+    <string name="report_problem_details_title">Details sent with your report</string>
+    <string name="report_problem_details_logs">+ %1$d recent app log lines</string>
+    <string name="report_problem_send">Send report</string>
+    <string name="report_problem_sending">Saving…</string>
+    <string name="report_problem_sent_online">Thank you. Your report is being sent.</string>
+    <string name="report_problem_sent_offline">You are offline. Your report is saved and will be sent automatically.</string>
+    <string name="report_problem_save_failed">Could not save your report. Please try again.</string>
+    <string name="report_problem_unknown">Unknown</string>
+
 </resources>
 
 
