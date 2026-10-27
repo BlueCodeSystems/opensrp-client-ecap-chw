@@ -3,8 +3,10 @@ package com.bluecodeltd.ecap.chw.presenter;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -32,6 +34,16 @@ public class LoginPresenter extends BaseLoginPresenter implements BaseLoginContr
         mLoginView = new WeakReference<>(loginView);
         mLoginInteractor = new LoginInteractor(this);
         mLoginModel = new BaseLoginModel();
+    }
+
+    /**
+     * The base version sets bottom_section's top margin to centre the old login layout and casts its
+     * LayoutParams to RelativeLayout's. activity_login now lays its sections out with a
+     * ConstraintLayout, so that cast crashes and the margin is not needed.
+     */
+    @Override
+    public void canvasGlobalLayoutListenerProcessor(ScrollView canvasSV, ViewTreeObserver.OnGlobalLayoutListener layoutListener) {
+        canvasSV.getViewTreeObserver().removeOnGlobalLayoutListener(layoutListener);
     }
 
     @Override

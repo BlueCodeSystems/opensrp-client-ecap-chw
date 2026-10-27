@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Login text field: grey outline, brand-blue outline while focused -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/white" />
+            <stroke android:width="2dp" android:color="@color/login_accent" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/white" />
+            <stroke android:width="1dp" android:color="@color/login_field_stroke" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+</selector>

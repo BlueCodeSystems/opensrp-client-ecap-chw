@@ -195,7 +195,17 @@
             android:orientation="vertical"
             android:paddingTop="30dp">
 
-            <include layout="@layout/login_partner_logos" />
+            <ImageView
+                android:id="@+id/opensrp_logo_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="2dp"
+                android:adjustViewBounds="false"
+                android:contentDescription="@string/logo"
+                android:cropToPadding="false"
+                android:scaleType="centerInside"
+                android:src="@drawable/coat_of_arms_of_zambia_ecap" />
         </LinearLayout>
 
         <ProgressBar

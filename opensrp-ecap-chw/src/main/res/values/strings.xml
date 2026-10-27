@@ -14,9 +14,10 @@
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
     <string name="logo">Logo</string>
-    <string name="partner_coat_of_arms">Coat of arms of Zambia</string>
-    <string name="partner_us_flag">Flag of the United States</string>
-    <string name="partner_pcz_logo">Project Concern Zambia</string>
+    <string name="login_subtitle">Sign in to continue</string>
+    <string name="login_username_hint">Enter your username</string>
+    <string name="login_password_hint">Enter your password</string>
+    <string name="login_coat_of_arms">Coat of arms of the Republic of Zambia</string>
     <string name="use_4_digit_pin_number_promt">Use 4-digit PIN number</string>
     <string name="immunisation_and_services">Immunisation and services</string>
     <string name="select_options">Select options</string>

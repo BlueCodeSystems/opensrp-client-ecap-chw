@@ -30,4 +30,20 @@
     <dimen name="family_register_text_size">5sp</dimen>
     <dimen name="family_register_image_size">22dp</dimen>
     <dimen name="family_register_count_size">40dp</dimen>
+
+    <!-- Login screen, 7-8 inch tablets -->
+    <dimen name="login_card_max_width">520dp</dimen>
+    <dimen name="login_card_padding">32dp</dimen>
+    <dimen name="login_screen_padding">32dp</dimen>
+    <dimen name="login_header_overlap">130dp</dimen>
+    <dimen name="login_section_gap">22dp</dimen>
+    <dimen name="login_title_size">30sp</dimen>
+    <dimen name="login_subtitle_size">17sp</dimen>
+    <dimen name="login_label_size">15sp</dimen>
+    <dimen name="login_field_height">56dp</dimen>
+    <dimen name="login_field_text_size">17sp</dimen>
+    <dimen name="login_button_height">56dp</dimen>
+    <dimen name="login_button_text_size">17sp</dimen>
+    <dimen name="login_logo_max_height">205dp</dimen>
+    <dimen name="login_coat_of_arms_height">100dp</dimen>
 </resources>

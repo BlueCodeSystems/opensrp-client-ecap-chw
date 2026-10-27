@@ -192,5 +192,23 @@
     <color name="cbs_stat_suspected_bg">#FDECC8</color>
     <color name="cbs_stat_suspected_text">#8A5A00</color>
 
-</resources>
+    <!-- Login screen: greens taken from the iCCMS logo -->
+    <color name="login_page_bg">#FFFFFF</color>
+    <color name="login_card_stroke">#E2E8E4</color>
+    <color name="login_header_start">#0A3A23</color>
+    <color name="login_header_end">#0F5230</color>
+    <color name="login_header_subtitle">#CFE5D7</color>
+    <color name="login_heading">#0A3A23</color>
+    <color name="login_text">#1F2D38</color>
+    <color name="login_text_secondary">#5B6B78</color>
+    <color name="login_hint">#8A98A3</color>
+    <color name="login_field_stroke">#CBD5DC</color>
+    <!-- The iCCMS logo green; white button text on it is about 7.4:1 -->
+    <color name="login_accent">#016421</color>
+    <!-- Log In button: a brighter green than the logo band so it reads as an action; white text is about 5:1 -->
+    <color name="login_button">#188038</color>
+    <color name="login_button_pressed">#0E6B2D</color>
+    <color name="login_button_disabled">#9FC2AC</color>
+    <color name="login_button_ripple">#33FFFFFF</color>
 
+</resources>

@@ -445,4 +445,29 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!-- Login screen: field label above an outlined text field with a leading icon -->
+    <style name="LoginFieldLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">6dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/login_text</item>
+        <item name="android:textSize">@dimen/login_label_size</item>
+    </style>
+
+    <style name="LoginField">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/login_field_height</item>
+        <item name="android:background">@drawable/login_field_bg</item>
+        <item name="android:drawablePadding">12dp</item>
+        <item name="android:drawableTint">@color/login_hint</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:paddingStart">14dp</item>
+        <item name="android:paddingEnd">14dp</item>
+        <item name="android:textColor">@color/login_text</item>
+        <item name="android:textColorHint">@color/login_hint</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:textSize">@dimen/login_field_text_size</item>
+    </style>
+
 </resources>

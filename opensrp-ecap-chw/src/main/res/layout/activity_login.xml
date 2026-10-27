@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  Login screen: navy header band, a white sign-in card and the coat of arms at the bottom.
+  The title and card are centred in the space above the coat of arms, and the band always ends
+  login_header_overlap into the card. Sizes come from values/, values-sw600dp/ and
+  values-sw720dp/ dimens so phones and tablets each get a proportionate layout.
+  LoginActivity, LoginPresenter and BaseLoginActivity look up the login_* view ids, and
+  BaseLoginPresenter casts login_layout to a RelativeLayout, so keep both when changing this.
+-->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/canvasSV"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/login_page_bg"
     android:fillViewport="true"
     android:isScrollContainer="true">
 
@@ -10,186 +20,204 @@
         android:id="@+id/login_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.0"
-        android:background="#ffffff"
-        android:paddingBottom="@dimen/login_bottom_margin">
+        android:background="@color/login_page_bg">
 
-
-        <!-- Top section -->
-        <LinearLayout
-            android:id="@+id/top_section"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:orientation="vertical"
-            android:paddingTop="@dimen/login_logo_top_padding">
+            android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/login_logo"
-                android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="40dp"
-                android:layout_marginTop="60dp"
-                android:layout_weight="1"
-                android:contentDescription="@string/logo"
-                android:scaleType="fitCenter"
-                android:src="@drawable/new_ecap_logo" />
+            <!-- Navy band from the top of the screen to login_header_overlap into the card -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/login_header_bg"
+                app:layout_constraintBottom_toBottomOf="@id/header_anchor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/login_title_text_view"
-                android:layout_width="match_parent"
+            <Space
+                android:id="@+id/header_anchor"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/login_header_overlap"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/middle_section" />
+
+            <!-- Top section: app name on the navy band -->
+            <LinearLayout
+                android:id="@+id/top_section"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginStart="@dimen/login_screen_padding"
+                android:layout_marginTop="@dimen/login_section_gap"
+                android:layout_marginEnd="@dimen/login_screen_padding"
                 android:gravity="center_horizontal"
-                android:text="@string/login_title"
-                android:textColor="#272727"
-                android:textSize="25sp"
-                android:textStyle="bold"
-                android:typeface="sans" />
-
-            <TextView
-                android:id="@+id/login_build_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:gravity="center_horizontal"
-                android:text="@string/app_version"
-                android:textColor="#999999"
-                android:textSize="@dimen/login_build_text_view_textSize" />
-
-        </LinearLayout>
-
-        <!-- Middle section -->
-        <LinearLayout
-            android:id="@+id/middle_section"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/top_section"
-            android:layout_marginTop="@dimen/login_middle_section_padding_top"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/login_horizontal_margin"
-            android:paddingRight="@dimen/login_horizontal_margin">
-
-            <EditText
-                android:id="@+id/login_user_name_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/login_view_component_height"
-                android:layout_weight="8"
-                android:background="@drawable/rounded_corner_edit_text_bg"
-                android:cursorVisible="true"
-                android:ems="10"
-                android:hint="@string/username"
-                android:imeOptions="actionNext"
-                android:inputType="text"
-                android:lines="1"
-                android:paddingLeft="10dp"
-                android:textColor="#666666"
-                android:textColorHint="#bfbfbf"
-                android:textCursorDrawable="@null"
-                android:textSize="@dimen/login_edit_text_textSize"
-                android:typeface="sans" />
-
-            <EditText
-                android:id="@+id/login_password_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/login_view_component_height"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"
-                android:layout_weight="8"
-                android:background="@drawable/rounded_corner_edit_text_bg"
-                android:cursorVisible="true"
-                android:ems="10"
-                android:hint="@string/password"
-                android:imeActionId="@integer/login"
-                android:inputType="textPassword"
-                android:lines="1"
-                android:paddingLeft="10dp"
-                android:textColor="#666666"
-                android:textColorHint="#bfbfbf"
-                android:textCursorDrawable="@null"
-                android:textSize="@dimen/login_edit_text_textSize"
-                android:typeface="sans" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/checkbox_margin_top">
-
-                <CheckBox
-                    android:id="@+id/login_show_password_checkbox"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="3dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginRight="5dp"
-                    android:button="@drawable/white_checkbox_bg_selector" />
+                android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@id/middle_section"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.4"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintWidth_max="@dimen/login_card_max_width">
 
                 <TextView
-                    android:id="@+id/login_show_password_text_view"
+                    android:id="@+id/login_title_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/login_show_password_checkbox"
-                    android:text="@string/show_password_text"
-                    android:textColor="#585858"
-                    android:textSize="@dimen/login_edit_text_textSize" />
-            </RelativeLayout>
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center_horizontal"
+                    android:text="@string/login_title"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/login_title_size" />
 
-            <Button
-                android:id="@+id/login_login_btn"
-                android:onClick="onClick"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:layout_weight="8"
-                android:background="@drawable/login_button_bg"
-                android:ems="10"
-                android:shadowColor="#ffffff"
-                android:shadowDx="0"
-                android:shadowDy="1"
-                android:shadowRadius="0.5"
-                android:text="@string/login_text"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/login_subtitle"
+                    android:textColor="@color/login_header_subtitle"
+                    android:textSize="@dimen/login_subtitle_size" />
 
-        </LinearLayout>
-        <!-- Bottom section -->
+            </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/bottom_section"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/middle_section"
-            android:layout_alignParentBottom="true"
-            android:orientation="vertical"
-            android:paddingTop="30dp">
-
-            <include layout="@layout/login_partner_logos" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <!-- Middle section: the sign-in card -->
+            <LinearLayout
+                android:id="@+id/middle_section"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:visibility="gone">
+                android:layout_marginStart="@dimen/login_screen_padding"
+                android:layout_marginTop="@dimen/login_section_gap"
+                android:layout_marginEnd="@dimen/login_screen_padding"
+                android:layout_marginBottom="@dimen/login_section_gap"
+                android:background="@drawable/login_card_bg"
+                android:elevation="6dp"
+                android:orientation="vertical"
+                android:padding="@dimen/login_card_padding"
+                app:layout_constraintBottom_toTopOf="@id/bottom_section"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/top_section"
+                app:layout_constraintWidth_max="@dimen/login_card_max_width">
+
+                <!-- Capped so the whole screen fits without scrolling; the width shrinks to match -->
+                <ImageView
+                    android:id="@+id/login_logo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:maxHeight="@dimen/login_logo_max_height"
+                    android:contentDescription="@string/logo"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/iccms" />
+
+                <TextView
+                    style="@style/LoginFieldLabel"
+                    android:layout_marginTop="24dp"
+                    android:labelFor="@id/login_user_name_edit_text"
+                    android:text="@string/username" />
+
+                <EditText
+                    android:id="@+id/login_user_name_edit_text"
+                    style="@style/LoginField"
+                    android:autofillHints="username"
+                    android:drawableStart="@drawable/ic_person_black_24dp"
+                    android:hint="@string/login_username_hint"
+                    android:imeOptions="actionNext"
+                    android:inputType="text" />
+
+                <TextView
+                    style="@style/LoginFieldLabel"
+                    android:layout_marginTop="16dp"
+                    android:labelFor="@id/login_password_edit_text"
+                    android:text="@string/password" />
+
+                <EditText
+                    android:id="@+id/login_password_edit_text"
+                    style="@style/LoginField"
+                    android:autofillHints="password"
+                    android:drawableStart="@drawable/ic_login_lock"
+                    android:hint="@string/login_password_hint"
+                    android:imeActionId="@integer/login"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/login_show_password_checkbox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="-6dp"
+                        android:buttonTint="@color/login_accent" />
+
+                    <TextView
+                        android:id="@+id/login_show_password_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/show_password_text"
+                        android:textColor="@color/login_text_secondary"
+                        android:textSize="@dimen/login_label_size" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/login_login_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/login_button_height"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/login_button_bg"
+                    android:elevation="4dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:letterSpacing="0.04"
+                    android:onClick="onClick"
+                    android:stateListAnimator="@animator/login_button_elevation"
+                    android:textStyle="bold"
+                    android:text="@string/login_text"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/login_button_text_size" />
+
+                <TextView
+                    android:id="@+id/login_build_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/app_version"
+                    android:textColor="@color/login_hint"
+                    android:textSize="@dimen/login_build_text_view_textSize" />
+
+            </LinearLayout>
+
+            <!-- Bottom section: coat of arms on the bottom edge -->
+            <LinearLayout
+                android:id="@+id/bottom_section"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/login_bottom_margin"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
                 <ImageView
-                    android:id="@+id/opensrp_blue"
-                    android:layout_width="200dp"
-                    android:layout_height="90dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentEnd="true"
-                    android:adjustViewBounds="false"
-                    android:cropToPadding="false"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/bluecode_logo" />
+                    android:id="@+id/opensrp_logo_image_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/login_coat_of_arms_height"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/login_coat_of_arms"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/iccms_coat_of_arms" />
 
-            </RelativeLayout>
+            </LinearLayout>
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </RelativeLayout>
 </ScrollView>

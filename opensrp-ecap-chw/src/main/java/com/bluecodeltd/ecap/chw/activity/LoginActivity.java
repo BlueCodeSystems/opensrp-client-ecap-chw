@@ -69,7 +69,9 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
-        getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(this, R.color.chw_family_primary_dark));
+        // Matches the top of the login header band, so the status bar area runs straight into it
+        getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(this, R.color.login_header_start));
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.login_header_start));
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content), (v, insets) -> {
             Insets statusBar = insets.getInsets(WindowInsetsCompat.Type.statusBars());
             v.setPadding(0, statusBar.top, 0, 0);
