@@ -40,12 +40,16 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.My
     }
 
     public String getSelectedView() {
-        return StringUtils.isBlank(host.getSelectedView()) ? CoreConstants.DrawerMenu.ALL_FAMILIES : host.getSelectedView();
+        return StringUtils.isBlank(host.getSelectedView()) ? CoreConstants.DrawerMenu.REPORTS : host.getSelectedView();
     }
 
     public void setSelectedView(String selectedView) {
         host.setSelectedView(selectedView);
         this.notifyDataSetChanged();
+    }
+
+    public List<NavigationOption> getNavigationOptions() {
+        return navigationOptionList;
     }
 
     @NonNull

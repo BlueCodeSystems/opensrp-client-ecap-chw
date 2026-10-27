@@ -35,6 +35,7 @@ import org.smartregister.chw.core.adapter.NavigationAdapterHost;
 import org.smartregister.chw.core.application.CoreChwApplication;
 import org.smartregister.chw.core.contract.NavigationContract;
 import org.smartregister.chw.core.model.NavigationModel;
+import org.smartregister.chw.core.listener.NavigationListener;
 import org.smartregister.chw.core.model.NavigationOption;
 import org.smartregister.chw.core.presenter.NavigationPresenter;
 import org.smartregister.chw.core.utils.CoreConstants;
@@ -74,7 +75,8 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
     private NavigationContract.Presenter mPresenter;
     private View parentView;
     private Timer timer;
-    private static String selectedView = CoreConstants.DrawerMenu.HOUSEHOLD_REGISTER;
+    // The app opens on the dashboard, which the drawer's Home item (tag REPORTS) opens
+    private static String selectedView = CoreConstants.DrawerMenu.REPORTS;
 
     public static void setupNavigationMenu(CoreChwApplication application, NavigationMenu.Flavour menuFlavor,
                                            NavigationModel.Flavor modelFlavor, Map<String, Class> registeredActivities, boolean showDeviceToDeviceSync) {
@@ -481,11 +483,16 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
     @Override
     public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
         Timber.v("Drawer is sliding");
+        // First moments of opening: fix the highlight before the items come into view
+        if (slideOffset < 0.1f) {
+            highlightCurrentScreen(drawerView);
+        }
     }
 
     @Override
     public void onDrawerOpened(@NonNull View drawerView) {
         Timber.v("Drawer is opened");
+        highlightCurrentScreen(drawerView);
         recomputeCounts();
     }
 
@@ -502,6 +509,42 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
     @Override
     public void onDrawerStateChanged(int newState) {
         Timber.v("Drawer state is changed");
+    }
+
+    /**
+     * Highlights the drawer item that opens the screen this drawer belongs to. The selection is shared across
+     * screens and otherwise only changes on a drawer tap, so it went stale when a register was reached another
+     * way (a dashboard card, Back). The screen and the list are both taken from the drawer being opened, since
+     * this menu's own fields point at whichever screen set it up last. Screens with no drawer item, such as
+     * profiles, keep the last selection.
+     */
+    private void highlightCurrentScreen(View drawerView) {
+        Activity activity = activityOf(drawerView.getContext());
+        androidx.recyclerview.widget.RecyclerView list = drawerView.findViewById(R.id.rvOptions);
+        if (activity == null || list == null || !(list.getAdapter() instanceof NavigationAdapter)
+                || registeredActivities == null) {
+            return;
+        }
+        NavigationAdapter adapter = (NavigationAdapter) list.getAdapter();
+        for (NavigationOption option : adapter.getNavigationOptions()) {
+            String key = NavigationListener.registeredActivityKey(option.getMenuTitle());
+            Class screen = key != null ? registeredActivities.get(key) : null;
+            if (screen != null && screen.equals(activity.getClass())) {
+                if (!option.getMenuTitle().equals(selectedView)) {
+                    adapter.setSelectedView(option.getMenuTitle());
+                }
+                return;
+            }
+        }
+    }
+
+    @Nullable
+    private static Activity activityOf(android.content.Context context) {
+        while (context instanceof android.content.ContextWrapper) {
+            if (context instanceof Activity) return (Activity) context;
+            context = ((android.content.ContextWrapper) context).getBaseContext();
+        }
+        return null;
     }
 
     private void recomputeCounts() {
