@@ -81,12 +81,13 @@
 
     <!-- Dashboard KPI cards -->
     <dimen name="dash_card_min_height">130dp</dimen>
-    <dimen name="dash_kpi_number">24sp</dimen>
-    <dimen name="dash_card_label">10sp</dimen>
-    <dimen name="dash_card_sublabel">9sp</dimen>
+    <dimen name="dash_kpi_number">26sp</dimen>
+    <dimen name="dash_card_label">13sp</dimen>
+    <dimen name="dash_card_sublabel">12sp</dimen>
     <dimen name="dash_card_radius">16dp</dimen>
     <dimen name="dash_card_elevation">4dp</dimen>
-    <dimen name="dash_card_gap">5dp</dimen>
+    <dimen name="dash_card_gap">6dp</dimen>
+    <dimen name="dash_subpop_chart_height">240dp</dimen>
     <dimen name="dash_icon_size">20dp</dimen>
     <dimen name="dash_icon_circle">34dp</dimen>
     <dimen name="dash_pill_radius">20dp</dimen>
@@ -113,5 +114,7 @@
     <dimen name="login_button_height">52dp</dimen>
     <dimen name="login_button_text_size">16sp</dimen>
     <dimen name="login_logo_max_height">150dp</dimen>
-    <dimen name="login_coat_of_arms_height">110dp</dimen>
+    <dimen name="login_ministry_text_size">12sp</dimen>
+    <dimen name="login_developer_logo_height">14dp</dimen>
+    <dimen name="login_coat_of_arms_height">96dp</dimen>
 </resources>

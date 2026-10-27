@@ -141,19 +141,24 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
     public void setupViews(String family, String village, int plans, int visits, boolean visitedThisMonth, String is_index, String status, String gender, String age, String vcaAge){
 
         familyNameTextView.setText(family);
-        villageTextView.setText("ID : "+village);
-        gender_age.setText(gender + " : " + age+" ");
+        villageTextView.setText("ID: " + village);
+        gender_age.setText(gender + " · " + (age != null ? age.trim() : ""));
         setupGenderAvatar(gender);
 
 
 
-        if(status != null && status.equals("1")){
-            myStatus.setBackgroundColor(0xff05b714);
-        } else if (status != null && status.equals("0")) {
-            myStatus.setBackgroundColor(0xffff0000);
-        } else if(status != null && status.equals("2")){
-            myStatus.setBackgroundColor(0xffffa500);
+        // Case status stripe, in the reserved status colours. Rows are recycled, so every case sets a colour.
+        int stripeColor;
+        if ("1".equals(status)) {
+            stripeColor = R.color.dash_status_good;
+        } else if ("0".equals(status)) {
+            stripeColor = R.color.dash_status_critical;
+        } else if ("2".equals(status)) {
+            stripeColor = R.color.dash_status_warning;
+        } else {
+            stripeColor = R.color.reg_status_none;
         }
+        myStatus.setBackgroundColor(ContextCompat.getColor(context, stripeColor));
 
         if (is_index != null && is_index.equals("1")){
 
@@ -181,8 +186,8 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
 
 
         // Default while loading
-        dueButton.setBackgroundResource(R.drawable.due_contact);
-        dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), org.smartregister.chw.core.R.color.btn_blue));
+        dueButton.setBackgroundResource(R.drawable.reg_pill_action);
+        dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), R.color.reg_pill_action_text));
         dueButton.setText("Conduct Visit");
         final String rowTag = village;
         dueButton.setTag(rowTag);
@@ -214,21 +219,22 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
                     int backgroundResource;
                     int textColorResource;
                     String buttonText;
+                    // Visit statuses are soft tinted pills; only Conduct Visit is an outlined button
                     if ("green".equalsIgnoreCase(fColor) && fDate != null) {
-                        backgroundResource = R.drawable.home_visit_due;
-                        textColorResource = android.R.color.white;
+                        backgroundResource = R.drawable.reg_pill_good;
+                        textColorResource = R.color.reg_pill_good_text;
                         buttonText = "Visit Due: " + fDate;
                     } else if ("yellow".equalsIgnoreCase(fColor) && fDate != null) {
-                        backgroundResource = R.drawable.home_visit_10days_less;
-                        textColorResource = R.color.text_black;
+                        backgroundResource = R.drawable.reg_pill_warning;
+                        textColorResource = R.color.reg_pill_warning_text;
                         buttonText = "Visit Due: " + fDate;
                     } else if ("red".equalsIgnoreCase(fColor) && fDate != null) {
-                        backgroundResource = R.drawable.home_visit_overdue;
-                        textColorResource = android.R.color.white;
+                        backgroundResource = R.drawable.reg_pill_critical;
+                        textColorResource = R.color.reg_pill_critical_text;
                         buttonText = "Visit Overdue: " + fDate;
                     } else {
-                        backgroundResource = R.drawable.due_contact;
-                        textColorResource = android.R.color.white;
+                        backgroundResource = R.drawable.reg_pill_action;
+                        textColorResource = R.color.reg_pill_action_text;
                         buttonText = "Conduct Visit";
                     }
                     dueButton.setBackgroundResource(backgroundResource);
@@ -236,12 +242,12 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
                     dueButton.setText(buttonText);
                 } else {
                     if (screeningFinal != null && ("0".equals(screeningFinal.getCase_status()) || "2".equals(screeningFinal.getCase_status()))) {
-                        dueButton.setBackgroundResource(R.drawable.inactive_button);
-                        dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), R.color.stat_pill_unknown));
+                        dueButton.setBackgroundResource(R.drawable.reg_pill_neutral);
+                        dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), R.color.reg_pill_neutral_text));
                         dueButton.setText("Case Closed");
                     } else {
-                        dueButton.setBackgroundResource(R.drawable.due_contact);
-                        dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), android.R.color.white));
+                        dueButton.setBackgroundResource(R.drawable.reg_pill_action);
+                        dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), R.color.reg_pill_action_text));
                         dueButton.setText("Conduct Visit");
                     }
                 }

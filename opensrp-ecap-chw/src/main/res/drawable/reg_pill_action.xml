@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- VCA register row: primary action pill (Conduct Visit), outlined in the action green -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/white" />
+    <stroke
+        android:width="1.5dp"
+        android:color="@color/dash_accent" />
+    <corners android:radius="999dp" />
+</shape>

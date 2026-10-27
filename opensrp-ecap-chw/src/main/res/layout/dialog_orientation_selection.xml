@@ -46,7 +46,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:src="@drawable/ic_portrait"
-                    app:tint="#0089D5" />
+                    app:tint="#188038" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -81,7 +81,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:src="@drawable/ic_landscape"
-                    app:tint="#0089D5" />
+                    app:tint="#188038" />
 
                 <TextView
                     android:layout_width="wrap_content"

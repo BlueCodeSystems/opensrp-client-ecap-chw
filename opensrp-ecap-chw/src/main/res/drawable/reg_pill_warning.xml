@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- VCA register row: visit due within 10 days -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/dash_status_warning_soft" />
+    <corners android:radius="999dp" />
+</shape>

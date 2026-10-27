@@ -26,18 +26,17 @@ public class ServiceRegisterViewHolder extends RecyclerView.ViewHolder {
         detailTextView = itemView.findViewById(R.id.service_register_detail);
         idTextView = itemView.findViewById(R.id.villageTextView);
 
+        // The register's own colour marks only its avatar, as on the other register rows; the stripe has
+        // no status to show here, so it stays neutral
         int iconColor = ContextCompat.getColor(itemView.getContext(), register.iconColor);
         ColorStateList iconTint = ColorStateList.valueOf(iconColor);
-        itemView.findViewById(R.id.service_register_accent).setBackgroundColor(iconColor);
         itemView.findViewById(R.id.service_register_avatar).setBackgroundTintList(
                 ColorStateList.valueOf(ContextCompat.getColor(itemView.getContext(), register.iconBackground)));
         ImageView icon = itemView.findViewById(R.id.service_register_icon);
         icon.setImageResource(register.icon);
         icon.setImageTintList(iconTint);
-        detailTextView.setTextColor(iconColor);
         TextView footer = itemView.findViewById(R.id.service_register_footer);
         footer.setText(register.title);
-        footer.setTextColor(iconColor);
     }
 
     public void setupViews(String name, String genderAge, String detail, String clientId) {

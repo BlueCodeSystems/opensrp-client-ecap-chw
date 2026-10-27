@@ -19,7 +19,7 @@
             android:id="@+id/profile_name_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#218CC5"
+            android:background="#188038"
             android:orientation="vertical"
             android:visibility="gone">
 

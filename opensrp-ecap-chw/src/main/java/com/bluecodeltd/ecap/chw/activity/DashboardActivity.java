@@ -45,17 +45,14 @@ import com.bluecodeltd.ecap.chw.presenter.GenerateCSVPresenter;
 import com.bluecodeltd.ecap.chw.util.CsvFormImportService;
 import com.github.javiersantos.appupdater.AppUpdater;
 import com.bluecodeltd.ecap.chw.util.UpdateManager;
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.gson.Gson;
 import androidx.lifecycle.ViewModelProvider;
@@ -75,10 +72,11 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Locale;
 import java.util.Objects;
-import java.util.Random;
 import com.bluecodeltd.ecap.chw.util.Threading;
 import com.bluecodeltd.ecap.chw.util.PublicGoogleDriveFolderDownloader;
+import com.bluecodeltd.ecap.chw.util.Subpopulation;
 
 public class DashboardActivity extends AppCompatActivity  implements GenerateCSVContract.View {
     private com.bluecodeltd.ecap.chw.databinding.ActivityDashboardBinding binding;
@@ -93,13 +91,8 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
     private  android.widget.TextView lastUpdated;
     private  android.widget.TextView facilityName;
     CardView dueCardview;
-    private static final int MAX_X_VALUE = 7;
-    private static final int MAX_Y_VALUE = 50;
-    private static final int MIN_Y_VALUE = 5;
-    private static final String SET_LABEL = "Sub populations";
-    // Displayed subpopulations: AGYW and FSW removed
-    private static final String[] SUBPOPS = { "CALHIV", "HEI", "CWLHIV", "C/ASSV"};
-    private BarChart chart;
+    // The subpopulations charted on the dashboard, top to bottom, in Subpopulation order
+    private final List<Subpopulation> dashboardSubpops = new ArrayList<>();
     Handler handler = new Handler();
     List<Child> allChildren;
     DateTimeFormatter dtf;
@@ -109,7 +102,6 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
     String phone = "";
     private static final long FORTY_FIVE_MINUTES = 45L * 60L * 1000L;
     Runnable runnable;
-    ArrayList<Integer> colors;
     AppUpdater appUpdater;
     private DashboardViewModel dashboardViewModel;
     private static final int REQUEST_CODE_IMPORT_CSV = 49011;
@@ -144,7 +136,8 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
         toolbar.getOverflowIcon().setColorFilter(Color.WHITE , PorterDuff.Mode.SRC_ATOP);
         myAppbar = binding.collapsingToolbarAppbarlayout;
         NavigationMenu.getInstance(this, null, toolbar);
-        chart = binding.fragmentVerticalbarchartChart;
+        // Matches the top of the green header
+        getWindow().setStatusBarColor(androidx.core.content.ContextCompat.getColor(this, R.color.login_header_start));
         allHouseHoldsCount = binding.allHouseholdsNumber;
         presenter = new GenerateCSVPresenter(this);
 
@@ -198,18 +191,9 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
         String password = extras != null ? extras.getString("password") : null;
         // Last updated format: 01 Jan 2025, 10:30
         dtf = DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm");
-        colors = new ArrayList<Integer>();
-        // Vibrant palette matching the new card gradients.
-        // Populated before the ViewModel observer is registered below: if the ViewModel
-        // survives a configuration change, observe() delivers its cached state synchronously
-        // on subscribe, and dataForBarchart()/setColors() must never see an empty list.
-        colors.add(Color.parseColor("#0097A7")); // CALHIV  (teal)
-        colors.add(Color.parseColor("#26C6DA")); // HEI     (cyan)
-        colors.add(Color.parseColor("#5C6BC0")); // CWLHIV  (indigo)
-        colors.add(Color.parseColor("#AB47BC")); // C/ASSV  (purple)
-        // Static chart appearance (axes, legend, formatters) doesn't depend on data,
-        // so configure it once instead of rebuilding it on every state update.
-        configureChartAppearance();
+        // Static chart appearance doesn't depend on data, so configure it once. This runs before the
+        // ViewModel observer is registered, which can deliver a cached state synchronously.
+        configureSubpopChart();
 
         appUpdater = new AppUpdater(DashboardActivity.this);
         UpdateManager.startOnce(this);
@@ -221,30 +205,13 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
             try {
                 int visits = state.getVisitsDue();
                 allDueVisits.setText(String.valueOf(visits));
-                // Color code due card: 0 = grey, 1-5 amber, >5 red
-                int bgColor;
-                int fgColor;
-                if (visits == 0) {
-                    bgColor = Color.parseColor("#E5E7EB"); // light grey
-                    fgColor = Color.parseColor("#374151"); // dark grey text/icon
-                } else if (visits > 5) {
-                    bgColor = Color.parseColor("#EF4444");
-                    fgColor = Color.WHITE;
-                } else {
-                    bgColor = Color.parseColor("#F1BA0B");
-                    fgColor = Color.WHITE;
-                }
-                if (dueCardview != null) dueCardview.setCardBackgroundColor(bgColor);
-                allDueVisits.setTextColor(fgColor);
-                try { binding.iconDueVisits.setColorFilter(fgColor, PorterDuff.Mode.SRC_IN); } catch (Exception ignored) {}
-                try { binding.dueVisitsView.setTextColor(fgColor); } catch (Exception ignored) {}
-                BarData data = dataForBarchart(state.getSubpops());
-                prepareChartData(data);
+                bindVisitsDueStatus(visits);
                 allHouseHoldsCount = binding.allHouseholdsNumber;
                 allHouseHoldsCount.setText(state.getHouseholdsCount() != null ? state.getHouseholdsCount() : "0");
                 allVcasCount.setText(state.getVcasCount());
+                bindSubpops(state.getSubpops());
                 boolean hasChartData = hasChartData(state.getSubpops());
-                binding.fragmentVerticalbarchartChart.setVisibility(hasChartData ? View.VISIBLE : View.INVISIBLE);
+                binding.dashSubpopList.setVisibility(hasChartData ? View.VISIBLE : View.INVISIBLE);
                 binding.chartEmptyState.setVisibility(hasChartData ? View.GONE : View.VISIBLE);
                 // Gender breakdown in Children card
                 binding.cardMaleCount.setText(state.getMaleCount());
@@ -313,119 +280,154 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
 //        loadData();
 //    }
 
-    private BarData dataForBarchart(ArrayList<Integer> subpops)
-    {
-        ArrayList<BarEntry> values = new ArrayList<>();
-        // Only include indices: 0=CALHIV, 1=HEI, 2=CWLHIV, 4=C/ASSV (skip 3=AGYW, 5=FSW)
-        int[] include = new int[]{0, 1, 2, 4};
-        int xIndex = 0;
-        if (subpops == null) subpops = new ArrayList<>();
-        for (int idx : include) {
-            float y = 0f;
-            if (idx >= 0 && idx < subpops.size()) {
-                Integer v = subpops.get(idx);
-                y = (v != null) ? v : 0f;
+    /**
+     * Sets up the subpopulation column chart: one column per Subpopulation shown on the dashboard, left
+     * to right in declaration order, plus the key under it. Columns narrow as groups are added, and
+     * the names tilt once there are too many to sit side by side.
+     */
+    private void configureSubpopChart() {
+        // The key repeats each column's colour as a dot, so colour is never the only label
+        android.text.SpannableStringBuilder key = new android.text.SpannableStringBuilder();
+        for (Subpopulation subpop : Subpopulation.values()) {
+            if (!subpop.onDashboard) continue;
+            dashboardSubpops.add(subpop);
+            if (subpop.description != 0) {
+                if (key.length() > 0) key.append('\n');
+                int dotStart = key.length();
+                key.append("●  ");
+                key.setSpan(new android.text.style.ForegroundColorSpan(
+                                androidx.core.content.ContextCompat.getColor(this, subpop.color)),
+                        dotStart, dotStart + 1, android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                int nameStart = key.length();
+                key.append(subpop.shortName);
+                key.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD),
+                        nameStart, key.length(), android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                key.append(" – ").append(getString(subpop.description));
             }
-            values.add(new BarEntry(xIndex, y));
-            xIndex++;
         }
-        BarDataSet set1 = new BarDataSet(values, SET_LABEL);
-        ArrayList<IBarDataSet> dataSets = new ArrayList<>();
-        // MPAndroidChart divides by the color list's size when rendering, so an empty
-        // list (which should no longer happen now that colors is seeded before the
-        // ViewModel observer is registered) would throw at render time rather than here.
-        // Leaving BarDataSet's own default color in place is safer than passing an empty list.
-        if (colors != null && !colors.isEmpty()) {
-            set1.setColors(colors);
-        }
-        dataSets.add(set1);
+        binding.dashSubpopKey.setText(key);
+        binding.dashSubpopKey.setVisibility(key.length() > 0 ? View.VISIBLE : View.GONE);
 
-        BarData data = new BarData(dataSets);
-        data.setValueFormatter(new MyValueFormatter());
-
-        return data;
-    }
-
-    private BarData createChartData() {
-        ArrayList<BarEntry> values = new ArrayList<>();
-        for (int i = 0; i < MAX_X_VALUE; i++) {
-            float x = i;
-            float y = new Random().nextFloat() * (MAX_Y_VALUE - MIN_Y_VALUE) + MIN_Y_VALUE;
-            //new Util .randomFloatBetween(MIN_Y_VALUE, MAX_Y_VALUE);
-            values.add(new BarEntry(x, y));
-        }
-        BarDataSet set1 = new BarDataSet(values, SET_LABEL);
-        set1.setColors(ColorTemplate.MATERIAL_COLORS);
-        ArrayList<IBarDataSet> dataSets = new ArrayList<>();
-        dataSets.add(set1);
-
-
-
-        BarData data = new BarData(dataSets);
-
-        data.setValueFormatter(new MyValueFormatter());
-
-
-        return data;
-    }
-
-
-    private void configureChartAppearance() {
+        int text = androidx.core.content.ContextCompat.getColor(this, R.color.dash_text);
+        int muted = androidx.core.content.ContextCompat.getColor(this, R.color.dash_text_muted);
+        int grid = androidx.core.content.ContextCompat.getColor(this, R.color.dash_divider);
+        BarChart chart = binding.dashSubpopChart;
+        chart.setRenderer(new com.bluecodeltd.ecap.chw.util.RoundedColumnRenderer(
+                chart, chart.getAnimator(), chart.getViewPortHandler(), 6f));
         chart.getDescription().setEnabled(false);
-        chart.setDrawValueAboveBar(false);
+        chart.getLegend().setEnabled(false);
+        chart.setTouchEnabled(false);
+        chart.setDrawGridBackground(false);
+        chart.setDrawValueAboveBar(true);
+        chart.setFitBars(true);
+        chart.setNoDataText("");
+        chart.setExtraOffsets(0f, 8f, 0f, 4f);
 
-        XAxis xAxis = chart.getXAxis();
-        xAxis.setValueFormatter(new ValueFormatter() {
+        int columns = Math.max(1, dashboardSubpops.size());
+        XAxis names = chart.getXAxis();
+        names.setPosition(XAxis.XAxisPosition.BOTTOM);
+        names.setDrawGridLines(false);
+        names.setAxisLineColor(grid);
+        names.setGranularity(1f);
+        names.setLabelCount(columns);
+        names.setTextColor(text);
+        names.setTextSize(12f);
+        names.setTypeface(android.graphics.Typeface.DEFAULT_BOLD);
+        names.setYOffset(8f);
+        // Tilt the names once columns get too narrow for them to sit side by side
+        if (columns > 6) {
+            names.setLabelRotationAngle(-35f);
+        }
+        names.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return "";
+                int i = Math.round(value);
+                return i >= 0 && i < dashboardSubpops.size() ? dashboardSubpops.get(i).shortName : "";
             }
         });
 
-        chart.getXAxis().setDrawGridLines(false);
-        Legend l = chart.getLegend();
-
-        l.getEntries();
-
-        l.setYEntrySpace(10f);
-
-        LegendEntry l1 = new LegendEntry("CALHIV",  Legend.LegendForm.CIRCLE, 10f, 2f, null, Color.parseColor("#0097A7"));
-        LegendEntry l2 = new LegendEntry("HEI",     Legend.LegendForm.CIRCLE, 10f, 2f, null, Color.parseColor("#26C6DA"));
-        LegendEntry l3 = new LegendEntry("CWLHIV",  Legend.LegendForm.CIRCLE, 10f, 2f, null, Color.parseColor("#5C6BC0"));
-        LegendEntry l5 = new LegendEntry("C/ASSV",  Legend.LegendForm.CIRCLE, 10f, 2f, null, Color.parseColor("#AB47BC"));
-        l.setCustom(new LegendEntry[]{l1, l2, l3, l5});
-
-        l.setEnabled(true);
-
-        YAxis axisLeft = chart.getAxisLeft();
-        axisLeft.setGranularity(10f);
-        axisLeft.setAxisMinimum(0);
-        axisLeft.setDrawGridLines(false);
-
-        YAxis axisRight = chart.getAxisRight();
-        axisRight.setDrawGridLines(false);
-        axisRight.setGranularity(10f);
-        axisRight.setAxisMinimum(0);
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        YAxis counts = chart.getAxisLeft();
+        counts.setAxisMinimum(0f);
+        counts.setGranularity(1f);
+        counts.setLabelCount(5, false);
+        counts.setDrawAxisLine(false);
+        counts.setGridColor(grid);
+        counts.enableGridDashedLine(8f, 6f, 0f);
+        counts.setTextColor(muted);
+        counts.setTextSize(11f);
+        // Headroom above the tallest column for its count label
+        counts.setSpaceTop(18f);
+        counts.setXOffset(8f);
+        chart.getAxisRight().setEnabled(false);
     }
 
-    private void prepareChartData(BarData data) {
-        data.setValueTextSize(12f);
+    /** Draws one column per charted group, labelled with its count. */
+    private void bindSubpops(ArrayList<Integer> subpops) {
+        ArrayList<BarEntry> entries = new ArrayList<>();
+        for (int i = 0; i < dashboardSubpops.size(); i++) {
+            entries.add(new BarEntry(i, subpopCount(subpops, dashboardSubpops.get(i))));
+        }
+        BarDataSet set = new BarDataSet(entries, "");
+        // Each group keeps its own colour; the count above and the name below label every column
+        ArrayList<Integer> colors = new ArrayList<>();
+        for (Subpopulation subpop : dashboardSubpops) {
+            colors.add(androidx.core.content.ContextCompat.getColor(this, subpop.color));
+        }
+        set.setColors(colors);
+        set.setValueTextColor(androidx.core.content.ContextCompat.getColor(this, R.color.dash_text));
+        set.setValueTextSize(13f);
+        set.setValueTypeface(android.graphics.Typeface.DEFAULT_BOLD);
+        set.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getBarLabel(BarEntry entry) {
+                return String.valueOf(Math.round(entry.getY()));
+            }
+        });
+        BarData data = new BarData(set);
+        data.setBarWidth(0.5f);
+
+        BarChart chart = binding.dashSubpopChart;
         chart.setData(data);
-        chart.invalidate();
+        chart.animateY(900, Easing.EaseInOutQuad);
+    }
+
+    /** The count for one subpopulation; DashboardState.subpops holds one per Subpopulation in declaration order. */
+    private static int subpopCount(ArrayList<Integer> subpops, Subpopulation subpop) {
+        int idx = subpop.ordinal();
+        Integer value = subpops != null && idx < subpops.size() ? subpops.get(idx) : null;
+        return value != null ? value : 0;
+    }
+
+    /** Colours the visits-due icon and status line with the reserved status colours; the label carries the meaning too. */
+    private void bindVisitsDueStatus(int visits) {
+        int status;
+        int soft;
+        int label;
+        if (visits == 0) {
+            status = R.color.dash_status_good;
+            soft = R.color.dash_status_good_soft;
+            label = R.string.dash_status_none_due;
+        } else if (visits > 5) {
+            status = R.color.dash_status_critical;
+            soft = R.color.dash_status_critical_soft;
+            label = R.string.dash_status_many_due;
+        } else {
+            status = R.color.dash_status_warning;
+            soft = R.color.dash_status_warning_soft;
+            label = R.string.dash_status_due;
+        }
+        int statusColor = androidx.core.content.ContextCompat.getColor(this, status);
+        binding.iconDueVisitsChip.setBackgroundTintList(android.content.res.ColorStateList.valueOf(
+                androidx.core.content.ContextCompat.getColor(this, soft)));
+        binding.iconDueVisits.setColorFilter(statusColor, PorterDuff.Mode.SRC_IN);
+        binding.dueStatusDot.setBackgroundTintList(android.content.res.ColorStateList.valueOf(statusColor));
+        binding.dueStatusText.setText(label);
     }
 
     private boolean hasChartData(ArrayList<Integer> subpops) {
-        if (subpops == null || subpops.isEmpty()) {
-            return false;
-        }
-        int[] include = new int[]{0, 1, 2, 4};
-        for (int idx : include) {
-            if (idx >= 0 && idx < subpops.size()) {
-                Integer value = subpops.get(idx);
-                if (value != null && value > 0) {
-                    return true;
-                }
+        for (Subpopulation subpop : dashboardSubpops) {
+            if (subpopCount(subpops, subpop) > 0) {
+                return true;
             }
         }
         return false;
@@ -552,7 +554,7 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
     public void loadData() {
         setChartLoading(true);
         binding.chartEmptyState.setVisibility(View.GONE);
-        binding.fragmentVerticalbarchartChart.setVisibility(View.VISIBLE);
+        binding.dashSubpopList.setVisibility(View.VISIBLE);
         // Delegate to ViewModel (all-CHW view)
         dashboardViewModel.refresh(null);
         // AppUpdater is started in onCreate
@@ -713,7 +715,7 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
     public void loadCaseworkerData(){
         setChartLoading(true);
         binding.chartEmptyState.setVisibility(View.GONE);
-        binding.fragmentVerticalbarchartChart.setVisibility(View.VISIBLE);
+        binding.dashSubpopList.setVisibility(View.VISIBLE);
         // Delegate to ViewModel (filtered by caseworker phone)
         dashboardViewModel.refresh(phone);
     }
@@ -826,14 +828,6 @@ public class DashboardActivity extends AppCompatActivity  implements GenerateCSV
 
 
     //format values on top of the bars rto return whole numbers
-    private  class MyValueFormatter extends ValueFormatter {
-        @Override
-        public String getFormattedValue(float value) {
-            return ""+(int)value;
-        }
-
-
-    }
 
 
     public void showCustomDialog(Context context, String message) {

@@ -374,17 +374,10 @@ public class IndexDetailsActivity extends AppCompatActivity {
             fabCasePlan.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
         }
 
-        if( gender != null && gender.equals("male")){
-
-            toolbar.setBackgroundDrawable(new ColorDrawable(0xff218CC5));
-            myAppbar.setBackgroundDrawable(new ColorDrawable(0xff218CC5));
-
-        } else {
-
-            toolbar.setBackgroundDrawable(new ColorDrawable(0xffDA70D6));
-            myAppbar.setBackgroundDrawable(new ColorDrawable(0xffDA70D6));
-
-        }
+        // The app's green for every child; the avatar and the details line already show the gender
+        int headerColor = androidx.core.content.ContextCompat.getColor(this, R.color.primary);
+        toolbar.setBackgroundDrawable(new ColorDrawable(headerColor));
+        myAppbar.setBackgroundDrawable(new ColorDrawable(headerColor));
 
         fab = binding.fab;
         fabScrim = binding.fabScrim;
@@ -497,13 +490,8 @@ public class IndexDetailsActivity extends AppCompatActivity {
             }
         }
         if (profileNameLayout != null) {
-            // Match the exact colors initAfterLoad() already uses for the toolbar/app bar by gender,
-            // so this section blends with them instead of introducing a third, mismatched palette.
-            if ("male".equalsIgnoreCase(displayGender)) {
-                profileNameLayout.setBackgroundColor(0xff218CC5);
-            } else {
-                profileNameLayout.setBackgroundColor(0xffDA70D6);
-            }
+            // Same colour initAfterLoad() gives the toolbar and app bar, so the header reads as one block
+            profileNameLayout.setBackgroundColor(androidx.core.content.ContextCompat.getColor(this, R.color.primary));
         }
         if (txtChildid != null) {
             String idForDisplay = indexVCA != null ? indexVCA.getUnique_id() : (child != null ? child.getUnique_id() : null);

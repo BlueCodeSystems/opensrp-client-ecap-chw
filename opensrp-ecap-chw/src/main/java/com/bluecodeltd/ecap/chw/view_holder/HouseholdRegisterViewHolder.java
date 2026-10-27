@@ -74,7 +74,7 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
         }
         homeIcon.clearColorFilter();
         homeIcon.setTag(householdId);
-        statusStrip.setBackgroundColor(ContextCompat.getColor(context, R.color.register_household_icon));
+        statusStrip.setBackgroundColor(ContextCompat.getColor(context, R.color.reg_status_none));
 
         Threading.ioBestEffort(() -> {
             try {
@@ -97,14 +97,14 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
 
                         if (graduationModel != null && "1".equals(graduationModel.getGraduation_status())) {
                             homeIcon.setImageResource(R.mipmap.graduation);
-                            statusStrip.setBackgroundColor(ContextCompat.getColor(context, R.color.status_green));
+                            statusStrip.setBackgroundColor(ContextCompat.getColor(context, R.color.dash_status_good));
                             return;
                         }
 
                         if (householdStatus != null && "1".equals(householdStatus)) {
                             homeIcon.setImageResource(R.drawable.tabmenu_home);
                             homeIcon.setColorFilter(ContextCompat.getColor(context, com.nerdstone.neatformcore.R.color.colorRed));
-                            statusStrip.setBackgroundColor(ContextCompat.getColor(context, R.color.pie_chart_red));
+                            statusStrip.setBackgroundColor(ContextCompat.getColor(context, R.color.dash_status_critical));
                         } else {
                             if ("true".equals(screened)) {
                                 homeIcon.setImageResource(R.drawable.tabmenu_home_active);
@@ -112,7 +112,7 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
                                 homeIcon.setImageResource(R.drawable.tabmenu_home);
                             }
                             homeIcon.clearColorFilter();
-                            statusStrip.setBackgroundColor(ContextCompat.getColor(context, R.color.register_household_icon));
+                            statusStrip.setBackgroundColor(ContextCompat.getColor(context, R.color.reg_status_none));
                         }
 
                         if (house != null) {
@@ -231,7 +231,7 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
         try { count = Integer.parseInt(vcaCount); } catch (Exception ignored) {}
 
         vcaCountBadge.setText(count == 1 ? "1 CA" : count + " CAs");
-        vcaCountBadge.setTextColor(ContextCompat.getColor(context, count > 0 ? R.color.kpi_children : R.color.stat_pill_unknown));
+        vcaCountBadge.setTextColor(ContextCompat.getColor(context, count > 0 ? R.color.dash_text_secondary : R.color.dash_text_muted));
     }
 
 public boolean checkGraduationStatus(String householdId){

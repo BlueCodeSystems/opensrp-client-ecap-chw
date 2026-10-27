@@ -8,11 +8,15 @@ import com.bluecodeltd.ecap.chw.model.CaseStatusModel;
 import com.bluecodeltd.ecap.chw.model.Child;
 import com.bluecodeltd.ecap.chw.model.EcClientIndexSummary;
 import com.bluecodeltd.ecap.chw.model.VCAServiceModel;
+import com.bluecodeltd.ecap.chw.util.Subpopulation;
 
 import org.smartregister.dao.AbstractDao;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class IndexPersonDao  extends AbstractDao {
@@ -73,22 +77,38 @@ public class IndexPersonDao  extends AbstractDao {
      * getAllChildrenSubpops(), which loaded every child (~150 columns incl. signature images) just
      * to count these and drove the app out of memory on large caseloads.
      */
+    /**
+     * One count per {@link Subpopulation}, in declaration order, followed by the male and female counts.
+     * The query is built from the enum, so a new subpopulation is counted without changing this method.
+     * A subpopulation whose column isn't on ec_client_index counts as 0 instead of failing the whole query.
+     */
     public static int[] countSubpopsAndGender(String caseworkerPhoneNumber) {
-        int[] totals = new int[8];
+        Subpopulation[] subpops = Subpopulation.values();
+        Set<String> tableColumns = clientIndexColumns();
+        String[] columns = new String[subpops.length + 2];
+        StringBuilder select = new StringBuilder("SELECT ");
+        for (int i = 0; i < subpops.length; i++) {
+            columns[i] = "s" + i;
+            // An empty set means the schema couldn't be read; query every column as before
+            if (tableColumns.isEmpty() || tableColumns.contains(subpops[i].column.toLowerCase(Locale.ROOT))) {
+                select.append("SUM(CASE WHEN ").append(subpops[i].column).append(" = 'true' THEN 1 ELSE 0 END)");
+            } else {
+                Log.w("countSubpopsAndGender", "ec_client_index has no column " + subpops[i].column
+                        + " for subpopulation " + subpops[i].name() + "; counting it as 0");
+                select.append("0");
+            }
+            select.append(" AS ").append(columns[i]).append(", ");
+        }
+        columns[subpops.length] = "males";
+        columns[subpops.length + 1] = "females";
+        int[] totals = new int[columns.length];
         String phoneFilter = (caseworkerPhoneNumber == null || caseworkerPhoneNumber.isEmpty()) ? ""
                 : "AND phone = '" + caseworkerPhoneNumber.replace("'", "''") + "' ";
-        String sql = "SELECT " +
-                "SUM(CASE WHEN subpop1 = 'true' THEN 1 ELSE 0 END) AS s1, " +
-                "SUM(CASE WHEN subpop2 = 'true' THEN 1 ELSE 0 END) AS s2, " +
-                "SUM(CASE WHEN subpop3 = 'true' THEN 1 ELSE 0 END) AS s3, " +
-                "SUM(CASE WHEN subpop4 = 'true' THEN 1 ELSE 0 END) AS s4, " +
-                "SUM(CASE WHEN subpop5 = 'true' THEN 1 ELSE 0 END) AS s5, " +
-                "SUM(CASE WHEN subpop = 'true' THEN 1 ELSE 0 END) AS s6, " +
+        String sql = select +
                 "SUM(CASE WHEN LOWER(gender) = 'male' THEN 1 ELSE 0 END) AS males, " +
                 "SUM(CASE WHEN LOWER(gender) = 'female' THEN 1 ELSE 0 END) AS females " +
                 "FROM ec_client_index WHERE is_closed = 0 AND (deleted IS NULL OR deleted != '1') " +
                 phoneFilter;
-        String[] columns = {"s1", "s2", "s3", "s4", "s5", "s6", "males", "females"};
         try {
             AbstractDao.DataMap<int[]> dataMap = c -> {
                 int[] row = new int[columns.length];
@@ -106,6 +126,22 @@ public class IndexPersonDao  extends AbstractDao {
             Log.e("countSubpopsAndGender", "Exception", e);
         }
         return totals;
+    }
+
+    /** Lower-cased column names of ec_client_index, or an empty set if the schema can't be read. */
+    private static Set<String> clientIndexColumns() {
+        Set<String> names = new HashSet<>();
+        try {
+            List<String> rows = AbstractDao.readData("PRAGMA table_info(ec_client_index)", c -> getCursorValue(c, "name"));
+            if (rows != null) {
+                for (String name : rows) {
+                    if (name != null) names.add(name.toLowerCase(Locale.ROOT));
+                }
+            }
+        } catch (Exception e) {
+            Log.e("clientIndexColumns", "Exception", e);
+        }
+        return names;
     }
 
     public static String countAllChildren(){

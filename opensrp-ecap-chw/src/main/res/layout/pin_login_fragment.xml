@@ -158,7 +158,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:text="@string/use_your_password"
-                        android:textColor="#0089D5"
+                        android:textColor="#188038"
                         android:textSize="@dimen/login_edit_text_textSize" />
 
                 </LinearLayout>

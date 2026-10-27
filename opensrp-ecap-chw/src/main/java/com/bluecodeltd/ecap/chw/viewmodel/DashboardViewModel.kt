@@ -12,6 +12,7 @@ import com.bluecodeltd.ecap.chw.dao.IndexPersonDao
 import com.bluecodeltd.ecap.chw.dao.PMTCTMotherDao
 import com.bluecodeltd.ecap.chw.dao.ServiceRegisterDao
 import com.bluecodeltd.ecap.chw.util.ServiceRegister
+import com.bluecodeltd.ecap.chw.util.Subpopulation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.ensureActive
@@ -50,8 +51,10 @@ class DashboardViewModel : ViewModel() {
             val visitDates = CaregiverVisitationDao.getAllVisitDates()
             val visitsDue = computeVisitsDue(visitDates)
             ensureActive()
+            // One count per Subpopulation in declaration order, then males and females
             val totals = IndexPersonDao.countSubpopsAndGender(caseworkerPhone)
-            val subpops = arrayListOf(totals[0], totals[1], totals[2], totals[3], totals[4], totals[5])
+            val subpopCount = Subpopulation.values().size
+            val subpops = ArrayList(totals.take(subpopCount))
             ensureActive()
             val householdsCount = if (caseworkerPhone.isNullOrEmpty())
                 HouseholdDao.countNumberoFHouseholds() else HouseholdDao.countNumberOfHouseholdsByCaseworkerPhone(caseworkerPhone)
@@ -77,8 +80,8 @@ class DashboardViewModel : ViewModel() {
                     subpops = subpops,
                     householdsCount = householdsCount,
                     vcasCount = vcasCount,
-                    maleCount = totals[6].toString(),
-                    femaleCount = totals[7].toString(),
+                    maleCount = totals[subpopCount].toString(),
+                    femaleCount = totals[subpopCount + 1].toString(),
                     caregiverMaleCount = caregiverMaleCount,
                     caregiverFemaleCount = caregiverFemaleCount,
                     mothersCount = mothersCount,

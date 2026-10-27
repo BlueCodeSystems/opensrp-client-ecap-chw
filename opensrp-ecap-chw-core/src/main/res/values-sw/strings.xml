@@ -1,7 +1,7 @@
 <resources>
     <!--Login and app strings-->
-    <color name="chw_primary">#218CC5</color>
-    <color name="chw_primary_dark">#0d384e</color>
+    <color name="chw_primary">#188038</color>
+    <color name="chw_primary_dark">#0A3A23</color>
     <string name="powered_by">Imedhaminiwa na</string>
     <string name="username">Jina la mtumiaji</string>
     <!-- Date manipulation-->

@@ -90,9 +90,9 @@ public class PMTCTRegisterViewHolder extends RecyclerView.ViewHolder {
         }
         if (myStatus != null) {
             if (flagged) {
-                myStatus.setBackgroundColor(0xFFE53935); // red when unsuppressed
+                myStatus.setBackgroundResource(R.color.dash_status_critical); // red when unsuppressed
             } else {
-                myStatus.setBackgroundResource(R.color.register_pmtct_icon);
+                myStatus.setBackgroundResource(R.color.reg_status_none);
             }
         }
         // no warning icon in register row
@@ -105,7 +105,7 @@ public class PMTCTRegisterViewHolder extends RecyclerView.ViewHolder {
         // When suppressed, ensure unsuppressed alert is hidden and stripe set to default
         if (flagged) {
             if (unsuppressedAlert != null) unsuppressedAlert.setVisibility(View.GONE);
-            if (myStatus != null) myStatus.setBackgroundResource(R.color.register_pmtct_icon);
+            if (myStatus != null) myStatus.setBackgroundResource(R.color.reg_status_none);
             if (unsuppressedVlFlag != null) unsuppressedVlFlag.clearAnimation();
         }
     }

@@ -17,12 +17,12 @@
     <color name="button_navy_blue">#1A237E</color>
     <color name="client_list_grey">#F5F5F5</color>
     <color name="client_list_header_dark_grey">#424242</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="customAppThemeBlue">#1976D2</color>
+    <color name="colorPrimaryDark">#0A3A23</color>
+    <color name="customAppThemeBlue">#188038</color>
     <color name="dark_grey">#616161</color>
     <color name="due_vaccine_red">#D32F2F</color>
-    <color name="family_actionbar">#3F51B5</color>
-    <color name="family_navigation">#303F9F</color>
+    <color name="family_actionbar">#0F5230</color>
+    <color name="family_navigation">#0F5230</color>
     <color name="grey">#9E9E9E</color>
     <color name="light_gray">#D3D3D3</color>
     <color name="light_grey">#ECECEC</color>
@@ -32,10 +32,10 @@
     <color name="medical_bar">#009688</color>
     <color name="medical_history_item_grey">#EEEEEE</color>
     <color name="medical_text_inner">#424242</color>
-    <color name="opensrp_primary">#3F51B5</color>
+    <color name="opensrp_primary">#0F5230</color>
     <color name="other_member_profile_bg">#FFF3E0</color>
-    <color name="primary">#3F51B5</color>
-    <color name="primary_dark">#303F9F</color>
+    <color name="primary">#0F5230</color>
+    <color name="primary_dark">#0A3A23</color>
     <color name="smart_register_client_divider_color">#BDBDBD</color>
     <color name="status_bar_bg_dark_grey">#212121</color>
     <color name="text_black">#212121</color>
@@ -55,18 +55,21 @@
     <color name="navigation_item_unselected">#9E9E9E</color>
     <color name="light_pink">#FFCDD2</color>
     <color name="progress_orange">#FFA726</color>
-    <!-- Side menu: ECAP navy body under a white logo header -->
-    <color name="nav_drawer_bg">#0D384E</color>
+    <!-- Side menu: slate body under a white logo header; green marks the selected register, the
+         header rule and the logo, so it stands out against the green app bars beside it -->
+    <color name="nav_drawer_bg">#1F2D38</color>
     <color name="nav_header_bg">#FFFFFF</color>
-    <color name="nav_header_accent">#218CC5</color>
+    <color name="nav_header_accent">#188038</color>
+    <color name="nav_header_title">#1F2D38</color>
+    <color name="nav_header_subtitle">#5B6B78</color>
     <color name="nav_text">#FFFFFF</color>
-    <color name="nav_text_secondary">#A9C3D1</color>
-    <color name="nav_icon">#CFE0EA</color>
+    <color name="nav_text_secondary">#AAB8C2</color>
+    <color name="nav_icon">#C9D3DA</color>
     <color name="nav_divider">#1FFFFFFF</color>
     <color name="nav_ripple">#33FFFFFF</color>
-    <!-- Deeper than the brand blue so white text on it stays above 4.5:1 -->
-    <color name="nav_selected_bg">#1A75A8</color>
+    <!-- The login button green; white text on it is about 5:1 -->
+    <color name="nav_selected_bg">#188038</color>
     <color name="nav_badge_bg">#26FFFFFF</color>
     <color name="nav_badge_text">#FFFFFF</color>
-    <color name="nav_sync_bg">#0A2D3F</color>
+    <color name="nav_sync_bg">#17222B</color>
 </resources>

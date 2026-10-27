@@ -14,5 +14,7 @@
     <dimen name="login_button_height">60dp</dimen>
     <dimen name="login_button_text_size">18sp</dimen>
     <dimen name="login_logo_max_height">232dp</dimen>
-    <dimen name="login_coat_of_arms_height">110dp</dimen>
+    <dimen name="login_ministry_text_size">15sp</dimen>
+    <dimen name="login_developer_logo_height">18dp</dimen>
+    <dimen name="login_coat_of_arms_height">92dp</dimen>
 </resources>

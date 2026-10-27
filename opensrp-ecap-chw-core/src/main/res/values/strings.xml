@@ -1,7 +1,7 @@
 <resources>
     <!--Login and app strings-->
-    <color name="chw_primary">#218CC5</color>
-    <color name="chw_primary_dark">#0d384e</color>
+    <color name="chw_primary">#188038</color>
+    <color name="chw_primary_dark">#0A3A23</color>
     <string name="powered_by">Powered by</string>
     <string name="username">Username</string>
     <string name="icons_counter" translatable="false">+%1$d</string>
@@ -9,6 +9,9 @@
     <!-- Date manipulation-->
     <string name="password">Password</string>
     <string name="nav_logo">Boresha Afya App</string>
+    <string name="nav_app_name">iCCMS</string>
+    <string name="nav_app_full_name">Integrated Community Case Management System</string>
+    <string name="nav_partner_logos">Partner logos: United States, AFGHS-PCZ and Project Concern Zambia</string>
     <string name="day">day</string>
     <string name="days">days</string>
     <string name="week">week</string>

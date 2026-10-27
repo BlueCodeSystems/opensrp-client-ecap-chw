@@ -8,7 +8,7 @@
         android:top="1dp">
         <shape android:shape="rectangle">
             <corners android:radius="4dp" />
-            <solid android:color="#0089D5" />
+            <solid android:color="#188038" />
         </shape>
     </item>
 

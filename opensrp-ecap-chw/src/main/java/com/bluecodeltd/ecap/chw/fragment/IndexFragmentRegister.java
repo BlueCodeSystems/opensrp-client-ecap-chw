@@ -148,6 +148,9 @@ public class IndexFragmentRegister extends BaseSafeRegisterFragment implements I
                 }
             } catch (Exception ignored) { }
 
+            // The fallback above can bind clientsView after the base setup already ran, so drop the divider again
+            removeListDividers();
+
             // Toolbar Setup
             Toolbar toolbar = view.findViewById(org.smartregister.R.id.register_toolbar);
             if (toolbar != null) {

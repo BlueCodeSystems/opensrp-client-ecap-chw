@@ -31,6 +31,20 @@ public abstract class BaseSafeRegisterFragment extends BaseRegisterFragment {
         } catch (Throwable t) {
             Timber.w(t, "Base setupViews threw; continuing");
         }
+        removeListDividers();
+    }
+
+    /**
+     * The register rows are spaced cards, so drop the hairline DividerItemDecoration the base list adds
+     * between them. Other decorations (such as grid spacing) are left alone.
+     */
+    protected void removeListDividers() {
+        if (clientsView == null) return;
+        for (int i = clientsView.getItemDecorationCount() - 1; i >= 0; i--) {
+            if (clientsView.getItemDecorationAt(i) instanceof androidx.recyclerview.widget.DividerItemDecoration) {
+                clientsView.removeItemDecorationAt(i);
+            }
+        }
     }
 
     protected void ensureBaseScaffold(View root) {

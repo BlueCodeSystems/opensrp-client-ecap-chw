@@ -195,12 +195,13 @@
 
             </LinearLayout>
 
-            <!-- Bottom section: coat of arms on the bottom edge -->
+            <!-- Bottom section: coat of arms and ministry name on the bottom edge -->
             <LinearLayout
                 android:id="@+id/bottom_section"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/login_bottom_margin"
+                android:gravity="center_horizontal"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -215,7 +216,32 @@
                     android:scaleType="fitCenter"
                     android:src="@drawable/iccms_coat_of_arms" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:letterSpacing="0.06"
+                    android:text="@string/login_ministry"
+                    android:textAllCaps="true"
+                    android:textColor="@color/login_text"
+                    android:textSize="@dimen/login_ministry_text_size" />
+
             </LinearLayout>
+
+            <!-- Developer credit: small and faded in the corner, out of the main flow -->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/login_developer_logo_height"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="@dimen/login_bottom_margin"
+                android:adjustViewBounds="true"
+                android:alpha="0.5"
+                android:contentDescription="@string/login_developer_logo"
+                android:scaleType="fitCenter"
+                android:src="@drawable/iccms_bluecode_logo"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -187,7 +187,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="#218CC5"
+                android:background="#188038"
                 android:onClick="onClick"
                 android:padding="8dp"
                 android:text="Add Service Report"

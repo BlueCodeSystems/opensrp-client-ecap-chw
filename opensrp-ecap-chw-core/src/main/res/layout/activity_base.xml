@@ -27,7 +27,7 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="false">
 
-            <!-- Header: the partner logo banner, kept on white so its full-colour artwork reads correctly -->
+            <!-- Header: partner logos on white, then the app name and the signed-in user as text -->
             <LinearLayout
                 android:id="@+id/rlLogo"
                 android:layout_width="match_parent"
@@ -35,25 +35,50 @@
                 android:layout_alignParentTop="true"
                 android:background="@color/nav_header_bg"
                 android:orientation="vertical"
-                android:paddingStart="20dp"
+                android:paddingStart="24dp"
                 android:paddingTop="32dp"
-                android:paddingEnd="20dp"
-                android:paddingBottom="16dp">
+                android:paddingEnd="24dp"
+                android:paddingBottom="20dp">
 
                 <ImageView
                     android:id="@+id/ivLogo"
                     android:layout_width="match_parent"
-                    android:layout_height="96dp"
+                    android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
-                    android:contentDescription="@string/nav_logo"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_logo" />
+                    android:contentDescription="@string/nav_partner_logos"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/iccms_partner_logos" />
 
-                <!-- The banner already carries the name; kept for NavigationMenu, which sets its text -->
+                <!-- App name; NavigationMenu sets its text -->
                 <TextView
                     android:id="@+id/tvLogo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/nav_app_name"
+                    android:textColor="@color/nav_header_title"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/nav_app_full_name"
+                    android:textColor="@color/nav_header_subtitle"
+                    android:textSize="12sp" />
+
+                <!-- Signed-in user and facility; NavigationMenu fills it -->
+                <TextView
+                    android:id="@+id/tvNavUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:ellipsize="end"
+                    android:fontFamily="sans-serif-medium"
+                    android:maxLines="1"
+                    android:textColor="@color/nav_header_accent"
+                    android:textSize="13sp"
                     android:visibility="gone" />
 
             </LinearLayout>

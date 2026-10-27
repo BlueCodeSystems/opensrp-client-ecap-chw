@@ -7,16 +7,16 @@
     android:id="@+id/register_columns"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginBottom="4dp"
+    android:layout_marginStart="12dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginBottom="6dp"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="1dp"
-    app:cardBackgroundColor="@color/register_card_bg">
+    app:cardCornerRadius="14dp"
+    app:cardElevation="1.5dp"
+    app:cardBackgroundColor="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,21 +26,21 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="76dp"
+            android:minHeight="88dp"
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
             <View
                 android:id="@+id/service_register_accent"
-                android:layout_width="6dp"
+                android:layout_width="4dp"
                 android:layout_height="match_parent"
-                android:minHeight="76dp" />
+                android:background="@color/reg_status_none"/>
 
             <FrameLayout
                 android:id="@+id/service_register_avatar"
-                android:layout_width="46dp"
-                android:layout_height="46dp"
-                android:layout_marginStart="12dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="14dp"
                 android:background="@drawable/circle_light_grey">
 
                 <ImageView
@@ -70,10 +70,10 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:ellipsize="end"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    tools:text="Chanda Mwape" />
+                    android:textColor="@color/dash_text"
+                    android:textSize="16sp"
+                    tools:text="Chanda Mwape"
+                    android:fontFamily="sans-serif-medium"/>
 
                 <org.smartregister.view.customcontrols.CustomFontTextView
                     android:id="@+id/gender_age"
@@ -82,8 +82,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
                     android:maxLines="1"
-                    android:textColor="@color/textSecondary"
-                    android:textSize="12sp"
+                    android:textColor="@color/dash_text_secondary"
+                    android:textSize="13sp"
                     tools:text="Female : 28 Years Old" />
 
                 <org.smartregister.view.customcontrols.CustomFontTextView
@@ -94,7 +94,8 @@
                     android:layout_marginTop="2dp"
                     android:maxLines="1"
                     android:ellipsize="end"
-                    android:textSize="11sp"
+                    android:textSize="12sp"
+                    android:textColor="@color/dash_text_secondary"
                     android:textStyle="bold"
                     tools:text="Appointment: 12-11-2026 · ART refill" />
 
@@ -106,25 +107,26 @@
                     android:layout_marginTop="2dp"
                     android:maxLines="1"
                     android:ellipsize="end"
-                    android:textColor="@color/textSecondary"
-                    android:textSize="11sp"
+                    android:textColor="@color/dash_text_secondary"
+                    android:textSize="12sp"
                     tools:text="ID : 1002/4471" />
 
             </LinearLayout>
 
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:layout_marginEnd="12dp"
                 android:src="@drawable/ic_chevron_right"
-                android:contentDescription="@null" />
+                android:contentDescription="@null"
+                app:tint="@color/dash_text_muted"/>
 
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/divider_grey" />
+            android:background="@color/dash_divider" />
 
         <TextView
             android:id="@+id/service_register_footer"
@@ -134,7 +136,8 @@
             android:paddingEnd="14dp"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
-            android:textSize="10sp"
+            android:textSize="12sp"
+            android:textColor="@color/dash_text_secondary"
             android:textStyle="bold"
             android:letterSpacing="0.05"
             tools:text="Appointments" />

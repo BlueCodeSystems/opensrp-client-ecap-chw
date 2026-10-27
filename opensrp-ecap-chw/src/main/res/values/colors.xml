@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Legacy Holo blue for dialogs referencing color/holo_blue_light -->
-    <color name="holo_blue_light">#33B5E5</color>
+    <color name="holo_blue_light">#4CAF6E</color>
     <!-- CHW theme colors (placeholders to satisfy theme references) -->
-    <color name="chw_family_primary">#218CC5</color>
-    <color name="chw_family_primary_dark">#0D384E</color>
-    <color name="chw_family_accent">#3797CA</color>
-    <color name="chw_accent">#3797CA</color>
+    <color name="chw_family_primary">#0F5230</color>
+    <color name="chw_family_primary_dark">#0A3A23</color>
+    <color name="chw_family_accent">#188038</color>
+    <color name="chw_accent">#188038</color>
     <!-- Reporting pie chart colors and common color refs -->
     <color name="pie_chart_yes_green">#4CAF50</color>
     <color name="pie_chart_no_red">#F44336</color>
     <color name="black">#000000</color>
     <!-- Primary color fallback referenced in some forms -->
-    <color name="primary">#218CC5</color>
-    <color name="family_actionbar">#218CC5</color>
-    <color name="family_navigation">#61A5C9</color>
+    <color name="primary">#0F5230</color>
+    <color name="family_actionbar">#0F5230</color>
+    <color name="family_navigation">#4CAF6E</color>
     <color name="pie_chart_yellow">#FFC107</color>
     <!-- Additional pie chart palette used in ChwReport -->
     <color name="pie_chart_blue">#2196F3</color>
@@ -24,7 +24,7 @@
     <color name="pie_chart_brown">#795548</color>
     <color name="pie_chart_red">#F44336</color>
     <!-- CHW primary color alias used in fragments -->
-    <color name="chw_primary">#218CC5</color>
+    <color name="chw_primary">#0F5230</color>
     <!-- Fallback color used by some library references -->
     <color name="translucent_yellow">#80FFFF00</color>
     <!-- Bottom navigation background color -->
@@ -35,9 +35,9 @@
     <color name="grey">#9E9E9E</color>
     <color name="light_grey">#E0E0E0</color>
     <color name="client_list_header_dark_grey">#333333</color>
-    <color name="search_bar_background_black">#0D384E</color>
+    <color name="search_bar_background_black">#0A3A23</color>
     <color name="search_hint_white">#B3FFFFFF</color>
-    <color name="customAppThemeBlue">#3797CA</color>
+    <color name="customAppThemeBlue">#188038</color>
 
     
     <color name="colorDarkGrey">#585858</color>
@@ -110,8 +110,8 @@
     <color name="bar_cassv">#AB47BC</color>
 
     <!-- Header gradient -->
-    <color name="dash_header_start">#1565C0</color>
-    <color name="dash_header_end">#1976D2</color>
+    <color name="dash_header_start">#0A3A23</color>
+    <color name="dash_header_end">#0F5230</color>
 
     <!-- Card text on dark backgrounds -->
     <color name="card_text_primary">#FFFFFF</color>
@@ -135,8 +135,8 @@
     <!-- Register list icons & backgrounds -->
     <color name="register_vca_bg">#E0F7FA</color>
     <color name="register_vca_icon">#0097A7</color>
-    <color name="register_vca_header">#006064</color>
-    <color name="register_vca_header_light">#B2EBF2</color>
+    <color name="register_vca_header">#0F5230</color>
+    <color name="register_vca_header_light">#CFE5D7</color>
     <color name="register_household_bg">#E8EAF6</color>
     <color name="register_household_icon">#303F9F</color>
     <color name="register_mother_bg">#E8F5E9</color>
@@ -151,11 +151,11 @@
     <color name="register_prep_icon">#5E35B1</color>
     <color name="register_linkages_bg">#E0F2F1</color>
     <color name="register_linkages_icon">#00796B</color>
-    <color name="register_pmtct_header">#AD1457</color>
-    <color name="register_pmtct_header_light">#F8BBD0</color>
+    <color name="register_pmtct_header">#0F5230</color>
+    <color name="register_pmtct_header_light">#CFE5D7</color>
     <color name="register_pmtct_accent_light">#EC407A</color>
-    <color name="register_hei_header">#E91E63</color>
-    <color name="register_hei_gradient_start">#F06292</color>
+    <color name="register_hei_header">#0F5230</color>
+    <color name="register_hei_gradient_start">#188038</color>
     <color name="register_malaria_bg">#E0F7FA</color>
     <color name="register_malaria_icon">#00838F</color>
     <color name="register_nutrition_bg">#FFF3E0</color>
@@ -171,12 +171,12 @@
 
     <!-- Community Alert (CBS) report document colors -->
     <color name="cbs_report_screen_bg">#EEF2F6</color>
-    <color name="cbs_report_header_start">#1E6FA8</color>
-    <color name="cbs_report_header_end">#218CC5</color>
-    <color name="cbs_report_section_label">#0D384E</color>
+    <color name="cbs_report_header_start">#0F5230</color>
+    <color name="cbs_report_header_end">#188038</color>
+    <color name="cbs_report_section_label">#0A3A23</color>
     <color name="cbs_report_border">#C7D3DD</color>
     <color name="cbs_report_column_header_bg">#E5EFF6</color>
-    <color name="cbs_report_column_header_text">#0D384E</color>
+    <color name="cbs_report_column_header_text">#0A3A23</color>
     <color name="cbs_report_row_stripe">#F4F8FB</color>
     <color name="cbs_report_row_white">#FFFFFF</color>
     <color name="cbs_report_total_row_bg">#FDECC8</color>
@@ -186,7 +186,7 @@
 
     <!-- CBS weekly submissions-list card: stat chip colors -->
     <color name="cbs_stat_affected_bg">#E3F0FA</color>
-    <color name="cbs_stat_affected_text">#1E6FA8</color>
+    <color name="cbs_stat_affected_text">#0F5230</color>
     <color name="cbs_stat_deaths_bg">#FBE7E6</color>
     <color name="cbs_stat_deaths_text">#B3261E</color>
     <color name="cbs_stat_suspected_bg">#FDECC8</color>
@@ -211,4 +211,39 @@
     <color name="login_button_disabled">#9FC2AC</color>
     <color name="login_button_ripple">#33FFFFFF</color>
 
+    <!-- Dashboard: green header and accents from the login screen; status colours are the reserved status set -->
+    <color name="dash_page_bg">#F3F6F4</color>
+    <color name="dash_text">#1F2D38</color>
+    <color name="dash_text_secondary">#5B6B78</color>
+    <color name="dash_text_muted">#8A98A3</color>
+    <color name="dash_divider">#E9EEEB</color>
+    <color name="dash_track">#E6ECE8</color>
+    <color name="dash_accent">#188038</color>
+    <color name="dash_accent_soft">#E3F1E7</color>
+    <!-- Subpopulation column colours: the validated categorical palette, one fixed colour per group -->
+    <color name="dash_cat_blue">#2A78D6</color>
+    <color name="dash_cat_orange">#EB6834</color>
+    <color name="dash_cat_aqua">#1BAF7A</color>
+    <color name="dash_cat_violet">#6250D6</color>
+    <color name="dash_cat_yellow">#EDA100</color>
+    <color name="dash_cat_magenta">#E87BA4</color>
+    <color name="dash_status_good">#0CA30C</color>
+    <color name="dash_status_good_soft">#E2F5E2</color>
+    <color name="dash_status_warning">#FAB219</color>
+    <color name="dash_status_warning_soft">#FEF3DA</color>
+    <color name="dash_status_critical">#D03B3B</color>
+    <color name="dash_status_critical_soft">#FBE6E6</color>
+    <color name="dash_switch_track_off">#40FFFFFF</color>
+    <color name="dash_switch_track_on">#7BD08F</color>
+
+    <!-- VCA register rows: soft status pills with dark text of the same hue, so the outlined green
+         Conduct Visit button reads as the only action -->
+    <color name="reg_pill_good_text">#1F6B1F</color>
+    <color name="reg_pill_warning_text">#7A4F00</color>
+    <color name="reg_pill_critical_text">#A32020</color>
+    <color name="reg_pill_neutral_bg">#ECEFF1</color>
+    <color name="reg_pill_neutral_text">#5B6B78</color>
+    <color name="reg_status_none">#CBD5DC</color>
+    <!-- Conduct Visit text, green to match its outlined pill (white if the pill is made solid) -->
+    <color name="reg_pill_action_text">#188038</color>
 </resources>

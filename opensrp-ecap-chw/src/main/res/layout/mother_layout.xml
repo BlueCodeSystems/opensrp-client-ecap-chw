@@ -6,16 +6,16 @@
     android:id="@+id/register_columns"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginBottom="4dp"
+    android:layout_marginStart="12dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginBottom="6dp"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="1dp"
-    app:cardBackgroundColor="@color/register_card_bg">
+    app:cardCornerRadius="14dp"
+    app:cardElevation="1.5dp"
+    app:cardBackgroundColor="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,29 +27,28 @@
             android:id="@+id/itemm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="76dp"
+            android:minHeight="88dp"
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
             <!-- Left accent strip -->
             <View
-                android:layout_width="6dp"
+                android:layout_width="4dp"
                 android:layout_height="match_parent"
-                android:minHeight="76dp"
-                android:background="@color/register_mother_icon" />
+                android:background="@color/reg_status_none" />
 
             <!-- Mother avatar -->
             <FrameLayout
-                android:layout_width="46dp"
-                android:layout_height="46dp"
-                android:layout_marginStart="12dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="14dp"
                 android:background="@drawable/circle_light_grey"
                 android:backgroundTint="@color/register_mother_bg">
 
                 <ImageView
                     android:id="@+id/gender_image"
-                    android:layout_width="26dp"
-                    android:layout_height="26dp"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_mother_holding_baby"
                     app:tint="@color/register_mother_icon"
@@ -83,10 +82,10 @@
                         android:layout_weight="1"
                         android:maxLines="1"
                         android:ellipsize="end"
-                        android:textColor="@color/textPrimary"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        tools:text="Mother Name" />
+                        android:textColor="@color/dash_text"
+                        android:textSize="16sp"
+                        tools:text="Mother Name"
+                        android:fontFamily="sans-serif-medium"/>
 
                     <org.smartregister.view.customcontrols.CustomFontTextView
                         android:id="@+id/motherAgeTextView"
@@ -94,8 +93,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
-                        android:textColor="@color/textSecondary"
-                        android:textSize="12sp"
+                        android:textColor="@color/dash_text_secondary"
+                        android:textSize="13sp"
                         tools:text="32 yrs" />
 
                 </LinearLayout>
@@ -109,9 +108,7 @@
                     android:layout_marginTop="3dp"
                     android:maxLines="1"
                     android:ellipsize="end"
-                    android:drawableStart="@drawable/ic_mother_child"
-                    android:drawablePadding="4dp"
-                    android:textColor="@color/register_mother_icon"
+                    android:textColor="@color/dash_text_secondary"
                     android:textSize="12sp"
                     android:textStyle="bold"
                     tools:text="3 children" />
@@ -125,21 +122,20 @@
                     android:layout_marginTop="2dp"
                     android:maxLines="1"
                     android:ellipsize="end"
-                    android:drawableStart="@drawable/ic_household"
-                    android:drawablePadding="4dp"
-                    android:textColor="@color/textSecondary"
-                    android:textSize="11sp"
+                    android:textColor="@color/dash_text_secondary"
+                    android:textSize="12sp"
                     tools:text="Kanyama Clinic" />
 
             </LinearLayout>
 
             <!-- Chevron -->
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:layout_marginEnd="12dp"
                 android:src="@drawable/ic_chevron_right"
-                android:contentDescription="@null" />
+                android:contentDescription="@null"
+                app:tint="@color/dash_text_muted"/>
 
         </LinearLayout>
 
@@ -147,7 +143,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/divider_grey" />
+            android:background="@color/dash_divider" />
 
         <!-- Footer: last interaction / enrollment date -->
         <LinearLayout
@@ -166,7 +162,7 @@
                 android:layout_marginEnd="4dp"
                 android:src="@drawable/ic_calender"
                 android:contentDescription="@null"
-                app:tint="@color/register_mother_icon" />
+                app:tint="@color/dash_text_muted" />
 
             <org.smartregister.view.customcontrols.CustomFontTextView
                 android:id="@+id/referralDateTextView"
@@ -175,8 +171,8 @@
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:textColor="@color/register_mother_icon"
-                android:textSize="10sp"
+                android:textColor="@color/dash_text_secondary"
+                android:textSize="12sp"
                 android:textStyle="bold"
                 android:letterSpacing="0.05"
                 tools:text="Enrolled: 12 Jan 2025" />

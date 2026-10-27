@@ -184,11 +184,12 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
         syncProgressBar = rootView.findViewById(R.id.pbSync);
 
         ImageView ivLogo = rootView.findViewById(R.id.ivLogo);
-        ivLogo.setContentDescription(activity.getString(R.string.nav_logo));
-        ivLogo.setImageResource(R.drawable.ecap_logo);
+        ivLogo.setContentDescription(activity.getString(R.string.nav_partner_logos));
+        // The partner logos from the login banner; the app name is real text beneath them
+        ivLogo.setImageResource(R.drawable.iccms_partner_logos);
 
         TextView tvLogo = rootView.findViewById(R.id.tvLogo);
-        tvLogo.setText(activity.getString(R.string.nav_logo));
+        tvLogo.setText(activity.getString(R.string.nav_app_name));
 
         if (syncProgressBar != null) {
             syncProgressBar.setIndeterminate(true);
@@ -231,9 +232,26 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
 
     @Override
     public void refreshCurrentUser(String name) {
-        if (tvLogout != null && activityWeakReference.get() != null) {
-            tvLogout.setText(String.format("%s %s", activityWeakReference.get().getResources().getString(R.string.log_out_as), name));
+        Activity activity = activityWeakReference.get();
+        if (tvLogout != null && activity != null) {
+            tvLogout.setText(String.format("%s %s", activity.getResources().getString(R.string.log_out_as), name));
         }
+        showSignedInUser(activity, name);
+    }
+
+    /** "Name · Facility" under the app name in the header; the facility is the one the dashboard shows. */
+    private void showSignedInUser(Activity activity, String name) {
+        if (activity == null || rootView == null) return;
+        TextView tvNavUser = rootView.findViewById(R.id.tvNavUser);
+        if (tvNavUser == null) return;
+        String facility = androidx.preference.PreferenceManager.getDefaultSharedPreferences(activity).getString("facility", "");
+        StringBuilder line = new StringBuilder(name != null ? name.trim() : "");
+        if (facility != null && !facility.trim().isEmpty() && !"anonymous".equalsIgnoreCase(facility.trim())) {
+            if (line.length() > 0) line.append(" · ");
+            line.append(facility.trim());
+        }
+        tvNavUser.setText(line);
+        tvNavUser.setVisibility(line.length() > 0 ? View.VISIBLE : View.GONE);
     }
 
     @Override

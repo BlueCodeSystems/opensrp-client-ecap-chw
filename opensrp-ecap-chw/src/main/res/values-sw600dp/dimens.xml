@@ -45,5 +45,14 @@
     <dimen name="login_button_height">56dp</dimen>
     <dimen name="login_button_text_size">17sp</dimen>
     <dimen name="login_logo_max_height">205dp</dimen>
-    <dimen name="login_coat_of_arms_height">100dp</dimen>
+    <dimen name="login_ministry_text_size">14sp</dimen>
+    <dimen name="login_developer_logo_height">16dp</dimen>
+    <dimen name="login_coat_of_arms_height">84dp</dimen>
+
+    <!-- Dashboard, tablets -->
+    <dimen name="dash_kpi_number">32sp</dimen>
+    <dimen name="dash_card_label">15sp</dimen>
+    <dimen name="dash_card_sublabel">13sp</dimen>
+    <dimen name="dash_card_gap">8dp</dimen>
+    <dimen name="dash_subpop_chart_height">300dp</dimen>
 </resources>

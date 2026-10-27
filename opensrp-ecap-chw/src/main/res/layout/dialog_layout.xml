@@ -18,7 +18,7 @@
         android:id="@+id/dialog_button"
         android:text="OK"
         android:textColor="@color/white"
-        android:background="#0089D5"
+        android:background="#188038"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"/>
