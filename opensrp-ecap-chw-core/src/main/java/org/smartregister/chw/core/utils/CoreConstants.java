@@ -1004,6 +1004,7 @@ public class CoreConstants {
         public static final String APPOINTMENTS_ACTIVITY = "APPOINTMENTS_ACTIVITY";
         public static final String PREP_ACTIVITY = "PREP_ACTIVITY";
         public static final String REFERRAL_LINKAGES_ACTIVITY = "REFERRAL_LINKAGES_ACTIVITY";
+        public static final String TRAINING_ATTENDANCE_ACTIVITY = "TRAINING_ATTENDANCE_ACTIVITY";
         public static final String FLAGS_ACTIVITY = "FLAGS_ACTIVITY";
 
     }

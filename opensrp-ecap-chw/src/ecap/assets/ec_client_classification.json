@@ -21,6 +21,13 @@
           },
           {
             "field": "eventType",
+            "field_value": "Training Attendance",
+            "creates_case": [
+              "ec_training_attendance"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "Monthly Nutrition Report",
             "creates_case": [
               "ec_monthly_nutrition"

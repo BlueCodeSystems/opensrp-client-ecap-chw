@@ -1,0 +1,298 @@
+{
+  "count": "1",
+  "encounter_type": "Training Attendance",
+  "entity_id": "",
+  "relational_id": "",
+  "validate_on_submit": true,
+  "show_errors_on_submit": true,
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1": {
+    "title": "Log training",
+    "fields": [
+      {
+        "key": "form_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "form_id",
+        "type": "hidden",
+        "value": ""
+      },
+      {
+        "key": "caseworker_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_name",
+        "type": "hidden",
+        "value": ""
+      },
+      {
+        "key": "facility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "facility",
+        "type": "hidden",
+        "value": ""
+      },
+      {
+        "key": "province",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "province",
+        "type": "hidden",
+        "value": ""
+      },
+      {
+        "key": "district",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "district",
+        "type": "hidden",
+        "value": ""
+      },
+      {
+        "key": "date_created",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_created",
+        "type": "hidden",
+        "value": ""
+      },
+      {
+        "key": "delete_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "delete_status",
+        "type": "hidden",
+        "value": ""
+      },
+      {
+        "key": "training_section_label",
+        "type": "label",
+        "text": "Training details",
+        "label_text_style": "bold",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": ""
+      },
+      {
+        "key": "training_title",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "training_title",
+        "type": "edit_text",
+        "hint": "Training title",
+        "edit_type": "name",
+        "v_required": {
+          "value": "true",
+          "err": "Enter the training title"
+        }
+      },
+      {
+        "key": "training_topic",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "training_topic",
+        "type": "spinner",
+        "hint": "Topic",
+        "values": [
+          "Case management",
+          "Child protection",
+          "HIV and PMTCT",
+          "Safeguarding",
+          "Data and reporting",
+          "Psychosocial support",
+          "Other"
+        ],
+        "keys": [
+          "case_management",
+          "child_protection",
+          "hiv_pmtct",
+          "safeguarding",
+          "data_reporting",
+          "psychosocial_support",
+          "other"
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Select the topic"
+        }
+      },
+      {
+        "key": "start_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "start_date",
+        "type": "date_picker",
+        "hint": "Start date",
+        "expanded": false,
+        "min_date": "today-10y",
+        "max_date": "today",
+        "v_required": {
+          "value": "true",
+          "err": "Enter the start date"
+        }
+      },
+      {
+        "key": "end_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "end_date",
+        "type": "date_picker",
+        "hint": "End date (if more than one day)",
+        "expanded": false,
+        "min_date": "today-10y",
+        "max_date": "today"
+      },
+      {
+        "key": "training_mode",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "training_mode",
+        "type": "spinner",
+        "hint": "How it was delivered",
+        "values": [
+          "In person",
+          "Virtual",
+          "Blended"
+        ],
+        "keys": [
+          "in_person",
+          "virtual",
+          "blended"
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Select how the training was delivered"
+        }
+      },
+      {
+        "key": "venue",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "venue",
+        "type": "edit_text",
+        "hint": "Venue",
+        "edit_type": "name"
+      },
+      {
+        "key": "facilitator",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "facilitator",
+        "type": "edit_text",
+        "hint": "Facilitator or organiser",
+        "edit_type": "name"
+      },
+      {
+        "key": "attended_full",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "attended_full",
+        "type": "native_radio",
+        "label": "Did you attend the whole training?",
+        "label_text_style": "bold",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "yes"
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "no"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Select yes or no"
+        }
+      },
+      {
+        "key": "certificate_received",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "certificate_received",
+        "type": "native_radio",
+        "label": "Did you receive a certificate?",
+        "label_text_style": "bold",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "yes"
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "openmrs_entity": "person_attribute",
+            "openmrs_entity_id": "no"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Select yes or no"
+        }
+      },
+      {
+        "key": "comment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "comment",
+        "type": "edit_text",
+        "hint": "Notes (optional)",
+        "edit_type": "name"
+      }
+    ]
+  }
+}

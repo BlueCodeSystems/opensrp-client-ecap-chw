@@ -9,6 +9,7 @@ import com.bluecodeltd.ecap.chw.util.ChwDBConstants;
 import com.bluecodeltd.ecap.chw.util.RepositoryUtils;
 import com.bluecodeltd.ecap.chw.util.RepositoryUtilsFlv;
 import com.bluecodeltd.ecap.chw.util.ServiceRegister;
+import com.bluecodeltd.ecap.chw.util.TrainingAttendance;
 
 import net.sqlcipher.Cursor;
 import net.sqlcipher.database.SQLiteDatabase;
@@ -134,6 +135,9 @@ public class ChwRepositoryFlv {
                     break;
                 case 34:
                     upgradeToVersion34(db);
+                    break;
+                case 35:
+                    upgradeToVersion35(db);
                     break;
                 default:
                     break;
@@ -1327,6 +1331,23 @@ public class ChwRepositoryFlv {
             } catch (Exception e) {
                 Timber.e(e, "upgradeToVersion34 %s", register.table);
             }
+        }
+    }
+
+    private static void upgradeToVersion35(SQLiteDatabase db) {
+        // Staff training attendance. Same shape as the table CommonRepository creates on a fresh install
+        // from ec_client_fields.json, so both paths end up identical.
+        try {
+            StringBuilder sql = new StringBuilder("CREATE TABLE IF NOT EXISTS ").append(TrainingAttendance.TABLE)
+                    .append(" (id VARCHAR PRIMARY KEY, relationalid VARCHAR, details VARCHAR, is_closed TINYINT DEFAULT 0");
+            for (String column : TrainingAttendance.COLUMNS) {
+                sql.append(", ").append(column).append(" VARCHAR");
+            }
+            db.execSQL(sql.append(")").toString());
+            db.execSQL("CREATE INDEX IF NOT EXISTS " + TrainingAttendance.TABLE + "_base_entity_id_index ON "
+                    + TrainingAttendance.TABLE + " (base_entity_id)");
+        } catch (Exception e) {
+            Timber.e(e, "upgradeToVersion35 %s", TrainingAttendance.TABLE);
         }
     }
 

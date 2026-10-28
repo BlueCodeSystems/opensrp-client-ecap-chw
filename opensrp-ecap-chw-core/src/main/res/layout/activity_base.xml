@@ -165,6 +165,25 @@
 
                     </RelativeLayout>
 
+                    <!-- Shown only when the app registers TRAINING_ATTENDANCE_ACTIVITY -->
+                    <RelativeLayout
+                        android:id="@+id/rlTrainingAttendance"
+                        style="@style/NavActionRow"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/ivIconTrainingAttendance"
+                            style="@style/NavActionIcon"
+                            android:src="@drawable/ic_nav_training" />
+
+                        <TextView
+                            android:id="@+id/tvTrainingAttendance"
+                            style="@style/NavActionText"
+                            android:layout_toEndOf="@+id/ivIconTrainingAttendance"
+                            android:text="@string/nav_training_attendance" />
+
+                    </RelativeLayout>
+
                     <RelativeLayout
                         android:id="@+id/rlIconStockReport"
                         style="@style/NavActionRow"

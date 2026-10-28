@@ -21041,6 +21041,144 @@
           }
         }
       ]
+    },
+    {
+      "name": "ec_training_attendance",
+      "columns": [
+        {
+          "column_name": "last_interacted_with",
+          "type": "Event",
+          "json_mapping": {
+            "field": "version"
+          }
+        },
+        {
+          "column_name": "base_entity_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "form_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.form_id"
+          }
+        },
+        {
+          "column_name": "training_title",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.training_title"
+          }
+        },
+        {
+          "column_name": "training_topic",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.training_topic"
+          }
+        },
+        {
+          "column_name": "start_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.start_date"
+          }
+        },
+        {
+          "column_name": "end_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.end_date"
+          }
+        },
+        {
+          "column_name": "training_mode",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.training_mode"
+          }
+        },
+        {
+          "column_name": "venue",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.venue"
+          }
+        },
+        {
+          "column_name": "facilitator",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.facilitator"
+          }
+        },
+        {
+          "column_name": "attended_full",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.attended_full"
+          }
+        },
+        {
+          "column_name": "certificate_received",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.certificate_received"
+          }
+        },
+        {
+          "column_name": "comment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.comment"
+          }
+        },
+        {
+          "column_name": "caseworker_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caseworker_name"
+          }
+        },
+        {
+          "column_name": "facility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.facility"
+          }
+        },
+        {
+          "column_name": "province",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.province"
+          }
+        },
+        {
+          "column_name": "district",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.district"
+          }
+        },
+        {
+          "column_name": "date_created",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_created"
+          }
+        },
+        {
+          "column_name": "delete_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.delete_status"
+          }
+        }
+      ]
     }
   ]
 }

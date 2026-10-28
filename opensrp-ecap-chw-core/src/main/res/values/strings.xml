@@ -12,6 +12,7 @@
     <string name="nav_app_name">iCCMS</string>
     <string name="nav_app_full_name">Integrated Community Case Management System</string>
     <string name="nav_partner_logos">Partner logos: United States, AFGHS-PCZ and Project Concern Zambia</string>
+    <string name="nav_training_attendance">Training attendance</string>
     <string name="day">day</string>
     <string name="days">days</string>
     <string name="week">week</string>

@@ -135,6 +135,9 @@
             android:name=".activity.ReferralLinkagesRegisterActivity"
             android:theme="@style/ChwTheme.NoActionBar" />
         <activity
+            android:name=".activity.TrainingAttendanceActivity"
+            android:theme="@style/ChwTheme.NoActionBar" />
+        <activity
             android:name=".activity.HouseholdCasePlanActivity"
             android:exported="true"
             android:label="Caregiver Case Plan"

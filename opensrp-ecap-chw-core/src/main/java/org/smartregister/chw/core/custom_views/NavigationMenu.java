@@ -204,6 +204,7 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
         /// register bottom section menu items after the separator
         registerLanguageSwitcher(activity);
         registerServiceActivity(activity);
+        registerTrainingAttendance(activity);
         registerStockReport(activity);
         registerCommunityResponders(activity);
         registerDeviceToDeviceSync(activity);
@@ -282,6 +283,23 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
                 activity.startActivity( menuFlavor.getHIA2ReportActivityIntent(activity));
             });
         }
+    }
+
+    /** "Training attendance" under More, for apps that register a screen for it. */
+    private void registerTrainingAttendance(Activity activity) {
+        View row = rootView.findViewById(R.id.rlTrainingAttendance);
+        if (row == null) return;
+        Class screen = registeredActivities != null
+                ? registeredActivities.get(CoreConstants.REGISTERED_ACTIVITIES.TRAINING_ATTENDANCE_ACTIVITY) : null;
+        if (screen == null) {
+            row.setVisibility(View.GONE);
+            return;
+        }
+        row.setVisibility(View.VISIBLE);
+        row.setOnClickListener(view -> {
+            if (drawer != null) drawer.closeDrawer(GravityCompat.START);
+            activity.startActivity(new Intent(activity, screen));
+        });
     }
 
     private void registerStockReport(Activity activity) {

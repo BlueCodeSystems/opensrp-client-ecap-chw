@@ -40,6 +40,7 @@ import com.bluecodeltd.ecap.chw.activity.PrepRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.ReferralLinkagesRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.ReportRegisterActivity;
 import com.bluecodeltd.ecap.chw.activity.ReferralRegisterActivity;
+import com.bluecodeltd.ecap.chw.activity.TrainingAttendanceActivity;
 import com.bluecodeltd.ecap.chw.activity.UpdatesRegisterActivity;
 import com.bluecodeltd.ecap.chw.configs.AllClientsRegisterRowOptions;
 import com.bluecodeltd.ecap.chw.custom_view.NavigationMenuFlv;
@@ -660,6 +661,7 @@ public class ChwApplication extends CoreChwApplication implements SyncStatusBroa
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.APPOINTMENTS_ACTIVITY, AppointmentsRegisterActivity.class);
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.PREP_ACTIVITY, PrepRegisterActivity.class);
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.REFERRAL_LINKAGES_ACTIVITY, ReferralLinkagesRegisterActivity.class);
+        registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.TRAINING_ATTENDANCE_ACTIVITY, TrainingAttendanceActivity.class);
         if (BuildConfig.USE_UNIFIED_REFERRAL_APPROACH) {
             registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.REFERRALS_REGISTER_ACTIVITY, ReferralRegisterActivity.class);
         }
