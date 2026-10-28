@@ -94,6 +94,9 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
         holder.txtCaseDate.setText(com.bluecodeltd.ecap.chw.view_holder.RegisterRow.shownDate(casePlan.getCase_plan_date()));
         holder.txtCasePlanStatus.setText(casePlan.getCase_plan_status());
         holder.statusStripe.setBackgroundColor(context.getResources().getColor(statusStripeColor(casePlan.getCase_plan_status())));
+        boolean followUp = "Follow Up".equalsIgnoreCase(casePlan.getCase_plan_status());
+        holder.txtCasePlanStatus.setBackgroundResource(followUp ? R.drawable.reg_pill_good : R.drawable.reg_pill_warning);
+        holder.txtCasePlanStatus.setTextColor(context.getResources().getColor(followUp ? R.color.reg_pill_good_text : R.color.reg_pill_warning_text));
 
         final String rowTag = casePlan.getBase_entity_id() != null ? casePlan.getBase_entity_id()
                 : (casePlan.getUnique_id() != null ? casePlan.getUnique_id() : String.valueOf(position));
@@ -109,7 +112,7 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
                 Object tag = holder.itemView.getTag(R.id.tag_row_id);
                 if (!(tag instanceof String) || !rowTag.equals(tag)) return;
                 String vCount = (finalVulnerabilities == null || finalVulnerabilities.trim().isEmpty()) ? "0" : finalVulnerabilities.trim();
-                holder.txtVulnerabilities.setText(vCount + " Vulnerabilities");
+                holder.txtVulnerabilities.setText("1".equals(vCount) ? "1 vulnerability" : vCount + " vulnerabilities");
                 setDeleteVisibility(holder, "0".equals(vCount) ? View.VISIBLE : View.INVISIBLE);
             });
         });
@@ -232,11 +235,11 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
 
     private int statusStripeColor(String status) {
         if ("Initial".equalsIgnoreCase(status)) {
-            return R.color.pie_chart_orange;
+            return R.color.dash_status_warning;
         } else if ("Follow Up".equalsIgnoreCase(status)) {
-            return R.color.status_green;
+            return R.color.dash_status_good;
         }
-        return R.color.register_vca_icon;
+        return R.color.reg_status_none;
     }
 
     public void refreshActivity() {

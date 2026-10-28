@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- A child's follow-up visit: title and date, the caregiver's signature, HIV status details behind the
+     chevron, and its actions. VisitAdapter fills it and toggles the details. -->
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/register_columns"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -17,10 +20,11 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingStart="14dp"
-        android:paddingTop="12dp"
+        android:paddingTop="14dp"
         android:paddingEnd="14dp"
         android:paddingBottom="12dp">
 
+        <!-- Icon, title and date; signature and the details toggle on the right -->
         <LinearLayout
             android:id="@+id/itemm"
             android:layout_width="match_parent"
@@ -29,15 +33,20 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/signature_view"
+            <FrameLayout
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/bg_vca_icon_circle"
-                android:contentDescription="@string/not_available"
-                android:padding="8dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_edit" />
+                android:background="@drawable/dash_icon_chip"
+                android:backgroundTint="@color/dash_accent_soft">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_service_calendar"
+                    app:tint="@color/primary" />
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -47,49 +56,45 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
                     android:text="@string/follow_up_visitation"
                     android:textColor="@color/dash_text"
                     android:textSize="16sp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
-                        android:contentDescription="@string/not_available"
-                        android:src="@drawable/ic_calender"
-                        app:tint="@color/dash_text_secondary" />
-
-                    <TextView
-                        android:id="@+id/date"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:textColor="@color/dash_text_secondary"
-                        android:textSize="12sp" />
-                </LinearLayout>
+                    android:maxLines="1"
+                    android:textColor="@color/dash_text_secondary"
+                    android:textSize="13sp"
+                    tools:text="5 Aug 2026" />
             </LinearLayout>
+
+            <!-- Caregiver's signature for the visit -->
+            <ImageView
+                android:id="@+id/signature_view"
+                android:layout_width="72dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/service_signature_frame"
+                android:contentDescription="@null"
+                android:padding="4dp"
+                android:scaleType="fitCenter" />
 
             <ImageView
                 android:id="@+id/expand_more"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginStart="8dp"
-                android:contentDescription="@string/not_available"
-                android:padding="4dp"
+                android:background="@drawable/dash_icon_chip"
+                android:backgroundTint="@color/dash_track"
+                android:contentDescription="@string/show_details"
+                android:padding="6dp"
                 android:src="@drawable/baseline_expand_more_24"
-                android:visibility="visible"
                 app:tint="@color/dash_text_secondary" />
 
             <ImageView
@@ -97,20 +102,22 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginStart="8dp"
-                android:contentDescription="@string/not_available"
-                android:padding="4dp"
+                android:background="@drawable/dash_icon_chip"
+                android:backgroundTint="@color/dash_track"
+                android:contentDescription="@string/show_details"
+                android:padding="6dp"
                 android:src="@drawable/baseline_expand_less_24"
                 android:visibility="gone"
                 app:tint="@color/dash_text_secondary" />
-
         </LinearLayout>
 
+        <!-- HIV status details, shown by the chevron -->
         <LinearLayout
             android:id="@+id/expandable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@color/dash_bg"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/service_signature_frame"
             android:orientation="vertical"
             android:visibility="gone">
 
@@ -139,19 +146,13 @@
                 <TextView style="@style/OverviewRowLabel" android:text="@string/updated_hiv_status_date" />
                 <TextView android:id="@+id/updated_hiv_status_date" style="@style/OverviewRowValue" />
             </LinearLayout>
-
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="12dp"
-            android:background="@color/dash_divider" />
-
+        <!-- Actions -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="12dp"
             android:gravity="end|center_vertical"
             android:orientation="horizontal">
 
@@ -159,12 +160,13 @@
                 android:id="@+id/edit_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:background="@drawable/bg_button_primary_outline"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="6dp">
+                android:paddingStart="12dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="14dp"
+                android:paddingBottom="6dp">
 
                 <ImageView
                     android:id="@+id/edit_me"
@@ -172,27 +174,30 @@
                     android:layout_height="14dp"
                     android:contentDescription="@string/edit"
                     android:src="@drawable/ic_edit"
-                    app:tint="@color/primary" />
+                    app:tint="@color/dash_accent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="6dp"
+                    android:fontFamily="sans-serif-medium"
                     android:text="@string/edit"
-                    android:textColor="@color/primary"
-                    android:textSize="11sp"
-                    android:textStyle="bold" />
+                    android:textColor="@color/reg_pill_action_text"
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/delete_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:background="@drawable/bg_button_alert_outline"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="6dp">
+                android:paddingStart="12dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="14dp"
+                android:paddingBottom="6dp">
 
                 <ImageView
                     android:id="@+id/delete_record"
@@ -200,16 +205,16 @@
                     android:layout_height="14dp"
                     android:contentDescription="@string/delete"
                     android:src="@drawable/delete_icon"
-                    app:tint="@color/pie_chart_red" />
+                    app:tint="@color/reg_pill_critical_text" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="6dp"
+                    android:fontFamily="sans-serif-medium"
                     android:text="@string/delete"
-                    android:textColor="@color/pie_chart_red"
-                    android:textSize="11sp"
-                    android:textStyle="bold" />
+                    android:textColor="@color/reg_pill_critical_text"
+                    android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
 

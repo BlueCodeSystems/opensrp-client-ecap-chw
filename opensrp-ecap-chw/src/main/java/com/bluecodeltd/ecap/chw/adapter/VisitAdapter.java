@@ -226,7 +226,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
             } else {
                 holder.updateHivStatus.setText("Negative");
             }
-            holder.updatedHivStatusDate.setText(visit.getVisit_date() != null ? visit.getVisit_date() : "Date not set");
+            holder.updatedHivStatusDate.setText(visit.getVisit_date() != null ? com.bluecodeltd.ecap.chw.view_holder.RegisterRow.shownDate(visit.getVisit_date()) : "Date not set");
         }
 
         String encodedSignature = visit.getSignature();
@@ -299,7 +299,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
                     } else {
                         holder.intialHivStatus.setText("Negative");
                     }
-                    holder.initialHivStatusDate.setText(finalChildModel.getDate_screened() != null ? finalChildModel.getDate_screened() : "Date not set");
+                    holder.initialHivStatusDate.setText(finalChildModel.getDate_screened() != null ? com.bluecodeltd.ecap.chw.view_holder.RegisterRow.shownDate(finalChildModel.getDate_screened()) : "Date not set");
                 }
 
                 if ((encodedSignature == null || encodedSignature.isEmpty()) && finalHousehold != null) {

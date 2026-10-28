@@ -624,7 +624,7 @@
     <string name="report_submission_stat_deaths_label">Deaths</string>
     <string name="report_submission_stat_suspected_label">Suspected</string>
     <string name="report_submission_tap_to_view">Tap to view full report</string>
-    <string name="follow_up_visitation">Follow-up Visitation</string>
+    <string name="follow_up_visitation">Follow-up visit</string>
     <string name="household_visit">Household Visit</string>
     <string name="case_plan_label">Case Plan</string>
     <string name="bullet_separator">•</string>
