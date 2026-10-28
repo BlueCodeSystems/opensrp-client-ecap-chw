@@ -94,9 +94,13 @@ public class HivTestingServicesRegisterProvider implements RecyclerViewProvider<
             age = getAge(birthdate);
         }
 
-        hivTestingServicesRegisterViewHolder.setupViews(firstName +" "+lastName, "ID : " + clientId, gender, age,client_type);
+        String dateTested = Utils.getValue(personObjectClient.getColumnmaps(), "date_tested", false);
+        String result = Utils.getValue(personObjectClient.getColumnmaps(), "hiv_result", false);
+        String artStarted = Utils.getValue(personObjectClient.getColumnmaps(), "art_date_initiated", false);
+
+        hivTestingServicesRegisterViewHolder.setupViews(firstName + " " + lastName, clientId, gender, birthdate,
+                client_type, dateTested, result, artStarted);
         hivTestingServicesRegisterViewHolder.itemView.setOnClickListener(onClickListener);
-        hivTestingServicesRegisterViewHolder.itemView.findViewById(R.id.index_warning).setOnClickListener(onClickListener);
         hivTestingServicesRegisterViewHolder.itemView.setTag(smartRegisterClient);
     }
 
@@ -136,7 +140,7 @@ public class HivTestingServicesRegisterProvider implements RecyclerViewProvider<
 
     @Override
     public HivTestingServicesRegisterViewHolder createViewHolder(ViewGroup viewGroup) {
-        View viewHolder = inflater().inflate(R.layout.hts_register_item_layout, viewGroup, false);
+        View viewHolder = inflater().inflate(R.layout.register_row, viewGroup, false);
         return new HivTestingServicesRegisterViewHolder(viewHolder);
     }
 

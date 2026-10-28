@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import com.bluecodeltd.ecap.chw.util.RegisterHeader;
 import com.bluecodeltd.ecap.chw.util.Threading;
 import android.view.View;
 import android.widget.ImageView;
@@ -289,6 +290,7 @@ public class HouseholdIndexFragment extends BaseSafeRegisterFragment implements 
                         org.smartregister.R.drawable.ic_action_search, 0, 0, 0
                 );
                 getSearchView().setTextColor(getResources().getColor(org.smartregister.R.color.text_black));
+                RegisterHeader.style(view, getSearchView());
             }
 
             // Hide unused layouts

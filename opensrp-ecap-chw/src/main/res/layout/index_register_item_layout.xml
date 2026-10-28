@@ -31,7 +31,7 @@
             android:id="@+id/itemm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
+            android:gravity="top"
             android:minHeight="88dp"
             android:orientation="horizontal">
 
@@ -45,9 +45,10 @@
             <!-- Child avatar: row_boy / row_girl on a gender-tinted circle -->
             <FrameLayout
                 android:id="@+id/gender_avatar"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="14dp"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="14dp"
                 android:background="@drawable/circle_light_grey"
                 android:visibility="gone"
                 tools:visibility="visible">
@@ -62,32 +63,48 @@
                     android:src="@drawable/row_boy" />
             </FrameLayout>
 
-            <!-- Text and the visit pill; the only flexible column, so the row can never overflow -->
+            <!-- Text, chips and the action; the only flexible column, so the row can never overflow -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:paddingStart="14dp"
-                android:paddingTop="14dp"
-                android:paddingEnd="8dp"
-                android:paddingBottom="14dp">
+                android:paddingStart="12dp"
+                android:paddingTop="12dp"
+                android:paddingEnd="4dp"
+                android:paddingBottom="12dp">
 
-                <org.smartregister.view.customcontrols.CustomFontTextView
-                    android:id="@+id/familyNameTextView"
-                    style="@style/CustomFontTextViewStyle.ClientList"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:fontFamily="sans-serif-medium"
-                    android:maxLines="1"
-                    android:textColor="@color/dash_text"
-                    android:textSize="16sp"
-                    tools:text="Nega Baby Child" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                <org.smartregister.view.customcontrols.CustomFontTextView
+                    <TextView
+                        android:id="@+id/familyNameTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:fontFamily="sans-serif-medium"
+                        android:maxLines="1"
+                        android:textColor="@color/dash_text"
+                        android:textSize="16sp"
+                        tools:text="Nega Baby Child" />
+
+                    <TextView
+                        android:id="@+id/villageTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:maxLines="1"
+                        android:textColor="@color/dash_text_muted"
+                        android:textSize="12sp"
+                        tools:text="ID 22906804" />
+                </LinearLayout>
+
+                <TextView
                     android:id="@+id/gender_age"
-                    style="@style/CustomFontTextViewStyle.ClientList.Light"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
@@ -97,34 +114,74 @@
                     android:textSize="13sp"
                     tools:text="Male · 0y 2m" />
 
-                <org.smartregister.view.customcontrols.CustomFontTextView
-                    android:id="@+id/villageTextView"
-                    style="@style/CustomFontTextViewStyle.ClientList.Light"
+                <!-- This month's visit and the case plan, labelled so a gap is as visible as a tick -->
+                <LinearLayout
+                    android:id="@+id/ca_indicators"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textColor="@color/dash_text_muted"
-                    android:textSize="12sp"
-                    tools:text="ID: 22906804" />
+                    android:layout_marginTop="6dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
+                    <TextView
+                        android:id="@+id/index_visit"
+                        style="@style/CaIndicator"
+                        tools:drawableStart="@drawable/ic_service_calendar"
+                        tools:text="Visited this month" />
+
+                    <TextView
+                        android:id="@+id/index_case_plan"
+                        style="@style/CaIndicator"
+                        android:layout_marginStart="16dp"
+                        tools:drawableStart="@drawable/ic_case_plan"
+                        tools:text="Case plan" />
+                </LinearLayout>
+
+                <!-- Visit status and Index on the left; visit / case-plan indicators and the action on the right -->
                 <LinearLayout
                     android:id="@+id/due_button_wrapper"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/visit_status"
+                            style="@style/ServiceRegisterPill"
+                            android:layout_marginEnd="6dp"
+                            android:visibility="gone"
+                            tools:background="@drawable/reg_pill_warning"
+                            tools:text="Visit due 26 Aug 2026"
+                            tools:textColor="@color/reg_pill_warning_text"
+                            tools:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/index_icon"
+                            style="@style/ServiceRegisterPill"
+                            android:background="@drawable/reg_chip_index"
+                            android:text="Index"
+                            android:textColor="@color/primary"
+                            android:visibility="gone"
+                            tools:visibility="visible" />
+                    </LinearLayout>
 
                     <Button
                         android:id="@+id/due_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
                         android:background="@drawable/reg_pill_action"
-                        android:ellipsize="end"
                         android:fontFamily="sans-serif-medium"
                         android:gravity="center"
                         android:hapticFeedbackEnabled="true"
-                        android:maxWidth="220dp"
                         android:maxLines="1"
                         android:minWidth="0dp"
                         android:minHeight="0dp"
@@ -133,7 +190,7 @@
                         android:paddingEnd="14dp"
                         android:paddingBottom="6dp"
                         android:stateListAnimator="@null"
-                        android:text="Conduct Visit"
+                        android:text="Conduct visit"
                         android:textAllCaps="false"
                         android:textColor="@color/reg_pill_action_text"
                         android:textSize="12sp" />
@@ -142,68 +199,10 @@
 
             </LinearLayout>
 
-            <!-- Index chip and the visit / case-plan indicators -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/index_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/reg_chip_index"
-                    android:fontFamily="sans-serif-medium"
-                    android:paddingStart="10dp"
-                    android:paddingTop="3dp"
-                    android:paddingEnd="10dp"
-                    android:paddingBottom="3dp"
-                    android:text="Index"
-                    android:textColor="@color/primary"
-                    android:textSize="11sp"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:orientation="horizontal">
-
-                    <!-- Monthly visit: green once a visit is recorded this month, grey otherwise -->
-                    <ImageView
-                        android:id="@+id/index_visit"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:contentDescription="@string/icon_service_visit_desc"
-                        android:src="@drawable/ic_service_calendar"
-                        android:tint="@color/stat_pill_unknown"
-                        android:visibility="gone" />
-
-                    <!-- Case plan on file -->
-                    <ImageView
-                        android:id="@+id/index_case_plan"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginStart="8dp"
-                        android:contentDescription="@string/icon_case_plan_desc"
-                        android:src="@drawable/ic_case_plan"
-                        android:tint="@color/primary" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="10dp"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_chevron_right"
-                app:tint="@color/dash_text_muted" />
+            <!-- No chevron: the whole card opens the profile, as on the other registers -->
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="1dp" />
 
         </LinearLayout>
 

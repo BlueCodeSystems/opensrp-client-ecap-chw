@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.dao.CasePlanDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
+import com.bluecodeltd.ecap.chw.dao.VCAServiceReportDao;
 import com.bluecodeltd.ecap.chw.dao.VcaVisitationDao;
 import com.bluecodeltd.ecap.chw.util.Threading;
 import com.bluecodeltd.ecap.chw.view_holder.IndexRegisterViewHolder;
@@ -87,7 +88,8 @@ public class IndexRegisterProvider implements RecyclerViewProvider<IndexRegister
             String status = null;
             try { plans = CasePlanDao.checkCasePlan(childLookupId); } catch (Exception ignored) {}
             try { visits = VcaVisitationDao.countVisits(childLookupId); } catch (Exception ignored) {}
-            try { visitedThisMonth = VcaVisitationDao.hasVisitThisMonth(childLookupId); } catch (Exception ignored) {}
+            // The row shows this month's service: services are monthly, visits three-monthly (the visit due chip)
+            try { visitedThisMonth = VCAServiceReportDao.hasServiceThisMonth(childLookupId); } catch (Exception ignored) {}
             try { is_index = IndexPersonDao.checkIndexPerson(BaseEntityId); } catch (Exception ignored) {}
             try { status = IndexPersonDao.getIndexStatus(BaseEntityId); } catch (Exception ignored) {}
 

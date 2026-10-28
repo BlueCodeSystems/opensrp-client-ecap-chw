@@ -246,4 +246,11 @@
     <color name="reg_status_none">#CBD5DC</color>
     <!-- Conduct Visit text, green to match its outlined pill (white if the pill is made solid) -->
     <color name="reg_pill_action_text">#188038</color>
+    <color name="reg_pill_info_bg">#E3EEFB</color>
+    <color name="reg_pill_info_text">#1C5BA8</color>
+    <!-- Child profile: boy / girl, as the avatar circle and (option C) the whole header -->
+    <color name="profile_boy">#2A78D6</color>
+    <color name="profile_girl">#D04E8A</color>
+    <color name="profile_boy_header">#1B4F8A</color>
+    <color name="profile_girl_header">#962E62</color>
 </resources>

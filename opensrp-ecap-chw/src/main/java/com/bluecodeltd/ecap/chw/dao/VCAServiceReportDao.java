@@ -177,6 +177,22 @@ public class VCAServiceReportDao extends AbstractDao {
             return record;
         };
     }
+
+    /**
+     * Whether the child has a service recorded in the current calendar month. Services are monthly; visits
+     * are three-monthly and have their own due date. date is stored as dd-MM-yyyy.
+     */
+    public static boolean hasServiceThisMonth(String uniqueId) {
+        String sql = "SELECT COUNT(*) AS cnt FROM ec_vca_service_report " +
+                "WHERE unique_id = '" + uniqueId.replace("'", "''") + "' " +
+                "AND (delete_status IS NULL OR delete_status <> '1') " +
+                "AND substr(date,4,2) = strftime('%m','now') " +
+                "AND substr(date,7,4) = strftime('%Y','now')";
+        try {
+            List<String> values = AbstractDao.readData(sql, c -> getCursorValue(c, "cnt"));
+            return values != null && !values.isEmpty() && Integer.parseInt(values.get(0)) > 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
-
-

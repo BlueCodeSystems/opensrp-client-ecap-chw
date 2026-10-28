@@ -20583,6 +20583,13 @@
           }
         },
         {
+          "column_name": "last_interacted_with",
+          "type": "Event",
+          "json_mapping": {
+            "field": "version"
+          }
+        },
+        {
           "column_name": "client_number",
           "type": "Client",
           "json_mapping": {
@@ -20653,13 +20660,6 @@
           }
         },
         {
-          "column_name": "last_interacted_with",
-          "type": "Client",
-          "json_mapping": {
-            "field": "relationships.last_interacted_with"
-          }
-        },
-        {
           "column_name": "date_created",
           "type": "Client",
           "json_mapping": {
@@ -20681,6 +20681,62 @@
           }
         },
         {
+          "column_name": "iccm_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.iccm_id"
+          }
+        },
+        {
+          "column_name": "sub_population",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sub_population"
+          }
+        },
+        {
+          "column_name": "caregiver_name",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.caregiver_name"
+          }
+        },
+        {
+          "column_name": "hiv_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_status"
+          }
+        },
+        {
+          "column_name": "under_five_card_no",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.under_five_card_no"
+          }
+        },
+        {
+          "column_name": "art_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.art_number"
+          }
+        },
+        {
+          "column_name": "sm_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sm_number"
+          }
+        },
+        {
+          "column_name": "alt_phone",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.alt_phone"
+          }
+        },
+        {
           "column_name": "appointment_date",
           "type": "Client",
           "json_mapping": {
@@ -20688,10 +20744,108 @@
           }
         },
         {
+          "column_name": "appointment_time",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.appointment_time"
+          }
+        },
+        {
           "column_name": "appointment_type",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.appointment_type"
+          }
+        },
+        {
+          "column_name": "appointment_type_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.appointment_type_other"
+          }
+        },
+        {
+          "column_name": "reminder_given",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.reminder_given"
+          }
+        },
+        {
+          "column_name": "days_late",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.days_late"
+          }
+        },
+        {
+          "column_name": "appointment_kept",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.appointment_kept"
+          }
+        },
+        {
+          "column_name": "date_tracking_initiated",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_tracking_initiated"
+          }
+        },
+        {
+          "column_name": "tracking_attempt_1",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tracking_attempt_1"
+          }
+        },
+        {
+          "column_name": "tracking_attempt_2",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tracking_attempt_2"
+          }
+        },
+        {
+          "column_name": "tracking_attempt_3",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tracking_attempt_3"
+          }
+        },
+        {
+          "column_name": "date_declared_late",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_declared_late"
+          }
+        },
+        {
+          "column_name": "tracking_method",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tracking_method"
+          }
+        },
+        {
+          "column_name": "tracking_outcome",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.tracking_outcome"
+          }
+        },
+        {
+          "column_name": "outcome_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.outcome_date"
+          }
+        },
+        {
+          "column_name": "comment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.comment"
           }
         },
         {
@@ -20706,13 +20860,6 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.service_point"
-          }
-        },
-        {
-          "column_name": "comment",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.comment"
           }
         }
       ]
@@ -20735,6 +20882,13 @@
           }
         },
         {
+          "column_name": "last_interacted_with",
+          "type": "Event",
+          "json_mapping": {
+            "field": "version"
+          }
+        },
+        {
           "column_name": "client_number",
           "type": "Client",
           "json_mapping": {
@@ -20805,13 +20959,6 @@
           }
         },
         {
-          "column_name": "last_interacted_with",
-          "type": "Client",
-          "json_mapping": {
-            "field": "relationships.last_interacted_with"
-          }
-        },
-        {
           "column_name": "date_created",
           "type": "Client",
           "json_mapping": {
@@ -20833,10 +20980,255 @@
           }
         },
         {
+          "column_name": "substantial_risk",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.substantial_risk"
+          }
+        },
+        {
+          "column_name": "prep_eligibility",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.prep_eligibility"
+          }
+        },
+        {
           "column_name": "prep_status",
           "type": "Client",
           "json_mapping": {
             "field": "attributes.prep_status"
+          }
+        },
+        {
+          "column_name": "review_1m_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.review_1m_date"
+          }
+        },
+        {
+          "column_name": "next_reassessment_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.next_reassessment_date"
+          }
+        },
+        {
+          "column_name": "iccm_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.iccm_id"
+          }
+        },
+        {
+          "column_name": "date_first_contact",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_first_contact"
+          }
+        },
+        {
+          "column_name": "ward",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.ward"
+          }
+        },
+        {
+          "column_name": "sub_population",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sub_population"
+          }
+        },
+        {
+          "column_name": "pregnant",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.pregnant"
+          }
+        },
+        {
+          "column_name": "breastfeeding",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.breastfeeding"
+          }
+        },
+        {
+          "column_name": "risk_assessment_done",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.risk_assessment_done"
+          }
+        },
+        {
+          "column_name": "high_risk",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.high_risk"
+          }
+        },
+        {
+          "column_name": "hiv_test_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_test_date"
+          }
+        },
+        {
+          "column_name": "hiv_result",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.hiv_result"
+          }
+        },
+        {
+          "column_name": "valid_result_3m",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.valid_result_3m"
+          }
+        },
+        {
+          "column_name": "linked_to_art",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.linked_to_art"
+          }
+        },
+        {
+          "column_name": "ahi_symptoms",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.ahi_symptoms"
+          }
+        },
+        {
+          "column_name": "risk_factors",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.risk_factors"
+          }
+        },
+        {
+          "column_name": "eligibility_criteria",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.eligibility_criteria"
+          }
+        },
+        {
+          "column_name": "prep_provision",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.prep_provision"
+          }
+        },
+        {
+          "column_name": "prep_type",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.prep_type"
+          }
+        },
+        {
+          "column_name": "referral_completed",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.referral_completed"
+          }
+        },
+        {
+          "column_name": "facility_prep_type",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.facility_prep_type"
+          }
+        },
+        {
+          "column_name": "prep_start_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.prep_start_date"
+          }
+        },
+        {
+          "column_name": "facility_prep_start_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.facility_prep_start_date"
+          }
+        },
+        {
+          "column_name": "comment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.comment"
+          }
+        },
+        {
+          "column_name": "review_1m_completed",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.review_1m_completed"
+          }
+        },
+        {
+          "column_name": "follow_up_type",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.follow_up_type"
+          }
+        },
+        {
+          "column_name": "last_follow_up_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.last_follow_up_date"
+          }
+        },
+        {
+          "column_name": "ahi_screened",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.ahi_screened"
+          }
+        },
+        {
+          "column_name": "repeat_test_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.repeat_test_date"
+          }
+        },
+        {
+          "column_name": "repeat_test_result",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.repeat_test_result"
+          }
+        },
+        {
+          "column_name": "still_high_risk",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.still_high_risk"
+          }
+        },
+        {
+          "column_name": "continuing_prep",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.continuing_prep"
+          }
+        },
+        {
+          "column_name": "stop_reason",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.stop_reason"
           }
         },
         {
@@ -20873,13 +21265,6 @@
           "json_mapping": {
             "field": "attributes.date_tested"
           }
-        },
-        {
-          "column_name": "comment",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.comment"
-          }
         }
       ]
     },
@@ -20898,6 +21283,13 @@
           "type": "Client",
           "json_mapping": {
             "field": "relationships.family"
+          }
+        },
+        {
+          "column_name": "last_interacted_with",
+          "type": "Event",
+          "json_mapping": {
+            "field": "version"
           }
         },
         {
@@ -20971,13 +21363,6 @@
           }
         },
         {
-          "column_name": "last_interacted_with",
-          "type": "Client",
-          "json_mapping": {
-            "field": "relationships.last_interacted_with"
-          }
-        },
-        {
           "column_name": "date_created",
           "type": "Client",
           "json_mapping": {
@@ -20999,10 +21384,66 @@
           }
         },
         {
-          "column_name": "date_referred",
+          "column_name": "date_referral_received",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.date_referred"
+            "field": "attributes.date_referral_received"
+          }
+        },
+        {
+          "column_name": "iccm_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.iccm_id"
+          }
+        },
+        {
+          "column_name": "sub_population",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sub_population"
+          }
+        },
+        {
+          "column_name": "sub_population_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sub_population_other"
+          }
+        },
+        {
+          "column_name": "referred_from",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.referred_from"
+          }
+        },
+        {
+          "column_name": "referred_from_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.referred_from_other"
+          }
+        },
+        {
+          "column_name": "referred_to",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.referred_to"
+          }
+        },
+        {
+          "column_name": "referred_to_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.referred_to_other"
+          }
+        },
+        {
+          "column_name": "referred_by",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.referred_by"
           }
         },
         {
@@ -21010,6 +21451,48 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.referral_service"
+          }
+        },
+        {
+          "column_name": "referral_service_other",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.referral_service_other"
+          }
+        },
+        {
+          "column_name": "facility_service_number",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.facility_service_number"
+          }
+        },
+        {
+          "column_name": "comment",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.comment"
+          }
+        },
+        {
+          "column_name": "service_received",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.service_received"
+          }
+        },
+        {
+          "column_name": "date_service_received",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_service_received"
+          }
+        },
+        {
+          "column_name": "date_referred",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_referred"
           }
         },
         {
@@ -21031,13 +21514,6 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.date_linked"
-          }
-        },
-        {
-          "column_name": "comment",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.comment"
           }
         }
       ]

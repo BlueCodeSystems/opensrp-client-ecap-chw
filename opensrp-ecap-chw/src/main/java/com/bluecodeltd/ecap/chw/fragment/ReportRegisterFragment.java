@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bluecodeltd.ecap.chw.util.RegisterHeader;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.ReportRegisterActivity;
 import com.bluecodeltd.ecap.chw.adapter.ReportFormOptionAdapter;
@@ -78,7 +79,8 @@ public class ReportRegisterFragment extends BaseSafeRegisterFragment implements 
             toolbar.setTitle("");
             android.widget.TextView titleLabel = toolbar.findViewById(org.smartregister.R.id.txt_title_label);
             if (titleLabel != null) {
-                titleLabel.setVisibility(View.GONE);
+                titleLabel.setText(R.string.report_register_menu_title);
+                titleLabel.setVisibility(View.VISIBLE);
             }
             NavigationMenu menu = NavigationMenu.getInstance(getActivity(), null, toolbar);
             if (menu != null && menu.getNavigationAdapter() != null) {
@@ -123,13 +125,15 @@ public class ReportRegisterFragment extends BaseSafeRegisterFragment implements 
 
         android.widget.TextView titleView = view.findViewById(org.smartregister.R.id.txt_title_label);
         if (titleView != null) {
-            titleView.setVisibility(View.GONE);
+            titleView.setText(R.string.report_register_menu_title);
+            titleView.setVisibility(View.VISIBLE);
         }
 
         if (getSearchView() != null) {
             getSearchView().setBackgroundResource(R.color.white);
             getSearchView().setCompoundDrawablesWithIntrinsicBounds(org.smartregister.R.drawable.ic_action_search, 0, 0, 0);
             getSearchView().setTextColor(getResources().getColor(org.smartregister.R.color.text_black));
+            RegisterHeader.style(view, getSearchView());
         }
 
         hideIfPresent(view, org.smartregister.R.id.top_right_layout);

@@ -4,18 +4,22 @@
     android:id="@+id/register_columns"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="2dp"
-    android:layout_marginBottom="10dp"
+    android:layout_marginStart="12dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginBottom="6dp"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="14dp"
-    app:cardElevation="2dp"
-    app:cardUseCompatPadding="true">
+    app:cardElevation="1.5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:paddingStart="14dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="14dp"
+        android:paddingBottom="12dp">
 
         <LinearLayout
             android:id="@+id/itemm"
@@ -27,8 +31,8 @@
 
             <ImageView
                 android:id="@+id/signature_view"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:background="@drawable/bg_vca_icon_circle"
                 android:contentDescription="@string/not_available"
                 android:padding="8dp"
@@ -45,10 +49,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
                     android:text="@string/follow_up_visitation"
-                    android:textColor="@color/text_black"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:textColor="@color/dash_text"
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -62,9 +66,9 @@
                         android:layout_height="14dp"
                         android:contentDescription="@string/not_available"
                         android:src="@drawable/ic_calender"
-                        app:tint="@color/light_grey_text" />
+                        app:tint="@color/dash_text_secondary" />
 
-                    <org.smartregister.view.customcontrols.CustomFontTextView
+                    <TextView
                         android:id="@+id/date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -72,7 +76,7 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:textColor="@color/light_grey_text"
+                        android:textColor="@color/dash_text_secondary"
                         android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -86,7 +90,7 @@
                 android:padding="4dp"
                 android:src="@drawable/baseline_expand_more_24"
                 android:visibility="visible"
-                app:tint="@color/light_grey_text" />
+                app:tint="@color/dash_text_secondary" />
 
             <ImageView
                 android:id="@+id/expand_less"
@@ -97,7 +101,7 @@
                 android:padding="4dp"
                 android:src="@drawable/baseline_expand_less_24"
                 android:visibility="gone"
-                app:tint="@color/light_grey_text" />
+                app:tint="@color/dash_text_secondary" />
 
         </LinearLayout>
 
@@ -142,7 +146,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="12dp"
-            android:background="@color/divider_grey" />
+            android:background="@color/dash_divider" />
 
         <LinearLayout
             android:layout_width="match_parent"

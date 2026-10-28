@@ -85,7 +85,7 @@ public class NutritionAssessmentInterventionAdapter extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(@NonNull ViewHolder h, int position) {
         NutritionAssessmentInterventionModel m = items.get(position);
-        h.date.setText(m.getDate_of_assessment() != null ? m.getDate_of_assessment() : "");
+        h.date.setText(com.bluecodeltd.ecap.chw.view_holder.RegisterRow.shownDate(m.getDate_of_assessment()));
 
         String dash = "—";
         h.muac.setText(m.getMuac_category() != null && !m.getMuac_category().isEmpty() ? m.getMuac_category() : dash);

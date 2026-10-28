@@ -153,7 +153,7 @@ public class HouseholdRegisterProvider implements RecyclerViewProvider<Household
 
     @Override
     public HouseholdRegisterViewHolder createViewHolder(ViewGroup viewGroup) {
-        View viewHolder = inflater().inflate(R.layout.household_register_item_layout, viewGroup, false);
+        View viewHolder = inflater().inflate(R.layout.register_row, viewGroup, false);
         return new HouseholdRegisterViewHolder(viewHolder);
     }
 

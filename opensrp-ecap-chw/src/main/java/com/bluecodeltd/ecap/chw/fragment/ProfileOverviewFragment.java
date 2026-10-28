@@ -409,6 +409,7 @@ public class ProfileOverviewFragment extends Fragment {
 
             boolean showMore = muacLocal != null && ("red".equals(muacLocal.getMuac()) || "yellow".equals(muacLocal.getMuac()));
             moreSubpopBtn.setVisibility(showMore ? View.VISIBLE : View.GONE);
+            if (binding != null) OverviewFormat.tidy(binding.getRoot(), binding.subPopLayout1);
         });
         if (householdId != null && uniqueId != null) {
             new ViewModelProvider(this).get(ProfileOverviewViewModel.class)

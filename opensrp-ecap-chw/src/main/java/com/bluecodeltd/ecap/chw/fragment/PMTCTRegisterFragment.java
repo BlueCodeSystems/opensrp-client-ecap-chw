@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.ActionBar;
 
+import com.bluecodeltd.ecap.chw.util.RegisterHeader;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.MotherPmtctProfileActivity;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterFragmentContract;
@@ -132,7 +133,7 @@ public class PMTCTRegisterFragment extends BaseSafeRegisterFragment implements I
                 android.widget.TextView titleLabel = root.findViewById(org.smartregister.R.id.txt_title_label);
                 if (titleLabel != null) {
                     titleLabel.setVisibility(View.VISIBLE);
-                    titleLabel.setText(R.string.pmtct_services);
+                    titleLabel.setText(R.string.pmtct_register_screen_title);
                 }
             }
         }
@@ -281,6 +282,7 @@ public class PMTCTRegisterFragment extends BaseSafeRegisterFragment implements I
             getSearchView().setBackgroundResource(R.color.white);
             getSearchView().setCompoundDrawablesWithIntrinsicBounds(org.smartregister.R.drawable.ic_action_search, 0, 0, 0);
             getSearchView().setTextColor(getResources().getColor(org.smartregister.R.color.text_black));
+            RegisterHeader.style(view, getSearchView());
         }
         View topRightLayout = null;
         try { topRightLayout = view.findViewById(org.smartregister.R.id.top_right_layout); } catch (Exception ignored) {}
@@ -321,7 +323,7 @@ public class PMTCTRegisterFragment extends BaseSafeRegisterFragment implements I
             toolbar.setTitle("");
             android.widget.TextView titleLabel = toolbar.findViewById(org.smartregister.R.id.txt_title_label);
             if (titleLabel != null) {
-                titleLabel.setText(R.string.pmtct_services);
+                titleLabel.setText(R.string.pmtct_register_screen_title);
                 titleLabel.setVisibility(View.VISIBLE);
             }
         }

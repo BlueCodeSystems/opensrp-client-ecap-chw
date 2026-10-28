@@ -91,7 +91,7 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
 
         holder.setIsRecyclable(false);
 
-        holder.txtCaseDate.setText(casePlan.getCase_plan_date());
+        holder.txtCaseDate.setText(com.bluecodeltd.ecap.chw.view_holder.RegisterRow.shownDate(casePlan.getCase_plan_date()));
         holder.txtCasePlanStatus.setText(casePlan.getCase_plan_status());
         holder.statusStripe.setBackgroundColor(context.getResources().getColor(statusStripeColor(casePlan.getCase_plan_status())));
 
@@ -222,6 +222,8 @@ public class CasePlanAdapter extends RecyclerView.Adapter<CasePlanAdapter.ViewHo
 
     }
     private void setDeleteVisibility(ViewHolder holder, int visibility) {
+        // A hidden Delete takes no space, so Edit stays at the card's right edge
+        if (visibility == View.INVISIBLE) visibility = View.GONE;
         holder.delete.setVisibility(visibility);
         if (holder.deleteButton != null) {
             holder.deleteButton.setVisibility(visibility);

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Service register row: upcoming or pending, nothing wrong yet -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/reg_pill_info_bg" />
+    <corners android:radius="999dp" />
+</shape>

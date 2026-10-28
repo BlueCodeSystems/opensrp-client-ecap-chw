@@ -52,12 +52,24 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
 
     public HouseholdRegisterViewHolder(@NonNull View itemView) {
         super(itemView);
-        familyNameTextView = itemView.findViewById(R.id.familyNameTextView);
-        villageTextView = itemView.findViewById(R.id.villageTextView);
-        vcaCountBadge = itemView.findViewById(R.id.vca_count_badge);
-        hLayout = itemView.findViewById(R.id.child_wrapper);
-        homeIcon = itemView.findViewById(R.id.home_icon);
-        statusStrip = itemView.findViewById(R.id.status_strip);
+        // On the shared register row: the household ID and landmark are the summary, the CA count a chip and
+        // the members sit in the extras slot
+        RegisterRow row = new RegisterRow(itemView);
+        familyNameTextView = itemView.findViewById(R.id.row_name);
+        villageTextView = itemView.findViewById(R.id.row_summary);
+        villageTextView.setVisibility(View.VISIBLE);
+        vcaCountBadge = itemView.findViewById(R.id.row_status);
+        vcaCountBadge.setBackgroundResource(R.drawable.reg_pill_neutral);
+        vcaCountBadge.setVisibility(View.VISIBLE);
+        hLayout = itemView.findViewById(R.id.row_trailing);
+        hLayout.setVisibility(View.VISIBLE);
+        homeIcon = itemView.findViewById(R.id.row_icon);
+        statusStrip = itemView.findViewById(R.id.row_accent);
+        itemView.findViewById(R.id.row_avatar).setBackgroundTintList(
+                ColorStateList.valueOf(ContextCompat.getColor(itemView.getContext(), R.color.register_household_bg)));
+        row.id("").detail("");
+        // The CA count chip always shows, so the chip line does too
+        itemView.findViewById(R.id.row_chips).setVisibility(View.VISIBLE);
     }
 
     public void setupViews(String family, String householdId, String baseId, String isClosed, List<String> genderList, String screened, List<String> birthdateList, String vcaCount, Context context){
@@ -89,7 +101,7 @@ public class HouseholdRegisterViewHolder extends RecyclerView.ViewHolder{
                         if (house != null && householdId.equals(villageTextView.getTag())) {
                             String landmark = house.getLandmark();
                             if (landmark != null && !landmark.trim().isEmpty()) {
-                                villageTextView.setText(householdId + " • " + landmark.trim());
+                                villageTextView.setText(householdId + " · " + landmark.trim());
                             } else {
                                 villageTextView.setText(householdId);
                             }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Child profile header pill: translucent white on the header colour -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#2EFFFFFF" />
+    <corners android:radius="999dp" />
+</shape>

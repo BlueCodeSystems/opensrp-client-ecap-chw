@@ -74,7 +74,10 @@ public class TbScreeningAdapter extends RecyclerView.Adapter<TbScreeningAdapter.
     public void onBindViewHolder(@NonNull VH h, int position) {
         TbScreeningModel m = items.get(position);
         h.tvDate.setText(fmt(m.getLast_interacted_with()));
-        String summary = m.getReferred_for_tb_evaluation() != null ? ("Referred: " + m.getReferred_for_tb_evaluation()) : "";
+        String referred = m.getReferred_for_tb_evaluation();
+        String summary = referred != null && !referred.trim().isEmpty()
+                ? "Referred for TB evaluation: " + Character.toUpperCase(referred.trim().charAt(0)) + referred.trim().substring(1)
+                : "";
         h.tvSummary.setText(summary);
         // Follow-up date binding
         String follow = m.getFollowup_date();
@@ -121,7 +124,7 @@ public class TbScreeningAdapter extends RecyclerView.Adapter<TbScreeningAdapter.
     private String fmt(String millisStr) {
         try {
             long v = Long.parseLong(millisStr);
-            return new SimpleDateFormat("dd MMM yyyy, HH:mm", Locale.getDefault()).format(new Date(v));
+            return new SimpleDateFormat("d MMM yyyy, HH:mm", Locale.ENGLISH).format(new Date(v));
         } catch (Exception e) {
             return millisStr != null ? millisStr : "";
         }

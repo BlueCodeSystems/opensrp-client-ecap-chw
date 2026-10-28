@@ -51,36 +51,81 @@
     }
   },
   "step1": {
-    "title": "Referral Linkages",
+    "title": "Record referral",
     "fields": [
-      {
-        "key": "placeholder_notice",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "instructions",
-        "type": "toaster_notes",
-        "text": "Interim form: the final questions will be added in a later update. Submitted records are saved and synced.",
-        "text_color": "#000000",
-        "toaster_type": "info"
-      },
       {
         "key": "client_number",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "client_number",
-        "type": "edit_text",
-        "hint": "Client Number",
-        "read_only": "true",
-        "edit_type": "number"
+        "type": "hidden"
       },
       {
         "key": "health_facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "health_facility",
+        "type": "hidden"
+      },
+      {
+        "key": "caseworker_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_name",
+        "type": "hidden"
+      },
+      {
+        "key": "date_created",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_created",
+        "type": "hidden"
+      },
+      {
+        "key": "delete_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "delete_status",
+        "type": "hidden"
+      },
+      {
+        "key": "referral_label",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "label",
+        "text": "Referral",
+        "text_color": "#0F5230",
+        "label_text_style": "bold",
+        "has_bg": true,
+        "bg_color": "#E3F1E7",
+        "top_padding": "8dp",
+        "bottom_padding": "8dp",
+        "left_padding": "8dp"
+      },
+      {
+        "key": "date_referral_received",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_referral_received",
+        "type": "date_picker",
+        "hint": "Date referral received",
+        "expanded": false,
+        "min_date": "today-1y",
+        "max_date": "today",
+        "v_required": {
+          "value": "true",
+          "err": "Date referral received is required"
+        }
+      },
+      {
+        "key": "iccm_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "iccm_id",
         "type": "edit_text",
-        "hint": "Health Facility",
-        "read_only": "true"
+        "hint": "iCCM ID as it appears in eCMS (leave blank if not enrolled)",
+        "edit_type": "name"
       },
       {
         "key": "first_name",
@@ -88,28 +133,15 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "first_name",
         "type": "edit_text",
-        "hint": "First Name",
+        "hint": "First name",
         "edit_type": "name",
         "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
+          "value": "[A-Za-z\\s\\.\\-']*",
           "err": "Names can only contain letters"
         },
         "v_required": {
           "value": "true",
-          "err": "First Name is Required"
-        }
-      },
-      {
-        "key": "middle_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "middle_name",
-        "type": "edit_text",
-        "hint": "Middle Name",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Names can only contain letters"
+          "err": "First name is required"
         }
       },
       {
@@ -118,15 +150,15 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "last_name",
         "type": "edit_text",
-        "hint": "Last Name",
+        "hint": "Surname",
         "edit_type": "name",
         "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
+          "value": "[A-Za-z\\s\\.\\-']*",
           "err": "Names can only contain letters"
         },
         "v_required": {
           "value": "true",
-          "err": "Last Name is Required"
+          "err": "Surname is required"
         }
       },
       {
@@ -148,7 +180,7 @@
         ],
         "v_required": {
           "value": "true",
-          "err": "This field is Required"
+          "err": "This field is required"
         }
       },
       {
@@ -157,29 +189,94 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "birthdate",
         "type": "date_picker",
-        "hint": "Date of Birth",
+        "hint": "Date of birth",
         "expanded": false,
+        "min_date": "today-100y",
+        "max_date": "today",
         "duration": {
           "label": "Age"
         },
-        "min_date": "today-100y",
-        "max_date": "today",
         "v_required": {
           "value": "true",
-          "err": "Please enter the date of birth"
+          "err": "Date of birth is required"
         }
       },
       {
-        "key": "phone",
+        "key": "sub_population",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "phone",
+        "openmrs_entity_id": "sub_population",
+        "type": "check_box",
+        "label": "Priority sub-population (tick all that apply)",
+        "options": [
+          {
+            "key": "calhiv",
+            "text": "C/ALHIV",
+            "value": "false"
+          },
+          {
+            "key": "hei",
+            "text": "HEI",
+            "value": "false"
+          },
+          {
+            "key": "child_plhiv",
+            "text": "Child of PLHIV",
+            "value": "false"
+          },
+          {
+            "key": "ssv",
+            "text": "Survivor of sexual violence",
+            "value": "false"
+          },
+          {
+            "key": "hiv_neg_pbfw",
+            "text": "HIV-negative PBF AGYW 10-25 years",
+            "value": "false"
+          },
+          {
+            "key": "hiv_pos_pbfw",
+            "text": "HIV-positive PBFW",
+            "value": "false"
+          },
+          {
+            "key": "ayp_high_risk",
+            "text": "AYP at high risk",
+            "value": "false"
+          },
+          {
+            "key": "other",
+            "text": "Other",
+            "value": "false"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Tick at least one"
+        }
+      },
+      {
+        "key": "sub_population_other",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "sub_population_other",
         "type": "edit_text",
-        "hint": "Phone Number",
-        "edit_type": "number",
-        "v_regex": {
-          "value": "((07||09||05)[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 077,076,055,056,057,095, 096, or 097 and must be a total of 10 digits in length"
+        "hint": "Specify the sub-population",
+        "edit_type": "name",
+        "v_required": {
+          "value": "true",
+          "err": "Specify the sub-population is required"
+        },
+        "relevance": {
+          "step1:sub_population": {
+            "ex-checkbox": [
+              {
+                "or": [
+                  "other"
+                ]
+              }
+            ]
+          }
         }
       },
       {
@@ -188,21 +285,138 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "address",
         "type": "edit_text",
-        "hint": "Address"
+        "hint": "Address (village, zone or section)",
+        "edit_type": "name"
       },
       {
-        "key": "date_referred",
+        "key": "phone",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_referred",
-        "type": "date_picker",
-        "hint": "Date Referred",
-        "expanded": false,
-        "min_date": "today-5y",
-        "max_date": "today",
+        "openmrs_entity_id": "phone",
+        "type": "edit_text",
+        "hint": "Phone number",
+        "edit_type": "number",
+        "v_regex": {
+          "value": "^$|0[0-9]{9}",
+          "err": "Enter a 10-digit phone number"
+        }
+      },
+      {
+        "key": "service_label",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "label",
+        "text": "Service",
+        "text_color": "#0F5230",
+        "label_text_style": "bold",
+        "has_bg": true,
+        "bg_color": "#E3F1E7",
+        "top_padding": "8dp",
+        "bottom_padding": "8dp",
+        "left_padding": "8dp"
+      },
+      {
+        "key": "referred_from",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "referred_from",
+        "type": "native_radio",
+        "label": "Referred from",
+        "options": [
+          {
+            "key": "community",
+            "text": "Community"
+          },
+          {
+            "key": "facility",
+            "text": "Health facility"
+          },
+          {
+            "key": "other",
+            "text": "Other"
+          }
+        ],
         "v_required": {
           "value": "true",
-          "err": "Date Referred is Required"
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "referred_from_other",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "referred_from_other",
+        "type": "edit_text",
+        "hint": "Name of the institution referring",
+        "edit_type": "name",
+        "v_required": {
+          "value": "true",
+          "err": "Name of the institution referring is required"
+        },
+        "relevance": {
+          "step1:referred_from": {
+            "type": "string",
+            "ex": "equalTo(., \"other\")"
+          }
+        }
+      },
+      {
+        "key": "referred_to",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "referred_to",
+        "type": "native_radio",
+        "label": "Referred to",
+        "options": [
+          {
+            "key": "community",
+            "text": "Community"
+          },
+          {
+            "key": "facility",
+            "text": "Health facility"
+          },
+          {
+            "key": "other",
+            "text": "Other"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "referred_to_other",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "referred_to_other",
+        "type": "edit_text",
+        "hint": "Name of the institution referred to",
+        "edit_type": "name",
+        "v_required": {
+          "value": "true",
+          "err": "Name of the institution referred to is required"
+        },
+        "relevance": {
+          "step1:referred_to": {
+            "type": "string",
+            "ex": "equalTo(., \"other\")"
+          }
+        }
+      },
+      {
+        "key": "referred_by",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "referred_by",
+        "type": "edit_text",
+        "hint": "Referred by (surname, first name)",
+        "edit_type": "name",
+        "v_required": {
+          "value": "true",
+          "err": "Referred by (surname, first name) is required"
         }
       },
       {
@@ -210,95 +424,91 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "referral_service",
-        "type": "native_radio",
-        "label": "Referred For",
-        "options": [
-          {
-            "key": "HTS",
-            "text": "HTS"
-          },
-          {
-            "key": "ART",
-            "text": "ART"
-          },
-          {
-            "key": "PrEP",
-            "text": "PrEP"
-          },
-          {
-            "key": "VMMC",
-            "text": "VMMC"
-          },
-          {
-            "key": "TB screening",
-            "text": "TB screening"
-          },
-          {
-            "key": "GBV services",
-            "text": "GBV services"
-          },
-          {
-            "key": "Family planning",
-            "text": "Family planning"
-          },
-          {
-            "key": "Other",
-            "text": "Other"
-          }
+        "type": "spinner",
+        "hint": "Service referred for",
+        "values": [
+          "Viral load testing",
+          "Enhanced adherence counselling",
+          "Drug modification",
+          "TB diagnosis",
+          "Nutrition counselling/screening",
+          "Transition from <3MMD to 3MMD",
+          "Transition from <3MMD to 6MMD",
+          "Community VL sample collection",
+          "Community DBS collection",
+          "Interruption in treatment traced",
+          "PrEP",
+          "PEP",
+          "Advanced HIV disease",
+          "Malaria",
+          "Other"
         ],
+        "keys": [
+          "vl_testing",
+          "eac",
+          "drug_modification",
+          "tb_diagnosis",
+          "nutrition",
+          "mmd3",
+          "mmd6",
+          "community_vl",
+          "community_dbs",
+          "itt_traced",
+          "prep",
+          "pep",
+          "ahd",
+          "malaria",
+          "other"
+        ],
+        "openmrs_choice_ids": {
+          "vl_testing": "vl_testing",
+          "eac": "eac",
+          "drug_modification": "drug_modification",
+          "tb_diagnosis": "tb_diagnosis",
+          "nutrition": "nutrition",
+          "mmd3": "mmd3",
+          "mmd6": "mmd6",
+          "community_vl": "community_vl",
+          "community_dbs": "community_dbs",
+          "itt_traced": "itt_traced",
+          "prep": "prep",
+          "pep": "pep",
+          "ahd": "ahd",
+          "malaria": "malaria",
+          "other": "other"
+        },
         "v_required": {
           "value": "true",
-          "err": "This field is Required"
+          "err": "Please choose service referred for"
         }
       },
       {
-        "key": "receiving_facility",
+        "key": "referral_service_other",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "receiving_facility",
+        "openmrs_entity_id": "referral_service_other",
         "type": "edit_text",
-        "hint": "Receiving Facility",
+        "hint": "Specify the service",
+        "edit_type": "name",
         "v_required": {
           "value": "true",
-          "err": "Receiving Facility is Required"
-        }
-      },
-      {
-        "key": "linkage_status",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "linkage_status",
-        "type": "native_radio",
-        "label": "Linkage Status",
-        "options": [
-          {
-            "key": "Pending",
-            "text": "Pending"
-          },
-          {
-            "key": "Linked",
-            "text": "Linked"
-          },
-          {
-            "key": "Not linked",
-            "text": "Not linked"
+          "err": "Specify the service is required"
+        },
+        "relevance": {
+          "step1:referral_service": {
+            "type": "string",
+            "ex": "equalTo(., \"other\")"
           }
-        ],
-        "v_required": {
-          "value": "true",
-          "err": "This field is Required"
         }
       },
       {
-        "key": "date_linked",
+        "key": "facility_service_number",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_linked",
-        "type": "date_picker",
-        "hint": "Date Linked",
-        "expanded": false,
-        "min_date": "today-5y",
-        "max_date": "today"
+        "openmrs_entity_id": "facility_service_number",
+        "type": "edit_text",
+        "hint": "Client service number at the facility (e.g. ART or OPD number)",
+        "edit_type": "name"
       },
       {
         "key": "comment",
@@ -306,7 +516,8 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "comment",
         "type": "edit_text",
-        "hint": "Comments"
+        "hint": "Remarks",
+        "edit_type": "name"
       }
     ]
   }

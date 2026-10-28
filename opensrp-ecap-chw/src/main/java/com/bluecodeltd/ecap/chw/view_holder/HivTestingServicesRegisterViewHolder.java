@@ -1,104 +1,42 @@
 package com.bluecodeltd.ecap.chw.view_holder;
 
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
+import com.bluecodeltd.ecap.chw.util.ServiceRegisterStatus.Tone;
 
+/** HTS register row on the shared register row: who was tested, how, and the result. */
 public class HivTestingServicesRegisterViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView familyNameTextView;
-
-    private TextView villageTextView, gender_age,client_type;
-
-    //public Button caseplan_layout;
-
-    private View myStatus;
-
-    private final ImageView  visitLayout, caseplan_layout, warningIcon;
-    private final TextView index_icon_layout;
+    private final RegisterRow row;
 
     public HivTestingServicesRegisterViewHolder(@NonNull View itemView) {
         super(itemView);
-        familyNameTextView = itemView.findViewById(R.id.familyNameTextView);
-        villageTextView = itemView.findViewById(R.id.villageTextView);
-        caseplan_layout = itemView.findViewById(R.id.index_case_plan);
-        index_icon_layout = itemView.findViewById(R.id.index_icon);
-        myStatus = itemView.findViewById(R.id.mystatusx);
-        visitLayout = itemView.findViewById(R.id.index_visit);
-        gender_age = itemView.findViewById(R.id.gender_age);
-        warningIcon = itemView.findViewById(R.id.index_warning);
-        client_type = itemView.findViewById(R.id.client_type);
-
+        row = new RegisterRow(itemView).avatar(R.drawable.ic_shield_droplet, R.color.register_hts_icon, R.color.register_hts_bg);
     }
 
-
-    public void setupViews(String family, String village,String gender,String age,String client){
-
-        //check if gender is null
-        if(gender == null)
-        {
-            gender = "";
-        }
-
-        if(family == null)
-        {
-            family = "";
-        }
-        if(age == null)
-        {
-            age = "";
-        }
-
-        familyNameTextView.setText(family);
-        villageTextView.setText(village);
-        gender_age.setText(gender + " : " + age);
-//        if(client.equals("Other Community")){
-//            gender_age.setVisibility(View.GONE);
-//        }
-        client_type.setText("Testing Modality: "+client);
-
-//        if(status != null && status.equals("1")){
-//            myStatus.setBackgroundColor(0xff05b714);
-//        } else if (status != null && status.equals("0")) {
-//            myStatus.setBackgroundColor(0xffff0000);
-//        } else if(status != null && status.equals("2")){
-//            myStatus.setBackgroundColor(0xffffa500);
-//        }
-//
-//        if (is_index != null && is_index.equals("1")){
-//
-//            index_icon_layout.setVisibility(View.VISIBLE);
-//        } else {
-//
-//            index_icon_layout.setVisibility(View.GONE);
-//        }
-//
-//
-//        if(plans > 0){
-//            caseplan_layout.setVisibility(View.VISIBLE);
-//        } else {
-//            caseplan_layout.setVisibility(View.GONE);
-//        }
-//
-//        if(visits > 0){
-//            visitLayout.setVisibility(View.VISIBLE);
-//        } else {
-//            visitLayout.setVisibility(View.GONE);
-//        }
-//
-//
-//        if(is_screened != null && is_screened.equals("true")){
-//            warningIcon.setVisibility(View.GONE);
-//        } else {
-//            warningIcon.setVisibility(View.VISIBLE);
-//        }
-
+    public void setupViews(String name, String clientId, String gender, String birthdate, String modality,
+                           String dateTested, String result, String artStarted) {
+        boolean onArt = artStarted != null && !artStarted.trim().isEmpty();
+        row.name(name)
+                .id(clientId == null || clientId.trim().isEmpty() ? "" : "ID " + clientId.trim())
+                .summary(RegisterRow.join(RegisterRow.sex(gender), RegisterRow.age(birthdate)))
+                .detail(modality == null || modality.trim().isEmpty() ? "" : "Testing modality: " + modality.trim())
+                .stripe(onArt ? Tone.GOOD : Tone.NEUTRAL)
+                .status(onArt ? "On ART" : resultLabel(result), onArt ? Tone.GOOD : Tone.NEUTRAL)
+                .due(dateTested == null || dateTested.trim().isEmpty() ? "" : "Tested " + RegisterRow.shownDate(dateTested), Tone.NEUTRAL);
     }
 
-
+    /** The result as staff read it: "HIV negative", "Newly tested HIV positive" and so on. */
+    private static String resultLabel(String result) {
+        if (result == null || result.trim().isEmpty()) return "";
+        String value = result.trim().toLowerCase();
+        String status = value.contains("hiv+") || value.contains("positive") ? "HIV positive"
+                : value.contains("hiv-") || value.contains("negative") ? "HIV negative" : null;
+        if (status == null) return Character.toUpperCase(value.charAt(0)) + value.substring(1);
+        return value.contains("newly") ? "Newly tested " + status : status;
+    }
 }

@@ -101,7 +101,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
 
         holder.setIsRecyclable(false);
 
-        holder.txtDate.setText(visit.getVisit_date());
+        holder.txtDate.setText(com.bluecodeltd.ecap.chw.view_holder.RegisterRow.shownDate(visit.getVisit_date()));
 
         holder.linearLayout.setOnClickListener(v -> {
 

@@ -160,6 +160,64 @@ public class IndexDetailsActivity extends AppCompatActivity {
     private Caregiver householdCaregiver;
     private  VcaAssessmentModel assessmentModel;
     private TextView txtName, txtGender, txtAge, txtChildid;
+
+    /** The whole header takes the child's gender colour (chosen over a green header with only a coloured avatar). */
+    private static final boolean GENDER_COLOURED_HEADER = true;
+    private String profileGender;
+
+    private int profileHeaderColor() {
+        boolean boy = "male".equalsIgnoreCase(profileGender);
+        boolean girl = "female".equalsIgnoreCase(profileGender);
+        int colour = GENDER_COLOURED_HEADER && boy ? R.color.profile_boy_header
+                : GENDER_COLOURED_HEADER && girl ? R.color.profile_girl_header : R.color.primary;
+        return androidx.core.content.ContextCompat.getColor(this, colour);
+    }
+
+    /**
+     * Shows the child's sex from across the room: a solid blue or pink avatar on the green header (B), or the
+     * whole header in deep blue or rose (C). The avatar figure is white either way.
+     */
+    private void applyGenderHeader(String gender) {
+        profileGender = gender;
+        boolean boy = "male".equalsIgnoreCase(gender);
+        boolean girl = "female".equalsIgnoreCase(gender);
+        int white = Color.WHITE;
+        int genderColour = androidx.core.content.ContextCompat.getColor(this, boy ? R.color.profile_boy : R.color.profile_girl);
+        float density = getResources().getDisplayMetrics().density;
+
+        if (txtGender != null) {
+            txtGender.setText(boy ? "Male" : girl ? "Female" : "");
+            txtGender.setVisibility(boy || girl ? View.VISIBLE : View.GONE);
+            if (!GENDER_COLOURED_HEADER && (boy || girl)) {
+                android.graphics.drawable.GradientDrawable pill = new android.graphics.drawable.GradientDrawable();
+                pill.setColor(genderColour);
+                pill.setCornerRadius(999 * density);
+                txtGender.setBackground(pill);
+            } else {
+                txtGender.setBackgroundResource(R.drawable.profile_header_pill);
+            }
+        }
+        if (profileGenderImage != null && profileGenderAvatar != null) {
+            profileGenderAvatar.setVisibility(boy || girl ? View.VISIBLE : View.GONE);
+            profileGenderImage.setImageResource(boy ? R.drawable.row_boy : R.drawable.row_girl);
+            androidx.core.widget.ImageViewCompat.setImageTintList(profileGenderImage, ColorStateList.valueOf(white));
+            android.graphics.drawable.GradientDrawable circle = new android.graphics.drawable.GradientDrawable();
+            circle.setShape(android.graphics.drawable.GradientDrawable.OVAL);
+            circle.setColor(GENDER_COLOURED_HEADER ? 0x33FFFFFF : genderColour);
+            circle.setStroke(Math.round(3 * density), white);
+            profileGenderAvatar.setBackground(circle);
+        }
+
+        int header = profileHeaderColor();
+        if (profileNameLayout != null) profileNameLayout.setBackgroundColor(header);
+        if (toolbar != null) toolbar.setBackgroundDrawable(new ColorDrawable(header));
+        if (myAppbar != null) myAppbar.setBackgroundDrawable(new ColorDrawable(header));
+        binding.collapsingToolbarLayout.setBackgroundColor(header);
+        binding.collapsingToolbarLayout.setContentScrimColor(header);
+        getWindow().setStatusBarColor(GENDER_COLOURED_HEADER && (boy || girl)
+                ? androidx.core.graphics.ColorUtils.blendARGB(header, Color.BLACK, 0.25f)
+                : androidx.core.content.ContextCompat.getColor(this, R.color.chw_family_primary_dark));
+    }
     private android.widget.ImageView profileGenderImage;
     private View profileGenderAvatar;
     private View profileNameLayout;
@@ -374,10 +432,9 @@ public class IndexDetailsActivity extends AppCompatActivity {
             fabCasePlan.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_input_add));
         }
 
-        // The app's green for every child; the avatar and the details line already show the gender
-        int headerColor = androidx.core.content.ContextCompat.getColor(this, R.color.primary);
-        toolbar.setBackgroundDrawable(new ColorDrawable(headerColor));
-        myAppbar.setBackgroundDrawable(new ColorDrawable(headerColor));
+        // The header colour applyGenderHeader() chose (green, or the child's gender colour in option C)
+        toolbar.setBackgroundDrawable(new ColorDrawable(profileHeaderColor()));
+        myAppbar.setBackgroundDrawable(new ColorDrawable(profileHeaderColor()));
 
         fab = binding.fab;
         fabScrim = binding.fabScrim;
@@ -474,29 +531,16 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         if (txtName != null && !TextUtils.isEmpty(full_name)) {
             txtName.setText(full_name);
+            // Shown in the slim bar once the header collapses; the large name covers the expanded header
+            binding.collapsingToolbarLayout.setTitle(full_name);
+            binding.collapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT);
+            binding.collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
         }
-        if (txtGender != null) {
-            txtGender.setText(!TextUtils.isEmpty(displayGender) ? displayGender.toUpperCase() : "");
-        }
-        if (profileGenderImage != null && profileGenderAvatar != null) {
-            if ("male".equalsIgnoreCase(displayGender)) {
-                profileGenderImage.setImageResource(R.drawable.row_boy);
-                profileGenderAvatar.setVisibility(View.VISIBLE);
-            } else if ("female".equalsIgnoreCase(displayGender)) {
-                profileGenderImage.setImageResource(R.drawable.row_girl);
-                profileGenderAvatar.setVisibility(View.VISIBLE);
-            } else {
-                profileGenderAvatar.setVisibility(View.GONE);
-            }
-        }
-        if (profileNameLayout != null) {
-            // Same colour initAfterLoad() gives the toolbar and app bar, so the header reads as one block
-            profileNameLayout.setBackgroundColor(androidx.core.content.ContextCompat.getColor(this, R.color.primary));
-        }
+        applyGenderHeader(displayGender);
         if (txtChildid != null) {
             String idForDisplay = indexVCA != null ? indexVCA.getUnique_id() : (child != null ? child.getUnique_id() : null);
             if (!TextUtils.isEmpty(idForDisplay)) {
-                txtChildid.setText("ID : " + idForDisplay);
+                txtChildid.setText("ID " + idForDisplay);
             }
         }
 

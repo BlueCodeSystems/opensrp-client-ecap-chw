@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.ActionBar;
 import android.widget.ProgressBar;
 
+import com.bluecodeltd.ecap.chw.util.RegisterHeader;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterFragmentContract;
@@ -234,6 +235,7 @@ public class IndexFragmentRegister extends BaseSafeRegisterFragment implements I
                         org.smartregister.R.drawable.ic_action_search, 0, 0, 0
                 );
                 getSearchView().setTextColor(getResources().getColor(org.smartregister.R.color.text_black));
+                RegisterHeader.style(view, getSearchView());
             } else {
                 Log.w("setupViews", "Search view is null.");
             }

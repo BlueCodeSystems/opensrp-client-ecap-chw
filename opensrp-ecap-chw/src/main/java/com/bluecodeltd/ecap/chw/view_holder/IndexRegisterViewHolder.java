@@ -84,7 +84,8 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
 
     private View myStatus;
 
-    private final ImageView  visitLayout, caseplan_layout;
+    private final TextView visitLayout, caseplan_layout;
+    private final View indicators;
     private final TextView index_icon_layout;
     private final Button dueButton;
     private final ImageView notification;
@@ -106,8 +107,10 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
         index_icon_layout = itemView.findViewById(R.id.index_icon);
         myStatus = itemView.findViewById(R.id.mystatusx);
         visitLayout = itemView.findViewById(R.id.index_visit);
+        indicators = itemView.findViewById(R.id.ca_indicators);
         gender_age = itemView.findViewById(R.id.gender_age);
         dueButton = itemView.findViewById(R.id.due_button);
+        visitStatus = itemView.findViewById(R.id.visit_status);
         notification = itemView.findViewById(R.id.notifications);
         notification_wrapper = itemView.findViewById(R.id.notification_wrapper);
         genderAvatar = itemView.findViewById(R.id.gender_avatar);
@@ -138,10 +141,38 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
     }
 
 
+    /** An icon and label in one colour, e.g. a green "Case plan" or an amber "No case plan". */
+    private static void indicator(TextView view, int icon, String label, int colorRes) {
+        int color = ContextCompat.getColor(view.getContext(), colorRes);
+        android.graphics.drawable.Drawable drawable = ContextCompat.getDrawable(view.getContext(), icon);
+        if (drawable != null) {
+            drawable = androidx.core.graphics.drawable.DrawableCompat.wrap(drawable.mutate());
+            androidx.core.graphics.drawable.DrawableCompat.setTint(drawable, color);
+            int size = Math.round(15 * view.getResources().getDisplayMetrics().density);
+            drawable.setBounds(0, 0, size, size);
+        }
+        view.setCompoundDrawablesRelative(drawable, null, null, null);
+        view.setText(label);
+        view.setTextColor(color);
+        view.setVisibility(View.VISIBLE);
+    }
+
+    /** Visit status chip beside the Index chip; the Conduct visit button stays on the right. */
+    private final TextView visitStatus;
+
+    private void showVisitStatus(String text, int background, int textColor) {
+        boolean empty = text == null || text.isEmpty();
+        visitStatus.setVisibility(empty ? View.GONE : View.VISIBLE);
+        if (empty) return;
+        visitStatus.setText(text);
+        visitStatus.setBackgroundResource(background);
+        visitStatus.setTextColor(ContextCompat.getColor(visitStatus.getContext(), textColor));
+    }
+
     public void setupViews(String family, String village, int plans, int visits, boolean visitedThisMonth, String is_index, String status, String gender, String age, String vcaAge){
 
         familyNameTextView.setText(family);
-        villageTextView.setText("ID: " + village);
+        villageTextView.setText("ID " + village);
         gender_age.setText(gender + " · " + (age != null ? age.trim() : ""));
         setupGenderAvatar(gender);
 
@@ -169,26 +200,24 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
         }
 
 
-        if(plans > 0){
-            caseplan_layout.setVisibility(View.VISIBLE);
+        // Always shown on an open case, so a missing visit or case plan is as visible as one on file
+        indicators.setVisibility(View.VISIBLE);
+        // Services are monthly (visitedThisMonth carries "served this month"); the three-monthly visit has its own chip
+        if (visitedThisMonth) {
+            indicator(visitLayout, R.drawable.ic_service_calendar, "Served this month", R.color.reg_pill_good_text);
         } else {
-            caseplan_layout.setVisibility(View.GONE);
+            indicator(visitLayout, R.drawable.ic_service_calendar, "No service this month", R.color.reg_pill_warning_text);
+        }
+        if (plans > 0) {
+            indicator(caseplan_layout, R.drawable.ic_case_plan, "Case plan", R.color.reg_pill_good_text);
+        } else {
+            indicator(caseplan_layout, R.drawable.ic_case_plan, "No case plan", R.color.reg_pill_warning_text);
         }
 
-        if(visits > 0){
-            visitLayout.setVisibility(View.VISIBLE);
-            // Green = service already recorded this calendar month; grey = has a visit history, but not this month.
-            int tintColorRes = visitedThisMonth ? R.color.status_green : R.color.stat_pill_unknown;
-            ImageViewCompat.setImageTintList(visitLayout, ColorStateList.valueOf(ContextCompat.getColor(context, tintColorRes)));
-        } else {
-            visitLayout.setVisibility(View.GONE);
-        }
 
-
-        // Default while loading
-        dueButton.setBackgroundResource(R.drawable.reg_pill_action);
-        dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), R.color.reg_pill_action_text));
-        dueButton.setText("Conduct Visit");
+        // Default while loading: the action shows, the status waits for the visit data
+        dueButton.setVisibility(View.VISIBLE);
+        showVisitStatus(null, 0, 0);
         final String rowTag = village;
         dueButton.setTag(rowTag);
         Threading.ioBestEffort(() -> {
@@ -223,32 +252,30 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
                     if ("green".equalsIgnoreCase(fColor) && fDate != null) {
                         backgroundResource = R.drawable.reg_pill_good;
                         textColorResource = R.color.reg_pill_good_text;
-                        buttonText = "Visit Due: " + fDate;
+                        buttonText = "Visit due " + RegisterRow.shownDate(fDate);
                     } else if ("yellow".equalsIgnoreCase(fColor) && fDate != null) {
                         backgroundResource = R.drawable.reg_pill_warning;
                         textColorResource = R.color.reg_pill_warning_text;
-                        buttonText = "Visit Due: " + fDate;
+                        buttonText = "Visit due " + RegisterRow.shownDate(fDate);
                     } else if ("red".equalsIgnoreCase(fColor) && fDate != null) {
                         backgroundResource = R.drawable.reg_pill_critical;
                         textColorResource = R.color.reg_pill_critical_text;
-                        buttonText = "Visit Overdue: " + fDate;
+                        buttonText = "Visit overdue " + RegisterRow.shownDate(fDate);
                     } else {
-                        backgroundResource = R.drawable.reg_pill_action;
-                        textColorResource = R.color.reg_pill_action_text;
-                        buttonText = "Conduct Visit";
+                        backgroundResource = 0;
+                        textColorResource = 0;
+                        buttonText = null;
                     }
-                    dueButton.setBackgroundResource(backgroundResource);
-                    dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), textColorResource));
-                    dueButton.setText(buttonText);
+                    showVisitStatus(buttonText, backgroundResource, textColorResource);
+                    dueButton.setVisibility(View.VISIBLE);
                 } else {
                     if (screeningFinal != null && ("0".equals(screeningFinal.getCase_status()) || "2".equals(screeningFinal.getCase_status()))) {
-                        dueButton.setBackgroundResource(R.drawable.reg_pill_neutral);
-                        dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), R.color.reg_pill_neutral_text));
-                        dueButton.setText("Case Closed");
+                        showVisitStatus("Case closed", R.drawable.reg_pill_neutral, R.color.reg_pill_neutral_text);
+                        dueButton.setVisibility(View.GONE);
+                        indicators.setVisibility(View.GONE);
                     } else {
-                        dueButton.setBackgroundResource(R.drawable.reg_pill_action);
-                        dueButton.setTextColor(ContextCompat.getColor(dueButton.getContext(), R.color.reg_pill_action_text));
-                        dueButton.setText("Conduct Visit");
+                        showVisitStatus(null, 0, 0);
+                        dueButton.setVisibility(View.VISIBLE);
                     }
                 }
             });

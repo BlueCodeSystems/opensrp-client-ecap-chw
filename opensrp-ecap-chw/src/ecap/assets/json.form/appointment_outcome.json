@@ -1,0 +1,320 @@
+{
+  "count": "1",
+  "encounter_type": "Appointment Outcome",
+  "entity_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1": {
+    "title": "Record outcome",
+    "fields": [
+      {
+        "key": "days_late",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "days_late",
+        "type": "hidden"
+      },
+      {
+        "key": "date_edited",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_edited",
+        "type": "hidden"
+      },
+      {
+        "key": "reminder_given",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "reminder_given",
+        "type": "native_radio",
+        "label": "Reminder given? (7, 3 and 1 days before)",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "appointment_kept",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "appointment_kept",
+        "type": "native_radio",
+        "label": "Did the client keep the appointment?",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "tracking_label",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "label",
+        "text": "Follow up of the missed appointment",
+        "text_color": "#0F5230",
+        "label_text_style": "bold",
+        "has_bg": true,
+        "bg_color": "#E3F1E7",
+        "top_padding": "8dp",
+        "bottom_padding": "8dp",
+        "left_padding": "8dp",
+        "relevance": {
+          "step1:appointment_kept": {
+            "type": "string",
+            "ex": "equalTo(., \"No\")"
+          }
+        }
+      },
+      {
+        "key": "date_tracking_initiated",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_tracking_initiated",
+        "type": "date_picker",
+        "hint": "Date tracking initiated",
+        "expanded": false,
+        "min_date": "today-1y",
+        "max_date": "today",
+        "v_required": {
+          "value": "true",
+          "err": "Date tracking initiated is required"
+        },
+        "relevance": {
+          "step1:appointment_kept": {
+            "type": "string",
+            "ex": "equalTo(., \"No\")"
+          }
+        }
+      },
+      {
+        "key": "tracking_attempt_1",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "tracking_attempt_1",
+        "type": "date_picker",
+        "hint": "Tracking attempt 1",
+        "expanded": false,
+        "min_date": "today-1y",
+        "max_date": "today",
+        "relevance": {
+          "step1:appointment_kept": {
+            "type": "string",
+            "ex": "equalTo(., \"No\")"
+          }
+        }
+      },
+      {
+        "key": "tracking_attempt_2",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "tracking_attempt_2",
+        "type": "date_picker",
+        "hint": "Tracking attempt 2",
+        "expanded": false,
+        "min_date": "today-1y",
+        "max_date": "today",
+        "relevance": {
+          "step1:appointment_kept": {
+            "type": "string",
+            "ex": "equalTo(., \"No\")"
+          }
+        }
+      },
+      {
+        "key": "tracking_attempt_3",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "tracking_attempt_3",
+        "type": "date_picker",
+        "hint": "Tracking attempt 3",
+        "expanded": false,
+        "min_date": "today-1y",
+        "max_date": "today",
+        "relevance": {
+          "step1:appointment_kept": {
+            "type": "string",
+            "ex": "equalTo(., \"No\")"
+          }
+        }
+      },
+      {
+        "key": "date_declared_late",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_declared_late",
+        "type": "date_picker",
+        "hint": "Date declared late",
+        "expanded": false,
+        "min_date": "today-1y",
+        "max_date": "today",
+        "relevance": {
+          "step1:appointment_kept": {
+            "type": "string",
+            "ex": "equalTo(., \"No\")"
+          }
+        }
+      },
+      {
+        "key": "tracking_method",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "tracking_method",
+        "type": "spinner",
+        "hint": "Tracking method",
+        "values": [
+          "SMS",
+          "Phone call",
+          "Home visit",
+          "Other"
+        ],
+        "keys": [
+          "sms",
+          "phone",
+          "hv",
+          "other"
+        ],
+        "openmrs_choice_ids": {
+          "sms": "sms",
+          "phone": "phone",
+          "hv": "hv",
+          "other": "other"
+        },
+        "v_required": {
+          "value": "true",
+          "err": "Please choose tracking method"
+        },
+        "relevance": {
+          "step1:appointment_kept": {
+            "type": "string",
+            "ex": "equalTo(., \"No\")"
+          }
+        }
+      },
+      {
+        "key": "tracking_outcome",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "tracking_outcome",
+        "type": "native_radio",
+        "label": "Tracking outcome",
+        "options": [
+          {
+            "key": "sbf",
+            "text": "Still being followed"
+          },
+          {
+            "key": "bbtc",
+            "text": "Brought back to care"
+          },
+          {
+            "key": "traced_served",
+            "text": "Traced and served"
+          },
+          {
+            "key": "refused",
+            "text": "Traced and refused care"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:appointment_kept": {
+            "type": "string",
+            "ex": "equalTo(., \"No\")"
+          }
+        }
+      },
+      {
+        "key": "outcome_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "outcome_date",
+        "type": "date_picker",
+        "hint": "Date brought back to care or served (if applicable)",
+        "expanded": false,
+        "min_date": "today-1y",
+        "max_date": "today",
+        "relevance": {
+          "step1:appointment_kept": {
+            "type": "string",
+            "ex": "equalTo(., \"No\")"
+          }
+        }
+      },
+      {
+        "key": "comment",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "comment",
+        "type": "edit_text",
+        "hint": "Comments",
+        "edit_type": "name"
+      }
+    ]
+  }
+}

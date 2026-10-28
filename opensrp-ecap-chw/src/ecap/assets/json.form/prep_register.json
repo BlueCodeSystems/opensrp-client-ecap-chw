@@ -51,36 +51,101 @@
     }
   },
   "step1": {
-    "title": "HIV Prevention (PrEP)",
+    "title": "HIV prevention (PrEP) screening",
     "fields": [
-      {
-        "key": "placeholder_notice",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "instructions",
-        "type": "toaster_notes",
-        "text": "Interim form: the final questions will be added in a later update. Submitted records are saved and synced.",
-        "text_color": "#000000",
-        "toaster_type": "info"
-      },
       {
         "key": "client_number",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "client_number",
-        "type": "edit_text",
-        "hint": "Client Number",
-        "read_only": "true",
-        "edit_type": "number"
+        "type": "hidden"
       },
       {
         "key": "health_facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "health_facility",
+        "type": "hidden"
+      },
+      {
+        "key": "caseworker_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_name",
+        "type": "hidden"
+      },
+      {
+        "key": "date_created",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_created",
+        "type": "hidden"
+      },
+      {
+        "key": "delete_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "delete_status",
+        "type": "hidden"
+      },
+      {
+        "key": "substantial_risk",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "substantial_risk",
+        "type": "hidden"
+      },
+      {
+        "key": "prep_eligibility",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "prep_eligibility",
+        "type": "hidden"
+      },
+      {
+        "key": "prep_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "prep_status",
+        "type": "hidden"
+      },
+      {
+        "key": "review_1m_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "review_1m_date",
+        "type": "hidden"
+      },
+      {
+        "key": "next_reassessment_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "next_reassessment_date",
+        "type": "hidden"
+      },
+      {
+        "key": "participant_label",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "label",
+        "text": "Program participant",
+        "text_color": "#0F5230",
+        "label_text_style": "bold",
+        "has_bg": true,
+        "bg_color": "#E3F1E7",
+        "top_padding": "8dp",
+        "bottom_padding": "8dp",
+        "left_padding": "8dp"
+      },
+      {
+        "key": "iccm_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "iccm_id",
         "type": "edit_text",
-        "hint": "Health Facility",
-        "read_only": "true"
+        "hint": "iCCM ID as it appears in eCMS (leave blank if not enrolled)",
+        "edit_type": "name"
       },
       {
         "key": "first_name",
@@ -88,28 +153,15 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "first_name",
         "type": "edit_text",
-        "hint": "First Name",
+        "hint": "First name",
         "edit_type": "name",
         "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
+          "value": "[A-Za-z\\s\\.\\-']*",
           "err": "Names can only contain letters"
         },
         "v_required": {
           "value": "true",
-          "err": "First Name is Required"
-        }
-      },
-      {
-        "key": "middle_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "middle_name",
-        "type": "edit_text",
-        "hint": "Middle Name",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Names can only contain letters"
+          "err": "First name is required"
         }
       },
       {
@@ -118,15 +170,15 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "last_name",
         "type": "edit_text",
-        "hint": "Last Name",
+        "hint": "Surname",
         "edit_type": "name",
         "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
+          "value": "[A-Za-z\\s\\.\\-']*",
           "err": "Names can only contain letters"
         },
         "v_required": {
           "value": "true",
-          "err": "Last Name is Required"
+          "err": "Surname is required"
         }
       },
       {
@@ -148,7 +200,7 @@
         ],
         "v_required": {
           "value": "true",
-          "err": "This field is Required"
+          "err": "This field is required"
         }
       },
       {
@@ -157,16 +209,149 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "birthdate",
         "type": "date_picker",
-        "hint": "Date of Birth",
+        "hint": "Date of birth",
         "expanded": false,
+        "min_date": "today-100y",
+        "max_date": "today",
         "duration": {
           "label": "Age"
         },
-        "min_date": "today-100y",
+        "v_required": {
+          "value": "true",
+          "err": "Date of birth is required"
+        }
+      },
+      {
+        "key": "date_first_contact",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_first_contact",
+        "type": "date_picker",
+        "hint": "Date of first contact",
+        "expanded": false,
+        "min_date": "today-1y",
         "max_date": "today",
         "v_required": {
           "value": "true",
-          "err": "Please enter the date of birth"
+          "err": "Date of first contact is required"
+        }
+      },
+      {
+        "key": "ward",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "ward",
+        "type": "edit_text",
+        "hint": "Ward",
+        "edit_type": "name"
+      },
+      {
+        "key": "address",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "address",
+        "type": "edit_text",
+        "hint": "Community, compound or address",
+        "edit_type": "name"
+      },
+      {
+        "key": "sub_population",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "sub_population",
+        "type": "check_box",
+        "label": "Priority sub-population (tick all that apply)",
+        "options": [
+          {
+            "key": "hiv_neg_pbfw",
+            "text": "HIV-negative PBF AGYW 10-25 years",
+            "value": "false"
+          },
+          {
+            "key": "hiv_neg_pbfw_25",
+            "text": "HIV-negative PBFW over 25 at high risk",
+            "value": "false"
+          },
+          {
+            "key": "ayp_high_risk",
+            "text": "AYP at high risk",
+            "value": "false"
+          },
+          {
+            "key": "ssv",
+            "text": "Survivor of sexual violence",
+            "value": "false"
+          },
+          {
+            "key": "caregiver",
+            "text": "Primary caregiver",
+            "value": "false"
+          },
+          {
+            "key": "other",
+            "text": "Other",
+            "value": "false"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Tick at least one"
+        }
+      },
+      {
+        "key": "pregnant",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "pregnant",
+        "type": "native_radio",
+        "label": "Pregnant?",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:gender": {
+            "type": "string",
+            "ex": "equalTo(., \"Female\")"
+          }
+        }
+      },
+      {
+        "key": "breastfeeding",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "breastfeeding",
+        "type": "native_radio",
+        "label": "Breastfeeding?",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:gender": {
+            "type": "string",
+            "ex": "equalTo(., \"Female\")"
+          }
         }
       },
       {
@@ -175,135 +360,754 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "phone",
         "type": "edit_text",
-        "hint": "Phone Number",
+        "hint": "Phone number",
         "edit_type": "number",
         "v_regex": {
-          "value": "((07||09||05)[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 077,076,055,056,057,095, 096, or 097 and must be a total of 10 digits in length"
+          "value": "^$|0[0-9]{9}",
+          "err": "Enter a 10-digit phone number"
         }
       },
       {
-        "key": "address",
+        "key": "step1_label",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "address",
-        "type": "edit_text",
-        "hint": "Address"
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "label",
+        "text": "Step 1: HIV risk and HIV test",
+        "text_color": "#0F5230",
+        "label_text_style": "bold",
+        "has_bg": true,
+        "bg_color": "#E3F1E7",
+        "top_padding": "8dp",
+        "bottom_padding": "8dp",
+        "left_padding": "8dp"
       },
       {
-        "key": "hiv_status",
+        "key": "risk_assessment_done",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "hiv_status",
+        "openmrs_entity_id": "risk_assessment_done",
         "type": "native_radio",
-        "label": "HIV Status",
+        "label": "HIV risk assessment done?",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "high_risk",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "high_risk",
+        "type": "native_radio",
+        "label": "Individual at high risk?",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:risk_assessment_done": {
+            "type": "string",
+            "ex": "equalTo(., \"Yes\")"
+          }
+        }
+      },
+      {
+        "key": "test_note",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "At high risk with no valid HIV result: conduct an HIV test and record it in the HTS register with PrEP as the entry point.",
+        "text_color": "#1F2D38",
+        "toaster_type": "warning",
+        "relevance": {
+          "step1:high_risk": {
+            "type": "string",
+            "ex": "equalTo(., \"Yes\")"
+          }
+        }
+      },
+      {
+        "key": "hiv_test_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_test_date",
+        "type": "date_picker",
+        "hint": "HIV test date (last documented test)",
+        "expanded": false,
+        "min_date": "today-1y",
+        "max_date": "today"
+      },
+      {
+        "key": "hiv_result",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_result",
+        "type": "native_radio",
+        "label": "HIV result",
         "options": [
           {
             "key": "Negative",
             "text": "Negative"
           },
           {
+            "key": "Positive",
+            "text": "Positive"
+          },
+          {
             "key": "Unknown",
-            "text": "Unknown"
+            "text": "Not tested / unknown"
           }
         ],
         "v_required": {
           "value": "true",
-          "err": "This field is Required"
+          "err": "This field is required"
         }
       },
       {
-        "key": "date_tested",
+        "key": "valid_result_3m",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_tested",
-        "type": "date_picker",
-        "hint": "Date Tested",
-        "expanded": false,
-        "min_date": "today-5y",
-        "max_date": "today",
-        "v_required": {
-          "value": "true",
-          "err": "Date Tested is Required"
-        }
-      },
-      {
-        "key": "prep_status",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "prep_status",
+        "openmrs_entity_id": "valid_result_3m",
         "type": "native_radio",
-        "label": "PrEP Status",
+        "label": "Valid HIV result within the last 3 months?",
         "options": [
           {
-            "key": "Initiated",
-            "text": "Initiated"
+            "key": "Yes",
+            "text": "Yes"
           },
           {
-            "key": "Continuing",
-            "text": "Continuing"
-          },
-          {
-            "key": "Restarted",
-            "text": "Restarted"
-          },
-          {
-            "key": "Discontinued",
-            "text": "Discontinued"
+            "key": "No",
+            "text": "No"
           }
         ],
         "v_required": {
           "value": "true",
-          "err": "This field is Required"
+          "err": "This field is required"
         }
       },
       {
-        "key": "date_initiated",
+        "key": "positive_note",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "HIV positive: link to ART and check for signs of acute HIV infection.",
+        "text_color": "#1F2D38",
+        "toaster_type": "warning",
+        "relevance": {
+          "step1:hiv_result": {
+            "type": "string",
+            "ex": "equalTo(., \"Positive\")"
+          }
+        }
+      },
+      {
+        "key": "linked_to_art",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "date_initiated",
+        "openmrs_entity_id": "linked_to_art",
+        "type": "native_radio",
+        "label": "Linked to ART?",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:hiv_result": {
+            "type": "string",
+            "ex": "equalTo(., \"Positive\")"
+          }
+        }
+      },
+      {
+        "key": "ahi_symptoms",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "ahi_symptoms",
+        "type": "check_box",
+        "label": "Signs of acute HIV infection (tick all that apply)",
+        "options": [
+          {
+            "key": "fever",
+            "text": "Fever",
+            "value": "false"
+          },
+          {
+            "key": "fatigue",
+            "text": "Fatigue",
+            "value": "false"
+          },
+          {
+            "key": "anorexia",
+            "text": "Anorexia",
+            "value": "false"
+          },
+          {
+            "key": "rash",
+            "text": "Rash",
+            "value": "false"
+          },
+          {
+            "key": "pharyngitis",
+            "text": "Pharyngitis",
+            "value": "false"
+          },
+          {
+            "key": "lymphadenopathy",
+            "text": "Generalised lymphadenopathy",
+            "value": "false"
+          },
+          {
+            "key": "ulcerations",
+            "text": "Skin or mucous membrane ulcerations",
+            "value": "false"
+          },
+          {
+            "key": "headache",
+            "text": "Headache",
+            "value": "false"
+          },
+          {
+            "key": "thrush",
+            "text": "Thrush",
+            "value": "false"
+          },
+          {
+            "key": "herpes_zoster",
+            "text": "Herpes zoster",
+            "value": "false"
+          },
+          {
+            "key": "none",
+            "text": "None of these",
+            "value": "false"
+          }
+        ],
+        "exclusive": [
+          "none"
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Tick at least one"
+        },
+        "relevance": {
+          "step1:hiv_result": {
+            "type": "string",
+            "ex": "equalTo(., \"Positive\")"
+          }
+        }
+      },
+      {
+        "key": "ahd_note",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Signs of acute HIV infection: refer for advanced HIV disease (AHD) management.",
+        "text_color": "#1F2D38",
+        "toaster_type": "problem",
+        "relevance": {
+          "step1:ahi_symptoms": {
+            "ex-checkbox": [
+              {
+                "or": [
+                  "fever",
+                  "fatigue",
+                  "anorexia",
+                  "rash",
+                  "pharyngitis",
+                  "lymphadenopathy",
+                  "ulcerations",
+                  "headache",
+                  "thrush",
+                  "herpes_zoster"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "key": "step2_label",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "label",
+        "text": "Step 2: Substantial risk of HIV",
+        "text_color": "#0F5230",
+        "label_text_style": "bold",
+        "has_bg": true,
+        "bg_color": "#E3F1E7",
+        "top_padding": "8dp",
+        "bottom_padding": "8dp",
+        "left_padding": "8dp",
+        "relevance": {
+          "step1:hiv_result": {
+            "type": "string",
+            "ex": "equalTo(., \"Negative\")"
+          }
+        }
+      },
+      {
+        "key": "risk_factors",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "risk_factors",
+        "type": "check_box",
+        "label": "Risk factors present (tick all that apply)",
+        "options": [
+          {
+            "key": "partner_status_unknown",
+            "text": "Partner HIV status unknown",
+            "value": "false"
+          },
+          {
+            "key": "multiple_partners",
+            "text": "Client or partner has more than one sexual partner",
+            "value": "false"
+          },
+          {
+            "key": "migration",
+            "text": "Long-distance or labour migration",
+            "value": "false"
+          },
+          {
+            "key": "discordant",
+            "text": "Discordant relationship",
+            "value": "false"
+          },
+          {
+            "key": "inconsistent_condoms",
+            "text": "Inconsistent condom use",
+            "value": "false"
+          },
+          {
+            "key": "sti_6m",
+            "text": "STI in the past 6 months",
+            "value": "false"
+          },
+          {
+            "key": "none",
+            "text": "None of these",
+            "value": "false"
+          }
+        ],
+        "exclusive": [
+          "none"
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Tick at least one"
+        },
+        "relevance": {
+          "step1:hiv_result": {
+            "type": "string",
+            "ex": "equalTo(., \"Negative\")"
+          }
+        }
+      },
+      {
+        "key": "no_risk_note",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "No substantial risk: offer other prevention methods.",
+        "text_color": "#1F2D38",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:risk_factors": {
+            "ex-checkbox": [
+              {
+                "or": [
+                  "none"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "key": "step3_label",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "label",
+        "text": "Step 3: PrEP eligibility",
+        "text_color": "#0F5230",
+        "label_text_style": "bold",
+        "has_bg": true,
+        "bg_color": "#E3F1E7",
+        "top_padding": "8dp",
+        "bottom_padding": "8dp",
+        "left_padding": "8dp",
+        "relevance": {
+          "step1:risk_factors": {
+            "ex-checkbox": [
+              {
+                "or": [
+                  "partner_status_unknown",
+                  "multiple_partners",
+                  "migration",
+                  "discordant",
+                  "inconsistent_condoms",
+                  "sti_6m"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "key": "eligibility_criteria",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "eligibility_criteria",
+        "type": "check_box",
+        "label": "Tick each criterion the client meets",
+        "options": [
+          {
+            "key": "willing_adhere",
+            "text": "Willing to adhere to PrEP",
+            "value": "false"
+          },
+          {
+            "key": "attend_3monthly",
+            "text": "Able to attend 3-monthly visits and HIV testing",
+            "value": "false"
+          },
+          {
+            "key": "other_prevention",
+            "text": "Willing to use other prevention methods",
+            "value": "false"
+          },
+          {
+            "key": "ipv_screened_out",
+            "text": "Screened for IPV and screened out",
+            "value": "false"
+          }
+        ],
+        "relevance": {
+          "step1:risk_factors": {
+            "ex-checkbox": [
+              {
+                "or": [
+                  "partner_status_unknown",
+                  "multiple_partners",
+                  "migration",
+                  "discordant",
+                  "inconsistent_condoms",
+                  "sti_6m"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "key": "ipv_note",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Screen for intimate partner violence before starting PrEP.",
+        "text_color": "#1F2D38",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:risk_factors": {
+            "ex-checkbox": [
+              {
+                "or": [
+                  "partner_status_unknown",
+                  "multiple_partners",
+                  "migration",
+                  "discordant",
+                  "inconsistent_condoms",
+                  "sti_6m"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "key": "defer_note",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "If any criterion is not met, defer PrEP and offer other prevention methods.",
+        "text_color": "#1F2D38",
+        "toaster_type": "info",
+        "relevance": {
+          "step1:risk_factors": {
+            "ex-checkbox": [
+              {
+                "or": [
+                  "partner_status_unknown",
+                  "multiple_partners",
+                  "migration",
+                  "discordant",
+                  "inconsistent_condoms",
+                  "sti_6m"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "key": "step4_label",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "label",
+        "text": "Step 4: PrEP",
+        "text_color": "#0F5230",
+        "label_text_style": "bold",
+        "has_bg": true,
+        "bg_color": "#E3F1E7",
+        "top_padding": "8dp",
+        "bottom_padding": "8dp",
+        "left_padding": "8dp",
+        "relevance": {
+          "step1:eligibility_criteria": {
+            "ex-checkbox": [
+              {
+                "and": [
+                  "willing_adhere",
+                  "attend_3monthly",
+                  "other_prevention",
+                  "ipv_screened_out"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "key": "prep_provision",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "prep_provision",
+        "type": "native_radio",
+        "label": "PrEP provided or referred?",
+        "options": [
+          {
+            "key": "community",
+            "text": "Provided PrEP in the community"
+          },
+          {
+            "key": "referred",
+            "text": "Referred to a health facility"
+          },
+          {
+            "key": "not_yet",
+            "text": "Not yet"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:eligibility_criteria": {
+            "ex-checkbox": [
+              {
+                "and": [
+                  "willing_adhere",
+                  "attend_3monthly",
+                  "other_prevention",
+                  "ipv_screened_out"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "key": "prep_type",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "prep_type",
+        "type": "spinner",
+        "hint": "PrEP type provided",
+        "values": [
+          "Oral PrEP (daily)",
+          "Event-driven oral PrEP",
+          "Injectable PrEP (CAB-LA)",
+          "Dapivirine vaginal ring",
+          "Other"
+        ],
+        "keys": [
+          "oral_daily",
+          "oral_ed",
+          "cab_la",
+          "dapivirine_ring",
+          "other"
+        ],
+        "openmrs_choice_ids": {
+          "oral_daily": "oral_daily",
+          "oral_ed": "oral_ed",
+          "cab_la": "cab_la",
+          "dapivirine_ring": "dapivirine_ring",
+          "other": "other"
+        },
+        "v_required": {
+          "value": "true",
+          "err": "Please choose prep type provided"
+        },
+        "relevance": {
+          "step1:prep_provision": {
+            "type": "string",
+            "ex": "equalTo(., \"community\")"
+          }
+        }
+      },
+      {
+        "key": "referral_completed",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "referral_completed",
+        "type": "native_radio",
+        "label": "PrEP referral completed?",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
+          },
+          {
+            "key": "pending",
+            "text": "Not yet"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "This field is required"
+        },
+        "relevance": {
+          "step1:prep_provision": {
+            "type": "string",
+            "ex": "equalTo(., \"referred\")"
+          }
+        }
+      },
+      {
+        "key": "facility_prep_type",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "facility_prep_type",
+        "type": "spinner",
+        "hint": "PrEP type provided at the health facility",
+        "values": [
+          "Oral PrEP (daily)",
+          "Event-driven oral PrEP",
+          "Injectable PrEP (CAB-LA)",
+          "Dapivirine vaginal ring",
+          "Other"
+        ],
+        "keys": [
+          "oral_daily",
+          "oral_ed",
+          "cab_la",
+          "dapivirine_ring",
+          "other"
+        ],
+        "openmrs_choice_ids": {
+          "oral_daily": "oral_daily",
+          "oral_ed": "oral_ed",
+          "cab_la": "cab_la",
+          "dapivirine_ring": "dapivirine_ring",
+          "other": "other"
+        },
+        "v_required": {
+          "value": "true",
+          "err": "Please choose prep type provided at the health facility"
+        },
+        "relevance": {
+          "step1:referral_completed": {
+            "type": "string",
+            "ex": "equalTo(., \"Yes\")"
+          }
+        }
+      },
+      {
+        "key": "prep_start_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "prep_start_date",
         "type": "date_picker",
-        "hint": "Date Initiated on PrEP",
+        "hint": "PrEP start date",
         "expanded": false,
-        "min_date": "today-5y",
+        "min_date": "today-1y",
         "max_date": "today",
         "v_required": {
           "value": "true",
-          "err": "Date Initiated on PrEP is Required"
+          "err": "PrEP start date is required"
+        },
+        "relevance": {
+          "step1:prep_provision": {
+            "type": "string",
+            "ex": "equalTo(., \"community\")"
+          }
         }
       },
       {
-        "key": "prep_regimen",
+        "key": "facility_prep_start_date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "prep_regimen",
-        "type": "native_radio",
-        "label": "Regimen",
-        "options": [
-          {
-            "key": "TDF/FTC",
-            "text": "TDF/FTC"
-          },
-          {
-            "key": "TDF/3TC",
-            "text": "TDF/3TC"
-          },
-          {
-            "key": "Other",
-            "text": "Other"
-          }
-        ]
-      },
-      {
-        "key": "next_refill_date",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "next_refill_date",
+        "openmrs_entity_id": "facility_prep_start_date",
         "type": "date_picker",
-        "hint": "Next Refill Date",
+        "hint": "PrEP start date at the health facility",
         "expanded": false,
-        "min_date": "today",
-        "max_date": "today+1y"
+        "min_date": "today-1y",
+        "max_date": "today",
+        "v_required": {
+          "value": "true",
+          "err": "PrEP start date at the health facility is required"
+        },
+        "relevance": {
+          "step1:referral_completed": {
+            "type": "string",
+            "ex": "equalTo(., \"Yes\")"
+          }
+        }
       },
       {
         "key": "comment",
@@ -311,7 +1115,8 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "comment",
         "type": "edit_text",
-        "hint": "Comments"
+        "hint": "Comments",
+        "edit_type": "name"
       }
     ]
   }

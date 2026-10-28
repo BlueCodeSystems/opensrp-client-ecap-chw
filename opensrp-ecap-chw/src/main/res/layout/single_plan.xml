@@ -4,13 +4,14 @@
     android:id="@+id/register_columns"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="2dp"
-    android:layout_marginBottom="10dp"
     android:foreground="?attr/selectableItemBackground"
+    android:layout_marginStart="12dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginBottom="6dp"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="14dp"
-    app:cardElevation="2dp"
-    app:cardUseCompatPadding="true">
+    app:cardElevation="1.5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,7 +30,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:paddingStart="14dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="14dp"
+            android:paddingBottom="12dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -37,7 +41,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <org.smartregister.view.customcontrols.CustomFontTextView
+                <TextView
                     android:id="@+id/case_date"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -45,22 +49,22 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:textColor="@color/text_black"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="@color/dash_text"
+                    android:textSize="16sp" />
 
-                <org.smartregister.view.customcontrols.CustomFontTextView
+                <TextView
                     android:id="@+id/quarter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:background="@drawable/bg_report_chip"
+                    android:background="@drawable/reg_pill_neutral"
+                    android:fontFamily="sans-serif-medium"
                     android:gravity="center"
                     android:paddingHorizontal="10dp"
-                    android:paddingVertical="4dp"
-                    android:textColor="@color/register_vca_icon"
-                    android:textSize="11sp"
-                    android:textStyle="bold" />
+                    android:paddingVertical="3dp"
+                    android:textColor="@color/reg_pill_neutral_text"
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -74,7 +78,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/case_plan_label"
-                    android:textColor="@color/light_grey_text"
+                    android:textColor="@color/dash_text_secondary"
                     android:textSize="12.5sp" />
 
                 <TextView
@@ -82,14 +86,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="4dp"
                     android:text="@string/bullet_separator"
-                    android:textColor="@color/light_grey_text"
+                    android:textColor="@color/dash_text_secondary"
                     android:textSize="12.5sp" />
 
-                <org.smartregister.view.customcontrols.CustomFontTextView
+                <TextView
                     android:id="@+id/case_plan_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/text_black"
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="@color/dash_text"
                     android:textSize="12.5sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -124,7 +129,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="12dp"
-                android:background="@color/divider_grey" />
+                android:background="@color/dash_divider" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -137,7 +142,6 @@
                     android:id="@+id/edit_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
                     android:background="@drawable/bg_button_primary_outline"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
@@ -166,6 +170,7 @@
                     android:id="@+id/delete_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:background="@drawable/bg_button_alert_outline"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"

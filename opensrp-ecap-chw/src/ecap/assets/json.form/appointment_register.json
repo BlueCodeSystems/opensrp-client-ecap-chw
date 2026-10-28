@@ -51,36 +51,66 @@
     }
   },
   "step1": {
-    "title": "Appointment",
+    "title": "Book appointment",
     "fields": [
-      {
-        "key": "placeholder_notice",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "instructions",
-        "type": "toaster_notes",
-        "text": "Interim form: the final questions will be added in a later update. Submitted records are saved and synced.",
-        "text_color": "#000000",
-        "toaster_type": "info"
-      },
       {
         "key": "client_number",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "client_number",
-        "type": "edit_text",
-        "hint": "Client Number",
-        "read_only": "true",
-        "edit_type": "number"
+        "type": "hidden"
       },
       {
         "key": "health_facility",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "health_facility",
+        "type": "hidden"
+      },
+      {
+        "key": "caseworker_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caseworker_name",
+        "type": "hidden"
+      },
+      {
+        "key": "date_created",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "date_created",
+        "type": "hidden"
+      },
+      {
+        "key": "delete_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "delete_status",
+        "type": "hidden"
+      },
+      {
+        "key": "participant_label",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "label",
+        "text": "Program participant",
+        "text_color": "#0F5230",
+        "label_text_style": "bold",
+        "has_bg": true,
+        "bg_color": "#E3F1E7",
+        "top_padding": "8dp",
+        "bottom_padding": "8dp",
+        "left_padding": "8dp"
+      },
+      {
+        "key": "iccm_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "iccm_id",
         "type": "edit_text",
-        "hint": "Health Facility",
-        "read_only": "true"
+        "hint": "iCCM ID as it appears in eCMS (leave blank if not enrolled)",
+        "edit_type": "name"
       },
       {
         "key": "first_name",
@@ -88,28 +118,15 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "first_name",
         "type": "edit_text",
-        "hint": "First Name",
+        "hint": "First name",
         "edit_type": "name",
         "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
+          "value": "[A-Za-z\\s\\.\\-']*",
           "err": "Names can only contain letters"
         },
         "v_required": {
           "value": "true",
-          "err": "First Name is Required"
-        }
-      },
-      {
-        "key": "middle_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "middle_name",
-        "type": "edit_text",
-        "hint": "Middle Name",
-        "edit_type": "name",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Names can only contain letters"
+          "err": "First name is required"
         }
       },
       {
@@ -118,15 +135,15 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "last_name",
         "type": "edit_text",
-        "hint": "Last Name",
+        "hint": "Surname",
         "edit_type": "name",
         "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
+          "value": "[A-Za-z\\s\\.\\-']*",
           "err": "Names can only contain letters"
         },
         "v_required": {
           "value": "true",
-          "err": "Last Name is Required"
+          "err": "Surname is required"
         }
       },
       {
@@ -148,7 +165,7 @@
         ],
         "v_required": {
           "value": "true",
-          "err": "This field is Required"
+          "err": "This field is required"
         }
       },
       {
@@ -157,16 +174,145 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "birthdate",
         "type": "date_picker",
-        "hint": "Date of Birth",
+        "hint": "Date of birth",
         "expanded": false,
+        "min_date": "today-100y",
+        "max_date": "today",
         "duration": {
           "label": "Age"
         },
-        "min_date": "today-100y",
-        "max_date": "today",
         "v_required": {
           "value": "true",
-          "err": "Please enter the date of birth"
+          "err": "Date of birth is required"
+        }
+      },
+      {
+        "key": "sub_population",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "sub_population",
+        "type": "check_box",
+        "label": "Priority sub-population (tick all that apply)",
+        "options": [
+          {
+            "key": "calhiv",
+            "text": "C/ALHIV",
+            "value": "false"
+          },
+          {
+            "key": "hei",
+            "text": "HEI",
+            "value": "false"
+          },
+          {
+            "key": "ca_wlhiv",
+            "text": "Child/adolescent of WLHIV",
+            "value": "false"
+          },
+          {
+            "key": "ssv",
+            "text": "Survivor of sexual violence",
+            "value": "false"
+          },
+          {
+            "key": "hiv_pos_caregiver",
+            "text": "HIV-positive caregiver",
+            "value": "false"
+          },
+          {
+            "key": "hiv_pos_pbfw",
+            "text": "HIV-positive PBFW",
+            "value": "false"
+          },
+          {
+            "key": "hiv_neg_pbfw",
+            "text": "HIV-negative PBF AGYW 10-25 years",
+            "value": "false"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Tick at least one"
+        }
+      },
+      {
+        "key": "caregiver_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "caregiver_name",
+        "type": "edit_text",
+        "hint": "Mother/caregiver name (if child or adolescent)",
+        "edit_type": "name"
+      },
+      {
+        "key": "hiv_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "hiv_status",
+        "type": "native_radio",
+        "label": "HIV status",
+        "options": [
+          {
+            "key": "Positive",
+            "text": "Positive"
+          },
+          {
+            "key": "Negative",
+            "text": "Negative"
+          },
+          {
+            "key": "Unknown",
+            "text": "Unknown"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "under_five_card_no",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "under_five_card_no",
+        "type": "edit_text",
+        "hint": "Under-five card number (under 5 years)",
+        "edit_type": "name"
+      },
+      {
+        "key": "art_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "art_number",
+        "type": "edit_text",
+        "hint": "ART number",
+        "edit_type": "name",
+        "relevance": {
+          "step1:hiv_status": {
+            "type": "string",
+            "ex": "equalTo(., \"Positive\")"
+          }
+        }
+      },
+      {
+        "key": "sm_number",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "sm_number",
+        "type": "edit_text",
+        "hint": "SM number (as in the antenatal register)",
+        "edit_type": "name",
+        "relevance": {
+          "step1:sub_population": {
+            "ex-checkbox": [
+              {
+                "or": [
+                  "hiv_pos_pbfw",
+                  "hiv_neg_pbfw"
+                ]
+              }
+            ]
+          }
         }
       },
       {
@@ -175,11 +321,24 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "phone",
         "type": "edit_text",
-        "hint": "Phone Number",
+        "hint": "Phone number",
         "edit_type": "number",
         "v_regex": {
-          "value": "((07||09||05)[5-7][0-9]{7})|s*",
-          "err": "Number must begin with 077,076,055,056,057,095, 096, or 097 and must be a total of 10 digits in length"
+          "value": "^$|0[0-9]{9}",
+          "err": "Enter a 10-digit phone number"
+        }
+      },
+      {
+        "key": "alt_phone",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "alt_phone",
+        "type": "edit_text",
+        "hint": "Alternative phone number",
+        "edit_type": "number",
+        "v_regex": {
+          "value": "^$|0[0-9]{9}",
+          "err": "Enter a 10-digit phone number"
         }
       },
       {
@@ -188,7 +347,23 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "address",
         "type": "edit_text",
-        "hint": "Address"
+        "hint": "Residential address or landmark",
+        "edit_type": "name"
+      },
+      {
+        "key": "appointment_label",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "label",
+        "text": "Appointment",
+        "text_color": "#0F5230",
+        "label_text_style": "bold",
+        "has_bg": true,
+        "bg_color": "#E3F1E7",
+        "top_padding": "8dp",
+        "bottom_padding": "8dp",
+        "left_padding": "8dp"
       },
       {
         "key": "appointment_date",
@@ -196,94 +371,123 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "appointment_date",
         "type": "date_picker",
-        "hint": "Appointment Date",
+        "hint": "Appointment date",
         "expanded": false,
-        "min_date": "today-1y",
+        "min_date": "today-3m",
         "max_date": "today+1y",
         "v_required": {
           "value": "true",
-          "err": "Appointment Date is Required"
+          "err": "Appointment date is required"
         }
+      },
+      {
+        "key": "appointment_time",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "appointment_time",
+        "type": "time_picker",
+        "hint": "Appointment time",
+        "expanded": false
       },
       {
         "key": "appointment_type",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "appointment_type",
-        "type": "native_radio",
-        "label": "Appointment Type",
-        "options": [
-          {
-            "key": "ART refill",
-            "text": "ART refill"
-          },
-          {
-            "key": "Viral load",
-            "text": "Viral load"
-          },
-          {
-            "key": "Clinical review",
-            "text": "Clinical review"
-          },
-          {
-            "key": "PrEP refill",
-            "text": "PrEP refill"
-          },
-          {
-            "key": "Other",
-            "text": "Other"
-          }
+        "type": "spinner",
+        "hint": "Appointment type",
+        "values": [
+          "Immunisation",
+          "Growth monitoring",
+          "Maternal retesting",
+          "Antenatal",
+          "Post-natal",
+          "EID",
+          "TPT",
+          "PrEP",
+          "ART",
+          "Clinical review",
+          "Pharmacy pick-up",
+          "Enhanced adherence counselling",
+          "Viral load testing",
+          "CaCx screening",
+          "Other"
         ],
+        "keys": [
+          "immunisation",
+          "growth_monitoring",
+          "maternal_retesting",
+          "antenatal",
+          "postnatal",
+          "eid",
+          "tpt",
+          "prep",
+          "art",
+          "cr",
+          "pp",
+          "eac",
+          "vl_testing",
+          "cacx",
+          "other"
+        ],
+        "openmrs_choice_ids": {
+          "immunisation": "immunisation",
+          "growth_monitoring": "growth_monitoring",
+          "maternal_retesting": "maternal_retesting",
+          "antenatal": "antenatal",
+          "postnatal": "postnatal",
+          "eid": "eid",
+          "tpt": "tpt",
+          "prep": "prep",
+          "art": "art",
+          "cr": "cr",
+          "pp": "pp",
+          "eac": "eac",
+          "vl_testing": "vl_testing",
+          "cacx": "cacx",
+          "other": "other"
+        },
         "v_required": {
           "value": "true",
-          "err": "This field is Required"
+          "err": "Please choose appointment type"
         }
       },
       {
-        "key": "appointment_status",
+        "key": "appointment_type_other",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "appointment_status",
-        "type": "native_radio",
-        "label": "Status",
-        "options": [
-          {
-            "key": "Scheduled",
-            "text": "Scheduled"
-          },
-          {
-            "key": "Attended",
-            "text": "Attended"
-          },
-          {
-            "key": "Missed",
-            "text": "Missed"
-          },
-          {
-            "key": "Rescheduled",
-            "text": "Rescheduled"
-          }
-        ],
+        "openmrs_entity_id": "appointment_type_other",
+        "type": "edit_text",
+        "hint": "Specify the appointment type",
+        "edit_type": "name",
         "v_required": {
           "value": "true",
-          "err": "This field is Required"
+          "err": "Specify the appointment type is required"
+        },
+        "relevance": {
+          "step1:appointment_type": {
+            "type": "string",
+            "ex": "equalTo(., \"other\")"
+          }
         }
       },
       {
-        "key": "service_point",
+        "key": "reminder_given",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "service_point",
-        "type": "edit_text",
-        "hint": "Service Point"
-      },
-      {
-        "key": "comment",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person_attribute",
-        "openmrs_entity_id": "comment",
-        "type": "edit_text",
-        "hint": "Comments"
+        "openmrs_entity_id": "reminder_given",
+        "type": "native_radio",
+        "label": "Reminder given? (remember 7, 3 and 1 days before)",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
+          }
+        ]
       }
     ]
   }

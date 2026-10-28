@@ -218,48 +218,68 @@
     </style>
 
     <!-- fragment_overview.xml section styles -->
+    <!-- Profile section title: green small caps over a hairline, inside the section's white card -->
     <style name="OverviewSectionHeader">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/overview_header_bg</item>
+        <item name="android:background">@drawable/overview_section_header_bg</item>
         <item name="android:paddingStart">16dp</item>
         <item name="android:paddingEnd">16dp</item>
-        <item name="android:paddingTop">12dp</item>
-        <item name="android:paddingBottom">12dp</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
         <item name="android:singleLine">true</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:letterSpacing">0.05</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:letterSpacing">0.08</item>
+        <item name="android:textColor">@color/primary</item>
+    </style>
+
+    <!-- Child profile header: sex, age and ID -->
+    <style name="ProfileHeaderPill">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/profile_header_pill</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">13sp</item>
     </style>
 
     <style name="OverviewRow">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:orientation">horizontal</item>
-        <item name="android:weightSum">2</item>
+        <item name="android:weightSum">5</item>
         <item name="android:paddingStart">16dp</item>
         <item name="android:paddingEnd">16dp</item>
-        <item name="android:paddingTop">10dp</item>
-        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingTop">11dp</item>
+        <item name="android:paddingBottom">11dp</item>
+        <!-- OverviewFormat finds rows by this tag to tidy their values -->
+        <item name="android:tag">overview_row</item>
     </style>
 
     <style name="OverviewRowLabel">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
+        <item name="android:layout_weight">2</item>
         <item name="android:textSize">13sp</item>
-        <item name="android:textColor">@color/textSecondary</item>
+        <item name="android:textColor">@color/dash_text_secondary</item>
     </style>
 
     <style name="OverviewRowValue">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
+        <item name="android:layout_weight">3</item>
         <item name="android:gravity">start</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textColor">@color/dash_text</item>
     </style>
 
     <!-- Read-only submitted-report screens (household/vca service report view) -->
@@ -285,12 +305,12 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginEnd">6dp</item>
-        <item name="android:background">@drawable/bg_chip_subpop</item>
+        <item name="android:background">@drawable/reg_pill_good</item>
         <item name="android:paddingStart">12dp</item>
         <item name="android:paddingEnd">12dp</item>
         <item name="android:paddingTop">5dp</item>
         <item name="android:paddingBottom">5dp</item>
-        <item name="android:textColor">@color/register_vca_icon</item>
+        <item name="android:textColor">@color/primary</item>
         <item name="android:textSize">11sp</item>
         <item name="android:textStyle">bold</item>
     </style>
@@ -468,6 +488,31 @@
         <item name="android:textColorHint">@color/login_hint</item>
         <item name="android:textCursorDrawable">@null</item>
         <item name="android:textSize">@dimen/login_field_text_size</item>
+    </style>
+
+    <!-- CA register row: this month's visit and the case plan, an icon with a short label -->
+    <style name="CaIndicator">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawablePadding">5dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!-- Status and due chips on the service register rows -->
+    <style name="ServiceRegisterPill">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingTop">3dp</item>
+        <item name="android:paddingEnd">10dp</item>
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
 </resources>

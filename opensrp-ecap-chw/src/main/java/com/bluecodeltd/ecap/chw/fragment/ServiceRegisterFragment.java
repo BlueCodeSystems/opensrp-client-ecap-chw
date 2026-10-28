@@ -1,8 +1,13 @@
 package com.bluecodeltd.ecap.chw.fragment;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -13,22 +18,27 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bluecodeltd.ecap.chw.util.RegisterHeader;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.ServiceRegisterActivity;
 import com.bluecodeltd.ecap.chw.contract.IndexRegisterFragmentContract;
 import com.bluecodeltd.ecap.chw.presenter.ServiceRegisterFragmentPresenter;
 import com.bluecodeltd.ecap.chw.provider.ServiceRegisterProvider;
 import com.bluecodeltd.ecap.chw.util.ServiceRegister;
+import com.bluecodeltd.ecap.chw.util.ServiceRegisterStatus;
 import com.bluecodeltd.ecap.chw.util.Threading;
 import com.bluecodeltd.ecap.chw.util.UpdateManager;
 
 import org.smartregister.chw.core.custom_views.NavigationMenu;
+import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.cursoradapter.RecyclerViewPaginatedAdapter;
 import org.smartregister.domain.FetchStatus;
 import org.smartregister.receiver.SyncStatusBroadcastReceiver;
 import org.smartregister.util.Utils;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * List screen shared by the Appointments, PrEP and Referral Linkages registers, modelled on
@@ -39,7 +49,10 @@ public class ServiceRegisterFragment extends BaseSafeRegisterFragment implements
 
     public static final String ARG_REGISTER = "service_register";
 
+    private static final String FILTER_BAR_TAG = "service_register_filters";
+
     private ServiceRegister register;
+    private int selectedFilter = 0;
 
     public static ServiceRegisterFragment newInstance(ServiceRegister register) {
         ServiceRegisterFragment fragment = new ServiceRegisterFragment();
@@ -136,11 +149,70 @@ public class ServiceRegisterFragment extends BaseSafeRegisterFragment implements
             getSearchView().setBackgroundResource(R.color.white);
             getSearchView().setCompoundDrawablesWithIntrinsicBounds(org.smartregister.R.drawable.ic_action_search, 0, 0, 0);
             getSearchView().setTextColor(getResources().getColor(org.smartregister.R.color.text_black));
+            RegisterHeader.style(view, getSearchView());
         }
+        addFilterBar(view);
         hide(view, org.smartregister.R.id.top_right_layout);
         hide(view, org.smartregister.R.id.top_left_layout);
         hide(view, org.smartregister.R.id.register_sort_filter_bar_layout);
         hide(view, org.smartregister.R.id.filter_sort_layout);
+    }
+
+    /** Status chips under the search bar, e.g. Upcoming / Missed / Completed for appointments. */
+    private void addFilterBar(View root) {
+        View list = root.findViewById(R.id.recycler_view);
+        if (list == null || getContext() == null) return;
+        View listFrame = (View) list.getParent();
+        if (!(listFrame.getParent() instanceof LinearLayout) || root.findViewWithTag(FILTER_BAR_TAG) != null) return;
+        LinearLayout page = (LinearLayout) listFrame.getParent();
+
+        HorizontalScrollView bar = new HorizontalScrollView(getContext());
+        bar.setTag(FILTER_BAR_TAG);
+        bar.setHorizontalScrollBarEnabled(false);
+        bar.setBackgroundResource(R.color.primary);
+        LinearLayout chips = new LinearLayout(getContext());
+        chips.setOrientation(LinearLayout.HORIZONTAL);
+        int pad = dp(12);
+        chips.setPadding(pad, 0, pad, dp(12));
+        bar.addView(chips);
+
+        List<ServiceRegisterStatus.Filter> filters = ServiceRegisterStatus.filters(getServiceRegister());
+        for (int i = 0; i < filters.size(); i++) {
+            int index = i;
+            TextView chip = new TextView(getContext());
+            chip.setText(filters.get(i).label);
+            chip.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
+            chip.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+            chip.setPadding(dp(14), dp(6), dp(14), dp(6));
+            chip.setOnClickListener(v -> selectFilter(chips, index));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            if (i > 0) params.setMarginStart(dp(8));
+            chips.addView(chip, params);
+        }
+        page.addView(bar, page.indexOfChild(listFrame));
+        styleFilters(chips);
+    }
+
+    private void selectFilter(LinearLayout chips, int index) {
+        if (index == selectedFilter) return;
+        selectedFilter = index;
+        styleFilters(chips);
+        String search = getSearchView() != null ? getSearchView().getText().toString() : "";
+        filter(search, "", getMainCondition(), false);
+    }
+
+    private void styleFilters(LinearLayout chips) {
+        for (int i = 0; i < chips.getChildCount(); i++) {
+            TextView chip = (TextView) chips.getChildAt(i);
+            boolean on = i == selectedFilter;
+            chip.setBackgroundResource(on ? R.drawable.reg_filter_on : R.drawable.reg_filter_off);
+            chip.setTextColor(on ? getResources().getColor(R.color.primary) : Color.WHITE);
+        }
+    }
+
+    private int dp(int value) {
+        return Math.round(value * getResources().getDisplayMetrics().density);
     }
 
     private void hide(View root, int id) {
@@ -217,11 +289,14 @@ public class ServiceRegisterFragment extends BaseSafeRegisterFragment implements
      * LIKE condition instead of letting it reach the SQL as-is.
      */
     private String toSearchCondition(String searchText) {
+        List<ServiceRegisterStatus.Filter> filters = ServiceRegisterStatus.filters(getServiceRegister());
+        String status = selectedFilter < filters.size() ? filters.get(selectedFilter).condition : "";
+        String statusCondition = status.isEmpty() ? "" : "AND " + status + " ";
         if (searchText == null || searchText.trim().isEmpty()) {
-            return "";
+            return statusCondition;
         }
         String term = searchText.trim().replace("'", "''");
-        StringBuilder condition = new StringBuilder("AND (");
+        StringBuilder condition = new StringBuilder(statusCondition).append("AND (");
         String[] columns = {"first_name", "middle_name", "last_name", "client_number", "phone"};
         for (int i = 0; i < columns.length; i++) {
             if (i > 0) condition.append(" OR ");
@@ -243,9 +318,16 @@ public class ServiceRegisterFragment extends BaseSafeRegisterFragment implements
 
     @Override
     protected void onViewClicked(View view) {
-        if (view.getId() == R.id.register_columns) {
-            // No client profile yet; the details screen comes with the register's forms.
-            Utils.showShortToast(getActivity(), getString(R.string.service_register_profile_pending));
+        if (!(view.getTag() instanceof CommonPersonObjectClient) || !(getActivity() instanceof ServiceRegisterActivity)) {
+            return;
+        }
+        Map<String, String> columns = ((CommonPersonObjectClient) view.getTag()).getColumnmaps();
+        ServiceRegisterActivity activity = (ServiceRegisterActivity) getActivity();
+        if (view.getId() == R.id.row_action) {
+            activity.openFollowUpForm(columns);
+        } else if (view.getId() == R.id.register_columns) {
+            ServiceRegisterDetailsSheet.show(activity, getServiceRegister(), columns,
+                    () -> activity.openFollowUpForm(columns));
         }
     }
 

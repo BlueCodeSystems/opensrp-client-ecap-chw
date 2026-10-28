@@ -150,7 +150,7 @@ public class PMTCTRegisterProvider implements RecyclerViewProvider<PMTCTRegister
         String displayId = isNullOrEmpty(clientId) ? householdId : clientId;
         String dateEnrolledPmtct = Utils.getValue(personObjectClient.getColumnmaps(), "date_enrolled_pmtct", false);
 
-        pmtctRegisterViewHolder.setupViews(displayName,"ID : " + displayId, gender, age,client_type);
+        pmtctRegisterViewHolder.setupViews(displayName, displayId, birthdate);
         pmtctRegisterViewHolder.setEnrolledDate(dateEnrolledPmtct);
 
         // Per-row SQLCipher/DAO work should be best-effort and off the main thread.
@@ -259,7 +259,7 @@ public class PMTCTRegisterProvider implements RecyclerViewProvider<PMTCTRegister
 
     @Override
     public PMTCTRegisterViewHolder createViewHolder(ViewGroup viewGroup) {
-        View viewHolder = inflater().inflate(R.layout.ptcmt_register_item_layout, viewGroup, false);
+        View viewHolder = inflater().inflate(R.layout.register_row, viewGroup, false);
         return new PMTCTRegisterViewHolder(viewHolder);
     }
 

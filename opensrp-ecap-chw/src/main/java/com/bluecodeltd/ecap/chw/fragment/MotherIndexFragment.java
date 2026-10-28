@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.bluecodeltd.ecap.chw.util.RegisterHeader;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.IndexDetailsActivity;
 import com.bluecodeltd.ecap.chw.activity.MotherDetail;
@@ -236,6 +237,7 @@ public class MotherIndexFragment extends BaseSafeRegisterFragment implements Mot
             getSearchView().setBackgroundResource(R.color.white);
             getSearchView().setCompoundDrawablesWithIntrinsicBounds(org.smartregister.R.drawable.ic_action_search, 0, 0, 0);
             getSearchView().setTextColor(getResources().getColor(org.smartregister.R.color.text_black));
+            RegisterHeader.style(view, getSearchView());
         }
         View topRightLayout = null;
         try { topRightLayout = view.findViewById(org.smartregister.R.id.top_right_layout); } catch (Exception ignored) {}

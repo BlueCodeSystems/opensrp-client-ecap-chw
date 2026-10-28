@@ -484,6 +484,10 @@ public class PMTCTRegisterActivity extends BaseRegisterActivity implements Index
 
 //            bottomNavigationView.getMenu().findItem(R.id.action_identifcation).setTitle( "Add Mother");
 
+            // Mothers join PMTCT from their profile, so the bar has no action left; an empty bar only takes space
+            if (bottomNavigationView.getMenu().size() == 0) {
+                bottomNavigationView.setVisibility(android.view.View.GONE);
+            }
         }
     }
 

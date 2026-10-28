@@ -10,9 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.util.ServiceRegister;
+import com.bluecodeltd.ecap.chw.util.ServiceRegisterStatus;
+import com.bluecodeltd.ecap.chw.util.ServiceRegisterValues;
 import com.bluecodeltd.ecap.chw.view_holder.ServiceRegisterViewHolder;
 
-import org.apache.commons.lang3.StringUtils;
 import org.smartregister.chw.core.holders.FooterViewHolder;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.cursoradapter.RecyclerViewProvider;
@@ -25,9 +26,6 @@ import org.smartregister.view.dialog.SortOption;
 import org.smartregister.view.viewholder.OnClickFormLauncher;
 
 import java.text.MessageFormat;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 public class ServiceRegisterProvider implements RecyclerViewProvider<ServiceRegisterViewHolder> {
@@ -44,20 +42,6 @@ public class ServiceRegisterProvider implements RecyclerViewProvider<ServiceRegi
         this.paginationViewHandler = paginationViewHandler;
     }
 
-    private static String getAge(String birthdate) {
-        try {
-            Period age = Period.between(LocalDate.parse(birthdate, DateTimeFormatter.ofPattern("dd-MM-u")), LocalDate.now());
-            if (age.getYears() > 0) {
-                return age.getYears() + (age.getYears() == 1 ? " Year Old" : " Years Old");
-            } else if (age.getMonths() > 0) {
-                return age.getMonths() + (age.getMonths() == 1 ? " Month Old" : " Months Old");
-            }
-            return age.getDays() + " Days Old";
-        } catch (Exception e) {
-            return "Age Not Set";
-        }
-    }
-
     @Override
     public void getView(Cursor cursor, SmartRegisterClient smartRegisterClient, ServiceRegisterViewHolder viewHolder) {
         CommonPersonObjectClient client = (CommonPersonObjectClient) smartRegisterClient;
@@ -65,24 +49,16 @@ public class ServiceRegisterProvider implements RecyclerViewProvider<ServiceRegi
 
         String name = (Utils.getValue(columns, "first_name", true) + " "
                 + Utils.getValue(columns, "last_name", true)).trim();
-        String gender = Utils.getValue(columns, "gender", true);
-        String birthdate = Utils.getValue(columns, "birthdate", false);
-        String genderAge = gender + " : " + (StringUtils.isNotBlank(birthdate) ? getAge(birthdate) : "Age Not Set");
+        String iccmId = ServiceRegisterValues.get(columns, "iccm_id");
+        String id = iccmId.isEmpty() ? context.getString(R.string.service_register_not_enrolled)
+                : context.getString(R.string.service_register_iccm_id, iccmId);
 
-        String detailValue = Utils.getValue(columns, register.detailColumn, true);
-        String secondaryValue = Utils.getValue(columns, register.secondaryColumn, true);
-        String detail = "";
-        if (StringUtils.isNotBlank(detailValue)) {
-            detail = register.detailLabel + ": " + detailValue
-                    + (StringUtils.isNotBlank(secondaryValue) ? " · " + secondaryValue : "");
-        }
-
-        String clientNumber = Utils.getValue(columns, "client_number", false);
-        String clientId = StringUtils.isNotBlank(clientNumber) ? "ID : " + clientNumber : "";
-
-        viewHolder.setupViews(name, genderAge, detail, clientId);
+        viewHolder.bind(name, id, ServiceRegisterStatus.summary(columns),
+                ServiceRegisterStatus.row(context, register, columns));
         viewHolder.itemView.setOnClickListener(onClickListener);
         viewHolder.itemView.setTag(smartRegisterClient);
+        viewHolder.action.setOnClickListener(onClickListener);
+        viewHolder.action.setTag(smartRegisterClient);
     }
 
     @Override
@@ -120,7 +96,7 @@ public class ServiceRegisterProvider implements RecyclerViewProvider<ServiceRegi
 
     @Override
     public ServiceRegisterViewHolder createViewHolder(ViewGroup viewGroup) {
-        View view = inflater().inflate(R.layout.service_register_item_layout, viewGroup, false);
+        View view = inflater().inflate(R.layout.register_row, viewGroup, false);
         return new ServiceRegisterViewHolder(view, register);
     }
 

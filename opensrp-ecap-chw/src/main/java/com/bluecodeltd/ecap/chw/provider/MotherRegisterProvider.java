@@ -12,6 +12,7 @@ import com.bluecodeltd.ecap.chw.dao.IndexMotherDao;
 import com.bluecodeltd.ecap.chw.dao.IndexPersonDao;
 import com.bluecodeltd.ecap.chw.model.IndexMotherModel;
 import com.bluecodeltd.ecap.chw.view_holder.MotherRegisterViewHolder;
+import com.bluecodeltd.ecap.chw.view_holder.RegisterRow;
 import com.bluecodeltd.ecap.chw.util.Threading;
 
 import org.smartregister.chw.core.holders.FooterViewHolder;
@@ -55,7 +56,7 @@ public class MotherRegisterProvider implements RecyclerViewProvider<MotherRegist
         String caregiverBirthDate = Utils.getValue(personObjectClient.getColumnmaps(), "caregiver_birth_date", true);
         String lastInteractedWith = Utils.getValue(personObjectClient.getColumnmaps(), "last_interacted_with", true);
 
-        final String age = getMotherAge(caregiverBirthDate);
+        final String age = RegisterRow.age(caregiverBirthDate);
         final String enrollmentLabel = buildEnrollmentLabel(lastInteractedWith);
 
         // Tag to avoid stale updates on recycled rows.
@@ -129,8 +130,8 @@ public class MotherRegisterProvider implements RecyclerViewProvider<MotherRegist
         try {
             long timestamp = Long.parseLong(lastInteractedWithRaw);
             Date date = new Date(timestamp);
-            String formatted = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH).format(date);
-            return "Enrolled: " + formatted;
+            String formatted = new SimpleDateFormat("d MMM yyyy", Locale.ENGLISH).format(date);
+            return "Enrolled " + formatted;
         } catch (Exception e) {
             return "";
         }
@@ -172,7 +173,7 @@ public class MotherRegisterProvider implements RecyclerViewProvider<MotherRegist
 
     @Override
     public MotherRegisterViewHolder createViewHolder(ViewGroup viewGroup) {
-        View viewHolder = inflater().inflate(R.layout.mother_layout, viewGroup, false);
+        View viewHolder = inflater().inflate(R.layout.register_row, viewGroup, false);
         return new MotherRegisterViewHolder(viewHolder);
     }
 

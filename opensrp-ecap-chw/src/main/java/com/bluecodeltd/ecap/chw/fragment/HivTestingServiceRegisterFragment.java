@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.ActionBar;
 
+import com.bluecodeltd.ecap.chw.util.RegisterHeader;
 import com.bluecodeltd.ecap.chw.R;
 import com.bluecodeltd.ecap.chw.activity.HTSDetailsActivity;
 import com.bluecodeltd.ecap.chw.activity.HTSRegisterFragmentPresenter;
@@ -280,6 +281,7 @@ public class HivTestingServiceRegisterFragment extends BaseSafeRegisterFragment 
             getSearchView().setBackgroundResource(R.color.white);
             getSearchView().setCompoundDrawablesWithIntrinsicBounds(org.smartregister.R.drawable.ic_action_search, 0, 0, 0);
             getSearchView().setTextColor(getResources().getColor(org.smartregister.R.color.text_black));
+            RegisterHeader.style(view, getSearchView());
         }
         View topRightLayout = null;
         try { topRightLayout = view.findViewById(org.smartregister.R.id.top_right_layout); } catch (Exception ignored) {}

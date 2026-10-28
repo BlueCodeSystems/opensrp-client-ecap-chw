@@ -139,6 +139,9 @@ public class ChwRepositoryFlv {
                 case 35:
                     upgradeToVersion35(db);
                     break;
+                case 36:
+                    upgradeToVersion36(db);
+                    break;
                 default:
                     break;
             }
@@ -1348,6 +1351,24 @@ public class ChwRepositoryFlv {
                     + TrainingAttendance.TABLE + " (base_entity_id)");
         } catch (Exception e) {
             Timber.e(e, "upgradeToVersion35 %s", TrainingAttendance.TABLE);
+        }
+    }
+
+    private static void upgradeToVersion36(SQLiteDatabase db) {
+        // The Appointments, PrEP and Referral Linkages forms now follow the AFGHS-PCZ tools, so their tables
+        // gain the new questions' columns. upgradeToVersion34 already creates tables of the new shape.
+        for (ServiceRegister register : ServiceRegister.values()) {
+            List<String> columns = new ArrayList<>(Arrays.asList(ServiceRegister.COMMON_COLUMNS));
+            columns.addAll(Arrays.asList(register.specificColumns()));
+            for (String column : columns) {
+                try {
+                    if (!hasColumn(db, register.table, column)) {
+                        db.execSQL("ALTER TABLE " + register.table + " ADD COLUMN " + column + " VARCHAR");
+                    }
+                } catch (Exception e) {
+                    Timber.e(e, "upgradeToVersion36 %s.%s", register.table, column);
+                }
+            }
         }
     }
 
