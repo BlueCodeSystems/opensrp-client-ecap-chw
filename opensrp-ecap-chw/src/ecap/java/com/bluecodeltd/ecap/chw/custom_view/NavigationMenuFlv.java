@@ -33,7 +33,8 @@ public class NavigationMenuFlv implements NavigationMenu.Flavour {
 
     @Override
     public boolean hasServiceReport() {
-        return true;
+        // No HIA2 indicator definitions ship with iCCMS, so the screen would be empty
+        return false;
     }
 
     @Override
