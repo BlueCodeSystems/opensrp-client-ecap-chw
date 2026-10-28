@@ -1,96 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- A child's TB screening: title and date, the referral result and follow-up as chips, and its actions.
+     TbScreeningAdapter fills it. -->
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="12dp"
     android:layout_marginTop="6dp"
     android:layout_marginEnd="12dp"
     android:layout_marginBottom="6dp"
-    card_view:cardBackgroundColor="@color/white"
-    card_view:cardCornerRadius="14dp"
-    card_view:cardElevation="1.5dp">
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="1.5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingStart="14dp"
-        android:paddingTop="12dp"
+        android:paddingTop="14dp"
         android:paddingEnd="14dp"
         android:paddingBottom="12dp">
 
-        <!-- Top row: Date + Edit button -->
+        <!-- Icon, title and date -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvDate"
+            <FrameLayout
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/dash_icon_chip"
+                android:backgroundTint="@color/dash_accent_soft">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_tb_24"
+                    app:tint="@color/primary" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="TB screening"
+                    android:textColor="@color/dash_text"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:maxLines="1"
+                    android:text="—"
+                    android:textColor="@color/dash_text_secondary"
+                    android:textSize="13sp"
+                    tools:text="5 Aug 2026, 13:41" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Referral result and follow-up on the left, actions on the right -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="sans-serif-medium"
-                android:text="—"
-                android:textColor="@color/dash_text"
-                android:textSize="16sp" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvSummary"
+                    style="@style/ServiceRegisterPill"
+                    android:background="@drawable/reg_pill_neutral"
+                    android:textColor="@color/reg_pill_neutral_text"
+                    tools:text="Referred for TB evaluation" />
+
+                <TextView
+                    android:id="@+id/tvFollowUpDate"
+                    style="@style/ServiceRegisterPill"
+                    android:layout_marginStart="6dp"
+                    android:background="@drawable/reg_pill_info"
+                    android:textColor="@color/reg_pill_info_text"
+                    android:visibility="gone"
+                    tools:text="Follow-up 12 Sep 2026"
+                    tools:visibility="visible" />
+            </LinearLayout>
 
             <ImageButton
                 android:id="@+id/btnEdit"
-                android:layout_width="34dp"
-                android:layout_height="34dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="8dp"
                 android:background="@drawable/bg_button_primary_outline"
+                android:contentDescription="@string/edit"
                 android:padding="8dp"
                 android:scaleType="fitCenter"
-                android:contentDescription="@string/edit"
                 android:src="@drawable/ic_edit"
-                card_view:tint="@color/dash_accent" />
-        </LinearLayout>
+                app:tint="@color/dash_accent" />
 
-        <!-- Summary / description -->
-        <TextView
-            android:id="@+id/tvSummary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="13sp"
-            android:textColor="@color/dash_text_secondary"
-            android:layout_marginTop="2dp"
-            android:maxLines="3"
-            android:ellipsize="end" />
-
-        <!-- Divider -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/dash_divider" />
-
-        <!-- Bottom row: Follow-up date + Outcome button -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="end|center_vertical"
-            android:layout_marginTop="10dp">
-
-            <!-- Follow-up date -->
-            <TextView
-                android:id="@+id/tvFollowUpDate"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Follow-up: —"
-                android:textSize="12sp"
-                android:textColor="@color/dash_text_muted" />
-
-            <!-- Outcome button -->
             <Button
                 android:id="@+id/btnAddOutcome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:background="@drawable/bg_button_primary_outline"
                 android:fontFamily="sans-serif-medium"
                 android:minWidth="0dp"

@@ -74,19 +74,23 @@ public class TbScreeningAdapter extends RecyclerView.Adapter<TbScreeningAdapter.
     public void onBindViewHolder(@NonNull VH h, int position) {
         TbScreeningModel m = items.get(position);
         h.tvDate.setText(fmt(m.getLast_interacted_with()));
-        String referred = m.getReferred_for_tb_evaluation();
-        String summary = referred != null && !referred.trim().isEmpty()
-                ? "Referred for TB evaluation: " + Character.toUpperCase(referred.trim().charAt(0)) + referred.trim().substring(1)
-                : "";
-        h.tvSummary.setText(summary);
+        // Referral result as a chip: amber when referred for evaluation, green when not
+        String referred = m.getReferred_for_tb_evaluation() == null ? "" : m.getReferred_for_tb_evaluation().trim();
+        boolean isReferred = referred.equalsIgnoreCase("yes");
+        boolean notReferred = referred.equalsIgnoreCase("no");
+        h.tvSummary.setText(isReferred ? "Referred for TB evaluation" : notReferred ? "Not referred" : "");
+        h.tvSummary.setVisibility(isReferred || notReferred ? View.VISIBLE : View.GONE);
+        h.tvSummary.setBackgroundResource(isReferred ? R.drawable.reg_pill_warning : R.drawable.reg_pill_good);
+        h.tvSummary.setTextColor(androidx.core.content.ContextCompat.getColor(context,
+                isReferred ? R.color.reg_pill_warning_text : R.color.reg_pill_good_text));
         // Follow-up date binding
         String follow = m.getFollowup_date();
         if (follow == null || follow.trim().isEmpty()) follow = m.getTreatment_followup_date();
         final String followForClick = follow;
         if (follow != null && !follow.trim().isEmpty()) {
-            h.tvFollowUpDate.setText("Follow-up: " + follow);
+            h.tvFollowUpDate.setText("Follow-up " + com.bluecodeltd.ecap.chw.view_holder.RegisterRow.shownDate(follow));
             h.tvFollowUpDate.setVisibility(View.VISIBLE);
-            h.btnAddOutcome.setText("View Outcome");
+            h.btnAddOutcome.setText("View outcome");
         } else {
             h.tvFollowUpDate.setVisibility(View.GONE);
             h.btnAddOutcome.setText("Follow up");
