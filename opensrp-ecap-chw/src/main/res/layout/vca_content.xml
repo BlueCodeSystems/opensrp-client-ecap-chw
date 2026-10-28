@@ -181,21 +181,29 @@
                 </com.google.android.material.appbar.CollapsingToolbarLayout>
 
 
+                <!-- Tabs on a white strip, divided from the records below; IndexDetailsActivity colours the
+                     indicator with the header colour and restyles the custom tab views -->
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tabs"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
                     app:tabContentStart="0dp"
                     app:tabGravity="fill"
-                    app:tabIndicatorColor="@color/white"
+                    app:tabIndicatorColor="@color/primary"
                     app:tabIndicatorHeight="3dp"
                     app:tabIndicatorFullWidth="false"
                     app:tabMaxWidth="0dp"
                     app:tabMode="scrollable"
-                    app:tabRippleColor="@color/white"
-                    app:tabSelectedTextColor="@color/white"
-                    app:tabTextColor="@color/register_vca_header_light"
+                    app:tabRippleColor="@color/dash_divider"
+                    app:tabSelectedTextColor="@color/dash_text"
+                    app:tabTextColor="@color/dash_text_secondary"
                     app:tabTextAppearance="@style/CustomFontTextViewStyle.tabIndicator.sub.white" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/dash_divider" />
 
             </com.google.android.material.appbar.AppBarLayout>
 
