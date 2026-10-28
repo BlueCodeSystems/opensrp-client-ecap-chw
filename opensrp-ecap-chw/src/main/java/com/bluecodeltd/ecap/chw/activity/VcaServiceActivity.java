@@ -131,7 +131,7 @@ public class VcaServiceActivity extends AppCompatActivity {
         applyHouseholdServiceReportLinkVisibilityAsync();
         evaluateAddServiceButtonState();
 
-        hh_id.setText(intent_vcaid);
+        hh_id.setText(intent_vcaid != null ? "ID " + intent_vcaid : "");
         vcaname.setText(intent_cname);
 
         if (recyclerViewadapter == null) {
@@ -498,7 +498,8 @@ public class VcaServiceActivity extends AppCompatActivity {
                     if (count > 0) {
                         String lastDate = familyServiceList.get(0).getDate();
                         if (lastDate != null && !lastDate.trim().isEmpty()) {
-                            countText += getString(R.string.service_reports_last_submitted, lastDate.trim());
+                            countText += " · " + getString(R.string.service_reports_last_submitted,
+                                    com.bluecodeltd.ecap.chw.view_holder.RegisterRow.shownDate(lastDate));
                         }
                     }
                     servicesCountText.setText(countText);

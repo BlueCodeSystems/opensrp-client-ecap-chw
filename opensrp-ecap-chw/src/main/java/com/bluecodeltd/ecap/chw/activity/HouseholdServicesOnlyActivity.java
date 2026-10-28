@@ -165,7 +165,7 @@ public class HouseholdServicesOnlyActivity extends AppCompatActivity {
         if (count > 0) {
             String lastDate = familyServiceList.get(0).getDate();
             if (lastDate != null && !lastDate.trim().isEmpty()) {
-                text += getString(R.string.service_reports_last_submitted, lastDate.trim());
+                text += " · " + getString(R.string.service_reports_last_submitted, com.bluecodeltd.ecap.chw.view_holder.RegisterRow.shownDate(lastDate));
             }
         }
         servicesCountText.setText(text);

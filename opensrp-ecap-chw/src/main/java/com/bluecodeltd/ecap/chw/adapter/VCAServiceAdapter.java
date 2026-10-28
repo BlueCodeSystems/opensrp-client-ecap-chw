@@ -110,8 +110,12 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
 
         holder.setIsRecyclable(false);
 
-        holder.txtDate.setText(service.getDate());
-        holder.txtserviceType.setText("For VCA");
+        holder.txtDate.setText(com.bluecodeltd.ecap.chw.view_holder.RegisterRow.shownDate(service.getDate()));
+        holder.txtserviceType.setText("CA service report");
+        int serviceCount = countServices(service.getServices()) + countServices(service.getSchooled_services())
+                + countServices(service.getSafe_services()) + countServices(service.getStable_services());
+        holder.txtServices.setText(serviceCount == 1 ? "1 service" : serviceCount + " services");
+        holder.txtServices.setVisibility(serviceCount > 0 ? View.VISIBLE : View.GONE);
 
 
 //        JSONArray jsonArray = null;
@@ -562,5 +566,26 @@ public class VCAServiceAdapter  extends RecyclerView.Adapter<VCAServiceAdapter.V
         public void onClick(View v) {
 
         }
+    }
+
+    /**
+     * Services ticked in one domain. The form stores a JSON array of option labels (some contain commas), and
+     * "not applicable" when the domain had nothing that month.
+     */
+    private static int countServices(String stored) {
+        if (stored == null || stored.trim().isEmpty() || "null".equalsIgnoreCase(stored.trim())) return 0;
+        java.util.List<String> keys = new java.util.ArrayList<>();
+        try {
+            org.json.JSONArray array = new org.json.JSONArray(stored.trim());
+            for (int i = 0; i < array.length(); i++) keys.add(array.optString(i));
+        } catch (Exception notJson) {
+            keys.add(stored);
+        }
+        int count = 0;
+        for (String key : keys) {
+            String value = key == null ? "" : key.trim();
+            if (!value.isEmpty() && !"not applicable".equalsIgnoreCase(value) && !"none".equalsIgnoreCase(value)) count++;
+        }
+        return count;
     }
 }

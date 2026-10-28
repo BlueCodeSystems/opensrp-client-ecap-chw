@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Caregiver signature thumbnail on a service report card -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/dash_page_bg" />
+    <stroke
+        android:width="1dp"
+        android:color="@color/dash_divider" />
+    <corners android:radius="10dp" />
+</shape>

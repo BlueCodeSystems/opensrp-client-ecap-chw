@@ -18,14 +18,15 @@
             android:id="@+id/collapsing_toolbar_appbarlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_vca_header">
+            android:background="@color/primary"
+            app:elevation="0dp">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/collapsing_toolbar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:contentScrim="@color/register_vca_icon"
+                app:contentScrim="@color/primary"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <androidx.appcompat.widget.Toolbar
@@ -48,30 +49,28 @@
                     app:layout_collapseParallaxMultiplier="1.5">
 
 
-                    <org.smartregister.view.customcontrols.CustomFontTextView
+                    <TextView
                         android:id="@+id/caregiver_name"
-                        style="@style/CustomFontTextViewStyle.ClientList.Medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="15dp"
-                        android:paddingStart="0dp"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="sans-serif-medium"
                         android:text="CA : Bertha Mwansa"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/activity_title_size" />
+                        android:textSize="24sp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="10dp"
-                        android:layout_marginBottom="50dp"
+                        android:layout_marginBottom="0dp"
                         android:gravity="center"
                         android:orientation="horizontal">
 
-                        <org.smartregister.view.customcontrols.CustomFontTextView
+                        <TextView
                             android:id="@+id/address1"
-                            style="@style/CustomFontTextViewStyle.ClientList.Light"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
@@ -83,16 +82,20 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <org.smartregister.view.customcontrols.CustomFontTextView
+                            <TextView
                                 android:id="@+id/hhid"
-                                style="@style/CustomFontTextViewStyle.ClientList.Light"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_horizontal"
                                 android:text="Choma"
-                                android:paddingStart="0dp"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                                android:textColor="@color/white" />
+                                android:background="@drawable/profile_header_pill"
+                                android:fontFamily="sans-serif-medium"
+                                android:paddingStart="12dp"
+                                android:paddingTop="4dp"
+                                android:paddingEnd="12dp"
+                                android:paddingBottom="4dp"
+                                android:textColor="@color/white"
+                                android:textSize="13sp" />
 
                         </LinearLayout>
 
@@ -103,15 +106,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="16dp"
-                        android:background="@drawable/bg_header_stat_pill"
-                        android:paddingHorizontal="14dp"
-                        android:paddingVertical="6dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/profile_header_pill"
+                        android:fontFamily="sans-serif-medium"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="4dp"
                         android:text="0 Service Reports"
                         android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:textSize="13sp" />
 
                 </LinearLayout>
 
@@ -131,8 +134,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:paddingHorizontal="6dp"
-                android:paddingTop="10dp"
+                android:paddingTop="6dp"
                 android:paddingBottom="16dp" />
 
             <LinearLayout
@@ -146,38 +148,47 @@
                 android:visibility="visible">
 
                 <ImageView
-                    android:layout_width="72dp"
-                    android:layout_height="72dp"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
                     android:layout_gravity="center_horizontal"
-                    android:alpha="0.9"
-                    android:src="@drawable/not_done" />
+                    android:alpha="0.45"
+                    android:contentDescription="@null"
+                    android:src="@drawable/empty_calendar" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:gravity="center_horizontal"
+                    android:fontFamily="sans-serif-medium"
                     android:text="No service reports yet"
-                    android:textColor="@color/text_black"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textColor="@color/dash_text"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:gravity="center_horizontal"
-                    android:text="Tap “Add Service Report” below to log the first one"
-                    android:textColor="@color/light_grey_text"
+                    android:text="Tap “Record service” below to log the first one"
+                    android:textColor="@color/dash_text_secondary"
                     android:textSize="13sp" />
 
             </LinearLayout>
 
         </RelativeLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/dash_divider" />
+
+        <!-- Bottom bar: the household's services as a quiet link, Record service as the main action -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingHorizontal="16dp"
             android:paddingVertical="12dp">
@@ -188,14 +199,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/bg_button_vca_outline"
+                android:background="?attr/selectableItemBackground"
                 android:onClick="onClick"
+                android:fontFamily="sans-serif-medium"
                 android:paddingVertical="12dp"
-                android:text="View Household Services"
+                android:text="View household services"
                 android:textAllCaps="false"
-                android:textColor="@color/register_vca_icon"
-                android:textSize="13sp"
-                android:textStyle="bold"
+                android:textColor="@color/reg_pill_action_text"
+                android:textSize="14sp"
                 android:visibility="visible"
                 app:rd_enable="true"
                 app:rd_rippleType="wave" />
@@ -205,14 +216,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/ripple_button_vca_primary"
+                android:background="@drawable/service_details_action_bg"
                 android:onClick="onClick"
+                android:fontFamily="sans-serif-medium"
                 android:paddingVertical="12dp"
-                android:text="+  Add Service Report"
+                android:text="+  Record service"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
-                android:textSize="13sp"
-                android:textStyle="bold"
+                android:textSize="14sp"
                 android:visibility="visible"
                 app:rd_enable="true"
                 app:rd_rippleType="wave" />
