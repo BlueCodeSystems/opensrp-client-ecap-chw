@@ -173,11 +173,35 @@
                             tools:visibility="visible" />
                     </LinearLayout>
 
+                    <!-- The three-monthly visit: a quieter text action beside the main one -->
                     <Button
                         android:id="@+id/due_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
+                        android:layout_marginStart="8dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:fontFamily="sans-serif-medium"
+                        android:gravity="center"
+                        android:hapticFeedbackEnabled="true"
+                        android:maxLines="1"
+                        android:minWidth="0dp"
+                        android:minHeight="0dp"
+                        android:paddingStart="10dp"
+                        android:paddingTop="6dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="6dp"
+                        android:stateListAnimator="@null"
+                        android:text="Conduct visit"
+                        android:textAllCaps="false"
+                        android:textColor="@color/reg_pill_action_text"
+                        android:textSize="12sp" />
+
+                    <!-- Services are monthly, so recording one is the row's main action -->
+                    <Button
+                        android:id="@+id/record_service"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
                         android:background="@drawable/reg_pill_action"
                         android:fontFamily="sans-serif-medium"
                         android:gravity="center"
@@ -190,7 +214,7 @@
                         android:paddingEnd="14dp"
                         android:paddingBottom="6dp"
                         android:stateListAnimator="@null"
-                        android:text="Conduct visit"
+                        android:text="Record service"
                         android:textAllCaps="false"
                         android:textColor="@color/reg_pill_action_text"
                         android:textSize="12sp" />

@@ -77,6 +77,11 @@ import timber.log.Timber;
 
 public class VcaServiceActivity extends AppCompatActivity {
 
+    /** Boolean extra: open the add-service-report flow as soon as the screen is ready. */
+    public static final String EXTRA_START_SERVICE_REPORT = "start_service_report";
+    private boolean startServiceReport;
+
+
     private com.bluecodeltd.ecap.chw.databinding.ActivityVcaServiceBinding binding;
 
     private RecyclerView recyclerView;
@@ -120,6 +125,8 @@ public class VcaServiceActivity extends AppCompatActivity {
         household_id = extras != null ? extras.getString("hh_id") : null;
         c_name = extras != null ? extras.getString("vcaname") : null;
         signature = extras != null ? extras.getString("signature") : null;
+        // Record service on a CA register row opens this screen straight into a new service report
+        startServiceReport = savedInstanceState == null && extras != null && extras.getBoolean(EXTRA_START_SERVICE_REPORT, false);
 
         applyHouseholdServiceReportLinkVisibilityAsync();
         evaluateAddServiceButtonState();
@@ -513,6 +520,11 @@ public class VcaServiceActivity extends AppCompatActivity {
                     addServiceReportButton.setAlpha(canAddServiceReport ? 1f : 0.5f);
                     addServiceReportButton.setEnabled(true);
                     addServiceReportButton.setClickable(true);
+                    if (startServiceReport) {
+                        // Once the eligibility check is in, so the same guards apply as tapping the button
+                        startServiceReport = false;
+                        onClick(addServiceReportButton);
+                    }
                 }
             });
         });

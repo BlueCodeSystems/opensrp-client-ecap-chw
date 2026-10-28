@@ -88,6 +88,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
     private final View indicators;
     private final TextView index_icon_layout;
     private final Button dueButton;
+    private final Button recordService;
     private final ImageView notification;
     private final LinearLayout notification_wrapper;
     private final View genderAvatar;
@@ -110,6 +111,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
         indicators = itemView.findViewById(R.id.ca_indicators);
         gender_age = itemView.findViewById(R.id.gender_age);
         dueButton = itemView.findViewById(R.id.due_button);
+        recordService = itemView.findViewById(R.id.record_service);
         visitStatus = itemView.findViewById(R.id.visit_status);
         notification = itemView.findViewById(R.id.notifications);
         notification_wrapper = itemView.findViewById(R.id.notification_wrapper);
@@ -217,6 +219,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
 
         // Default while loading: the action shows, the status waits for the visit data
         dueButton.setVisibility(View.VISIBLE);
+        recordService.setVisibility(View.VISIBLE);
         showVisitStatus(null, 0, 0);
         final String rowTag = village;
         dueButton.setTag(rowTag);
@@ -268,14 +271,17 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
                     }
                     showVisitStatus(buttonText, backgroundResource, textColorResource);
                     dueButton.setVisibility(View.VISIBLE);
+                    recordService.setVisibility(View.VISIBLE);
                 } else {
                     if (screeningFinal != null && ("0".equals(screeningFinal.getCase_status()) || "2".equals(screeningFinal.getCase_status()))) {
                         showVisitStatus("Case closed", R.drawable.reg_pill_neutral, R.color.reg_pill_neutral_text);
                         dueButton.setVisibility(View.GONE);
+                        recordService.setVisibility(View.GONE);
                         indicators.setVisibility(View.GONE);
                     } else {
                         showVisitStatus(null, 0, 0);
                         dueButton.setVisibility(View.VISIBLE);
+                        recordService.setVisibility(View.VISIBLE);
                     }
                 }
             });
@@ -329,6 +335,7 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
 
             }
         });
+        recordService.setOnClickListener(view -> openServiceReport(village));
         dueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -373,6 +380,36 @@ public class IndexRegisterViewHolder extends RecyclerView.ViewHolder {
 
 
     }
+    /**
+     * Opens the child's service reports straight into a new report. The service screen applies its own checks
+     * (case plan on file, this month's TB screening for under-10s) before the form opens.
+     */
+    private void openServiceReport(String uniqueId) {
+        VcaScreeningModel cached = indexVCA;
+        Threading.io(() -> {
+            VcaScreeningModel screen = cached;
+            if (screen == null) {
+                try { screen = VCAScreeningDao.getVcaScreening(uniqueId); } catch (Exception ignored) {}
+            }
+            VcaScreeningModel finalScreen = screen;
+            Threading.main(() -> {
+                if (context instanceof Activity && (((Activity) context).isFinishing() || ((Activity) context).isDestroyed())) return;
+                String name = String.valueOf(familyNameTextView.getText());
+                if (finalScreen == null || finalScreen.getDate_screened() == null || android.text.TextUtils.isEmpty(finalScreen.getHousehold_id())) {
+                    Toasty.warning(context, "Unable to record a service for " + name + ". CA Screening has not been done", Toast.LENGTH_LONG, true).show();
+                    return;
+                }
+                Intent intent = new Intent(context, com.bluecodeltd.ecap.chw.activity.VcaServiceActivity.class);
+                intent.putExtra("hh_id", finalScreen.getHousehold_id());
+                intent.putExtra("vcaid", uniqueId);
+                intent.putExtra("hivstatus", finalScreen.getIs_hiv_positive());
+                intent.putExtra("vcaname", name);
+                intent.putExtra(com.bluecodeltd.ecap.chw.activity.VcaServiceActivity.EXTRA_START_SERVICE_REPORT, true);
+                context.startActivity(intent);
+            });
+        });
+    }
+
     public void openVisitationForm(String village,String vcaAge){
         Threading.io(() -> {
             JSONObject parsedForm = null;
