@@ -372,6 +372,8 @@ public class HouseholdOverviewFragment extends Fragment {
                         txtNextVl.setText(finalLatest.getDate_next_vl());
                     }
                 }
+                // Last values are in: tidy dates, missing values and capitals across the overview
+                OverviewFormat.tidy(binding.getRoot(), null);
             });
         });
 

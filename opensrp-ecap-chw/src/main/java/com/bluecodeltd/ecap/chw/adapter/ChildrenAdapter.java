@@ -168,11 +168,11 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
 //        newCaregiverModel caregiverModel = newCaregiverDao.getNewCaregiverById(child.getHousehold_id());
 
-        holder.colorView.setBackgroundColor(Color.parseColor("#696969"));
+        holder.colorView.setBackgroundColor(androidx.core.content.ContextCompat.getColor(holder.itemView.getContext(), R.color.reg_status_none));
 
 //        if(caregiverModel.getHousehold_case_status() != null && caregiverModel.getHousehold_case_status().equals("0")){
 //
-//            holder.colorView.setBackgroundColor(Color.parseColor("#ff0000"));
+//            holder.colorView.setBackgroundColor(androidx.core.content.ContextCompat.getColor(holder.itemView.getContext(), R.color.dash_status_critical));
 //        }
 
         // Populate age and gender line
@@ -276,13 +276,13 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
                 }
 
                 if(finalCaseStatus != null && finalCaseStatus.equals("1")){
-                    holder.colorView.setBackgroundColor(Color.parseColor("#05b714"));
+                    holder.colorView.setBackgroundColor(androidx.core.content.ContextCompat.getColor(holder.itemView.getContext(), R.color.dash_status_good));
                 } else if (finalCaseStatus != null && finalCaseStatus.equals("0")) {
-                    holder.colorView.setBackgroundColor(Color.parseColor("#ff0000"));
+                    holder.colorView.setBackgroundColor(androidx.core.content.ContextCompat.getColor(holder.itemView.getContext(), R.color.dash_status_critical));
                 } else if(finalCaseStatus != null && finalCaseStatus.equals("2")){
-                    holder.colorView.setBackgroundColor(Color.parseColor("#ffa500"));
+                    holder.colorView.setBackgroundColor(androidx.core.content.ContextCompat.getColor(holder.itemView.getContext(), R.color.dash_status_warning));
                 } else{
-                    holder.colorView.setBackgroundColor(Color.parseColor("#696969"));
+                    holder.colorView.setBackgroundColor(androidx.core.content.ContextCompat.getColor(holder.itemView.getContext(), R.color.reg_status_none));
                 }
 
                 if (finalEligibleForMuac) {
@@ -417,7 +417,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         holder.muacButton.setVisibility(View.GONE);
         holder.muacButton.setTag(null);
         holder.is_index.setVisibility(View.GONE);
-        holder.colorView.setBackgroundColor(Color.parseColor("#696969"));
+        holder.colorView.setBackgroundColor(androidx.core.content.ContextCompat.getColor(holder.itemView.getContext(), R.color.reg_status_none));
     }
 
     private void ensureIndexCache() {

@@ -246,6 +246,7 @@ public class HouseholdDetails extends AppCompatActivity {
         household_visitation_caregiver = binding.householdVisitationCaregiver;
         tb_screening_caregiver = binding.tbScreeningCaregiver;
         mTabLayout =  binding.tabs;
+        com.bluecodeltd.ecap.chw.util.ProfileTabs.headerColour(this, mTabLayout, R.color.profile_household_header);
         mViewPager  = binding.viewpager;
         try {
             // Assign a fresh unique ID to avoid any stale fragments attached to the
@@ -300,12 +301,17 @@ public class HouseholdDetails extends AppCompatActivity {
             updateGradTabTitle();
             setupFabVisibility();
             txtDistrict.setText(householdId);
+            txtDistrict.setVisibility(android.text.TextUtils.isEmpty(householdId) ? View.GONE : View.VISIBLE);
 
             if(house.getCaregiver_name() != null && !house.getCaregiver_name().equals("null")){
                 cname.setText(house.getCaregiver_name() + " Household");
             } else {
                 cname.setText("No Household");
             }
+            // Shown in the slim bar once the header collapses; the large name covers the expanded header
+            binding.collapsingToolbarLayout.setTitle(cname.getText());
+            binding.collapsingToolbarLayout.setExpandedTitleColor(android.graphics.Color.TRANSPARENT);
+            binding.collapsingToolbarLayout.setCollapsedTitleTextColor(android.graphics.Color.WHITE);
 
             try{
                 if(caregiverAssessmentModel == null || caregiverAssessmentModel.getHousehold_type() == null){
@@ -679,7 +685,7 @@ public class HouseholdDetails extends AppCompatActivity {
             });
         });
 
-        try { if (mTabLayout.getTabAt(3) != null) mTabLayout.getTabAt(3).setCustomView(taskTabTitleLayout); } catch (Exception ignored) {}
+        try { if (mTabLayout.getTabAt(3) != null) mTabLayout.getTabAt(3).setCustomView(com.bluecodeltd.ecap.chw.util.ProfileTabs.onWhite(this, taskTabTitleLayout)); } catch (Exception ignored) {}
     }
 
     private void updateCaseplanTitle() {
@@ -699,7 +705,7 @@ public class HouseholdDetails extends AppCompatActivity {
                 countView.setText(String.valueOf(Math.max(0, finalPlans)));
             });
         });
-        try { if (mTabLayout.getTabAt(2) != null) mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout); } catch (Exception ignored) {}
+        try { if (mTabLayout.getTabAt(2) != null) mTabLayout.getTabAt(2).setCustomView(com.bluecodeltd.ecap.chw.util.ProfileTabs.onWhite(this, taskTabTitleLayout)); } catch (Exception ignored) {}
     }
 
     private void updateChildTabTitle() {
@@ -722,7 +728,7 @@ public class HouseholdDetails extends AppCompatActivity {
             });
         });
 
-        try { if (mTabLayout.getTabAt(1) != null) mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout); } catch (Exception ignored) {}
+        try { if (mTabLayout.getTabAt(1) != null) mTabLayout.getTabAt(1).setCustomView(com.bluecodeltd.ecap.chw.util.ProfileTabs.onWhite(this, taskTabTitleLayout)); } catch (Exception ignored) {}
     }
     private void updateHivRiskTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
@@ -744,7 +750,7 @@ public class HouseholdDetails extends AppCompatActivity {
             });
         });
 
-        mTabLayout.getTabAt(6).setCustomView(taskTabTitleLayout);
+        mTabLayout.getTabAt(6).setCustomView(com.bluecodeltd.ecap.chw.util.ProfileTabs.onWhite(this, taskTabTitleLayout));
     }
     private void updateGradTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
@@ -766,7 +772,7 @@ public class HouseholdDetails extends AppCompatActivity {
         });
 //        visitTabCount.setVisibility(View.GONE);
 
-        mTabLayout.getTabAt(5).setCustomView(taskTabTitleLayout);
+        mTabLayout.getTabAt(5).setCustomView(com.bluecodeltd.ecap.chw.util.ProfileTabs.onWhite(this, taskTabTitleLayout));
     }
     private void updateTbTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
@@ -789,7 +795,7 @@ public class HouseholdDetails extends AppCompatActivity {
         });
 
         if (mTabLayout.getTabCount() > 4 && mTabLayout.getTabAt(4) != null) {
-            mTabLayout.getTabAt(4).setCustomView(taskTabTitleLayout);
+            mTabLayout.getTabAt(4).setCustomView(com.bluecodeltd.ecap.chw.util.ProfileTabs.onWhite(this, taskTabTitleLayout));
         }
     }
     private void updateOverviewTabTitle() {
@@ -812,7 +818,7 @@ public class HouseholdDetails extends AppCompatActivity {
             });
         });
 
-        mTabLayout.getTabAt(0).setCustomView(taskTabTitleLayout);
+        mTabLayout.getTabAt(0).setCustomView(com.bluecodeltd.ecap.chw.util.ProfileTabs.onWhite(this, taskTabTitleLayout));
     }
 
 

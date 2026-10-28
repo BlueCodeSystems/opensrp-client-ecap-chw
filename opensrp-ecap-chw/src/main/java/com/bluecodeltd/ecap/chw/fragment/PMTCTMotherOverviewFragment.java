@@ -118,6 +118,7 @@ public class PMTCTMotherOverviewFragment extends Fragment {
                 txt_on_art_at_time_of_delivery.setText(getSafeString(pmtctDeliveryModel.getOn_art_at_time_of_delivery()));
             }
         }
+        if (binding != null) OverviewFormat.tidy(binding.getRoot(), null);
     }
 
     @Override

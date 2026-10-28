@@ -104,8 +104,7 @@ if(htsModel.getTesting_modality() != null && htsModel.getTesting_modality().equa
         partner.setText(htsModel.getImplementing_partner() != null ? htsModel.getImplementing_partner() : "Not Set");
         date_edited.setText(htsModel.getDate_edited() != null ? htsModel.getDate_edited() : "Not Set");
         date_case_created.setText(htsModel.getDate_client_created() != null ? htsModel.getDate_client_created() : "Not Set");
-
-
+        OverviewFormat.tidy(rootView, null);
 
         return rootView;
     }

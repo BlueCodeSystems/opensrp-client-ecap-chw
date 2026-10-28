@@ -4,15 +4,16 @@
     android:id="@+id/register_columns"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="2dp"
-    android:layout_marginBottom="10dp"
+    android:layout_marginStart="12dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginBottom="6dp"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="14dp"
-    app:cardElevation="2dp"
-    app:cardUseCompatPadding="true">
+    app:cardElevation="1.5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,18 +33,18 @@
             <View
                 android:id="@+id/mycolor"
                 android:layout_width="4dp"
-                android:layout_height="32dp"
-                android:background="@color/register_mother_icon" />
+                android:layout_height="44dp"
+                android:background="@color/reg_status_none" />
 
             <!-- Child avatar: gender icon set dynamically in code (boy/girl/unknown) -->
             <ImageView
                 android:id="@+id/child_icon"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="10dp"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="12dp"
                 android:background="@drawable/bg_mother_icon_circle"
                 android:contentDescription="@string/not_available"
-                android:padding="4dp"
+                android:padding="8dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_child_unknown_gender" />
 
@@ -61,7 +62,7 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <org.smartregister.view.customcontrols.CustomFontTextView
+                    <TextView
                         android:id="@+id/child_name"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -69,9 +70,9 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:text="Child Name"
-                        android:textColor="@color/text_black"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/dash_text"
+                        android:textSize="16sp" />
 
                     <!-- Index tracing status chip -->
                     <TextView
@@ -90,7 +91,7 @@
                 </LinearLayout>
 
                 <!-- Age + gender line -->
-                <org.smartregister.view.customcontrols.CustomFontTextView
+                <TextView
                     android:id="@+id/child_age_gender"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -98,11 +99,11 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="5 years • Female"
-                    android:textColor="@color/light_grey_text"
-                    android:textSize="12.5sp" />
+                    android:textColor="@color/dash_text_secondary"
+                    android:textSize="13sp" />
 
                 <!-- Caregiver / mother name -->
-                <org.smartregister.view.customcontrols.CustomFontTextView
+                <TextView
                     android:id="@+id/caregiver_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -110,7 +111,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="Mother: Hope Chanda"
-                    android:textColor="@color/light_grey_text"
+                    android:textColor="@color/dash_text_muted"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -120,7 +121,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="12dp"
-            android:background="@color/divider_grey" />
+            android:background="@color/dash_divider" />
 
         <!-- ACTIONS: MUAC (optional) + Open profile -->
         <LinearLayout
@@ -143,8 +144,8 @@
                 android:paddingVertical="6dp"
                 android:text="MUAC"
                 android:textAllCaps="false"
-                android:textColor="@color/pie_chart_red"
-                android:textSize="11sp"
+                android:textColor="@color/reg_pill_critical_text"
+                android:textSize="12sp"
                 android:textStyle="bold"
                 android:visibility="gone" />
 
@@ -154,13 +155,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_button_primary_outline"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="6dp"
+                android:fontFamily="sans-serif-medium"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingStart="14dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="14dp"
+                android:paddingBottom="6dp"
                 android:text="Profile"
                 android:textAllCaps="false"
-                android:textColor="@color/primary"
-                android:textSize="11sp"
-                android:textStyle="bold" />
+                android:textColor="@color/reg_pill_action_text"
+                android:textSize="12sp" />
         </LinearLayout>
 
     </LinearLayout>

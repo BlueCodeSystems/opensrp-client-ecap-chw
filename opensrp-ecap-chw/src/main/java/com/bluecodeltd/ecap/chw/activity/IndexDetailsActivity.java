@@ -174,34 +174,6 @@ public class IndexDetailsActivity extends AppCompatActivity {
     }
 
     /**
-     * The tabs sit on a white strip under the coloured header: titles in grey, the selected one dark, and the
-     * record counts as soft grey badges. The tab title layouts are shared with other profiles whose tabs stay
-     * on colour, so they are recoloured here rather than in the layouts.
-     */
-    private View styleTabOnWhite(View tabView) {
-        if (!(tabView instanceof android.view.ViewGroup)) return tabView;
-        android.view.ViewGroup group = (android.view.ViewGroup) tabView;
-        ColorStateList titleColours = new ColorStateList(
-                new int[][]{new int[]{android.R.attr.state_selected}, new int[]{}},
-                new int[]{androidx.core.content.ContextCompat.getColor(this, R.color.dash_text),
-                        androidx.core.content.ContextCompat.getColor(this, R.color.dash_text_secondary)});
-        boolean title = true;
-        for (int i = 0; i < group.getChildCount(); i++) {
-            if (!(group.getChildAt(i) instanceof TextView)) continue;
-            TextView text = (TextView) group.getChildAt(i);
-            if (title) {
-                text.setTextColor(titleColours);
-                text.setTypeface(android.graphics.Typeface.create("sans-serif-medium", android.graphics.Typeface.NORMAL));
-                title = false;
-            } else {
-                text.setBackgroundResource(R.drawable.profile_tab_badge);
-                text.setTextColor(androidx.core.content.ContextCompat.getColor(this, R.color.dash_text_secondary));
-            }
-        }
-        return tabView;
-    }
-
-    /**
      * Shows the child's sex from across the room: a solid blue or pink avatar on the green header (B), or the
      * whole header in deep blue or rose (C). The avatar figure is white either way.
      */
@@ -780,7 +752,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         });
 
         if (mTabLayout.getTabCount() > index && mTabLayout.getTabAt(index) != null) {
-            mTabLayout.getTabAt(index).setCustomView(styleTabOnWhite(taskTabTitleLayout));
+            mTabLayout.getTabAt(index).setCustomView(com.bluecodeltd.ecap.chw.util.ProfileTabs.onWhite(this, taskTabTitleLayout));
         }
     }
 
@@ -855,7 +827,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
 
         visitTabCount.setVisibility(View.GONE);
 
-        mTabLayout.getTabAt(0).setCustomView(styleTabOnWhite(taskTabTitleLayout));
+        mTabLayout.getTabAt(0).setCustomView(com.bluecodeltd.ecap.chw.util.ProfileTabs.onWhite(this, taskTabTitleLayout));
     }
     private void updateHivAssessmentTabTitle() {
         ConstraintLayout taskTabTitleLayout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.visits_tab_title, null);
@@ -882,7 +854,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             });
         });
 
-        mTabLayout.getTabAt(3).setCustomView(styleTabOnWhite(taskTabTitleLayout));
+        mTabLayout.getTabAt(3).setCustomView(com.bluecodeltd.ecap.chw.util.ProfileTabs.onWhite(this, taskTabTitleLayout));
     }
 
     // Allows setting HIV tab title at a dynamic index when tab order changes
@@ -912,7 +884,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         });
 
         if (mTabLayout.getTabCount() > index && mTabLayout.getTabAt(index) != null) {
-            mTabLayout.getTabAt(index).setCustomView(styleTabOnWhite(taskTabTitleLayout));
+            mTabLayout.getTabAt(index).setCustomView(com.bluecodeltd.ecap.chw.util.ProfileTabs.onWhite(this, taskTabTitleLayout));
         }
     }
     private void updateVisitsTabTitle() {
@@ -935,7 +907,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             });
         });
 
-        mTabLayout.getTabAt(2).setCustomView(styleTabOnWhite(taskTabTitleLayout));
+        mTabLayout.getTabAt(2).setCustomView(com.bluecodeltd.ecap.chw.util.ProfileTabs.onWhite(this, taskTabTitleLayout));
     }
 
     private void updatePlanTabTitle() {
@@ -958,7 +930,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
             });
         });
 
-        mTabLayout.getTabAt(1).setCustomView(styleTabOnWhite(plansTabTitleLayout));
+        mTabLayout.getTabAt(1).setCustomView(com.bluecodeltd.ecap.chw.util.ProfileTabs.onWhite(this, plansTabTitleLayout));
     }
 
     // New: Nutrition tab custom title similar to visits tab pattern
@@ -987,7 +959,7 @@ public class IndexDetailsActivity extends AppCompatActivity {
         });
 
         if (mTabLayout.getTabCount() > index && mTabLayout.getTabAt(index) != null) {
-            mTabLayout.getTabAt(index).setCustomView(styleTabOnWhite(taskTabTitleLayout));
+            mTabLayout.getTabAt(index).setCustomView(com.bluecodeltd.ecap.chw.util.ProfileTabs.onWhite(this, taskTabTitleLayout));
         }
     }
 

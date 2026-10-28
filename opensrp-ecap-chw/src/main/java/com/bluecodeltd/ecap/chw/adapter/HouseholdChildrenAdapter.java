@@ -107,13 +107,13 @@ public class HouseholdChildrenAdapter extends RecyclerView.Adapter<HouseholdChil
                 }
 
                 if ("1".equals(finalCaseStatus)) {
-                    holder.colorView.setBackgroundColor(Color.parseColor("#05b714"));
+                    holder.colorView.setBackgroundColor(androidx.core.content.ContextCompat.getColor(context, R.color.dash_status_good));
                 } else if ("0".equals(finalCaseStatus)) {
-                    holder.colorView.setBackgroundColor(Color.parseColor("#ff0000"));
+                    holder.colorView.setBackgroundColor(androidx.core.content.ContextCompat.getColor(context, R.color.dash_status_critical));
                 } else if ("2".equals(finalCaseStatus)) {
-                    holder.colorView.setBackgroundColor(Color.parseColor("#ffa500"));
+                    holder.colorView.setBackgroundColor(androidx.core.content.ContextCompat.getColor(context, R.color.dash_status_warning));
                 } else {
-                    holder.colorView.setBackgroundColor(Color.parseColor("#696969"));
+                    holder.colorView.setBackgroundColor(androidx.core.content.ContextCompat.getColor(context, R.color.reg_status_none));
                 }
             });
         });
@@ -166,7 +166,8 @@ public class HouseholdChildrenAdapter extends RecyclerView.Adapter<HouseholdChil
             ageGenderLine.append(gender.substring(0, 1).toUpperCase(Locale.ENGLISH))
                     .append(gender.length() > 1 ? gender.substring(1).toLowerCase(Locale.ENGLISH) : "");
         }
-        holder.ageGender.setText(ageGenderLine.toString());
+        holder.ageGender.setText(ageGenderLine.toString().replace(" • ", " · "));
+        showGenderAvatar(holder.itemView, gender);
 
         String caregiver = child.getCaregiver_name();
         holder.caregiverName.setText(!TextUtils.isEmpty(caregiver) ? ("Mother: " + caregiver) : "");
@@ -187,7 +188,7 @@ public class HouseholdChildrenAdapter extends RecyclerView.Adapter<HouseholdChil
         holder.ageGender.setText("");
         holder.caregiverName.setText("");
         holder.isIndex.setVisibility(View.GONE);
-        holder.colorView.setBackgroundColor(Color.parseColor("#696969"));
+        holder.colorView.setBackgroundColor(androidx.core.content.ContextCompat.getColor(context, R.color.reg_status_none));
     }
 
     private void ensureIndexCache() {
@@ -277,6 +278,17 @@ public class HouseholdChildrenAdapter extends RecyclerView.Adapter<HouseholdChil
     @Override
     public int getItemCount() {
         return children != null ? children.size() : 0;
+    }
+
+    /** Boy or girl on a tinted circle, as on the CA register rows. */
+    private void showGenderAvatar(View row, String gender) {
+        android.widget.ImageView icon = row.findViewById(R.id.child_icon);
+        View avatar = row.findViewById(R.id.child_avatar);
+        if (icon == null || avatar == null) return;
+        boolean girl = gender != null && gender.trim().toLowerCase(Locale.ENGLISH).startsWith("f");
+        icon.setImageResource(girl ? R.drawable.row_girl : R.drawable.row_boy);
+        avatar.setBackgroundTintList(android.content.res.ColorStateList.valueOf(androidx.core.content.ContextCompat.getColor(
+                context, girl ? R.color.stat_pill_female_bg : R.color.stat_pill_male_bg)));
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

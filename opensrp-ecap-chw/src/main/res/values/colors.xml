@@ -253,4 +253,9 @@
     <color name="profile_girl">#D04E8A</color>
     <color name="profile_boy_header">#1B4F8A</color>
     <color name="profile_girl_header">#962E62</color>
+    <!-- Profile headers in the green theme: household deep pine, mother teal, HTS olive, PMTCT rose -->
+    <color name="profile_household_header">#1E4D45</color>
+    <color name="profile_mother_header">#00695C</color>
+    <color name="profile_hts_header">#3F6B21</color>
+    <color name="profile_pmtct_header">#AD1457</color>
 </resources>

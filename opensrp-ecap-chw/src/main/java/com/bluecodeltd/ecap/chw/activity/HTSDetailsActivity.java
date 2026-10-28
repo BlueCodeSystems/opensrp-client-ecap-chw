@@ -170,6 +170,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = com.bluecodeltd.ecap.chw.databinding.HtsProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        com.bluecodeltd.ecap.chw.util.ProfileTabs.headerColour(this, binding.tabs, R.color.profile_hts_header);
 
         toolbar = binding.toolbarx;
         setSupportActionBar(toolbar);
@@ -220,7 +221,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
         genderSpacer = binding.genderSpacer;
         ageSpacer = binding.ageSpacer;
         if (clientId != null && !clientId.isEmpty()){
-            txtChildid.setText("ID : " + clientId);
+            txtChildid.setText("ID " + clientId);
         }
 
         oMapper = new ObjectMapper();
@@ -266,7 +267,8 @@ public class HTSDetailsActivity extends AppCompatActivity {
 
         try {
             if (hivTestingServiceModel != null && hivTestingServiceModel.getGender() != null) {
-                txtGender.setText(hivTestingServiceModel.getGender().toUpperCase());
+                String sex = hivTestingServiceModel.getGender().trim();
+                txtGender.setText(sex.isEmpty() ? "" : Character.toUpperCase(sex.charAt(0)) + sex.substring(1).toLowerCase());
             }
         } catch (Exception e) {
             Log.e("YourActivityName", "Exception", e);
@@ -277,6 +279,10 @@ public class HTSDetailsActivity extends AppCompatActivity {
             if (hivTestingServiceModel != null && hivTestingServiceModel.getFirst_name() != null && hivTestingServiceModel.getLast_name() != null) {
                 String full_name = hivTestingServiceModel.getFirst_name() + " " + hivTestingServiceModel.getLast_name();
                 txtName.setText(full_name);
+                // Shown in the slim bar once the header collapses; the large name covers the expanded header
+                binding.collapsingToolbarLayout.setTitle(full_name);
+                binding.collapsingToolbarLayout.setExpandedTitleColor(android.graphics.Color.TRANSPARENT);
+                binding.collapsingToolbarLayout.setCollapsedTitleTextColor(android.graphics.Color.WHITE);
             }
         } catch (Exception e) {
             Log.e("YourActivityName", "Exception", e);
@@ -284,7 +290,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
 
         try {
             if(hivTestingServiceModel != null && hivTestingServiceModel.getBirthdate() != null && !hivTestingServiceModel.getBirthdate().isEmpty()){
-                txtAge.setText("AGE: "+getAge(hivTestingServiceModel.getBirthdate()));
+                txtAge.setText(getAge(hivTestingServiceModel.getBirthdate()));
             } else {
                 txtAge.setText("Not Set");
             }
@@ -425,7 +431,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
 
         visitTabCount.setText(String.valueOf(visits));
 
-        mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
+        mTabLayout.getTabAt(2).setCustomView(com.bluecodeltd.ecap.chw.util.ProfileTabs.onWhite(this, taskTabTitleLayout));
     }
 
     private void updatePlanTabTitle() {
@@ -438,7 +444,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
 
         plansTabCount.setText(String.valueOf(plans));
 
-        mTabLayout.getTabAt(1).setCustomView(plansTabTitleLayout);
+        mTabLayout.getTabAt(1).setCustomView(com.bluecodeltd.ecap.chw.util.ProfileTabs.onWhite(this, plansTabTitleLayout));
     }
 
 
@@ -1237,7 +1243,7 @@ public class HTSDetailsActivity extends AppCompatActivity {
         if ( tabLayout != null) {
             TabLayout.Tab tab =  tabLayout.getTabAt(1);
             if (tab != null) {
-                tab.setCustomView(taskTabTitleLayout);
+                tab.setCustomView(com.bluecodeltd.ecap.chw.util.ProfileTabs.onWhite(this, taskTabTitleLayout));
             } else {
                 Log.e("HTSDetailsActivity", "Error");
             }

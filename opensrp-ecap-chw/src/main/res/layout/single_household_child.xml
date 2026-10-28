@@ -1,96 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- A household member, in the register card style. HouseholdChildrenAdapter colours the case-status stripe and
+     sets the boy / girl avatar; the inner RelativeLayout is the row the adapter listens to. -->
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/register_columns"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
-    android:background="@android:color/white">
+    android:layout_marginStart="12dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginBottom="6dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="1.5dp">
 
-    <LinearLayout
-        android:id="@+id/itemm"
+    <RelativeLayout
+        android:id="@+id/register_columns"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <View
-            android:id="@+id/mycolor"
-            android:layout_width="4dp"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimary" />
-
-        <ImageView
-            android:id="@+id/child_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_children" />
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:id="@+id/itemm"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:gravity="center_vertical"
+            android:minHeight="80dp"
+            android:orientation="horizontal">
 
-            <org.smartregister.view.customcontrols.CustomFontTextView
-                android:id="@+id/child_name"
-                style="@style/CustomFontTextViewStyle.ClientList"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="@color/text_black"
-                android:textSize="16sp" />
+            <View
+                android:id="@+id/mycolor"
+                android:layout_width="4dp"
+                android:layout_height="match_parent"
+                android:background="@color/reg_status_none" />
 
-            <org.smartregister.view.customcontrols.CustomFontTextView
-                android:id="@+id/child_age_gender"
-                style="@style/CustomFontTextViewStyle.ClientList.Light"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:textColor="@color/light_grey_text"
-                android:textSize="13sp" />
+            <FrameLayout
+                android:id="@+id/child_avatar"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/circle_light_grey">
 
-            <org.smartregister.view.customcontrols.CustomFontTextView
-                android:id="@+id/caregiver_name"
-                style="@style/CustomFontTextViewStyle.ClientList.Light"
-                android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/child_icon"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/row_boy" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:textColor="@color/light_grey_text"
-                android:textSize="12sp" />
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="88dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp">
+
+                <TextView
+                    android:id="@+id/child_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="sans-serif-medium"
+                    android:maxLines="1"
+                    android:textColor="@color/dash_text"
+                    android:textSize="16sp"
+                    tools:text="Agatha Phiri" />
+
+                <TextView
+                    android:id="@+id/child_age_gender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/dash_text_secondary"
+                    android:textSize="13sp"
+                    tools:text="15 Years · Female" />
+
+                <TextView
+                    android:id="@+id/caregiver_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/dash_text_muted"
+                    android:textSize="12sp"
+                    tools:text="Mother: Amai Phiri" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
-    <View
-        android:layout_below="@id/itemm"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray" />
+        <TextView
+            android:id="@+id/index_icon"
+            style="@style/ServiceRegisterPill"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="14dp"
+            android:background="@drawable/reg_chip_index"
+            android:text="Index"
+            android:textColor="@color/primary"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
-    <TextView
-        android:id="@+id/index_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="12dp"
-        android:background="@drawable/rounded_corner_index"
-        android:paddingLeft="10dp"
-        android:paddingTop="4dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="4dp"
-        android:text="Index"
-        android:textColor="@color/dark_grey_text"
-        android:textSize="11sp"
-        android:visibility="gone" />
+    </RelativeLayout>
 
-</RelativeLayout>
-
+</androidx.cardview.widget.CardView>

@@ -148,6 +148,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         NavigationMenu.getInstance(this, null, toolbar);
         // Rely on NavigationMenu to set up navigation icon/drawer like other profile screens
         mTabLayout =  binding.tabs;
+        com.bluecodeltd.ecap.chw.util.ProfileTabs.headerColour(this, mTabLayout, R.color.profile_pmtct_header);
         mViewPager  = binding.viewpager;
         try { mViewPager.setSaveEnabled(false); } catch (Throwable ignored) {}
         motherName = binding.motherName;
@@ -251,10 +252,14 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
                             ? String.format("%s %s", valueOrEmpty(ptctMotherModel.getFirst_name()), valueOrEmpty(ptctMotherModel.getLast_name())).trim()
                             : ptctMotherModel.getCaregiver_name();
                     motherName.setText(isNullOrEmpty(mothersFullName) ? "" : mothersFullName);
+                    // Shown in the slim bar once the header collapses; the large name covers the expanded header
+                    binding.collapsingToolbarLayout.setTitle(motherName.getText());
+                    binding.collapsingToolbarLayout.setExpandedTitleColor(android.graphics.Color.TRANSPARENT);
+                    binding.collapsingToolbarLayout.setCollapsedTitleTextColor(android.graphics.Color.WHITE);
 
                     String mothersAge = ptctMotherModel.getCaregiver_birth_date();
                     if (mothersAge != null) {
-                        txtAge.setText(getClientAge(mothersAge));
+                        txtAge.setText(getClientAge(mothersAge).replace(" Old", ""));
                     } else {
                         txtAge.setText("N/A");
                     }
@@ -436,7 +441,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         final TextView countView = taskTabTitleLayout.findViewById(R.id.children_count);
         countView.setText("0");
         if (mTabLayout.getTabAt(1) != null) {
-            mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
+            mTabLayout.getTabAt(1).setCustomView(com.bluecodeltd.ecap.chw.util.ProfileTabs.onWhite(this, taskTabTitleLayout));
         }
 
         Threading.ioBestEffort(() -> {
@@ -474,7 +479,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         final TextView countView = taskTabTitleLayout.findViewById(R.id.children_count);
         countView.setText("0");
         if (mTabLayout.getTabAt(2) != null) {
-            mTabLayout.getTabAt(2).setCustomView(taskTabTitleLayout);
+            mTabLayout.getTabAt(2).setCustomView(com.bluecodeltd.ecap.chw.util.ProfileTabs.onWhite(this, taskTabTitleLayout));
         }
 
         final String primaryId = (ptctMotherModel != null && !isNullOrEmpty(ptctMotherModel.getPmtct_id()))
@@ -506,7 +511,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         final TextView countView = taskTabTitleLayout.findViewById(R.id.children_count);
         countView.setText("…");
         if (mTabLayout.getTabAt(3) != null) {
-            mTabLayout.getTabAt(3).setCustomView(taskTabTitleLayout);
+            mTabLayout.getTabAt(3).setCustomView(com.bluecodeltd.ecap.chw.util.ProfileTabs.onWhite(this, taskTabTitleLayout));
         }
 
         final String hhId = (ptctMotherModel != null && !isNullOrEmpty(ptctMotherModel.getHousehold_id()))
@@ -539,7 +544,7 @@ public class MotherPmtctProfileActivity extends AppCompatActivity {
         childTabCount.setText("10");
         childTabCount.setVisibility(View.GONE);
 
-        mTabLayout.getTabAt(0).setCustomView(taskTabTitleLayout);
+        mTabLayout.getTabAt(0).setCustomView(com.bluecodeltd.ecap.chw.util.ProfileTabs.onWhite(this, taskTabTitleLayout));
     }
     private String getClientAge(String birthdate){
         LocalDate localDateBirthdate = BirthdateParser.parse(birthdate);

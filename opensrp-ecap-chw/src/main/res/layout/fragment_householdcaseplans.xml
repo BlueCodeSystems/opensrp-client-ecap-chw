@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/contact_small_padding">
+    android:padding="@dimen/contact_small_padding"
+    android:background="@color/dash_bg">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/householdRecycler"
@@ -42,9 +43,12 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/empty_calendar" />
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/empty_calendar"
+            android:alpha="0.45"
+            android:contentDescription="@null"
+        />
 
         <TextView
             android:layout_width="wrap_content"
@@ -53,7 +57,7 @@
             android:gravity="center"
             android:text="No Case Plans"
             android:textColor="@color/text_black"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 

@@ -132,6 +132,7 @@ public class MotherOverviewFragment extends Fragment {
             try { breastfeeding = mother != null && mother.getColumnmaps() != null ? mother.getColumnmaps().get("mother_breastfeeding") : null; } catch (Exception ignored) { }
         }
         txtBreastfeeding.setText(breastfeeding);
+        if (binding != null) OverviewFormat.tidy(binding.getRoot(), null);
     }
 
     private void applyHivStatusVisibility(@Nullable String hivStatus) {

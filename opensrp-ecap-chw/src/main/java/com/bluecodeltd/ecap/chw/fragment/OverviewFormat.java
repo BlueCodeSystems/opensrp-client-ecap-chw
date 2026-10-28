@@ -124,6 +124,8 @@ final class OverviewFormat {
         value.setTextColor(ContextCompat.getColor(value.getContext(), R.color.dash_text));
         if (RegisterRow.date(text) != null) {
             value.setText(RegisterRow.shownDate(text));
+        } else if (lower.equals("yes") || lower.equals("no")) {
+            value.setText(Character.toUpperCase(lower.charAt(0)) + lower.substring(1));
         } else if (Character.isLowerCase(text.charAt(0)) && !text.contains("@")) {
             value.setText(Character.toUpperCase(text.charAt(0)) + text.substring(1));
         }

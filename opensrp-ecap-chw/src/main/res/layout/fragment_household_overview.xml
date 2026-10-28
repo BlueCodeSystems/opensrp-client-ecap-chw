@@ -42,11 +42,11 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="8dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="1dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginTop="10dp"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="1.5dp"
                 app:cardBackgroundColor="@color/register_card_bg">
 
                 <LinearLayout
@@ -126,13 +126,20 @@
                             android:id="@+id/case_status_overview"
                             style="@style/OverviewRowLabel"
                             android:text="Signature" />
-                        <ImageView
-                            android:id="@+id/signature_view"
+                        <FrameLayout
                             android:layout_width="0dp"
-                            android:layout_height="72dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/circle_light_grey"
-                            android:scaleType="fitCenter" />
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3">
+
+                            <ImageView
+                                android:id="@+id/signature_view"
+                                android:layout_width="140dp"
+                                android:layout_height="72dp"
+                                android:background="@drawable/service_signature_frame"
+                                android:contentDescription="@null"
+                                android:padding="6dp"
+                                android:scaleType="fitCenter" />
+                        </FrameLayout>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -143,11 +150,11 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="8dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="1dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginTop="10dp"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="1.5dp"
                 app:cardBackgroundColor="@color/register_card_bg">
 
                 <LinearLayout
@@ -172,11 +179,11 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="8dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="1dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginTop="10dp"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="1.5dp"
                 app:cardBackgroundColor="@color/register_card_bg">
 
                 <LinearLayout
@@ -190,9 +197,9 @@
                         android:id="@+id/myview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/overview_header_bg"
-                        android:paddingTop="12dp"
-                        android:paddingBottom="12dp">
+                        android:background="@drawable/overview_section_header_bg"
+                        android:paddingTop="14dp"
+                        android:paddingBottom="10dp">
 
                         <TextView
                             android:id="@+id/myart"
@@ -204,9 +211,9 @@
                             android:text="ART Status &amp; VL Details"
                             android:textAllCaps="true"
                             android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:letterSpacing="0.05"
-                            android:textColor="@android:color/white" />
+                            android:fontFamily="sans-serif-medium"
+                            android:letterSpacing="0.08"
+                            android:textColor="@color/primary" />
 
                         <ImageButton
                             android:id="@+id/arrow_button"
@@ -216,7 +223,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="12dp"
                             android:background="@android:color/transparent"
-                            app:tint="@android:color/white"
+                            app:tint="@color/primary"
                             android:src="@drawable/ic_down" />
 
                     </RelativeLayout>
@@ -319,11 +326,11 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="8dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="1dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginTop="10dp"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="1.5dp"
                 app:cardBackgroundColor="@color/register_card_bg">
 
                 <LinearLayout
@@ -357,11 +364,11 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="8dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="1dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginTop="10dp"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="1.5dp"
                 app:cardBackgroundColor="@color/register_card_bg">
 
                 <LinearLayout

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/dash_bg">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/visitrecyclerView"
@@ -26,17 +27,23 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/empty_calendar" />
+            android:src="@drawable/empty_calendar"
+            android:alpha="0.45"
+            android:contentDescription="@null"
+        />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:text="No mother longitudinal visits added"
-            android:textSize="20sp" />
+            android:textSize="16sp"
+            android:textColor="@color/dash_text_secondary"
+            android:layout_marginTop="12dp"
+            />
 
     </LinearLayout>
 

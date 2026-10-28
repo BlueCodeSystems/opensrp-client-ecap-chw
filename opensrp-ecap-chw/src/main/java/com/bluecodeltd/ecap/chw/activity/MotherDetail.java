@@ -144,6 +144,7 @@ public class MotherDetail extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         NavigationMenu.getInstance(this, null, toolbar);
         mTabLayout =  binding.tabs;
+        com.bluecodeltd.ecap.chw.util.ProfileTabs.headerColour(this, mTabLayout, R.color.profile_mother_header);
         mViewPager  = binding.viewpager;
         try { mViewPager.setSaveEnabled(false); } catch (Throwable ignored) {}
         motherName = binding.motherName;
@@ -261,6 +262,10 @@ public class MotherDetail extends AppCompatActivity {
                 }
 
                 motherName.setText(commonPersonObjectClient.getColumnmaps().get("caregiver_name"));
+                // Shown in the slim bar once the header collapses; the large name covers the expanded header
+                binding.collapsingToolbarLayout.setTitle(motherName.getText());
+                binding.collapsingToolbarLayout.setExpandedTitleColor(android.graphics.Color.TRANSPARENT);
+                binding.collapsingToolbarLayout.setCollapsedTitleTextColor(android.graphics.Color.WHITE);
                 String birthdate = commonPersonObjectClient.getColumnmaps().get("caregiver_birth_date");
                 String age = getAge(birthdate);
                 txtAge.setText(age);
@@ -270,7 +275,7 @@ public class MotherDetail extends AppCompatActivity {
                     if (householdIdView != null) {
                         String hhId = commonPersonObjectClient.getColumnmaps().get("household_id");
                         if (hhId != null && !hhId.isEmpty()) {
-                            householdIdView.setText("ID: " + hhId);
+                            householdIdView.setText("ID " + hhId);
                         }
                     }
                 } catch (Exception ignored) { }
@@ -400,7 +405,7 @@ public class MotherDetail extends AppCompatActivity {
             childTabCount.setText("0");
 
             if (mTabLayout.getTabCount() > 1 && mTabLayout.getTabAt(1) != null) {
-                mTabLayout.getTabAt(1).setCustomView(taskTabTitleLayout);
+                mTabLayout.getTabAt(1).setCustomView(com.bluecodeltd.ecap.chw.util.ProfileTabs.onWhite(this, taskTabTitleLayout));
             }
 
             // Count off the main thread: during a sync the DB lock can be held for seconds.
@@ -433,7 +438,7 @@ public class MotherDetail extends AppCompatActivity {
             countView.setText("0");
 
             if (mTabLayout.getTabCount() > 2 && mTabLayout.getTabAt(2) != null) {
-                mTabLayout.getTabAt(2).setCustomView(layout);
+                mTabLayout.getTabAt(2).setCustomView(com.bluecodeltd.ecap.chw.util.ProfileTabs.onWhite(this, layout));
             }
 
             final String householdId = commonPersonObjectClient != null && commonPersonObjectClient.getColumnmaps() != null
@@ -461,7 +466,7 @@ public class MotherDetail extends AppCompatActivity {
             countView.setText("0");
 
             if (mTabLayout.getTabCount() > 3 && mTabLayout.getTabAt(3) != null) {
-                mTabLayout.getTabAt(3).setCustomView(layout);
+                mTabLayout.getTabAt(3).setCustomView(com.bluecodeltd.ecap.chw.util.ProfileTabs.onWhite(this, layout));
             }
 
             final String householdId = commonPersonObjectClient != null && commonPersonObjectClient.getColumnmaps() != null
@@ -489,7 +494,7 @@ public class MotherDetail extends AppCompatActivity {
             countView.setText("0");
 
             if (mTabLayout.getTabCount() > 4 && mTabLayout.getTabAt(4) != null) {
-                mTabLayout.getTabAt(4).setCustomView(layout);
+                mTabLayout.getTabAt(4).setCustomView(com.bluecodeltd.ecap.chw.util.ProfileTabs.onWhite(this, layout));
             }
 
             final String householdId = commonPersonObjectClient != null && commonPersonObjectClient.getColumnmaps() != null
@@ -532,7 +537,7 @@ public class MotherDetail extends AppCompatActivity {
         com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter adapter = new com.bluecodeltd.ecap.chw.adapter.ViewPager2Adapter(this, fragments);
         mViewPager.setAdapter(adapter);
         tabMediator = new TabLayoutMediator(mTabLayout, mViewPager, (tab, position) -> {
-            if (position == 0) tab.setText("Overview");
+            if (position == 0) tab.setText("OVERVIEW");
             else if (position == 1) tab.setText("Children");
             else if (position == 2) tab.setText("ANC");
             else if (position == 3) tab.setText("Longitudinal");

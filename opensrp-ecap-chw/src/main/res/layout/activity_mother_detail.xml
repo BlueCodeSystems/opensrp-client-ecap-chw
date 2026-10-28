@@ -5,20 +5,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@color/dash_bg"
     tools:context=".activity.MotherDetail">
 
-    <RelativeLayout
-        android:id="@+id/activity_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
         <!-- APP BAR + MOTHER PROFILE HEADER -->
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/collapsing_toolbar_appbarlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_mother_header"
+            android:background="@color/profile_mother_header"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:elevation="4dp">
 
@@ -26,10 +22,9 @@
                 android:id="@+id/collapsing_toolbar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:contentScrim="@color/register_mother_icon"
-                android:background="@android:color/transparent"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:titleEnabled="false">
+                android:background="@color/profile_mother_header"
+                app:contentScrim="@color/profile_mother_header"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbarx"
@@ -39,272 +34,201 @@
                     app:layout_collapseMode="pin"
                     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-                <!-- Mother profile header area -->
                 <LinearLayout
                     android:id="@+id/profile_name_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="?attr/actionBarSize"
-                    android:background="@android:color/transparent"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:paddingTop="16dp"
-                    android:paddingBottom="20dp"
                     app:layout_collapseMode="parallax"
                     app:layout_collapseParallaxMultiplier="1.5">
 
-                    <!-- Card-style profile block -->
-                    <!-- Card-style mother profile block -->
-                    <androidx.cardview.widget.CardView
+                    <!-- Kept for MotherDetail; the profile reads as one header now, so the card is a plain frame -->
+                    <FrameLayout
                         android:id="@+id/mother_profile_card"
                         android:layout_width="match_parent"
-                        android:layout_height="240dp"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="?attr/selectableItemBackground"
-                        app:cardBackgroundColor="@android:color/white"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="3dp"
-                        app:cardUseCompatPadding="true">
+                        android:layout_height="wrap_content">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="16dp">
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
 
-                            <!-- Top row: label + status -->
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
+                            <FrameLayout
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_marginTop="8dp"
+                                android:background="@drawable/profile_household_avatar">
 
-                                <!-- "Mother profile" label -->
-                                <TextView
-                                    android:id="@+id/mother_profile_label"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:alpha="0.7"
-                                    android:letterSpacing="0.08"
-                                    android:text="Mother Profile"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_black"
-                                    android:textSize="11sp" />
-
-                                <!-- Optional status pill (e.g. Active / Completed ANC) -->
-                                <TextView
-                                    android:id="@+id/mother_status"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="@drawable/bg_chip_success"
-                                    android:paddingStart="10dp"
-                                    android:paddingTop="3dp"
-                                    android:paddingEnd="10dp"
-                                    android:paddingBottom="3dp"
-                                    android:singleLine="true"
-                                    android:text="Active"
-                                    android:textColor="@android:color/white"
-                                    android:textSize="10.5sp"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-
-                            <!-- Row: avatar + main info -->
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
-
-                                <!-- Circular avatar -->
                                 <ImageView
                                     android:id="@+id/mother_avatar"
-                                    android:layout_width="52dp"
-                                    android:layout_height="52dp"
-                                    android:layout_marginEnd="14dp"
-                                    android:background="@drawable/bg_mother_icon_circle"
-                                    android:padding="10dp"
-                                    android:scaleType="centerInside"
+                                    android:layout_width="44dp"
+                                    android:layout_height="44dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@null"
+                                    android:scaleType="fitCenter"
                                     android:src="@drawable/ic_mother_holding_baby"
-                                    app:tint="@color/register_mother_icon" />
+                                    app:tint="@color/white" />
+                            </FrameLayout>
 
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical">
-
-                                    <!-- Name -->
-                                    <org.smartregister.view.customcontrols.CustomFontTextView
-                                        android:id="@+id/mother_name"
-                                        style="@style/CustomFontTextViewStyle.ClientList.Medium"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Hope Chanda"
-                                        android:textColor="@color/text_black"
-                                        android:textSize="@dimen/activity_title_size" />
-
-                                    <!-- Age + ID row -->
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="2dp"
-                                        android:orientation="horizontal">
-
-                                        <org.smartregister.view.customcontrols.CustomFontTextView
-                                            style="@style/CustomFontTextViewStyle.ClientList.Light"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="Age: "
-                                            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                                            android:textColor="@color/text_black" />
-
-                                        <org.smartregister.view.customcontrols.CustomFontTextView
-                                            android:id="@+id/mother_age"
-                                            style="@style/CustomFontTextViewStyle.ClientList.Light"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="32"
-                                            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                                            android:textColor="@color/text_black" />
-
-                                        <!-- Small separator dot -->
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginStart="6dp"
-                                            android:layout_marginEnd="6dp"
-                                            android:alpha="0.5"
-                                            android:text="•"
-                                            android:textColor="@color/text_black" />
-
-                                        <!-- Optional ID / folder number -->
-                                        <org.smartregister.view.customcontrols.CustomFontTextView
-                                            android:id="@+id/household_id"
-                                            style="@style/CustomFontTextViewStyle.ClientList.Light"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:alpha="0.9"
-                                            android:text="ID: 00123"
-                                            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                                            android:textColor="@color/text_black" />
-                                    </LinearLayout>
-
-                                    <!-- Extra info line (G/P, village/facility) -->
-                                    <org.smartregister.view.customcontrols.CustomFontTextView
-                                        android:id="@+id/mother_facility"
-                                        style="@style/CustomFontTextViewStyle.ClientList.Light"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="2dp"
-                                        android:alpha="0.8"
-                                        android:text="Chipata Clinic"
-                                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                                        android:textColor="@color/text_black" />
-
-                                </LinearLayout>
-                            </LinearLayout>
-
-                            <!-- Optional footer: quick actions / tags -->
-                            <LinearLayout
-                                android:id="@+id/profile_footer_row"
-                                android:layout_width="match_parent"
+                            <TextView
+                                android:id="@+id/mother_name"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="12dp"
-                                android:gravity="start"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="sans-serif-medium"
+                                android:text="Hope Chanda"
+                                android:textColor="@color/white"
+                                android:textSize="24sp" />
+
+                            <!-- Status, age and household ID as pills -->
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:gravity="center"
                                 android:orientation="horizontal">
 
-                                <!-- Last visit -->
+                                <TextView
+                                    android:id="@+id/mother_status"
+                                    style="@style/ProfileHeaderPill"
+                                    android:background="@drawable/profile_status_pill"
+                                    android:text="Active"
+                                    android:textColor="@color/profile_mother_header" />
+
+                                <TextView
+                                    android:id="@+id/mother_age"
+                                    style="@style/ProfileHeaderPill"
+                                    android:layout_marginStart="8dp"
+                                    android:text="32" />
+
+                                <TextView
+                                    android:id="@+id/household_id"
+                                    style="@style/ProfileHeaderPill"
+                                    android:layout_marginStart="8dp"
+                                    android:text="ID: 00123" />
+                            </LinearLayout>
+
+                            <!-- Facility, last ANC and EDD in one quiet line -->
+                            <LinearLayout
+                                android:id="@+id/profile_footer_row"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/mother_facility"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:alpha="0.85"
+                                    android:text="Chipata Clinic"
+                                    android:textColor="@color/white"
+                                    android:textSize="13sp" />
+
                                 <TextView
                                     android:id="@+id/mother_last_visit"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginStart="12dp"
+                                    android:alpha="0.85"
                                     android:text="Last ANC: 12 Aug 2025"
-                                    android:textColor="@color/light_grey_text"
-                                    android:textSize="11sp" />
+                                    android:textColor="@color/white"
+                                    android:textSize="13sp" />
 
-                                <!-- Separator dot -->
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="6dp"
-                                    android:layout_marginEnd="6dp"
-                                    android:text="•"
-                                    android:textColor="@color/light_grey_text"
-                                    android:textSize="11sp" />
-
-                                <!-- Next appointment / EDD -->
                                 <TextView
                                     android:id="@+id/mother_next_appointment"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginStart="12dp"
+                                    android:alpha="0.85"
                                     android:text="EDD: 10 Feb 2026"
-                                    android:textColor="@color/light_grey_text"
-                                    android:textSize="11sp" />
+                                    android:textColor="@color/white"
+                                    android:textSize="13sp" />
                             </LinearLayout>
 
-                            <!-- EXISTING PROFILE BUTTONS -->
                             <LinearLayout
                                 android:id="@+id/profile_buttons_row"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="12dp"
-                                android:background="@android:color/transparent"
-                                android:gravity="start"
+                                android:layout_marginTop="14dp"
+                                android:layout_marginBottom="18dp"
                                 android:orientation="horizontal">
 
-                                <Button
+                                <TextView
                                     android:id="@+id/hh_prof"
-                                    android:layout_width="0dp"
-                                    android:layout_height="38dp"
-                                    android:layout_marginEnd="8dp"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/ripple_button_mother_primary"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/profile_header_button"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:fontFamily="sans-serif-medium"
                                     android:onClick="onClick"
+                                    android:paddingStart="@dimen/profile_btn_registration_info_padding"
+                                    android:paddingTop="9dp"
+                                    android:paddingEnd="@dimen/profile_btn_registration_info_padding"
+                                    android:paddingBottom="9dp"
                                     android:text="Household Profile"
-                                    android:textAllCaps="false"
-                                    android:textColor="@android:color/white"
-                                    android:textSize="12.5sp" />
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp" />
 
-                                <Button
+                                <TextView
                                     android:id="@+id/pmtct_prof"
-                                    android:layout_width="0dp"
-                                    android:layout_height="38dp"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/ripple_button_mother_primary"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:background="@drawable/profile_header_button"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:fontFamily="sans-serif-medium"
                                     android:onClick="onClick"
+                                    android:paddingStart="@dimen/profile_btn_registration_info_padding"
+                                    android:paddingTop="9dp"
+                                    android:paddingEnd="@dimen/profile_btn_registration_info_padding"
+                                    android:paddingBottom="9dp"
                                     android:text="@string/pmtct_services"
-                                    android:textAllCaps="false"
-                                    android:textColor="@android:color/white"
-                                    android:textSize="12.5sp" />
-
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp" />
                             </LinearLayout>
 
+                            <!-- No longer shown: the status pill says what this label used to -->
+                            <TextView
+                                android:id="@+id/mother_profile_label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone" />
                         </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
+                    </FrameLayout>
 
                 </LinearLayout>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
+            <!-- Tabs on a white strip, divided from the records below -->
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/register_mother_icon"
+                android:background="@color/white"
                 app:tabContentStart="0dp"
                 app:tabGravity="fill"
-                app:tabIndicatorColor="@android:color/white"
-                app:tabIndicatorHeight="4dp"
+                app:tabIndicatorColor="@color/profile_mother_header"
+                app:tabIndicatorFullWidth="false"
+                app:tabIndicatorHeight="3dp"
                 app:tabMaxWidth="0dp"
                 app:tabMode="scrollable"
-                app:tabSelectedTextColor="@color/white"
-                app:tabTextAppearance="@style/CustomFontTextViewStyle.tabIndicator.sub.white" />
+                app:tabRippleColor="@color/dash_divider"
+                app:tabSelectedTextColor="@color/dash_text"
+                app:tabTextAppearance="@style/CustomFontTextViewStyle.tabIndicator.sub.white"
+                app:tabTextColor="@color/dash_text_secondary" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/dash_divider" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -313,8 +237,13 @@
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/collapsing_toolbar_appbarlayout"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <!-- Overlay for the action menu; a direct sibling so the header can collapse as the tabs scroll -->
+    <RelativeLayout
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <View
             android:id="@+id/fab_scrim"
